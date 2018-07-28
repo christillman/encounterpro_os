@@ -1,0 +1,38 @@
+HA$PBExportHeader$f_datetime_diff.srf
+global type f_datetime_diff from function_object
+end type
+
+forward prototypes
+global function string f_datetime_diff (datetime pdt_from, datetime pdt_to)
+end prototypes
+
+global function string f_datetime_diff (datetime pdt_from, datetime pdt_to);integer li_days
+long ll_seconds
+integer li_s
+integer li_m
+integer li_h
+string ls_time_diff
+
+if pdt_from >= pdt_to then
+	return "00:00:00"
+end if
+
+li_days = daysafter(date(pdt_from), date(pdt_to))
+if li_days = 0 then
+	ll_seconds = secondsafter(time(pdt_from), time(pdt_to))
+else
+	ll_seconds = secondsafter(time(pdt_from), time("23:59:59")) + 1
+	ll_seconds += secondsafter(time("00:00:00"), time(pdt_to))
+end if
+	
+li_h = ll_seconds / 3600
+ll_seconds = ll_seconds - (li_h * 3600)
+li_m = ll_seconds / 60
+li_s = ll_seconds - (li_m * 60)
+
+ls_time_diff = string(li_h, "00") + ":" + string(li_m, "00") + ":" + string(li_s, "00")
+
+return ls_time_diff
+
+end function
+

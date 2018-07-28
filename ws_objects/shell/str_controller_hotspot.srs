@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_controller_hotspot.srs
+global type str_controller_hotspot from structure
+	long		hotspot_id
+	string		context_object
+	string		hotspot_name
+	string		description
+	string		menu_config_object_id
+	string		status
+	datetime		created
+	string		created_by
+end type
+

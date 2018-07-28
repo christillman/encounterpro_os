@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_outpatient_type.srs
+global type str_outpatient_type from structure
+	datetime		appointmenttime
+	integer		estappointmentlength
+	string		encounterstatus
+	datetime		encounterenddate
+end type
+

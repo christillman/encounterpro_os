@@ -1,0 +1,78 @@
+HA$PBExportHeader$f_attributes_to_context.srf
+global type f_attributes_to_context from function_object
+end type
+
+forward prototypes
+global function str_context f_attributes_to_context (str_attributes pstr_attributes)
+end prototypes
+
+global function str_context f_attributes_to_context (str_attributes pstr_attributes);str_context lstr_context
+string ls_temp
+
+lstr_context = f_empty_simple_context()
+
+
+lstr_context.cpr_id = f_attribute_find_attribute(pstr_attributes, "cpr_id")
+if isnull(lstr_context.cpr_id) then
+	lstr_context.context_object = "General"
+	return lstr_context
+end if
+
+lstr_context.context_object = f_attribute_find_attribute(pstr_attributes, "context_object")
+if isnull(lstr_context.context_object) then
+	// If we don't have a "context_object" attribute then assume the context_object from the available object_keys
+	// using the most specific first (treatment, assessment, encounter, patient).
+	ls_temp = f_attribute_find_attribute(pstr_attributes, "treatment_id")
+	if not isnull(ls_temp) and isnumber(ls_temp) then
+		lstr_context.context_object = "Treatment"
+		lstr_context.object_key = long(ls_temp)
+		return lstr_context
+	end if
+
+	ls_temp = f_attribute_find_attribute(pstr_attributes, "problem_id")
+	if not isnull(ls_temp) and isnumber(ls_temp) then
+		lstr_context.context_object = "Assessment"
+		lstr_context.object_key = long(ls_temp)
+		return lstr_context
+	end if
+	
+	ls_temp = f_attribute_find_attribute(pstr_attributes, "encounter_id")
+	if not isnull(ls_temp) and isnumber(ls_temp) then
+		lstr_context.context_object = "Encounter"
+		lstr_context.object_key = long(ls_temp)
+		return lstr_context
+	end if
+	
+	// If we get here then just assume "Patient" context
+	lstr_context.context_object = "Patient"
+	return lstr_context
+else
+	// Get the object key based on the context_object
+	CHOOSE CASE lower(lstr_context.context_object)
+		CASE "encounter"
+			ls_temp = f_attribute_find_attribute(pstr_attributes, "encounter_id")
+		CASE "assessment"
+			ls_temp = f_attribute_find_attribute(pstr_attributes, "problem_id")
+		CASE "treatment"
+			ls_temp = f_attribute_find_attribute(pstr_attributes, "treatment_id")
+	END CHOOSE
+
+	if not isnull(ls_temp) and isnumber(ls_temp) then
+		lstr_context.object_key = long(ls_temp)
+	end if
+	
+	// If we got an object_key we're done
+	if lstr_context.object_key > 0 then return lstr_context
+
+	// If we don't have an object key then assume Patient context
+	lstr_context.context_object = "Patient"
+	setnull(lstr_context.object_key)
+	return lstr_context
+end if
+
+
+return lstr_context
+
+
+end function
+

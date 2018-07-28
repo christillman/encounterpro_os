@@ -1,0 +1,30 @@
+HA$PBExportHeader$dw_folder_workplan_pick.srd
+release 9;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(40) update=yes updatewhereclause=yes key=yes name=folder dbname="c_Folder_Workplan.folder" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=workplan_sequence dbname="c_Folder_Workplan.workplan_sequence" )
+ column=(type=long update=yes updatewhereclause=yes name=workplan_id dbname="c_Folder_Workplan.workplan_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=owned_by dbname="c_Folder_Workplan.owned_by" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="c_Folder_Workplan.sort_sequence" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="c_Workplan.description" )
+ column=(type=char(64) updatewhereclause=yes name=user_full_name dbname="c_User.user_full_name" )
+ column=(type=long updatewhereclause=yes name=color dbname="c_User.color" )
+ column=(type=char(32) updatewhereclause=yes name=c_role_role_name dbname="c_Role.role_name" )
+ column=(type=long updatewhereclause=yes name=c_role_color dbname="c_Role.color" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Folder_Workplan~" )  TABLE(NAME=~"c_Workplan~" )  TABLE(NAME=~"c_User~" )  TABLE(NAME=~"c_Role~" ) COLUMN(NAME=~"c_Folder_Workplan.folder~") COLUMN(NAME=~"c_Folder_Workplan.workplan_sequence~") COLUMN(NAME=~"c_Folder_Workplan.workplan_id~") COLUMN(NAME=~"c_Folder_Workplan.owned_by~") COMPUTE(NAME=~"selected_flag=0~") COLUMN(NAME=~"c_Folder_Workplan.sort_sequence~") COLUMN(NAME=~"c_Workplan.description~") COLUMN(NAME=~"c_User.user_full_name~") COLUMN(NAME=~"c_User.color~") COLUMN(NAME=~"c_Role.role_name~") COLUMN(NAME=~"c_Role.color~")    JOIN (LEFT=~"c_Folder_Workplan.owned_by~"    OP =~"=~"RIGHT=~"c_User.user_id~"    OUTER1 =~"c_Folder_Workplan.owned_by~" )    JOIN (LEFT=~"c_Folder_Workplan.owned_by~"    OP =~"=~"RIGHT=~"c_Role.role_id~"    OUTER1 =~"c_Folder_Workplan.owned_by~" )   JOIN (LEFT=~"c_Folder_Workplan.workplan_id~"    OP =~"=~"RIGHT=~"c_Workplan.workplan_id~" ) WHERE(    EXP1 =~"c_Folder_Workplan.folder~"   OP =~"=~"    EXP2 =~":folder~" ) ) ARG(NAME = ~"folder~" TYPE = string) " update="c_Folder_Workplan" updatewhere=0 updatekeyinplace=no arguments=(("folder", string))  sort="sort_sequence A description A " )
+compute(band=detail alignment="2" expression="if(not isnull(  user_full_name ), user_full_name,
+    if(not isnull( c_role_role_name ), ~"Any ~" + c_role_role_name , ~"<Pick>~" ))"border="6" color="0" x="1221" y="12" height="96" width="818" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(color <> 0, color, 
+     if( c_role_color <> 0, c_role_color ,
+                if(selected_flag=0, rgb(192,192,192),rgb(128,128,128))
+       ) 
+  )" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1179" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )

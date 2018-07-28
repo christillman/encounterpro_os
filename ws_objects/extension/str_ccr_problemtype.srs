@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_ccr_problemtype.srs
+global type str_ccr_problemtype from structure
+	string		ccrdataobjectid
+	str_ccr_datetimetype		datetime[]
+	str_ccr_idtype		ids[]
+	str_ccr_codeddescriptiontype		objecttype
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		status
+	str_ccr_slrcgroup		slrcgroup
+	string		Episodes
+	string		HealthStatus
+	string		PatientKnowledge
+end type
+

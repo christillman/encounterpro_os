@@ -1,0 +1,11 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_immunization.pbl" "";
+@end;
+@begin Objects
+ "service\\w_do_immunization.srw" "service\\svc_immunization.pbl";
+ "service\\u_component_service_vaccine_signature.sru" "service\\svc_immunization.pbl";
+ "service\\dw_vaccine_approval_list.srd" "service\\svc_immunization.pbl";
+ "service\\w_vaccine_signature.srw" "service\\svc_immunization.pbl";
+ "service\\u_component_service_immunization.sru" "service\\svc_immunization.pbl";
+@end;

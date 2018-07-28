@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[c_Actor_Communication]
+    ADD CONSTRAINT [PK_c_Actor_Communication_40] PRIMARY KEY CLUSTERED ([actor_id] ASC, [communication_sequence] ASC) WITH (FILLFACTOR = 80, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

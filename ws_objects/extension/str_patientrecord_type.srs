@@ -1,0 +1,45 @@
+HA$PBExportHeader$str_patientrecord_type.srs
+global type str_patientrecord_type from structure
+	str_patientid_type		patientid[]
+	str_objecthandling_type		patienthandling
+	string		race
+	date		dateofbirth
+	time		timeofbirth
+	string		sex
+	string		primarylanguage
+	string		maritalstatus
+	string		ssn
+	string		firstname
+	string		lastname
+	string		degree
+	string		nameprefix
+	string		middlename
+	string		namesuffix
+	string		maidenname
+	str_communication_type		communication[]
+	str_actor_type		primarylocation
+	string		patientstatus
+	str_address_type		patientaddress[]
+	string		religion
+	string		nationality
+	string		financialclass
+	string		employer
+	string		employeeid
+	string		department
+	string		shift
+	string		jobdescription
+	date		startdate
+	date		terminationdate
+	string		employmentstatus
+	str_patientrelation_type		relation[]
+	str_actor_type		primaryprovider
+	str_actor_type		secondaryprovider
+	str_actor_type		referringprovider
+	str_authority_type		authority[]
+	str_encounter_type		encounter[]
+	str_assessment_instance_type		assessment[]
+	str_treatment_type		treatment[]
+	str_note_type		patientnote[]
+	str_message_type		message[]
+end type
+

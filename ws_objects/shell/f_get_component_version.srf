@@ -1,0 +1,131 @@
+HA$PBExportHeader$f_get_component_version.srf
+global type f_get_component_version from function_object
+end type
+
+forward prototypes
+global function str_component_version f_get_component_version (string ps_component_id, string ps_version_name, boolean pb_include_installer)
+end prototypes
+
+global function str_component_version f_get_component_version (string ps_component_id, string ps_version_name, boolean pb_include_installer);str_component_version lstr_component_version
+long ll_version
+
+setnull(lstr_component_version.component_id)
+setnull(lstr_component_version.version)
+setnull(lstr_component_version.version_name)
+setnull(lstr_component_version.objectdata)
+
+SELECT max(version)
+INTO :ll_version
+FROM c_Component_Version
+WHERE component_id = :ps_component_id
+AND compile_name = :ps_version_name;
+if not tf_check() then return lstr_component_version
+
+if isnull(ll_version) then
+	// If we can't find the version name in c_Component_Version then get the default version
+	ll_version = 0
+end if
+	
+SELECT component_id
+			,version_name
+			,version
+			,description
+			,version_description
+			,component_type
+			,component_class
+			,component_location
+			,component_data
+			,status
+			,status_date_time
+			,release_status
+			,release_status_date_time
+			,installer
+			,independence
+			,system_id
+			,build
+			,build_name
+			,compile
+			,compile_name
+			,test_begin_date
+			,beta_begin_date
+			,release_date
+			,build_status
+			,notes
+			,min_build
+			,min_modification_level
+			,max_modification_level
+			,owner_id
+			,owner_description
+			,created
+			,created_by
+			,last_updated
+			,id
+INTO :lstr_component_version.component_id
+		,:lstr_component_version.version_name
+		,:lstr_component_version.version
+		,:lstr_component_version.description
+		,:lstr_component_version.version_description
+		,:lstr_component_version.component_type
+		,:lstr_component_version.component_class
+		,:lstr_component_version.component_location
+		,:lstr_component_version.component_data
+		,:lstr_component_version.status
+		,:lstr_component_version.status_date_time
+		,:lstr_component_version.release_status
+		,:lstr_component_version.release_status_date_time
+		,:lstr_component_version.installer
+		,:lstr_component_version.independence
+		,:lstr_component_version.system_id
+		,:lstr_component_version.build
+		,:lstr_component_version.build_name
+		,:lstr_component_version.compile
+		,:lstr_component_version.compile_name
+		,:lstr_component_version.test_begin_date
+		,:lstr_component_version.beta_begin_date
+		,:lstr_component_version.release_date
+		,:lstr_component_version.build_status
+		,:lstr_component_version.notes
+		,:lstr_component_version.min_build
+		,:lstr_component_version.min_modification_level
+		,:lstr_component_version.max_modification_level
+		,:lstr_component_version.owner_id
+		,:lstr_component_version.owner_description
+		,:lstr_component_version.created
+		,:lstr_component_version.created_by
+		,:lstr_component_version.last_updated
+		,:lstr_component_version.id
+FROM dbo.fn_Component_Versions(:ps_component_id)
+WHERE version = :ll_version;
+if not tf_check() then return lstr_component_version
+	
+if pb_include_installer and ll_version > 0 then
+	SELECTBLOB objectdata
+	INTO :lstr_component_version.objectdata
+	FROM c_Component_Version
+	WHERE component_id = :ps_component_id
+	AND version = :ll_version;
+	if not tf_check() then return lstr_component_version
+end if
+
+if lower(lstr_component_version.independence) = "single" or lower(lstr_component_version.independence) = "multi" then
+	lstr_component_version.independently_installable = true
+else
+	lstr_component_version.independently_installable = false
+end if
+
+SELECT plugin_type
+INTO :lstr_component_version.plugin_type
+FROM c_Component_Type
+WHERE component_type = :lstr_component_version.component_type;
+if not tf_check() then return lstr_component_version
+if sqlca.sqlnrows = 0 then
+	log.log(this, "f_new_component_version()", "component_type not found (" + lstr_component_version.component_type + ")", 3)
+end if
+
+
+
+return lstr_component_version
+
+
+end function
+

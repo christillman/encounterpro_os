@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_epro_object_property.srs
+global type str_epro_object_property from structure
+	string		property_type
+	string		property_name
+	string		property_datatype
+	string		property_column
+	string		property_formula
+	long		cache_column_length
+	long		property_id
+	string		property_select_expression
+	boolean		exception
+	long		column_index
+end type
+

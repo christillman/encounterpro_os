@@ -1,0 +1,201 @@
+HA$PBExportHeader$f_datawindow_create_config_object.srf
+global type f_datawindow_create_config_object from function_object
+end type
+
+forward prototypes
+global function string f_datawindow_create_config_object (string ps_config_object_id, long pl_version, str_datawindow_config_object pstr_dwcfg)
+end prototypes
+
+global function string f_datawindow_create_config_object (string ps_config_object_id, long pl_version, str_datawindow_config_object pstr_dwcfg);pbdom_document lo_xml
+pbdom_element lo_root
+pbdom_element lo_datawindow
+pbdom_element lo_element
+string ls_description
+string ls_null
+blob lbl_data
+string ls_xml
+integer li_sts
+str_config_object_info lstr_config_object
+string ls_version_description
+string ls_config_object_type
+long ll_owner_id
+datetime ldt_created
+string ls_created_by
+string ls_status
+datetime ldt_status_date_time
+string ls_release_status
+string ls_temp
+
+Setnull(ls_null)
+
+//li_sts = f_get_config_object_info(ps_config_object_id, lstr_config_object)
+//if li_sts <= 0 then return ls_null
+//
+//SELECT description,
+//			version_description,
+//			config_object_type,
+//			owner_id,
+//			created,
+//			created_by,
+//			status,
+//			status_date_time,
+//			release_status
+//INTO :ls_description,
+//		:ls_version_description,
+//		:ls_config_object_type,
+//		:ll_owner_id,
+//		:ldt_created,
+//		:ls_created_by,
+//		:ls_status,
+//		:ldt_status_date_time,
+//		:ls_release_status
+//FROM c_Config_Object_Version
+//WHERE config_object_id = :ps_config_object_id
+//AND version = :pl_version;
+//if not tf_check() then return ls_null
+//
+//
+//TRY
+//	lo_xml = CREATE PBDOM_Document
+//	lo_xml.newdocument("EPConfigObjects")
+//	lo_root = lo_xml.Getrootelement()
+//
+//	lo_root.setattribute("ObjectEncodingMethod", "Builtin")
+//	
+//	// Create the child elements
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("ConfigObject")
+//	// Add attributes
+//	if not isnull(lstr_config_object.config_object_id) then
+//		lo_element.setattribute("config_object_id", lstr_config_object.config_object_id)
+//	end if
+//	if not isnull(lstr_config_object.config_object_type) then
+//		lo_element.setattribute("config_object_type", lstr_config_object.config_object_type)
+//	end if
+//	if not isnull(lstr_config_object.context_object) then
+//		lo_element.setattribute("context_object", lstr_config_object.context_object)
+//	end if
+//	if not isnull(lstr_config_object.description) then
+//		lo_element.setattribute("description", lstr_config_object.description)
+//	end if
+//	if not isnull(lstr_config_object.owner_id) then
+//		ls_temp = string(lstr_config_object.owner_id)
+//		lo_element.setattribute("owner_id", ls_temp)
+//	end if
+//	if not isnull(lstr_config_object.owner_description) then
+//		lo_element.setattribute("owner_description", lstr_config_object.owner_description)
+//	end if
+//	if not isnull(lstr_config_object.created) then
+//		ls_temp = string(lstr_config_object.created)
+//		lo_element.setattribute("created", ls_temp)
+//	end if
+//	if not isnull(lstr_config_object.created_by) then
+//		lo_element.setattribute("created_by", lstr_config_object.created_by)
+//	end if
+//	if not isnull(lstr_config_object.status) then
+//		lo_element.setattribute("status", lstr_config_object.status)
+//	end if
+//	if not isnull(lstr_config_object.copyright_status) then
+//		lo_element.setattribute("copyright_status", lstr_config_object.copyright_status)
+//	end if
+//	if not isnull(lstr_config_object.copyable) then
+//		ls_temp = string(lstr_config_object.copyable)
+//		lo_element.setattribute("copyable", ls_temp)
+//	end if
+//	lo_root.addcontent(lo_element)
+//	
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("ConfigObjectVersion")
+//	// Add the config object version attributes
+//	if not isnull(ps_config_object_id) then
+//		lo_element.setattribute("config_object_id", ps_config_object_id)
+//	end if
+//	if not isnull(pl_version) then
+//		ls_temp = string(pl_version)
+//		lo_element.setattribute("version", ls_temp)
+//	end if
+//	if not isnull(ls_description) then
+//		lo_element.setattribute("description", ls_description)
+//	end if
+//	if not isnull(ls_version_description) then
+//		lo_element.setattribute("version_description", ls_version_description)
+//	end if
+//	if not isnull(ls_config_object_type) then
+//		lo_element.setattribute("config_object_type", ls_config_object_type)
+//	end if
+//	if not isnull(ll_owner_id) then
+//		ls_temp = string(ll_owner_id)
+//		lo_element.setattribute("owner_id", ls_temp)
+//	end if
+//	if not isnull(ldt_created) then
+//		ls_temp = string(ldt_created)
+//		lo_element.setattribute("created", ls_temp)
+//	end if
+//	if not isnull(ls_created_by) then
+//		lo_element.setattribute("created_by", ls_created_by)
+//	end if
+//	if not isnull(ls_status) then
+//		lo_element.setattribute("status", ls_status)
+//	end if
+//	if not isnull(ldt_status_date_time) then
+//		ls_temp = string(ldt_status_date_time)
+//		lo_element.setattribute("status_date_time", ls_temp)
+//	end if
+//	if not isnull(ls_release_status) then
+//		lo_element.setattribute("release_status", ls_release_status)
+//	end if
+//	lo_root.addcontent(lo_element)
+//	
+//	// Create the datawindow block
+//	lo_datawindow = CREATE PBDOM_Element
+//	lo_datawindow.setname("Datawindow")
+//	
+//	// Add the datawindow details
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("dwtype")
+//	lo_element.addcontent(pstr_dwcfg.dwtype)
+//	lo_datawindow.addcontent(lo_element)
+//	
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("component_id")
+//	if not isnull(pstr_dwcfg.component_id) then
+//		lo_element.addcontent(pstr_dwcfg.component_id)
+//	end if
+//	lo_datawindow.addcontent(lo_element)
+//	
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("dataobject")
+//	if not isnull(pstr_dwcfg.dataobject) then
+//		lo_element.addcontent(pstr_dwcfg.dataobject)
+//	end if
+//	lo_datawindow.addcontent(lo_element)
+//	
+//	lo_element = CREATE PBDOM_Element
+//	lo_element.setname("datawindow_script")
+//	if not isnull(pstr_dwcfg.datawindow_script) then
+//		lo_element.addcontent(pstr_dwcfg.datawindow_script)
+//	end if
+//	lo_datawindow.addcontent(lo_element)
+//	
+//	// Finally add the datwindow block to the root
+//	lo_root.addcontent(lo_datawindow)
+//CATCH (throwable lo_error)
+//	log.log(this, "f_create_datawindow_config_object()", "Error creating document (" + lo_error.text + ")", 4)
+//	return ls_null
+//END TRY
+//
+//
+//
+//TRY
+//	ls_xml = lo_xml.savedocumentintostring()
+//CATCH (throwable lo_error2)
+//	log.log(this, "f_create_datawindow_config_object()", "Error saving document (" + lo_error.text + ")", 4)
+//	return ls_null
+//END TRY
+//
+//
+return ls_xml
+
+
+end function
+

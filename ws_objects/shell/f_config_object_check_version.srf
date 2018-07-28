@@ -1,0 +1,163 @@
+HA$PBExportHeader$f_config_object_check_version.srf
+global type f_config_object_check_version from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_check_version (ref str_config_object_info pstr_config_object)
+end prototypes
+
+global function integer f_config_object_check_version (ref str_config_object_info pstr_config_object);integer li_sts
+string ls_null
+long ll_len
+long ll_sts
+string ls_version_description
+blob lbl_objectdata
+string ls_status
+long ll_max_version
+long ll_version_count
+string ls_copyright_status
+string ls_copyable
+u_component_config_object luo_config_object
+
+setnull(ls_null)
+setnull(ls_version_description)
+setnull(lbl_objectdata)
+setnull(ls_status)
+
+ls_copyright_status = "Owner"
+ls_copyable = "Y"
+
+// Count the version records
+SELECT count(*)
+INTO :ll_version_count
+FROM c_Config_Object_Version
+WHERE config_object_id = :pstr_config_object.config_object_id;
+if not tf_check() then return -1
+
+if ll_version_count = 0 then
+	if pstr_config_object.installed_version > 1 then
+		// If the installed_version is greater than 1 and there aren't any version records, assume an error condition
+		log.log(this, "f_config_object_check_version()", "Error:  No version records", 4)
+		return -1
+	end if
+
+	if isnull(pstr_config_object.installed_version) then
+		if pstr_config_object.owner_id = 0 then
+			pstr_config_object.installed_version = 0
+		else
+			pstr_config_object.installed_version = 1
+		end if
+	end if
+	sqlca.config_create_object_version(pstr_config_object.config_object_id, &
+													pstr_config_object.config_object_type, &
+													pstr_config_object.context_object, &
+													pstr_config_object.owner_id, &
+													pstr_config_object.description, &
+													pstr_config_object.long_description, &
+													pstr_config_object.config_object_category, &
+													pstr_config_object.installed_version, &
+													lbl_objectdata, &
+													current_scribe.user_id, &
+													'CheckedIn', &
+													ls_version_description , &
+													ls_copyright_status, &
+													ls_copyable , &
+													ls_null &
+													)
+	if not tf_check() then return -1
+elseif isnull(pstr_config_object.installed_version) then
+	SELECT max(version)
+	INTO :ll_max_version
+	FROM c_Config_Object_Version
+	WHERE config_object_id = :pstr_config_object.config_object_id;
+	if not tf_check() then return -1
+		
+	pstr_config_object.installed_version = ll_max_version
+end if
+
+// Make sure the installed version record exists
+SELECT status, DATALENGTH(objectdata)
+INTO :ls_status, :ll_len
+FROM c_Config_Object_Version
+WHERE config_object_id = :pstr_config_object.config_object_id
+AND version = :pstr_config_object.installed_version;
+if not tf_check() then return -1
+if sqlca.sqlnrows <> 1 then
+	// If we still couldn't find a versionrecord then report an error
+	log.log(this, "f_config_object_check_version()", "Unable to find version record", 4)
+	return -1
+elseif isnull(ll_len) then
+	ll_len = 0
+end if
+
+// If the version status is not valid then set it to checkedin
+if isnull(ls_status) or (lower(ls_status) <> "checkedout" AND lower(ls_status) <> "checkedin") then
+	ls_status = "CheckedIn"
+	UPDATE c_Config_Object_Version
+	SET status = :ls_status
+	WHERE  config_object_id = :pstr_config_object.config_object_id
+	AND version = :pstr_config_object.installed_version;
+	if not tf_check() then return -1
+end if
+
+// If the version status doesn't match the config_object status then fix it
+if lower(pstr_config_object.installed_version_status) <> lower(ls_status) then
+	UPDATE c_Config_Object
+	SET installed_version_status = :ls_status
+	WHERE  config_object_id = :pstr_config_object.config_object_id;
+	if not tf_check() then return -1
+
+	pstr_config_object.installed_version_status = ls_status
+end if
+
+// If the latest version equals the installed version and the latest version status doesn't match the config_object status then fix it
+if pstr_config_object.latest_version = pstr_config_object.installed_version AND lower(pstr_config_object.latest_version_status) <> lower(ls_status) then
+	UPDATE c_Config_Object
+	SET latest_version_status = :ls_status
+	WHERE  config_object_id = :pstr_config_object.config_object_id;
+	if not tf_check() then return -1
+
+	pstr_config_object.latest_version_status = ls_status
+end if
+
+// If the installed version is not checked out, then it must have object data
+if lower(ls_status) <> "checkedout" and ll_len <= 0 and (pstr_config_object.installed_version = 0 OR pstr_config_object.owner_id = sqlca.customer_id) then
+	if isnull(pstr_config_object.object_component_id) then
+		log.log(this, "f_config_object_check_version()", "This type of config object (" + pstr_config_object.config_object_type + ") does not have a component specified in c_Config_Object_Type.object_component_id.", 4)
+		return -1
+	end if
+	
+	luo_config_object = component_manager.get_component(pstr_config_object.object_component_id)
+	if isnull(luo_config_object) then
+		log.log(this, "f_config_object_check_version()", "Error getting config object component (" + pstr_config_object.object_component_id + ")", 4)
+		return -1
+	end if
+	
+	li_sts = luo_config_object.encapsulate(pstr_config_object, lbl_objectdata)
+	if ll_sts < 0 then
+		log.log(this, "f_config_object_check_version()", "Error encapsulating config object (" + pstr_config_object.config_object_id + ")", 4)
+		return -1
+	end if
+
+	UPDATEBLOB c_Config_Object_Version
+	SET objectdata = :lbl_objectdata
+	WHERE config_object_id = :pstr_config_object.config_object_id
+	AND version = :pstr_config_object.installed_version;
+	if not tf_check() then return -1
+end if
+
+
+// Requery the database to get the latest config object info
+li_sts = f_get_config_object_info(pstr_config_object.config_object_id, pstr_config_object)
+if li_sts <= 0 then
+	log.log(this, "f_config_object_check_version()", "Error getting object information (" + pstr_config_object.config_object_id + ")", 4)
+	return -1
+end if
+
+
+return 1
+
+
+
+end function
+

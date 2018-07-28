@@ -1,0 +1,21 @@
+HA$PBExportHeader$str_param.srs
+global type str_param from structure
+	string		id
+	string		param_mode
+	string		param_class
+	string		param_title
+	string		token1
+	string		token2
+	string		token3
+	string		token4
+	string		initial1
+	string		initial2
+	string		initial3
+	string		initial4
+	string		helptext
+	integer		param_sequence
+	character		required_flag
+	string		query
+	string		config_object_description
+end type
+

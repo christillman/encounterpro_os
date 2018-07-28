@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_patientknowledge_type.srs
+global type str_patientknowledge_type from structure
+	string		description
+	string		reason
+end type
+

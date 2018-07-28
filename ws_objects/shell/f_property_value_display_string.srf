@@ -1,0 +1,24 @@
+HA$PBExportHeader$f_property_value_display_string.srf
+global type f_property_value_display_string from function_object
+end type
+
+forward prototypes
+global function string f_property_value_display_string (str_property_value pstr_property_value)
+end prototypes
+
+global function string f_property_value_display_string (str_property_value pstr_property_value);string ls_display
+
+ls_display = pstr_property_value.display_value
+
+if lower(ls_display) <> lower(pstr_property_value.value) then
+	if isnull(pstr_property_value.value) then
+		ls_display += " (Null)"
+	else
+		ls_display += " (" + pstr_property_value.value + ")"
+	end if
+end if
+
+return ls_display
+
+end function
+

@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_result_type.srs
+global type str_result_type from structure
+	string		description
+	str_code_type		code[]
+	str_substance_type		substance
+	str_date_type		result_date[]
+	str_test_type		test[]
+	string		position
+	string		location
+	string		method
+end type
+

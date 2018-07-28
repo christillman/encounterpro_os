@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_jmjdocumentcontext_type.srs
+global type str_jmjdocumentcontext_type from structure
+	string		contextobject
+	string		encounterid
+	string		assessmentid
+	string		treatmentid
+	string		purpose
+	str_jmjdocument_messageid_type		messageid
+	str_message_type		message
+end type
+

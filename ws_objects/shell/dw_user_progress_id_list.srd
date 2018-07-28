@@ -1,0 +1,38 @@
+HA$PBExportHeader$dw_user_progress_id_list.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=8 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=152 color="536870912" )
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=user_id dbname="c_User_Progress.user_id" dbalias=".user_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=user_progress_sequence dbname="c_User_Progress.user_progress_sequence" dbalias=".user_progress_sequence" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=progress_user_id dbname="c_User_Progress.progress_user_id" dbalias=".progress_user_id" )
+ column=(type=datetime update=yes updatewhereclause=yes name=progress_date_time dbname="c_User_Progress.progress_date_time" dbalias=".progress_date_time" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=progress_type dbname="c_User_Progress.progress_type" dbalias=".progress_type" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=progress_key dbname="c_User_Progress.progress_key" dbalias=".progress_key" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=progress_value dbname="c_User_Progress.progress_value" dbalias=".progress_value" )
+ column=(type=char(32766) update=yes updatewhereclause=no name=progress dbname="c_User_Progress.progress" dbalias=".progress" )
+ column=(type=datetime update=yes updatewhereclause=yes name=created dbname="c_User_Progress.created" dbalias=".created" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=created_by dbname="c_User_Progress.created_by" dbalias=".created_by" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=current_flag dbname="c_User_Progress.current_flag" dbalias=".current_flag" )
+ column=(type=long updatewhereclause=yes identity=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(40) updatewhereclause=yes name=owner_name dbname="owner_name" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_User_Progress~" ) COLUMN(NAME=~"c_User_Progress.user_id~") COLUMN(NAME=~"c_User_Progress.user_progress_sequence~") COLUMN(NAME=~"c_User_Progress.progress_user_id~") COLUMN(NAME=~"c_User_Progress.progress_date_time~") COLUMN(NAME=~"c_User_Progress.progress_type~") COLUMN(NAME=~"c_User_Progress.progress_key~") COLUMN(NAME=~"c_User_Progress.progress_value~") COLUMN(NAME=~"c_User_Progress.progress~") COLUMN(NAME=~"c_User_Progress.created~") COLUMN(NAME=~"c_User_Progress.created_by~") COLUMN(NAME=~"c_User_Progress.current_flag~") COMPUTE(NAME=~"selected_flag=0~") COMPUTE(NAME=~"owner_name=CAST(NULL AS varchar(40))~")WHERE(    EXP1 =~"c_User_Progress.user_id~"   OP =~"=~"    EXP2 =~":user_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_User_Progress.progress_type~"   OP =~"=~"    EXP2 =~"'ID'~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_User_Progress.current_flag~"   OP =~"=~"    EXP2 =~"'Y'~" ) ) ARG(NAME = ~"user_id~" TYPE = string) " update="c_User_Progress" updatewhere=1 updatekeyinplace=no arguments=(("user_id", string)) )
+compute(band=detail alignment="0" expression="if(
+pos( progress_key, '^')>0,
+ mid( progress_key , pos( progress_key, '^') + 1 ),
+ progress_key)"border="6" color="0" x="18" y="12" height="128" width="1280" format="[GENERAL]" html.valueishtml="0"  name=c_progress_key visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="6" color="0" x="1326" y="12" height="128" width="1280" format="[general]" html.valueishtml="0"  name=progress_value visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=13 alignment="1" tabsequence=0 border="0" color="0" x="187" y="80" height="56" width="1106" html.valueishtml="0"  name=owner_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

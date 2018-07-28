@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[o_Computer_External_Source]
+    ADD CONSTRAINT [PK_o_Computer_Ext_Source_40] PRIMARY KEY CLUSTERED ([computer_id] ASC, [external_source] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

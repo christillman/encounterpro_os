@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_datawindow_mapping.srs
+global type str_datawindow_mapping from structure
+	string		control_name
+	string		hotspot_name
+	string		status
+	string		created_by
+	datetime		created
+	str_attributes		attributes
+end type
+

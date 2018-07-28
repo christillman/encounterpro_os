@@ -1,0 +1,8 @@
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.dll.config
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.dll
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.tlb
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\stdole.dll
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\ResolveAssemblyReference.cache
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.ResolveComReference.cache
+C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\EncounterPRO.OS.Utilities.dll

@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_longest_line.srf
+global type f_longest_line from function_object
+end type
+
+forward prototypes
+global function long f_longest_line (string ps_text)
+end prototypes
+
+global function long f_longest_line (string ps_text);long ll_longest_line
+string ls_line
+string ls_therest
+
+ls_therest = ps_text
+
+DO WHILE len(ls_therest) > 0
+	f_split_string(ls_therest, "~n", ls_line, ls_therest)
+
+	if len(ls_line) > ll_longest_line then ll_longest_line = len(ls_line)
+LOOP
+
+
+return ll_longest_line
+
+
+end function
+

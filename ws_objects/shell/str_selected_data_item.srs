@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_selected_data_item.srs
+global type str_selected_data_item from structure
+	long		data_id
+	string		description
+	date		begin_date
+	date		end_date
+	integer		restriction_count
+	str_selected_data_restriction		restrictions[]
+end type
+

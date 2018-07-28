@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_popup_yes_no.srf
+global type f_popup_yes_no from function_object
+end type
+
+forward prototypes
+global function boolean f_popup_yes_no (string ps_prompt)
+end prototypes
+
+global function boolean f_popup_yes_no (string ps_prompt);str_popup popup
+str_popup_return popup_return
+w_pop_yes_no lw_window
+
+openwithparm(lw_window, ps_prompt, "w_pop_yes_no")
+popup_return = message.powerobjectparm
+if popup_return.item = "YES" then return true
+
+return false
+
+end function
+

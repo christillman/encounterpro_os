@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_material.pbl" "";
+@end;
+@begin Objects
+ "service\\w_do_material.srw" "service\\svc_material.pbl";
+ "service\\u_component_service_material.sru" "service\\svc_material.pbl";
+@end;

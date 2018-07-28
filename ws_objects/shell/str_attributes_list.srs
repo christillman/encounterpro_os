@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_attributes_list.srs
+global type str_attributes_list from structure
+	long		attributes_count
+	str_attributes		attributes[]
+end type
+

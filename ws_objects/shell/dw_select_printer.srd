@@ -1,0 +1,22 @@
+HA$PBExportHeader$dw_select_printer.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=152 color="536870912" )
+table(column=(type=char(128) updatewhereclause=yes name=printer dbname="o_Computer_Printer.printer" dbalias=".printer" )
+ column=(type=long updatewhereclause=yes identity=yes name=selected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"o_Computer_Printer~" )  TABLE(NAME=~"o_Server_Component~" ) COLUMN(NAME=~"o_Computer_Printer.printer~") COMPUTE(NAME=~"selected_flag=0~")    JOIN (LEFT=~"o_Computer_Printer.computer_id~"    OP =~"=~"RIGHT=~"o_Server_Component.computer_id~" )WHERE(    EXP1 =~"o_Server_Component.status~"   OP =~"in~"    EXP2 =~"('OK', 'NA')~" ) ) " )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="33554432" x="18" y="12" height="132" width="1198" format="[general]" html.valueishtml="0"  name=printer visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

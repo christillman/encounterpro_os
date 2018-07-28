@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_hm_class_criterion.srs
+global type str_hm_class_criterion from structure
+	string		property
+	string		value
+	string		operation
+end type
+

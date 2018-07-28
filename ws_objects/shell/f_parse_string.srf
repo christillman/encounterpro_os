@@ -1,0 +1,39 @@
+HA$PBExportHeader$f_parse_string.srf
+global type f_parse_string from function_object
+end type
+
+forward prototypes
+global function integer f_parse_string (string ps_string, string ps_seperator, ref string ps_items[])
+end prototypes
+
+global function integer f_parse_string (string ps_string, string ps_seperator, ref string ps_items[]);integer li_pos, li_sep_len
+string ls_string
+integer li_count
+
+if isnull(ps_string) or isnull(ps_seperator) then return 0
+
+ls_string = ps_string
+
+li_count = 0
+li_sep_len = len(ps_seperator)
+li_pos = pos(ls_string, ps_seperator)
+
+DO WHILE li_pos > 0
+	li_count += 1
+	ps_items[li_count] = left(ls_string, li_pos - 1)
+	ls_string = mid(ls_string, li_pos + li_sep_len)
+	li_pos = pos(ls_string, ps_seperator)
+LOOP
+
+// If there's anything left then put it in the last item
+if len(ls_string) > 0 then
+	li_count += 1
+	ps_items[li_count] = ls_string
+end if
+	
+
+return li_count
+
+
+end function
+

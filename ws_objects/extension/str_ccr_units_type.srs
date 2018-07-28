@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_ccr_units_type.srs
+global type str_ccr_units_type from structure
+	string		unit
+	str_ccr_codetype		code[]
+end type
+

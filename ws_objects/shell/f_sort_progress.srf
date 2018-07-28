@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_sort_progress.srf
+global type f_sort_progress from function_object
+end type
+
+forward prototypes
+global subroutine f_sort_progress (ref str_progress_list pstr_progress)
+end prototypes
+
+global subroutine f_sort_progress (ref str_progress_list pstr_progress);str_progress lstr_temp_progress
+integer i, j
+
+// Sorts the given progress list ascending by progress_date_time
+
+for i = 1 to pstr_progress.progress_count - 1
+	for j = i + 1 to pstr_progress.progress_count
+		if pstr_progress.progress[i].progress_date_time > pstr_progress.progress[j].progress_date_time then
+			lstr_temp_progress = pstr_progress.progress[i]
+			pstr_progress.progress[i] = pstr_progress.progress[j]
+			pstr_progress.progress[j] = lstr_temp_progress
+		end if
+	next
+next
+
+
+end subroutine
+

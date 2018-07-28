@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_ccr_actorreferencetype.srs
+global type str_ccr_actorreferencetype from structure
+	string		actorid
+	str_ccr_codeddescriptiontype		actorrole[]
+end type
+

@@ -1,0 +1,97 @@
+HA$PBExportHeader$dw_part_fkey_altkeys.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=message_fkey_sequence dbname="c_Message_Fkey.message_fkey_sequence" )
+ column=(type=char(64) updatewhereclause=yes name=target_table dbname="c_Message_Fkey.target_table" )
+ column=(type=char(12) updatewhereclause=yes name=target_location dbname="c_Message_Fkey.target_location" )
+ column=(type=long updatewhereclause=yes name=fkey_order dbname="c_Message_Fkey.fkey_order" )
+ column=(type=char(64) updatewhereclause=yes name=fkey1 dbname="c_Message_Fkey.fkey1" )
+ column=(type=char(64) updatewhereclause=yes name=fkey2 dbname="c_Message_Fkey.fkey2" )
+ column=(type=char(64) updatewhereclause=yes name=fkey3 dbname="c_Message_Fkey.fkey3" )
+ column=(type=char(64) updatewhereclause=yes name=fkey4 dbname="c_Message_Fkey.fkey4" )
+ column=(type=char(64) updatewhereclause=yes name=fkey5 dbname="c_Message_Fkey.fkey5" )
+ column=(type=char(64) updatewhereclause=yes name=fkey6 dbname="c_Message_Fkey.fkey6" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key1 dbname="c_Table_Altkey.primary_key1" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key2 dbname="c_Table_Altkey.primary_key2" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key3 dbname="c_Table_Altkey.primary_key3" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key4 dbname="c_Table_Altkey.primary_key4" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key5 dbname="c_Table_Altkey.primary_key5" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_primary_key6 dbname="c_Table_Altkey.primary_key6" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key1 dbname="c_Table_Altkey.alt_key1" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key2 dbname="c_Table_Altkey.alt_key2" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key3 dbname="c_Table_Altkey.alt_key3" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key4 dbname="c_Table_Altkey.alt_key4" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key5 dbname="c_Table_Altkey.alt_key5" )
+ column=(type=char(32) updatewhereclause=yes name=c_table_altkey_alt_key6 dbname="c_Table_Altkey.alt_key6" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Message_Fkey~" )  TABLE(NAME=~"c_Table_Altkey~" ) COLUMN(NAME=~"c_Message_Fkey.message_fkey_sequence~") COLUMN(NAME=~"c_Message_Fkey.target_table~") COLUMN(NAME=~"c_Message_Fkey.target_location~") COLUMN(NAME=~"c_Message_Fkey.fkey_order~") COLUMN(NAME=~"c_Message_Fkey.fkey1~") COLUMN(NAME=~"c_Message_Fkey.fkey2~") COLUMN(NAME=~"c_Message_Fkey.fkey3~") COLUMN(NAME=~"c_Message_Fkey.fkey4~") COLUMN(NAME=~"c_Message_Fkey.fkey5~") COLUMN(NAME=~"c_Message_Fkey.fkey6~") COLUMN(NAME=~"c_Table_Altkey.primary_key1~") COLUMN(NAME=~"c_Table_Altkey.primary_key2~") COLUMN(NAME=~"c_Table_Altkey.primary_key3~") COLUMN(NAME=~"c_Table_Altkey.primary_key4~") COLUMN(NAME=~"c_Table_Altkey.primary_key5~") COLUMN(NAME=~"c_Table_Altkey.primary_key6~") COLUMN(NAME=~"c_Table_Altkey.alt_key1~") COLUMN(NAME=~"c_Table_Altkey.alt_key2~") COLUMN(NAME=~"c_Table_Altkey.alt_key3~") COLUMN(NAME=~"c_Table_Altkey.alt_key4~") COLUMN(NAME=~"c_Table_Altkey.alt_key5~") COLUMN(NAME=~"c_Table_Altkey.alt_key6~")    JOIN (LEFT=~"c_Message_Fkey.target_table~"    OP =~"=~"RIGHT=~"c_Table_Altkey.cpr_table~" )WHERE(    EXP1 =~"( ( c_Message_Fkey.message_type~"   OP =~"=~"    EXP2 =~":message_type )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( c_Message_Fkey.message_part_sequence~"   OP =~"=~"    EXP2 =~":message_part_sequence ) )~" ) ) ARG(NAME = ~"message_type~" TYPE = string)  ARG(NAME = ~"message_part_sequence~" TYPE = number) " arguments=(("message_type", string),("message_part_sequence", number))  sort="fkey_order A message_fkey_sequence A " )
+text(band=header alignment="2" text="C Message Fkey
+Message Fkey Sequence"border="0" color="0" x="5" y="4" height="128" width="677"  name=c_message_fkey_message_fkey_sequence_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Target Table"border="0" color="0" x="686" y="4" height="128" width="1783"  name=c_message_fkey_target_table_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Target Location"border="0" color="0" x="2473" y="4" height="128" width="457"  name=c_message_fkey_target_location_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey Order"border="0" color="0" x="2935" y="4" height="128" width="453"  name=c_message_fkey_fkey_order_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey1"border="0" color="0" x="3392" y="4" height="128" width="1783"  name=c_message_fkey_fkey1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey2"border="0" color="0" x="5179" y="4" height="128" width="1783"  name=c_message_fkey_fkey2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey3"border="0" color="0" x="6967" y="4" height="128" width="1783"  name=c_message_fkey_fkey3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey4"border="0" color="0" x="8754" y="4" height="128" width="1783"  name=c_message_fkey_fkey4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey5"border="0" color="0" x="10542" y="4" height="128" width="1783"  name=c_message_fkey_fkey5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Message Fkey
+Fkey6"border="0" color="0" x="12329" y="4" height="128" width="1783"  name=c_message_fkey_fkey6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key1"border="0" color="0" x="14121" y="4" height="128" width="905"  name=c_altkey_primary_key1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key2"border="0" color="0" x="15031" y="4" height="128" width="905"  name=c_altkey_primary_key2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key3"border="0" color="0" x="15941" y="4" height="128" width="905"  name=c_altkey_primary_key3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key4"border="0" color="0" x="16850" y="4" height="128" width="905"  name=c_altkey_primary_key4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key5"border="0" color="0" x="17760" y="4" height="128" width="905"  name=c_altkey_primary_key5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Primary Key6"border="0" color="0" x="18670" y="4" height="128" width="905"  name=c_altkey_primary_key6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key1"border="0" color="0" x="19579" y="4" height="128" width="905"  name=c_altkey_alt_key1_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key2"border="0" color="0" x="20489" y="4" height="128" width="905"  name=c_altkey_alt_key2_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key3"border="0" color="0" x="21399" y="4" height="128" width="905"  name=c_altkey_alt_key3_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key4"border="0" color="0" x="22309" y="4" height="128" width="905"  name=c_altkey_alt_key4_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key5"border="0" color="0" x="23218" y="4" height="128" width="905"  name=c_altkey_alt_key5_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Altkey
+Alt Key6"border="0" color="0" x="24128" y="4" height="128" width="905"  name=c_altkey_alt_key6_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=message_fkey_sequence edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="686" y="4" height="76" width="1783" format="[general]"  name=target_table edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2473" y="4" height="76" width="361" format="[general]"  name=target_location edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="2935" y="4" height="76" width="329" format="[general]"  name=fkey_order edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="3392" y="4" height="76" width="1783" format="[general]"  name=fkey1 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="5179" y="4" height="76" width="1783" format="[general]"  name=fkey2 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="6967" y="4" height="76" width="1783" format="[general]"  name=fkey3 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="8754" y="4" height="76" width="1783" format="[general]"  name=fkey4 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="10542" y="4" height="76" width="1783" format="[general]"  name=fkey5 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="12329" y="0" height="76" width="1783" format="[general]"  name=fkey6 edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="0" x="25033" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="25897" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="26761" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="27625" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="28489" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="0" x="29353" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_primary_key6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="30217" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key1 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=32766 border="0" color="0" x="31081" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key2 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=32766 border="0" color="0" x="31945" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key3 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=32766 border="0" color="0" x="32809" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key4 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=32766 border="0" color="0" x="33673" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key5 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=32766 border="0" color="0" x="34537" y="0" height="64" width="864" format="[general]"  name=c_table_altkey_alt_key6 edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

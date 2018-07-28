@@ -1,0 +1,28 @@
+HA$PBExportHeader$f_empty_fontstate.srf
+global type f_empty_fontstate from function_object
+end type
+
+forward prototypes
+global function str_tx_fontstate f_empty_fontstate ()
+end prototypes
+
+global function str_tx_fontstate f_empty_fontstate ();str_tx_fontstate lstr_fontstate
+
+setnull(lstr_fontstate.fontsize)
+setnull(lstr_fontstate.fontbold)
+setnull(lstr_fontstate.fontunderline)
+setnull(lstr_fontstate.fontitalic)
+setnull(lstr_fontstate.forecolor)
+setnull(lstr_fontstate.textbkcolor)
+setnull(lstr_fontstate.alignment)
+setnull(lstr_fontstate.indentl)
+setnull(lstr_fontstate.indentr)
+setnull(lstr_fontstate.indentfl)
+setnull(lstr_fontstate.fontname)
+lstr_fontstate.tabstop_count = 0
+setnull(lstr_fontstate.use_wrap_margin)
+
+return lstr_fontstate
+
+end function
+

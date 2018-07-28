@@ -1,0 +1,25 @@
+HA$PBExportHeader$f_config_object_install_blob.srf
+global type f_config_object_install_blob from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_install_blob (blob pbl_objectdata)
+end prototypes
+
+global function integer f_config_object_install_blob (blob pbl_objectdata);u_component_config_object luo_config_object
+integer li_sts
+long ll_sts
+
+luo_config_object = CREATE u_component_config_object
+
+li_sts = luo_config_object.install(pbl_objectdata)
+if ll_sts < 0 then
+	log.log(this, "f_config_object_install_blob()", "Error installing config object from blob", 4)
+end if
+
+DESTROY luo_config_object
+
+return li_sts
+
+end function
+

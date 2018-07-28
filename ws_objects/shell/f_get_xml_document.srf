@@ -1,0 +1,40 @@
+HA$PBExportHeader$f_get_xml_document.srf
+global type f_get_xml_document from function_object
+end type
+
+forward prototypes
+global function integer f_get_xml_document (string ps_xml, ref u_xml_document po_xml_document)
+end prototypes
+
+global function integer f_get_xml_document (string ps_xml, ref u_xml_document po_xml_document);PBDOM_BUILDER pbdombuilder_new
+PBDOM_ELEMENT lo_element
+blob lbl_xml_file
+integer li_sts
+string ls_beginning
+pbdom_document lo_pbdom_document
+
+pbdombuilder_new = Create PBDOM_Builder
+
+// Make sure this looks like XML
+ls_beginning = left(trim(ps_xml), 8)
+if pos(ls_beginning, "<") > 0 and (pos(ps_xml, "</") > 0 or pos(ps_xml, "/>") > 0) then
+	TRY
+		lo_pbdom_document = pbdombuilder_new.BuildFromString(ps_xml)
+	CATCH (throwable lo_error)
+		log.log(this, "f_get_xml_document()", "Error building XML object (" + lo_error.text + ")", 4)
+		return -1
+	END TRY
+	
+	po_xml_document = CREATE u_XML_Document
+	po_xml_document.XML_Document = lo_pbdom_document
+	po_xml_document.xml_string = ps_xml
+else
+	log.log(this, "f_get_xml_document()", "XML string does not look like XML", 4)
+	return -1
+end if
+
+return 1
+
+
+end function
+

@@ -1,0 +1,12 @@
+HA$PBExportHeader$p_epiegateway.srj
+$PBExportComments$Generated Web Service Proxy Project
+GeneratorID:{1B1DCEE2-E514-11D1-B30A-006008925BD4}GENBC00000000
+
+WSDLLOCATION:https://www.jmjtech.com/EpIEGateway/service.asmx?wsdl	
+COMPONENT:0
+PACKAGE:2	WebService.Service	WebService.CredentialsHeader
+COMMENT:Web Service Proxy Generator
+DEPLOYMENT:eproepiegateway.pbl	1	0
+PROJECT:p_epiegateway
+PREFIX:epiegateway_
+ASSEMBLY:1	1	EproEpieGateway.dll

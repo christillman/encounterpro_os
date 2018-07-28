@@ -1,0 +1,12 @@
+HA$PBExportHeader$f_temp_file.srf
+global type f_temp_file from function_object
+end type
+
+forward prototypes
+global function string f_temp_file (string ps_extension)
+end prototypes
+
+global function string f_temp_file (string ps_extension);return f_temp_file2(ps_extension, "")
+
+end function
+

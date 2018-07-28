@@ -1,0 +1,41 @@
+HA$PBExportHeader$str_component_version.srs
+global type str_component_version from structure
+	string		component_id
+	long		version
+	string		version_name
+	string		description
+	string		version_description
+	string		component_type
+	string		component_class
+	string		component_location
+	string		component_data
+	string		status
+	datetime		status_date_time
+	string		release_status
+	datetime		release_status_date_time
+	string		installer
+	blob		objectdata
+	string		independence
+	string		system_id
+	long		build
+	string		build_name
+	long		compile
+	string		compile_name
+	datetime		test_begin_date
+	datetime		beta_begin_date
+	datetime		release_date
+	string		build_status
+	string		notes
+	long		min_build
+	long		min_modification_level
+	long		max_modification_level
+	long		owner_id
+	string		owner_description
+	datetime		created
+	string		created_by
+	datetime		last_updated
+	string		id
+	boolean		independently_installable
+	string		plugin_type
+end type
+

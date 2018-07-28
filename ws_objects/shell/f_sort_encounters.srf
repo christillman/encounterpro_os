@@ -1,0 +1,59 @@
+HA$PBExportHeader$f_sort_encounters.srf
+global type f_sort_encounters from function_object
+end type
+
+forward prototypes
+global function integer f_sort_encounters (long pl_encounter_count, ref str_encounter_description lstra_encounters[], string ps_sort_column, string ps_sort_direction)
+end prototypes
+
+global function integer f_sort_encounters (long pl_encounter_count, ref str_encounter_description lstra_encounters[], string ps_sort_column, string ps_sort_direction);str_encounter_description lstr_temp_trt
+boolean lb_less
+boolean lb_ascending
+long i, j
+
+if lower(left(ps_sort_direction, 1)) = "d" then
+	lb_ascending = false
+else
+	lb_ascending = true
+end if
+
+for i = pl_encounter_count to 1 step -1
+	for j = 1 to i - 1
+		lb_less = false
+		
+		CHOOSE CASE lower(ps_sort_column)
+			CASE "description"
+				if lstra_encounters[i].description < lstra_encounters[j].description then lb_less = true
+			CASE "encounter_date"
+				if lstra_encounters[i].encounter_date < lstra_encounters[j].encounter_date then lb_less = true
+			CASE ELSE
+				// we don't recognize the column so abort
+				return 0
+		END CHOOSE
+		
+		
+		if lb_less then
+			// If the ith encounter is less than the jth encounter, then swap them
+			lstr_temp_trt = lstra_encounters[i]
+			lstra_encounters[i] = lstra_encounters[j]
+			lstra_encounters[j] = lstr_temp_trt
+		end if
+	next
+next
+
+// If we're not ascending, the reverse the order
+if not lb_ascending then
+	for i = 1 to int(pl_encounter_count / 2)
+		lstr_temp_trt = lstra_encounters[i]
+		lstra_encounters[i] = lstra_encounters[pl_encounter_count - i + 1]
+		lstra_encounters[pl_encounter_count - i + 1] = lstr_temp_trt
+	next
+end if
+
+return 1
+
+
+
+
+end function
+

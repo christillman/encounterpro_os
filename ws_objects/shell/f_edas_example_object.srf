@@ -1,0 +1,40 @@
+HA$PBExportHeader$f_edas_example_object.srf
+global type f_edas_example_object from function_object
+end type
+
+forward prototypes
+global function integer f_edas_example_object (string ps_collectionproperty, str_complete_context pstr_context, str_attributes pstr_attributes, ref string ps_collection_object, ref string ps_example_key)
+end prototypes
+
+global function integer f_edas_example_object (string ps_collectionproperty, str_complete_context pstr_context, str_attributes pstr_attributes, ref string ps_collection_object, ref string ps_example_key);str_property_value lstr_property_value
+str_property_address lstr_property_address
+
+if lower(ps_collectionproperty) = "root" then
+	ps_collection_object = "Root"
+	ps_example_key = ""
+elseif len(ps_collectionproperty) > 0 then
+	// Parse the address
+	lstr_property_address = f_edas_parse_address("Root", ps_collectionproperty)
+	if lstr_property_address.return_status <= 0 then
+		log.log(this, "f_edas_interpret_address()", "EDAS Error parsing collection property (" + ps_collectionproperty + "): " + lstr_property_address.error_message, 3)
+		ps_collection_object = ""
+		ps_example_key = ""
+		return -1
+	end if
+	
+	// Set the collection object
+	ps_collection_object = lstr_property_address.property[lstr_property_address.property_count].referenced_epro_object.epro_object
+	
+	// Get an exemplar object for the collection
+	lstr_property_value = f_edas_interpret_address(ps_collectionproperty, pstr_context, pstr_attributes)
+	if lstr_property_value.referenced_object_collection.object_key_count > 0 then
+		ps_example_key = lstr_property_value.referenced_object_collection.object_key[1]
+	else
+		ps_example_key = ""
+	end if
+end if
+
+return 1
+
+end function
+

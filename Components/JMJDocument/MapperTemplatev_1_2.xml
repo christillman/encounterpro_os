@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JMJDocument>
+	<EpIEHandler></EpIEHandler>
+	<PatientRecord>
+		<PatientID>
+			<PatientIDDomain default="JMJPatientId"></PatientIDDomain>
+			<PatientID>jmjinternalid</PatientID>
+		</PatientID>
+		<PatientID>
+			<PatientIDDomain default="JMJBillingID"></PatientIDDomain>
+			<PatientID>jmjexternalid</PatientID>
+		</PatientID>
+		<race>race</race>
+		<DateOfBirth>dateofbirth</DateOfBirth>
+		<TimeOfBirth></TimeOfBirth>
+		<sex>sex</sex>
+		<PrimaryLanguage>primarylanguage</PrimaryLanguage>
+		<MaritalStatus>maritalstatus</MaritalStatus>
+		<SSN>ssn</SSN>
+		<FirstName>firstname</FirstName>
+		<LastName>lastname</LastName>
+		<Degree>degree</Degree>
+		<NamePrefix>nameprefix</NamePrefix>
+		<MiddleName>middlename</MiddleName>
+		<NameSuffix>namesuffix</NameSuffix>
+		<MaidenName>maidenname</MaidenName>
+		<PatientStatus>patientstatus</PatientStatus>
+		<PatientAddress>
+			<Description></Description>
+			<AddressLine1>patientaddressaddressline1</AddressLine1>
+			<AddressLine2>patientaddressaddressline2</AddressLine2>
+			<City>patientaddresscity</City>
+			<State>patientaddressstate</State>
+			<Zip>patientaddresszip</Zip>
+			<Country>patientaddresscountry</Country>
+		</PatientAddress>
+		<Religion>religion</Religion>
+		<Nationality>nationality</Nationality>
+		<FinancialClass>financialclass</FinancialClass>
+		<Employer>employer</Employer>
+		<EmployeeID>employerid</EmployeeID>
+		<Department>department</Department>
+		<Shift>shift</Shift>
+		<JobDescription>jobdescription</JobDescription>
+		<StartDate>startdate</StartDate>
+		<TerminationDate>terminationdate</TerminationDate>
+		<EmploymentStatus>employmentstatus</EmploymentStatus>
+		<PatientNote>
+			<Context>context_object</Context>
+			<NoteType>progress_type</NoteType>
+			<NoteKey>progress_key</NoteKey>
+			<!--Choice Start -->
+			<NoteText>progress_value</NoteText>
+			<NoteAttachment>
+				<FileName></FileName>
+				<FileType></FileType>
+				<AttachmentName></AttachmentName>
+				<AttachmentData></AttachmentData>
+				<AttachmentDate></AttachmentDate>
+			</NoteAttachment>
+			<!--Choice End -->
+			<NoteDate></NoteDate>
+			<NoteBy></NoteBy>
+			<NoteSeverity></NoteSeverity>
+		</PatientNote>
+		<Communication>
+			<Type default="Phone"></Type>
+			<Value>phone1</Value>
+		</Communication>
+	</PatientRecord>
+	<Encounter EncounterID="encounterid">
+		<ObjectID>
+			<OwnerID></OwnerID>
+			<CustomerID></CustomerID>
+			<JMJDomain default="encounter_id"></JMJDomain>
+			<JMJValue>encounterid</JMJValue>
+		</ObjectID>
+		<EncounterDate>encounterdate</EncounterDate>
+		<Description>description</Description>
+		<EncounterType>encountertype</EncounterType>
+		<AttendingDoctor>attendingdoctor_actorid</AttendingDoctor>
+		<ReferringDoctor>referringdoctor_actorid</ReferringDoctor>
+		<SupervisingDoctor>supervisingdoctor_actorid</SupervisingDoctor>
+		<NewPatient>newpatientflag</NewPatient>
+		<EncounterLocation>encounterlocation</EncounterLocation>
+		<WorkersCompFlag>workerscompflag</WorkersCompFlag>
+		<InpatientStatus>
+			<AdmissionType>encountertype</AdmissionType>
+			<AdmitReason></AdmitReason>
+			<DischargeDisposition>chiefcomplaint</DischargeDisposition>
+			<DischargeDate>dischargedate</DischargeDate>
+		</InpatientStatus>
+		<OutpatientStatus>
+			<AppointmentTime>appointmenttime</AppointmentTime>
+			<EstAppointmentLength>estappointmentlength</EstAppointmentLength>
+			<EncounterStatus>encounterstatus</EncounterStatus>
+			<EncounterEndDate>dischargedate</EncounterEndDate>
+		</OutpatientStatus>
+		<IndirectEncounterStatus>
+			<CommunicationType default="Phone"></CommunicationType>
+		</IndirectEncounterStatus>
+		<OtherEncounterStatus>
+			<Purpose>encounterdescription</Purpose>
+		</OtherEncounterStatus>
+		<EncounterNote>
+			<Context>context_object</Context>
+			<NoteType>progress_type</NoteType>
+			<NoteKey>progress_key</NoteKey>
+			<!--Choice Start -->
+			<NoteText>progress_value</NoteText>
+			<NoteAttachment> <!-- Mapping info not complete -->
+				<FileName></FileName>
+				<FileType></FileType>
+				<AttachmentName></AttachmentName>
+				<AttachmentData></AttachmentData>
+				<AttachmentDate></AttachmentDate>
+			</NoteAttachment>
+			<!--Choice End -->
+			<NoteDate></NoteDate>
+			<NoteBy></NoteBy>
+			<NoteSeverity></NoteSeverity>
+		</EncounterNote>
+		<!--Add charge node and childnodes here for context object==Encounter -->
+	</Encounter>
+	<Charge>
+		<Treatment TreatmentID="treatmentid" />
+		<ProcedureObjectID>
+			<OwnerID />
+			<IDDomain />
+			<IDValue />
+			<CustomerID />
+			<JMJDomain default="Procedure_ID" />
+			<JMJValue>procedureid</JMJValue>
+		</ProcedureObjectID>
+		<CPTCode>cptcode</CPTCode>
+		<Modifier>modifier</Modifier>
+		<OtherModifiers>othermodifiers</OtherModifiers>
+		<Units>units</Units>
+		<Charge Currency="">charge</Charge>
+		<UnitsBilled>unitsbilled</UnitsBilled>
+		<ChargeBilled Currency="">chargebilled</ChargeBilled>
+		<UnitsRecovered>unitsrecovered</UnitsRecovered>
+		<ChargeRecovered Currency="">chargerecovered</ChargeRecovered>
+		<Assessment>
+			<Assessment AssessmentID="" />
+			<ICD9Code>icd9code</ICD9Code>
+		</Assessment>
+	</Charge>
+	<Assessment AssessmentID="problemid">
+		<ObjectID>
+			<JMJDomain default="problem_id"></JMJDomain>
+			<JMJValue>problemid</JMJValue>
+		</ObjectID>
+		<AssessmentDefinitionID>assessmentdefinitionid</AssessmentDefinitionID>
+		<AssessmentType>assessmenttype</AssessmentType>
+		<OpenEncounter>openencounter</OpenEncounter>
+		<Description>description</Description>
+		<Location>location</Location>
+		<ICD9>icd9</ICD9>
+		<BeginDate>begindate</BeginDate>
+		<DiagnosedBy>diagnosedby_actorid</DiagnosedBy>
+		<AssessmentStatus>assessmentstatus</AssessmentStatus>
+		<CloseEncounter>closeencounter</CloseEncounter>
+		<EndDate></EndDate>
+		<AssessmentNote>
+			<Context>context_object</Context>
+			<NoteType>progress_type</NoteType>
+			<NoteKey>progress_key</NoteKey>
+			<!--Choice Start -->
+			<NoteText>progress_value</NoteText>
+			<NoteAttachment>
+				<FileName></FileName>
+				<FileType></FileType>
+				<AttachmentName></AttachmentName>
+				<AttachmentData></AttachmentData>
+				<AttachmentDate></AttachmentDate>
+			</NoteAttachment>
+			<!--Choice End -->
+			<NoteDate></NoteDate>
+			<NoteBy></NoteBy>
+			<NoteSeverity></NoteSeverity>
+		</AssessmentNote>
+	</Assessment>
+	<Treatment TreatmentID="treatmentid">
+		<ObjectID>
+			<JMJDomain default="treatment_id"></JMJDomain>
+			<JMJValue>treatmentid</JMJValue>
+		</ObjectID>
+		<ObjectID>
+			<JMJDomain default="parent_treatment_id"></JMJDomain>
+			<JMJValue>parent_treatment_id</JMJValue>
+		</ObjectID>
+		<ObjectID>
+			<JMJDomain default="orginal_treatment_id"></JMJDomain>
+			<JMJValue>orginal_treatment_id</JMJValue>
+		</ObjectID>
+		<TreatmentHandling>
+			<Purpose />
+		</TreatmentHandling>
+		<OpenEncounter>openencounter</OpenEncounter>
+		<TreatmentType>treatmenttype</TreatmentType>
+		<BeginDate>begindate</BeginDate>
+		<Description>description</Description>
+		<SpecimenID>specimenid</SpecimenID>
+		<TreatmentLocation>treatmentlocation</TreatmentLocation>
+		<TreatmentStatus>treatmentstatus</TreatmentStatus>
+		<CloseEncounter>closeencounter</CloseEncounter>
+		<EndDate>enddate</EndDate>
+		<OrderedBy>orderedby_actorid</OrderedBy>
+		<OrderedFor>ordered_for</OrderedFor>
+		<CompletedBy>completed_by</CompletedBy>
+		<LastOrderedBy>last_orderedby</LastOrderedBy>
+		<LastOrderedDateTime>last_order_date</LastOrderedDateTime>
+		<LastOrderedEncounter>last_encounter_id</LastOrderedEncounter>
+		<Order>
+				<OrderType>order_type</OrderType>
+				<OrderedBy>ordered_by</OrderedBy>
+				<OrderedDateTime>ordered_date</OrderedDateTime>
+				<Encounter>encounter_id</Encounter>
+				<Description>description</Description>
+		</Order>
+		<Assessment></Assessment>
+		<Observation>
+				<ObjectID>
+					<JMJDomain default="observation_id"></JMJDomain>
+					<JMJValue>observation_id</JMJValue>
+				</ObjectID>
+				<Description>observation_description</Description>
+				<ResultExpectedDate>result_date_time</ResultExpectedDate>
+				<Stage>stage</Stage>
+				<StageDescription>stage_description</StageDescription>
+				<ObservationResult>
+					<ObjectID>
+						<JMJDomain default="observation_id"></JMJDomain>
+						<JMJValue>observation_id</JMJValue>
+					</ObjectID>
+					<location>location</location>
+					<result_definition_id></result_definition_id>
+					<encounter_date></encounter_date>
+					<ResultDate>result_date_time</ResultDate>
+					<ResultType>result_type</ResultType>
+					<Result>result</Result>
+					<ResultValue>result_value</ResultValue>
+					<ResultUnit>result_unit</ResultUnit>
+					<AbnormalFlag>abnormal_flag</AbnormalFlag>
+					<AbnormalNature>abnormal_nature</AbnormalNature>
+					<severity>severity</severity>
+					<ObservedBy>orderedby_actorid</ObservedBy>
+					<ReferenceRange></ReferenceRange>
+					<ResultStatus></ResultStatus>
+				</ObservationResult>
+				<Observation>
+					<ObjectID>
+						<JMJDomain default="observation_id"></JMJDomain>
+						<JMJValue>observation_id</JMJValue>
+					</ObjectID>
+					<Description>observation_description</Description>
+					<ResultExpectedDate>result_date_time</ResultExpectedDate>
+					<Stage>stage</Stage>
+					<StageDescription>stage_description</StageDescription>
+					<ObservationResult>
+						<ObjectID>
+							<JMJDomain default="observation_id"></JMJDomain>
+							<JMJValue>observation_id</JMJValue>
+						</ObjectID>
+						<location>location</location>
+						<result_definition_id></result_definition_id>
+						<encounter_date></encounter_date>
+						<ResultDate>result_date_time</ResultDate>
+						<ResultType>result_type</ResultType>
+						<Result>result</Result>
+						<ResultValue>result_value</ResultValue>
+						<ResultUnit>result_unit</ResultUnit>
+						<AbnormalFlag>abnormal_flag</AbnormalFlag>
+						<AbnormalNature>abnormal_nature</AbnormalNature>
+						<severity>severity</severity>
+						<ObservedBy>orderedby_actorid</ObservedBy>
+						<ReferenceRange></ReferenceRange>
+						<ResultStatus></ResultStatus>
+					</ObservationResult>
+				</Observation>
+				<ObservationNote>
+					<Context>context_object</Context>
+					<NoteType>progress_type</NoteType>
+					<NoteKey>progress_key</NoteKey>
+					<!--Choice Start -->
+					<NoteText>progress_value</NoteText>
+					<NoteAttachment>
+						<FileName></FileName>
+						<FileType></FileType>
+						<AttachmentName></AttachmentName>
+						<AttachmentData></AttachmentData>
+						<AttachmentDate></AttachmentDate>
+					</NoteAttachment>
+					<!--Choice End -->
+					<NoteDate></NoteDate>
+					<NoteBy></NoteBy>
+					<NoteSeverity></NoteSeverity>
+				</ObservationNote>
+				<SpecimenCollected></SpecimenCollected>
+				<ObservationStatus></ObservationStatus>
+			</Observation>
+		<TreatmentNote>
+				<Context>context_object</Context>
+				<NoteType>progress_type</NoteType>
+				<NoteKey>progress_key</NoteKey>
+				<!--Choice Start -->
+				<NoteText>progress_value</NoteText>
+				<NoteAttachment>
+					<FileName></FileName>
+					<FileType></FileType>
+					<AttachmentName></AttachmentName>
+					<AttachmentData></AttachmentData>
+					<AttachmentDate></AttachmentDate>
+				</NoteAttachment>
+				<!--Choice End -->
+				<NoteDate>progress_date_time</NoteDate>
+				<NoteBy></NoteBy>
+				<NoteSeverity></NoteSeverity>
+			</TreatmentNote>
+		<!--
+			**** Medication Node Comes Here******
+		<Medication></Medication>
+		-->
+		<Medication>
+				<DrugId>drugid</DrugId>
+				<ObjectID>
+					<OwnerID></OwnerID>
+					<CustomerID></CustomerID>
+					<JMJDomain></JMJDomain>
+					<JMJValue></JMJValue>
+				</ObjectID>
+				<CommonName>commanname</CommonName>
+				<GenericName>genericname</GenericName>
+				<BrandName>brandname</BrandName>
+				<LotNumber>lotnumber</LotNumber>
+				<ExpirationDate>expirationdate</ExpirationDate>
+				<Manufacturer>manufacturer</Manufacturer>
+				<Package>
+					<PackageID>packageid</PackageID>
+					<ObjectID>
+						<OwnerID></OwnerID>
+						<CustomerID></CustomerID>
+						<JMJDomain></JMJDomain>
+						<JMJValue></JMJValue>
+					</ObjectID>
+					<AdministerMethod>packadministermethod</AdministerMethod>
+					<Description>packagedescription</Description>
+					<Dose>
+						<Amount>packagedoseamount</Amount>
+						<Unit>packagedoseunitid</Unit>
+					</Dose>
+					<AdministerPerDose>
+						<Amount>packageadminperdoseamount</Amount>
+						<Unit>packageadminperdoseunitid</Unit>
+					</AdministerPerDose>
+					<DosageForm>pacakgedosageform</DosageForm>
+				</Package>
+				<Dose>
+					<Amount>doseamount</Amount>
+					<Unit>doseunitid</Unit>
+				</Dose>
+				<Frequency>
+					<Abbreviation></Abbreviation>
+					<Description></Description>
+					<TimesPerDayCalc></TimesPerDayCalc>
+				</Frequency>
+				<Duration>
+					<Amount>durationamount</Amount>
+					<Unit>durationunitid</Unit>
+				</Duration>
+				<DurationPRN>durationprn</DurationPRN>
+				<DispenseAtPharmacy>
+					<Amount>dispenseatpharmacyamount</Amount>
+					<Unit>dispenseatpharmacyunitid</Unit>
+				</DispenseAtPharmacy>
+				<DispenseInOffice>
+					<Amount>dispenseinofficeamount</Amount>
+					<Unit>dispenseinofficeunitid</Unit>
+				</DispenseInOffice>
+				<SubstitutionAllowed>brandnamerequired</SubstitutionAllowed>
+				<RefillsAllowed>refillsallowed</RefillsAllowed>
+				<AdminInstructions>Admin Instructions</AdminInstructions>
+				<DosingInstructions>Dosing Instructions</DosingInstructions>
+				<PatientInstructions>Patient Instructions</PatientInstructions>
+				<PharmacistInstructions>Pharmacist Instructions</PharmacistInstructions>
+			</Medication>
+		<ConstituentTreatments>ConstituentTreatment</ConstituentTreatments>
+	</Treatment>
+	<Actors>
+		<ActorAttendingDoctor ActorID="attendingdoctor_actorid">
+			<Name>attendingdoctor_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>attendingdoctor_actorid</JMJValue>
+				</ObjectID>
+				<LastName>attendingdoctor_actorlastname</LastName>
+				<FirstName>attendingdoctor_actorfirstname</FirstName>
+			</Person>
+		</ActorAttendingDoctor>
+		<ActorReferringDoctor ActorID="referringdoctor_actorid">
+			<Name>referringdoctor_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>referringdoctor_actorid</JMJValue>
+				</ObjectID>
+				<LastName>referringdoctor_actorlastname</LastName>
+				<FirstName>referringdoctor_actorfirstname</FirstName>
+			</Person>
+		</ActorReferringDoctor>
+		<ActorSupervisingDoctor ActorID="supervisingdoctor_actorid">
+			<Name>supervisingdoctor_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>supervisingdoctor_actorid</JMJValue>
+				</ObjectID>
+				<LastName>supervisingdoctor_actorlastname</LastName>
+				<FirstName>supervisingdoctor_actorfirstname</FirstName>
+			</Person>
+		</ActorSupervisingDoctor>
+		<ActorDiagnosedBy ActorID="diagnosedby_actorid">
+			<Name>diagnosedby_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>diagnosedby_actorid</JMJValue>
+				</ObjectID>
+				<LastName>diagnosedby_actorlastname</LastName>
+				<FirstName>diagnosedby_actorfirstname</FirstName>
+			</Person>
+		</ActorDiagnosedBy>
+		<ActorEncounterLocation ActorID="encounterlocation">
+			<Name>enlocationname</Name>
+			<ActorClass default="Organization"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="office_id"></JMJDomain>
+					<JMJValue>encounterlocation</JMJValue>
+				</ObjectID>
+			</Person>
+			<Address>
+				<AddressLine1>enlocationaddr1</AddressLine1>
+				<AddressLine2>enlocationaddr2</AddressLine2>
+				<City>enlocationcity</City>
+				<State>enlocationstate</State>
+				<Zip>enlocationzip</Zip>
+			</Address>
+			<Communication>
+				<Type default="Phone"></Type>
+				<Value>enlocationPhone</Value>
+			</Communication>
+		</ActorEncounterLocation>
+		<ActorOrderedBy ActorID="orderedby_actorid">
+			<Name>orderedby_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>orderedby_actorid</JMJValue>
+				</ObjectID>
+				<LastName>orderedby_actorlastname</LastName>
+				<FirstName>orderedby_actorfirstname</FirstName>
+			</Person>
+		</ActorOrderedBy>
+		<ActorTreatmentOrderedFor ActorID="ordered_for">
+			<Name>orderedfor_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>ordered_for</JMJValue>
+				</ObjectID>
+				<LastName>orderedfor_actorlastname</LastName>
+				<FirstName>orderedfor_actorfirstname</FirstName>
+			</Person>
+		</ActorTreatmentOrderedFor>
+		<ActorTreatmentCompletedBy ActorID="completed_by">
+			<Name>cmpby_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>completed_by</JMJValue>
+				</ObjectID>
+				<LastName>cmpby_actorlastname</LastName>
+				<FirstName>cmpby_actorfirstname</FirstName>
+			</Person>
+		</ActorTreatmentCompletedBy>
+		<ActorTreatmentLastOrderedBy ActorID="last_orderedby">
+			<Name>last_orderedby_actorname</Name>
+			<ActorClass default="User"></ActorClass>
+			<Person>
+				<ObjectID>
+					<JMJDomain default="user_id"></JMJDomain>
+					<JMJValue>last_orderedby</JMJValue>
+				</ObjectID>
+				<LastName>last_orderedby_actorlastname</LastName>
+				<FirstName>last_orderedby_actorfirstname</FirstName>
+			</Person>
+		</ActorTreatmentLastOrderedBy>
+	</Actors>
+</JMJDocument>

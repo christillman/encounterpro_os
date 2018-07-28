@@ -1,0 +1,139 @@
+HA$PBExportHeader$f_configure_report_component.srf
+global type f_configure_report_component from function_object
+end type
+
+forward prototypes
+global function integer f_configure_report_component (string ps_report_id)
+end prototypes
+
+global function integer f_configure_report_component (string ps_report_id);string ls_component_id
+str_attributes lstr_attributes
+integer li_sts
+u_ds_data luo_data
+integer li_count
+integer i, j
+integer li_attribute_sequence
+string ls_id
+str_attributes lstr_state_attributes
+string ls_context_object
+str_attributes lstr_big_attributes_before
+str_attributes lstr_big_attributes_after
+blob lbl_value
+string ls_attribute
+long ll_attribute_sequence
+
+SELECT CAST(c.id AS varchar(38)), r.report_type
+INTO :ls_id, :ls_context_object
+FROM c_Report_Definition r
+	INNER JOIN (SELECT component_id, description, id FROM dbo.fn_components()) c
+	ON r.component_id = c.component_id
+WHERE r.report_id = :ps_report_id;
+If Not tf_check() Then Return -1
+If sqlca.sqlcode = 100 then
+	openwithparm(w_pop_message, "configure_report_component()", "The report component for this report is not valid")
+	log.log(this, "configure_report_component()", "The report component for this report is not valid (" + ps_report_id + ")", 4)
+end if
+
+// Get the existing attributes
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_c_report_component_attribute")
+li_count = luo_data.retrieve(ps_report_id)
+
+if li_count < 0 then
+	log.log(this, "configure_report()", "Error getting report component attributes", 4)
+	return -1
+end if
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+// Get the big values and put them into the attributes structure
+luo_data.setfilter("big_data='Y'")
+luo_data.filter()
+for i = 1 to luo_data.rowcount()
+	ls_attribute = luo_data.object.attribute[i]
+	ll_attribute_sequence = luo_data.object.attribute_sequence[i]
+	
+	SELECTBLOB objectdata
+	INTO :lbl_value
+	FROM c_Report_Attribute
+	WHERE report_id = :ps_report_id
+	AND attribute_sequence = :ll_attribute_sequence;
+	if not tf_check() then return -1
+	
+	f_attribute_add_attribute(lstr_attributes, ls_attribute, f_blob_to_string(lbl_value))
+	f_attribute_add_attribute(lstr_big_attributes_before, ls_attribute, f_blob_to_string(lbl_value))
+next
+luo_data.setfilter("")
+luo_data.filter()
+
+// Add the config object to the state attributes
+f_attribute_add_attribute(lstr_state_attributes, "context_object", ls_context_object)
+f_attribute_add_attribute(lstr_state_attributes, "parent_config_object_id", ps_report_id)
+
+// Prompt the user to enter params
+li_sts = f_get_params_with_state(ls_id, "Config", lstr_attributes, lstr_state_attributes)
+if li_sts < 0 then return -1
+
+
+// Get any attributes greater than 255
+for i = 1 to lstr_attributes.attribute_count
+	if len(lstr_attributes.attribute[i].value) > 255 then
+		f_attribute_add_attribute(lstr_big_attributes_after, lstr_attributes.attribute[i].attribute, lstr_attributes.attribute[i].value)
+		lstr_attributes.attribute[i].value = left(lstr_attributes.attribute[i].value, 251) + " ..."
+	end if
+next
+
+// Add/replace the new attributes, removing any attributes no longer referenced
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+// For any new records, add the key values
+for i = 1 to luo_data.rowcount()
+	// Set the big attributes to not update
+	for j = 1 to lstr_big_attributes_after.attribute_count
+		if lower(lstr_big_attributes_after.attribute[j].attribute) = lower(string(luo_data.object.attribute[i])) then
+			// Set the row to not update
+			luo_data.setitemstatus(i, 0, Primary!, NotModified!)
+		end if
+	next
+	if isnull(string(luo_data.object.report_id[i])) then
+		luo_data.object.report_id[i] = ps_report_id
+		luo_data.object.component_attribute[i] = "Y"
+		luo_data.setitemstatus(i, 0, Primary!, NewModified!)
+	end if
+next
+
+// Update the attributes
+li_sts = luo_data.update()
+DESTROY luo_data
+if li_sts < 0 then
+	log.log(this, "configure_command()", "Error updating command attributes", 4)
+	return -1
+end if
+
+
+// Set the big attributes
+for i = 1 to lstr_big_attributes_after.attribute_count
+	lbl_value = f_string_to_blob(lstr_big_attributes_after.attribute[i].value, "UTF16-LE")
+	UPDATEBLOB c_Report_Attribute
+	SET objectdata = :lbl_value
+	WHERE report_id = :ps_report_id
+	AND attribute = :lstr_big_attributes_after.attribute[i].attribute;
+	if not tf_check() then return -1
+	
+	f_attribute_remove_attribute(lstr_big_attributes_before, lstr_big_attributes_after.attribute[i].attribute)
+next
+
+// Any attributes left in lstr_big_attributes_before should have their blob nulled out
+for i = 1 to lstr_big_attributes_before.attribute_count
+	UPDATE c_Report_Attribute
+	SET objectdata = NULL
+	WHERE report_id = :ps_report_id
+	AND attribute = :lstr_big_attributes_before.attribute[i].attribute;
+	if not tf_check() then return -1
+next
+
+return 1
+
+
+end function
+

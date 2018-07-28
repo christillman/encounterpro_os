@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_empty_datawindow_mapping.srf
+global type f_empty_datawindow_mapping from function_object
+end type
+
+forward prototypes
+global function str_datawindow_mapping f_empty_datawindow_mapping ()
+end prototypes
+
+global function str_datawindow_mapping f_empty_datawindow_mapping ();str_datawindow_mapping lstr_datawindow_mapping
+
+setnull(lstr_datawindow_mapping.control_name)
+setnull(lstr_datawindow_mapping.hotspot_name)
+setnull(lstr_datawindow_mapping.status)
+setnull(lstr_datawindow_mapping.created_by)
+setnull(lstr_datawindow_mapping.created)
+
+return lstr_datawindow_mapping
+
+end function
+

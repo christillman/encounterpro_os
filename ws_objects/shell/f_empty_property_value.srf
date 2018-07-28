@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_empty_property_value.srf
+global type f_empty_property_value from function_object
+end type
+
+forward prototypes
+global function str_property_value f_empty_property_value ()
+end prototypes
+
+global function str_property_value f_empty_property_value ();str_property_value lstr_property_value
+
+setnull(lstr_property_value.value)
+setnull(lstr_property_value.display_value)
+setnull(lstr_property_value.textcolor)
+setnull(lstr_property_value.backcolor)
+setnull(lstr_property_value.weight)
+setnull(lstr_property_value.data)
+setnull(lstr_property_value.referenced_epro_object)
+setnull(lstr_property_value.datatype)
+setnull(lstr_property_value.filetype)
+setnull(lstr_property_value.encoding)
+
+return lstr_property_value
+
+
+end function
+

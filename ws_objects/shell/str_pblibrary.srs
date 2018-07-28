@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_pblibrary.srs
+global type str_pblibrary from structure
+	string		component_id
+	long		version
+	string		compile_name
+	string		path
+	string		component_description
+	boolean		debug
+end type
+

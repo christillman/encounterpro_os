@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_inpatient_type.srs
+global type str_inpatient_type from structure
+	string		admissiontype
+	string		admitreason
+	string		dischargedisposition
+	datetime		dischargedate
+end type
+

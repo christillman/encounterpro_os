@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_open_browser.srf
+global type f_open_browser from function_object
+end type
+
+forward prototypes
+global function integer f_open_browser (string ps_url)
+end prototypes
+
+global function integer f_open_browser (string ps_url);inet l_Inet
+integer li_sts
+
+// Open html file with HyperlinkToURL
+// So, a new browser is launched
+// (with the code using ShellExecuteEx, it is not sure)
+GetContextService("Internet", l_Inet)
+li_sts = l_Inet.HyperlinkToURL(ps_url)
+
+if li_sts > 0 then
+	return 1
+else
+	return -1
+end if
+
+
+end function
+

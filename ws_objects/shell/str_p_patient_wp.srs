@@ -1,0 +1,24 @@
+HA$PBExportHeader$str_p_patient_wp.srs
+global type str_p_patient_wp from structure
+	long		patient_workplan_id
+	string		cpr_id
+	long		workplan_id
+	string		workplan_type
+	string		in_office_flag
+	string		mode
+	long		last_step_dispatched
+	datetime		last_step_date
+	long		encounter_id
+	long		problem_id
+	long		treatment_id
+	long		observation_sequence
+	long		attachment_id
+	string		description
+	string		ordered_by
+	string		owned_by
+	long		prnt_patient_workplan_item_id
+	string		status
+	string		created_by
+	datetime		created
+end type
+

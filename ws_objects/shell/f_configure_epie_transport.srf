@@ -1,0 +1,50 @@
+HA$PBExportHeader$f_configure_epie_transport.srf
+global type f_configure_epie_transport from function_object
+end type
+
+forward prototypes
+global function integer f_configure_epie_transport (long pl_interfaceserviceid, long pl_transportsequence)
+end prototypes
+
+global function integer f_configure_epie_transport (long pl_interfaceserviceid, long pl_transportsequence);string ls_id
+str_params lstr_params
+str_attributes lstr_attributes
+string ls_value
+integer li_sts
+u_ds_data luo_data
+long ll_attribute_count
+long i
+
+// Get the existing attributes for this transport
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_practice_interface_transport_properties")
+ll_attribute_count = luo_data.retrieve(sqlca.customer_id, pl_interfaceserviceid, pl_transportsequence)
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+ls_id = "{18D9F50E-5DC2-4322-960E-BCC418B1B57E}"
+
+li_sts = f_get_params(ls_id, "Config", lstr_attributes)
+if li_sts < 0 then return -1
+
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+for i = 1 to luo_data.rowcount()
+	if isnull(luo_data.object.subscriber_owner_id[i]) then
+		luo_data.object.subscriber_owner_id[i] = sqlca.customer_id
+		luo_data.object.interfaceserviceid[i] = pl_interfaceserviceid
+		luo_data.object.transportsequence[i] = pl_transportsequence
+		luo_data.object.property[i] = luo_data.object.attribute[i]
+		luo_data.object.last_updated[i] = datetime(today(), now())
+	end if
+next
+
+li_sts = luo_data.update()
+
+DESTROY luo_data
+
+return 1
+
+
+end function
+

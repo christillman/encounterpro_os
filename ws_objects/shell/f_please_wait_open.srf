@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_please_wait_open.srf
+global type f_please_wait_open from function_object
+end type
+
+forward prototypes
+global function integer f_please_wait_open ()
+end prototypes
+
+global function integer f_please_wait_open ();integer li_index
+
+if not isvalid(common_thread.please_wait) then
+	open(common_thread.please_wait)
+end if
+
+li_index = common_thread.please_wait.open_caller()
+
+return li_index
+
+end function
+

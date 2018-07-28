@@ -1,0 +1,28 @@
+HA$PBExportHeader$f_empty_datawindow_config_object.srf
+global type f_empty_datawindow_config_object from function_object
+end type
+
+forward prototypes
+global function str_datawindow_config_object f_empty_datawindow_config_object ()
+end prototypes
+
+global function str_datawindow_config_object f_empty_datawindow_config_object ();str_datawindow_config_object lstr_datawindow
+
+
+setnull(lstr_datawindow.config_object_id)
+setnull(lstr_datawindow.context_object)
+setnull(lstr_datawindow.datawindow_name)
+setnull(lstr_datawindow.description)
+setnull(lstr_datawindow.library_component_id)
+setnull(lstr_datawindow.dataobject)
+setnull(lstr_datawindow.datawindow_syntax)
+setnull(lstr_datawindow.controller_config_object_id)
+setnull(lstr_datawindow.status)
+setnull(lstr_datawindow.created_by)
+setnull(lstr_datawindow.created)
+
+return lstr_datawindow
+
+
+end function
+

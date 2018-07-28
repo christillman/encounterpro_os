@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_filepath.srs
+global type str_filepath from structure
+	string		filepath
+	string		drive
+	string		directory
+	string		filename
+	string		extension
+end type
+

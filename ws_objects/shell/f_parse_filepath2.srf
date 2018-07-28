@@ -1,0 +1,19 @@
+HA$PBExportHeader$f_parse_filepath2.srf
+global type f_parse_filepath2 from function_object
+end type
+
+forward prototypes
+global function str_filepath f_parse_filepath2 (string ps_filepath)
+end prototypes
+
+global function str_filepath f_parse_filepath2 (string ps_filepath);str_filepath lstr_filepath
+integer li_sts
+
+lstr_filepath.filename = ps_filepath
+
+li_sts = f_parse_filepath(ps_filepath, lstr_filepath.drive, lstr_filepath.filepath, lstr_filepath.filename, lstr_filepath.extension)
+
+return lstr_filepath
+
+end function
+

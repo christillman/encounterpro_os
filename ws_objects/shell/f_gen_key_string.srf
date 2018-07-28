@@ -1,0 +1,52 @@
+HA$PBExportHeader$f_gen_key_string.srf
+global type f_gen_key_string from function_object
+end type
+
+forward prototypes
+global function string f_gen_key_string (string ps_key, integer pi_length)
+end prototypes
+
+global function string f_gen_key_string (string ps_key, integer pi_length);string ls_key
+integer i
+string ls_char
+string ls_word1, ls_word2, ls_word3
+integer li_words, li_wordlength, li_word1length
+
+f_split_string(ps_key, " ", ls_word1, ls_key)
+ls_word1 = f_remove_nonalphanumeric(ls_word1)
+
+if len(ls_key) > 0 then
+	f_split_string(ls_key, " ", ls_word2, ls_key)
+	ls_word2 = f_remove_nonalphanumeric(ls_word2)
+
+	if len(ls_key) > 0 then
+		f_split_string(ls_key, " ", ls_word3, ls_key)
+		ls_word3 = f_remove_nonalphanumeric(ls_word3)
+		li_words = 3
+	else
+		li_words = 2
+		ls_word3 = ""
+	end if
+else
+	li_words = 1
+	ls_word2 = ""
+	ls_word3 = ""
+end if
+
+li_wordlength = pi_length / li_words
+
+if li_words = 1 then
+	li_word1length = pi_length
+elseif li_words = 2 then
+	li_word1length = pi_length - min(len(ls_word2), li_wordlength)
+else
+	li_word1length = pi_length - min(len(ls_word2), li_wordlength) - min(len(ls_word3), li_wordlength)
+end if
+
+ls_key = left(ls_word1, li_word1length) + left(ls_word2, li_wordlength) + left(ls_word3, li_wordlength)
+
+return ls_key
+
+
+end function
+

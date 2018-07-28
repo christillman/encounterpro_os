@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_ccr_internalccrlink_type.srs
+global type str_ccr_internalccrlink_type from structure
+	string		LinkID
+	string		LinkRelationship[]
+	str_ccr_sourcetype		source
+end type
+

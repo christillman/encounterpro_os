@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_datawindow_control.srs
+global type str_datawindow_control from structure
+	string		control_name
+	string		control_column_datatype
+	long		control_length
+	string		control_tag
+	string		control_type
+end type
+

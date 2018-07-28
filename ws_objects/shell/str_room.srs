@@ -1,0 +1,16 @@
+HA$PBExportHeader$str_room.srs
+global type str_room from structure
+	string		room_id
+	string		room_name
+	integer		room_sequence
+	string		room_type
+	string		room_status
+	long		computer_id
+	string		office_id
+	string		status
+	string		default_encounter_type
+	string		sort
+	string		in_room_user_id
+	string		dirty_flag
+end type
+

@@ -1,0 +1,102 @@
+HA$PBExportHeader$f_initialize_objects.srf
+global type f_initialize_objects from function_object
+end type
+
+forward prototypes
+global function integer f_initialize_objects ()
+end prototypes
+
+global function integer f_initialize_objects ();string ls_temp
+integer li_sts, i
+string ls_build_check
+str_file_attributes lstr_file
+str_popup_return popup_return
+string ls_epro_setup
+u_ds_data luo_components
+string ls_component
+long ll_count
+string ls_myversion
+string ls_newversion
+
+setnull(current_service)
+setnull(current_patient)
+setnull(current_display_encounter)
+setnull(current_room)
+
+current_patient_hold = CREATE u_patient
+
+// Perform the startup check
+li_sts = sqlca.jmj_startup_check()
+if not tf_check() then return -1
+if li_sts <= 0 then
+	log.log(this, "f_initialize_objects()","Startup Check failed", 5)
+	return -1
+end if
+
+// Load the initial preference values
+f_get_preferences()
+
+// Instantiate Global Objects
+vaccine_list = CREATE u_vaccine_list
+room_list = CREATE u_room_list
+service_list = CREATE u_service_list
+unit_list = CREATE u_unit_list
+temp_datastore = CREATE u_ds_data
+
+// Check the versions.  If this function returns then we're OK to continue
+f_check_version()
+
+// Install any library components that should be pre-installed on this computer
+component_manager.install_libraries()
+
+// Initialize Global Variables
+just_logged_on = false
+
+log.log(this, "f_initialize_objects()", "Unit list load", 1)
+li_sts = unit_list.load_units()
+if li_sts < 0 then
+	log.log(this, "f_initialize_objects()","Unit list load failed", 5)
+	return -1
+end if
+
+log.log(this, "f_initialize_objects()", "Vaccine list load", 1)
+li_sts = vaccine_list.load_vaccines()
+if li_sts < 0 then
+	log.log(this, "f_initialize_objects()","Vaccine list load failed", 5)
+	return -1
+end if
+
+// Don't do this at startup anymore
+//log.log(this, "f_initialize_objects()", "User list load", 1)
+//li_sts = user_list.load_users()
+//if li_sts < 0 then
+//	log.log(this, "f_initialize_objects()","User list load failed", 5)
+//	return -1
+//end if
+
+log.log(this, "f_initialize_objects()", "Room list load", 1)
+room_list.load_rooms()
+if li_sts < 0 then
+	log.log(this, "f_initialize_objects()","Room list load failed", 5)
+	return -1
+end if
+
+drugdb = component_manager.get_component(common_thread.drugdb_component())
+if isnull(drugdb) then
+	log.log(this, "f_initialize_objects","Error getting drug database component", 5)
+	return -1
+end if
+
+// If the computername matches one of the room_id's then set the current_room
+current_room = room_list.find_room_computer(computer_id)
+
+log.log(this, "f_initialize_objects()", "Clean up in case last time crashed", 1)
+li_sts = f_crash_clean_up()
+if li_sts < 0 then
+	log.log(this, "f_initialize_objects()","crash clean up failed", 5)
+	return -1
+end if
+
+return 1
+end function
+

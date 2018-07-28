@@ -1,0 +1,17 @@
+HA$PBExportHeader$str_unit_type.srs
+global type str_unit_type from structure
+	string		UnitID
+	string		Unit
+	string		UnitAmountType
+	string		PluralRule
+	string		PrintUnit
+	string		DisplayTemplate
+	string		Prefix
+	string		MajorUnitDisplaySuffix
+	string		MinorUnitDisplaySuffix
+	string		MajorUnitInputSuffix
+	string		MinorUnitInputSuffix
+	string		MajorMinorMultiplier
+	string		DisplayMinorUnits
+end type
+

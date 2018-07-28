@@ -1,0 +1,30 @@
+HA$PBExportHeader$f_display_attachment_with_attributes.srf
+global type f_display_attachment_with_attributes from function_object
+end type
+
+forward prototypes
+global function integer f_display_attachment_with_attributes (long pl_attachment_id, str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_display_attachment_with_attributes (long pl_attachment_id, str_attributes pstr_attributes);u_ds_attachments attachments
+u_component_attachment luo_attachment
+integer li_sts
+
+attachments = CREATE u_ds_attachments
+attachments.settransobject(sqlca)
+
+li_sts = attachments.attachment(luo_attachment, pl_attachment_id)
+if li_sts <= 0 then return -1
+
+luo_attachment.add_attributes(pstr_attributes)
+
+luo_attachment.display()
+
+component_manager.destroy_component(luo_attachment)
+
+DESTROY attachments
+
+return 1
+
+end function
+

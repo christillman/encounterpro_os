@@ -1,0 +1,84 @@
+HA$PBExportHeader$f_interpret_font_settings.srf
+global type f_interpret_font_settings from function_object
+end type
+
+forward prototypes
+global function str_font_settings f_interpret_font_settings (string ps_font_settings)
+end prototypes
+
+global function str_font_settings f_interpret_font_settings (string ps_font_settings);string ls_next_command
+string ls_remaining
+string ls_temp1
+string ls_temp2
+integer li_fontsize
+long ll_left_margin
+long ll_wrap_margin
+long ll_right_margin
+string lsa_tabs[]
+integer li_count
+integer i
+long ll_tabstop
+string ls_tabstop
+string ls_tabtype
+long ll_pagewidth
+long ll_pageheight
+str_font_settings lstr_font_settings
+
+// Formatting is specified by comma delimited commands:
+// fontsize=#			Set the font size
+// fn=<fontname>		Set the font
+// bold					Set bold on
+// italic				Set italics on
+// underline			Set underline on
+// xbold					Set bold off
+// xitalic				Set italics off
+// xunderline			Set underline off
+//	fc=#					Foreground Color
+//	bc=#					Text Background Color
+
+lstr_font_settings = f_empty_font_settings()
+
+ls_remaining = trim(ps_font_settings)
+
+DO WHILE len(ls_remaining) > 0
+	f_split_string(ls_remaining, ",", ls_next_command, ls_remaining)
+	ls_remaining = trim(ls_remaining)
+	
+	CHOOSE CASE trim(lower(left(ls_next_command, 2)))
+		CASE "fo"
+			f_split_string(ls_next_command, "=", ls_temp1, ls_temp2)
+			li_fontsize = integer(ls_temp2)
+			if li_fontsize > 0 then
+				lstr_font_settings.fontsize = li_fontsize
+			end if
+		CASE "fn"
+			f_split_string(ls_next_command, "=", ls_temp1, ls_temp2)
+			lstr_font_settings.fontname = ls_temp2
+		CASE "fc"
+			f_split_string(ls_next_command, "=", ls_temp1, ls_temp2)
+			lstr_font_settings.forecolor = f_string_to_color(ls_temp2)
+		CASE "bc"
+			f_split_string(ls_next_command, "=", ls_temp1, ls_temp2)
+			lstr_font_settings.textbackcolor = f_string_to_color(ls_temp2)
+		CASE "bo"
+			lstr_font_settings.bold = true
+		CASE "it"
+			lstr_font_settings.italic = true
+		CASE "un"
+			lstr_font_settings.underline = true
+		CASE "xb"
+			lstr_font_settings.bold = false
+		CASE "xi"
+			lstr_font_settings.italic = false
+		CASE "xu"
+			lstr_font_settings.underline = false
+	END CHOOSE
+LOOP
+
+return lstr_font_settings
+
+
+
+	
+end function
+

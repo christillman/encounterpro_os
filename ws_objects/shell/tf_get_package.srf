@@ -1,0 +1,54 @@
+HA$PBExportHeader$tf_get_package.srf
+global type tf_get_package from function_object
+end type
+
+forward prototypes
+global function integer tf_get_package (string ps_package_id, ref string ps_administer_method, ref string ps_administer_unit, ref string ps_dose_unit, ref real pr_administer_per_dose, ref string ps_package_description, ref string ps_method_description, ref real pr_dose_amount, ref string ps_dosage_form)
+end prototypes
+
+global function integer tf_get_package (string ps_package_id, ref string ps_administer_method, ref string ps_administer_unit, ref string ps_dose_unit, ref real pr_administer_per_dose, ref string ps_package_description, ref string ps_method_description, ref real pr_dose_amount, ref string ps_dosage_form);
+string ls_administer_unit
+string ls_dose_unit
+real lr_administer_per_dose
+string ls_package_description
+string ls_administer_method
+string ls_method_description
+string ls_dosage_form
+real lr_dose_amount
+
+  SELECT c_Package.administer_unit,   
+         c_Package.dose_unit,   
+         c_Package.administer_per_dose,   
+         c_Package.description,
+			c_Package.administer_method,
+			c_Administration_Method.description,
+			c_Package.dose_amount,
+			c_Package.dosage_form
+    INTO :ls_administer_unit,   
+         :ls_dose_unit,   
+         :lr_administer_per_dose,   
+         :ls_package_description,
+			:ls_administer_method,
+			:ls_method_description,
+			:lr_dose_amount,
+			:ls_dosage_form
+    FROM c_Package (NOLOCK),
+			c_Administration_Method (NOLOCK)
+   WHERE c_Package.package_id = :ps_package_id
+	and c_Package.administer_method = c_Administration_method.administer_method ;
+
+if not tf_check() then return -1
+if sqlca.sqlcode = 100 then return 0
+
+ps_administer_unit = ls_administer_unit 
+ps_dose_unit = ls_dose_unit
+pr_administer_per_dose = lr_administer_per_dose
+ps_package_description = ls_package_description
+ps_administer_method = ls_administer_method
+ps_method_description = ls_method_description
+pr_dose_amount = lr_dose_amount
+ps_dosage_form = ls_dosage_form
+
+return 1
+end function
+

@@ -1,0 +1,24 @@
+HA$PBExportHeader$f_review_attachment_with_attributes.srf
+global type f_review_attachment_with_attributes from function_object
+end type
+
+forward prototypes
+global function integer f_review_attachment_with_attributes (long pl_attachment_id, str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_review_attachment_with_attributes (long pl_attachment_id, str_attributes pstr_attributes);u_component_attachment luo_attachment
+integer li_sts
+
+li_sts = current_patient.attachments.attachment(luo_attachment, pl_attachment_id)
+if li_sts <= 0 then return -1
+
+luo_attachment.add_attributes(pstr_attributes)
+
+luo_attachment.review()
+
+component_manager.destroy_component(luo_attachment)
+
+return 1
+
+end function
+

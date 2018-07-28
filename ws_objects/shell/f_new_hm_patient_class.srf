@@ -1,0 +1,112 @@
+HA$PBExportHeader$f_new_hm_patient_class.srf
+global type f_new_hm_patient_class from function_object
+end type
+
+forward prototypes
+global function string f_new_hm_patient_class (ref str_attributes pstr_attributes)
+end prototypes
+
+global function string f_new_hm_patient_class (ref str_attributes pstr_attributes);long ll_maintenance_rule_id
+long ll_filter_from_maintenance_rule_id
+string ls_maintenance_rule_type
+string ls_description
+string ls_sex
+string ls_race
+long ll_age_range_id
+string ls_status
+string ls_id
+long ll_owner_id
+long ll_compliance_ok_percent
+long ll_compliance_warning_percent
+long ll_measured_ok_percent
+long ll_measured_warning_percent
+long ll_controlled_ok_percent
+long ll_controlled_warning_percent
+string ls_null
+
+setnull(ls_null)
+
+ll_filter_from_maintenance_rule_id = long(f_attribute_find_attribute(pstr_attributes, "filter_from_maintenance_rule_id"))
+ls_maintenance_rule_type = f_attribute_find_attribute(pstr_attributes, "maintenance_rule_type")
+ls_description = f_attribute_find_attribute(pstr_attributes, "description")
+ls_sex = f_attribute_find_attribute(pstr_attributes, "sex")
+ls_race = f_attribute_find_attribute(pstr_attributes, "race")
+ll_age_range_id = long(f_attribute_find_attribute(pstr_attributes, "age_range_id"))
+ls_status = f_attribute_find_attribute(pstr_attributes, "status")
+ll_compliance_ok_percent = long(f_attribute_find_attribute(pstr_attributes, "compliance_ok_percent"))
+ll_compliance_warning_percent = long(f_attribute_find_attribute(pstr_attributes, "compliance_warning_percent"))
+ll_measured_ok_percent = long(f_attribute_find_attribute(pstr_attributes, "measured_ok_percent"))
+ll_measured_warning_percent = long(f_attribute_find_attribute(pstr_attributes, "measured_warning_percent"))
+ll_controlled_ok_percent = long(f_attribute_find_attribute(pstr_attributes, "controlled_ok_percent"))
+ll_controlled_warning_percent = long(f_attribute_find_attribute(pstr_attributes, "controlled_warning_percent"))
+
+if isnull(ls_maintenance_rule_type) then ls_maintenance_rule_type = "Rule"
+
+if isnull(ls_description) then
+	log.log(this, "f_new_hm_patient_class()", "Error: No description", 4)
+	return ls_null
+end if
+
+if isnull(ls_status) then ls_status = "OK"
+
+ll_owner_id = sqlca.customer_id
+
+INSERT INTO dbo.c_Maintenance_Patient_Class (
+	filter_from_maintenance_rule_id
+	,maintenance_rule_type
+	,description
+	,sex
+	,race
+	,age_range_id
+	,status
+	,id
+	,owner_id
+	,compliance_ok_percent
+	,compliance_warning_percent
+	,measured_ok_percent
+	,measured_warning_percent
+	,controlled_ok_percent
+	,controlled_warning_percent)
+VALUES (
+	:ll_filter_from_maintenance_rule_id,
+	:ls_maintenance_rule_type,
+	:ls_description,
+	:ls_sex,
+	:ls_race,
+	:ll_age_range_id,
+	:ls_status,
+	newid(),
+	:ll_owner_id,
+	:ll_compliance_ok_percent,
+	:ll_compliance_warning_percent,
+	:ll_measured_ok_percent,
+	:ll_measured_warning_percent,
+	:ll_controlled_ok_percent,
+	:ll_controlled_warning_percent);
+if not tf_check() then return ls_null
+
+SELECT SCOPE_IDENTITY()
+INTO :ll_maintenance_rule_id
+FROM c_1_record;
+if not tf_check() then return ls_null
+
+f_attribute_add_attribute(pstr_attributes, "maintenance_rule_id", string(ll_maintenance_rule_id))
+
+SELECT CAST(id AS varchar(40))
+INTO :ls_id
+FROM dbo.c_Maintenance_Patient_Class
+WHERE maintenance_rule_id = :ll_maintenance_rule_id;
+if not tf_check() then return ls_null
+if sqlca.sqlnrows <> 1 then
+	log.log(this, "f_new_hm_patient_class()", "Error saving new patient class", 4)
+	return ls_null
+end if
+
+f_attribute_add_attribute(pstr_attributes, "id", ls_id)
+
+
+return ls_id
+
+
+end function
+

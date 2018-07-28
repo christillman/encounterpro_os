@@ -1,0 +1,70 @@
+HA$PBExportHeader$f_get_drug_administration_dose.srf
+global type f_get_drug_administration_dose from function_object
+end type
+
+forward prototypes
+global function integer f_get_drug_administration_dose (string ps_drug_id, ref str_drug_administration pstra_drug_admin[])
+end prototypes
+
+global function integer f_get_drug_administration_dose (string ps_drug_id, ref str_drug_administration pstra_drug_admin[]);integer li_sts
+long ll_rows
+long i
+integer li_administration_sequence
+string ls_administer_unit
+real lr_administer_amount
+string ls_mult_by_what
+string ls_calc_per
+string ls_frequency_description
+integer li_times_per_day
+string ls_admin_description
+string ls_item
+string ls_administer_frequency
+string ls_pretty_fraction
+real lr_converted_amount
+real lr_dose_amount
+u_ds_data luo_data
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_drug_admins_for_drug")
+
+ll_rows = luo_data.retrieve(ps_drug_id, "DOSE")
+
+for i = 1 to ll_rows
+	li_administration_sequence = luo_data.object.administration_sequence[i]
+	ls_administer_frequency = luo_data.object.administer_frequency[i]
+	ls_administer_unit = luo_data.object.administer_unit[i]
+	lr_administer_amount = luo_data.object.administer_amount[i]
+	ls_mult_by_what = luo_data.object.mult_by_what[i]
+	ls_calc_per = luo_data.object.calc_per[i]
+	ls_frequency_description = luo_data.object.administer_frequency_description[i]
+	li_times_per_day = luo_data.object.frequency[i]
+	ls_admin_description = luo_data.object.description[i]
+
+	ls_item = f_pretty_amount_unit(lr_administer_amount, ls_administer_unit)
+
+	if not (isnull(ls_mult_by_what) or ls_mult_by_what = "") then 
+		ls_item = ls_item + "/" + ls_mult_by_what + "/" + ls_calc_per
+	end if
+
+	ls_item = ls_item + "  " + ls_administer_frequency
+	if not isnull(ls_admin_description) and trim(ls_admin_description) <> "" then
+		ls_item = ls_item + "~n" + ls_admin_description
+	end if
+
+	pstra_drug_admin[i].drug_id = ps_drug_id
+	pstra_drug_admin[i].administer_frequency = ls_administer_frequency
+	pstra_drug_admin[i].times_per_day = li_times_per_day
+	pstra_drug_admin[i].administer_amount = lr_administer_amount
+	pstra_drug_admin[i].administer_unit = ls_administer_unit
+	pstra_drug_admin[i].mult_by_what = ls_mult_by_what
+	pstra_drug_admin[i].calc_per = ls_calc_per
+	pstra_drug_admin[i].administration_sequence = li_administration_sequence
+	pstra_drug_admin[i].description = ls_item
+next
+
+DESTROY luo_data
+
+return ll_rows
+
+end function
+

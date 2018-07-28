@@ -1,0 +1,14 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "chart\\chart_healthmain.pbl" "";
+@end;
+@begin Objects
+ "chart\\u_cpr_page_maintenance_old.sru" "chart\\chart_healthmain.pbl";
+ "chart\\dw_patient_maintenance.srd" "chart\\chart_healthmain.pbl";
+ "chart\\u_cpr_page_maintenance.sru" "chart\\chart_healthmain.pbl";
+ "chart\\dw_maintenance_performed_procs_list.srd" "chart\\chart_healthmain.pbl";
+ "chart\\dw_maintenance_closed_assessment_list.srd" "chart\\chart_healthmain.pbl";
+ "chart\\dw_maintenance_open_assessment_list.srd" "chart\\chart_healthmain.pbl";
+ "chart\\dw_maintenance_rule_observation_ids.srd" "chart\\chart_healthmain.pbl";
+ "chart\\dw_treatment_results_display.srd" "chart\\chart_healthmain.pbl";
+@end;

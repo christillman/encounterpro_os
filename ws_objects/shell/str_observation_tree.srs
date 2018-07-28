@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_observation_tree.srs
+global type str_observation_tree from structure
+	long		branch_count
+	str_observation_tree_branch		branch[]
+end type
+

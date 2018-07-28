@@ -1,0 +1,137 @@
+HA$PBExportHeader$f_edas_set_property_display_value.srf
+global type f_edas_set_property_display_value from function_object
+end type
+
+forward prototypes
+global subroutine f_edas_set_property_display_value (str_property_suffix pstr_property_suffix, ref str_property_value pstr_property_value)
+end prototypes
+
+global subroutine f_edas_set_property_display_value (str_property_suffix pstr_property_suffix, ref str_property_value pstr_property_value);string ls_true
+string ls_false
+string ls_null_format
+datetime ldt_datetime
+decimal ld_decimal
+string ls_date_format
+string ls_string_format
+
+setnull(ls_null_format)
+
+// If we don't have a value then just return
+if pstr_property_value.value = "" then setnull(pstr_property_value.value)
+
+// Revert the display value to the code (actual value) if desired
+if pstr_property_suffix.display_code then
+	pstr_property_value.display_value = pstr_property_value.value
+end if
+
+// Translate the code if desired
+if len(pstr_property_suffix.lookup_code_domain) > 0 and pstr_property_suffix.lookup_owner_id >= 0 and len(pstr_property_value.value) > 0 then
+	pstr_property_value.display_value = sqlca.fn_lookup_code(pstr_property_value.property.property_domain, pstr_property_value.value, pstr_property_suffix.lookup_code_domain, pstr_property_suffix.lookup_owner_id)
+end if
+
+
+// Set the default format_string for the datatype
+if isnull(pstr_property_suffix.format_string) or trim(pstr_property_suffix.format_string) = "" then
+	// If we want to display the code, then we're done
+	if pstr_property_suffix.display_code then return
+	
+	// Since we don't have a format string, if we already have a display_value then we're done
+	if len(pstr_property_value.display_value) > 0 then return
+	
+	// Set the default format_string
+	CHOOSE CASE lower(pstr_property_value.datatype)
+		CASE "boolean"
+			pstr_property_suffix.format_string = "True;False"
+		CASE "string"
+		CASE "datetime" 
+			pstr_property_suffix.format_string = "[shortdate] [time]"
+		CASE "number"	
+		CASE "binary"	
+		CASE "text"	
+	END CHOOSE
+end if
+
+
+CHOOSE CASE lower(pstr_property_value.datatype)
+	CASE "boolean"
+		// ps_display_format == <TrueDisplayValue>,<FalseDisplayValue>
+		if pos(pstr_property_suffix.format_string, ";") > 0 then
+			f_split_string(pstr_property_suffix.format_string, ";", ls_true, ls_false)
+			if len(ls_false) > 0 then
+				f_split_string(ls_false, ";", ls_false, ls_null_format)
+			end if
+		else
+			ls_true = "True"
+			ls_false = "False"
+		end if
+		
+		if isnull(pstr_property_value.value) then
+			pstr_property_value.display_value = ls_null_format
+		elseif f_string_to_boolean(pstr_property_value.value) then
+			pstr_property_value.display_value = ls_true
+		else
+			pstr_property_value.display_value = ls_false
+		end if
+	CASE "string"
+		// determine the null format string
+		f_split_string(pstr_property_suffix.format_string, ";", ls_string_format, ls_null_format)
+		if ls_null_format = "" then setnull(ls_null_format)
+		
+		if isnull(pstr_property_value.value) then
+			pstr_property_value.display_value = ls_null_format
+		else
+			CHOOSE CASE lower(ls_string_format)
+				CASE "cap"
+					pstr_property_value.display_value = upper(left(pstr_property_value.value, 1)) + lower(mid(pstr_property_value.value, 2))
+				CASE "wordcap"
+					pstr_property_value.display_value = wordcap(pstr_property_value.value)
+				CASE "uppercase"
+					pstr_property_value.display_value = upper(pstr_property_value.value)
+				CASE "lowercase"
+					pstr_property_value.display_value = lower(pstr_property_value.value)
+				CASE ELSE
+					if len(ls_string_format) > 0 then
+						pstr_property_value.display_value = string(pstr_property_value.value, ls_string_format)
+					end if
+			END CHOOSE
+		end if
+	CASE "datetime" 
+		if len(pstr_property_suffix.format_string) > 0 then
+			// determine the null format string
+			f_split_string(pstr_property_suffix.format_string, ";", ls_date_format, ls_null_format)
+			if ls_null_format = "" then setnull(ls_null_format)
+		
+			if isnull(pstr_property_value.value) then
+				pstr_property_value.display_value = ls_null_format
+			else
+				ldt_datetime = f_string_to_datetime(pstr_property_value.value)
+				pstr_property_value.display_value = string(ldt_datetime,ls_date_format)
+			end if
+		end if
+	CASE "number"	
+		if len(pstr_property_suffix.format_string) > 0 then
+			ld_decimal = dec(pstr_property_value.value)
+			if lower(pstr_property_suffix.format_string) = "[text]" then
+				if left(pstr_property_suffix.format_string, 2) = "[T" then
+					if right(pstr_property_suffix.format_string, 2) = "T]" then
+						pstr_property_value.display_value = upper(common_thread.mm.number_to_text(ld_decimal))
+					else
+						pstr_property_value.display_value = wordcap(common_thread.mm.number_to_text(ld_decimal))
+					end if
+				else
+					pstr_property_value.display_value = common_thread.mm.number_to_text(ld_decimal)
+				end if
+			else
+				pstr_property_value.display_value = string(ld_decimal, pstr_property_suffix.format_string)
+			end if
+		end if
+	CASE "binary"
+	CASE "text"
+END CHOOSE
+
+if isnull(pstr_property_value.display_value) or pstr_property_value.display_value = "" then pstr_property_value.display_value = pstr_property_value.value
+
+return
+
+end subroutine
+

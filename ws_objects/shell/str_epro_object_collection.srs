@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_epro_object_collection.srs
+global type str_epro_object_collection from structure
+	long		object_key_count
+	string		object_key[]
+	str_epro_object_definition		object_definition
+end type
+

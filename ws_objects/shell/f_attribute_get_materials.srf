@@ -1,0 +1,33 @@
+HA$PBExportHeader$f_attribute_get_materials.srf
+global type f_attribute_get_materials from function_object
+end type
+
+forward prototypes
+global function integer f_attribute_get_materials (str_attributes pstr_attributes, boolean pb_include_data, ref str_patient_materials pstr_materials)
+end prototypes
+
+global function integer f_attribute_get_materials (str_attributes pstr_attributes, boolean pb_include_data, ref str_patient_materials pstr_materials);long i
+str_patient_material lstr_material
+long ll_material_id
+
+pstr_materials.material_count = 0
+pstr_materials.includes_data = pb_include_data
+
+// Scan the attributes for materials and add the file data
+for i = 1 to pstr_attributes.attribute_count
+	if lower(right(pstr_attributes.attribute[i].attribute, 11)) = "material_id" &
+	  and isnumber(pstr_attributes.attribute[i].value) then
+	  	ll_material_id = long(pstr_attributes.attribute[i].value)
+		lstr_material = f_get_patient_material(ll_material_id, pb_include_data)
+		if lstr_material.material_id > 0 then
+			lstr_material.attribute = pstr_attributes.attribute[i].attribute
+			pstr_materials.material_count += 1
+			pstr_materials.material[pstr_materials.material_count] = lstr_material
+		end if
+	end if
+next
+
+return pstr_materials.material_count
+
+end function
+

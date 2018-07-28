@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_equivalence_item.srs
+global type str_equivalence_item from structure
+	string		object_id
+	string		object_type
+	string		description
+end type
+

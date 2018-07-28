@@ -1,0 +1,16 @@
+HA$PBExportHeader$dw_materials_category.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(255) update=yes updatewhereclause=yes name=title dbname="c_Patient_material.title" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=material_id dbname="c_Patient_material.material_id" )
+ column=(type=long update=yes updatewhereclause=yes name=category dbname="c_Patient_material.category" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(64) updatewhereclause=yes name=icon dbname="icon" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Patient_material~" ) COLUMN(NAME=~"c_Patient_material.title~") COLUMN(NAME=~"c_Patient_material.material_id~") COLUMN(NAME=~"c_Patient_material.category~") COMPUTE(NAME=~"selected_flag = 0~") COMPUTE(NAME=~"convert(varchar(64),'0') as icon~")WHERE(    EXP1 =~"( c_Patient_material.category~"   OP =~"=~"    EXP2 =~":pi_category )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( c_Patient_material.status~"   OP =~"=~"    EXP2 =~"'OK' )~" ) ) ORDER(NAME=~"c_Patient_material.title~" ASC=yes ) ARG(NAME = ~"pi_category~" TYPE = number)  ARG(NAME = ~"icon_bitmap~" TYPE = string) " update="c_Patient_material" updatewhere=0 updatekeyinplace=no arguments=(("pi_category", number),("icon_bitmap", string)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="0" x="110" y="4" height="76" width="1408" format="[general]"  name=title edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192), rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="bitmap(icon_bitmap)"border="6" color="0" x="9" y="8" height="76" width="91" format="[general]"  name=icon  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,41 @@
+HA$PBExportHeader$str_config_object_info.srs
+global type str_config_object_info from structure
+	string		config_object_id
+	string		config_object_type
+	string		context_object
+	string		description
+	string		long_description
+	string		config_object_category
+	long		installed_version
+	datetime		installed_version_date
+	string		installed_version_status
+	string		installed_version_release_sts
+	long		installed_local_key
+	long		latest_version
+	datetime		latest_version_date
+	string		latest_version_status
+	long		owner_id
+	string		owner_description
+	datetime		created
+	string		created_by
+	string		checked_out_by
+	datetime		checked_out_date_time
+	long		checked_out_from_version
+	string		status
+	string		copyright_status
+	boolean		copyable
+	string		license_data
+	string		license_status
+	datetime		license_expiration_date
+	long		earliest_version
+	long		version_count
+	long		production_version
+	datetime		production_version_date
+	long		beta_version
+	datetime		beta_version_date
+	long		testing_version
+	datetime		testing_version_date
+	boolean		library_object
+	string		object_component_id
+end type
+

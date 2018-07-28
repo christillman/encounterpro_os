@@ -1,0 +1,37 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_attachments.pbl" "";
+@end;
+@begin Objects
+ "extension\\w_attachment_psreport_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_render_cic_signature.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_wa_ecg_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_image_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_edit_attachment_text.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_render_isf_signature.srw" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_audio.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_dotnet.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_image.sru" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_audio_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_isf.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_link.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_xml.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_signature_cic.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_signature_penop.sru" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_signature_cic_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_activex_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_brentwood.sru" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_signature_easyink_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_signature_isf_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_activex.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_browser.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_ecg_wlca.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_generic.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_psreport.sru" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_xml_ccr.sru" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_signature_penop_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\u_component_attachment_signature_easyink.sru" "extension\\ext_attachments.pbl";
+ "extension\\w_render_easyink_signature.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_brentwood_display.srw" "extension\\ext_attachments.pbl";
+ "extension\\w_attachment_browser_display.srw" "extension\\ext_attachments.pbl";
+@end;

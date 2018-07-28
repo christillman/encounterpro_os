@@ -1,0 +1,19 @@
+HA$PBExportHeader$str_pick_users.srs
+global type str_pick_users from structure
+	string		search_option
+	string		user_name
+	string		role_id
+	string		specialty_id
+	boolean		hide_users
+	boolean		allow_roles
+	boolean		allow_system_users
+	boolean		allow_special_users
+	boolean		allow_support
+	str_users		selected_users
+	boolean		allow_multiple
+	string		pick_screen_title
+	string		cpr_id
+	string		actor_class
+	boolean		allow_editing
+end type
+

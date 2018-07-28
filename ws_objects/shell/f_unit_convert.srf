@@ -1,0 +1,36 @@
+HA$PBExportHeader$f_unit_convert.srf
+global type f_unit_convert from function_object
+end type
+
+forward prototypes
+global function integer f_unit_convert (real pr_amount, string ps_unit_from, string ps_unit_to, ref real pr_converted_amount)
+end prototypes
+
+global function integer f_unit_convert (real pr_amount, string ps_unit_from, string ps_unit_to, ref real pr_converted_amount);real lr_conversion_factor
+real lr_conversion_difference
+integer li_sts
+
+if ps_unit_from = ps_unit_to then
+	pr_converted_amount = pr_amount
+	return 1
+end if
+
+li_sts = tf_get_conversion(ps_unit_from, ps_unit_to, lr_conversion_factor, lr_conversion_difference)
+
+if li_sts > 0 then
+	pr_converted_amount = (pr_amount * lr_conversion_factor) + lr_conversion_difference
+elseif li_sts = 0 then
+	li_sts = tf_get_conversion(ps_unit_to, ps_unit_from, lr_conversion_factor, lr_conversion_difference)
+	if li_sts > 0 then
+		if lr_conversion_factor > 0 then
+			pr_converted_amount = (pr_amount - lr_conversion_difference) / lr_conversion_factor
+		else
+			pr_converted_amount = 0
+		end if
+	end if
+end if
+
+return li_sts
+
+end function
+

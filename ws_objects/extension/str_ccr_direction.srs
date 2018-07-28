@@ -1,0 +1,21 @@
+HA$PBExportHeader$str_ccr_direction.srs
+global type str_ccr_direction from structure
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		doseindicator
+	str_ccr_codeddescriptiontype		deliverymethod
+	str_ccr_dose_type		dose[]
+	string		dosecalculation[]
+	string		vehicle[]
+	str_ccr_codeddescriptiontype_2		route[]
+	str_ccr_codeddescriptiontype_2		site[]
+	str_ccr_datetimetype_2		administrationtiming[]
+	string		frequency[]
+	string		interval[]
+	string		duration[]
+	string		doserestriction[]
+	string		indication[]
+	str_ccr_codeddescriptiontype		stopindicator
+	long		sequenceposition
+	str_ccr_codeddescriptiontype		modifier
+end type
+

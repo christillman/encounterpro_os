@@ -1,0 +1,22 @@
+HA$PBExportHeader$str_encounter_type.srs
+global type str_encounter_type from structure
+	long		encounterpro_encounter_id
+	string		encounterid
+	str_id_instance		objectid[]
+	str_objecthandling_type		encounterhandling
+	datetime		encounterdate
+	string		description
+	string		encountertype
+	str_actor_type		attendingdoctor
+	str_actor_type		referringdoctor
+	str_actor_type		supervisingdoctor
+	boolean		newpatient
+	str_actor_type		encounterlocation
+	boolean		workerscompstatus
+	string		encountermodality
+	str_inpatient_type		inpatientstatus
+	str_outpatient_type		outpatientstatus
+	str_note_type		encounternote[]
+	str_message_type		message[]
+end type
+

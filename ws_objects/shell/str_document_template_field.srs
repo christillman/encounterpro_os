@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_document_template_field.srs
+global type str_document_template_field from structure
+	string		description
+	long		field_start		descriptor "comment" = "Offset of token spec"
+	long		field_length		descriptor "comment" = "Length of token spec"
+	string		field_datatype		descriptor "comment" = "Datatype of value that token will be replace with"
+	long		field_datalength		descriptor "comment" = "Length of value that token will be replaced with"
+end type
+

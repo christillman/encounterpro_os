@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_empty_controller.srf
+global type f_empty_controller from function_object
+end type
+
+forward prototypes
+global function str_controller f_empty_controller ()
+end prototypes
+
+global function str_controller f_empty_controller ();str_controller lstr_controller
+
+setnull(lstr_controller.config_object_id)
+
+return lstr_controller
+
+end function
+

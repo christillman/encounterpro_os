@@ -1,0 +1,25 @@
+HA$PBExportHeader$f_open_file.srf
+global type f_open_file from function_object
+end type
+
+forward prototypes
+global function integer f_open_file (string ps_file, boolean pb_edit_file)
+end prototypes
+
+global function integer f_open_file (string ps_file, boolean pb_edit_file);ulong pul_process_id
+integer li_sts
+string ls_action
+
+if pb_edit_file then
+	ls_action = "Edit"
+Else
+	ls_action = "Open"
+end if
+
+// By default, we'll wait for completion if we're editing the file
+li_sts = f_open_file_with_process(ps_file, ls_action, pb_edit_file, pul_process_id)
+
+return li_sts
+
+end function
+

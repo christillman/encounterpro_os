@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_ccr_reaction.srs
+global type str_ccr_reaction from structure
+	str_ccr_codeddescriptiontype		Description
+	str_ccr_codeddescriptiontype		Status
+	str_ccr_codeddescriptiontype		Severity
+	string		Interventions[]
+	long		SequencePosition
+	str_ccr_codeddescriptiontype		Modifier
+end type
+

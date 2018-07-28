@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_resolve_field_mapped_property.srf
+global type f_resolve_field_mapped_property from function_object
+end type
+
+forward prototypes
+global function str_property_value f_resolve_field_mapped_property (str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_resolve_field_mapped_property (str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes);str_document_element_set_collection lstr_collection
+
+lstr_collection.collectiontype = "None"
+
+return f_resolve_field_mapped_property_from_object(lstr_collection, 0, pstr_mapping, pstr_context, pstr_attributes)
+
+end function
+

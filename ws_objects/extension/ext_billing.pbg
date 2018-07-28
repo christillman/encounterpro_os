@@ -1,0 +1,21 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_billing.pbl" "";
+@end;
+@begin Objects
+ "extension\\str_db_parms.srs" "extension\\ext_billing.pbl";
+ "extension\\u_component_billing_medman.sru" "extension\\ext_billing.pbl";
+ "extension\\u_component_billing_encounterpro.sru" "extension\\ext_billing.pbl";
+ "extension\\u_component_billing_foxmeadows.sru" "extension\\ext_billing.pbl";
+ "extension\\dw_encounter_charges_for_treatment.srd" "extension\\ext_billing.pbl";
+ "extension\\u_component_billing_lytec.sru" "extension\\ext_billing.pbl";
+ "extension\\str_component_collection.srs" "extension\\ext_billing.pbl";
+ "extension\\dw_facility_pick.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_msg_out_file.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_provider_entry.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_provider_list.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_facility_entry.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_provider_entry_new.srd" "extension\\ext_billing.pbl";
+ "extension\\dw_provider_entry_new_id.srd" "extension\\ext_billing.pbl";
+ "extension\\str_component_attribute.srs" "extension\\ext_billing.pbl";
+@end;

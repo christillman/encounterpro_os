@@ -1,0 +1,19 @@
+HA$PBExportHeader$str_attachment_context.srs
+global type str_attachment_context from structure
+	string		folder
+	string		description
+	string		cpr_id
+	string		context_object
+	string		context_object_type
+	long		object_key
+	boolean		remove
+	boolean		apply_to_all
+	boolean		user_cancelled
+	long		workplan_id
+	string		user_id
+	datetime		begin_date
+	str_attributes		object_attributes
+	boolean		new_object
+	boolean		posting_file
+end type
+

@@ -1,0 +1,33 @@
+HA$PBExportHeader$f_get_progress_types.srf
+global type f_get_progress_types from function_object
+end type
+
+forward prototypes
+global function integer f_get_progress_types (string ps_cpr_id, string ps_progress_type, string ps_context_object, long pl_object_key, ref str_progress_type pstr_progress_type[])
+end prototypes
+
+global function integer f_get_progress_types (string ps_cpr_id, string ps_progress_type, string ps_context_object, long pl_object_key, ref str_progress_type pstr_progress_type[]);long ll_types
+string ls_context_object_type
+
+if isnull(current_patient) then
+	if lower(ps_context_object) = "patient" then
+		setnull(ls_context_object_type)
+	else
+		ls_context_object_type = sqlca.fn_context_object_type(ps_context_object, ps_cpr_id, pl_object_key)
+	end if
+else
+	ls_context_object_type = current_patient.context_object_type(ps_context_object, pl_object_key)
+end if
+
+
+if isnull(ps_progress_type) then
+	ll_types = datalist.progress_types(ps_context_object, ls_context_object_type, pstr_progress_type)
+else
+	ll_types = datalist.progress_type(ps_context_object, ls_context_object_type, ps_progress_type, pstr_progress_type[1])
+end if
+
+return ll_types
+
+
+end function
+

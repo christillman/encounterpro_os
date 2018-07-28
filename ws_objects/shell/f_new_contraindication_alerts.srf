@@ -1,0 +1,95 @@
+HA$PBExportHeader$f_new_contraindication_alerts.srf
+global type f_new_contraindication_alerts from function_object
+end type
+
+forward prototypes
+global function string f_new_contraindication_alerts (str_attributes pstr_attributes)
+end prototypes
+
+global function string f_new_contraindication_alerts (str_attributes pstr_attributes);str_popup popup
+str_popup_return popup_return
+string ls_context_object
+string ls_description
+string ls_contraindication_document_component_id
+string ls_report_id
+string ls_null
+long ll_sts
+long ll_count
+string ls_long_description
+string ls_contraindication_report_component_id
+string ls_contraindication_report_component_guid
+
+ls_contraindication_report_component_id = "RPT_Document"
+setnull(ls_null)
+setnull(ls_long_description)
+
+DO WHILE true
+	popup.title = "Enter title of new Contraindication Alerts component"
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_description = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Report_Definition
+	WHERE description = :ls_description;
+	if not tf_check() then return ls_null
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a Contraindication Alerts component with that title.  Please enter a different title for the new Contraindication Alerts component.")
+	else
+		exit
+	end if
+LOOP
+
+ls_context_object = "Patient"
+
+popup.title = "Select Datafile Component"
+popup.dataobject = "dw_component_pick"
+popup.datacolumn = 1
+popup.displaycolumn = 4
+popup.argument_count = 1
+popup.argument[1] = "Contraindication"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.choices_count < 1 then
+	openwithparm(w_pop_message, "There are no Contraindication components installed.  Please install a Contraindication component.")
+	return ls_null
+end if
+if popup_return.item_count <> 1 then return ls_null
+
+ls_contraindication_document_component_id = popup_return.items[1]
+
+SELECT CAST(id AS varchar(40))
+INTO :ls_contraindication_report_component_guid
+FROM dbo.fn_components()
+WHERE component_id = :ls_contraindication_report_component_id;
+if not tf_check() then return ls_null
+
+ll_sts = sqlca.jmj_new_document_config_object(  &
+										"Contraindication Alerts", &
+										ls_description, &
+										ls_context_object, &
+										ls_contraindication_document_component_id, &
+										current_user.user_id, &
+										"OK", &
+										ls_long_description, &
+										REF ls_report_id )
+if not tf_check() then return ls_null
+if ll_sts <> 1 then
+	log.log(this, "f_new_datafile()", "Error creating new datafile", 4)
+	return ls_null
+end if
+
+if isnull(ls_report_id) or trim(ls_report_id) = "" then
+	log.log(this, "f_new_datafile()", "jmj_new_datafile returned NULL", 4)
+	return ls_null
+end if
+
+return ls_report_id
+
+
+
+end function
+

@@ -1,0 +1,67 @@
+HA$PBExportHeader$f_empty_treatment.srf
+global type f_empty_treatment from function_object
+end type
+
+forward prototypes
+global function str_treatment_description f_empty_treatment ()
+end prototypes
+
+global function str_treatment_description f_empty_treatment ();str_treatment_description lstr_treatment_description
+
+
+setnull(lstr_treatment_description.treatment_id)
+setnull(lstr_treatment_description.treatment_type)
+setnull(lstr_treatment_description.treatment_key)
+setnull(lstr_treatment_description.treatment_description)
+setnull(lstr_treatment_description.begin_date)
+setnull(lstr_treatment_description.end_date)
+setnull(lstr_treatment_description.treatment_status)
+setnull(lstr_treatment_description.selected_flag)
+setnull(lstr_treatment_description.color)
+setnull(lstr_treatment_description.open_encounter_id)
+setnull(lstr_treatment_description.close_encounter_id)
+setnull(lstr_treatment_description.parent_treatment_id)
+lstr_treatment_description.problem_count = 0
+setnull(lstr_treatment_description.attachment_count)
+setnull(lstr_treatment_description.observation_id)
+setnull(lstr_treatment_description.encounter_id)
+setnull(lstr_treatment_description.cpt_code)
+setnull(lstr_treatment_description.drug_id)
+setnull(lstr_treatment_description.package_id)
+setnull(lstr_treatment_description.specialty_id)
+setnull(lstr_treatment_description.procedure_id)
+setnull(lstr_treatment_description.location)
+setnull(lstr_treatment_description.ordered_by)
+setnull(lstr_treatment_description.material_id)
+setnull(lstr_treatment_description.treatment_mode)
+setnull(lstr_treatment_description.observation_type)
+setnull(lstr_treatment_description.created)
+setnull(lstr_treatment_description.created_by)
+setnull(lstr_treatment_description.dose_amount)
+setnull(lstr_treatment_description.dose_unit)
+setnull(lstr_treatment_description.duration_amount)
+setnull(lstr_treatment_description.duration_unit)
+setnull(lstr_treatment_description.duration_prn)
+setnull(lstr_treatment_description.dispense_amount)
+setnull(lstr_treatment_description.office_dispense_amount)
+setnull(lstr_treatment_description.dispense_unit)
+setnull(lstr_treatment_description.administration_sequence)
+setnull(lstr_treatment_description.administer_frequency)
+setnull(lstr_treatment_description.refills)
+setnull(lstr_treatment_description.brand_name_required)
+setnull(lstr_treatment_description.maker_id)
+setnull(lstr_treatment_description.lot_number)
+setnull(lstr_treatment_description.expiration_date)
+setnull(lstr_treatment_description.specimen_id)
+setnull(lstr_treatment_description.ordered_by_supervisor)
+setnull(lstr_treatment_description.appointment_date_time)
+setnull(lstr_treatment_description.ordered_for)
+setnull(lstr_treatment_description.completed_by)
+setnull(lstr_treatment_description.dispatch_encounter_id)
+
+
+return lstr_treatment_description
+
+
+end function
+

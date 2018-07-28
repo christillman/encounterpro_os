@@ -1,0 +1,15 @@
+HA$PBExportHeader$str_observation_type.srs
+global type str_observation_type from structure
+	str_id_instance		objectid[]
+	string		description
+	str_encounter_type		encounter[]
+	datetime		resultexpecteddate
+	long		stage
+	string		stagedescription
+	str_observation_result_type		observationresult[]
+	str_child_observation_type		observation[]
+	str_note_type		observationnote[]
+	datetime		specimencollected
+	string		observationstatus
+end type
+

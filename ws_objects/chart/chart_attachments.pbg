@@ -1,0 +1,11 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "chart\\chart_attachments.pbl" "";
+@end;
+@begin Objects
+ "chart\\w_scan_letter.srw" "chart\\chart_attachments.pbl";
+ "chart\\dw_sp_get_folder_list.srd" "chart\\chart_attachments.pbl";
+ "chart\\u_letters.sru" "chart\\chart_attachments.pbl";
+ "chart\\u_letter_attachments.sru" "chart\\chart_attachments.pbl";
+ "chart\\dw_sp_get_letter_count.srd" "chart\\chart_attachments.pbl";
+@end;

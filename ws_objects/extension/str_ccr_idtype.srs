@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_ccr_idtype.srs
+global type str_ccr_idtype from structure
+	str_ccr_datetimetype		datetime[]
+	str_ccr_codeddescriptiontype		idtype
+	string		id
+	str_ccr_actorreferencetype		issuedby
+	str_ccr_slrcgroup		slrcgroup
+end type
+

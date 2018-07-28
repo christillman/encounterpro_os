@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[u_Display_Script_Selection]
+    ADD CONSTRAINT [PK_u_Display_Script_Selection] PRIMARY KEY CLUSTERED ([display_script_selection_id] ASC) WITH (FILLFACTOR = 90, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

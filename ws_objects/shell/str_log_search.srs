@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_log_search.srs
+global type str_log_search from structure
+	long		computer_id
+	string		user_id
+	datetime		begin_date
+	datetime		end_date
+	long		min_severity
+	string		cpr_id
+end type
+

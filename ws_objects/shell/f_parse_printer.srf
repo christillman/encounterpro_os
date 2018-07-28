@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_parse_printer.srf
+global type f_parse_printer from function_object
+end type
+
+forward prototypes
+global function str_printer f_parse_printer (string ps_printerstring)
+end prototypes
+
+global function str_printer f_parse_printer (string ps_printerstring);str_printer lstr_printer
+string ls_temp
+
+lstr_printer.printerstring = ps_printerstring
+f_split_string(ps_printerstring, "~t", lstr_printer.printername, ls_temp)
+f_split_string(ls_temp, "~t", lstr_printer.driver, lstr_printer.port)
+lstr_printer.nt_device = lstr_printer.printername + "," + lstr_printer.driver + "," + lstr_printer.port
+return lstr_printer
+
+
+end function
+

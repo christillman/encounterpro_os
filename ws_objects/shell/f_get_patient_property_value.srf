@@ -1,0 +1,19 @@
+HA$PBExportHeader$f_get_patient_property_value.srf
+global type f_get_patient_property_value from function_object
+end type
+
+forward prototypes
+global function string f_get_patient_property_value (string ps_cpr_id, long pl_object_key, string ps_context_object, string ps_property, str_attributes pstr_context_attributes)
+end prototypes
+
+global function string f_get_patient_property_value (string ps_cpr_id, long pl_object_key, string ps_context_object, string ps_property, str_attributes pstr_context_attributes);str_property_value lstr_property
+
+lstr_property = f_get_patient_property(ps_cpr_id, &
+												pl_object_key, &
+												ps_context_object, &
+												ps_property, &
+												pstr_context_attributes)
+
+return lstr_property.value
+end function
+

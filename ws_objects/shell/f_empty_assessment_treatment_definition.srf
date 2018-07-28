@@ -1,0 +1,36 @@
+HA$PBExportHeader$f_empty_assessment_treatment_definition.srf
+global type f_empty_assessment_treatment_definition from function_object
+end type
+
+forward prototypes
+global function str_assessment_treatment_definition f_empty_assessment_treatment_definition ()
+end prototypes
+
+global function str_assessment_treatment_definition f_empty_assessment_treatment_definition ();str_assessment_treatment_definition lstr_treatment
+
+setnull(lstr_treatment.definition_id)
+setnull(lstr_treatment.assessment_id)
+setnull(lstr_treatment.treatment_type)
+setnull(lstr_treatment.treatment_description)
+setnull(lstr_treatment.treatment_mode)
+setnull(lstr_treatment.workplan_id)
+setnull(lstr_treatment.followup_workplan_id)
+setnull(lstr_treatment.user_id)
+setnull(lstr_treatment.sort_sequence)
+setnull(lstr_treatment.instructions)
+setnull(lstr_treatment.parent_definition_id)
+setnull(lstr_treatment.child_flag)
+setnull(lstr_treatment.update_flag)
+setnull(lstr_treatment.common_list)
+setnull(lstr_treatment.open_encounter_id)
+setnull(lstr_treatment.begin_date)
+setnull(lstr_treatment.end_date)
+setnull(lstr_treatment.problem_id)
+
+lstr_treatment.attributes.attribute_count = 0
+
+
+return lstr_treatment
+
+end function
+

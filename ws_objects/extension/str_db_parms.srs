@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_db_parms.srs
+global type str_db_parms from structure
+	string		server
+	string		database
+end type
+

@@ -1,0 +1,63 @@
+HA$PBExportHeader$f_string_to_color.srf
+global type f_string_to_color from function_object
+end type
+
+forward prototypes
+global function long f_string_to_color (string ps_string)
+end prototypes
+
+global function long f_string_to_color (string ps_string);long ll_color
+
+if isnumber(ps_string) then
+	return long(ps_string)
+end if
+
+CHOOSE CASE upper(ps_string)
+	CASE "LIGHT_BLUE"
+		ll_color = COLOR_LIGHT_BLUE
+	CASE "BLUE"
+		ll_color = COLOR_BLUE
+	CASE "EPRO_BLUE"
+		ll_color = COLOR_EPRO_BLUE
+	CASE "BEIGE"
+		ll_color = COLOR_BEIGE
+	CASE "BROWN"
+		ll_color = COLOR_BROWN
+	CASE "DARK_BLUE"
+		ll_color = COLOR_DARK_BLUE
+	CASE "LIGHT_GREY"
+		ll_color = COLOR_LIGHT_GREY
+	CASE "DARK_GREY"
+		ll_color = COLOR_DARK_GREY
+	CASE "LIGHT_YELLOW"
+		ll_color = COLOR_LIGHT_YELLOW
+	CASE "BLACK"
+		ll_color = COLOR_BLACK
+	CASE "RED"
+		ll_color = COLOR_RED
+	CASE "GREEN"
+		ll_color = COLOR_GREEN
+	CASE "WHITE"
+		ll_color = COLOR_WHITE
+	CASE "OBJECT"
+		ll_color = COLOR_OBJECT
+	CASE "OBJECT_SELECTED"
+		ll_color = COLOR_OBJECT_SELECTED
+	CASE "BACKGROUND"
+		ll_color = COLOR_BACKGROUND
+	CASE "TEXT_NORMAL"
+		ll_color = COLOR_TEXT_NORMAL
+	CASE "TEXT_WARNING"
+		ll_color = COLOR_TEXT_WARNING
+	CASE "TEXT_ERROR"
+		ll_color = COLOR_TEXT_ERROR
+	CASE ELSE
+		setnull(ll_color)
+END CHOOSE
+
+
+return ll_color
+
+
+end function
+

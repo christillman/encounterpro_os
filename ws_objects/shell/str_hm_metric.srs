@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_hm_metric.srs
+global type str_hm_metric from structure
+	long		metric_sequence
+	string		title
+	string		description
+	string		observation_id
+	integer		result_sequence
+	long		interval
+	string		interval_unit
+end type
+

@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_integer_to_boolean.srf
+global type f_integer_to_boolean from function_object
+end type
+
+forward prototypes
+global function boolean f_integer_to_boolean (integer pi_boolean)
+end prototypes
+
+global function boolean f_integer_to_boolean (integer pi_boolean);if pi_boolean = 0 then
+	return false
+else
+	return true
+end if
+
+end function
+

@@ -1,0 +1,14 @@
+HA$PBExportHeader$f_new_config_object.srf
+global type f_new_config_object from function_object
+end type
+
+forward prototypes
+global function string f_new_config_object (string ps_config_object_type, ref str_attributes pstr_attributes)
+end prototypes
+
+global function string f_new_config_object (string ps_config_object_type, ref str_attributes pstr_attributes);str_attributes lstr_state_attributes
+
+return f_new_config_object_2(ps_config_object_type, pstr_attributes, lstr_state_attributes)
+
+end function
+

@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_rxhistory_type.srs
+global type str_rxhistory_type from structure
+	str_date_type		rx_date
+	string		rxhistory_type
+	str_link_type		practitioner
+	str_link_type		location
+end type
+

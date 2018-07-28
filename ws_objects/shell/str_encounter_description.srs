@@ -1,0 +1,29 @@
+HA$PBExportHeader$str_encounter_description.srs
+global type str_encounter_description from structure
+	string		cpr_id
+	long		encounter_id
+	datetime		encounter_date
+	string		encounter_type
+	string		indirect_flag
+	string		description
+	datetime		discharge_date
+	string		attending_doctor
+	string		referring_doctor
+	string		supervising_doctor
+	string		new_flag
+	boolean		billing_posted
+	string		encounter_status
+	string		patient_name
+	string		office_id
+	string		bill_flag
+	str_access_control_list		access_control_list
+	str_id_list		id_list
+	date		date_of_birth
+	datetime		created
+	string		created_by
+	long		patient_workplan_id
+	string		patient_location
+	long		document_status
+	long		color
+end type
+

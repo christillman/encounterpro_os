@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_codeddescription_type.srs
+global type str_codeddescription_type from structure
+	string		description
+	string		code
+end type
+

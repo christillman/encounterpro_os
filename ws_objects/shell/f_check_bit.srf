@@ -1,0 +1,29 @@
+HA$PBExportHeader$f_check_bit.srf
+global type f_check_bit from function_object
+end type
+
+forward prototypes
+global function boolean f_check_bit (long pl_flags, integer pl_bit)
+end prototypes
+
+global function boolean f_check_bit (long pl_flags, integer pl_bit);unsignedlong ll_flag
+unsignedlong ll_temp
+
+if pl_bit <= 0 then return false
+
+ll_flag = 2^(pl_bit - 1)
+
+ll_temp = pl_flags / ll_flag
+
+ll_temp = mod(ll_temp, 2)
+
+if ll_temp = 1 then
+	return true
+else
+	return false
+end if
+
+
+
+end function
+

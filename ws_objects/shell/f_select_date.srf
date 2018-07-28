@@ -1,0 +1,37 @@
+HA$PBExportHeader$f_select_date.srf
+global type f_select_date from function_object
+end type
+
+forward prototypes
+global function string f_select_date (ref date pd_date, string ps_title)
+end prototypes
+
+global function string f_select_date (ref date pd_date, string ps_title);str_popup popup
+str_popup_return popup_return
+string ls_text
+string ls_null
+w_pick_date lw_window
+
+setnull(ls_null)
+
+popup.title = ps_title
+
+if isnull(pd_date) then
+	popup.data_row_count = 0
+else
+	popup.items[1] = string(pd_date, date_format_string)
+	popup.data_row_count = 1
+end if
+
+openwithparm(lw_window, popup, "w_pick_date", f_active_window())
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+pd_date =date(popup_return.items[1])
+ls_text = string(pd_date, date_format_string)
+
+return ls_text
+
+
+end function
+

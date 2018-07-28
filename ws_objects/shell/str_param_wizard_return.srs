@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_param_wizard_return.srs
+global type str_param_wizard_return from structure
+	integer		return_status
+	str_attributes		attributes
+end type
+

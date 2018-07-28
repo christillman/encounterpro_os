@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_cpr_page_param.srs
+global type str_cpr_page_param from structure
+	long		param_sequence
+	string		param1
+	string		param2
+	string		param3
+	string		param4
+end type
+

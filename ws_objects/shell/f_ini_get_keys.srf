@@ -1,0 +1,158 @@
+HA$PBExportHeader$f_ini_get_keys.srf
+global type f_ini_get_keys from function_object
+end type
+
+forward prototypes
+global function integer f_ini_get_keys (string as_file, string as_section, ref string as_keys[])
+end prototypes
+
+global function integer f_ini_get_keys (string as_file, string as_section, ref string as_keys[]);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  		of_GetKeys
+//
+//	Access:  		public
+//
+//	Arguments:	
+//	as_ini			The .ini file.
+//	as_section		The section name to retrieve keys from
+//	as_keys[]		An array of strings passed by reference.  This will store the 
+//							key names retrieved from the .INI file
+//
+//	Returns:			Integer
+//						The number of keys retrieved
+//						 0	if there are no keys that exist for section, or section does not exist
+//						-1	file error
+//						-2	if .INI file has not been specified or does not exist.  
+//
+//	Description:  	Retrieves all keys from a specified section.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	5.0   Initial version
+// 5.0.02 Initialize keys array to blanks at start of function
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Copyright $$HEX2$$a9002000$$ENDHEX$$1996 Powersoft Corporation.  All Rights Reserved.
+//	Any distribution of the PowerBuilder Foundation Classes (PFC)
+//	source code by other than Powersoft is prohibited.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+boolean	lb_sectionfound
+integer	li_file
+integer	li_rc
+integer	li_keys
+long		ll_pos
+long		ll_first
+long		ll_last
+long		ll_equal
+long		ll_length
+string	ls_line
+string	ls_key
+string	ls_section
+string	ls_comment
+string	ls_keys[]
+
+SetPointer (Hourglass!)
+
+// Verify that .INI file name has been specified.
+if not FileExists (as_file) then
+	return -2
+end if
+
+// Open file (check rc).
+ll_length = FileLength (as_file)
+li_file = FileOpen (as_file, LineMode!)
+if li_file = -1 then return -1
+
+// reset the array coming in
+as_keys = ls_keys
+//////////////////////////////////////////////////////////////////////////////
+// Find the correct section name
+//////////////////////////////////////////////////////////////////////////////
+do while li_rc >= 0 and not lb_sectionfound
+	
+	// Read one line from the inifile (check rc).
+	li_rc = FileRead (li_file, ls_line)
+	if li_rc = -1 then
+		return -1
+	end if
+	
+	// Check if any characters were read.
+	if li_rc > 0 then
+		
+		// Look for a section header components (the OpenBracket and CloseBracket (if any)).
+		ll_first = Pos (ls_line, "[")
+		ll_last = Pos (ls_line, "]")
+		
+		// Was section header found?		
+		if ll_first > 0 and ll_last > 0 then
+			// Yes, a section header has been found.
+			// Get the name of the section.
+			ls_line = trim(ls_line)
+			if Left (ls_line, 1) = "[" then
+				ll_pos = Pos (ls_line, "]")
+				ls_section = Mid (ls_line, 2, ll_pos - 2)
+				// Determine if this is the section being searched for.								
+				if Lower(ls_section) = Lower(as_section) then
+					// The search for section has been found.
+					lb_sectionfound = true
+				end if
+			end if
+		end if
+	end if
+loop 
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Retrieve all keys for section
+//////////////////////////////////////////////////////////////////////////////
+if lb_sectionfound then
+	lb_sectionfound = false
+	do while li_rc >= 0 and not lb_sectionfound
+		
+		// Read one line from the file (validate the rc).
+		li_rc = FileRead (li_file, ls_line)
+		if li_rc = -1 then
+			return -1
+		end if
+		
+		// Check if any characters were read.		
+		if li_rc > 0 then
+			// Check for a "commented" line (skip if found).
+			ls_comment = trim(ls_line)
+			if Char (ls_comment) = ";" then Continue
+			
+			ll_equal = Pos (ls_line, "=")
+			if ll_equal > 0 then
+				ls_key = trim(Left (ls_line, ll_equal - 1))
+				if Len (ls_key) > 0 then
+					li_keys++
+					as_keys[li_keys] = ls_key
+				end if
+			else
+				ll_first = Pos (ls_line, "[")
+				ll_last = Pos (ls_line, "]")
+				if ll_first > 0 and ll_last > 0 then
+					ls_line = trim(ls_line)
+					if Left (ls_line, 1) = "[" then
+						lb_sectionfound = true
+					end if
+				end if
+			end if
+		end if
+	loop 
+end if
+
+
+//////////////////////////////////////////////////////////////////////////////
+// Close file and return
+//////////////////////////////////////////////////////////////////////////////
+FileClose (li_file)
+return li_keys
+end function
+

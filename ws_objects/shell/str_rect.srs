@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_rect.srs
+global type str_rect from structure
+	long		left
+	long		top
+	long		right
+	long		bottom
+end type
+

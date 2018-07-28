@@ -1,0 +1,45 @@
+HA$PBExportHeader$f_get_progress.srf
+global type f_get_progress from function_object
+end type
+
+forward prototypes
+global function str_progress_list f_get_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key)
+end prototypes
+
+global function str_progress_list f_get_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key);// This scans a datastore and extracts the progress records into a str_progress_list structure.  Progress notes
+// with identical progress_key and progress_date_time are considered duplication so only the latest is taken
+// If the latest progress records has a null progress value and a null attachment_id then it is considered deleted
+
+long i
+long ll_pt
+str_progress_type lstr_progress_type[]
+integer li_progress_type_count
+str_progress_list lstr_progress_for_type
+str_progress_list lstr_progress
+string ls_progress_type
+
+lstr_progress.progress_count = 0
+
+// Get a list of the progress types
+li_progress_type_count = f_get_progress_types(ps_cpr_id, ps_progress_type, ps_context_object, pl_object_key, lstr_progress_type)
+
+for ll_pt = 1 to li_progress_type_count
+	ls_progress_type = lstr_progress_type[ll_pt].progress_type
+	// Get the progress records for this type
+	if isnull(current_patient) then
+		lstr_progress_for_type = f_get_progress_list(ps_cpr_id, ps_context_object, pl_object_key, ls_progress_type, ps_progress_key, 'N')
+	else
+		lstr_progress_for_type = current_patient.get_progress_list(ps_context_object, pl_object_key, ls_progress_type, ps_progress_key, 'N')
+	end if
+	
+	// Add the progress records to the list
+	for i = 1 to lstr_progress_for_type.progress_count
+		lstr_progress.progress_count += 1
+		lstr_progress.progress[lstr_progress.progress_count] = lstr_progress_for_type.progress[i]
+	next
+next
+
+return lstr_progress
+
+end function
+

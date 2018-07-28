@@ -1,0 +1,18 @@
+HA$PBExportHeader$f_attachment_type_from_object_type.srf
+global type f_attachment_type_from_object_type from function_object
+end type
+
+forward prototypes
+global function string f_attachment_type_from_object_type (string ps_extension)
+end prototypes
+
+global function string f_attachment_type_from_object_type (string ps_extension);String ls_attachment_type
+
+ls_attachment_type = datalist.extension_default_attachment_type(ps_extension)
+If isnull(ls_attachment_type) Or Len(ls_attachment_type) = 0 Then
+	ls_attachment_type = "FILE"
+End If
+
+Return ls_attachment_type
+end function
+

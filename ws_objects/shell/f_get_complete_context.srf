@@ -1,0 +1,34 @@
+HA$PBExportHeader$f_get_complete_context.srf
+global type f_get_complete_context from function_object
+end type
+
+forward prototypes
+global function str_complete_context f_get_complete_context ()
+end prototypes
+
+global function str_complete_context f_get_complete_context ();str_complete_context lstr_context
+
+if isnull(current_service) then
+	lstr_context = f_empty_context()
+
+	lstr_context.customer_id = sqlca.customer_id
+	lstr_context.office_id = office_id
+	lstr_context.user_id = current_user.user_id
+	lstr_context.scribe_user_id = current_scribe.user_id
+
+	if isnull(current_patient) then
+		return lstr_context
+	else
+		lstr_context.cpr_id = current_patient.cpr_id
+		lstr_context.encounter_id = current_patient.open_encounter_id
+	end if
+
+	return lstr_context
+end if
+
+return current_service.context()
+
+
+
+end function
+

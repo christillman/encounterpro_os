@@ -1,0 +1,36 @@
+HA$PBExportHeader$f_get_controller_config_object.srf
+global type f_get_controller_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_get_controller_config_object (string ps_config_object_id, ref str_controller pstr_controller)
+end prototypes
+
+global function integer f_get_controller_config_object (string ps_config_object_id, ref str_controller pstr_controller);u_ds_data luo_controller_hotspots
+long i
+
+pstr_controller = f_empty_controller()
+
+pstr_controller.config_object_id = ps_config_object_id
+
+luo_controller_hotspots = CREATE u_ds_data
+luo_controller_hotspots.set_dataobject("dw_controller_hotspots")
+pstr_controller.hotspot_count = luo_controller_hotspots.retrieve(ps_config_object_id)
+
+for i = 1 to pstr_controller.hotspot_count
+	pstr_controller.hotspot[i].hotspot_id = luo_controller_hotspots.object.hotspot_id[i]
+	pstr_controller.hotspot[i].context_object = luo_controller_hotspots.object.context_object[i]
+	pstr_controller.hotspot[i].hotspot_name = luo_controller_hotspots.object.hotspot_name[i]
+	pstr_controller.hotspot[i].description = luo_controller_hotspots.object.description[i]
+	pstr_controller.hotspot[i].menu_config_object_id = luo_controller_hotspots.object.menu_config_object_id[i]
+	pstr_controller.hotspot[i].status = luo_controller_hotspots.object.status[i]
+	pstr_controller.hotspot[i].created = luo_controller_hotspots.object.created[i]
+	pstr_controller.hotspot[i].created_by = luo_controller_hotspots.object.created_by[i]
+next
+
+DESTROY luo_controller_hotspots
+
+return 1
+
+end function
+

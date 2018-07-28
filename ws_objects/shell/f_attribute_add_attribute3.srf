@@ -1,0 +1,120 @@
+HA$PBExportHeader$f_attribute_add_attribute3.srf
+global type f_attribute_add_attribute3 from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_add_attribute3 (ref str_attributes pstr_attributes, string ps_attribute, string ps_value, string ps_component_id)
+global subroutine f_attribute_add_attribute3 (ref str_attributes pstr_attributes, string ps_attribute, string ps_value, string ps_component_id, long pl_attribute_sequence)
+end prototypes
+
+global subroutine f_attribute_add_attribute3 (ref str_attributes pstr_attributes, string ps_attribute, string ps_value, string ps_component_id);long i
+long ll_idx
+
+setnull(ll_idx)
+
+// If there isn't an attribute name then don't do anything
+if isnull(ps_attribute) then return
+
+// See if the attribute already exists.  Search from the end so we update the last one.
+for i = pstr_attributes.attribute_count to 1 step -1
+	if lower(pstr_attributes.attribute[i].attribute) = lower(ps_attribute) then
+		// If a component_id is supplied, then only find an existing attribute if it matches on the component_id too
+		if len(ps_component_id) > 0 then
+			if lower(pstr_attributes.attribute[i].component_id) = lower(ps_component_id) then
+				ll_idx = i
+				exit
+			end if
+		else
+			ll_idx = i
+			exit
+		end if
+	end if
+next
+
+// If the attribute isn't already in the structure...
+if isnull(ll_idx) then
+	// If the new value is null and the attribute doesn't exist, then we're done
+	if isnull(ps_value) then
+		return
+	else
+		// Otherwise, add the new attribute
+		pstr_attributes.attribute_count += 1
+		ll_idx = pstr_attributes.attribute_count
+		pstr_attributes.attribute[ll_idx].attribute = ps_attribute
+		pstr_attributes.attribute[ll_idx].value = ps_value
+		pstr_attributes.attribute[ll_idx].component_id = ps_component_id
+	end if
+else
+	// If the new value is null and the attribute exists, then remove the attribute
+	if isnull(ps_value) then
+		for i = ll_idx + 1 to pstr_attributes.attribute_count
+			pstr_attributes.attribute[i - 1] = pstr_attributes.attribute[i]
+		next
+		pstr_attributes.attribute_count -= 1
+	else
+		// Otherwise just update the value
+		pstr_attributes.attribute[ll_idx].value = ps_value
+	end if
+end if
+
+
+return
+
+end subroutine
+
+global subroutine f_attribute_add_attribute3 (ref str_attributes pstr_attributes, string ps_attribute, string ps_value, string ps_component_id, long pl_attribute_sequence);long i
+long ll_idx
+
+setnull(ll_idx)
+
+// If there isn't an attribute name then don't do anything
+if isnull(ps_attribute) then return
+
+// See if the attribute already exists.  Search from the end so we update the last one.
+for i = pstr_attributes.attribute_count to 1 step -1
+	if lower(pstr_attributes.attribute[i].attribute) = lower(ps_attribute) then
+		// If a component_id is supplied, then only find an existing attribute if it matches on the component_id too
+		if len(ps_component_id) > 0 then
+			if lower(pstr_attributes.attribute[i].component_id) = lower(ps_component_id) then
+				ll_idx = i
+				exit
+			end if
+		else
+			ll_idx = i
+			exit
+		end if
+	end if
+next
+
+// If the attribute isn't already in the structure...
+if isnull(ll_idx) then
+	// If the new value is null and the attribute doesn't exist, then we're done
+	if isnull(ps_value) then
+		return
+	else
+		// Otherwise, add the new attribute
+		pstr_attributes.attribute_count += 1
+		ll_idx = pstr_attributes.attribute_count
+		pstr_attributes.attribute[ll_idx].attribute = ps_attribute
+		pstr_attributes.attribute[ll_idx].value = ps_value
+		pstr_attributes.attribute[ll_idx].component_id = ps_component_id
+		pstr_attributes.attribute[ll_idx].attribute_sequence = pl_attribute_sequence
+	end if
+else
+	// If the new value is null and the attribute exists, then remove the attribute
+	if isnull(ps_value) then
+		for i = ll_idx + 1 to pstr_attributes.attribute_count
+			pstr_attributes.attribute[i - 1] = pstr_attributes.attribute[i]
+		next
+		pstr_attributes.attribute_count -= 1
+	else
+		// Otherwise just update the value
+		pstr_attributes.attribute[ll_idx].value = ps_value
+	end if
+end if
+
+
+return
+
+end subroutine
+

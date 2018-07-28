@@ -1,0 +1,50 @@
+HA$PBExportHeader$f_string_get_next_line.srf
+global type f_string_get_next_line from function_object
+end type
+
+forward prototypes
+global function string f_string_get_next_line (ref string ps_string)
+end prototypes
+
+global function string f_string_get_next_line (ref string ps_string);string ls_next_line
+string ls_char
+long i
+long ll_length
+long ll_first_unprintable
+long ll_next_printable
+integer li_asc
+
+// For the purposes of this function, an end-of-line is defined as any character which
+// has an ascii value less than 32.
+
+ls_next_line = ""
+
+ll_length = len(ps_string)
+
+// Find the first unprintable character (tabs are OK)
+for i = 1 to ll_length
+	li_asc = asc(mid(ps_string, i, 1))
+	if li_asc < 32 and li_asc <> 8 then
+		ll_first_unprintable = i
+		exit
+	end if
+next
+
+// Then find the next printable character
+for ll_next_printable = ll_first_unprintable + 1 to ll_length
+	li_asc = asc(mid(ps_string, ll_next_printable, 1))
+	if li_asc >= 32 then exit
+next
+
+ls_next_line = left(ps_string, ll_first_unprintable - 1)
+if ll_next_printable < ll_length then
+	ps_string = mid(ps_string, ll_next_printable)
+else
+	ps_string = ""
+end if
+	
+return ls_next_line
+
+
+end function
+

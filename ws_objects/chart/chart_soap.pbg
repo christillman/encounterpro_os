@@ -1,0 +1,18 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "chart\\chart_soap.pbl" "";
+@end;
+@begin Objects
+ "chart\\dw_sp_get_encounter_list_small.srd" "chart\\chart_soap.pbl";
+ "chart\\u_cpr_page_rtf.sru" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_base_large.sru" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_problem_list.sru" "chart\\chart_soap.pbl";
+ "chart\\dw_sp_get_encounters_and_updates_list.srd" "chart\\chart_soap.pbl";
+ "chart\\dw_encounter_service_list.srd" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_assessments.sru" "chart\\chart_soap.pbl";
+ "chart\\dw_assessments_by_patient_age_range.srd" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_observations.sru" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_encounter_notes.sru" "chart\\chart_soap.pbl";
+ "chart\\dw_patient_progress_display_small.srd" "chart\\chart_soap.pbl";
+ "chart\\u_soap_page_base.sru" "chart\\chart_soap.pbl";
+@end;

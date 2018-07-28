@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_activity.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_review_activity.sru" "service\\svc_activity.pbl";
+ "service\\w_edit_activity.srw" "service\\svc_activity.pbl";
+@end;

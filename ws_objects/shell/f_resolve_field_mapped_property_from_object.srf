@@ -1,0 +1,65 @@
+HA$PBExportHeader$f_resolve_field_mapped_property_from_object.srf
+global type f_resolve_field_mapped_property_from_object from function_object
+end type
+
+forward prototypes
+global function str_property_value f_resolve_field_mapped_property_from_object (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_resolve_field_mapped_property_from_object (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes);str_property_value lstr_property_value
+str_property_value lstr_property_value2
+string ls_left_side
+string ls_right_side
+long i
+
+// The mapped property is the left side
+lstr_property_value = f_resolve_collection_field(pstr_collection, &
+																pl_collection_index, &
+																pstr_mapping.mapped_property, &
+																pstr_context, &
+																pstr_attributes)
+																
+// Loop through the rules and see if we have a return value
+ls_left_side = lstr_property_value.display_value
+for i = 1 to pstr_mapping.mapping_rule_count
+	// Resolve the right side
+	lstr_property_value2 = f_resolve_collection_field(pstr_collection, &
+																	pl_collection_index, &
+																	pstr_mapping.mapping_rule[i].right_side, &
+																	pstr_context, &
+																	pstr_attributes)
+	ls_right_side = lstr_property_value2.display_value
+	
+	// Now compare the left and right sides
+	if f_string_compare(ls_left_side, ls_right_side, pstr_mapping.mapping_rule[i].operator) then
+		// The comparison was true so if there is a true value then we're done
+		if len(pstr_mapping.mapping_rule[i].true_value) > 0 then
+			return f_resolve_collection_field(pstr_collection, &
+														pl_collection_index, &
+														pstr_mapping.mapping_rule[i].true_value, &
+														pstr_context, &
+														pstr_attributes)
+		end if
+	else
+		// The comparison was false so if there is a false value then we're done
+		if len(pstr_mapping.mapping_rule[i].false_value) > 0 then
+			return f_resolve_collection_field(pstr_collection, &
+														pl_collection_index, &
+														pstr_mapping.mapping_rule[i].false_value, &
+														pstr_context, &
+														pstr_attributes)
+		end if
+	end if
+next
+
+// If this is a sql or datawindow collection then see if there is a suffix to apply
+if upper(pstr_collection.collectiontype) = "SQL" or upper(pstr_collection.collectiontype) = "DATAWINDOW" then
+	f_edas_set_property_display_value(pstr_mapping.suffix, lstr_property_value)
+end if
+
+// If we get here then none of the rules resulted in a return value.  In this case just return the resolved mapped property
+return lstr_property_value
+
+
+end function
+

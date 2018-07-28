@@ -1,0 +1,50 @@
+HA$PBExportHeader$f_strong_pw.srf
+global type f_strong_pw from function_object
+end type
+
+forward prototypes
+global function string f_strong_pw (integer pl_len)
+end prototypes
+
+global function string f_strong_pw (integer pl_len);string ls_chars1
+string ls_chars2
+string ls_nums
+string ls_special
+string ls_chars_all
+integer i
+string ls_pw
+
+if pl_len > 64 then pl_len = 64
+if pl_len < 8 then pl_len = 8
+
+ls_chars1 = "abcdefghijklmnopqrstuvwxyz"
+ls_chars2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+ls_nums = "0123456789"
+ls_special = "~!@#$%^&*()_+=-?"
+
+// Make sure we start with one of each
+ls_pw = ""
+ls_pw += mid(ls_chars1, rand(len(ls_chars1)), 1)
+ls_pw += mid(ls_chars2, rand(len(ls_chars2)), 1)
+ls_pw += mid(ls_nums, rand(len(ls_nums)), 1)
+ls_pw += mid(ls_special, rand(len(ls_special)), 1)
+
+// Then randomly add a bunch more
+for i = 1 to pl_len - 4
+	CHOOSE CASE rand(4)
+		CASE 1
+			ls_pw += mid(ls_chars1, rand(len(ls_chars1)), 1)
+		CASE 2
+			ls_pw += mid(ls_chars2, rand(len(ls_chars2)), 1)
+		CASE 3
+			ls_pw += mid(ls_nums, rand(len(ls_nums)), 1)
+		CASE ELSE
+			ls_pw += mid(ls_special, rand(len(ls_special)), 1)
+	END CHOOSE
+next
+
+
+return ls_pw
+
+end function
+

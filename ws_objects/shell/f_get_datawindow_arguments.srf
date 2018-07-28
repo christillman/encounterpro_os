@@ -1,0 +1,55 @@
+HA$PBExportHeader$f_get_datawindow_arguments.srf
+global type f_get_datawindow_arguments from function_object
+end type
+
+forward prototypes
+global function str_datawindow_arguments f_get_datawindow_arguments (string ps_datawindow_syntax)
+end prototypes
+
+global function str_datawindow_arguments f_get_datawindow_arguments (string ps_datawindow_syntax);str_datawindow_arguments lstr_arguments
+long ll_pos_start
+long ll_pos_lparen
+long ll_pos_rparen
+long ll_pos_comma
+long ll_pos_arg1
+long ll_pos_arg2
+string ls_arguments_start = "arguments=("
+
+lstr_arguments.argument_count = 0
+
+if isnull(ps_datawindow_syntax) then return lstr_arguments
+
+ll_pos_start = pos(ps_datawindow_syntax, ls_arguments_start)
+if ll_pos_start <= 0 then return lstr_arguments
+
+ll_pos_start += len(ls_arguments_start) - 1
+
+DO WHILE true
+	ll_pos_lparen = pos(ps_datawindow_syntax, "(", ll_pos_start + 1)
+	ll_pos_rparen = pos(ps_datawindow_syntax, ")", ll_pos_start + 1)
+	
+	// if there is no left paren or if the next right paren is before the next left paren then we're done
+	if ll_pos_lparen <= 0 OR ll_pos_rparen < ll_pos_lparen then return lstr_arguments
+	
+	ll_pos_arg1 = pos(ps_datawindow_syntax, "~"", ll_pos_lparen)
+	if ll_pos_arg1 <= 0 then return lstr_arguments
+	
+	ll_pos_arg2 = pos(ps_datawindow_syntax, "~"", ll_pos_arg1 + 1)
+	if ll_pos_arg2 <= 0 then return lstr_arguments
+	
+	ll_pos_comma = pos(ps_datawindow_syntax, ",", ll_pos_arg2 + 1)
+	if ll_pos_comma <= 0 then return lstr_arguments
+	
+	lstr_arguments.argument_count += 1
+	lstr_arguments.argument[lstr_arguments.argument_count].argument_name = mid(ps_datawindow_syntax, ll_pos_arg1 + 1, ll_pos_arg2 - ll_pos_arg1 - 1)
+	lstr_arguments.argument[lstr_arguments.argument_count].argument_type = trim(mid(ps_datawindow_syntax, ll_pos_comma + 1, ll_pos_rparen - ll_pos_comma - 1))
+	
+	ll_pos_start = ll_pos_rparen + 1
+LOOP
+
+
+return lstr_arguments
+
+
+end function
+

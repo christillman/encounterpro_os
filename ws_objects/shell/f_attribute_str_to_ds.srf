@@ -1,0 +1,53 @@
+HA$PBExportHeader$f_attribute_str_to_ds.srf
+global type f_attribute_str_to_ds from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_str_to_ds (str_attributes pstr_attributes, ref u_ds_data puo_data)
+end prototypes
+
+global subroutine f_attribute_str_to_ds (str_attributes pstr_attributes, ref u_ds_data puo_data);long i
+long ll_rowcount
+long ll_row
+string ls_find
+string ls_old_value
+boolean lb_component_id
+string ls_temp
+
+ls_temp = puo_data.describe("component_id.name")
+if lower(ls_temp) = "component_id" then
+	lb_component_id = true
+else
+	lb_component_id = false
+end if
+
+
+ll_rowcount = puo_data.rowcount()
+
+for i = 1 to pstr_attributes.attribute_count
+	ls_find = "attribute='" + pstr_attributes.attribute[i].attribute + "'"
+	if len(pstr_attributes.attribute[i].component_id) > 0 and lb_component_id then
+		ls_find += " and upper(component_id) = '" + upper(pstr_attributes.attribute[i].component_id) + "'"
+	end if
+	ll_row = puo_data.find(ls_find, 1, ll_rowcount)
+	if ll_row <= 0 then
+		ll_row = puo_data.insertrow(0)
+		puo_data.object.attribute[ll_row] = pstr_attributes.attribute[i].attribute
+		if lb_component_id then
+			puo_data.object.component_id[ll_row] = pstr_attributes.attribute[i].component_id
+		end if
+	end if
+	
+	ls_old_value = puo_data.object.value[ll_row]
+	if f_string_modified(ls_old_value, pstr_attributes.attribute[i].value) then
+		puo_data.object.value[ll_row] = pstr_attributes.attribute[i].value
+		if lb_component_id then
+			puo_data.object.component_id[ll_row] = pstr_attributes.attribute[i].component_id
+		end if
+	end if
+next
+
+return
+
+end subroutine
+

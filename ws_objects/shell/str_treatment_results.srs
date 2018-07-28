@@ -1,0 +1,15 @@
+HA$PBExportHeader$str_treatment_results.srs
+global type str_treatment_results from structure
+	long		result_count
+	long		observation_sequence[]
+	string		observation_id[]
+	character		composite_flag[]
+	character		in_context_flag[]
+	integer		level[]
+	string		observation_description[]
+	str_results		result_description[]
+	str_results		collect_description[]
+	str_observation_comment_list		comments[]
+	integer		max_severity[]
+end type
+

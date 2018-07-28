@@ -1,0 +1,29 @@
+HA$PBExportHeader$f_calculated_visit_level.srf
+global type f_calculated_visit_level from function_object
+end type
+
+forward prototypes
+global function integer f_calculated_visit_level (string ps_cpr_id, long pl_encounter_id, string ps_em_documentation_guide)
+end prototypes
+
+global function integer f_calculated_visit_level (string ps_cpr_id, long pl_encounter_id, string ps_em_documentation_guide);integer li_visit_level
+integer li_null
+
+setnull(li_null)
+
+SELECT max(visit_level)
+INTO :li_visit_level
+FROM fn_em_visit_rules_passed (:ps_cpr_id, :pl_encounter_id, :ps_em_documentation_guide)
+WHERE passed_flag = 'Y';
+if not tf_check() then return li_null
+
+if li_visit_level > 0 then
+	return li_visit_level
+else
+	return 1
+end if
+
+
+
+end function
+

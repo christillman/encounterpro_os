@@ -1,0 +1,48 @@
+HA$PBExportHeader$f_config_object_import_objectdata_old.srf
+global type f_config_object_import_objectdata_old from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_import_objectdata_old (string ps_object_xml, ref str_config_object_info pstr_config_object)
+end prototypes
+
+global function integer f_config_object_import_objectdata_old (string ps_object_xml, ref str_config_object_info pstr_config_object);long ll_sts
+u_config_object_manager lo_config_object_manager
+string ls_config_object_id
+str_config_object_info lstr_config_object_info
+integer li_sts
+
+// Post the object data
+lo_config_object_manager = CREATE u_config_object_manager
+
+ll_sts = lo_config_object_manager.initialize_com()
+if ll_sts <= 0 then
+	log.log(this, "f_config_object_import()", "Error initializing COM object", 4)
+	return -1
+end if
+
+TRY
+	ls_config_object_id = lo_config_object_manager.ImportConfigObject(ps_object_xml)
+CATCH (oleruntimeerror lt_error)
+	log.log(this, "f_config_object_import()", "Error calling ImportConfigObject ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+	return -1
+END TRY
+
+lo_config_object_manager.disconnectobject()
+DESTROY lo_config_object_manager
+
+
+if isnull(ls_config_object_id) or len(ls_config_object_id) = 0 then
+	log.log(this, "f_config_object_import()", "No Config Object ID returned from ImportConfigObject()", 4)
+	return -1
+end if
+
+li_sts  = f_get_config_object_info(ls_config_object_id, lstr_config_object_info)
+if li_sts <= 0 then return -1
+
+pstr_config_object = lstr_config_object_info
+
+return li_sts
+
+end function
+

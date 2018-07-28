@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_folder_list.srs
+global type str_folder_list from structure
+	long		folder_count
+	str_c_folder		folders[]
+end type
+

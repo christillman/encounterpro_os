@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_drugpackage_type.srs
+global type str_drugpackage_type from structure
+	string		packageid
+	str_id_instance		objectid[]
+	string		AdministerMethod
+	string		Description
+	str_amountunit_type		Dose
+	str_amountunit_type		AdministerPerDose
+	string		DosageForm
+end type
+

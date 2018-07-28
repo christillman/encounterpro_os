@@ -1,0 +1,46 @@
+HA$PBExportHeader$f_render_file_as_image.srf
+global type f_render_file_as_image from function_object
+end type
+
+forward prototypes
+global function integer f_render_file_as_image (string ps_filetype, blob pbl_data, ref string ps_image_filetype, ref blob pbl_rendered_image_data, integer pi_width, integer pi_height)
+end prototypes
+
+global function integer f_render_file_as_image (string ps_filetype, blob pbl_data, ref string ps_image_filetype, ref blob pbl_rendered_image_data, integer pi_width, integer pi_height);long ll_row
+string ls_component_id
+u_component_attachment luo_attachment
+string ls_file
+integer li_sts
+str_filepath lstr_filepath
+long ll_filelength
+
+ls_component_id = datalist.extension_component_id(ps_filetype)
+if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
+
+luo_attachment = component_manager.get_component(ls_component_id)
+if isnull(luo_attachment) then
+	log.log(this, "attachment()", "Unable to get component (" + ls_component_id + ")", 4)
+	setnull(luo_attachment)
+	return -1
+end if
+
+luo_attachment.set_attachment_data(ps_filetype, pbl_data)
+li_sts = luo_attachment.render(ps_image_filetype, ls_file, pi_width, pi_height)
+if li_sts <= 0 then return -1
+
+component_manager.destroy_component(luo_attachment)
+
+lstr_filepath = f_parse_filepath2(ls_file)
+ps_image_filetype = lstr_filepath.extension
+
+li_sts = log.file_read(ls_file, pbl_rendered_image_data)
+if li_sts <= 0 then return -1
+
+ll_filelength = len(pbl_rendered_image_data)
+if ll_filelength = 0 then return 0
+
+return 1
+
+
+end function
+

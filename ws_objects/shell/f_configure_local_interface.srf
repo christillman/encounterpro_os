@@ -1,0 +1,176 @@
+HA$PBExportHeader$f_configure_local_interface.srf
+global type f_configure_local_interface from function_object
+end type
+
+forward prototypes
+global function integer f_configure_local_interface (long pl_interfaceserviceid)
+end prototypes
+
+global function integer f_configure_local_interface (long pl_interfaceserviceid);str_popup popup
+str_popup_return popup_return
+string ls_id
+str_params lstr_params
+str_attributes lstr_attributes
+string ls_value
+integer li_sts
+long ll_attribute_count
+long i
+string ls_interfaceservicetype
+string ls_commcomponent
+string ls_transportdescription
+string ls_documenttype
+long ll_count
+string ls_interfacedescription
+string ls_purpose
+string ls_document_route
+string ls_document_route_suffix
+string ls_original_document_route
+string ls_original_document_route_suffix
+string ls_new_document_route
+string ls_document_format
+string ls_send_from
+string ls_direction
+u_ds_data luo_data
+string ls_receive_flag
+string ls_send_flag
+
+string ls_description
+
+// Get the existing attributes for this transport
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_practice_interface_transport_properties")
+
+if isnull(pl_interfaceserviceid) then
+else
+	// Get some info about the interface
+	SELECT description, interfaceservicetype, document_route, receive_flag, send_flag
+	INTO :ls_interfacedescription, :ls_interfaceservicetype, :ls_document_route, :ls_receive_flag, :ls_send_flag
+	FROM c_component_interface
+	WHERE interfaceserviceid = :pl_interfaceserviceid;
+	if not tf_check() then return -1
+	if sqlca.sqlnrows = 0 then
+		log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+		return -1
+	end if
+	
+	ll_count = luo_data.retrieve(sqlca.customer_id, pl_interfaceserviceid, 0)
+	
+	f_attribute_ds_to_str(luo_data, lstr_attributes)
+	
+	f_attribute_add_attribute(lstr_attributes, "description", ls_interfacedescription)
+	f_attribute_add_attribute(lstr_attributes, "document_route", ls_document_route)
+end if
+
+// Define the new interface transport
+ls_id = "{32FB1A09-E3F6-4c43-AB90-6F88AC4554B4}"
+
+li_sts = f_get_params(ls_id, "Config", lstr_attributes)
+if li_sts < 0 then return -1
+
+// Get attributes returned from wizard
+ls_description = f_attribute_find_attribute(lstr_attributes, "description")
+if isnull(ls_description) then
+	openwithparm(w_pop_message, "Interface description is required")
+	return 0
+end if
+ls_document_route = f_attribute_find_attribute(lstr_attributes, "document_route")
+if isnull(ls_document_route) then
+	openwithparm(w_pop_message, "Document Route Name is required")
+	return 0
+elseif left(lower(ls_document_route), 6) <> "local." then
+	ls_document_route = "Local." + ls_document_route
+end if
+if len(ls_document_route) > 24 then
+	openwithparm(w_pop_message, "The total length of the document route, including the prepended ~"Local.~", must not exceed 24 characters.")
+	return 0
+end if
+
+ls_direction = f_attribute_find_attribute(lstr_attributes, "interface_direction")
+CHOOSE CASE upper(ls_direction)
+	CASE "IN"
+		ls_receive_flag = "Y"
+		ls_send_flag = "N"
+	CASE "OUT"
+		ls_receive_flag = "N"
+		ls_send_flag = "Y"
+	CASE "BOTH"
+		ls_receive_flag = "Y"
+		ls_send_flag = "Y"
+	CASE ELSE
+		ls_receive_flag = "N"
+		ls_send_flag = "Y"
+END CHOOSE
+
+if isnull(pl_interfaceserviceid) then
+	SELECT min(interfaceserviceid)
+	INTO :pl_interfaceserviceid
+	FROM c_component_interface
+	WHERE subscriber_owner_id = :sqlca.customer_id
+	AND owner_id = :sqlca.customer_id
+	AND interfaceservicetype = 'Local';
+	if not tf_check() then return -1
+	
+	// Local interface services start at -1 and go down
+	if isnull(pl_interfaceserviceid) or pl_interfaceserviceid >= 0 then
+		pl_interfaceserviceid = -1
+	else
+		pl_interfaceserviceid -= 1
+	end if
+	
+	  INSERT INTO c_Component_Interface  
+				( subscriber_owner_id,   
+				  interfaceServiceId,   
+				  owner_id,   
+				  interfaceServiceType,   
+				  sortSequence,   
+				  description,   
+				  document_route,
+			  receive_flag,
+			  send_flag,
+			  servicestate,
+				  status )  
+	  VALUES ( :sqlca.customer_id,   
+				  :pl_interfaceserviceid,   
+				  :sqlca.customer_id,   
+				  'Local',   
+				  1,   
+				  :ls_description,   
+				  :ls_document_route,   
+			  :ls_receive_flag,
+			  :ls_send_flag,
+			 'Production',
+				  'OK' )  ;
+	if not tf_check() then return -1
+else
+	UPDATE c_Component_Interface  
+	SET	description = :ls_description,   
+			document_route = :ls_document_route,
+			receive_flag = :ls_receive_flag,
+			send_flag = :ls_send_flag
+	WHERE interfaceserviceid = :pl_interfaceserviceid;
+	if not tf_check() then return -1
+end if
+
+// Save the attributes in the properties table
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+for i = 1 to luo_data.rowcount()
+	if isnull(luo_data.object.subscriber_owner_id[i]) then
+		luo_data.object.subscriber_owner_id[i] = sqlca.customer_id
+		luo_data.object.interfaceserviceid[i] = pl_interfaceserviceid
+		luo_data.object.transportsequence[i] = 0
+		luo_data.object.property[i] = luo_data.object.attribute[i]
+		luo_data.object.last_updated[i] = datetime(today(), now())
+	end if
+next
+
+li_sts = luo_data.update()
+
+DESTROY luo_data
+
+return 1
+
+
+
+end function
+

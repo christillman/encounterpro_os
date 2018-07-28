@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "encounterpro shell\\eproepiegateway.pbl" "";
+@end;
+@begin Objects
+ "encounterpro shell\\epiegateway_credentialsheader.sru" "encounterpro shell\\eproepiegateway.pbl";
+ "encounterpro shell\\epiegateway_service.srx" "encounterpro shell\\eproepiegateway.pbl";
+@end;

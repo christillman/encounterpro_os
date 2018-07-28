@@ -1,0 +1,12 @@
+HA$PBExportHeader$dw_dosage_form.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=129 color="536870912" )
+table(column=(type=char(15) updatewhereclause=no name=dosage_form dbname="dosage_form" )
+ column=(type=char(40) updatewhereclause=no name=description dbname="description" )
+ column=(type=number updatewhereclause=no name=selected_flag dbname="selected_flag" initial="0" )
+ procedure="1 execute dbo.sp_get_dosage_forms;1 @ps_drug_id = :ps_drug_id" arguments=(("ps_drug_id", string))  sort="description A " )
+column(band=detail id=2 alignment="2" tabsequence=32766 border="6" color="0" x="19" y="12" height="97" width="572" format="[general]"  name=description edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag = 0, rgb(192,192,192), rgb(128,128,128))" )

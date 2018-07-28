@@ -1,0 +1,229 @@
+HA$PBExportHeader$f_new_service.srf
+global type f_new_service from function_object
+end type
+
+forward prototypes
+global function string f_new_service ()
+end prototypes
+
+global function string f_new_service ();str_popup popup
+str_popup popup2
+str_popup popup3
+str_popup_return popup_return
+long ll_row
+integer li_sts
+long ll_nextkey
+string ls_null
+long ll_count
+long ll_iterations
+string ls_service
+string ls_description
+string ls_button 
+string ls_icon 
+string ls_general_flag
+string ls_patient_flag
+string ls_encounter_flag 
+string ls_assessment_flag
+string ls_treatment_flag
+string ls_observation_flag
+string ls_attachment_flag 
+string ls_close_flag
+string ls_signature_flag
+string ls_owner_flag
+string ls_visible_flag
+string ls_secure_flag 
+string ls_component_id
+string ls_status
+long ll_owner_id
+string ls_default_expiration_time
+string ls_default_expiration_unit_id
+string ls_default_context_object
+long i
+
+setnull(ls_null)
+
+DO WHILE true
+	popup2.title = "Enter service name"
+	openwithparm(w_pop_prompt_string, popup2)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_description = trim(popup_return.items[1])
+	if ls_description = "" then return ls_null
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM dbo.o_Service
+	WHERE description = :ls_description
+	AND status = 'OK';
+	if not tf_check() then return ls_null
+	
+	IF ll_count = 0 then exit
+	
+	openwithparm(w_pop_message, "There is already a service with that name. Please enter a different name.")
+LOOP
+
+ll_iterations = 0
+DO WHILE true
+	ll_iterations += 1
+	if ll_iterations = 1000 then return ls_null
+	
+	sqlca.sp_get_next_key("!CPR", "SERVICE", ll_nextkey)
+	if not tf_check() then return ls_null
+
+	ls_service = string(sqlca.customer_id) + "^" + string(ll_nextkey)
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM dbo.fn_components()
+	WHERE component_id = :ls_service;
+	if not tf_check() then return ls_null
+	
+	IF ll_count = 0 then exit
+LOOP
+
+ls_general_flag = "N"
+ls_patient_flag = "N"
+ls_encounter_flag  = "N"
+ls_assessment_flag = "N"
+ls_treatment_flag = "N"
+ls_observation_flag = "N"
+ls_attachment_flag  = "N"
+
+popup.title = "Select All Valid Contexts"
+popup.data_row_count = 7
+popup.items[1] = "General"
+popup.items[2] = "Patient"
+popup.items[3] = "Encounter"
+popup.items[4] = "Assessment"
+popup.items[5] = "Treatment"
+popup.items[6] = "Observation"
+popup.items[7] = "Attachment"
+popup.multiselect = true
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count < 1 then return ls_null
+for i = 1 to popup_return.item_count
+	CHOOSE CASE popup_return.item_indexes[ i]
+		CASE 1
+			popup.items[i] =  "General"
+			ls_general_flag = "Y"
+		CASE 2
+			popup.items[i] =  "Patient"
+			ls_patient_flag = "Y"
+		CASE 3
+			popup.items[i] =  "Encounter"
+			ls_encounter_flag  = "Y"
+		CASE 4
+			popup.items[i] =  "Assessment"
+			ls_assessment_flag = "Y"
+		CASE 5
+			popup.items[i] =  "Treatment"
+			ls_treatment_flag = "Y"
+		CASE 6
+			popup.items[i] =  "Observation"
+			ls_observation_flag = "Y"
+		CASE 7
+			popup.items[i] =  "Attachment"
+			ls_attachment_flag  = "Y"
+		CASE ELSE
+			return ls_null
+	END CHOOSE
+next
+
+popup.title = "Select Default Context"
+popup.data_row_count = popup_return.item_count
+popup.multiselect = false
+popup.auto_singleton = true
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_default_context_object = popup_return.items[1]
+
+popup.title = "Select Service Component"
+popup.data_row_count = 0
+popup.dataobject = "dw_components_of_only_type_pick"
+popup.datacolumn = 1
+popup.displaycolumn = 4
+popup.multiselect = false
+popup.auto_singleton = false
+popup.argument_count = 1
+popup.argument[1] = 'Service'
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_component_id = popup_return.items[1]
+
+setnull(ls_button)
+setnull(ls_icon)
+ls_close_flag = "N"
+ls_signature_flag = "N"
+ls_owner_flag = "N"
+ls_visible_flag = "Y"
+ls_secure_flag = "N"
+ls_status = "OK"
+ll_owner_id = sqlca.customer_id
+ls_default_expiration_time = "3"
+ls_default_expiration_unit_id = "Month"
+
+INSERT INTO dbo.o_Service (
+		service
+		,description
+		,button
+		,icon
+		,general_flag
+		,patient_flag
+		,encounter_flag
+		,assessment_flag
+		,treatment_flag
+		,observation_flag
+		,attachment_flag
+		,close_flag
+		,signature_flag
+		,owner_flag
+		,visible_flag
+		,secure_flag
+		,component_id
+		,status
+		,id
+		,owner_id
+		,last_updated
+		,definition
+		,default_expiration_time
+		,default_expiration_unit_id
+		,default_context_object)
+VALUES (
+		:ls_service,
+		:ls_description,
+		:ls_button, 
+		:ls_icon, 
+		:ls_general_flag,
+		:ls_patient_flag,
+		:ls_encounter_flag, 
+		:ls_assessment_flag,
+		:ls_treatment_flag,
+		:ls_observation_flag,
+		:ls_attachment_flag, 
+		:ls_close_flag,
+		:ls_signature_flag,
+		:ls_owner_flag,
+		:ls_visible_flag,
+		:ls_secure_flag, 
+		:ls_component_id,
+		:ls_status,
+		newid(),
+		:ll_owner_id,
+		getdate(),
+		:ls_description,
+		:ls_default_expiration_time,
+		:ls_default_expiration_unit_id,
+		:ls_default_context_object
+		);
+if not tf_check() then return ls_null
+
+return ls_service
+
+end function
+

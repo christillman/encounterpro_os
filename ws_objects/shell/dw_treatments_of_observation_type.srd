@@ -1,0 +1,22 @@
+HA$PBExportHeader$dw_treatments_of_observation_type.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(12) updatewhereclause=yes name=cpr_id dbname="p_Treatment_Item.cpr_id" )
+ column=(type=long updatewhereclause=yes identity=yes name=treatment_id dbname="p_Treatment_Item.treatment_id" )
+ column=(type=datetime updatewhereclause=yes name=begin_date dbname="p_Treatment_Item.begin_date" )
+ column=(type=char(80) updatewhereclause=yes name=treatment_description dbname="p_Treatment_Item.treatment_description" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"p_Treatment_Item~" )  TABLE(NAME=~"c_Observation~" ) COLUMN(NAME=~"p_Treatment_Item.cpr_id~") COLUMN(NAME=~"p_Treatment_Item.treatment_id~") COLUMN(NAME=~"p_Treatment_Item.begin_date~") COLUMN(NAME=~"p_Treatment_Item.treatment_description~")    JOIN (LEFT=~"p_Treatment_Item.observation_id~"    OP =~"=~"RIGHT=~"c_Observation.observation_id~" )WHERE(    EXP1 =~"p_Treatment_Item.cpr_id~"   OP =~"=~"    EXP2 =~":cpr_id~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"c_Observation.observation_type~"   OP =~"=~"    EXP2 =~":observation_type~" ) ) ARG(NAME = ~"cpr_id~" TYPE = string)  ARG(NAME = ~"observation_type~" TYPE = string) " arguments=(("cpr_id", string),("observation_type", string)) )
+text(band=header alignment="2" text="P Treatment Item
+Cpr Id" border="0" color="0" x="5" y="4" height="128" width="457"  name=p_treatment_item_cpr_id_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Treatment Item
+Treatment Id" border="0" color="0" x="466" y="4" height="128" width="457"  name=p_treatment_item_treatment_id_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="357" format="[general]"  name=cpr_id edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="466" y="4" height="76" width="329" format="[general]"  name=treatment_id edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="923" y="0" height="64" width="512"  name=begin_date  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=0 border="0" color="0" x="1435" y="0" height="64" width="2162"  name=treatment_description  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

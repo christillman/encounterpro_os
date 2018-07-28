@@ -1,0 +1,27 @@
+HA$PBExportHeader$f_convert_inches_to_pbunits.srf
+global type f_convert_inches_to_pbunits from function_object
+end type
+
+forward prototypes
+global subroutine f_convert_inches_to_pbunits (long pl_inches_x, long pl_inches_y, ref long pl_pbunits_x, ref long pl_pbunits_y)
+end prototypes
+
+global subroutine f_convert_inches_to_pbunits (long pl_inches_x, long pl_inches_y, ref long pl_pbunits_x, ref long pl_pbunits_y);long ll_screen_resolution_x
+long ll_screen_resolution_y
+long ll_pixels_x
+long ll_pixels_y
+
+ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
+ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+
+// pl_inches_x and pl_inches_y are in thousandths of an inch.  Screen resolution is in pixels per inch.
+
+ll_pixels_x = ll_screen_resolution_x * pl_inches_x / 1000
+ll_pixels_y = ll_screen_resolution_y * pl_inches_y / 1000
+
+pl_pbunits_x = pixelstounits(ll_pixels_x, XPixelsToUnits!)
+pl_pbunits_y = pixelstounits(ll_pixels_y, YPixelsToUnits!)
+
+
+end subroutine
+

@@ -1,0 +1,37 @@
+HA$PBExportHeader$f_get_context_xml.srf
+global type f_get_context_xml from function_object
+end type
+
+forward prototypes
+global function string f_get_context_xml (str_context pstr_context)
+end prototypes
+
+global function string f_get_context_xml (str_context pstr_context);u_ds_data luo_data
+string ls_xml
+long ll_count
+string ls_user_id
+
+if isnull(current_user) then
+	setnull(ls_user_id)
+else
+	ls_user_id = current_user.user_id
+end if
+
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_context_info")
+
+ll_count = luo_data.retrieve(pstr_context.cpr_id, &
+										pstr_context.context_object, &
+										pstr_context.object_key, &
+										ls_user_id)
+if ll_count < 0 then
+	setnull(ls_xml)
+else
+	ls_xml = luo_data.Object.DataWindow.Data.XML
+end if
+
+return ls_xml
+
+end function
+

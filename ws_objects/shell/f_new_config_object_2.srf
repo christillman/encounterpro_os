@@ -1,0 +1,83 @@
+HA$PBExportHeader$f_new_config_object_2.srf
+global type f_new_config_object_2 from function_object
+end type
+
+forward prototypes
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes)
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes)
+end prototypes
+
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes);string ls_null
+string ls_config_object_id
+string ls_config_object_type_id
+str_attributes lstr_state_attributes
+
+setnull(ls_null)
+
+CHOOSE CASE lower(ps_config_object_type)
+	CASE "report"
+		ls_config_object_id = f_new_report(pstr_attributes)
+	CASE "datafile"
+		ls_config_object_id = f_new_datafile(pstr_attributes)
+	CASE "contraindication alerts"
+		ls_config_object_id = f_new_contraindication_alerts(pstr_attributes)
+	CASE "health management class"
+		ls_config_object_type_id = "{6030C110-5CDA-4aef-A2B4-564790E627A7}"
+		f_get_params_with_state2(ls_config_object_type_id, "Config", pstr_attributes, lstr_state_attributes, true)
+		ls_config_object_id = f_new_hm_patient_class(pstr_attributes)
+	CASE ELSE
+		setnull(ls_config_object_id)
+END CHOOSE
+
+return ls_config_object_id
+
+
+end function
+
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes);u_component_config_object luo_config_object
+string ls_null
+string ls_config_object_id
+string ls_config_object_type_id
+str_config_object_type lstr_type
+
+setnull(ls_null)
+
+lstr_type = datalist.get_config_object_type(ps_config_object_type)
+if isnull(lstr_type.config_object_type) then
+	log.log(this, "f_new_config_object_2()", "Invalid config object type (" + ps_config_object_type + ")", 4)
+	return ls_null
+end if
+
+CHOOSE CASE lower(ps_config_object_type)
+	CASE "report"
+		ls_config_object_id = f_new_report(pstr_attributes)
+	CASE "datafile"
+		ls_config_object_id = f_new_datafile(pstr_attributes)
+	CASE "contraindication alerts"
+		ls_config_object_id = f_new_contraindication_alerts(pstr_attributes)
+	CASE "health management class"
+		ls_config_object_type_id = "{6030C110-5CDA-4aef-A2B4-564790E627A7}"
+		f_get_params_with_state2(ls_config_object_type_id, "Config", pstr_attributes, pstr_state_attributes, true)
+		ls_config_object_id = f_new_hm_patient_class(pstr_attributes)
+	CASE "datawindow"
+		ls_config_object_id = f_new_datawindow(pstr_attributes)
+	CASE ELSE
+		if isnull(lstr_type.object_component_id) then
+			log.log(this, "f_new_config_object_2()", "This type of config object (" + ps_config_object_type + ") does not have a component specified in c_Config_Object_Type.object_component_id.", 4)
+			return ls_null
+		end if
+		
+		luo_config_object = component_manager.get_component(lstr_type.object_component_id)
+		if isnull(luo_config_object) then
+			log.log(this, "f_check_in_config_object_silent()", "Error getting config object component (" + lstr_type.object_component_id + ")", 4)
+			return ls_null
+		end if
+		
+		ls_config_object_id = luo_config_object.new_config_object(ps_config_object_type, pstr_attributes)
+END CHOOSE
+
+return ls_config_object_id
+
+
+end function
+

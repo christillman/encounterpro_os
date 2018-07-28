@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_ccr_resulttype.srs
+global type str_ccr_resulttype from structure
+	string		ccrdataobjectid
+	str_ccr_datetimetype		datetime[]
+	str_ccr_idtype		ids[]
+	str_ccr_codeddescriptiontype		objecttype
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		status
+	str_ccr_slrcgroup		slrcgroup
+	string		Procedures[]
+	str_ccr_codeddescriptiontype		Substance
+	str_ccr_testtype		Test[]
+end type
+

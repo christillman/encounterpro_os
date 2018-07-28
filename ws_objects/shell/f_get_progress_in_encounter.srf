@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_get_progress_in_encounter.srf
+global type f_get_progress_in_encounter from function_object
+end type
+
+forward prototypes
+global function str_progress_list f_get_progress_in_encounter (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, long pl_encounter_id)
+end prototypes
+
+global function str_progress_list f_get_progress_in_encounter (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, long pl_encounter_id);str_progress_list lstr_progress
+str_progress_list lstr_progress_encounter
+long i
+
+lstr_progress = f_get_progress(ps_cpr_id, ps_context_object, pl_object_key, ps_progress_type, ps_progress_key)
+for i = 1 to lstr_progress.progress_count
+	if lstr_progress.progress[i].encounter_id = pl_encounter_id then
+		lstr_progress_encounter.progress_count += 1
+		lstr_progress_encounter.progress[lstr_progress_encounter.progress_count] = lstr_progress.progress[i]
+	end if
+next
+
+return lstr_progress_encounter
+
+
+
+end function
+

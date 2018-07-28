@@ -1,0 +1,22 @@
+HA$PBExportHeader$str_c_xml_class.srs
+global type str_c_xml_class from structure
+	string		xml_class
+	string		description
+	long		render_transform_material_id
+	string		render_transform_extension
+	string		xml_handler_class
+	string		xml_creator_class
+	string		handler_component_id
+	string		creator_component_id
+	string		root_context_object
+	datetime		created
+	string		created_by
+	string		id
+	long		creator_display_script_id
+	long		handler_display_script_id
+	string		root_element
+	string		file_extension
+	string		config_object
+	string		xml_schema
+end type
+

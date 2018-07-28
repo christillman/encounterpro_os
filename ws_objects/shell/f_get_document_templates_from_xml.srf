@@ -1,0 +1,36 @@
+HA$PBExportHeader$f_get_document_templates_from_xml.srf
+global type f_get_document_templates_from_xml from function_object
+end type
+
+forward prototypes
+global function integer f_get_document_templates_from_xml (string ps_xml, ref str_document_templates pstr_document_templates)
+end prototypes
+
+global function integer f_get_document_templates_from_xml (string ps_xml, ref str_document_templates pstr_document_templates);string ls_document_template_xml
+integer li_sts
+u_xml_document lo_xml_document
+u_component_xml_handler luo_handler
+blob lbl_xml_file
+str_complete_context lstr_current_context
+str_complete_context lstr_document_context
+
+
+li_sts = f_get_xml_document(ps_xml, lo_xml_document)
+if li_sts <= 0 then return -1
+
+
+luo_handler = CREATE USING "u_component_xml_handler_documenttemplatelist"
+
+lstr_current_context = f_get_complete_context()
+
+li_sts = luo_handler.interpret_xml(lo_xml_document, lstr_current_context, lstr_document_context)
+
+pstr_document_templates = luo_handler.document_payload
+
+DESTROY luo_handler
+
+return 1
+
+
+end function
+

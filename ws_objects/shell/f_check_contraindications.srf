@@ -1,0 +1,56 @@
+HA$PBExportHeader$f_check_contraindications.srf
+global type f_check_contraindications from function_object
+end type
+
+forward prototypes
+global function integer f_check_contraindications (string ps_cpr_id, string ps_assessment_id, string ps_treatment_type, string ps_treatment_key, string ps_treatment_description, str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_check_contraindications (string ps_cpr_id, string ps_assessment_id, string ps_treatment_type, string ps_treatment_key, string ps_treatment_description, str_attributes pstr_attributes);u_xml_document luo_xml_document
+integer li_sts
+str_complete_context lstr_from_context
+str_complete_context lstr_document_context
+string ls_payload_type
+str_contraindications lstr_contraindications
+long i
+string ls_find
+long ll_treatment_count
+long ll_row
+long ll_index
+string ls_response
+str_external_observation_attachment lstr_attachment
+string ls_null
+long ll_null
+
+setnull(ls_null)
+setnull(ll_null)
+
+if isnull(ps_cpr_id) then return 1
+
+lstr_contraindications = f_get_contraindications(ps_cpr_id, &
+															ps_treatment_type, &
+															ps_treatment_key, &
+															ps_treatment_description, &
+															ls_null, &
+															ps_assessment_id, &
+															ll_null, &
+															pstr_attributes)
+
+if lstr_contraindications.contraindication_count > 0 then
+	lstr_contraindications.assessment_id = ps_assessment_id
+	lstr_contraindications.show_choice = true
+	lstr_contraindications.treatment_type = ps_treatment_type
+	lstr_contraindications.treatment_key = ps_treatment_key
+	lstr_contraindications.treatment_description = ps_treatment_description
+	openwithparm(w_contraindication_display, lstr_contraindications)
+	ls_response = message.stringparm
+	if ls_response = "CANCEL" then
+		return 0
+	end if
+end if
+
+return 1
+
+
+end function
+

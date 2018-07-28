@@ -1,0 +1,115 @@
+HA$PBExportHeader$f_sql_property.srf
+global type f_sql_property from function_object
+end type
+
+forward prototypes
+global function str_property_value f_sql_property (str_property pstr_property, string ps_cpr_id, string ps_object_key, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_sql_property (str_property pstr_property, string ps_cpr_id, string ps_object_key, str_attributes pstr_attributes);string ls_sql
+string ls_string_result
+long ll_string_result
+integer li_string_result
+datetime ldt_string_result
+string ls_font_settings
+str_property_value lstr_property_value
+str_font_settings lstr_font_settings
+
+lstr_property_value = f_empty_property_value()
+
+ls_sql = pstr_property.script
+
+if pos(ls_sql, "%") > 0 then
+	// First substitute the cpr_id
+	if len(ps_cpr_id) > 0 then
+		ls_sql = f_string_substitute(ls_sql, "%cpr_id%", ps_cpr_id)
+	else
+		ls_sql = f_string_substitute(ls_sql, "%cpr_id%", "")
+	end if
+	
+	// Substitute the object_key
+	if not isnull(pstr_property.property_object) then
+		ls_sql = f_string_substitute(ls_sql, "%context_object%", pstr_property.property_object)
+	else
+		ls_sql = f_string_substitute(ls_sql, "%context_object%", "")
+	end if
+		
+	// Substitute the object_key
+	if not isnull(ps_object_key) then
+		ls_sql = f_string_substitute(ls_sql, "%object_key%", ps_object_key)
+	else
+		ls_sql = f_string_substitute(ls_sql, "%object_key%", "")
+	end if
+	
+	// Then substitute in any other params passed in
+	ls_sql = f_string_substitute_attributes(ls_sql, pstr_attributes)
+end if
+
+
+PREPARE SQLSA FROM :ls_sql ;
+if not tf_check() then return lstr_property_value
+
+DESCRIBE SQLSA INTO SQLDA ;
+
+DECLARE lc_sql_cursor DYNAMIC CURSOR FOR SQLSA ;
+
+OPEN DYNAMIC lc_sql_cursor USING DESCRIPTOR SQLDA ;
+if not tf_check() then return lstr_property_value
+
+if sqlca.sqlcode = 0 then
+	FETCH lc_sql_cursor USING DESCRIPTOR SQLDA ;
+	if not tf_check() then return lstr_property_value
+	
+	if sqlca.sqlcode = 0 and SQLDA.numoutputs > 0 then
+		CHOOSE CASE SQLDA.OutParmType[1]
+			CASE TypeString!
+				ls_string_result = SQLDA.GetDynamicString(1)
+				lstr_property_value.value = ls_string_result
+			CASE TypeInteger!
+				li_string_result = SQLDA.GetDynamicNumber(1)
+				lstr_property_value.value = string(li_string_result)
+			CASE TypeLong!
+				ll_string_result = SQLDA.GetDynamicNumber(1)
+				lstr_property_value.value = string(ll_string_result)
+			CASE TypeDateTime!
+				ldt_string_result = SQLDA.GetDynamicDateTime(1)
+				lstr_property_value.value = string(ldt_string_result)
+		END CHOOSE
+		
+		// If the second column is a string then treat it as a formatting command
+		if SQLDA.numoutputs > 1 then
+			if SQLDA.OutParmType[2] = TypeString! then
+				ls_font_settings = SQLDA.GetDynamicString(2)
+				lstr_font_settings = f_interpret_font_settings(ls_font_settings)
+				
+				if not isnull(lstr_font_settings.bold) then
+					if lstr_font_settings.bold then
+						lstr_property_value.weight = 700
+					else
+						lstr_property_value.weight = 400
+					end if
+				end if
+				
+				if not isnull(lstr_font_settings.forecolor) then
+					lstr_property_value.textcolor = lstr_font_settings.forecolor
+				end if
+				
+				if not isnull(lstr_font_settings.textbackcolor ) then
+					lstr_property_value.backcolor = lstr_font_settings.textbackcolor
+				end if
+			end if
+		end if
+	end if
+end if
+
+
+CLOSE lc_sql_cursor ;
+
+lstr_property_value.display_value = lstr_property_value.value
+
+return lstr_property_value
+
+
+
+end function
+

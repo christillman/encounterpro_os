@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_actor_communication.srs
+global type str_actor_communication from structure
+	long		actor_id
+	long		communication_sequence
+	string		communication_type
+	string		communication_name
+	string		communication_value
+	string		note
+	long		sort_sequence
+	string		status
+	datetime		created
+	string		created_by
+end type
+

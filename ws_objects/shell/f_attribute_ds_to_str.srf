@@ -1,0 +1,52 @@
+HA$PBExportHeader$f_attribute_ds_to_str.srf
+global type f_attribute_ds_to_str from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_ds_to_str (u_ds_data puo_data, ref str_attributes pstr_attributes)
+end prototypes
+
+global subroutine f_attribute_ds_to_str (u_ds_data puo_data, ref str_attributes pstr_attributes);long i
+long ll_rowcount
+string ls_attribute
+string ls_value
+string ls_component_id
+boolean lb_component_id
+string ls_temp
+boolean lb_attribute_sequence
+long ll_attribute_sequence
+
+ls_temp = puo_data.describe("component_id.name")
+if lower(ls_temp) = "component_id" then
+	lb_component_id = true
+else
+	lb_component_id = false
+	setnull(ls_component_id)
+end if
+
+ls_temp = puo_data.describe("attribute_sequence.name")
+if lower(ls_temp) = "attribute_sequence" then
+	lb_attribute_sequence = true
+else
+	lb_attribute_sequence = false
+	setnull(ll_attribute_sequence)
+end if
+
+ll_rowcount = puo_data.rowcount()
+
+for i = 1 to ll_rowcount
+	ls_attribute = puo_data.object.attribute[i]
+	ls_value = puo_data.object.value[i]
+	if lb_component_id then
+		ls_component_id = puo_data.object.component_id[i]
+	end if
+	if lb_attribute_sequence then
+		ll_attribute_sequence = puo_data.object.attribute_sequence[i]
+	end if
+	f_attribute_add_attribute3(pstr_attributes, ls_attribute, ls_value, ls_component_id, ll_attribute_sequence)
+next
+
+return
+
+end subroutine
+

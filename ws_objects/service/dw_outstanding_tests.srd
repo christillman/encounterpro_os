@@ -1,0 +1,56 @@
+HA$PBExportHeader$dw_outstanding_tests.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="553648127" )
+table(column=(type=char(12) updatewhereclause=no name=cpr_id dbname="cpr_id" )
+ column=(type=char(20) updatewhereclause=no name=first_name dbname="first_name" )
+ column=(type=char(20) updatewhereclause=no name=middle_name dbname="middle_name" )
+ column=(type=char(40) updatewhereclause=no name=last_name dbname="last_name" )
+ column=(type=char(24) updatewhereclause=no name=billing_id dbname="billing_id" )
+ column=(type=char(24) updatewhereclause=no name=primary_provider_id dbname="primary_provider_id" )
+ column=(type=long updatewhereclause=no name=treatment_id dbname="treatment_id" )
+ column=(type=char(24) updatewhereclause=no name=treatment_type dbname="treatment_type" )
+ column=(type=char(80) updatewhereclause=no name=treatment_description dbname="treatment_description" )
+ column=(type=long updatewhereclause=no name=attachment_id dbname="attachment_id" )
+ column=(type=char(1) updatewhereclause=no name=send_out_flag dbname="send_out_flag" )
+ column=(type=datetime updatewhereclause=no name=begin_date dbname="begin_date" )
+ column=(type=char(24) updatewhereclause=no name=ordered_by dbname="ordered_by" )
+ column=(type=char(12) updatewhereclause=no name=treatment_status dbname="treatment_status" )
+ column=(type=datetime updatewhereclause=no name=end_date dbname="end_date" )
+ column=(type=long updatewhereclause=no name=ordered_by_color dbname="ordered_by_color" )
+ column=(type=long updatewhereclause=no name=primary_provider_color dbname="primary_provider_color" )
+ column=(type=number updatewhereclause=no name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=long updatewhereclause=no name=open_encounter_id dbname="open_encounter_id" )
+ column=(type=char(4) updatewhereclause=no name=office_id dbname="office_id" )
+ procedure="1 execute dbo.sp_get_outstanding_tests;1  @ps_observation_type = :ps_observation_type, @ps_treatment_type = :ps_treatment_type, @ps_treatment_key = :ps_treatment_key" arguments=(("ps_observation_type", string),("ps_treatment_type", string),("ps_treatment_key", string, "$$HEX3$$000480ffff02$$ENDHEX$$")) )
+text(band=header alignment="2" text="Outstanding Labs/Tests as of 99/99/9999
+for Dr. James Killebrew" border="0" color="0" x="0" y="4" height="240" width="2350" html.valueishtml="0"  name=tests_title visible="1"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Date" border="0" color="0" x="14" y="172" height="64" width="256" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Patient #" border="0" color="0" x="293" y="172" height="64" width="270" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Patient Name" border="0" color="0" x="736" y="172" height="64" width="398" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Lab/Test Description" border="0" color="0" x="1518" y="172" height="64" width="613" html.valueishtml="0"  name=t_4 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression="bitmap(~"button15.bmp~")"border="6" color="0" x="5" y="8" height="76" width="105" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="6" color="0" x="133" y="8" height="76" width="256" format="[shortdate]" html.valueishtml="0"  name=begin_date visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, 
+              if(isnull(ordered_by_color) or ordered_by_color=0,
+                               rgb(192,192,192), ordered_by_color),
+              rgb(128,128,128))" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="6" color="0" x="411" y="8" height="76" width="270" format="[general]" html.valueishtml="0"  name=billing_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, 
+              if(isnull(primary_provider_color) or primary_provider_color=0,
+                               rgb(192,192,192), primary_provider_color),
+              rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="if(isnull(last_name), ~"~",  last_name + ~", ~") + if(isnull(first_name), ~"~", first_name) +   if(isnull(middle_name), ~"~", ~" ~" + middle_name )"border="6" color="0" x="704" y="8" height="76" width="695" format="[general]" html.valueishtml="0"  name=patient_name visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="6" color="0" x="1422" y="8" height="76" width="969" format="[general]" html.valueishtml="0"  name=treatment_description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10~tif(len(treatment_description) > 25, -8, -10)" font.weight="700~tif(len(treatment_description) > 20, 400, 700)"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

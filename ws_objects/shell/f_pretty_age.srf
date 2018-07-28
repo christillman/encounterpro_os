@@ -1,0 +1,41 @@
+HA$PBExportHeader$f_pretty_age.srf
+global type f_pretty_age from function_object
+end type
+
+forward prototypes
+global function string f_pretty_age (date pd_date_of_birth, date pd_current_date)
+end prototypes
+
+global function string f_pretty_age (date pd_date_of_birth, date pd_current_date);long ll_days, ll_temp
+string ls_temp
+real lr_temp
+string ls_unit_id
+
+ll_days = daysafter(pd_date_of_birth, pd_current_date)
+
+if ll_days < 7 then
+	ll_temp = ll_days
+	lr_temp = real(ll_temp)
+	ls_unit_id = "DAY"
+elseif ll_days <= 56 then
+	ll_temp = ll_days / 7
+	lr_temp = real(ll_temp)
+	ls_unit_id = "WEEK"
+elseif ll_days <= 1080 then
+	ll_temp = f_age_months(pd_date_of_birth, pd_current_date)
+	lr_temp = real(ll_temp)
+	ls_unit_id = "MONTH"
+else
+	ll_temp = f_age_years(pd_date_of_birth, pd_current_date)
+	lr_temp = real(ll_temp)
+	ls_unit_id = "YEAR"
+//	ls_temp = string(ll_temp) + " Year"
+end if
+
+ls_temp = f_pretty_amount_unit(lr_temp, ls_unit_id)
+
+return ls_temp
+
+
+end function
+

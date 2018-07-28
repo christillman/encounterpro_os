@@ -1,0 +1,15 @@
+HA$PBExportHeader$dw_patient_workplan_content.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=64 color="536870912" )
+table(column=(type=long updatewhereclause=yes identity=yes name=patient_workplan_item_id dbname="p_Patient_WP_Item.patient_workplan_item_id" )
+ column=(type=long updatewhereclause=yes name=step_number dbname="p_Patient_WP_Item.step_number" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="p_Patient_WP_Item.description" )
+ column=(type=char(12) updatewhereclause=yes name=status dbname="p_Patient_WP_Item.status" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"p_Patient_WP_Item~" ) COLUMN(NAME=~"p_Patient_WP_Item.patient_workplan_item_id~") COLUMN(NAME=~"p_Patient_WP_Item.step_number~") COLUMN(NAME=~"p_Patient_WP_Item.description~") COLUMN(NAME=~"p_Patient_WP_Item.status~")WHERE(    EXP1 =~"p_Patient_WP_Item.patient_workplan_id~"   OP =~"=~"    EXP2 =~":patient_workplan_id~" ) ) ARG(NAME = ~"patient_workplan_id~" TYPE = number) " arguments=(("patient_workplan_id", number)) )
+column(band=detail id=2 alignment="0" tabsequence=0 border="0" color="0" x="14" y="4" height="60" width="64"  name=step_number  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="101" y="4" height="60" width="1349"  name=description  font.face="Arial" font.height="-10~tif(len(description)>=40, -8, -10)" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

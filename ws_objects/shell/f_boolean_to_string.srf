@@ -1,0 +1,38 @@
+HA$PBExportHeader$f_boolean_to_string.srf
+$PBExportComments$Returns a string value based on the specified boolean value.
+global type f_boolean_to_string from function_object
+end type
+
+forward prototypes
+global function string f_boolean_to_string (boolean bparm)
+end prototypes
+
+global function string f_boolean_to_string (boolean bparm);///////////////////////////////////////////////////////////////////////
+//
+//    Function: F_Boolean_To_String
+//
+//     Purpose: Returns the passed boolean value as a string
+//
+//        Date: September 7, 1992
+//
+//       Scope: Public
+//
+//   Arguments: boolean bparm - the boolean value to be converted
+//
+//     Returns: String "True"  for a true boolean value or 
+//                     "False" for a false boolean value
+//
+// Log : 
+//
+//   DATE         WHO        WHAT
+//  --------     -----      -------------------------------------------
+//  Powersoft Company       initial version  
+////////////////////////////////////////////////////////////////////////
+
+if bparm then 
+	return "True"
+else
+	return "False"
+end if
+end function
+

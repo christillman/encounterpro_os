@@ -1,0 +1,104 @@
+HA$PBExportHeader$dw_fn_epro_properties.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=96 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=108 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes name=property_id dbname="property_id" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=property_type dbname="property_type" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=property_object dbname="property_object" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=description dbname="description" )
+ column=(type=char(20) update=yes updatewhereclause=yes name=title dbname="title" )
+ column=(type=char(64) update=yes updatewhereclause=yes name=function_name dbname="function_name" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=return_data_type dbname="return_data_type" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=script_language dbname="script_language" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=service dbname="service" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=status dbname="status" )
+ column=(type=char(32766) updatewhereclause=no name=script dbname="script" )
+ column=(type=char(38) updatewhereclause=yes name=id dbname="id" )
+ column=(type=long updatewhereclause=yes name=owner_id dbname="owner_id" )
+ column=(type=datetime updatewhereclause=yes name=last_updated dbname="last_updated" )
+ column=(type=char(24) updatewhereclause=yes name=property_value_object dbname="property_value_object" )
+ column=(type=char(24) updatewhereclause=yes name=epro_object dbname="epro_object" )
+ column=(type=char(255) updatewhereclause=yes name=property_value_object_filter dbname="property_value_object_filter" )
+ column=(type=char(1) updatewhereclause=yes name=property_value_object_unique dbname="property_value_object_unique" )
+ column=(type=char(255) updatewhereclause=yes name=property_value_object_cat_field dbname="property_value_object_cat_field" )
+ column=(type=char(32766) updatewhereclause=no name=property_value_object_cat_query dbname="property_value_object_cat_query" )
+ column=(type=char(64) updatewhereclause=yes name=property_name dbname="property_name" )
+ column=(type=char(64) updatewhereclause=yes name=property_value_object_key dbname="property_value_object_key" )
+ column=(type=char(1024) updatewhereclause=yes name=property_help dbname="property_help" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="sort_sequence" )
+ retrieve="  SELECT property_id,   
+         property_type,   
+         property_object,   
+         description,   
+         title,   
+         function_name,   
+         return_data_type,   
+         script_language,   
+         service,   
+         status,   
+         script,   
+         id,   
+         owner_id,   
+         last_updated,   
+         property_value_object,   
+         epro_object,   
+         property_value_object_filter,   
+         property_value_object_unique,
+         property_value_object_cat_field,   
+         property_value_object_cat_query,   
+         property_name,   
+         property_value_object_key,   
+         property_help,   
+         sort_sequence  
+    FROM dbo.fn_epro_properties()
+" )
+text(band=header alignment="2" text="Property Id" border="0" color="33554432" x="18" y="16" height="64" width="329" html.valueishtml="0"  name=property_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Type" border="0" color="33554432" x="366" y="16" height="64" width="370" html.valueishtml="0"  name=property_type_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Object" border="0" color="33554432" x="754" y="16" height="64" width="416" html.valueishtml="0"  name=property_object_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Description" border="0" color="33554432" x="1189" y="16" height="64" width="2222" html.valueishtml="0"  name=description_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Title" border="0" color="33554432" x="3429" y="16" height="64" width="576" html.valueishtml="0"  name=title_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Function Name" border="0" color="33554432" x="4023" y="16" height="64" width="1783" html.valueishtml="0"  name=function_name_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Return Data Type" border="0" color="33554432" x="5824" y="16" height="64" width="462" html.valueishtml="0"  name=return_data_type_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Script Language" border="0" color="33554432" x="6304" y="16" height="64" width="430" html.valueishtml="0"  name=script_language_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Script" border="0" color="33554432" x="6752" y="16" height="64" width="3945" html.valueishtml="0"  name=script_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Service" border="0" color="33554432" x="10715" y="16" height="64" width="686" html.valueishtml="0"  name=service_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Status" border="0" color="33554432" x="11419" y="16" height="64" width="357" html.valueishtml="0"  name=status_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="unique" border="0" color="0" x="24219" y="16" height="64" width="174" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="6" color="33554432" x="18" y="16" height="76" width="329" format="[general]" html.valueishtml="0"  name=property_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=10 border="6" color="33554432" x="366" y="16" height="76" width="357" format="[general]" html.valueishtml="0"  name=property_type visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=20 border="6" color="33554432" x="754" y="16" height="76" width="357" format="[general]" html.valueishtml="0"  name=property_object visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="6" color="33554432" x="1189" y="16" height="76" width="2222" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=40 border="6" color="33554432" x="3429" y="16" height="76" width="576" format="[general]" html.valueishtml="0"  name=title visible="1" edit.limit=20 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="6" color="33554432" x="4023" y="16" height="76" width="1783" format="[general]" html.valueishtml="0"  name=function_name visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="6" color="33554432" x="5824" y="16" height="76" width="357" format="[general]" html.valueishtml="0"  name=return_data_type visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="6" color="33554432" x="6304" y="16" height="76" width="357" format="[general]" html.valueishtml="0"  name=script_language visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=90 border="6" color="33554432" x="10715" y="16" height="76" width="686" format="[general]" html.valueishtml="0"  name=service visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=100 border="6" color="33554432" x="11419" y="16" height="76" width="357" format="[general]" html.valueishtml="0"  name=status visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="11776" y="0" height="64" width="3950" format="[general]" html.valueishtml="0"  name=script visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=110 border="0" color="33554432" x="15726" y="0" height="64" width="1029" format="[general]" html.valueishtml="0"  name=id visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=120 border="0" color="33554432" x="16754" y="0" height="64" width="82" format="[general]" html.valueishtml="0"  name=owner_id visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=130 border="0" color="33554432" x="16837" y="0" height="64" width="407" format="[shortdate] [time]" html.valueishtml="0"  name=last_updated visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=140 border="0" color="33554432" x="17243" y="0" height="64" width="649" format="[general]" html.valueishtml="0"  name=property_value_object visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=150 border="0" color="33554432" x="17893" y="0" height="64" width="649" format="[general]" html.valueishtml="0"  name=epro_object visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="0" tabsequence=160 border="0" color="33554432" x="18542" y="0" height="64" width="5760" format="[general]" html.valueishtml="0"  name=property_value_object_filter visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=170 border="0" color="33554432" x="24302" y="0" height="64" width="27" format="[general]" html.valueishtml="0"  name=property_value_object_unique visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=19 alignment="0" tabsequence=180 border="0" color="33554432" x="24393" y="0" height="64" width="1728" format="[general]" html.valueishtml="0"  name=property_value_object_cat_field visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=20 alignment="0" tabsequence=190 border="0" color="33554432" x="26121" y="0" height="64" width="5760" format="[general]" html.valueishtml="0"  name=property_value_object_cat_query visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=21 alignment="0" tabsequence=200 border="0" color="33554432" x="31881" y="0" height="64" width="1728" format="[general]" html.valueishtml="0"  name=property_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=22 alignment="0" tabsequence=210 border="0" color="33554432" x="33609" y="0" height="64" width="1728" format="[general]" html.valueishtml="0"  name=property_value_object_key visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=23 alignment="0" tabsequence=220 border="0" color="33554432" x="35337" y="0" height="64" width="4389" format="[general]" html.valueishtml="0"  name=property_help visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=24 alignment="0" tabsequence=230 border="0" color="33554432" x="39726" y="0" height="64" width="82" format="[general]" html.valueishtml="0"  name=sort_sequence visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

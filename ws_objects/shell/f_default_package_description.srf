@@ -1,0 +1,47 @@
+HA$PBExportHeader$f_default_package_description.srf
+global type f_default_package_description from function_object
+end type
+
+forward prototypes
+global function string f_default_package_description (real pr_dose_amount, string ps_dose_unit, real pr_administer_per_dose, string ps_administer_unit_id, string ps_dosage_form)
+end prototypes
+
+global function string f_default_package_description (real pr_dose_amount, string ps_dose_unit, real pr_administer_per_dose, string ps_administer_unit_id, string ps_dosage_form);string ls_description
+real lr_dose_amount, lr_administer_per_dose
+string ls_null
+string ls_dosage_form_description
+string ls_dose_in_name_flag
+
+setnull(ls_null)
+
+SELECT description, dose_in_name_flag
+INTO :ls_dosage_form_description, :ls_dose_in_name_flag
+FROM c_Dosage_Form
+WHERE dosage_form = :ps_dosage_form;
+if not tf_check() then return ls_null
+if sqlca.sqlcode = 100 then
+	ls_description = unit_list.unit_description(ps_dose_unit)
+	if pr_dose_amount = 1 then
+		ls_dose_in_name_flag = "N"
+	else
+		ls_dose_in_name_flag = "Y"
+	end if
+else
+	ls_description = ls_dosage_form_description
+end if
+
+if pr_dose_amount = pr_administer_per_dose &
+ and ps_dose_unit = ps_administer_unit_id then
+ return ls_description
+end if
+
+ls_description += " " + f_pretty_amount_unit(pr_administer_per_dose, ps_administer_unit_id)
+
+If upper(ls_dose_in_name_flag) = "Y" then
+	ls_description += "/" + f_pretty_amount_unit(pr_dose_amount, ps_dose_unit)
+end if
+
+return ls_description
+
+end function
+

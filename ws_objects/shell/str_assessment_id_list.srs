@@ -1,0 +1,5 @@
+HA$PBExportHeader$str_assessment_id_list.srs
+global type str_assessment_id_list from structure
+    string assessment_id_list[]
+end type
+

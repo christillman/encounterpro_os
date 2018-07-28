@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_ccr_slrcgroup.srs
+global type str_ccr_slrcgroup from structure
+	str_ccr_sourcetype		source[]
+	str_ccr_internalccrlink_type		internalccrlink[]
+	string		referenceid[]
+	string		commentid[]
+	str_ccr_signatureid_type		signature[]
+end type
+

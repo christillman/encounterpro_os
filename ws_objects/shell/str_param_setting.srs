@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_param_setting.srs
+global type str_param_setting from structure
+	str_param		param
+	str_attributes		attributes
+	boolean		invisible_wizard
+end type
+

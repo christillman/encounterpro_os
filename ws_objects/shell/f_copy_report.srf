@@ -1,0 +1,94 @@
+HA$PBExportHeader$f_copy_report.srf
+global type f_copy_report from function_object
+end type
+
+forward prototypes
+global function string f_copy_report (string ps_copy_from_report_id)
+end prototypes
+
+global function string f_copy_report (string ps_copy_from_report_id);str_popup popup
+str_popup_return popup_return
+string ls_description
+string ls_report_id
+string ls_null
+long ll_sts
+long ll_count
+u_ds_data luo_data
+boolean lb_change_references
+string ls_message
+integer li_index
+
+setnull(ls_null)
+
+DO WHILE true
+	popup.title = "Enter title of new report"
+	SELECT description
+	INTO :ls_description
+	FROM c_Report_Definition
+	WHERE report_id = :ps_copy_from_report_id;
+	if not tf_check() then return ls_null
+	
+	popup.item = ls_description
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_description = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Report_Definition
+	WHERE description = :ls_description
+	AND config_object_type = 'Report';
+	if not tf_check() then return ls_null
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a report with that title.  Please enter a different title for the new report.")
+	else
+		exit
+	end if
+LOOP
+
+openwithparm(w_pop_yes_no, "Do you want to change all references to the original report to use this copy?")
+popup_return = message.powerobjectparm
+if popup_return.item = "YES" then
+	lb_change_references = true
+else
+	lb_change_references = false
+end if
+
+li_index = f_please_wait_open()
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_copy_report_ds")
+ll_count = luo_data.retrieve(ps_copy_from_report_id, &
+										ls_description , &
+										current_user.user_id )
+if ll_count <= 0 then
+	setnull(ls_report_id)
+else
+	ls_report_id = luo_data.object.report_id[1]
+	if isnull(ls_report_id) or trim(ls_report_id) = "" then
+		setnull(ls_report_id)
+	end if
+end if
+
+
+DESTROY luo_data
+
+if isnull(ls_report_id) then
+	ls_message = "The copy failed.  Check the error log for more information."
+	if lb_change_references then ls_message += "  The references to the original report have NOT been changed."
+	openwithparm(w_pop_message, ls_message)
+	return ls_null
+end if
+
+if lb_change_references then
+	sqlca.jmj_change_references("Report", ps_copy_from_report_id, ls_report_id, current_scribe.user_id)
+end if
+
+f_please_wait_close(li_index)
+
+return ls_report_id
+
+end function
+

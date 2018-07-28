@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_script_params.srs
+global type str_script_params from structure
+	long		param_count
+	string		param_name[]
+	string		param_value[]
+end type
+

@@ -1,0 +1,45 @@
+HA$PBExportHeader$f_attribute_str_to_ds_with_removal.srf
+global type f_attribute_str_to_ds_with_removal from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_str_to_ds_with_removal (str_attributes pstr_attributes, ref u_ds_data puo_data)
+end prototypes
+
+global subroutine f_attribute_str_to_ds_with_removal (str_attributes pstr_attributes, ref u_ds_data puo_data);long i, j
+long ll_rowcount
+long ll_row
+string ls_attribute
+boolean lb_found
+
+// This function adds all of the attributes from pstr_attributes into the datastore puo_data, but
+// also finds which attributes were already in puo_data but aren't in pstr_attributes, and
+// removes them from puo_data.  The purpose of this is so that the datastore can then be used to
+// update the database and attributes which weren't referenced in pstr_attributes will be removed
+// from the database.
+
+// First call f_attribute_str_to_ds to add/update the values from pstr_attributes
+f_attribute_str_to_ds(pstr_attributes, puo_data)
+
+// Then, search the datastore for attributes which weren't in the structure and remove them
+ll_rowcount = puo_data.rowcount()
+for i = ll_rowcount to 1 step -1
+	ls_attribute = puo_data.object.attribute[i]
+	
+	lb_found = false
+	for j = 1 to pstr_attributes.attribute_count
+		if lower(ls_attribute) = lower(pstr_attributes.attribute[j].attribute) then
+			lb_found = true
+			exit
+		end if
+	next
+	
+	if not lb_found then
+		puo_data.deleterow(i)
+	end if
+next
+
+return
+
+end subroutine
+

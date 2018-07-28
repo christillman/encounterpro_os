@@ -1,0 +1,64 @@
+HA$PBExportHeader$dw_fn_user_audit.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=68 color="536870912"  height.autosize=yes)
+table(column=(type=datetime updatewhereclause=yes name=time dbname="Time" )
+ column=(type=char(64) updatewhereclause=yes name=provider dbname="Provider" )
+ column=(type=char(24) updatewhereclause=yes name=context_object dbname="context_object" )
+ column=(type=long updatewhereclause=yes name=object_key dbname="object_key" )
+ column=(type=char(24) updatewhereclause=yes name=object_type dbname="object_type" )
+ column=(type=char(80) updatewhereclause=yes name=object_description dbname="object_description" )
+ column=(type=char(12) updatewhereclause=yes name=item_type dbname="Item_Type" )
+ column=(type=char(80) updatewhereclause=yes name=item dbname="Item" )
+ column=(type=char(80) updatewhereclause=yes name=action dbname="Action" )
+ column=(type=long updatewhereclause=yes name=event_id dbname="event_id" )
+ column=(type=char(24) updatewhereclause=yes name=user_id dbname="user_id" )
+ column=(type=char(12) updatewhereclause=yes name=cpr_id dbname="cpr_id" )
+ column=(type=char(24) updatewhereclause=yes name=billing_id dbname="billing_id" )
+ column=(type=char(128) updatewhereclause=yes name=patient_name dbname="patient_name" )
+ column=(type=long updatewhereclause=yes name=computer_id dbname="computer_id" )
+ column=(type=char(80) updatewhereclause=yes name=computer_description dbname="computer_description" )
+ retrieve="SELECT 	[Time],
+	Provider ,
+	context_object ,
+	object_key ,
+	object_type ,
+	object_description ,
+	Item_Type ,
+	Item ,
+	Action ,
+	event_id ,
+	user_id ,
+	cpr_id,
+	billing_id,
+	patient_name,
+	computer_id,
+	computer_description
+FROM dbo.fn_user_audit(:ps_cpr_id, :ps_audit_date, :ps_include_object_updates)
+" arguments=(("ps_cpr_id", string),("ps_audit_date", string),("ps_include_object_updates", string))  sort="time A " )
+text(band=header alignment="0" text="Patient" border="0" color="0" x="2423~tlong(describe(~"compute_action.x~")) + long(describe(~"compute_action.width~")) + 20" y="8" height="64" width="320" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="80" x2="2802" y2="80"  name=l_header visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Event Time" border="0" color="0" x="9" y="8" height="64" width="320" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Where" border="0" color="0" x="562" y="8" height="64" width="320" html.valueishtml="0"  name=t_where visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Type" border="0" color="0" x="1024" y="8" height="64" width="320" html.valueishtml="0"  name=t_item_type visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Event" border="0" color="0" x="1403" y="8" height="64" width="320" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="64" width="530" format="[shortdate] [time]" html.valueishtml="0"  name=time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="1015" y="4" height="64" width="375" format="[general]" html.valueishtml="0"  name=item_type visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" item +  if(isnull(action), '', ' - ' + action) "border="0" color="33554432" x="1403" y="4" height="64" width="1001" format="[GENERAL]" html.valueishtml="0"  name=compute_action visible="1"  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912"  height.autosize=yes)
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="33554432" x="2423~tlong(describe(~"compute_action.x~")) + long(describe(~"compute_action.width~")) + 20" y="4" height="64" width="750" format="[general]" html.valueishtml="0"  name=patient_name visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=32766 border="0" color="33554432" x="562" y="4" height="64" width="411" format="[general]" html.valueishtml="0"  name=computer_description visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-9" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" context_object + ' - ' +  object_description "border="0" color="33554432" x="201" y="72" height="64" width="2546" format="[GENERAL]" html.valueishtml="0"  name=compute_object visible="1~tif(len(object_description) > 0, 1, 0)"  slideup=allabove  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912"  height.autosize=yes)
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

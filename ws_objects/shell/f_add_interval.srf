@@ -1,0 +1,57 @@
+HA$PBExportHeader$f_add_interval.srf
+global type f_add_interval from function_object
+end type
+
+forward prototypes
+global function date f_add_interval (date pd_date, integer pi_amount, string pi_unit)
+end prototypes
+
+global function date f_add_interval (date pd_date, integer pi_amount, string pi_unit);date ld_new_date
+integer li_year, li_month, li_day
+integer li_temp
+
+li_year = year(pd_date)
+li_month = month(pd_date)
+li_day = day(pd_date)
+
+CHOOSE CASE pi_unit
+	CASE "DAY"
+		ld_new_date = relativedate(pd_date, pi_amount)
+	CASE "WEEK"
+		ld_new_date = relativedate(pd_date, pi_amount*7)
+	CASE "MONTH"
+		li_month += pi_amount
+		if li_month = 0 then
+			li_year -= 1
+			li_month = 12
+		elseif li_month < 0 then
+			li_year -= 1
+			li_month = abs(li_month)
+			li_temp = li_month / 12
+			li_year -= li_temp
+			li_month = 12 - mod(li_month, 12)
+		elseif li_month > 12 then
+			li_year += (li_month - 1) / 12
+			li_month = mod((li_month - 1), 12) + 1
+		end if
+		// Make sure we have a valid date.  If not then decrement day until it works
+		DO WHILE true
+			ld_new_date = date(li_year, li_month, li_day)
+			if ld_new_date > date("1/1/1900") then exit
+			li_day -= 1
+			if li_day <= 27 then
+				log.log(this, "f_add_interval()", "Error converting date (" + string(li_year) + ", " + string(li_month) + ", " + string(li_day) + ")", 3)
+				return pd_date
+			end if
+		LOOP
+	CASE "YEAR"
+		li_year += pi_amount
+		ld_new_date = date(li_year, li_month, li_day)
+	CASE ELSE
+END CHOOSE
+
+return ld_new_date
+
+
+end function
+

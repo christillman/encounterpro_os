@@ -1,0 +1,67 @@
+HA$PBExportHeader$dw_fn_xml_epro_domain_ids.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" height.autosize=yes )
+table(column=(type=char(64) updatewhereclause=yes name=epro_id dbname="epro_id" )
+ column=(type=char(80) updatewhereclause=yes name=epro_description dbname="epro_description" )
+ column=(type=long updatewhereclause=yes name=epro_owner_id dbname="epro_owner_id" )
+ column=(type=char(64) updatewhereclause=yes name=epro_domain dbname="epro_domain" )
+ column=(type=long updatewhereclause=yes name=default_code_id dbname="default_code_id" )
+ column=(type=char(80) updatewhereclause=yes name=default_code dbname="default_code" )
+ column=(type=char(80) updatewhereclause=yes name=default_code_description dbname="default_code_description" )
+ column=(type=long updatewhereclause=yes name=default_mapping_owner_id dbname="default_mapping_owner_id" )
+ column=(type=char(12) updatewhereclause=yes name=default_mapping_owner_status dbname="default_mapping_owner_status" )
+ column=(type=char(12) updatewhereclause=yes name=default_status dbname="default_status" )
+ column=(type=long updatewhereclause=yes name=mapping_count dbname="mapping_count" )
+ column=(type=long updatewhereclause=yes name=customer_id dbname="customer_id" )
+ column=(type=long updatewhereclause=yes identity=yes name=selected_flag dbname="selected_flag" )
+ column=(type=number updatewhereclause=yes name=exists_in_document dbname="exists_in_document" )
+ column=(type=number updatewhereclause=yes name=failed_in_document dbname="failed_in_document" )
+ retrieve="SELECT
+	x.epro_id ,
+	x.epro_description ,
+	x.epro_owner_id,
+	x.epro_domain ,
+	x.default_code_id,
+	x.default_code,
+	x.default_code_description ,
+	x.default_mapping_owner_id,
+	x.default_mapping_owner_status,
+	x.default_status,
+	x.mapping_count, 
+	s.customer_id,
+	selected_flag=0,
+	x.exists_in_document,
+	x.failed_in_document
+FROM dbo.fn_xml_epro_domain_ids(:owner_id,:code_domain, :patient_workplan_item_id) x
+	CROSS JOIN c_Database_Status s
+
+" arguments=(("owner_id", number),("code_domain", string),("patient_workplan_item_id", number)) )
+text(band=header alignment="0" text="Default Mapping" border="0" color="0" x="1765~tlong(describe(~"compute_owner_code.width~")) + 30 + long(describe(~"epro_domain.width~")) + 12" y="12" height="64" width="494" html.valueishtml="0"  name=t_3 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="Epro ID" border="0" color="0" x="9" y="12" height="64" width="393" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=header alignment="0" text="Epro Domain" border="0" color="0" x="1029~tlong(describe(~"compute_owner_code.width~")) + 30" y="12" height="64" width="393" html.valueishtml="0"  name=t_2 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+line(band=detail x1="5" y1="0" x2="142~tlong(describe(~"compute_owner_code.width~")) + 30 + long(describe(~"epro_domain.width~")) + 12 + long(describe(~"compute_owner_code.width~"))" y2="0"  name=l_2 visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+button(band=detail text="Edit" enabled=yes action="0" border="0" color="0" x="3095~tlong(describe(~"compute_owner_code.width~")) + 30 + long(describe(~"epro_domain.width~")) + 12 + long(describe(~"compute_owner_code.width~")) + 12" y="8" height="84" width="206" vtextalign="0" htextalign="0"  name=b_edit visible="1~tif( mapping_count > 0, 1, 0)"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+compute(band=detail alignment="0" expression="if(lower(default_status)=~"unmapped~", ~"<Unmapped>~",
+if(default_code = default_code_description, default_code,
+  if(len(default_code_description) > 0, default_code_description + ~" (~" + default_code + ~")~", default_code))
+)
+"border="0~tif(mapping_count=0 OR default_mapping_owner_id = customer_id, 6, 0)" color="0~tif(lower(default_status)=~"unmapped~",rgb(255, 0, 0), rgb(0,0,0))" x="1765~tlong(describe(~"compute_owner_code.width~")) + 30 + long(describe(~"epro_domain.width~")) + 12" y="16" height="64" width="1307~tlong(describe(~"compute_owner_code.width~"))" format="[GENERAL]" html.valueishtml="0"  name=compute_epro_code visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(mapping_count=0 OR default_mapping_owner_id = customer_id, 79741120,
+if(selected_flag=0, rgb(192,192,192),rgb(128,128,128))
+)"  height.autosize=yes)
+compute(band=detail alignment="0" expression="if(isnull(epro_description) OR (epro_id = epro_description), epro_id, epro_description + ~" (~" + epro_id + ~")~")"border="0" color="0" x="9" y="16" height="64" width="992" format="[GENERAL]" html.valueishtml="0"  name=compute_owner_code visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))"  height.autosize=yes)
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1029" y="16" height="64" width="709" format="[general]" html.valueishtml="0"  name=epro_domain visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

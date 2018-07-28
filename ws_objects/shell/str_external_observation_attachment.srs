@@ -1,0 +1,22 @@
+HA$PBExportHeader$str_external_observation_attachment.srs
+global type str_external_observation_attachment from structure
+	string		attachment_type
+	string		filename
+	string		extension
+	blob		attachment
+	string		attachment_comment_title
+	string		attachment_comment
+	long		box_id
+	long		item_id
+	u_xml_document		xml_document
+	blob		attachment_render_file
+	string		attachment_render_file_type
+	string		attached_by_user_id
+	str_captured_signature		captured_signature
+	str_epiehandler_type		epiehandler
+	long		owner_id
+	long		interfaceserviceid
+	long		transportsequence
+	string		message_id
+end type
+

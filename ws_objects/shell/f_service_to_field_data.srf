@@ -1,0 +1,25 @@
+HA$PBExportHeader$f_service_to_field_data.srf
+global type f_service_to_field_data from function_object
+end type
+
+forward prototypes
+global function string f_service_to_field_data (str_service_info pstr_service)
+end prototypes
+
+global function string f_service_to_field_data (str_service_info pstr_service);string ls_field_data
+long i
+
+ls_field_data = pstr_service.service
+for i = 1 to pstr_service.attributes.attribute_count
+	ls_field_data += "::"
+	ls_field_data += pstr_service.attributes.attribute[i].attribute
+	ls_field_data += "="
+	ls_field_data += pstr_service.attributes.attribute[i].value
+next
+
+
+return ls_field_data
+
+
+end function
+

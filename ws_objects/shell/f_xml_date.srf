@@ -1,0 +1,66 @@
+HA$PBExportHeader$f_xml_date.srf
+global type f_xml_date from function_object
+end type
+
+forward prototypes
+global function date f_xml_date (string ps_xml_datetime)
+end prototypes
+
+global function date f_xml_date (string ps_xml_datetime);string ls_date
+string ls_time
+date ld_date
+long ll_count
+string lsa_parts[]
+string ls_year
+string ls_month
+string ls_day
+
+
+if pos(upper(ps_xml_datetime), "T") > 0 then
+	f_split_string(upper(ps_xml_datetime), "T", ls_date, ls_time)
+elseif pos(upper(ps_xml_datetime), " ") > 0 then
+	f_split_string(upper(ps_xml_datetime), " ", ls_date, ls_time)
+else
+	ls_date = ps_xml_datetime
+	ls_time = ""
+end if
+
+setnull(ls_year)
+setnull(ls_month)
+setnull(ls_day)
+
+if isdate(ls_date) then
+	ld_date = date(ls_date)
+else
+	if pos(ls_date, "-") > 0 then
+		ll_count = f_parse_string(ls_date, "-", lsa_parts)
+		if ll_count >= 1 then
+			ls_year = lsa_parts[1]
+			if ll_count >= 2 then
+				ls_month = lsa_parts[2]
+			else
+				ls_month = "1"
+			end if
+			if ll_count >= 3 then
+				ls_day = lsa_parts[3]
+			else
+				ls_day = "1"
+			end if
+		end if
+	elseif len(ls_date) >= 8 then
+		ls_year = left(ls_date, 4)
+		ls_month = mid(ls_date, 5, 2)
+		ls_day = mid(ls_date, 7, 2)
+	end if
+	
+	if isdate(ls_year + "-" + ls_month + "-" + ls_day) then
+		ld_date = date(ls_year + "-" + ls_month + "-" + ls_day)
+	else
+		setnull(ld_date)
+	end if
+end if
+
+return ld_date
+
+end function
+

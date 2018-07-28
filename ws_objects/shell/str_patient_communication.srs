@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_patient_communication.srs
+global type str_patient_communication from structure
+	string		communication_type
+	string		communication_name
+	string		communication_value
+end type
+

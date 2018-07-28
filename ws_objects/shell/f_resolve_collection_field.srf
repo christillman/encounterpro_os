@@ -1,0 +1,56 @@
+HA$PBExportHeader$f_resolve_collection_field.srf
+global type f_resolve_collection_field from function_object
+end type
+
+forward prototypes
+global function str_property_value f_resolve_collection_field (str_document_element_set_collection pstr_collection, long pl_collection_index, string ps_property, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_resolve_collection_field (str_document_element_set_collection pstr_collection, long pl_collection_index, string ps_property, str_complete_context pstr_context, str_attributes pstr_attributes);str_property_value lstr_property_value
+str_property_value lstr_property_value2
+string ls_left_side
+string ls_right_side
+long i
+string ls_column
+
+if left(ps_property, 1) = "." then
+	// Resolve Collection Property
+	if pstr_collection.collectionobjectcount > 0 and pl_collection_index > 0 and pl_collection_index <= pstr_collection.collectionobjectcount then
+		CHOOSE CASE upper(pstr_collection.collectiontype)
+			CASE "EDAS"
+				// The mapped property is the left side
+				lstr_property_value = f_edas_interpret_nested_address(pstr_collection.collectionobject, &
+																						pstr_collection.collectionobjectkey[pl_collection_index], &
+																						ps_property, &
+																						pstr_context, &
+																						pstr_attributes)
+			CASE "SQL", "DATAWINDOW"
+				ls_column = mid(ps_property, 2)
+				TRY
+					lstr_property_value = pstr_collection.collectiondata.get_property(ls_column, pl_collection_index)
+				CATCH (throwable lt_error)
+					lstr_property_value = f_empty_property_value()
+				END TRY
+				
+				
+			CASE ELSE
+				lstr_property_value = f_empty_property_value()
+		END CHOOSE
+	else
+		lstr_property_value = f_empty_property_value()
+	end if
+else
+	// Resolve Root EDAS Property
+	lstr_property_value = f_edas_interpret_nested_address("Root", &
+																			"", &
+																			ps_property, &
+																			pstr_context, &
+																			pstr_attributes)
+end if
+
+
+return lstr_property_value
+
+
+end function
+

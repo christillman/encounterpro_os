@@ -1,0 +1,22 @@
+HA$PBExportHeader$f_attribute_str_to_arrays.srf
+global type f_attribute_str_to_arrays from function_object
+end type
+
+forward prototypes
+global function integer f_attribute_str_to_arrays (str_attributes pstr_attributes, ref string psa_attribute[], ref string psa_value[])
+end prototypes
+
+global function integer f_attribute_str_to_arrays (str_attributes pstr_attributes, ref string psa_attribute[], ref string psa_value[]);long i
+long ll_rowcount
+long ll_row
+
+for i = 1 to pstr_attributes.attribute_count
+	psa_attribute[i] = pstr_attributes.attribute[i].attribute
+	psa_value[i] = pstr_attributes.attribute[i].value
+next
+
+return pstr_attributes.attribute_count
+
+
+end function
+

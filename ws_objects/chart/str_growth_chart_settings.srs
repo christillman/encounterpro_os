@@ -1,0 +1,17 @@
+HA$PBExportHeader$str_growth_chart_settings.srs
+global type str_growth_chart_settings from structure
+	string		graph_infant_child
+	string		graph_type
+	string		graph_unit_preference
+	string		visit_types
+	string		legend		descriptor "comment" = "Left, Right, Top, Bottom, None"
+	boolean		show_user_interface
+	string		return_file_type
+	string		return_file_path
+	string		ok_button_title
+	string		graph_title
+	long		background_color
+	long		image_width		descriptor "comment" = "thousandths of an inch"
+	long		image_height		descriptor "comment" = "thousandths of an inch"
+end type
+

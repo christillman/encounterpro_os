@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[x_ID_Lists] (
+    [IDList] UNIQUEIDENTIFIER NOT NULL,
+    [ID]     UNIQUEIDENTIFIER NOT NULL
+);
+
+
+

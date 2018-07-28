@@ -1,0 +1,15 @@
+HA$PBExportHeader$dw_selected_users.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=140 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=user_id dbname="user_id" )
+ column=(type=char(64) updatewhereclause=yes name=user_full_name dbname="user_full_name" )
+ column=(type=char(12) updatewhereclause=yes name=user_short_name dbname="user_short_name" )
+ column=(type=long updatewhereclause=yes name=color dbname="color" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ )
+column(band=detail id=2 alignment="0" tabsequence=0 border="6" color="0" x="23" y="16" height="108" width="1102" html.valueishtml="0"  name=user_full_name visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, if(isnull(color) or color = 0, rgb(192,192,192), color), rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

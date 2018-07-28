@@ -1,0 +1,16 @@
+HA$PBExportHeader$dw_sp_get_posting_failure_reasons.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=60 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="553648127"  height.autosize=yes)
+table(column=(type=char(12) updatewhereclause=yes name=date_time dbname="date_time" )
+ column=(type=char(255) updatewhereclause=yes name=reason dbname="reason" )
+ procedure="1 execute dbo.sp_get_posting_failure_reasons;1 @ps_cpr_id = :ps_cpr_id, @pl_encounter_id = :pl_encounter_id" arguments=(("ps_cpr_id", string),("pl_encounter_id", number)) )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="76" width="247" format="[general]" html.valueishtml="0"  name=date_time visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="255" x="279" y="4" height="76" width="2267" format="[general]" html.valueishtml="0"  name=reason visible="1" height.autosize=yes edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Date" border="0" color="33554432" x="0" y="0" height="64" width="297" html.valueishtml="0"  name=date_time_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="0" text="Reason" border="0" color="33554432" x="325" y="4" height="64" width="306" html.valueishtml="0"  name=reason_t visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

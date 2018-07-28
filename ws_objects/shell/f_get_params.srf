@@ -1,0 +1,14 @@
+HA$PBExportHeader$f_get_params.srf
+global type f_get_params from function_object
+end type
+
+forward prototypes
+global function integer f_get_params (string ps_id, string ps_param_mode, ref str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_get_params (string ps_id, string ps_param_mode, ref str_attributes pstr_attributes);str_attributes lstr_state_attributes
+
+return f_get_params_with_state(ps_id, ps_param_mode, pstr_attributes, lstr_state_attributes)
+
+end function
+

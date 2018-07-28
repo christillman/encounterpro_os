@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_browser.pbl" "";
+@end;
+@begin Objects
+ "service\\w_svc_web.srw" "service\\svc_browser.pbl";
+ "service\\u_component_service_browser.sru" "service\\svc_browser.pbl";
+@end;

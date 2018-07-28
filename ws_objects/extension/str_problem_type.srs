@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_problem_type.srs
+global type str_problem_type from structure
+	string		description
+	string		attribute[]
+	string		modifier[]
+	str_code_type		code[]
+	str_date_type		problem_date[]
+	string		occurences
+	string		status
+	str_patientknowledge_type		patientknowledge
+end type
+

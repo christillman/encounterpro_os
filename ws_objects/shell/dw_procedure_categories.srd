@@ -1,0 +1,13 @@
+HA$PBExportHeader$dw_procedure_categories.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=104 color="536870912" )
+table(column=(type=char(80) update=yes updatewhereclause=yes name=description dbname="c_Procedure_Category.description" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=procedure_category_id dbname="c_Procedure_Category.procedure_category_id" )
+ column=(type=long update=yes updatewhereclause=yes name=selected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Procedure_Category~" ) COLUMN(NAME=~"c_Procedure_Category.description~") COLUMN(NAME=~"c_Procedure_Category.procedure_category_id~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"c_Procedure_Category.procedure_type~"   OP =~"=~"    EXP2 =~":procedure_type~" ) ) ORDER(NAME=~"c_Procedure_Category.description~" ASC=yes ) ARG(NAME = ~"procedure_type~" TYPE = string) " update="c_Procedure_Category" updatewhere=1 updatekeyinplace=no arguments=(("procedure_type", string))  sort="description A " )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="76" width="1106" format="[general]"  name=description edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

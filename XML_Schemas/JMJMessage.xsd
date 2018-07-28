@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Mark Copenhaver (JMJ Technologies, Inc.) -->
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Mark Copenhaver (JMJ Technologies, Inc.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="JMJMessage" type="JMJMessageType"/>
+	<xs:complexType name="FromAddresseeType">
+		<xs:sequence>
+			<xs:element name="AddresseeType" minOccurs="0"/>
+			<xs:element name="Description" minOccurs="0"/>
+			<xs:element name="AddresseeID" type="xs:long"/>
+			<xs:element name="SenderSenderID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier for the individual within the AddresseeID from whom this message originated</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="36"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="VendorName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of vendor who's application created this message (e.g. EHR, Inc.)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ApplicationName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of application that ordered or created this message (e.g. EncounterPRO)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ApplicationVersion" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version of application that ordered or created this message (e.g. 5.0.28)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToAddresseeType">
+		<xs:sequence>
+			<xs:element name="AddresseeType" minOccurs="0"/>
+			<xs:element name="Description" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="AddresseeID" type="xs:long">
+					<xs:annotation>
+						<xs:documentation>InterfaceServiceID for message from customers.  CustomerID for messages from interface service partners.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SenderRecipientID">
+					<xs:annotation>
+						<xs:documentation>Sender's identifier for message addressee.  EpIE will use this to lookup the actual CustomerID</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="36"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="SenderRecipientActorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier for the individual within the AddresseeID to whom this message is intended.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JMJMessageType">
+		<xs:sequence>
+			<xs:element name="From" type="FromAddresseeType"/>
+			<xs:element name="To" type="ToAddresseeType"/>
+			<xs:element name="JMJMessageID" type="xs:string" minOccurs="0"/>
+			<xs:element name="SenderMessageID" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Message ID supplied by the sender.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OwnerID" type="xs:long">
+				<xs:annotation>
+					<xs:documentation>OwnerID of parent entity.  If the trading partner has multiple message types or addresseeIDs, then this may be different than the from/to addresseeID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentType" type="xs:string"/>
+			<xs:element name="Purpose" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="Manifest" type="Manifest" minOccurs="0"/>
+			<xs:element name="Payload">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="Encoding" use="optional">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="UTF-8"/>
+										<xs:enumeration value="Hex"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Debug" type="xs:integer" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Manifest">
+		<xs:sequence>
+			<xs:element name="HashAlgorithm"/>
+			<xs:element name="HashDate"/>
+			<xs:element name="HashedBy"/>
+			<xs:element name="HashValue"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_test_type.srs
+global type str_test_type from structure
+	string		description
+	string		modifier
+	str_code_type		code[]
+	string		value
+	string		unit
+	string		normalrange
+	string		flag
+end type
+

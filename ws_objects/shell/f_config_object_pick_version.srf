@@ -1,0 +1,62 @@
+HA$PBExportHeader$f_config_object_pick_version.srf
+global type f_config_object_pick_version from function_object
+end type
+
+forward prototypes
+global function long f_config_object_pick_version (string ps_config_object_id, boolean pb_show_beta, string ps_list_type)
+end prototypes
+
+global function long f_config_object_pick_version (string ps_config_object_id, boolean pb_show_beta, string ps_list_type);//
+//
+//pb_show_beta = True - include beta(testing) versions in the list
+//						False - include only production versions in the list
+// ps_list_type =	"Upgrade" - show only versions greater than the installed version
+//						"Revert" - show only versions less than the installed version
+//						"All" - show all versions
+//
+// Returns long = version number if one was selected
+//						NULL is user clicked "Cancel"
+//						-1 if there were no choices available
+long ll_sts
+u_config_object_manager lo_config_object_manager
+string ls_config_object_data
+blob lbl_objectdata
+str_popup popup
+str_popup_return popup_return
+long ll_version
+string ls_object_xml
+string ls_min_release_status
+str_config_object_info lstr_config_object_info
+integer li_sts
+long ll_null
+
+setnull(ll_null)
+
+if lower(sqlca.database_mode) = "testing" and pb_show_beta then
+	ls_min_release_status = "Testing"
+elseif pb_show_beta then
+	ls_min_release_status = "Beta"
+else
+	ls_min_release_status = "Production"
+end if
+
+popup.dataobject = "dw_config_object_versions"
+popup.datacolumn = 1
+popup.displaycolumn = 4
+popup.argument_count = 3
+popup.argument[1] = ps_config_object_id
+popup.argument[2] = ls_min_release_status
+popup.argument[3] = ps_list_type
+popup.auto_singleton = true
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.choices_count = 0 then return -1
+if popup_return.item_count <> 1 then return ll_null
+
+ll_version = long(popup_return.items[1])
+
+return ll_version
+
+
+end function
+

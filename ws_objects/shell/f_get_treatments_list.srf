@@ -1,0 +1,75 @@
+HA$PBExportHeader$f_get_treatments_list.srf
+global type f_get_treatments_list from function_object
+end type
+
+forward prototypes
+global function string f_get_treatments_list (string ps_treatment_list_id)
+end prototypes
+
+global function string f_get_treatments_list (string ps_treatment_list_id);Integer					button_pressed
+Long						ll_row = 1, ll_rowcount
+String					buttons[],ls_button,ls_help
+String					ls_treatment_type,ls_title,ls_null
+/* user defined */
+window 					lw_pop_buttons
+str_popup				popup
+str_popup_return 		popup_return
+datastore            lds_datastore
+
+Setnull(ls_null)
+
+lds_datastore = Create datastore
+lds_datastore.dataobject = "dw_treatments_list"
+lds_datastore.Settransobject(SQLCA)
+ll_rowcount = lds_datastore.Retrieve(ps_treatment_list_id)
+if ll_rowcount < 0 then return ls_null
+
+Do While ll_row <= ll_rowcount
+	ls_treatment_type = lds_datastore.object.treatment_type[ll_row]
+	ls_button = datalist.treatment_type_define_button(ls_treatment_type)
+	If Not Isnull(ls_button) And Len(ls_button) > 0 Then
+		ls_help = datalist.treatment_type_description(ls_treatment_type)
+		ls_title = datalist.treatment_type_define_title(ls_treatment_type)
+		popup.button_count = popup.button_count + 1
+		popup.button_icons[popup.button_count] = ls_button
+		popup.button_helps[popup.button_count] = ls_help
+		popup.button_titles[popup.button_count] = ls_title
+		buttons[popup.button_count] = ls_treatment_type
+	End If
+	ll_row++
+Loop
+// Destroy the datastore
+Destroy lds_datastore
+
+If ll_rowcount > 1 or config_mode then
+	popup.button_count = popup.button_count + 1
+	popup.button_icons[popup.button_count] = "button11.bmp"
+	popup.button_helps[popup.button_count] = "Cancel"
+	popup.button_titles[popup.button_count] = "Cancel"
+	buttons[popup.button_count] = ls_null
+End if
+
+popup.title = ps_treatment_list_id
+popup.dataobject = "TREATMENT_TYPE_LIST"
+popup.item = ps_treatment_list_id
+popup.button_titles_used = true
+
+If popup.button_count > 1 or config_mode then
+	Openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
+	If isvalid(Message.powerobjectparm) then
+		popup_return = Message.powerobjectparm
+		button_pressed = popup_return.item_index
+	Else
+		button_pressed = Message.doubleparm
+	End if
+
+	If button_pressed < 1 Or button_pressed > popup.button_count Then Return ls_null
+Elseif popup.button_count = 1 then
+	button_pressed = 1
+Else
+	Return ls_null
+End if
+Return buttons[button_pressed]
+
+end function
+

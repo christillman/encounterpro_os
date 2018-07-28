@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_results.srs
+global type str_results from structure
+	integer		result_count
+	string		results[]
+	string		results_rtf[]
+	integer		severity[]
+end type
+

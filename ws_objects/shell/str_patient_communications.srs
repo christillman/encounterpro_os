@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_patient_communications.srs
+global type str_patient_communications from structure
+	long		communication_count
+	str_patient_communication		communication[]
+end type
+

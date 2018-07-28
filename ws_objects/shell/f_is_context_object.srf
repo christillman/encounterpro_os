@@ -1,0 +1,18 @@
+HA$PBExportHeader$f_is_context_object.srf
+global type f_is_context_object from function_object
+end type
+
+forward prototypes
+global function boolean f_is_context_object (string ps_context_object)
+end prototypes
+
+global function boolean f_is_context_object (string ps_context_object);CHOOSE CASE lower(ps_context_object)
+	CASE "general", "patient", "encounter", "assessment", "treatment", "observation", "attachment"
+		return true
+	CASE ELSE
+		return false
+END CHOOSE
+
+
+end function
+

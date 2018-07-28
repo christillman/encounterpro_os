@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_indication_type.srs
+global type str_indication_type from structure
+	string		description
+	string		modifier
+	str_link_type		link
+end type
+

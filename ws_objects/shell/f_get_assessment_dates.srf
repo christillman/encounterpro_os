@@ -1,0 +1,52 @@
+HA$PBExportHeader$f_get_assessment_dates.srf
+global type f_get_assessment_dates from function_object
+end type
+
+forward prototypes
+global function integer f_get_assessment_dates (string ps_assessment_id, long pl_open_encounter_id, ref datetime pdt_begin_date, ref datetime pdt_end_date)
+end prototypes
+
+global function integer f_get_assessment_dates (string ps_assessment_id, long pl_open_encounter_id, ref datetime pdt_begin_date, ref datetime pdt_end_date);str_popup popup
+str_popup_return popup_return
+datetime ldt_temp
+string ls_auto_close
+
+ls_auto_close = datalist.assessment_auto_close(ps_assessment_id)
+if ls_auto_close = "Y" then
+	popup.multiselect = false
+else
+	popup.multiselect = true
+end if
+
+
+popup.data_row_count = 4
+popup.title = datalist.assessment_description(ps_assessment_id)
+popup.items[1] = string(pdt_begin_date, "[shortdate]")
+popup.items[2] = string(pdt_end_date, "[shortdate]")
+popup.items[3] = string(pl_open_encounter_id)
+popup.items[4] = "Assessment"
+
+openwithparm(w_onset_duration, popup, f_active_window())
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 3 then return 0
+
+// Set the onset date
+if popup_return.items[1] = "" or isnull(popup_return.items[1]) then
+	setnull(ldt_temp)
+else
+	ldt_temp = datetime(date(popup_return.items[1]), time(""))
+end if
+pdt_begin_date = ldt_temp
+
+// Set the duration (end) date
+if popup_return.items[2] = "" or isnull(popup_return.items[2]) then
+	setnull(ldt_temp)
+else
+	ldt_temp = datetime(date(popup_return.items[2]), time(""))
+end if
+pdt_end_date = ldt_temp
+
+return 1
+
+end function
+

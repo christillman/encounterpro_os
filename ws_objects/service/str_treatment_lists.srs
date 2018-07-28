@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_treatment_lists.srs
+global type str_treatment_lists from structure
+	long		treatment_list_count
+	str_treatment_list		treatment_list[]
+end type
+

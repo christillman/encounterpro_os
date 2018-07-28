@@ -1,0 +1,19 @@
+HA$PBExportHeader$str_datawindow_config_object.srs
+global type str_datawindow_config_object from structure
+	string		config_object_id
+	string		context_object
+	string		datawindow_name
+	string		description
+	string		library_component_id		descriptor "comment" = "component id of PB library"
+	string		dataobject		descriptor "comment" = "dataobject within pb library"
+	string		datawindow_syntax		descriptor "comment" = "datawindow script"
+	string		controller_config_object_id
+	string		status
+	string		created_by
+	datetime		created
+	str_datawindow_mappings		mappings
+	str_datawindow_arguments		arguments
+	str_datawindow_nested_datawindows		nested
+	str_datawindow_controls		controls
+end type
+

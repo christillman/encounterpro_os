@@ -1,0 +1,144 @@
+HA$PBExportHeader$f_new_patient.srf
+global type f_new_patient from function_object
+end type
+
+forward prototypes
+global function integer f_new_patient (ref str_patient pstr_patient)
+end prototypes
+
+global function integer f_new_patient (ref str_patient pstr_patient);str_popup_return popup_return
+string ls_cpr_id
+integer li_sts
+long ll_null
+long ll_count
+
+setnull(ll_null)
+
+setnull(ls_cpr_id)
+
+// if cpr_id is null and billing_id is provided, try using it as the cpr_id
+if isnull(ls_cpr_id) and not isnull(pstr_patient.billing_id) then
+	li_sts = tf_patient_exists(left(pstr_patient.billing_id, 12))
+	if li_sts = 0 then
+		ls_cpr_id = left(pstr_patient.billing_id, 12)
+	else
+		setnull(ls_cpr_id)
+	end if
+end if
+
+// if cpr_id is null and patient_id is provided, try using it as the cpr_id
+if isnull(ls_cpr_id) and not isnull(pstr_patient.patient_id) then
+	ls_cpr_id = string(pstr_patient.patient_id)
+	li_sts = tf_patient_exists(ls_cpr_id)
+	if li_sts <> 0 then
+		setnull(ls_cpr_id)
+	end if
+end if
+
+// If we have a numeric billing_id then set the patient_id to it
+if long(pstr_patient.billing_id) > 0 and isnull(pstr_patient.patient_id) then
+	pstr_patient.patient_id = long(pstr_patient.billing_id)
+end if
+
+// On the other hand, if we have a patient_id but no billing_id then
+// set the billing_id to the stringified patient_id
+if isnull(pstr_patient.billing_id) and not isnull(pstr_patient.patient_id) then
+	pstr_patient.billing_id = string(pstr_patient.patient_id)
+end if
+
+// Double check that the billing_id doesn't exist yet
+if not isnull(pstr_patient.billing_id) then
+	SELECT count(*)
+	INTO :ll_count
+	FROM p_Patient
+	WHERE billing_id = :pstr_patient.billing_id;
+	if not tf_check() then return -1
+	
+	if ll_count > 0 then
+		log.log(this, "f_new_patient()", "Billing ID Already Assigned to another patient (" + pstr_patient.billing_id + ")", 4)
+		return -1
+	end if
+end if
+
+// Double check that the patient_id doesn't exist yet
+if not isnull(pstr_patient.patient_id) then
+	SELECT count(*)
+	INTO :ll_count
+	FROM p_Patient
+	WHERE patient_id = :pstr_patient.patient_id;
+	if not tf_check() then return -1
+	
+	if ll_count > 0 then
+		log.log(this, "f_new_patient()", "Patient ID Already Assigned to another patient (" + string(pstr_patient.patient_id) + ")", 4)
+		return -1
+	end if
+end if
+
+// Everything looks OK, so create the patient
+li_sts = f_create_patient(ls_cpr_id)
+if li_sts <= 0 then return -1
+
+pstr_patient.cpr_id = ls_cpr_id
+
+// Set the test patient status
+if pstr_patient.test_patient then
+	UPDATE p_Patient
+	SET test_patient = 1
+	WHERE cpr_id = :pstr_patient.cpr_id;
+	if not tf_check() then return -1
+end if
+
+// Set the billing_id
+if not isnull(pstr_patient.billing_id) then
+	li_sts = datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "billing_id", pstr_patient.billing_id)
+	if ll_count > 0 then
+		log.log(this, "f_new_patient()", "Error setting the billing_id (" + pstr_patient.billing_id + ")", 4)
+		return -1
+	end if
+end if
+
+// Set the patient_id
+if not isnull(pstr_patient.patient_id) then
+	li_sts = datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "patient_id", string(pstr_patient.patient_id))
+	if ll_count > 0 then
+		log.log(this, "f_new_patient()", "Error setting the patient_id (" + string(pstr_patient.patient_id) + ")", 4)
+		return -1
+	end if
+end if
+
+// Set what we know
+li_sts = f_update_patient(pstr_patient)
+if li_sts <= 0 then return -1
+
+
+// Now create a data-entry encounter
+INSERT INTO p_Patient_Encounter (
+	cpr_id,
+	encounter_type,
+	encounter_status,
+	encounter_date,
+	encounter_description,
+	indirect_flag,
+	attending_doctor,
+	office_id,
+	created,
+	created_by)
+VALUES (
+	:pstr_patient.cpr_id,
+	'Initial Data Load',
+	'OK',
+	getdate(),
+	'Initial Data Load',
+	'N',
+	:current_user.user_id,
+	:office_id,
+	getdate(),
+	:current_user.user_id);
+if not tf_check() then return -1	
+
+
+return 1
+
+
+end function
+

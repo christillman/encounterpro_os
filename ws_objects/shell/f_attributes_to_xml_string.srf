@@ -1,0 +1,23 @@
+HA$PBExportHeader$f_attributes_to_xml_string.srf
+global type f_attributes_to_xml_string from function_object
+end type
+
+forward prototypes
+global function string f_attributes_to_xml_string (string ps_root, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_attributes_to_xml_string (string ps_root, str_attributes pstr_attributes);PBDOM_Document lo_document
+string ls_xml
+
+lo_document = f_attributes_to_xml(ps_root, pstr_attributes)
+if isnull(lo_document) then
+	setnull(ls_xml)
+else
+	ls_xml = f_xml_document_string(lo_document)
+end if
+
+return ls_xml
+
+
+end function
+

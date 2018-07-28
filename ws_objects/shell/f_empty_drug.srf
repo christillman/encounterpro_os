@@ -1,0 +1,31 @@
+HA$PBExportHeader$f_empty_drug.srf
+global type f_empty_drug from function_object
+end type
+
+forward prototypes
+global function str_drug_definition f_empty_drug ()
+end prototypes
+
+global function str_drug_definition f_empty_drug ();str_drug_definition lstr_drug
+
+
+setnull(lstr_drug.drug_id)
+setnull(lstr_drug.drug_type)
+setnull(lstr_drug.common_name)
+setnull(lstr_drug.generic_name)
+setnull(lstr_drug.controlled_substance_flag)
+setnull(lstr_drug.default_duration_amount)
+setnull(lstr_drug.default_duration_unit)
+setnull(lstr_drug.default_duration_prn)
+setnull(lstr_drug.max_dose_per_day)
+setnull(lstr_drug.max_dose_unit)
+setnull(lstr_drug.status)
+setnull(lstr_drug.patient_reference_material_id)
+setnull(lstr_drug.provider_reference_material_id)
+
+
+
+return lstr_drug
+
+end function
+

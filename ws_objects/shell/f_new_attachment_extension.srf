@@ -1,0 +1,69 @@
+HA$PBExportHeader$f_new_attachment_extension.srf
+global type f_new_attachment_extension from function_object
+end type
+
+forward prototypes
+global function string f_new_attachment_extension ()
+end prototypes
+
+global function string f_new_attachment_extension ();integer li_sts
+str_popup popup
+str_popup_return popup_return
+long ll_sts
+long ll_count
+string ls_extension
+string ls_description
+string ls_null
+
+setnull(ls_null)
+
+popup.title = "Enter the new attachment extension"
+openwithparm(w_pop_prompt_string, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_extension = popup_return.items[1]
+
+SELECT count(*)
+INTO :ll_count
+FROM c_Attachment_Extension
+WHERE extension = :ls_extension;
+if not tf_check() then return ls_null
+
+if ll_count > 0 then
+	openwithparm(w_pop_message, "The attachment extension ~"" + ls_extension + "~" already exists in this EncounterPRO installaion")
+	return ls_null
+end if
+
+ls_description = upper(ls_extension) + " File"
+
+INSERT INTO dbo.c_Attachment_Extension (
+	extension
+	,description
+	,button
+	,default_attachment_type
+	,default_storage_flag
+	,component_id
+	,display_control
+	,open_command
+	,edit_command
+	,print_command)
+VALUES (
+	:ls_extension,
+	:ls_description,
+	'button21.bmp',
+	'FILE',
+	'D',
+	'ATCH_GENERIC',
+	'ActiveX',
+	'Shell Open',
+	'Shell Edit',
+	'Shell Print');
+if not tf_check() then return ls_null
+
+
+return ls_extension
+
+
+end function
+

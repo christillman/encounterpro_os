@@ -1,0 +1,7 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_maintenance.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_db_maintenance.sru" "service\\svc_maintenance.pbl";
+@end;

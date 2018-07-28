@@ -1,0 +1,53 @@
+HA$PBExportHeader$f_size_and_position_window.srf
+global type f_size_and_position_window from function_object
+end type
+
+forward prototypes
+global function integer f_size_and_position_window (long pl_handle, long pl_x, long pl_y, long pl_width, long pl_height)
+end prototypes
+
+global function integer f_size_and_position_window (long pl_handle, long pl_x, long pl_y, long pl_width, long pl_height);long ll_flags
+long ll_xp
+long ll_yp
+long ll_width
+long ll_height
+
+//#define SWP_NOSIZE          0x0001
+//#define SWP_NOMOVE          0x0002
+//#define SWP_NOZORDER        0x0004
+//#define SWP_NOREDRAW        0x0008
+//#define SWP_NOACTIVATE      0x0010 = 16
+//#define SWP_FRAMECHANGED    0x0020 = 32 /* The frame changed: send WM_NCCALCSIZE */
+//#define SWP_SHOWWINDOW      0x0040 = 64
+//#define SWP_HIDEWINDOW      0x0080 = 128
+//#define SWP_NOCOPYBITS      0x0100 = 256
+//#define SWP_NOOWNERZORDER   0x0200 = 512 /* Don't do owner Z ordering */
+//#define SWP_NOSENDCHANGING  0x0400 = 1024 /* Don't send WM_WINDOWPOSCHANGING */
+//
+//#define SWP_DRAWFRAME       SWP_FRAMECHANGED
+//#define SWP_NOREPOSITION    SWP_NOOWNERZORDER
+//
+//#if(WINVER >= 0x0400)
+//#define SWP_DEFERERASE      0x2000
+//#define SWP_ASYNCWINDOWPOS  0x4000
+//#endif /* WINVER >= 0x0400 */
+//
+//
+//#define HWND_TOP        ((HWND)0)
+//#define HWND_BOTTOM     ((HWND)1)
+//#define HWND_TOPMOST    ((HWND)-1)
+//#define HWND_NOTOPMOST  ((HWND)-2)
+
+ll_xp = unitstopixels(pl_x, XUnitsToPixels!)
+ll_yp = unitstopixels(pl_y, YUnitsToPixels!)
+ll_width = unitstopixels(pl_width, XUnitsToPixels!)
+ll_height = unitstopixels(pl_height, YUnitsToPixels!)
+
+//ll_flags = SWP_NOACTIVATE
+ll_flags = 16
+
+// call win32 function
+return SetWindowPos(pl_handle, 0, ll_xp, ll_yp, ll_width, ll_height, ll_flags)
+
+end function
+

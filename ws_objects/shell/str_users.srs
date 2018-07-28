@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_users.srs
+global type str_users from structure
+	long		user_count
+	str_user		user[]
+end type
+

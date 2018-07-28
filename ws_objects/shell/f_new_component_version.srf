@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_new_component_version.srf
+global type f_new_component_version from function_object
+end type
+
+forward prototypes
+global function string f_new_component_version (string ps_component_id)
+end prototypes
+
+global function string f_new_component_version (string ps_component_id);string ls_filepath
+
+setnull(ls_filepath)
+
+return f_new_component_version2(ps_component_id, ls_filepath)
+
+end function
+

@@ -1,0 +1,30 @@
+HA$PBExportHeader$f_get_bmi.srf
+global type f_get_bmi from function_object
+end type
+
+forward prototypes
+global function decimal f_get_bmi (decimal weight, decimal height)
+end prototypes
+
+global function decimal f_get_bmi (decimal weight, decimal height);
+/*********************************************
+*
+* BMI = (weight(kg) % (height(in cm) * height(in cm))
+*
+* BMI Results:
+* Underweight = <18.5 
+* Normal weight = 18.5-24.9 
+* Overweight = 25-29.9 
+* Obesity = BMI of 30 or greater *
+**********************************************/
+decimal {2}  ld_bmi
+decimal {2}  ld_weight,ld_height
+double ld_temp
+
+ld_weight = round(weight,2)
+ld_height = round(height,2)
+ld_bmi = round( (ld_weight/(ld_height * ld_height)) * 10000,2)
+
+return ld_bmi
+end function
+

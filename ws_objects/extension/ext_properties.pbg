@@ -1,0 +1,7 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_properties.pbl" "";
+@end;
+@begin Objects
+ "extension\\u_component_property_script.sru" "extension\\ext_properties.pbl";
+@end;

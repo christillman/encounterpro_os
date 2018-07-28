@@ -1,0 +1,59 @@
+HA$PBExportHeader$f_str_treatment_results_description.srf
+global type f_str_treatment_results_description from function_object
+end type
+
+forward prototypes
+global function string f_str_treatment_results_description (str_treatment_results pstr_results, integer pi_index)
+end prototypes
+
+global function string f_str_treatment_results_description (str_treatment_results pstr_results, integer pi_index);integer i
+string ls_description
+string ls_comments
+string ls_nl
+string ls_null
+
+setnull(ls_null)
+
+ls_nl = "~r~n"
+
+ls_description = ""
+
+if isnull(pi_index) then
+	return ls_null
+end if
+
+if pi_index <=0 then
+	return ls_null
+end if
+
+if pi_index > pstr_results.result_count then
+	log.log(this, "f_str_treatment_results()", "Invalid result index", 4)
+	return ls_null
+end if
+
+// Add the perform results
+for i = 1 to pstr_results.result_description[pi_index].result_count
+	if ls_description <> "" then ls_description += "/"
+	ls_description += pstr_results.result_description[pi_index].results[i]
+next
+
+// Add the collect results
+for i = 1 to pstr_results.collect_description[pi_index].result_count
+	if ls_description <> "" then ls_description += " "
+	ls_description += "(" + pstr_results.collect_description[pi_index].results[i] + ")"
+next
+
+// Then add the comments
+for i = 1 to pstr_results.comments[pi_index].comment_count
+	// Make sure the comment isn't blank
+	ls_comments = trim(pstr_results.comments[pi_index].comment[i].comment)
+	if isnull(ls_comments) or ls_comments = "" then continue
+	if ls_description <> "" then ls_description += ls_nl
+	ls_description += ls_comments
+next
+
+if ls_description = "" then setnull(ls_description)
+
+return ls_description
+end function
+

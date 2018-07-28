@@ -1,0 +1,111 @@
+HA$PBExportHeader$f_configure_chart_page_definition.srf
+global type f_configure_chart_page_definition from function_object
+end type
+
+forward prototypes
+global subroutine f_configure_chart_page_definition (long pl_chart_id, long pl_section_id, long pl_page_id)
+global subroutine f_configure_chart_page_definition (string ps_page_class)
+end prototypes
+
+global subroutine f_configure_chart_page_definition (long pl_chart_id, long pl_section_id, long pl_page_id);string ls_page_guid
+str_params lstr_params
+str_attributes lstr_attributes
+string ls_value
+integer li_sts
+u_ds_data luo_data
+long ll_attribute_count
+long i
+str_attributes lstr_state_attributes
+
+if isnull(pl_chart_id) or pl_chart_id <= 0 then return
+if isnull(pl_section_id) or pl_section_id <= 0 then return
+if isnull(pl_page_id) or pl_page_id <= 0 then return
+
+SELECT CAST(d.id AS varchar(40))
+INTO :ls_page_guid
+FROM c_Chart_Section_Page p
+	INNER JOIN c_Chart_Page_Definition d
+	ON p.page_class = d.page_class
+WHERE p.chart_id = :pl_chart_id
+AND p.section_id = :pl_section_id
+AND p.page_id = :pl_page_id;
+if not tf_check() then return
+if sqlca.sqlnrows <> 1 then return
+
+// Get the existing attributes for this chart page
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_c_chart_section_page_attribute_edit")
+ll_attribute_count = luo_data.retrieve(pl_chart_id, pl_section_id, pl_page_id)
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+li_sts = f_get_params_with_state2(ls_page_guid, "Config", lstr_attributes, lstr_state_attributes, true)
+if li_sts < 0 then return
+
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+for i = 1 to luo_data.rowcount()
+	if isnull(luo_data.object.chart_id[i]) then
+		luo_data.object.chart_id[i] = pl_chart_id
+		luo_data.object.section_id[i] = pl_section_id
+		luo_data.object.page_id[i] = pl_page_id
+	end if
+next
+
+li_sts = luo_data.update()
+
+DESTROY luo_data
+
+
+return
+
+
+end subroutine
+
+global subroutine f_configure_chart_page_definition (string ps_page_class);string ls_page_guid
+str_params lstr_params
+str_attributes lstr_attributes
+string ls_value
+integer li_sts
+u_ds_data luo_data
+long ll_attribute_count
+long i
+str_attributes lstr_state_attributes
+
+if isnull(ps_page_class) or ps_page_class = "" then return
+
+SELECT CAST(id AS varchar(40))
+INTO :ls_page_guid
+FROM c_Chart_Page_Definition
+WHERE page_class = :ps_page_class;
+if not tf_check() then return
+if sqlca.sqlnrows <> 1 then return
+
+// Get the existing attributes for this chart page
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_chart_page_class_attributes")
+ll_attribute_count = luo_data.retrieve(ps_page_class)
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+li_sts = f_get_params_with_state2(ls_page_guid, "Config", lstr_attributes, lstr_state_attributes, true)
+if li_sts < 0 then return
+
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+for i = 1 to luo_data.rowcount()
+	if isnull(luo_data.object.page_class[i]) then
+		luo_data.object.page_class[i] = ps_page_class
+	end if
+next
+
+li_sts = luo_data.update()
+
+DESTROY luo_data
+
+
+return
+
+
+end subroutine
+

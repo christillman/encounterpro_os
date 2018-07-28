@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_content_object.srs
+global type str_content_object from structure
+	string		object_id
+	string		object_type
+	string		object_key
+	string		description
+	long		owner_id
+end type
+

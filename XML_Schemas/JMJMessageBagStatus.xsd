@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Mark Copenhaver (JMJ Technologies, Inc.) -->
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="Addressee">
+		<xs:sequence>
+			<xs:element name="AddresseeType" minOccurs="0"/>
+			<xs:element name="AddresseeID"/>
+			<xs:element name="Description" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JMJMessageStatusType">
+		<xs:sequence>
+			<xs:element name="From" type="Addressee"/>
+			<xs:element name="To" type="Addressee"/>
+			<xs:element name="JMJMessageID" type="xs:string" minOccurs="0"/>
+			<xs:element name="SenderMessageID" type="xs:string" minOccurs="0"/>
+			<xs:element name="OwnerID" type="xs:long"/>
+			<xs:element name="DocumentType" type="xs:string"/>
+			<xs:element name="Status" type="xs:string"/>
+			<xs:element name="StatusText" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="Debug" type="xs:integer" use="optional"/>
+	</xs:complexType>
+	<xs:element name="JMJMessageBagStatus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JMJMessageStatus" type="JMJMessageStatusType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

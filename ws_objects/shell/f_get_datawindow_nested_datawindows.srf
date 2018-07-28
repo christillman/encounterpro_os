@@ -1,0 +1,110 @@
+HA$PBExportHeader$f_get_datawindow_nested_datawindows.srf
+global type f_get_datawindow_nested_datawindows from function_object
+end type
+
+forward prototypes
+global function str_datawindow_nested_datawindows f_get_datawindow_nested_datawindows (string ps_datawindow_syntax)
+end prototypes
+
+global function str_datawindow_nested_datawindows f_get_datawindow_nested_datawindows (string ps_datawindow_syntax);str_datawindow_nested_datawindows lstr_nested
+long ll_pos_start
+long ll_pos_lparen
+long ll_pos_rparen
+long ll_pos_comma
+long ll_pos_arg1
+long ll_pos_arg2
+long ll_report_block_start
+long ll_nested_arguments_start
+
+string ls_report_start = "report("
+string ls_controlname_start = "name="
+string ls_dataobject_start = "dataobject="
+string ls_nested_arguments_start = "nest_arguments=("
+
+lstr_nested.nested_datawindow_count = 0
+
+if isnull(ps_datawindow_syntax) then return lstr_nested
+
+ll_pos_start = pos(ps_datawindow_syntax, ls_report_start)
+if ll_pos_start <= 0 then return lstr_nested
+
+ll_pos_start += len(ls_report_start) - 1
+
+ll_report_block_start = 0
+
+DO WHILE true
+	ll_report_block_start = ll_pos_start
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// Get the dataobject
+	ll_pos_start = pos(ps_datawindow_syntax, ls_dataobject_start, ll_report_block_start + 1)
+	if ll_pos_start <= 0 then exit
+	
+	ll_pos_arg1 = pos(ps_datawindow_syntax, "~"", ll_pos_start + 1)
+	if ll_pos_arg1 <= 0 then exit
+	
+	ll_pos_arg2 = pos(ps_datawindow_syntax, "~"", ll_pos_arg1 + 1)
+	if ll_pos_arg2 <= 0 then exit
+	
+	lstr_nested.nested_datawindow_count += 1
+	lstr_nested.nested_datawindow[lstr_nested.nested_datawindow_count].dataobject = trim(mid(ps_datawindow_syntax, ll_pos_arg1 + 1, ll_pos_arg2 - ll_pos_arg1 - 1))
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// Now load the nested arguments
+	ll_nested_arguments_start = pos(ps_datawindow_syntax, ls_nested_arguments_start, ll_report_block_start + 1)
+	if ll_nested_arguments_start > 0 then
+		ll_pos_start += len(ls_nested_arguments_start) - 1
+	
+		DO WHILE true
+			ll_pos_lparen = pos(ps_datawindow_syntax, "(", ll_pos_start + 1)
+			ll_pos_rparen = pos(ps_datawindow_syntax, ")", ll_pos_start + 1)
+			
+			// if there is no left paren or if the next right paren is before the next left paren then exit loop
+			if ll_pos_lparen <= 0 OR ll_pos_rparen < ll_pos_lparen then exit
+			
+			ll_pos_arg1 = pos(ps_datawindow_syntax, "~"", ll_pos_lparen)
+			if ll_pos_arg1 <= 0 then return lstr_nested
+			
+			ll_pos_arg2 = pos(ps_datawindow_syntax, "~"", ll_pos_arg1 + 1)
+			if ll_pos_arg2 <= 0 then return lstr_nested
+			
+			lstr_nested.nested_datawindow[lstr_nested.nested_datawindow_count].nested_argument_count += 1
+			lstr_nested.nested_datawindow[lstr_nested.nested_datawindow_count].nested_argument[lstr_nested.nested_datawindow[lstr_nested.nested_datawindow_count].nested_argument_count] = trim(mid(ps_datawindow_syntax, ll_pos_arg1 + 1, ll_pos_arg2 - ll_pos_arg1 - 1))
+			
+			ll_pos_start = ll_pos_rparen + 1
+		LOOP
+	end if
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// Now find the control name
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	ll_pos_start = pos(ps_datawindow_syntax, ls_controlname_start, ll_report_block_start + 1)
+	if ll_pos_start <= 0 then exit
+	
+	ll_pos_arg1 = ll_pos_start + len(ls_controlname_start)
+	
+	ll_pos_arg2 = pos(ps_datawindow_syntax, " ", ll_pos_arg1 + 1)
+	if ll_pos_arg2 <= 0 then exit
+	
+	lstr_nested.nested_datawindow[lstr_nested.nested_datawindow_count].controlname = trim(mid(ps_datawindow_syntax, ll_pos_arg1, ll_pos_arg2 - ll_pos_arg1))
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	// Find the next report block
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	ll_pos_start = pos(ps_datawindow_syntax, ls_report_start, ll_report_block_start + 1)
+	if ll_pos_start <= 0 then exit
+	
+	ll_pos_start += len(ls_report_start) - 1
+LOOP
+
+
+return lstr_nested
+
+
+end function
+

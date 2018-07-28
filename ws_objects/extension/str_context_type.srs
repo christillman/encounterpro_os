@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_context_type.srs
+global type str_context_type from structure
+	str_id_instance		patientid[]
+	string		contextobject
+	str_id_instance		objectid[]
+end type
+

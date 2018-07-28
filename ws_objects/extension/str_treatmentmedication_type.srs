@@ -1,0 +1,25 @@
+HA$PBExportHeader$str_treatmentmedication_type.srs
+global type str_treatmentmedication_type from structure
+	string		drugid
+	str_id_instance		objectid[]
+	string		commonname
+	string		genericname
+	string		brandname
+	string		lotnumber
+	datetime		expirationdate
+	string		manufacturer
+	str_drugpackage_type		package
+	string		dosinginstructions
+	string		admininstructions
+	string		patientinstructions
+	string		pharmacistinstructions
+	str_amountunit_type		dose
+	str_frequency_type		frequency
+	str_amountunit_type		duration
+	string		durationprn
+	str_amountunit_type		dispenseatpharmacy
+	str_amountunit_type		dispenseinoffice
+	boolean		substitutionallowed
+	integer		refillsallowed
+end type
+

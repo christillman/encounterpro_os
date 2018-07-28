@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[o_Report_Printer]
+    ADD CONSTRAINT [PK_o_Report_Printer] PRIMARY KEY CLUSTERED ([report_id] ASC, [report_printer_sequence] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

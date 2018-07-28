@@ -1,0 +1,88 @@
+HA$PBExportHeader$f_new_attachment_location.srf
+global type f_new_attachment_location from function_object
+end type
+
+forward prototypes
+global function long f_new_attachment_location ()
+end prototypes
+
+global function long f_new_attachment_location ();integer li_sts
+str_popup popup
+str_popup_return popup_return
+long ll_sts
+long ll_count
+u_ds_data luo_data
+long ll_disease_id
+string ls_unc
+string ls_server
+string ls_share
+string ls_path
+long ll_new_attachment_location_id
+blob lbl_testfile
+
+popup.title = "Enter the UNC path of the new attachment location"
+openwithparm(w_pop_prompt_string, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return 0
+
+ls_unc = popup_return.items[1]
+
+if left(ls_unc, 2) = "\\" then
+	ls_unc = mid(ls_unc, 3)
+end if
+
+f_split_string(ls_unc, "\", ls_server, ls_share)
+if len(ls_server) = 0 or len(ls_share) = 0 then
+	openwithparm(w_pop_message, "An attachment location must include a server name and a share name seperated by a backslash")
+	return 0
+end if
+
+// Test the location
+ls_path = "\\" + ls_server + "\" + ls_share
+if not directoryexists(ls_path) then
+	openwithparm(w_pop_message, "The specified UNC path does not exist")
+	return 0
+end if
+
+ls_path += "\testfile"
+ls_path += "_" + string(datetime(today(), now()), "yymmddhhmmss") + ".txt"
+lbl_testfile = blob("Testdata")
+li_sts = log.file_write(lbl_testfile, ls_path)
+if li_sts <= 0 then
+	openwithparm(w_pop_message, "The specified attachment location exists but an attempt to save a file to it has failed")
+	return 0
+end if
+
+filedelete(ls_path)
+
+SELECT count(*)
+INTO :ll_count
+FROM c_Attachment_Location
+WHERE attachment_server = :ls_server
+AND attachment_share = :ls_share;
+if not tf_check() then return -1
+if ll_count > 0 then
+	openwithparm(w_pop_message, "That attachment location already exists")
+	return 0
+end if
+
+INSERT INTO c_Attachment_Location (
+	attachment_server,
+	attachment_share,
+	status)
+VALUES (
+	:ls_server,
+	:ls_share,
+	'OK');
+if not tf_check() then return -1
+
+SELECT SCOPE_IDENTITY()
+INTO :ll_new_attachment_location_id
+FROM c_1_record;
+if not tf_check() then return -1
+
+return ll_new_attachment_location_id
+
+
+end function
+

@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_communication_type.srs
+global type str_communication_type from structure
+	string		communication_name
+	string		value
+	string		communication_type
+	string		priority
+	string		status
+	string		note
+end type
+

@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_datawindow_nested_datawindow.srs
+global type str_datawindow_nested_datawindow from structure
+	string		controlname
+	string		dataobject
+	integer		nested_argument_count
+	string		nested_argument[]
+	str_datawindow_controls		controls
+	boolean		has_selected_flag
+end type
+

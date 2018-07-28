@@ -1,0 +1,60 @@
+HA$PBExportHeader$f_app_version.srf
+global type f_app_version from function_object
+end type
+
+forward prototypes
+global function string f_app_version ()
+end prototypes
+
+global function string f_app_version ();//return string(major_release) + "." + database_version + "." + build + " (" + string(compile_date, "[shortdate]") + ")"
+integer li_sts
+string ls_compinfo
+string ls_common_files
+unsignedlong ll_ppidl
+boolean lb_sts
+string ls_ProductVersion
+string ls_product
+
+//li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
+//																windows_api.shell32.CSIDL_COMMONFILES , &
+//																ll_ppidl)
+//if li_sts = 0 then
+//	ls_common_files = space(500)
+//	lb_sts = windows_api.shell32.shgetpathfromidlist(ll_ppidl, ls_common_files)
+//	if lb_sts then
+//		ls_common_files = trim(ls_common_files)
+//		if right(ls_common_files, 1) <> "\" then ls_common_files += "\"
+//		ls_compinfo = ls_common_files + "JMJTech Common\EPCompInfo.ini"
+//	end if
+//	windows_api.shell32.CoTaskMemFree(ll_ppidl)
+//end if
+//
+//if not fileexists(ls_compinfo) then
+//	ls_compinfo = program_directory + "\EPCompInfo.ini"
+//end if
+
+ls_compinfo = program_directory + "\EPCompInfo.ini"
+
+if upper(cpr_mode) = "CLIENT" then
+	ls_product = "Client"
+elseif upper(cpr_mode) = "ISSUES" then
+	ls_product = "Issues"
+elseif upper(cpr_mode) = "SERVER" or upper(cpr_mode) = "DBMAINT" then
+	ls_product = "Server"
+end if
+
+ls_ProductVersion = profilestring(ls_compinfo, ls_product, "ProductVersion", "")
+
+// If we couldn't determine the Client or Server version, then just show the
+// PowerBuilder version from the application object
+if isnull(ls_ProductVersion) or trim(ls_ProductVersion) = "" then
+	ls_ProductVersion = string(major_release) + "." &
+							+ database_version + "." &
+							+ build + " (" + string(compile_date, "[shortdate]") + ")" &
+							+ " <" + ls_product + " PB Code>"
+end if
+
+return ls_ProductVersion
+
+end function
+

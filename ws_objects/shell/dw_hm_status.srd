@@ -1,0 +1,64 @@
+HA$PBExportHeader$dw_hm_status.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=172 color="536870912" )
+table(column=(type=long updatewhereclause=no name=maintenance_rule_id dbname="maintenance_rule_id" )
+ column=(type=char(1) updatewhereclause=no name=assessment_flag dbname="assessment_flag" )
+ column=(type=char(1) updatewhereclause=no name=sex dbname="sex" )
+ column=(type=char(12) updatewhereclause=no name=race dbname="race" )
+ column=(type=char(80) updatewhereclause=no name=description dbname="description" )
+ column=(type=long updatewhereclause=no name=age_from dbname="age_from" )
+ column=(type=char(24) updatewhereclause=no name=age_from_unit dbname="age_from_unit" )
+ column=(type=long updatewhereclause=no name=age_to dbname="age_to" )
+ column=(type=char(24) updatewhereclause=no name=age_to_unit dbname="age_to_unit" )
+ column=(type=char(40) updatewhereclause=no name=age_range_description dbname="age_range_description" )
+ column=(type=long updatewhereclause=no name=interval dbname="interval" )
+ column=(type=char(24) updatewhereclause=no name=interval_unit dbname="interval_unit" )
+ column=(type=long updatewhereclause=no name=warning_days dbname="warning_days" )
+ column=(type=char(24) updatewhereclause=no name=assessment_id dbname="assessment_id" )
+ column=(type=char(80) updatewhereclause=no name=assessment_description dbname="assessment_description" )
+ column=(type=char(24) updatewhereclause=no name=procedure_id dbname="procedure_id" )
+ column=(type=char(80) updatewhereclause=no name=procedure_description dbname="procedure_description" )
+ column=(type=long updatewhereclause=no name=age_range_id dbname="age_range_id" )
+ column=(type=number updatewhereclause=no name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(12) updatewhereclause=yes name=status dbname="status" )
+ procedure="1 execute dbo.sp_maintenance_rule_display @ps_maintenance_rule_type = :ps_maintenance_rule_type" arguments=(("ps_maintenance_rule_type", string)) )
+compute(band=detail alignment="0" expression="''"border="6" color="0" x="18" y="12" height="152" width="2825" format="[general]" html.valueishtml="0"  name=backdrop visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=15 alignment="0" tabsequence=32766 border="0" color="0" x="1728" y="16" height="64" width="855" format="[general]" html.valueishtml="0"  name=assessment_description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="27" y="16" height="64" width="1678" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700~tif(upper(status) = 'OK', 700, 400)"  font.family="2" font.pitch="2" font.charset="0"font.italic="0~tif(upper(status) = 'OK', 0, 1)"  background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="if(isnull(sex), '', sex) + 
+if(isnull(race), '', if(isnull(sex), '', ', ') + race)"border="0" color="0" x="27" y="92" height="64" width="457" format="[general]" html.valueishtml="0"  name=sex_race visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="1728" y="92" height="64" width="855" format="[general]" html.valueishtml="0"  name=procedure_description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="2" expression="'Every ' + string( interval ) + ' ' + case( interval_unit when 'DAY' then 'Day' 
+                                           when 'MONTH' then 'Month'
+                                           else 'Year')
+                        + if(interval = 1, '', 's')"border="0" color="0" x="1202" y="92" height="64" width="503" format="[general]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="2" expression="string( age_from ) + ' ' + case( age_from_unit when 'DAY' then 'Day' 
+                                           when 'MONTH' then 'Month'
+                                           else 'Year')
+                        + if(age_from = 1, '', 's')
++ if(isnull(age_to), '+', '  -  ' + 
+      string( age_to ) + ' ' + case( age_to_unit when 'DAY' then 'Day' 
+                                           when 'MONTH' then 'Month'
+                                           else 'Year')
+                        + if(age_to = 1, '', 's')
+     )
+"border="0" color="0" x="503" y="92" height="64" width="686" format="[general]" html.valueishtml="0"  name=compute_2 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+text(band=detail alignment="0" text="" border="0" color="0" x="2770" y="20~t20 + 136 - (136 * (len( description ) / 30.0 ))" height="136~t136 * (len( description ) / 30.0 )" width="64" html.valueishtml="0"  name=t_metric visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="16777215~tif(len( description ) / 30.0< .6, rgb(255,0,0),
+if(len( description ) / 30.0 < .75, rgb(255, 255, 128), rgb(0,255,0) ))
+" )
+compute(band=detail alignment="0" expression="len( description ) / 30.0"border="0" color="0" x="3104" y="36" height="76" width="256" format="[GENERAL]" html.valueishtml="0"  name=hm_score visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

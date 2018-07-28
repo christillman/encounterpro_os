@@ -1,0 +1,12 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_followup.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_reorder_followup.sru" "service\\svc_followup.pbl";
+ "service\\dw_treatment_item_modify_values.srd" "service\\svc_followup.pbl";
+ "service\\u_component_service_review_followup.sru" "service\\svc_followup.pbl";
+ "service\\w_followup.srw" "service\\svc_followup.pbl";
+ "service\\dw_fn_followup_treatment_status.srd" "service\\svc_followup.pbl";
+ "service\\w_followup_reorder.srw" "service\\svc_followup.pbl";
+@end;

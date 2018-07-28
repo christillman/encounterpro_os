@@ -1,0 +1,22 @@
+HA$PBExportHeader$str_drug_definition.srs
+global type str_drug_definition from structure
+	string		drug_id
+	string		drug_type
+	string		common_name
+	string		generic_name
+	string		controlled_substance_flag
+	real		default_duration_amount
+	string		default_duration_unit
+	string		default_duration_prn
+	real		max_dose_per_day
+	string		max_dose_unit
+	string		status
+	long		patient_reference_material_id
+	long		provider_reference_material_id
+	string		dea_schedule
+	string		dea_number
+	string		dea_narcotic_status
+	string		reference_ndc_code
+	long		owner_id
+end type
+

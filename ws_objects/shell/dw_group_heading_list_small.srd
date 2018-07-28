@@ -1,0 +1,16 @@
+HA$PBExportHeader$dw_group_heading_list_small.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=24 color="553648127" )
+detail(height=52 color="553648127" )
+table(column=(type=number updatewhereclause=no name=sort_sequence dbname="sort_sequence" )
+ column=(type=char(40) updatewhereclause=no name=heading dbname="heading" )
+ column=(type=char(255) updatewhereclause=no name=description dbname="description" )
+  sort="sort_sequence A heading A " )
+group(level=1 header.height=56 trailer.height=0 by=("heading" ) header.color="553648127" trailer.color="536870912" )
+column(band=header.1 id=2 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="0" height="60" width="873" format="[general]"  name=heading edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="0" height="56" width="873" format="[general]"  name=description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=footer alignment="0" text="i i i"border="0" color="0" x="754" y="0" height="64" width="87"  name=more_rows  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=footer alignment="0" text=""border="0" color="0" x="741" y="28" height="48" width="119"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

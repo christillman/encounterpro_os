@@ -1,0 +1,36 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_utility.pbl" "";
+@end;
+@begin Objects
+ "service\\dw_post_to_list.srd" "service\\svc_utility.pbl";
+ "service\\w_svc_generic.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_edit_supervisor.srw" "service\\svc_utility.pbl";
+ "service\\dw_server_status.srd" "service\\svc_utility.pbl";
+ "service\\w_scan_main.srw" "service\\svc_utility.pbl";
+ "service\\w_server_status.srw" "service\\svc_utility.pbl";
+ "service\\w_user_manual.srw" "service\\svc_utility.pbl";
+ "service\\dw_patient_info2.srd" "service\\svc_utility.pbl";
+ "service\\w_svc_audit.srw" "service\\svc_utility.pbl";
+ "service\\w_reinstall.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_change_scribe_context.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_config_database.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_change_office.srw" "service\\svc_utility.pbl";
+ "service\\w_graphs.srw" "service\\svc_utility.pbl";
+ "service\\w_scan_main_old.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_merge_patient.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_multi_chart_export.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_uncancel_encounter.srw" "service\\svc_utility.pbl";
+ "service\\dw_outstanding_tests.srd" "service\\svc_utility.pbl";
+ "service\\w_outstanding_tests.srw" "service\\svc_utility.pbl";
+ "service\\w_svc_referrals_by_day.srw" "service\\svc_utility.pbl";
+ "service\\u_component_service_utility.sru" "service\\svc_utility.pbl";
+ "service\\dw_export_patients_for_provider.srd" "service\\svc_utility.pbl";
+ "service\\dw_holding_list.srd" "service\\svc_utility.pbl";
+ "service\\dw_jmj_get_treatments_by_consultant.srd" "service\\svc_utility.pbl";
+ "service\\u_component_service_export_config.sru" "service\\svc_utility.pbl";
+ "service\\dw_sp_pick_folder_context_object_type.srd" "service\\svc_utility.pbl";
+ "service\\dw_general_report_types.srd" "service\\svc_utility.pbl";
+ "service\\w_change_password.srw" "service\\svc_utility.pbl";
+ "service\\w_general_reports.srw" "service\\svc_utility.pbl";
+@end;

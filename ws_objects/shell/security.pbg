@@ -1,0 +1,44 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "encounterpro shell\\security.pbl" "";
+@end;
+@begin Objects
+ "EncounterPRO Shell\\str_attempt_logon.srs" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\str_security_alert.srs" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_security_alert.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_tab_user_stamps.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_service_access_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_data_user_role_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\f_user_logon.srf" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_jmj_patient_care_team_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_c_privilege.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\str_pick_users.srs" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_tabpage_user_stamp_base.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_tabpage_user_stamp_other.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_data_role_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_data_user_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_pick_role_with_prefix.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_logon.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_user.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_user_manage_stamps.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_pop_user_already_logged_on.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_o_users.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_jmj_get_user_id_numbers.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_security_access_code.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_data_user_privilege_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_lock_terminal.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_data_user_service_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\f_log_security_event.srf" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_tabpage_user_stamp_signature.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_security_alert_message.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_component_security_jmj_secure.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\w_security_disclaimer.srw" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\str_role.srs" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_sp_user_search.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_user_progress_id_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\u_component_security_pin.sru" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\dw_user_of_status_list.srd" "EncounterPRO Shell\\security.pbl";
+ "EncounterPRO Shell\\str_users.srs" "EncounterPRO Shell\\security.pbl";
+ "encounterpro shell\\u_component_authentication_dotnet.sru" "encounterpro shell\\security.pbl";
+ "EncounterPRO Shell\\dw_sp_user_top_20_search.srd" "EncounterPRO Shell\\security.pbl";
+@end;

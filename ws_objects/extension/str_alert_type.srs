@@ -1,0 +1,13 @@
+HA$PBExportHeader$str_alert_type.srs
+global type str_alert_type from structure
+	string		description
+	string		attribute[]
+	string		modifier[]
+	str_code_type		code[]
+	str_reaction_type		reaction[]
+	str_codeddescription_type		causativeagent[]
+	str_date_type		alert_date[]
+	str_codeddescription_type		intervention[]
+	str_patientknowledge_type		patientknowledge
+end type
+

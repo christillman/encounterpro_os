@@ -1,0 +1,121 @@
+HA$PBExportHeader$f_resolve_collection.srf
+global type f_resolve_collection from function_object
+end type
+
+forward prototypes
+global function str_property_value f_resolve_collection_field (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes)
+global function str_document_element_set_collection f_resolve_collection (str_document_element_set pstr_element_set, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_resolve_collection_field (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element_mapping pstr_mapping, str_complete_context pstr_context, str_attributes pstr_attributes);str_property_value lstr_property_value
+str_property_value lstr_property_value2
+string ls_left_side
+string ls_right_side
+long i
+
+//CHOOSE CASE upper(pstr_collection.collectiontype)
+//	CASE "EDAS"
+//		// The mapped property is the left side
+//		lstr_property_value = f_edas_interpret_nested_address(pstr_collection.collectionobject, &
+//																				pstr_collection.key[pl_collection_index], &
+//																				pstr_mapping.mapped_property, &
+//																				pstr_context, &
+//																				pstr_attributes)
+//	CASE "SQL", "DATAWINDOW"
+//	CASE ELSE
+//END CHOOSE
+//																
+//// Loop through the rules and see if we have a return value
+//ls_left_side = lstr_property_value.display_value
+//for i = 1 to pstr_mapping.mapping_rule_count
+//	// Resolve the right side
+//	lstr_property_value2 = f_edas_interpret_nested_address(ps_from_object, &
+//																				ps_object_key, &
+//																				pstr_mapping.mapping_rule[i].right_side, &
+//																				pstr_context, &
+//																				pstr_attributes)
+//	ls_right_side = lstr_property_value2.display_value
+//	
+//	// Now compare the left and right sides
+//	if f_string_compare(ls_left_side, ls_right_side, pstr_mapping.mapping_rule[i].operator) then
+//		// The comparison was true so if there is a true value then we're done
+//		if len(pstr_mapping.mapping_rule[i].true_value) > 0 then
+//			return f_edas_interpret_nested_address(ps_from_object, &
+//																	ps_object_key, &
+//																	pstr_mapping.mapping_rule[i].true_value, &
+//																	pstr_context, &
+//																	pstr_attributes)
+//		end if
+//	else
+//		// The comparison was false so if there is a false value then we're done
+//		if len(pstr_mapping.mapping_rule[i].false_value) > 0 then
+//			return f_edas_interpret_nested_address(ps_from_object, &
+//																	ps_object_key, &
+//																	pstr_mapping.mapping_rule[i].false_value, &
+//																	pstr_context, &
+//																	pstr_attributes)
+//		end if
+//	end if
+//next
+//
+//
+//// If we get here then none of the rules resulted in a return value.  In this case just return the resolved mapped property
+return lstr_property_value
+//
+//
+end function
+
+global function str_document_element_set_collection f_resolve_collection (str_document_element_set pstr_element_set, str_complete_context pstr_context, str_attributes pstr_attributes);str_document_element_set_collection lstr_collection
+str_property_value lstr_property_value
+string ls_temp_proc_name
+string ls_sql
+string ls_procdef
+string ls_error_create
+integer li_sts
+str_sql_context lstr_sql_context
+
+lstr_collection.collectiontype = pstr_element_set.maptocollectiontype
+lstr_collection.collectiondefinition = pstr_element_set.collectiondefinition
+
+if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition) > 0 then
+	// If we have a collection definition, then resolve the collection into a list of objects/records
+	CHOOSE CASE upper(lstr_collection.collectiontype)
+		CASE "EDAS"
+			lstr_property_value = f_edas_interpret_address(lstr_collection.collectiondefinition, pstr_context, pstr_attributes)
+			lstr_collection.collectionobject = lstr_property_value.referenced_epro_object
+			lstr_collection.collectionobjectcount = lstr_property_value.referenced_object_collection.object_key_count
+			lstr_collection.collectionobjectkey = lstr_property_value.referenced_object_collection.object_key
+		CASE "SQL"
+			lstr_sql_context.script_name = pstr_element_set.description
+			lstr_sql_context.attributes = pstr_attributes
+			lstr_sql_context.context = pstr_context
+			lstr_sql_context.sql = lstr_collection.collectiondefinition
+			lstr_collection.collectionobjectcount = f_resolve_sql(lstr_sql_context)
+			lstr_collection.collectiondata = lstr_sql_context.data
+		CASE "DATAWINDOW"
+			// Create the datastore
+			lstr_collection.collectiondata = CREATE u_ds_data
+			lstr_collection.collectiondata.Create(lstr_collection.collectiondefinition, ls_error_create)
+			if Len(ls_error_create) > 0 THEN
+				if isnull(ls_error_create) then ls_error_create = "<Null>"
+				log.log(this, "f_get_collection_example()", "Error creating datastore (" + ls_error_create + ")", 4)
+				DESTROY lstr_collection.collectiondata
+				setnull(lstr_collection.collectiondata)
+				return lstr_collection
+			end if
+			lstr_collection.collectiondata.settransobject(sqlca)
+			lstr_collection.collectionobjectcount = lstr_collection.collectiondata.retrieve()
+	END CHOOSE
+else
+	// Otherwise just resolve each field against the EDAS root
+	lstr_collection.collectiontype = "EDAS"
+	lstr_collection.collectionobject = "Root"
+	lstr_collection.collectionobjectcount = 1
+	lstr_collection.collectionobjectkey[1] = ""
+end if
+
+return lstr_collection
+
+
+end function
+

@@ -1,0 +1,90 @@
+HA$PBExportHeader$f_datawindow_read_config_object.srf
+global type f_datawindow_read_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_datawindow_read_config_object (string ps_xml, ref str_datawindow_config_object pstr_dwcfg)
+end prototypes
+
+global function integer f_datawindow_read_config_object (string ps_xml, ref str_datawindow_config_object pstr_dwcfg);u_xml_document pbdom_doc
+u_xml_document pbdom_new_doc
+PBDOM_ELEMENT pbdom_root
+PBDOM_ELEMENT pbdom_datawindow
+PBDOM_ELEMENT pbdom_element_array[]
+integer li_sts
+string ls_root
+long i, j
+string ls_file
+blob lbl_xml_file
+boolean lb_success
+long ll_original_observation_count
+string ls_document_id
+PBDOM_ATTRIBUTE pbdom_attribute_array0[]
+int m
+string ls_element
+string ls_temp
+boolean lb_found
+
+//li_sts = f_get_xml_document(ps_xml, pbdom_doc)
+//if li_sts <= 0 then return -1
+//
+//pbdom_root = pbdom_doc.XML_Document.GetRootElement()
+//
+//ls_root = pbdom_root.GetName()
+//
+//if lower(ls_root) <> "epconfigobjects" then
+//	log.log(this, "f_datawindow_read_config_object()", "Root element is not ~"EPConfigObjects~"", 4)
+//	return -1
+//end if
+//
+//lb_found = false
+//pbdom_root.GetChildElements(ref pbdom_element_array)
+//for i = 1 to UpperBound(pbdom_element_array)
+//	ls_element = pbdom_element_array[i].getname()
+//	if len(ls_element) > 0 then
+//		CHOOSE CASE lower(ls_element)
+//			CASE "configobject"
+//				// Config Object attributes
+//			CASE "configobjectversion"
+//				// Config Object Version attributes
+//			CASE "datawindow"
+//				pbdom_datawindow =  pbdom_element_array[i]
+//				lb_found = true
+//		END CHOOSE
+//	end if
+//next
+//
+//if not lb_found then
+//	log.log(this, "f_datawindow_read_config_object()", "No <Datawindow> element", 4)
+//	return -1
+//end if
+//
+//setnull(pstr_dwcfg.dwtype)
+//setnull(pstr_dwcfg.component_id)
+//setnull(pstr_dwcfg.dataobject)
+//setnull(pstr_dwcfg.datawindow_script)
+//
+//pbdom_datawindow.GetChildElements(ref pbdom_element_array)
+//for i = 1 to UpperBound(pbdom_element_array)
+//	ls_element = pbdom_element_array[i].getname()
+//	ls_temp = pbdom_element_array[i].gettext()
+//	if len(ls_temp) > 0 then
+//		CHOOSE CASE lower(ls_element)
+//			CASE "dwtype"
+//				pstr_dwcfg.dwtype = ls_temp
+//			CASE "component_id"
+//				pstr_dwcfg.component_id = ls_temp
+//			CASE "dataobject"
+//				pstr_dwcfg.dataobject = ls_temp
+//			CASE "datawindow_script"
+//				pstr_dwcfg.datawindow_script = ls_temp
+//		END CHOOSE
+//	end if
+//next
+//
+
+return 1
+
+
+end function
+

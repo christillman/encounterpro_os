@@ -1,0 +1,31 @@
+HA$PBExportHeader$f_add_months.srf
+global type f_add_months from function_object
+end type
+
+forward prototypes
+global function date f_add_months (date pd_date, real pr_months)
+end prototypes
+
+global function date f_add_months (date pd_date, real pr_months);integer li_int_months, li_days, li_sign
+real lr_month_fraction
+date ld_temp
+
+// get the sign
+li_sign = sign(pr_months)
+
+// Get the integer and the fraction
+li_int_months = int(abs(pr_months))
+lr_month_fraction = abs(pr_months) - li_int_months
+
+// add the integer months to the date
+ld_temp = f_add_interval(pd_date, li_sign * li_int_months, "MONTH")
+
+// add the month fraction to the date
+li_days = li_sign * int(lr_month_fraction * 30.417)
+ld_temp = f_add_interval(ld_temp, li_days, "DAY")
+
+
+return ld_temp
+
+end function
+

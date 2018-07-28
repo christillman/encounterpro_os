@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "chart\\chart_labs_tests.pbl" "";
+@end;
+@begin Objects
+ "chart\\u_cpr_test_history.sru" "chart\\chart_labs_tests.pbl";
+ "chart\\dw_test_history.srd" "chart\\chart_labs_tests.pbl";
+@end;

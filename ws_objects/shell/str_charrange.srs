@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_charrange.srs
+global type str_charrange from structure
+	str_charposition		from_position
+	str_charposition		to_position
+end type
+

@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_patient_message.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_patient_msg.sru" "service\\svc_patient_message.pbl";
+ "service\\w_patient_messages.srw" "service\\svc_patient_message.pbl";
+@end;

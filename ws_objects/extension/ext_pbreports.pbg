@@ -1,0 +1,47 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_pbreports.pbl" "";
+@end;
+@begin Objects
+ "extension\\u_component_report_prescription.sru" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_rtf.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription.srd" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_asst_histories.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_report_list.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_treatment_results_display.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_obs_cat_results_display.srd" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_external_source.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription2_size_20.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_chart_alerts.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription2_size_6.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_dated_list.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_sp_get_child_treatments.srd" "extension\\ext_pbreports.pbl";
+ "extension\\encounter.srd" "extension\\ext_pbreports.pbl";
+ "extension\\assessment.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_billing_sheet.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_xml_object_select.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_obj_list_results.srd" "extension\\ext_pbreports.pbl";
+ "extension\\encounter_allergies.srd" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_all_encounters.sru" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_send_report.sru" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_send_report_lcr.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_referral_prescription.srd" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_billing_sheet.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_encounter_alert.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_immunization_history.srd" "extension\\ext_pbreports.pbl";
+ "extension\\w_send_report_rtf.srw" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_document_component.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_report_list_null_type.srd" "extension\\ext_pbreports.pbl";
+ "extension\\encounter_footer.srd" "extension\\ext_pbreports.pbl";
+ "extension\\encounter_plan.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_rpt_patient_summary.srd" "extension\\ext_pbreports.pbl";
+ "extension\\encounter_currentmeds.srd" "extension\\ext_pbreports.pbl";
+ "extension\\assessment_history.srd" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_patient_observations.sru" "extension\\ext_pbreports.pbl";
+ "extension\\w_encounterpro_report_rtf.srw" "extension\\ext_pbreports.pbl";
+ "extension\\u_component_report_immunization.sru" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription_size_20.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription_size_6.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_prescription2.srd" "extension\\ext_pbreports.pbl";
+ "extension\\dw_xml_encounter_select.srd" "extension\\ext_pbreports.pbl";
+@end;

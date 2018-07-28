@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_attribute_remove_attribute.srf
+global type f_attribute_remove_attribute from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_remove_attribute (ref str_attributes pstr_attributes, string ps_attribute)
+end prototypes
+
+global subroutine f_attribute_remove_attribute (ref str_attributes pstr_attributes, string ps_attribute);string ls_component_id
+
+setnull(ls_component_id)
+
+f_attribute_remove_attribute2(pstr_attributes, ps_attribute, ls_component_id)
+
+end subroutine
+

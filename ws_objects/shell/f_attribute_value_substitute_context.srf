@@ -1,0 +1,181 @@
+HA$PBExportHeader$f_attribute_value_substitute_context.srf
+global type f_attribute_value_substitute_context from function_object
+end type
+
+forward prototypes
+global function string f_attribute_value_substitute_context (string ps_token, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_attribute_value_substitute_context (string ps_token, str_complete_context pstr_context, str_attributes pstr_attributes);// This function takes a token wrapped in percent signs and returns the token value based on the passed in context.
+// If the token has two parts separated by a space then it is interpreted as a context sensitive property
+// If the token has only one part then it is interpreted as an attribute or a "General" property.  In this case first the
+// passed in attributes are searched for the substitution token, then if an attribute was not found, the substitution
+// token is treated as a "General" property.
+//
+// %<property>%    (e.g. %cpr_id%)
+// Single Part, No Context, No Object
+// This style will interpret <Property> as a passed-in attribute or a General context property.  First the passed-in attributes
+// will be searched and if an attribute is found where the attribute name = <property>, then the attribute value is returned.
+// If no attribute is found then the General properties will be searched.
+//
+// EncounterPRO Data Addressing Syntax
+// %<object>[(<WhichObject>)][.<property_specification>]%  (e.g. %Treatment.ordered_for.address.address_line_1%)
+// This is the standard style for referencing data in the EncounterPRO database.  See EncounterPRO Data Addressing Syntax documentation for more information
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!! This form has been retired and superceded by the EncounterPRO Data Addressing Syntax
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// %<property>(<object_type>.<object_property>)%    (e.g. %created_by(user.first_name)%)
+// Single Part, No Context, With Object
+// This style will first interpret <Property> according to the  "Single Part, No Context, No Object" rules.  Then the resulting
+// value, if there is one, is interpreted as a key of type <object_type> (e.g. "User").  If an object of the specified <object_type> is
+// found with the given key value, then the corresponding <object_property> (e.g. "first_name") is returned as the substitution value
+// for this token.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Object-space-Property (OSP) Syntax
+// These forms are still valid for backward compatibility, but all new references should be made using the EncounterPRO Data Addressing Syntax
+//
+//  %<context_object> <property>%    (e.g.  %treatment begin_date%)
+// Two Part, With Context, No Object
+// This style interprets the <property> to be a property of the current or latest context of the specified <context_object>.
+// First, the columns and built-in properties are searched.  If <property> is not found then the scripted and user-defined
+// properties are searched.
+//
+// %<context_object> <property>(<object_type>.<object_property>)%
+// Two Part, With Context, With Object
+// This style will first interpret the <context_object> and <Property> according to the  "Two Part, With Context, No Object" rules.  Then the resulting
+// value, if there is one, is interpreted as a key of type <object_type> (e.g. "User").  If an object of the specified <object_type> is
+// found with the given key value, then the corresponding <object_property> (e.g. "first_name") is returned as the substitution value
+// for this token.
+//
+string ls_string
+str_property_value lstr_property_value
+long ll_object_key
+string ls_context_object
+string ls_property
+long i
+string ls_value
+integer li_count
+long ll_pos1
+long ll_pos2
+long ll_pos3
+string ls_temp
+string  ls_object_type
+string ls_object_property
+string ls_attribute_name
+
+ls_value = ""
+
+// remove the percent sign wrapper
+if left(ps_token, 1) = "%" and right(ps_token, 1) = "%" then
+	ps_token = mid(ps_token, 2, len(ps_token) - 2)
+else
+	// If there's no wrapper then just return the passed in string
+	return ps_token
+end if
+
+// Split the property into it's context and property name
+ll_pos1 = pos(ps_token, " ")
+ll_pos2 = pos(ps_token, ".")
+ll_pos3 = pos(ps_token, "(")
+if (ll_pos2 > 0 AND (ll_pos1 = 0 OR ll_pos1 > ll_pos2)) &
+	OR (ll_pos3 > 0 AND (ll_pos1 = 0 OR ll_pos1 > ll_pos3))then
+	// If we have a period or left paren before a space, then we're using the EncounterPRO Data Addressing Syntax (EDAS)
+	lstr_property_value = f_edas_interpret_address(ps_token, pstr_context, pstr_attributes)
+	return lstr_property_value.display_value
+end if
+
+// If we have a space before a period then we're using the old object-space-property syntax
+// If we have no period or space then we have a simple atribute/value substitution
+if ll_pos1 = 0 and ll_pos2 = 0 then
+	ls_property = ps_token
+	setnull(ls_object_type)
+	setnull(ls_object_property)
+	ls_attribute_name = ls_property
+	
+	// If we recognize the attribute as a standard key, get the value from the context
+	CHOOSE CASE lower(ls_attribute_name)
+		CASE "cpr_id"
+			if len(pstr_context.cpr_id) > 0 then
+				return pstr_context.cpr_id
+			else
+				return ""
+			end if
+		CASE "encounter_id"
+			if isnull(pstr_context.encounter_id) then
+				return ""
+			else
+				return string(pstr_context.encounter_id)
+			end if
+		CASE "problem_id"
+			if isnull(pstr_context.problem_id) then
+				return ""
+			else
+				return string(pstr_context.problem_id)
+			end if
+		CASE "treatment_id"
+			if isnull(pstr_context.treatment_id) then
+				return ""
+			else
+				return string(pstr_context.treatment_id)
+			end if
+		CASE "observation_sequence"
+			if isnull(pstr_context.observation_sequence) then
+				return ""
+			else
+				return string(pstr_context.observation_sequence)
+			end if
+		CASE "attachment_id"
+			if isnull(pstr_context.attachment_id) then
+				return ""
+			else
+				return string(pstr_context.attachment_id)
+			end if
+		CASE ELSE
+			// Check the passed in attributes for the property
+			for i = 1 to pstr_attributes.attribute_count
+				if lower(ls_attribute_name) = lower(pstr_attributes.attribute[i].attribute) then
+					ls_value = pstr_attributes.attribute[i].value
+					if isnull(ls_value) or ls_value = "" then return ""
+		
+					// if the called specified an object type and object property, then get the specified object property as the value
+					if not isnull(ls_object_type) then
+						return f_object_property(ls_attribute_name, ls_value, ls_object_type, ls_object_property, pstr_attributes)
+					end if
+					
+					return ls_value
+				end if
+			next
+	END CHOOSE
+	
+	// If the token is a single part and didn't match any attributes, then treat it like OSP syntax using the "General" object
+	ls_context_object = "General"
+	setnull(ll_object_key)
+else
+	f_split_string(ps_token, " ", ls_context_object, ls_property)
+end if
+
+// Get the object key from the context structure
+CHOOSE CASE lower(ls_context_object)
+	CASE "encounter"
+		ll_object_key = pstr_context.encounter_id
+	CASE "assessment"
+		ll_object_key = pstr_context.problem_id
+	CASE "treatment"
+		ll_object_key = pstr_context.treatment_id
+	CASE "observation"
+		ll_object_key = pstr_context.observation_sequence
+	CASE "attachment"
+		ll_object_key = pstr_context.attachment_id
+	CASE ELSE
+		setnull(ll_object_key)
+END CHOOSE
+
+// Get the property value
+lstr_property_value = f_get_property(ls_context_object, ls_property, ll_object_key, pstr_attributes)
+return lstr_property_value.value
+
+end function
+

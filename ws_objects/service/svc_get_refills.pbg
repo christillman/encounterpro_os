@@ -1,0 +1,13 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_get_refills.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_new_refill_request.sru" "service\\svc_get_refills.pbl";
+ "service\\w_svc_rx_refill_document.srw" "service\\svc_get_refills.pbl";
+ "service\\u_component_service_refill_request.sru" "service\\svc_get_refills.pbl";
+ "service\\u_component_service_get_refills.sru" "service\\svc_get_refills.pbl";
+ "service\\w_svc_new_refill_request.srw" "service\\svc_get_refills.pbl";
+ "service\\w_svc_rx_refill_request.srw" "service\\svc_get_refills.pbl";
+ "service\\w_svc_rx_refill.srw" "service\\svc_get_refills.pbl";
+@end;

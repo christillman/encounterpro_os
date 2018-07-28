@@ -1,0 +1,16 @@
+HA$PBExportHeader$dw_sp_new_drug_result_set.srd
+release 9;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=96 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=108 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=drug_id dbname="drug_id" )
+ procedure="1 execute dbo.sp_new_drug_result_set @ps_drug_type = :ps_drug_type, @ps_common_name = :ps_common_name, @ps_generic_name = :ps_generic_name, @ps_controlled_substance_flag = :ps_controlled_substance_flag, @pr_default_duration_amount = :pr_default_duration_amount, @ps_default_duration_unit = :ps_default_duration_unit, @ps_default_duration_prn = :ps_default_duration_prn, @pr_max_dose_per_day = :pr_max_dose_per_day, @ps_max_dose_unit = :ps_max_dose_unit" arguments=(("ps_drug_type", string),("ps_common_name", string),("ps_generic_name", string),("ps_controlled_substance_flag", string),("pr_default_duration_amount", number),("ps_default_duration_unit", string),("ps_default_duration_prn", string),("pr_max_dose_per_day", number),("ps_max_dose_unit", string)) )
+text(band=header alignment="2" text="Drug Id" border="0" color="33554432" x="18" y="16" height="64" width="686" html.valueishtml="0"  name=drug_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="33554432" x="18" y="16" height="76" width="686" format="[general]" html.valueishtml="0"  name=drug_id visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )

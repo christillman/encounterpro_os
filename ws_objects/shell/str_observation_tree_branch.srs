@@ -1,0 +1,23 @@
+HA$PBExportHeader$str_observation_tree_branch.srs
+global type str_observation_tree_branch from structure
+	long		branch_id
+	string		parent_observation_id
+	string		child_observation_id
+	string		edit_service
+	string		location
+	integer		result_sequence
+	integer		result_sequence_2
+	string		description
+	integer		followon_severity
+	string		followon_observation_id
+	string		observation_tag
+	string		on_results_entered
+	string		unit_preference
+	integer		sort_sequence
+	integer		child_ordinal
+	integer		default_result_count
+	datetime		last_updated
+	str_exam_default_result		default_result[]
+	str_observation_tree		child_observation_tree
+end type
+

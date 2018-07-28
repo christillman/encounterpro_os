@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_disease_group.srs
+global type str_disease_group from structure
+	string		disease_group
+	long		disease_id
+	string		description
+end type
+

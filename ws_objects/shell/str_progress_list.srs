@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_progress_list.srs
+global type str_progress_list from structure
+	long		progress_count
+	str_progress		progress[]
+end type
+

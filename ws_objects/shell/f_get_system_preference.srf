@@ -1,0 +1,12 @@
+HA$PBExportHeader$f_get_system_preference.srf
+global type f_get_system_preference from function_object
+end type
+
+forward prototypes
+global function string f_get_system_preference (string ps_preference_type, string ps_preference_id)
+end prototypes
+
+global function string f_get_system_preference (string ps_preference_type, string ps_preference_id);return datalist.get_preference(ps_preference_type, ps_preference_id)
+
+end function
+

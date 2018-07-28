@@ -1,0 +1,17 @@
+HA$PBExportHeader$f_number_to_boolean.srf
+global type f_number_to_boolean from function_object
+end type
+
+forward prototypes
+global function boolean f_number_to_boolean (long pl_number)
+end prototypes
+
+global function boolean f_number_to_boolean (long pl_number);if isnull(pl_number) or pl_number = 0 then
+	return false
+else
+	return true
+end if
+
+
+end function
+

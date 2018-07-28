@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_hm_assessment_item.srs
+global type str_hm_assessment_item from structure
+	string		assessment_id
+	string		assessment_current_flag
+	string		primary_flag
+end type
+

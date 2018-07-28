@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_pblibraries.srs
+global type str_pblibraries from structure
+	long		pblibrary_count
+	str_pblibrary		pblibrary[]
+end type
+

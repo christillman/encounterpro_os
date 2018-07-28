@@ -1,0 +1,12 @@
+HA$PBExportHeader$f_get_default_treatment_mode.srf
+global type f_get_default_treatment_mode from function_object
+end type
+
+forward prototypes
+global function string f_get_default_treatment_mode (string ps_treatment_type, string ps_treatment_key)
+end prototypes
+
+global function string f_get_default_treatment_mode (string ps_treatment_type, string ps_treatment_key);return f_get_default_treatment_mode_2(ps_treatment_type, ps_treatment_key, false)
+
+end function
+

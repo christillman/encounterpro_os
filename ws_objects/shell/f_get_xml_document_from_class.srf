@@ -1,0 +1,33 @@
+HA$PBExportHeader$f_get_xml_document_from_class.srf
+global type f_get_xml_document_from_class from function_object
+end type
+
+forward prototypes
+global function string f_get_xml_document_from_class (string ps_xml_class, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_get_xml_document_from_class (string ps_xml_class, str_attributes pstr_attributes);u_xml_script luo_xml
+string ls_root_element
+long ll_xml_script_id
+u_xml_document lo_xml
+integer li_sts
+string ls_null
+string ls_xml_class
+
+setnull(ls_null)
+
+if isnull(ps_xml_class) then
+	log.log(this, "f_get_xml_document_from_class()", "No xml_class found", 4)
+	return ls_null
+end if
+
+luo_xml = CREATE u_xml_script
+li_sts = luo_xml.create_xml(ls_xml_class, pstr_attributes, lo_xml)
+if li_sts <= 0 then return ls_null
+
+DESTROY luo_xml
+
+return lo_xml.xml_string
+
+end function
+

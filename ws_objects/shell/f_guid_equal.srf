@@ -1,0 +1,33 @@
+HA$PBExportHeader$f_guid_equal.srf
+global type f_guid_equal from function_object
+end type
+
+forward prototypes
+global function boolean f_guid_equal (string ps_guid1, string ps_guid2)
+end prototypes
+
+global function boolean f_guid_equal (string ps_guid1, string ps_guid2);// Some operations return guids with brackets and some operations return guids without brackets.
+// This function compares 2 guids by stripping off the brackets and forcing both to uppercase
+
+if left(ps_guid1, 1) = "{" then
+	ps_guid1 = mid(ps_guid1, 2)
+end if
+
+if right(ps_guid1, 1) = "}" then
+	ps_guid1 = left(ps_guid1, len(ps_guid1) - 1)
+end if
+
+if left(ps_guid2, 1) = "{" then
+	ps_guid2 = mid(ps_guid2, 2)
+end if
+
+if right(ps_guid2, 1) = "}" then
+	ps_guid2 = left(ps_guid2, len(ps_guid2) - 1)
+end if
+
+if upper(ps_guid1) = upper(ps_guid2) then return true
+
+return false
+
+end function
+

@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_param_wizard_attributes.srs
+global type str_param_wizard_attributes from structure
+	string		id
+	string		param_mode
+	str_attributes		param_attributes
+	str_attributes		state_attributes
+	boolean		allow_preference
+end type
+

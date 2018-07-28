@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_progress_type_cache.srs
+global type str_progress_type_cache from structure
+	string		context_object
+	long		progress_types_count
+	str_progress_types		progress_types[]
+end type
+

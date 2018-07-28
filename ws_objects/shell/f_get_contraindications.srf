@@ -1,0 +1,116 @@
+HA$PBExportHeader$f_get_contraindications.srf
+global type f_get_contraindications from function_object
+end type
+
+forward prototypes
+global function str_contraindications f_get_contraindications (string ps_cpr_id, string ps_treatment_type, string ps_treatment_key, string ps_treatment_description, string ps_treatment_list_user_id, string ps_treatment_list_assessment_id, long pl_care_plan_id, str_attributes pstr_attributes)
+end prototypes
+
+global function str_contraindications f_get_contraindications (string ps_cpr_id, string ps_treatment_type, string ps_treatment_key, string ps_treatment_description, string ps_treatment_list_user_id, string ps_treatment_list_assessment_id, long pl_care_plan_id, str_attributes pstr_attributes);str_contraindications lstr_contraindications
+str_contraindications lstr_external_contraindications
+u_ds_data luo_data
+long i
+u_xml_document luo_xml_document
+integer li_sts
+str_complete_context lstr_from_context
+str_complete_context lstr_document_context
+string ls_payload_type
+string ls_find
+long ll_treatment_count
+long ll_row
+long ll_index
+string ls_response
+str_external_observation_attachment lstr_attachment
+str_complete_context lstr_context
+
+// Set the static fields
+lstr_contraindications.user_id = ps_treatment_list_user_id
+lstr_contraindications.assessment_id = ps_treatment_list_assessment_id
+lstr_contraindications.treatment_type = ps_treatment_type
+lstr_contraindications.treatment_key = ps_treatment_key
+lstr_contraindications.treatment_description = ps_treatment_description
+
+
+// Get the Native EncounterPRO contraindication
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_check_contraindications")
+lstr_contraindications.contraindication_count = luo_data.retrieve(ps_cpr_id, &
+																					current_user.user_id, &
+																					ps_treatment_type , &
+																					ps_treatment_key , &
+																					ps_treatment_description , &
+																					ps_treatment_list_user_id , &
+																					ps_treatment_list_assessment_id , &
+																					pl_care_plan_id)
+if lstr_contraindications.contraindication_count < 0 then
+	openwithparm(w_pop_message, "Unable to check any contraindication rules")
+	return lstr_contraindications
+end if
+
+for i = 1 to lstr_contraindications.contraindication_count
+	lstr_contraindications.contraindication[i].treatmentdefinitionid = luo_data.object.treatment_definition_id[i]
+	lstr_contraindications.contraindication[i].treatmenttype = luo_data.object.treatment_type[i]
+	lstr_contraindications.contraindication[i].treatmentkey = luo_data.object.treatment_key[i]
+	lstr_contraindications.contraindication[i].contraindicationtype = luo_data.object.contraindicationtype[i]
+	lstr_contraindications.contraindication[i].icon  = luo_data.object.icon [i]
+	lstr_contraindications.contraindication[i].severity  = luo_data.object.severity [i]
+	lstr_contraindications.contraindication[i].shortdescription  = luo_data.object.shortdescription [i]
+	lstr_contraindications.contraindication[i].longdescription  = luo_data.object.longdescription [i]
+	lstr_contraindications.contraindication[i].warning   = luo_data.object.contraindication_warning  [i]
+	lstr_contraindications.contraindication[i].references  = luo_data.object.contraindication_references [i]
+next
+
+f_attribute_add_attribute(pstr_attributes, "treatment_type", ps_treatment_type)
+f_attribute_add_attribute(pstr_attributes, "treatment_key", ps_treatment_key)
+f_attribute_add_attribute(pstr_attributes, "treatment_description", ps_treatment_description)
+
+f_attribute_add_attribute(pstr_attributes, "list_user_id", ps_treatment_list_user_id)
+f_attribute_add_attribute(pstr_attributes, "assessment_id", ps_treatment_list_assessment_id)
+f_attribute_add_attribute(pstr_attributes, "care_plan_id", string(pl_care_plan_id))
+
+lstr_context = f_empty_context()
+lstr_context.cpr_id = ps_cpr_id
+
+for i = 1 to common_thread.contraindication_count
+	li_sts = f_run_report( common_thread.contraindication_alerts[i].config_object_id , &
+								lstr_context, &
+								pstr_attributes, &
+								"Machine", &
+								false, &
+								lstr_attachment )
+
+	luo_xml_document = lstr_attachment.xml_document
+	if isnull(luo_xml_document) or not isvalid(luo_xml_document) then
+		log.log(this, "f_get_contraindications()", "Document returned was not an XML document", 4)
+		return lstr_contraindications
+	end if
+	
+	// We have an XML document from the external source.  Now interpret it.
+	li_sts = luo_xml_document.interpret(lstr_from_context, lstr_document_context)
+	if li_sts < 0 then
+		openwithparm(w_pop_message, "Unable to check all of the contraindication rules")
+		return lstr_contraindications
+	end if
+	
+	// See if the document payload is the right type
+	ls_payload_type = classname(luo_xml_document.document_payload)
+	if lower(ls_payload_type) = "str_contraindications" then
+		// Got some!!
+		lstr_external_contraindications = luo_xml_document.document_payload
+		
+		for i = 1 to lstr_external_contraindications.contraindication_count
+			lstr_contraindications.contraindication_count += 1
+			lstr_contraindications.contraindication[lstr_contraindications.contraindication_count] = lstr_external_contraindications.contraindication[i]
+		next
+	else
+		openwithparm(w_pop_message, "Unable to check all of the contraindication rules")
+		log.log(this, "f_get_contraindications()", "Document returned a payload of the wrong type (" + ls_payload_type + ")", 4)
+	end if
+next
+
+return lstr_contraindications
+
+
+
+end function
+

@@ -1,0 +1,92 @@
+HA$PBExportHeader$f_pick_treatment_from_list.srf
+global type f_pick_treatment_from_list from function_object
+end type
+
+forward prototypes
+global function integer f_pick_treatment_from_list (string ps_treatment_list_id, ref long pl_list_sequence, ref string ps_treatment_type, ref string ps_defined_flag, ref str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_pick_treatment_from_list (string ps_treatment_list_id, ref long pl_list_sequence, ref string ps_treatment_type, ref string ps_defined_flag, ref str_attributes pstr_attributes);Integer					button_pressed
+Long						ll_treatment_count
+long 						i
+long ll_count
+String					ls_button,ls_help
+String					ls_treatment_type,ls_title,ls_null
+/* user defined */
+window 					lw_pop_buttons
+str_popup				popup
+str_popup_return 		popup_return
+u_ds_data            luo_treatments
+u_ds_data	luo_attributes
+string ls_defined_flag
+integer li_sts
+
+Setnull(ls_null)
+
+luo_attributes = CREATE u_ds_data
+luo_attributes.set_dataobject("dw_treatment_type_list_attribute")
+
+luo_treatments = Create u_ds_data
+luo_treatments.set_dataobject("dw_treatments_list")
+ll_treatment_count = luo_treatments.Retrieve(ps_treatment_list_id)
+if ll_treatment_count <= 0 then return ll_treatment_count
+
+for i = 1 to ll_treatment_count
+	ls_treatment_type = luo_treatments.object.treatment_type[i]
+	ls_button = datalist.treatment_type_define_button(ls_treatment_type)
+	If Not Isnull(ls_button) And Len(ls_button) > 0 Then
+		ls_help = datalist.treatment_type_description(ls_treatment_type)
+		ls_title = luo_treatments.object.title[i]
+		if isnull(ls_title) then ls_title = datalist.treatment_type_define_title(ls_treatment_type)
+		popup.button_count = popup.button_count + 1
+		popup.button_icons[popup.button_count] = ls_button
+		popup.button_helps[popup.button_count] = ls_help
+		popup.button_titles[popup.button_count] = ls_title
+	End If
+next
+
+If popup.button_count > 1 then
+	popup.button_count = popup.button_count + 1
+	popup.button_icons[popup.button_count] = "button11.bmp"
+	popup.button_helps[popup.button_count] = "Cancel"
+	popup.button_titles[popup.button_count] = "Cancel"
+End if
+
+popup.button_titles_used = true
+
+If popup.button_count > 1 then
+	Openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
+	If isvalid(Message.powerobjectparm) then
+		popup_return = Message.powerobjectparm
+		button_pressed = popup_return.item_index
+	Else
+		button_pressed = Message.doubleparm
+	End if
+Elseif popup.button_count = 1 then
+	button_pressed = 1
+Else
+	button_pressed = 0
+End if
+
+// Check if "Cancel" button was pressed
+If popup.button_count > 1 and button_pressed = popup.button_count then button_pressed = 0
+
+If button_pressed > 0 and button_pressed <= popup.button_count Then
+	li_sts = 1
+	ps_treatment_type = luo_treatments.object.treatment_type[button_pressed]
+	pl_list_sequence = luo_treatments.object.list_sequence[button_pressed]
+	ps_defined_flag = luo_treatments.object.defined_flag[button_pressed]
+	ll_count = luo_attributes.retrieve(ps_treatment_list_id, pl_list_sequence)
+	f_attribute_ds_to_str(luo_attributes, pstr_attributes)
+else
+	li_sts = 0
+end if
+
+// Destroy the datastore
+Destroy luo_treatments
+DESTROY luo_attributes
+
+Return li_sts
+
+end function
+

@@ -1,0 +1,40 @@
+HA$PBExportHeader$f_get_object_info.srf
+global type f_get_object_info from function_object
+end type
+
+forward prototypes
+global function integer f_get_object_info (string ps_object_id, ref str_object_info pstr_object_info)
+end prototypes
+
+global function integer f_get_object_info (string ps_object_id, ref str_object_info pstr_object_info);
+
+// Sort by status descending so that the 'OK' record will sort before any 'NA' records
+
+SELECT TOP 1 id ,
+	object_class ,
+	object_type ,
+	description ,
+	object_type_prefix ,
+	owner_id ,
+	status ,
+	base_table ,
+	base_table_key
+INTO :pstr_object_info.id ,
+	:pstr_object_info.object_class ,
+	:pstr_object_info.object_type ,
+	:pstr_object_info.description ,
+	:pstr_object_info.object_type_prefix ,
+	:pstr_object_info.owner_id ,
+	:pstr_object_info.status ,
+	:pstr_object_info.base_table ,
+	:pstr_object_info.base_table_key
+FROM dbo.fn_object_info(:ps_object_id)
+ORDER BY status DESC, id;
+if not tf_check() then return -1
+
+return 1
+
+
+
+end function
+

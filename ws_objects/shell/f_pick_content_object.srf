@@ -1,0 +1,73 @@
+HA$PBExportHeader$f_pick_content_object.srf
+global type f_pick_content_object from function_object
+end type
+
+forward prototypes
+global function str_content_object f_pick_content_object (string ps_object_type, string ps_prompt)
+end prototypes
+
+global function str_content_object f_pick_content_object (string ps_object_type, string ps_prompt);str_popup_return popup_return
+str_popup popup
+str_param_setting lstr_param
+str_param_wizard_return lstr_return
+w_window_base lw_pick
+str_picked_observations lstr_observations
+str_content_object lstr_content_object
+w_param_setting lw_param_window
+
+setnull(lstr_content_object.object_id)
+setnull(lstr_content_object.object_key)
+lstr_content_object.object_type = ps_object_type
+
+CHOOSE CASE lower(ps_object_type)
+	CASE "assessment"
+		lstr_param.param.param_class = "u_param_assessment"
+	CASE "drug"
+		lstr_param.param.param_class = "u_param_drug"
+	CASE "material"
+		lstr_param.param.param_class = "u_param_patient_material"
+	CASE "procedure"
+		lstr_param.param.param_class = "u_param_procedure"
+	CASE "observation"
+		lstr_param.param.param_class = "u_param_observation_single"
+	CASE "result"
+		popup.data_row_count = 2
+		popup.title = ps_prompt
+		popup.multiselect = false
+		setnull(popup.items[1])
+		popup.items[2] = current_user.specialty_id
+		openwithparm(lw_pick, popup, "w_pick_observations")
+		lstr_observations = message.powerobjectparm
+		if lstr_observations.observation_count < 1 then return lstr_content_object
+		
+		f_attribute_add_attribute(lstr_param.attributes, "observation_id", lstr_observations.observation_id[1])
+		lstr_param.param.param_class = "u_param_observation_result"
+END CHOOSE
+
+lstr_param.param.param_title = ps_prompt
+lstr_param.param.helptext = lstr_param.param.param_title
+lstr_param.param.token1 = "object_key"
+setnull(lstr_param.param.query)
+lstr_param.param.required_flag = "N"
+lstr_param.invisible_wizard = true
+
+openwithparm(lw_param_window, lstr_param, "w_param_setting")
+lstr_return = message.powerobjectparm
+if lstr_return.return_status <= 0 then return lstr_content_object
+
+lstr_content_object.object_key = f_attribute_find_attribute(lstr_return.attributes, lstr_param.param.token1)
+
+SELECT object_id,
+		description,
+		owner_id
+INTO :lstr_content_object.object_id,
+		:lstr_content_object.description,
+		:lstr_content_object.owner_id
+FROM dbo.fn_content_object_info(:ps_object_type, :lstr_content_object.object_key);
+if not tf_check() then return lstr_content_object
+
+
+return lstr_content_object
+
+end function
+

@@ -1,0 +1,42 @@
+HA$PBExportHeader$f_context_to_attributes.srf
+global type f_context_to_attributes from function_object
+end type
+
+forward prototypes
+global function str_attributes f_context_to_attributes (str_complete_context pstr_context)
+end prototypes
+
+global function str_attributes f_context_to_attributes (str_complete_context pstr_context);str_attributes lstr_attributes
+
+// See if we got any context from the document
+if len(pstr_context.cpr_id) > 0 then
+	f_attribute_add_attribute(lstr_attributes, "cpr_id", pstr_context.cpr_id)
+end if
+if len(pstr_context.context_object) > 0 then
+	f_attribute_add_attribute(lstr_attributes, "context_object", pstr_context.context_object)
+end if
+if pstr_context.encounter_id > 0 then
+	f_attribute_add_attribute(lstr_attributes, "encounter_id", string(pstr_context.encounter_id))
+end if
+if pstr_context.problem_id > 0 then
+	f_attribute_add_attribute(lstr_attributes, "problem_id", string(pstr_context.problem_id))
+end if
+if pstr_context.treatment_id > 0 then
+	f_attribute_add_attribute(lstr_attributes, "treatment_id", string(pstr_context.treatment_id))
+end if
+if pstr_context.observation_sequence > 0 then
+	f_attribute_add_attribute(lstr_attributes, "observation_sequence", string(pstr_context.observation_sequence))
+end if
+if pstr_context.attachment_id > 0 then
+	f_attribute_add_attribute(lstr_attributes, "attachment_id", string(pstr_context.attachment_id))
+end if
+if len(pstr_context.purpose) > 0 then
+	f_attribute_add_attribute(lstr_attributes, "purpose", pstr_context.purpose)
+end if
+
+return lstr_attributes
+
+
+
+end function
+

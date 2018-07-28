@@ -1,0 +1,31 @@
+HA$PBExportHeader$f_attribute_find_attribute2.srf
+global type f_attribute_find_attribute2 from function_object
+end type
+
+forward prototypes
+global function string f_attribute_find_attribute2 (str_attributes pstr_attributes, string ps_attribute, string ps_component_id)
+end prototypes
+
+global function string f_attribute_find_attribute2 (str_attributes pstr_attributes, string ps_attribute, string ps_component_id);integer i
+string ls_null
+
+setnull(ls_null)
+
+// If there are multiples, then find the last one
+for i = pstr_attributes.attribute_count to 1 step -1
+	if lower(pstr_attributes.attribute[i].attribute) = lower(ps_attribute) then
+		if len(ps_component_id) > 0 and len(pstr_attributes.attribute[i].component_id) > 0 then
+			if f_guid_compare(pstr_attributes.attribute[i].component_id, ps_component_id) then
+				return pstr_attributes.attribute[i].value
+			end if
+		else
+			// Go ahead and match if either the passed in component_id or the component_id in the structure wasn't supplied
+			return pstr_attributes.attribute[i].value
+		end if
+	end if
+next
+
+return ls_null
+
+end function
+

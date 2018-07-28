@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_datawindow_mapping_edit_context.srs
+global type str_datawindow_mapping_edit_context from structure
+	str_datawindow_config_object		datawindow
+	long		mapping_index
+	long		return_status
+end type
+

@@ -1,0 +1,21 @@
+HA$PBExportHeader$str_config_object_version.srs
+global type str_config_object_version from structure
+	string		config_object_id
+	long		version
+	string		description
+	string		version_description
+	string		config_object_type
+	long		owner_id
+	datetime		created
+	string		created_by
+	long		created_from_version
+	datetime		checked_in
+	string		status
+	datetime		status_date_time
+	string		release_status
+	datetime		release_status_date_time
+	string		object_encoding_method
+	blob		objectdata
+	string		checked_out_by
+end type
+

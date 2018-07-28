@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_property_address.srs
+global type str_property_address from structure
+	string		property_address
+	long		property_count
+	str_property_specification		property[]
+	long		return_status
+	string		error_message
+	str_property_suffix		suffix
+end type
+

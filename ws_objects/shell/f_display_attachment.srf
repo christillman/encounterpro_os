@@ -1,0 +1,16 @@
+HA$PBExportHeader$f_display_attachment.srf
+global type f_display_attachment from function_object
+end type
+
+forward prototypes
+global function integer f_display_attachment (long pl_attachment_id)
+end prototypes
+
+global function integer f_display_attachment (long pl_attachment_id);str_attributes lstr_attributes
+
+lstr_attributes.attribute_count = 0
+
+return f_display_attachment_with_attributes(pl_attachment_id, lstr_attributes)
+
+end function
+

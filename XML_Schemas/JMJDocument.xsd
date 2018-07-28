@@ -1,0 +1,1151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by Mark Copenhaver (JMJ Technologies, Inc.) -->
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Mark Copenhaver (JMJ Technologies, Inc.) -->
+<xs:schema xmlns="http://jmjtech.com/epro.xsd" xmlns:mstns="http://jmjtech.com/epro.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" targetNamespace="http://jmjtech.com/epro.xsd" elementFormDefault="qualified" id="epro">
+	<xs:element name="JMJDocument">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="xs:string"/>
+				<xs:element name="OwnerID" type="xs:string"/>
+				<xs:element name="Creator">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CreateDate">
+								<xs:annotation>
+									<xs:documentation>Date and time this document was created</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="VendorName">
+								<xs:annotation>
+									<xs:documentation>Name of vendor who's application created this document (e.g. EHR, Inc.)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ApplicationName">
+								<xs:annotation>
+									<xs:documentation>Name of application that ordered or created this document (e.g. EncounterPRO)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ApplicationVersion">
+								<xs:annotation>
+									<xs:documentation>Version of application that ordered or created this document (e.g. 5.0.28)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ComponentName" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Name of component that created this document (e.g. JMJDocument)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ComponentVersion" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Version of component that created this document (e.g. 1.0.4.2) </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DatabaseModLevel" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Database Mod Level at the time this document was created</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="OfficeID" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Office ID where the task that created or ordered the creation of this document is running</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ComputerID" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Computer ID where the process that created this document is running</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="TaskID" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Identifies the workflow task that created or ordered the creation of this document.  (I.E. p_Patient_wp_Item.id)</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Actors" type="Actors"/>
+				<xs:element name="MessageID" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SenderMessageID" minOccurs="0"/>
+							<xs:element name="EpIEMessageID" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EpIEHandler" type="EpIEHandlerType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Internal Use Only.  EpIEHandler allows EpIE to send handling instructions to EncounterPRO.  This is only needed when the EpIE transform cannot resolve an ambiguity and is rarely used.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PrimaryContext" type="JMJDocumentContext" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Primary Context block identifies which context object under PatientRecord is the main focus of this document.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PatientRecord" type="PatientRecord"/>
+			</xs:sequence>
+			<xs:attribute name="Description" type="xs:string" use="optional"/>
+			<xs:attribute name="DocumentID" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PatientRecord">
+		<xs:sequence>
+			<xs:element name="PatientID" type="PatientID" maxOccurs="unbounded"/>
+			<xs:element name="PatientHandling" type="ObjectHandling" minOccurs="0"/>
+			<xs:element name="race" type="xs:string" minOccurs="0"/>
+			<xs:element name="DateOfBirth" type="xs:date" minOccurs="0"/>
+			<xs:element name="TimeOfBirth" type="xs:time" minOccurs="0"/>
+			<xs:element name="sex" type="xs:string" minOccurs="0"/>
+			<xs:element name="PrimaryLanguage" type="xs:string" minOccurs="0"/>
+			<xs:element name="MaritalStatus" type="xs:string" minOccurs="0"/>
+			<xs:element name="SSN" type="xs:string" minOccurs="0"/>
+			<xs:element name="FirstName" type="xs:string"/>
+			<xs:element name="LastName" type="xs:string"/>
+			<xs:element name="Degree" type="xs:string" minOccurs="0"/>
+			<xs:element name="NamePrefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0"/>
+			<xs:element name="NameSuffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="MaidenName" type="xs:string" minOccurs="0"/>
+			<xs:element name="Communication" type="CommunicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PrimaryLocation" type="ActorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Physician's office location where patient is managed and/or usually comes for office visits.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientStatus" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Active, Inactive, Dismissed, Deceased, Non-Patient Data, Relation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientAddress" type="AddressType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Religion" type="xs:string" minOccurs="0"/>
+			<xs:element name="Nationality" type="xs:string" minOccurs="0"/>
+			<xs:element name="FinancialClass" type="xs:string" minOccurs="0"/>
+			<xs:element name="Employer" type="xs:string" minOccurs="0"/>
+			<xs:element name="EmployeeID" type="xs:string" minOccurs="0"/>
+			<xs:element name="Department" type="xs:string" minOccurs="0"/>
+			<xs:element name="Shift" type="xs:string" minOccurs="0"/>
+			<xs:element name="JobDescription" type="xs:string" minOccurs="0"/>
+			<xs:element name="StartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="TerminationDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="EmploymentStatus" type="xs:string" minOccurs="0"/>
+			<xs:element name="Relation" type="PatientRelationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PrimaryProvider" type="ActorID" minOccurs="0"/>
+			<xs:element name="SecondaryProvider" type="ActorID" minOccurs="0"/>
+			<xs:element name="ReferringProvider" type="ActorID" minOccurs="0"/>
+			<xs:element name="Authority" type="AuthorityType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>List of authority actors that have a relationship with this patien (e.g. Payers, P4P)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Encounter" type="Encounter" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Assessment" type="Assessment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Treatment" type="Treatment" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PatientNote" type="ChartNoteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Encounter">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="EncounterHandling" type="ObjectHandling" minOccurs="0"/>
+			<xs:element name="EncounterDate" type="xs:dateTime"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="EncounterType" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="Description" use="optional">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="80"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AttendingDoctor" type="ActorID" minOccurs="0"/>
+			<xs:element name="ReferringDoctor" type="ActorID" minOccurs="0"/>
+			<xs:element name="SupervisingDoctor" type="ActorID" minOccurs="0"/>
+			<xs:element name="NewPatient" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="New"/>
+						<xs:enumeration value="Established"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EncounterLocation" type="ActorID" minOccurs="0"/>
+			<xs:element name="WorkersCompFlag" type="xs:string" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="InpatientStatus" type="InpatientStatusType">
+					<xs:annotation>
+						<xs:documentation>An inpatient encounter represents an admission to a hospital or other inpatient facility</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OutpatientStatus" type="OutpatientStatusType">
+					<xs:annotation>
+						<xs:documentation>An outpatient encounter is where the provider has direct contact with the patient but the encounter has a relatively finite duration</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IndirectEncounterStatus" type="IndirectEncounterStatusType">
+					<xs:annotation>
+						<xs:documentation>An indirect encounter is where some form of communication took place but there was no direct contact between provider and patient</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OtherEncounterStatus" type="OtherEncounterStatusType">
+					<xs:annotation>
+						<xs:documentation>An Other encouter is any process which updates the clinical record but does not fall into any of the other encounter modalities</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="EncounterNote" type="ChartNoteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Charge" type="EncounterChargeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="EncounterID" type="EncounterID" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Assessment">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AssessmentHandling" type="ObjectHandling" minOccurs="0"/>
+			<xs:element name="AssessmentDefinitionID" type="xs:string" minOccurs="0"/>
+			<xs:element name="OpenEncounter" type="EncounterID" minOccurs="0"/>
+			<xs:element name="AssessmentType" type="xs:string"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Location" type="xs:string" minOccurs="0"/>
+			<xs:element name="Acuteness" type="xs:string" minOccurs="0"/>
+			<xs:element name="ICD9" minOccurs="0"/>
+			<xs:element name="BeginDate" type="xs:dateTime"/>
+			<xs:element name="DiagnosedBy" type="ActorID" minOccurs="0"/>
+			<xs:element name="AssessmentStatus" type="xs:string" minOccurs="0"/>
+			<xs:element name="CloseEncounter" type="EncounterID" minOccurs="0"/>
+			<xs:element name="EndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Treatment" type="TreatmentID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AssessmentNote" type="ChartNoteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="AssessmentID" type="AssessmentID" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Treatment">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TreatmentHandling" type="ObjectHandling" minOccurs="0"/>
+			<xs:element name="OpenEncounter" type="EncounterID" minOccurs="0"/>
+			<xs:element name="TreatmentType" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BeginDate" type="xs:dateTime"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="SpecimenID" type="xs:string" minOccurs="0"/>
+			<xs:element name="TreatmentLocation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TreatmentStatus" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CloseEncounter" type="EncounterID" minOccurs="0"/>
+			<xs:element name="EndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="OrderedBy" type="ActorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The provider who originally ordered this treatment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderedFor" type="ActorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contains the actor that the original ordering provider intended to perform this treatment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Order" type="TreatmentOrderType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contains a child block for each Order Event.  E.g. for medications, the original order and each refill is a seperate Order Event.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastOrderedBy" type="ActorID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The OrderedBy provider who issued the latest Order event.  This is a duplicate of the OrderedBy element from the last Order block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastOrderedDateTime" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date/time of the latest Order event.  This is a duplicate of the OrderedDateTime element from the last Order block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastOrderedEncounter" type="EncounterID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Encounter associated with the latest Order event.  This is a duplicate of the Encounter element from the last Order block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompletedBy" type="ActorID" minOccurs="0"/>
+			<xs:element name="Assessment" type="AssessmentID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Observation" type="Observation" minOccurs="0"/>
+			<xs:element name="TreatmentNote" type="ChartNoteType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="Medication" type="TreatmentMedication"/>
+			</xs:choice>
+			<xs:element name="Message" type="MessageType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ConstituentTreatments" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the parent treatment contains individual sub-elements, such as different vials withing an immunotherapy treatment, the sub-elements are modeled as Constituent Treatments (also called "Child Treatments")</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Treatment" type="Treatment" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="TreatmentID" type="TreatmentID" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="Observation">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" maxOccurs="unbounded"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Encounter" type="Encounter" minOccurs="0"/>
+			<xs:element name="ResultExpectedDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Stage" type="xs:int" minOccurs="0"/>
+			<xs:element name="StageDescription" type="xs:string" minOccurs="0"/>
+			<xs:element name="ObservationResult" type="ObservationResult" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Observation" type="Observation" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ObservationNote" type="ChartNoteType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>ObservationNote is preserved for backward compatibility but is depricated and may not be supported in a future release</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecimenCollected" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="ObservationStatus" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Attachment">
+		<xs:sequence>
+			<xs:element name="ID" type="ObjectID"/>
+			<xs:element name="AttachmentType" type="xs:string"/>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Extension" type="xs:string"/>
+			<xs:element name="TextVersion" type="xs:string"/>
+			<xs:element name="Data" type="xs:hexBinary"/>
+			<xs:element name="AttachmentDate" type="xs:dateTime"/>
+			<xs:element name="AttachedBy" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ObjectID">
+		<xs:sequence>
+			<xs:element name="OwnerID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specifies owner of IDDomain and IDValue.  If not supplied then taken from JMJDocument/OwnerID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IDDomain" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specifies the domain of possible values for IDValue</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IDValue" type="xs:string" minOccurs="0"/>
+			<xs:element name="CustomerID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specifies owner of JMJDomain and JMJValue.  If not supplied then taken from JMJDocument/CustomerID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JMJDomain" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specifies the domain within the EncounterPRO database of the values for JMJValue.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JMJValue" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Specified the actual identifier or key with the EncounterPRO database</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ObjectHandling">
+		<xs:sequence>
+			<xs:element name="Purpose" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instructs the receiving system or EpIE of the purpose of this object block.  E.g. New Rx, Cancel Lab Order, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjectUpdate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instructs the receiving system on how to handle the object if it is found to already exist.  Default is UpdateNever.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="UpdateAlways"/>
+						<xs:enumeration value="UpdateNever"/>
+						<xs:enumeration value="UpdateAsk"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ObjectCreate" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instructs the receiving system on how to handle this object if it can't find it in the database.  Default is CreateNever.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="CreateNever"/>
+						<xs:enumeration value="CreateAlways"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Notify" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies provider who should be notified of the arrival of the new data.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="OrderingProvider"/>
+						<xs:enumeration value="PrimaryProvider"/>
+						<xs:enumeration value="EncounterProvider"/>
+						<xs:enumeration value="NoOne"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NewObjectWorkflowName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to lookup specific workplan to order if new object is created from this data.  (i.e. Treatment Mode for treatments).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExistingObjectWorkflowName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used to lookup specific workplan to order if existing object is found from this data.  (i.e. Treatment Mode for treatments).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientID">
+		<xs:sequence>
+			<xs:element name="OwnerID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies owner of this IDDomain.  If not supplied then if PatientIDDomain begins with JMJ the OwnerID defaults to the CustomerID.  Otherwise it defaults to the OwnerID of thsi document.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientIDDomain">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PatientID">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ObservationResult">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" maxOccurs="unbounded"/>
+			<xs:element name="location" type="xs:string" minOccurs="0"/>
+			<xs:element name="result_definition_id" type="xs:string" minOccurs="0"/>
+			<xs:element name="encounter_date" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="ResultDate" type="xs:dateTime"/>
+			<xs:element name="ResultType" type="xs:string"/>
+			<xs:element name="Result" type="xs:string"/>
+			<xs:element name="ResultValue" type="xs:string" minOccurs="0"/>
+			<xs:element name="ResultUnit" type="xs:string" minOccurs="0"/>
+			<xs:element name="ResultFile" type="AttachmentType" minOccurs="0"/>
+			<xs:element name="AbnormalFlag" type="xs:string" minOccurs="0"/>
+			<xs:element name="AbnormalNature" type="xs:string" minOccurs="0"/>
+			<xs:element name="severity" type="xs:short" minOccurs="0"/>
+			<xs:element name="ObservedBy" type="ActorID" minOccurs="0"/>
+			<xs:element name="ReferenceRange" type="xs:string" minOccurs="0"/>
+			<xs:element name="ResultStatus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChartNoteType">
+		<xs:sequence>
+			<xs:element name="Context" type="ContextType" minOccurs="0"/>
+			<xs:element name="NoteType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NoteKey">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="NoteText"/>
+				<xs:element name="NoteAttachment" type="AttachmentType"/>
+			</xs:choice>
+			<xs:element name="NoteDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="NoteBy" type="ActorID" minOccurs="0"/>
+			<xs:element name="NoteSeverity" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="4"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PropertyType">
+		<xs:sequence>
+			<xs:element name="PropertyKey">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PropertyValue"/>
+			<xs:element name="PropertyDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="PropertyBy" type="ActorID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttachmentType">
+		<xs:sequence>
+			<xs:element name="FileName" minOccurs="0"/>
+			<xs:element name="FileType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AttachmentName" minOccurs="0"/>
+			<xs:element name="AttachmentData" type="xs:hexBinary"/>
+			<xs:element name="AttachmentDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LastName" type="xs:string" minOccurs="0"/>
+			<xs:element name="FirstName" type="xs:string" minOccurs="0"/>
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0"/>
+			<xs:element name="Title" type="xs:string" minOccurs="0"/>
+			<xs:element name="Suffix" type="xs:string" minOccurs="0"/>
+			<xs:element name="Prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="Degree" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+			<xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+			<xs:element name="City" type="xs:string" minOccurs="0"/>
+			<xs:element name="State" type="xs:string" minOccurs="0"/>
+			<xs:element name="Zip" type="xs:string" minOccurs="0"/>
+			<xs:element name="Country" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommunicationType">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Type of communication element (e.g. Phone, Fax, Email, etc.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of this particular communication element (e.g. Home Phone)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Priority" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Relative priority of communication elements</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="xs:string" minOccurs="0"/>
+			<xs:element name="Value" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Actual value of communication element (e.g. "770-555-1212")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Note" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Comment associated with this communication element (e.g. "Don't call after 9pm")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationType">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Director" type="PersonType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationSystemType">
+		<xs:sequence>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Type" type="xs:string" minOccurs="0"/>
+			<xs:element name="Version" type="xs:string" minOccurs="0"/>
+			<xs:element name="Contact" type="PersonType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActorType">
+		<xs:sequence>
+			<xs:element name="Name"/>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ActorClass" type="xs:string" minOccurs="0"/>
+			<xs:element name="ActorCategory" type="xs:string" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="Person" type="PersonType" minOccurs="0"/>
+				<xs:element name="Organization" type="OrganizationType" minOccurs="0"/>
+				<xs:element name="InformationSystem" type="InformationSystemType" minOccurs="0"/>
+			</xs:choice>
+			<xs:element name="Address" type="AddressType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Communication" type="CommunicationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Property" type="PropertyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="ActorID" type="ActorID"/>
+	</xs:complexType>
+	<xs:complexType name="Actors">
+		<xs:sequence>
+			<xs:element name="Actor" type="ActorType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TreatmentMedication">
+		<xs:sequence>
+			<xs:element name="DrugId" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is EncounterPRO drug id</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CommonName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defines the common name for prescriptions and over-the-counter medications</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GenericName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defines the generic name for prescriptions and over-the-counter medications</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BrandName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Defines the brand name for the prescriptions and over-the-counter medications</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LotNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the lot number defined in EncounterPRO for this drug</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpirationDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the expiration date defined in EncounterPRO for this drug</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Manufacturer" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the drug maker name defined in EncounterPRO for this drug</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Package" type="DrugPackageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This defines the drug package details for given drug package.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DosingInstructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Human readable text of the prescribe dose (e.g. "2 Tablets" or "Take as Directed")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdminInstructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Human readable text of the prescribed administration route, frequency and duration (e.g. "By Mouth Three Times Per Day x 10 Days")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientInstructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instructions from the prescriber to the patient to augment or clarify the dosing information</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PharmacistInstructions" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Instructions from the prescriber to the pharmacist regarding the formulation or packaging of the medication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dose" type="AmountUnitType" minOccurs="0"/>
+			<xs:element name="Frequency" type="FrequencyType" minOccurs="0"/>
+			<xs:element name="Duration" type="AmountUnitType" minOccurs="0"/>
+			<xs:element name="DurationPRN" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="32"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DispenseAtPharmacy" type="AmountUnitType" minOccurs="0"/>
+			<xs:element name="DispenseInOffice" type="AmountUnitType" minOccurs="0"/>
+			<xs:element name="SubstitutionAllowed" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="RefillsAllowed" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UnitType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="UnitID" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>unit id</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unit"/>
+			<xs:element name="UnitAmountType" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Number"/>
+						<xs:enumeration value="Date"/>
+						<xs:enumeration value="String"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PluralRule" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="1"/>
+						<xs:enumeration value="Y"/>
+						<xs:enumeration value="N"/>
+						<xs:enumeration value="I"/>
+						<xs:enumeration value="E"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrintUnit" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DisplayTemplate" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Prefix" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MajorUnitDisplaySuffix" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MinorUnitDisplaySuffix" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MajorUnitInputSuffix" minOccurs="0" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MinorUnitInputSuffix" minOccurs="0" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="24"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MajorMinorMultiplier" type="xs:int" minOccurs="0"/>
+			<xs:element name="DisplayMinorUnits" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AmountUnitType">
+		<xs:sequence>
+			<xs:element name="Amount" type="xs:string"/>
+			<xs:element name="Unit" type="UnitType">
+				<xs:annotation>
+					<xs:documentation>If the UnitType fields are not present then the value of the Unit element is the human readable unit name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The human readable text version of the amount and unit (e.g. "12.5 mg" or "14 Inches")</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FrequencyType">
+		<xs:sequence>
+			<xs:element name="Abbreviation">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="80"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TimesPerDayCalc" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DrugPackageType">
+		<xs:sequence>
+			<xs:element name="PackageID">
+				<xs:annotation>
+					<xs:documentation>This is EncounterPRO PackageID.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AdministerMethod">
+				<xs:annotation>
+					<xs:documentation>This defines the admin method for the drug package</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description">
+				<xs:annotation>
+					<xs:documentation>this defines the package description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dose" type="AmountUnitType">
+				<xs:annotation>
+					<xs:documentation>this defines the dose amount and unit of a given drug package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdministerPerDose" type="AmountUnitType">
+				<xs:annotation>
+					<xs:documentation>this defines the admin dose amount and unit of a given drug package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DosageForm">
+				<xs:annotation>
+					<xs:documentation>this defines the dosage form of a given drug package.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="15"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContextType">
+		<xs:sequence>
+			<xs:element name="PatientID" type="PatientID"/>
+			<xs:element name="ContextObject" type="ContextObjectType"/>
+			<xs:element name="ObjectID" type="ObjectID" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PropertySetType">
+		<xs:sequence>
+			<xs:element name="CprID" minOccurs="0"/>
+			<xs:element name="ContextObject"/>
+			<xs:element name="ObjectKey">
+				<xs:annotation>
+					<xs:documentation>encounter_id, problem_id, treatment_id, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PropertyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>aka Progress_Type.  Defaults to "Property"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property">
+				<xs:annotation>
+					<xs:documentation>aka Progress_Key</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Value">
+				<xs:annotation>
+					<xs:documentation>aka Progress or Progress_Value</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EpIEHandlerType">
+		<xs:annotation>
+			<xs:documentation>Instructs EncounterPRO how to handle the sending of this document to EpIE.  Used for setting status fields in the EncounterPRO database after the document is successfully transmitted to EpIE.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PropertySet" type="PropertySetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ToAddresseeID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:sequence>
+			<xs:element name="MessageID" type="xs:string"/>
+			<xs:element name="ThreadID" minOccurs="0"/>
+			<xs:element name="MessageRecipient" type="ActorID" maxOccurs="unbounded"/>
+			<xs:element name="MessageSender" type="ActorID"/>
+			<xs:element name="MessageSubject" minOccurs="0"/>
+			<xs:element name="MessageBody" minOccurs="0"/>
+			<xs:element name="MessageSent" type="xs:dateTime"/>
+			<xs:element name="MessageAttachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ActorID">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="ContextObjectType" final="restriction">
+		<xs:restriction base="xs:string">
+			<xs:length value="24"/>
+			<xs:enumeration value="Patient"/>
+			<xs:enumeration value="Encounter"/>
+			<xs:enumeration value="Assessment"/>
+			<xs:enumeration value="Treatment"/>
+			<xs:enumeration value="Observation"/>
+			<xs:enumeration value="Attachment"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TreatmentID">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="AssessmentID">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="EncounterID">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="InpatientStatusType">
+		<xs:sequence>
+			<xs:element name="AdmissionType" type="xs:string"/>
+			<xs:element name="AdmitReason" type="xs:string" minOccurs="0"/>
+			<xs:element name="DischargeDisposition" type="xs:string" minOccurs="0"/>
+			<xs:element name="DischargeDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OutpatientStatusType">
+		<xs:sequence>
+			<xs:element name="AppointmentTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="EstAppointmentLength" type="xs:short" minOccurs="0"/>
+			<xs:element name="EncounterStatus" minOccurs="0"/>
+			<xs:element name="EncounterEndDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndirectEncounterStatusType">
+		<xs:sequence>
+			<xs:element name="CommunicationType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OtherEncounterStatusType">
+		<xs:sequence>
+			<xs:element name="Purpose"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncounterChargeType">
+		<xs:sequence>
+			<xs:element name="Treatment" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="TreatmentID">
+							<xs:attribute name="TreatmentID" type="TreatmentID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ProcedureObjectID" type="ObjectID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CPTCode"/>
+			<xs:element name="Modifier" minOccurs="0"/>
+			<xs:element name="OtherModifiers" minOccurs="0"/>
+			<xs:element name="Units" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of units performed according to the EncounterPRO coding rules</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charge" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The fee associated with this procedure in EncounterPRO.  Normally not supplied as fees are managed in the PMS system.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:decimal">
+							<xs:attribute name="Currency" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="UnitsBilled" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of units actually billed to the payer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChargeBilled" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The actual fee billed to the payer</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:decimal">
+							<xs:attribute name="Currency" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="UnitsRecovered" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The number of units actually paid for</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChargeRecovered" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The amount of money actually collected for this charge</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:decimal">
+							<xs:attribute name="Currency" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Assessment" type="EncounterAssessmentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncounterAssessmentType">
+		<xs:sequence>
+			<xs:element name="Assessment">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="AssessmentID">
+							<xs:attribute name="AssessmentID" type="AssessmentID" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ICD9Code"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JMJDocumentContext">
+		<xs:sequence>
+			<xs:element name="ContextObject">
+				<xs:annotation>
+					<xs:documentation>General, Patient, Encounter, Assessment, Treatment, Observation, Attachment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0">
+				<xs:element name="EncounterID" type="EncounterID"/>
+				<xs:element name="AssessmentID"/>
+				<xs:element name="TreatmentID"/>
+			</xs:choice>
+			<xs:element name="Purpose" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The reason this document is being sent.  If exists, it must be one of the values allowed by EpIE.  Purpose can affect routing through EpIE and workflow in EncounterPRO.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="40"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Message" type="MessageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If this document contains a message and no patient context then the message goes here</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthorityType">
+		<xs:sequence>
+			<xs:element name="StartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="EndDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="Sequence" type="xs:string" minOccurs="0"/>
+			<xs:element name="Authority" type="ActorID"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientRelationType">
+		<xs:sequence>
+			<xs:element name="RelationActor" type="ActorID"/>
+			<xs:element name="Relationship" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="MaternalSibiling"/>
+						<xs:enumeration value="PaternalSibling"/>
+						<xs:enumeration value="Parent"/>
+						<xs:enumeration value="Guardian"/>
+						<xs:enumeration value="Guarantor"/>
+						<xs:enumeration value="Payor"/>
+						<xs:enumeration value="PrimaryDecisionMaker"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RelationshipDescription" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TreatmentOrderType">
+		<xs:sequence>
+			<xs:element name="OrderType">
+				<xs:annotation>
+					<xs:documentation>Specifies type of order event.  Values include "PMH" for Past Medical History, "Order" for EHR Provider Order, "Refill" for medication refill order.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Order"/>
+						<xs:enumeration value="PMH"/>
+						<xs:enumeration value="Refill"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OrderedBy" type="ActorID">
+				<xs:annotation>
+					<xs:documentation>Specifies actor id for provider that initiated this order event</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderedDateTime" type="xs:dateTime">
+				<xs:annotation>
+					<xs:documentation>Specifies date/time that this order event was initiated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Encounter" type="EncounterID">
+				<xs:annotation>
+					<xs:documentation>Specifies encounter id for encounter in which this order event was initiated.  May be missing for PMH orders</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description of this order event.  If no order-specific description then this will contain the treatment description.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

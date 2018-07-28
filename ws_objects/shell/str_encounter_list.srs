@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_encounter_list.srs
+global type str_encounter_list from structure
+	long		encounter_count
+	str_encounter_description		encounter[]
+end type
+

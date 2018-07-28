@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[c_Preferred_Provider]
+    ADD CONSTRAINT [PK_c_Preferred_Provider] PRIMARY KEY CLUSTERED ([consultant_id] ASC, [authority_id] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

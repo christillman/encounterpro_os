@@ -1,0 +1,85 @@
+HA$PBExportHeader$f_save_assessment_treatment_def.srf
+global type f_save_assessment_treatment_def from function_object
+end type
+
+forward prototypes
+global function integer f_save_assessment_treatment_def (ref str_assessment_treatment_definition pstr_treatment_def)
+end prototypes
+
+global function integer f_save_assessment_treatment_def (ref str_assessment_treatment_definition pstr_treatment_def);u_ds_data luo_data
+long ll_count
+long i
+long j
+string ls_find
+long ll_row
+string ls_attribute
+boolean lb_found
+integer li_sts
+long ll_definition_id
+
+
+if isnull(pstr_treatment_def.definition_id) then
+	ll_definition_id = sqlca.sp_new_treatment_def(pstr_treatment_def.definition_id,   &
+																pstr_treatment_def.assessment_id,   &
+																pstr_treatment_def.treatment_type,   &
+																pstr_treatment_def.treatment_description,   &
+																pstr_treatment_def.followup_workplan_id,   &
+																pstr_treatment_def.user_id,   &
+																pstr_treatment_def.sort_sequence,   &
+																pstr_treatment_def.instructions,   &
+																pstr_treatment_def.parent_definition_id,   &
+																pstr_treatment_def.child_flag, &
+																pstr_treatment_def.treatment_mode)
+	if not tf_check() then return -1
+	
+	if ll_definition_id > 0 then
+		pstr_treatment_def.definition_id = ll_definition_id
+	else
+		log.log(this, "f_save_assessment_treatment_def()", "Invalid definition_id returned", 4)
+		return -1
+	end if
+else
+	UPDATE u_Assessment_Treat_Definition
+	SET assessment_id = :pstr_treatment_def.assessment_id,
+		treatment_type = :pstr_treatment_def.treatment_type,
+		treatment_description = :pstr_treatment_def.treatment_description,
+		workplan_id = :pstr_treatment_def.workplan_id,
+		followup_workplan_id = :pstr_treatment_def.followup_workplan_id,
+		user_id = :pstr_treatment_def.user_id,
+		sort_sequence = :pstr_treatment_def.sort_sequence,
+		instructions = :pstr_treatment_def.instructions,
+		parent_definition_id = :pstr_treatment_def.parent_definition_id,
+		child_flag = :pstr_treatment_def.child_flag,
+		treatment_mode = :pstr_treatment_def.treatment_mode
+	WHERE definition_id = :pstr_treatment_def.definition_id;
+	if not tf_check() then return -1
+end if
+
+// Get the attributes from the database
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_u_assessment_treat_def_attrib")
+ll_count = luo_data.retrieve(pstr_treatment_def.definition_id)
+if ll_count < 0 then return -1
+
+// Add/Remove the attributes from the structure to the datawindow
+f_attribute_str_to_ds_with_removal(pstr_treatment_def.attributes, luo_data)
+
+// Then update the definition_id for new records
+ll_count = luo_data.rowcount()  // get a fresh count of the datastore
+ls_find = "isnull(definition_id)"
+ll_row = luo_data.find(ls_find, 1, ll_count)
+DO WHILE ll_row > 0 and ll_row <= ll_count
+	luo_data.object.definition_id[ll_row] = pstr_treatment_def.definition_id
+	ll_row = luo_data.find(ls_find, ll_row + 1, ll_count + 1)
+LOOP
+
+// Finally, update the database
+li_sts = luo_data.update()
+if li_sts <= 0 then return -1
+
+DESTROY luo_data
+
+return 1
+
+end function
+

@@ -1,0 +1,55 @@
+HA$PBExportHeader$f_get_treatment_charges.srf
+global type f_get_treatment_charges from function_object
+end type
+
+forward prototypes
+global function str_treatment_charges f_get_treatment_charges (string ps_cpr_id, long pl_encounter_id, long pl_treatment_id)
+end prototypes
+
+global function str_treatment_charges f_get_treatment_charges (string ps_cpr_id, long pl_encounter_id, long pl_treatment_id);decimal ldc_charge
+string ls_cpt_code
+str_encounter_charge lstr_charge
+u_str_assessment luo_assessment
+integer i,j,k
+string ls_description
+string ls_modifier
+string ls_other_modifiers
+real lr_units
+long ll_units
+string ls_authority_id
+u_ds_data luo_data
+integer li_spdw_count
+str_treatment_charges lstr_charges
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_sp_get_treatment_charges")
+lstr_charges.charge_count = luo_data.retrieve(ps_cpr_id, pl_encounter_id, pl_treatment_id)
+
+for i = 1 to lstr_charges.charge_count
+	lstr_charges.charge[i].cpr_id = current_patient.cpr_id
+	lstr_charges.charge[i].encounter_id = pl_encounter_id
+	lstr_charges.charge[i].encounter_charge_id = luo_data.object.encounter_charge_id[i]
+	lstr_charges.charge[i].procedure_type = luo_data.object.procedure_type[i]
+	lstr_charges.charge[i].treatment_id = luo_data.object.treatment_id[i]
+	lstr_charges.charge[i].treatment_billing_id = luo_data.object.treatment_billing_id[i]
+	lstr_charges.charge[i].procedure_id = luo_data.object.procedure_id[i]
+	lstr_charges.charge[i].charge = luo_data.object.charge[i]
+	lstr_charges.charge[i].bill_flag = luo_data.object.bill_flag[i]
+	lstr_charges.charge[i].description = luo_data.object.description[i]
+	lstr_charges.charge[i].cpt_code = luo_data.object.cpt_code[i]
+	lstr_charges.charge[i].units = luo_data.object.units[i]
+	lstr_charges.charge[i].modifier = luo_data.object.modifier[i]
+	lstr_charges.charge[i].other_modifiers = luo_data.object.other_modifiers[i]
+	lstr_charges.charge[i].last_updated = luo_data.object.last_updated[i]
+	lstr_charges.charge[i].last_updated_by = luo_data.object.last_updated_by[i]
+	lstr_charges.charge[i].posted = luo_data.object.posted[i]
+next
+
+
+destroy luo_data
+
+return lstr_charges
+
+
+end function
+

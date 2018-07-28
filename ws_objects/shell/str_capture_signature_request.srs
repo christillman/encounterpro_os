@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_capture_signature_request.srs
+global type str_capture_signature_request from structure
+	string		capture_from_user
+	string		capture_title
+	string		capture_prompt
+	boolean		allow_user_change
+	long		render_width
+	long		render_height
+end type
+

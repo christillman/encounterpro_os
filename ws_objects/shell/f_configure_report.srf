@@ -1,0 +1,90 @@
+HA$PBExportHeader$f_configure_report.srf
+global type f_configure_report from function_object
+end type
+
+forward prototypes
+global function integer f_configure_report (string ps_report_id, string ps_office_id)
+end prototypes
+
+global function integer f_configure_report (string ps_report_id, string ps_office_id);string ls_component_id
+str_attributes lstr_attributes
+integer li_sts
+u_ds_data luo_data
+integer li_count
+integer i
+integer li_attribute_sequence
+str_attributes lstr_state_attributes
+string ls_context_object
+string ls_config_object_type
+
+if ps_office_id = "<Default>" then setnull(ps_office_id)
+
+SELECT component_id, report_type, config_object_type
+INTO :ls_component_id, :ls_context_object, :ls_config_object_type
+FROM c_Report_Definition
+WHERE report_id = :ps_report_id;
+If Not tf_check() Then Return -1
+
+// If any component defined for selected report then
+If Isnull(ls_component_id) Then
+	log.log(this, "clicked", "Null component_id (" + ps_report_id + ")", 4)
+	Return -1
+End If
+
+// Get the existing attributes
+luo_data = CREATE u_ds_data
+if isnull(ps_office_id) then
+	luo_data.set_dataobject("dw_c_report_attribute")
+	li_count = luo_data.retrieve(ps_report_id)
+else
+	luo_data.set_dataobject("dw_o_report_attribute")
+	li_count = luo_data.retrieve(ps_report_id, ps_office_id)
+end if
+
+if li_count < 0 then
+	log.log(this, "configure_report()", "Error getting attributes", 4)
+	return -1
+end if
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+if not f_any_params(ps_report_id, "Config") then
+	openwithparm(w_pop_message, "This " + lower(ls_config_object_type) + " has no configuration parameters")
+	return 0
+end if
+
+// Add the config object to the state attributes
+f_attribute_add_attribute(lstr_state_attributes, "context_object", ls_context_object)
+f_attribute_add_attribute(lstr_state_attributes, "parent_config_object_id", ps_report_id)
+
+li_sts = f_get_params_with_state(ps_report_id, "Config", lstr_attributes, lstr_state_attributes)
+if li_sts < 0 then return -1
+
+// Add/replace the new attributes, removing any attributes no longer referenced
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+// For any new records, add the key values
+for i = 1 to luo_data.rowcount()
+	if isnull(long(luo_data.object.report_id[i])) then
+		luo_data.object.report_id[i] = ps_report_id
+		if not isnull(ps_office_id) then
+			luo_data.object.office_id[i] = ps_office_id
+		end if
+	end if
+next
+
+// Update the attributes
+li_sts = luo_data.update()
+DESTROY luo_data
+if li_sts < 0 then
+	log.log(this, "configure_command()", "Error updating command attributes", 4)
+	return -1
+end if
+
+
+
+return 1
+
+
+end function
+

@@ -1,0 +1,13 @@
+HA$PBExportHeader$str_c_workplan.srs
+global type str_c_workplan from structure
+	long		workplan_id
+	string		workplan_type
+	string		treatment_type
+	string		in_office_flag
+	string		assessment_id
+	string		procedure_id
+	string		description
+	string		encounter_description_flag
+	string		specialty_id
+end type
+

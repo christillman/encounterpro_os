@@ -1,0 +1,26 @@
+HA$PBExportHeader$f_get_next_box_item.srf
+global type f_get_next_box_item from function_object
+end type
+
+forward prototypes
+global function long f_get_next_box_item (long pl_box_id)
+end prototypes
+
+global function long f_get_next_box_item (long pl_box_id);long ll_box_item
+
+DECLARE lsp_get_next_box_item PROCEDURE FOR dbo.sp_get_next_box_item  
+         @pl_box_id = :pl_box_id,   
+         @pl_next_box_item = :ll_box_item OUT ;
+
+EXECUTE lsp_get_next_box_item;
+if not tf_check() then return -1
+		
+FETCH lsp_get_next_box_item INTO :ll_box_item;
+if not tf_check() then return -1
+
+CLOSE lsp_get_next_box_item;
+
+return ll_box_item
+
+end function
+

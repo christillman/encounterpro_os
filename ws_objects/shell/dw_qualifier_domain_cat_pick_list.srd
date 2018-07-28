@@ -1,0 +1,18 @@
+HA$PBExportHeader$dw_qualifier_domain_cat_pick_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="553648127" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=qualifier_domain_category_id dbname="c_Qualifier_Domain_Category.qualifier_domain_category_id" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=description dbname="c_Qualifier_Domain_Category.description" )
+ column=(type=char(12) updatewhereclause=yes name=qualifier_class dbname="c_Qualifier_Domain_Category.qualifier_class" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=prefix dbname="c_Qualifier_Domain_Category.prefix" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="c_Qualifier_Domain_Category.sort_sequence" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Qualifier_Domain_Category~" ) COLUMN(NAME=~"c_Qualifier_Domain_Category.qualifier_domain_category_id~") COLUMN(NAME=~"c_Qualifier_Domain_Category.description~") COLUMN(NAME=~"c_Qualifier_Domain_Category.qualifier_class~") COLUMN(NAME=~"c_Qualifier_Domain_Category.prefix~") COLUMN(NAME=~"c_Qualifier_Domain_Category.sort_sequence~") COMPUTE(NAME=~"selected_flag=0~")) " update="c_Qualifier_Domain_Category" updatewhere=1 updatekeyinplace=no  sort="sort_sequence A description A " )
+compute(band=detail alignment="0" expression="''"border="6" color="0" x="18" y="12" height="96" width="1499" format="[general]"  name=background  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="20" height="64" width="1499" format="[general]"  name=description visible="1~t0" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="description"border="0" color="0" x="23" y="20" height="64" width="1157" format=""  name=calc_description  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="upper(left(qualifier_class, 1)) + lower(mid(qualifier_class, 2))"border="0" color="0" x="1193" y="20" height="64" width="315" format="[general]"  name=qualifier_class_display  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

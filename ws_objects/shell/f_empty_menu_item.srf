@@ -1,0 +1,28 @@
+HA$PBExportHeader$f_empty_menu_item.srf
+global type f_empty_menu_item from function_object
+end type
+
+forward prototypes
+global function str_menu_item f_empty_menu_item ()
+end prototypes
+
+global function str_menu_item f_empty_menu_item ();str_menu_item lstr_menu_item
+	
+setnull(lstr_menu_item.menu_item_id)
+setnull(lstr_menu_item.menu_item_type)
+setnull(lstr_menu_item.menu_item)
+setnull(lstr_menu_item.context_object)
+setnull(lstr_menu_item.button_title)
+setnull(lstr_menu_item.button_help)
+setnull(lstr_menu_item.button)
+setnull(lstr_menu_item.sort_sequence)
+setnull(lstr_menu_item.menu_id)
+setnull(lstr_menu_item.menu_item_description)
+setnull(lstr_menu_item.auto_close_flag)
+setnull(lstr_menu_item.authorized_user_id)
+setnull(lstr_menu_item.id)
+
+return lstr_menu_item
+
+end function
+

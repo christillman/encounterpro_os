@@ -1,0 +1,113 @@
+HA$PBExportHeader$f_string_compare.srf
+global type f_string_compare from function_object
+end type
+
+forward prototypes
+global function boolean f_string_compare (string ps_string1, string ps_string2, string ps_operator)
+end prototypes
+
+global function boolean f_string_compare (string ps_string1, string ps_string2, string ps_operator);// This function compares two strings and returns true or false based on the 
+// operator
+long ll_number1
+long ll_number2
+boolean lb_numeric
+boolean lb_boolean1
+boolean lb_boolean2
+boolean lb_left_null
+boolean lb_right_null
+boolean lb_left_or_right_null
+
+lb_left_null = false
+lb_right_null = false
+lb_left_or_right_null = false
+
+if isnull(ps_string1) or ps_string1 = "" then 
+	lb_left_null = true
+	lb_left_or_right_null = true
+end if
+
+if isnull(ps_string2) or ps_string2 = "" then 
+	lb_right_null = true
+	lb_left_or_right_null = true
+end if
+
+if isnumber(ps_string1) and isnumber(ps_string2) then
+	ll_number1 = long(ps_string1)
+	ll_number2 = long(ps_string2)
+	lb_numeric = true
+else
+	lb_numeric = false
+end if
+
+CHOOSE CASE lower(ps_operator)
+	CASE "is true"
+		if lb_left_null then return false
+		return f_string_to_boolean(ps_string1)
+	CASE "is false"
+		if lb_left_null then return false
+		return not f_string_to_boolean(ps_string1)
+	CASE "=="
+		if lb_left_or_right_null then return false
+		// This is a boolean comparison so first convert both sides to a boolean
+		lb_boolean1 = f_string_to_boolean(ps_string1)
+		lb_boolean2 = f_string_to_boolean(ps_string2)
+		// If the boolean form of both strings are the same then return true
+		if (lb_boolean1 and lb_boolean2) or (not lb_boolean1 and not lb_boolean2) then return true
+	CASE "!=="
+		if lb_left_or_right_null then return false
+		// This is a boolean comparison so first convert both sides to a boolean
+		lb_boolean1 = f_string_to_boolean(ps_string1)
+		lb_boolean2 = f_string_to_boolean(ps_string2)
+		// If the boolean form of both strings are different then return true
+		if (lb_boolean1 and not lb_boolean2) or (not lb_boolean1 and lb_boolean2) then return true
+	CASE "=", "eq", "equal", "equals"
+		if lb_left_or_right_null then return false
+		if isnull(ps_string1) and isnull(ps_string2) then return true
+		if lower(ps_string1) = lower(ps_string2) then return true
+		return false
+	CASE "!=", "<>", "not equal", "not equals"
+		if lb_left_or_right_null then return false
+		if isnull(ps_string1) and isnull(ps_string2) then return false
+		if lower(ps_string1) = lower(ps_string2) then return false
+		return true
+	CASE "<", "less than"
+		if lb_left_or_right_null then return false
+		if lb_numeric then
+			if ll_number1 < ll_number2 then return true
+		else
+			if ps_string1 < ps_string2 then return true
+		end if
+	CASE ">", "greater than"
+		if lb_left_or_right_null then return false
+		if lb_numeric then
+			if ll_number1 > ll_number2 then return true
+		else
+			if ps_string1 > ps_string2 then return true
+		end if
+	CASE "<=", "less than or equal"
+		if lb_left_or_right_null then return false
+		if lb_numeric then
+			if ll_number1 <= ll_number2 then return true
+		else
+			if ps_string1 <= ps_string2 then return true
+		end if
+	CASE ">=", "greater than or equal"
+		if lb_left_or_right_null then return false
+		if lb_numeric then
+			if ll_number1 >= ll_number2 then return true
+		else
+			if ps_string1 >= ps_string2 then return true
+		end if
+	CASE "not exists", "is empty", "is null"
+		// For the exists operator, we don't care what the string2 is, only that string1 is null or empty
+		if isnull(ps_string1) or len(ps_string1) = 0 then return true
+	CASE "exists", "does not exist", "is not empty", "is not null"
+		// For the exists operator, we don't care what the string2 is, only that string1 is not null or empty
+		if len(ps_string1) > 0 then return true
+END CHOOSE
+
+// If the operator was not recognized or if the case statement didn't return true, then return false
+return false
+
+end function
+

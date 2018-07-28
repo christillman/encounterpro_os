@@ -1,0 +1,27 @@
+HA$PBExportHeader$f_pretty_name.srf
+global type f_pretty_name from function_object
+end type
+
+forward prototypes
+global function string f_pretty_name (string ps_last_name, string ps_first_name, string ps_middle_name, string ps_name_suffix, string ps_name_prefix, string ps_degree)
+end prototypes
+
+global function string f_pretty_name (string ps_last_name, string ps_first_name, string ps_middle_name, string ps_name_suffix, string ps_name_prefix, string ps_degree);string ls_name
+string ls_nickname
+
+setnull(ls_nickname)
+
+ls_name = f_pretty_name_formatted( ps_first_name, & 
+												ps_middle_name, & 
+												ps_last_name, & 
+												ls_nickname, & 
+												ps_name_suffix, & 
+												ps_name_prefix, & 
+												ps_degree, & 
+												common_thread.name_format_list)
+
+
+return ls_name
+
+end function
+

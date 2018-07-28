@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_ccr_size_type.srs
+global type str_ccr_size_type from structure
+	string		text
+	str_ccr_objectattribute		objectattribute[]
+	str_ccr_codetype		code[]
+	str_ccr_dimension_type		dimension[]
+	long		sequenceposition
+	str_ccr_codeddescriptiontype		modifier
+end type
+

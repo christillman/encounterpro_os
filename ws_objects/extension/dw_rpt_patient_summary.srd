@@ -1,0 +1,67 @@
+//
+//EncounterPRO Open Source Project
+//
+//Copyright 2010 EncounterPRO Healthcare Resources, Inc.
+//
+//This program is free software: you can redistribute it and/or modify it under the terms
+//of the GNU Affero General Public License as published by  the Free Software Foundation, 
+//either version 3 of the License, or (at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+//without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+//See the GNU Affero General Public License for more details.
+//
+//You should have received a copy of the GNU Affero General Public License along with this
+//program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero
+//General Public License version 3, or any later version.  As such, linking the Project
+//statically or dynamically with other components is making a combined work based on the
+//Project. Thus, the terms and conditions of the GNU Affero General Public License 
+//version 3, or any later version, cover the whole combination. 
+//
+//However, as an additional permission, the copyright holders of EncounterPRO Open Source 
+//Project give you permission to link the Project with independent components, regardless 
+//of the license terms of these independent components, provided that all of the following
+//are true:
+// 
+//1) all access from the independent component to persisted data which resides inside any 
+//   EncounterPRO Open Source data store (e.g. SQL Server database) be made through a 
+//   publically available database driver (e.g. ODBC, SQL Native Client, etc) or through 
+//   a service which itself is part of The Project.
+//2) the independent component does not create or rely on any code or data structures 
+//   within the EncounterPRO Open Source data store unless such code or data structures, 
+//   and all code and data structures referred to by such code or data structures, are 
+//   themselves part of The Project.
+//3) the independent component either a) runs locally on the user's computer, or b) is 
+//   linked to at runtime by The Project’s Component Manager object which in turn is 
+//   called by code which itself is part of The Project.
+//
+//An independent component is a component which is not derived from or based on the
+//Project. If you modify the Project, you may extend this additional permission to your
+//version of the Project, but you are not obligated to do so. If you do not wish to do
+//so, delete this additional permission statement from your version. 
+HA$PBExportHeader$dw_rpt_patient_summary.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=5 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=504 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=888 color="536870912"  height.autosize=yes)
+table(column=(type=char(10) updatewhereclause=yes name=a dbname="a" )
+ unbound = "yes")
+text(band=header alignment="0" text="" border="0" color="0" x="110" y="180" height="56" width="494"  name=cpr_id  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+compute(band=header alignment="1" expression="'Page ' + page() + ' of ' + pageCount()"border="0" color="0" x="2638" y="192" height="64" width="562" format="[general]"  name=compute_1  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="" border="0" color="0" x="110" y="332" height="64" width="1152"  name=provider  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="" border="0" color="0" x="110" y="408" height="64" width="3109"  name=patient_id  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="110" y1="488" x2="3205" y2="488"  name=l_1 pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="Patient Summary Report" border="0" color="0" x="1042" y="176" height="80" width="1243"  name=title  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="2" text="" border="0" color="0" x="1413" y="272" height="64" width="503"  name=summary_date  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+report(band=detail dataobject="dw_rpt_chart_alerts" x="101" y="8" height="136" width="3113" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=alerts  slideup=directlyabove )
+report(band=detail dataobject="dw_sp_get_open_assessments_treatments" x="101" y="156" height="136" width="3113" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=assessments  slideup=directlyabove )
+report(band=detail dataobject="dw_rpt_treatment_results_display" x="101" y="304" height="136" width="3113" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=recent_procedures  slideup=directlyabove )
+report(band=detail dataobject="dw_rpt_obj_list_results" x="101" y="452" height="136" width="2624" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=recent_vitals  slideup=directlyabove )
+report(band=detail dataobject="dw_rpt_dated_list" x="101" y="600" height="136" width="3113" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=recent_encounters  slideup=directlyabove )
+report(band=detail dataobject="dw_rpt_obs_cat_results_display" x="101" y="748" height="136" width="3113" border="0"  height.autosize=yes criteria="" trail_footer = yes  name=history  slideup=directlyabove )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

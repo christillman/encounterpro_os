@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_address_type.srs
+global type str_address_type from structure
+	str_id_instance		objectid[]
+	string		description
+	string		addressline1
+	string		addressline2
+	string		city
+	string		state
+	string		zip
+	string		country
+	string		priority
+	string		status
+end type
+

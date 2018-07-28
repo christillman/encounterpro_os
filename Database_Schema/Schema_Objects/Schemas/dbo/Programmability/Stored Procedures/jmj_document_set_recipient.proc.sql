@@ -1,0 +1,90 @@
+﻿CREATE PROCEDURE jmj_document_set_recipient (
+	@pl_patient_workplan_item_id int,
+	@ps_ordered_for varchar(24),
+	@ps_dispatch_method varchar(24),
+	@ps_address_attribute varchar(64),
+	@ps_address_value varchar(255),
+	@ps_user_id varchar(24),
+	@ps_created_by varchar(24))
+AS
+
+DECLARE @ls_last_ordered_for varchar(24),
+		@ls_last_dispatch_method varchar(24),
+		@ll_last_attachment_id int,
+		@ls_cpr_id varchar(12),
+		@ls_status varchar(12),
+		@ll_error int,
+		@ll_rowcount int
+
+SELECT @ls_last_ordered_for = ordered_for,
+		@ls_last_dispatch_method = dispatch_method,
+		@ll_last_attachment_id = attachment_id,
+		@ls_cpr_id = cpr_id,
+		@ls_status = status
+FROM p_Patient_WP_Item
+WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
+
+SELECT @ll_error = @@ERROR,
+		@ll_rowcount = @@ROWCOUNT
+
+IF @ll_error <> 0
+	RETURN -1
+
+IF @ll_rowcount = 0
+	BEGIN
+	RAISERROR ('Document record not found (%d)',16,-1, @pl_patient_workplan_item_id)
+	RETURN -1
+	END
+
+IF ISNULL(@ls_last_ordered_for, '!NULL') <> ISNULL(@ps_ordered_for, '!NULL')
+	OR ISNULL(@ls_last_dispatch_method, '!NULL') <> ISNULL(@ps_dispatch_method, '!NULL')
+	BEGIN
+	UPDATE p_Patient_WP_Item
+	SET ordered_for = @ps_ordered_for,
+		dispatch_method = @ps_dispatch_method,
+		attachment_id = NULL -- Null out any existing attachment because it will need to be recreated
+	WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
+
+	SELECT @ll_error = @@ERROR,
+			@ll_rowcount = @@ROWCOUNT
+
+	IF @ll_error <> 0
+		RETURN -1
+
+	IF @ll_last_attachment_id > 0
+		BEGIN
+		-- Delete the existing attachment because it is no longer valid
+		EXECUTE [dbo].[sp_set_attachment_progress] 
+		   @ps_cpr_id = @ls_cpr_id
+		  ,@pl_attachment_id = @ll_last_attachment_id
+		  ,@pl_patient_workplan_item_id = @pl_patient_workplan_item_id
+		  ,@ps_user_id = @ps_user_id
+		  ,@ps_progress_type = 'DELETED'
+		  ,@ps_progress = 'Attachment Deleted'
+		  ,@ps_created_by = @ps_created_by
+
+		-- Null out the attachment_id for this document
+		EXEC sp_add_workplan_item_attribute
+			@ps_cpr_id = @ls_cpr_id,
+			@pl_patient_workplan_item_id = @pl_patient_workplan_item_id,
+			@ps_attribute = 'attachment_id',
+			@ps_value = NULL,
+			@ps_user_id = @ps_user_id,
+			@ps_created_by = @ps_created_by
+		END
+
+	END
+
+-- If an address attribute was passed in then set it
+IF LEN(@ps_address_attribute) > 0 AND LEN(@ps_address_value) > 0
+	BEGIN
+	EXEC sp_add_workplan_item_attribute
+		@ps_cpr_id = @ls_cpr_id,
+		@pl_patient_workplan_item_id = @pl_patient_workplan_item_id,
+		@ps_attribute = @ps_address_attribute,
+		@ps_value = @ps_address_value,
+		@ps_user_id = @ps_user_id,
+		@ps_created_by = @ps_created_by
+	END
+
+RETURN 1

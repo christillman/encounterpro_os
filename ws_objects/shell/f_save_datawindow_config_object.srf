@@ -1,0 +1,162 @@
+HA$PBExportHeader$f_save_datawindow_config_object.srf
+global type f_save_datawindow_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_save_datawindow_config_object (str_datawindow_config_object pstr_datawindow)
+end prototypes
+
+global function integer f_save_datawindow_config_object (str_datawindow_config_object pstr_datawindow);integer li_sts
+string ls_context_object
+str_config_object_info lstr_config_object
+u_ds_data luo_mappings
+u_ds_data luo_attributes
+string ls_current_status
+long i
+long j
+string ls_value
+string ls_long_value
+long ll_row
+
+// We need to already have a config_object_id in order to save it.  The config search screen will create the config_object_id before the user ever gets a chance to edit it
+if isnull(pstr_datawindow.config_object_id) or trim(pstr_datawindow.config_object_id) = "" then
+	log.log(this, "f_save_datawindow_config_object()", "No config_object_id", 4)
+	return -1
+end if
+
+li_sts = f_get_config_object_info(pstr_datawindow.config_object_id, lstr_config_object)
+if li_sts <= 0 then
+	log.log(this, "f_save_datawindow_config_object()", "Error getting config object info(" + pstr_datawindow.config_object_id + ")", 4)
+	return -1
+end if
+
+// Make sure the caller is not trying to change the context_object
+if lower(pstr_datawindow.context_object) <> lower(lstr_config_object.context_object) then
+	log.log(this, "f_save_datawindow_config_object()", "Changing the config object context_object is not allowed", 4)
+	return -1
+end if
+
+// See if the c_Datawindow record exists yet
+SELECT status
+INTO :ls_current_status
+FROM dbo.c_Datawindow
+WHERE config_object_id = :pstr_datawindow.config_object_id;
+if not tf_check() then return -1
+
+tf_begin_transaction(this, "Datawindow Config Object Save")
+
+if sqlca.sqlnrows = 0 then
+	INSERT INTO dbo.c_Datawindow (
+		config_object_id,
+		context_object,
+		datawindow_name,
+		description,
+		library_component_id,
+		dataobject,
+		datawindow_syntax,
+		controller_config_object_id,
+		status,
+		created_by)
+	VALUES (
+		:pstr_datawindow.config_object_id,
+		:pstr_datawindow.context_object,
+		:pstr_datawindow.datawindow_name,
+		:pstr_datawindow.description,
+		:pstr_datawindow.library_component_id,
+		:pstr_datawindow.dataobject,
+		:pstr_datawindow.datawindow_syntax,
+		:pstr_datawindow.controller_config_object_id,
+		:pstr_datawindow.status,
+		:current_scribe.user_id
+		);
+	if not tf_check() then
+		tf_rollback()
+		return -1
+	end if
+else
+	UPDATE d
+	SET	datawindow_name = :pstr_datawindow.datawindow_name,
+			description = :pstr_datawindow.description,
+			library_component_id = :pstr_datawindow.library_component_id,
+			dataobject = :pstr_datawindow.dataobject,
+			datawindow_syntax = :pstr_datawindow.datawindow_syntax,
+			controller_config_object_id = :pstr_datawindow.controller_config_object_id,
+			status = :pstr_datawindow.status
+	FROM dbo.c_Datawindow d WITH (UPDLOCK)
+	WHERE config_object_id = :pstr_datawindow.config_object_id;
+	if not tf_check() then
+		tf_rollback()
+		return -1
+	end if
+end if
+
+// Delete the existing attributes
+DELETE a
+FROM dbo.c_Datawindow_Mapping_Attribute a
+WHERE config_object_id = :pstr_datawindow.config_object_id;
+if not tf_check() then
+	tf_rollback()
+	return -1
+end if
+
+// Delete the existing mappings
+DELETE m
+FROM dbo.c_Datawindow_Mapping m
+WHERE config_object_id = :pstr_datawindow.config_object_id;
+if not tf_check() then
+	tf_rollback()
+	return -1
+end if
+
+luo_attributes = CREATE u_ds_data
+luo_attributes.set_dataobject("dw_c_datawindow_mapping_attribute")
+
+luo_mappings = CREATE u_ds_data
+luo_mappings.set_dataobject("dw_c_datawindow_mapping")
+
+for i = 1 to pstr_datawindow.mappings.mapping_count
+	ll_row = luo_mappings.insertrow(0)
+	luo_mappings.object.config_object_id[ll_row] = pstr_datawindow.config_object_id
+	luo_mappings.object.control_name[ll_row] = pstr_datawindow.mappings.mapping[i].control_name
+	luo_mappings.object.hotspot_name[ll_row] = pstr_datawindow.mappings.mapping[i].hotspot_name
+	luo_mappings.object.status[ll_row] = pstr_datawindow.mappings.mapping[i].status
+	luo_mappings.object.created_by[ll_row] = current_scribe.user_id
+
+	for j = 1 to pstr_datawindow.mappings.mapping[i].attributes.attribute_count
+		if len(pstr_datawindow.mappings.mapping[i].attributes.attribute[j].value) > 255 then
+			setnull(ls_value)
+			ls_long_value = pstr_datawindow.mappings.mapping[i].attributes.attribute[j].value
+		else
+			setnull(ls_long_value)
+			ls_value = pstr_datawindow.mappings.mapping[i].attributes.attribute[j].value
+		end if
+		ll_row = luo_attributes.insertrow(0)
+		luo_attributes.object.config_object_id[ll_row] = pstr_datawindow.config_object_id
+		luo_attributes.object.control_name[ll_row] = pstr_datawindow.mappings.mapping[i].control_name
+		luo_attributes.object.attribute[ll_row] = pstr_datawindow.mappings.mapping[i].attributes.attribute[j].attribute
+		luo_attributes.object.value[ll_row] = ls_value
+		luo_attributes.object.long_value[ll_row] = ls_long_value
+		luo_attributes.object.created_by[ll_row] = current_scribe.user_id
+	next
+next
+
+li_sts = luo_mappings.update()
+if li_sts < 0 then
+	log.log(this, "f_save_datawindow_config_object()", "Error saving mappings (" + pstr_datawindow.config_object_id + ")", 4)
+	tf_rollback()
+	return -1
+end if
+
+li_sts = luo_attributes.update()
+if li_sts < 0 then
+	log.log(this, "f_save_datawindow_config_object()", "Error saving mapping attributess (" + pstr_datawindow.config_object_id + ")", 4)
+	tf_rollback()
+	return -1
+end if
+
+tf_commit_transaction()
+
+return 1
+
+end function
+

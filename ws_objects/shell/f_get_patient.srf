@@ -1,0 +1,136 @@
+HA$PBExportHeader$f_get_patient.srf
+global type f_get_patient from function_object
+end type
+
+forward prototypes
+global function integer f_get_patient (string ps_cpr_id, ref str_patient pstr_patient)
+end prototypes
+
+global function integer f_get_patient (string ps_cpr_id, ref str_patient pstr_patient);datetime ldt_date_of_birth
+long ll_attachment_location_id
+integer li_sort_sequence
+str_attachment_location lstr_attachment_location
+integer li_test_patient
+
+SELECT cpr_id,
+		race,
+		date_of_birth,
+		sex,
+		primary_language,
+		marital_status,
+		billing_id,
+		ssn,
+		first_name,
+		last_name,
+		degree,
+		name_prefix,
+		middle_name,
+		name_suffix,
+		attachment_id,
+		primary_provider_id,
+		secondary_provider_id,
+		last_update,
+		phone_number,
+		patient_id,
+		date_of_conception,
+		patient_status,
+		created,
+		created_by,
+		modified_by,
+		office_id,
+		locked_by,
+		attachment_location_id,
+		attachment_path,
+		referring_provider_id,
+		email_address,
+		nickname,
+		maiden_name,
+		address_line_1,
+		address_line_2,
+		city,
+		state,
+		zip,
+		country,
+		attachment_location_id,
+		test_patient
+INTO :pstr_patient.cpr_id,
+		 :pstr_patient.race,
+		 :ldt_date_of_birth,
+		 :pstr_patient.sex,
+		 :pstr_patient.primary_language,
+		 :pstr_patient.marital_status,
+		 :pstr_patient.billing_id,
+		 :pstr_patient.ssn,
+		 :pstr_patient.first_name,
+		 :pstr_patient.last_name,
+		 :pstr_patient.degree,
+		 :pstr_patient.name_prefix,
+		 :pstr_patient.middle_name,
+		 :pstr_patient.name_suffix,
+		 :pstr_patient.attachment_id,
+		 :pstr_patient.primary_provider_id,
+		 :pstr_patient.secondary_provider_id,
+		 :pstr_patient.last_update,
+		 :pstr_patient.phone_number,
+		 :pstr_patient.patient_id,
+		 :pstr_patient.date_of_conception,
+		 :pstr_patient.patient_status,
+		 :pstr_patient.created,
+		 :pstr_patient.created_by,
+		 :pstr_patient.modified_by,
+		 :pstr_patient.office_id,
+		 :pstr_patient.locked_by,
+		 :pstr_patient.attachment_location_id,
+		 :pstr_patient.attachment_path,
+		 :pstr_patient.referring_provider_id,
+		 :pstr_patient.email_address,
+		 :pstr_patient.nickname,
+		 :pstr_patient.maiden_name,
+		 :pstr_patient.address_line_1,
+		 :pstr_patient.address_line_2,
+		 :pstr_patient.city,
+		 :pstr_patient.state,
+		 :pstr_patient.zip,
+		 :pstr_patient.country,
+		 :ll_attachment_location_id,
+		 :li_test_patient
+FROM p_Patient
+Where cpr_id = :ps_cpr_id;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	log.log(this, "f_get_patient()", "cpr_id not found (" + ps_cpr_id + ")", 4)
+	return -1
+end if
+
+pstr_patient.date_of_birth = date(ldt_date_of_birth)
+pstr_patient.time_of_birth = time(ldt_date_of_birth)
+
+
+if isnull(ll_attachment_location_id) then
+	ll_attachment_location_id = datalist.get_attachment_location_assignment(ps_cpr_id)
+
+	if ll_attachment_location_id > 0 then
+		UPDATE p_Patient
+		SET attachment_location_id = :ll_attachment_location_id
+		WHERE cpr_id = :ps_cpr_id;
+		if not tf_check() then return -1
+	end if
+end if
+
+lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
+
+pstr_patient.attachment_server = lstr_attachment_location.attachment_server
+pstr_patient.attachment_share = lstr_attachment_location.attachment_share
+
+if li_test_patient = 0 then
+	pstr_patient.test_patient = false
+else
+	pstr_patient.test_patient = true
+end if
+
+return 1
+
+
+end function
+

@@ -1,0 +1,76 @@
+HA$PBExportHeader$tf_set_report_definition.srf
+global type tf_set_report_definition from function_object
+end type
+
+forward prototypes
+global function integer tf_set_report_definition (string ps_report_id, string ps_description, string ps_report_type, string ps_report_class, string ps_setup_class, string ps_ui_class)
+end prototypes
+
+global function integer tf_set_report_definition (string ps_report_id, string ps_description, string ps_report_type, string ps_report_class, string ps_setup_class, string ps_ui_class);boolean lb_insert
+string ls_report_id
+integer li_count, li_x
+string ls_x
+
+lb_insert = false
+
+tf_begin_transaction(this, "tf_set_report_definition()")
+
+if isnull(ps_report_id) then
+	ls_report_id = f_gen_key_string(ps_description, 24)
+	li_x = 0
+	DO
+		if li_x > 1000 then
+			log.log(this, "tf_set_report_definition()", "Unable to generate new key", 4)
+			return -1
+		end if
+		if li_x > 0 then ls_report_id = left(ls_report_id, 24 - len(ls_x)) + ls_x
+
+		SELECT count(*)
+		INTO :li_count
+		FROM c_Report_Definition
+		WHERE report_id = :ls_report_id;
+		if not tf_check() then return -1
+
+		li_x++
+		ls_x = string(li_x)
+	LOOP WHILE li_count > 0
+	lb_insert = true
+else
+	UPDATE c_Report_Definition
+	SET description = :ps_description,
+		 report_type = :ps_report_type,
+		 report_class = :ps_report_class,
+		 setup_class = :ps_setup_class,
+		 ui_class = :ps_ui_class
+	WHERE report_id = :ps_report_id;
+	if not tf_check() then return -1
+	if sqlca.sqlcode = 100 or sqlca.sqlnrows = 0 then
+		lb_insert = true
+		ls_report_id = ps_report_id
+	end if
+end if
+
+if lb_insert then
+	INSERT INTO c_Report_Definition (
+		report_id,
+		description,
+		report_type,
+		report_class,
+		setup_class,
+		ui_class)
+	VALUES (
+		:ls_report_id,
+		:ps_description,
+		:ps_report_type,
+		:ps_report_class,
+		:ps_setup_class,
+		:ps_ui_class);
+	if not tf_check() then return -1
+end if
+
+tf_commit()
+
+return 1
+
+end function
+

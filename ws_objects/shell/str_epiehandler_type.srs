@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_epiehandler_type.srs
+global type str_epiehandler_type from structure
+	str_propertyset_type		propertyset[]
+	long		ToAddresseeID
+end type
+

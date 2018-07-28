@@ -1,0 +1,13 @@
+HA$PBExportHeader$str_treatment_observation.srs
+global type str_treatment_observation from structure
+	long		observation_sequence
+	string		observation_id
+	character		composite_flag
+	string		observation_description
+	long		parent_observation_sequence
+	string		service
+	datetime		created
+	string		created_by
+	string		observed_by
+end type
+

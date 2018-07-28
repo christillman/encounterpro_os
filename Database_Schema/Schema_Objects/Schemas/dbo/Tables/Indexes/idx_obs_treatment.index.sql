@@ -1,0 +1,4 @@
+﻿CREATE NONCLUSTERED INDEX [idx_obs_treatment]
+    ON [dbo].[p_Observation]([cpr_id] ASC, [treatment_id] ASC, [observation_sequence] ASC) WITH (FILLFACTOR = 80, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = ON, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF, ONLINE = OFF, MAXDOP = 0)
+    ON [PRIMARY];
+

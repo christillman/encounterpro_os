@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_params.srs
+global type str_params from structure
+	string		id
+	string		param_mode
+	integer		param_count
+	str_param		params[]
+end type
+

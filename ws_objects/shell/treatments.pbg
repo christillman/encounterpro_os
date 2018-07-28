@@ -1,0 +1,44 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "encounterpro shell\\treatments.pbl" "";
+@end;
+@begin Objects
+ "encounterpro shell\\w_define_activity.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_define_followup.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_define_referral.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_define_referral_old.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\tf_get_default_admin_procedure.srf" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_drug_package_data.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_pick_drug_instruction.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_referral_assessments.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_selected_materials.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\tf_get_consultant.srf" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_selected_procedures.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\tf_get_default_dispense.srf" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_trt_pick_observations.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_selected_drugs.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\tf_get_specialty.srf" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_hcpcs_procedure.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_pick_patient_materials.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_admin_method_procedure.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_referral_radiology.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_admin_method_procedure.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_dw_pick_test_results.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_display_instruction.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_trt_pick_procedures.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_pick_result_by_loc.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\str_treatment_attributes.srs" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_immunization.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_medication.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_officemed.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_procedure.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_activity.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_followup.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_material.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_referral.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_treatment_goal.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\dw_treatment_list.srd" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\w_trt_pick_drugs.srw" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_followup_prn.sru" "encounterpro shell\\treatments.pbl";
+ "encounterpro shell\\u_component_treatment_test.sru" "encounterpro shell\\treatments.pbl";
+@end;

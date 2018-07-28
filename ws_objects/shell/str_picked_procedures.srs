@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_picked_procedures.srs
+global type str_picked_procedures from structure
+	long		procedure_count
+	str_picked_procedure		procedures[]
+end type
+

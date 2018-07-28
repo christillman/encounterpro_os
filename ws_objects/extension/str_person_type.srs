@@ -1,0 +1,15 @@
+HA$PBExportHeader$str_person_type.srs
+global type str_person_type from structure
+	str_id_instance		objectid[]
+	string		lastname
+	string		firstname
+	string		middlename
+	string		title
+	string		suffix
+	string		prefix
+	string		degree
+	string		nickname
+	datetime		dateofbirth
+	string		gender
+end type
+

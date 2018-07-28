@@ -1,0 +1,32 @@
+HA$PBExportHeader$f_progress_value.srf
+global type f_progress_value from function_object
+end type
+
+forward prototypes
+global function string f_progress_value (string ps_short_progress, string ps_long_progress)
+end prototypes
+
+global function string f_progress_value (string ps_short_progress, string ps_long_progress);string ls_progress
+
+// If the short value is an empty string, then the value is an explicit null
+if trim(ps_short_progress) = "" then
+	setnull(ls_progress)
+else
+	// Otherwise, set the progress note to the short value
+	ls_progress = ps_short_progress
+	
+	// Then see if the long value (ps_progress) is not null
+	if not isnull(ps_long_progress) then
+		// If we have a long value, then add it to the progress note
+		if isnull(ls_progress) then
+			ls_progress = ps_long_progress
+		else
+			ls_progress += "~r~n" + ps_long_progress
+		end if
+	end if
+end if
+
+return ls_progress
+
+end function
+

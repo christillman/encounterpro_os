@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_ccr_codeddescriptiontype.srs
+global type str_ccr_codeddescriptiontype from structure
+	string		Text
+	str_ccr_objectattribute		ObjectAttribute[]
+	str_ccr_codetype		Code[]
+end type
+

@@ -1,0 +1,48 @@
+HA$PBExportHeader$f_attribute_value_substitute_context_old.srf
+global type f_attribute_value_substitute_context_old from function_object
+end type
+
+forward prototypes
+global function string f_attribute_value_substitute_context_old (string ps_string, string ps_context_object, long pl_object_key, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_attribute_value_substitute_context_old (string ps_string, string ps_context_object, long pl_object_key, str_attributes pstr_attributes);long i
+long ll_pos1
+long ll_pos2
+string ls_string
+string ls_property
+string ls_value
+integer li_count
+
+ls_string = ps_string
+li_count = 0
+
+DO WHILE li_count < 100
+	li_count += 1
+	
+	ll_pos1 = pos(ls_string, "%")
+	if ll_pos1 <= 0 then return ls_string
+	
+	ll_pos2 = pos(ls_string, "%", ll_pos1 + 1)
+	if ll_pos2 <= 0 then return ls_string
+	
+	ls_property = mid(ls_string, ll_pos1, ll_pos2 - ll_pos1 + 1)
+	ls_value = f_attribute_value_substitute(ps_context_object, pl_object_key, ls_property)
+	if isnull(ls_value) then
+		ls_value = ""
+		for i = 1 to pstr_attributes.attribute_count
+			if lower(ls_property) = "%" + lower(pstr_attributes.attribute[i].attribute) + "%" then
+				ls_value = pstr_attributes.attribute[i].value
+				exit
+			end if
+		next
+	end if
+	
+	ls_string = replace(ls_string, ll_pos1, ll_pos2 - ll_pos1 + 1, ls_value)
+LOOP
+
+return ls_string
+
+
+end function
+

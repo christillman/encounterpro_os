@@ -1,0 +1,18 @@
+HA$PBExportHeader$dw_report_by_type_list.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(80) update=yes updatewhereclause=yes name=description dbname="c_Report_Definition.description" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=report_type dbname="c_Report_Definition.report_type" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=report_category dbname="c_Report_Definition.report_category" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=component_id dbname="c_Report_Definition.component_id" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=status dbname="c_Report_Definition.status" )
+ column=(type=char(38) update=yes updatewhereclause=yes name=report_id dbname="report_id" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(4099) updatewhereclause=no name=template dbname="c_Report_Definition.template" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Report_Definition~" ) COLUMN(NAME=~"c_Report_Definition.description~") COLUMN(NAME=~"c_Report_Definition.report_type~") COLUMN(NAME=~"c_Report_Definition.report_category~") COLUMN(NAME=~"c_Report_Definition.component_id~") COLUMN(NAME=~"c_Report_Definition.status~") COMPUTE(NAME=~"report_id=convert(varchar(38), report_id)~") COMPUTE(NAME=~"selected_flag=0~") COLUMN(NAME=~"c_Report_Definition.template~")WHERE(    EXP1 =~"c_Report_Definition.report_type~"   OP =~"=~"    EXP2 =~":report_type~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Report_Definition.status~"   OP =~"=~"    EXP2 =~":status~" ) ) ORDER(NAME=~"c_Report_Definition.description~" ASC=yes ) ARG(NAME = ~"report_type~" TYPE = string)  ARG(NAME = ~"status~" TYPE = string) " arguments=(("report_type", string),("status", string))  sort="description A report_id A " )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1353" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10~tif(len(description) < 45, -10, -8)" font.weight="700~tif(len(description) > 40 , 400, 700)"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

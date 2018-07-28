@@ -1,0 +1,93 @@
+HA$PBExportHeader$f_get_datawindow_config_object.srf
+global type f_get_datawindow_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_get_datawindow_config_object (string ps_config_object_id, ref str_datawindow_config_object pstr_datawindow)
+end prototypes
+
+global function integer f_get_datawindow_config_object (string ps_config_object_id, ref str_datawindow_config_object pstr_datawindow);u_ds_data luo_mappings
+u_ds_data luo_attributes
+long i
+long ll_attribute_count
+string ls_filter
+long j
+string ls_long_value
+string ls_attribute
+string ls_value
+str_config_object_info lstr_config_object_info
+integer li_sts
+
+pstr_datawindow = f_empty_datawindow_config_object()
+
+SELECT config_object_id
+			,context_object
+			,datawindow_name
+			,description
+			,library_component_id
+			,dataobject
+			,datawindow_syntax
+			,controller_config_object_id
+			,status
+			,created
+			,created_by
+INTO :pstr_datawindow.config_object_id
+			,:pstr_datawindow.context_object
+			,:pstr_datawindow.datawindow_name
+			,:pstr_datawindow.description
+			,:pstr_datawindow.library_component_id
+			,:pstr_datawindow.dataobject
+			,:pstr_datawindow.datawindow_syntax
+			,:pstr_datawindow.controller_config_object_id
+			,:pstr_datawindow.status
+			,:pstr_datawindow.created
+			,:pstr_datawindow.created_by
+FROM dbo.c_Datawindow
+WHERE config_object_id = :ps_config_object_id;
+if not tf_check() then return -1
+if sqlca.sqlnrows = 0 then
+	// If there isn't a config object yet then initialize the config_object_id and context_object and return 0
+	li_sts = f_get_config_object_info(ps_config_object_id, lstr_config_object_info)
+	if li_sts <= 0 then return -1
+	pstr_datawindow.config_object_id = lstr_config_object_info.config_object_id
+	pstr_datawindow.context_object = lstr_config_object_info.context_object
+	pstr_datawindow.datawindow_name = lstr_config_object_info.description
+	pstr_datawindow.status = lstr_config_object_info.status
+	return 0
+end if
+
+
+luo_attributes = CREATE u_ds_data
+luo_attributes.set_dataobject("dw_c_datawindow_mapping_attribute")
+ll_attribute_count = luo_attributes.retrieve(pstr_datawindow.config_object_id)
+if ll_attribute_count < 0 then return -1
+
+luo_mappings = CREATE u_ds_data
+luo_mappings.set_dataobject("dw_c_datawindow_mapping")
+pstr_datawindow.mappings.mapping_count = luo_mappings.retrieve(pstr_datawindow.config_object_id)
+if pstr_datawindow.mappings.mapping_count < 0 then return -1
+
+for i = 1 to pstr_datawindow.mappings.mapping_count
+	pstr_datawindow.mappings.mapping[i].control_name = luo_mappings.object.control_name[i]
+	pstr_datawindow.mappings.mapping[i].hotspot_name = luo_mappings.object.hotspot_name[i]
+	pstr_datawindow.mappings.mapping[i].status = luo_mappings.object.status[i]
+	pstr_datawindow.mappings.mapping[i].created_by = luo_mappings.object.created_by[i]
+	pstr_datawindow.mappings.mapping[i].created = luo_mappings.object.created[i]
+	
+	ls_filter = "control_name='" + pstr_datawindow.mappings.mapping[i].control_name + "'"
+	luo_attributes.setfilter(ls_filter)
+	luo_attributes.filter()
+	ll_attribute_count = luo_attributes.rowcount()
+	for j = 1 to ll_attribute_count
+		ls_attribute = luo_attributes.object.attribute[j]
+		ls_value = luo_attributes.object.value[j]
+		ls_long_value = luo_attributes.object.long_value[j]
+		if not isnull(ls_long_value) then ls_value = ls_long_value
+		f_attribute_add_attribute(pstr_datawindow.mappings.mapping[i].attributes, ls_attribute, ls_value)
+	next
+next
+
+return 1
+
+end function
+

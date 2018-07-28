@@ -1,0 +1,70 @@
+HA$PBExportHeader$f_compress_documents.srf
+global type f_compress_documents from function_object
+end type
+
+forward prototypes
+global function integer f_compress_documents (ref str_document_file pstr_compressed_document, ref str_document_files pstr_add_documents)
+end prototypes
+
+global function integer f_compress_documents (ref str_document_file pstr_compressed_document, ref str_document_files pstr_add_documents);string ls_sourcepath
+string ls_compressed_file
+long ll_compression_level
+boolean lb_subdirs
+integer li_sts
+long i
+string ls_filename
+string ls_filetype
+string ls_filepath
+long j
+
+if isnull(pstr_compressed_document.filetype) or trim(pstr_compressed_document.filetype) = "" then
+	pstr_compressed_document.filetype = "zip"
+end if
+
+ls_compressed_file = f_temp_file(pstr_compressed_document.filetype)
+
+ll_compression_level = 6 // 0 = uncompressed, 9 = max compression
+lb_subdirs = false
+
+ls_sourcepath = temp_path + "\" + f_new_guid()
+
+li_sts = createdirectory(ls_sourcepath)
+if li_sts <= 0 then return -1
+
+for i = 1 to pstr_add_documents.file_count
+	if len(pstr_add_documents.file[i].filename) > 0 then
+		ls_filename = pstr_add_documents.file[i].filename
+	else
+		ls_filename = "file" + string(i)
+	end if
+	if len(pstr_add_documents.file[i].filetype) > 0 then
+		ls_filetype = pstr_add_documents.file[i].filetype
+	else
+		ls_filetype = "txt"
+	end if
+	ls_filepath = ls_sourcepath + "\" + ls_filename + "." + ls_filetype
+	j = 0
+	DO WHILE fileexists(ls_filepath)
+		j++
+		ls_filepath = ls_sourcepath + "\" + ls_filename + "_" + string(j) + "." + ls_filetype
+	LOOP
+	
+	li_sts = log.file_write(pstr_add_documents.file[i].filedata, ls_filepath)
+	if li_sts <= 0 then return -1
+next
+
+TRY
+	common_thread.eprolibnet4.zip(ls_sourcepath, ls_compressed_file, ll_compression_level, lb_subdirs)
+CATCH (oleruntimeerror lt_error)
+	log.log(this, "f_compress_document()", "Error Zipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+	return -1
+END TRY
+
+li_sts = log.file_read(ls_compressed_file, pstr_compressed_document.filedata)
+if li_sts <= 0 then return -1
+
+return 1
+
+
+end function
+

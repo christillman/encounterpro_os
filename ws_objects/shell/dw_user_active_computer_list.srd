@@ -1,0 +1,17 @@
+HA$PBExportHeader$dw_user_active_computer_list.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=o_users_user_id dbname="o_Users.user_id" )
+ column=(type=long updatewhereclause=yes name=o_users_computer_id dbname="o_Users.computer_id" )
+ column=(type=char(1) updatewhereclause=yes name=o_users_in_service dbname="o_Users.in_service" )
+ column=(type=char(64) updatewhereclause=yes name=c_user_user_full_name dbname="c_User.user_full_name" )
+ column=(type=char(40) updatewhereclause=yes name=o_computers_computername dbname="o_Computers.computername" )
+ column=(type=char(40) updatewhereclause=yes name=o_computers_logon_id dbname="o_Computers.logon_id" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"o_Users~" )  TABLE(NAME=~"o_Computers~" )  TABLE(NAME=~"c_User~" ) COLUMN(NAME=~"o_Users.user_id~") COLUMN(NAME=~"o_Users.computer_id~") COLUMN(NAME=~"o_Users.in_service~") COLUMN(NAME=~"c_User.user_full_name~") COLUMN(NAME=~"o_Computers.computername~") COLUMN(NAME=~"o_Computers.logon_id~")    JOIN (LEFT=~"o_Users.computer_id~"    OP =~"=~"RIGHT=~"o_Computers.computer_id~"    OUTER1 =~"o_Users.computer_id~" )    JOIN (LEFT=~"o_Users.user_id~"    OP =~"=~"RIGHT=~"c_User.user_id~" )WHERE(    EXP1 =~"o_Users.user_id~"   OP =~"=~"    EXP2 =~":user_id~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"o_Users.computer_id~"   OP =~"<>~"    EXP2 =~"convert(int, :exclude_computer_id)~" ) ) ARG(NAME = ~"user_id~" TYPE = string)  ARG(NAME = ~"exclude_computer_id~" TYPE = string) " arguments=(("user_id", string),("exclude_computer_id", string)) )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="6" color="0" x="978" y="28" height="64" width="27" format="[general]" html.valueishtml="0"  name=o_users_in_service visible="0" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+compute(band=detail alignment="0" expression=" o_computers_computername + ~"/~" +  o_computers_logon_id "border="0" color="0" x="18" y="12" height="96" width="987" format="[GENERAL]" html.valueishtml="0"  name=compute_computer visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

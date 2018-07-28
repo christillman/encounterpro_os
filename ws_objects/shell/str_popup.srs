@@ -1,0 +1,39 @@
+HA$PBExportHeader$str_popup.srs
+global type str_popup from structure
+	string		dataobject
+	integer		displaycolumn
+	integer		datacolumn
+	boolean		multiselect
+	integer		data_row_count
+	string		items[]
+	long		background_color[]
+	boolean		use_background_color
+	integer		argument_count
+	string		argument[]
+	boolean		numeric_argument
+	boolean		add_blank_row
+	string		blank_text
+	boolean		blank_at_bottom
+	string		blank_text_column
+	integer		pointerx
+	integer		pointery
+	string		item
+	real		realitem
+	powerobject		objectparm
+	integer		button_count
+	string		button_icons[]
+	string		button_titles[]
+	string		button_helps[]
+	boolean		button_titles_used
+	string		title
+	boolean		auto_singleton
+	u_sqlca		dbconnection
+	powerobject		objectparm1
+	powerobject		objectparm2
+	powerobject		objectparm3
+	boolean		preselected_items[]
+	u_component_base_class		calling_component
+	any		anyparm
+	boolean		display_only
+end type
+

@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_printer.srs
+global type str_printer from structure
+	string		printerstring
+	string		printername
+	string		driver
+	string		port
+	string		nt_device
+end type
+

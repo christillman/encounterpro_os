@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_get_vitals.srs
+global type str_get_vitals from structure
+	long		treatment_id
+	string		result_list
+	datetime		treatment_date_time
+	string		user_id
+	string		bitmap
+end type
+

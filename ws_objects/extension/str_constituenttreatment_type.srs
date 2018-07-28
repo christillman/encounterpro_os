@@ -1,0 +1,5 @@
+HA$PBExportHeader$str_constituenttreatment_type.srs
+global type str_constituenttreatment_type from structure
+	str_treatment_type		treatment[]
+end type
+

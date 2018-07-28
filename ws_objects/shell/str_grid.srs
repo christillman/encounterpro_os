@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_grid.srs
+global type str_grid from structure
+	string		description
+	string		grid_type
+	integer		row_count
+	integer		column_count
+	string		column_title[]
+	string		row_title
+	str_grid_row		grid_row[]
+	str_rtf_table_attributes		table_attributes
+end type
+

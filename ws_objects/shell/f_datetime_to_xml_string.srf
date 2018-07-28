@@ -1,0 +1,11 @@
+HA$PBExportHeader$f_datetime_to_xml_string.srf
+global type f_datetime_to_xml_string from function_object
+end type
+
+forward prototypes
+global function string f_datetime_to_xml_string (datetime pdt_datetime)
+end prototypes
+
+global function string f_datetime_to_xml_string (datetime pdt_datetime);return string(pdt_datetime, "yyyymmddThhmmss")
+end function
+

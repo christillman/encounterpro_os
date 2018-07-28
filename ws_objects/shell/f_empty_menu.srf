@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_empty_menu.srf
+global type f_empty_menu from function_object
+end type
+
+forward prototypes
+global function str_menu f_empty_menu ()
+end prototypes
+
+global function str_menu f_empty_menu ();str_menu lstr_menu
+
+setnull(lstr_menu.menu_id)
+setnull(lstr_menu.alternate_menu_id)
+setnull(lstr_menu.description)
+setnull(lstr_menu.specialty_id)
+setnull(lstr_menu.context_object)
+
+return lstr_menu
+
+end function
+

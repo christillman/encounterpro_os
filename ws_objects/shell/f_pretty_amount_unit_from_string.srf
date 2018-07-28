@@ -1,0 +1,24 @@
+HA$PBExportHeader$f_pretty_amount_unit_from_string.srf
+global type f_pretty_amount_unit_from_string from function_object
+end type
+
+forward prototypes
+global function string f_pretty_amount_unit_from_string (string ps_amount_and_unit)
+end prototypes
+
+global function string f_pretty_amount_unit_from_string (string ps_amount_and_unit);string ls_amount
+string ls_unit
+string ls_null
+real lr_amount
+
+setnull(ls_null)
+
+f_split_string(ps_amount_and_unit, " ", ls_amount, ls_unit)
+if not isnumber(ls_amount) then return ls_null
+
+ls_unit = trim(ls_unit)
+lr_amount = real(ls_amount)
+return f_pretty_amount_unit(lr_amount, ls_unit)
+
+end function
+

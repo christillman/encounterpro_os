@@ -1,0 +1,48 @@
+HA$PBExportHeader$f_xml_document_string.srf
+global type f_xml_document_string from function_object
+end type
+
+forward prototypes
+global function string f_xml_document_string (pbdom_document po_document)
+end prototypes
+
+global function string f_xml_document_string (pbdom_document po_document);integer li_sts
+string ls_file
+string ls_xml_string
+boolean lb_success
+blob lbl_xml
+string ls_null
+
+setnull(ls_null)
+
+if isnull(po_document) or not isvalid(po_document) then
+	log.log(this, "f_xml_document_string()", "Invalid document object", 4)
+	return ls_null
+end if
+
+// Now determine the xml string
+ls_file = f_temp_file("xml")
+TRY
+	lb_success = po_document.savedocument(ls_file)
+	if not lb_success then
+		log.log(this, "f_xml_document_string()", "Error saving document", 4)
+		return ls_null
+	end if
+CATCH (throwable lo_error2)
+	log.log(this, "f_xml_document_string()", "Error saving document (" + lo_error2.text + ")", 4)
+	return ls_null
+END TRY
+
+li_sts = log.file_read(ls_file, lbl_xml)
+if li_sts <= 0 then
+	log.log(this, "f_xml_document_string()", "Error reading document", 4)
+	return ls_null
+end if
+
+ls_xml_string = f_blob_to_string(lbl_xml)
+
+Return ls_xml_string
+
+
+end function
+

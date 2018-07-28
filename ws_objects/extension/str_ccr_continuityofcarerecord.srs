@@ -1,0 +1,13 @@
+HA$PBExportHeader$str_ccr_continuityofcarerecord.srs
+global type str_ccr_continuityofcarerecord from structure
+	string		ccrdocumentobjectid
+	str_ccr_codeddescriptiontype		language
+	string		version
+	str_ccr_datetimetype		datetime
+	str_actor_type		patient
+	str_ccr_actorreferencetype		ccrfrom[]
+	str_ccr_actorreferencetype		ccrto[]
+	str_ccr_purposetype		purpose[]
+	str_ccr_body		body
+end type
+

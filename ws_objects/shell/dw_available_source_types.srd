@@ -1,0 +1,28 @@
+HA$PBExportHeader$dw_available_source_types.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=external_source_type dbname="c_External_Source_Type.external_source_type" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="c_External_Source_Type.description" )
+ column=(type=char(64) updatewhereclause=yes name=button dbname="c_External_Source_Type.button" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_External_Source_Type.sort_sequence" )
+ column=(type=char(40) updatewhereclause=yes name=button_title dbname="c_External_Source_Type.button_title" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"c_External_Source~" )  TABLE(NAME=~"c_External_Source_Type~" )  TABLE(NAME=~"o_Computer_External_Source~" ) COLUMN(NAME=~"c_External_Source_Type.external_source_type~") COLUMN(NAME=~"c_External_Source_Type.description~") COLUMN(NAME=~"c_External_Source_Type.button~") COLUMN(NAME=~"c_External_Source_Type.sort_sequence~") COLUMN(NAME=~"c_External_Source_Type.button_title~")    JOIN (LEFT=~"c_External_Source.external_source_type~"    OP =~"=~"RIGHT=~"c_External_Source_Type.external_source_type~" )    JOIN (LEFT=~"c_External_Source.external_source~"    OP =~"=~"RIGHT=~"o_Computer_External_Source.external_source~" )WHERE(    EXP1 =~"o_Computer_External_Source.computer_id~"   OP =~"=~"    EXP2 =~":computer_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_External_Source.external_source_type~"   OP =~"like~"    EXP2 =~":external_source_type~" ) ) ARG(NAME = ~"computer_id~" TYPE = number)  ARG(NAME = ~"external_source_type~" TYPE = string) " arguments=(("computer_id", number),("external_source_type", string))  sort="sort_sequence A description A " )
+text(band=header alignment="2" text="C External Source Type
+External Source Type" border="0" color="0" x="5" y="4" height="128" width="686"  name=c_external_source_type_external_source_type_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C External Source Type
+Description" border="0" color="0" x="695" y="4" height="128" width="2222"  name=c_external_source_type_description_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C External Source Type
+Button" border="0" color="0" x="2921" y="4" height="128" width="1783"  name=c_external_source_type_button_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C External Source Type
+Sort Sequence" border="0" color="0" x="4713" y="4" height="128" width="631"  name=c_external_source_type_sort_sequence_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="686" format="[general]"  name=external_source_type edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="695" y="4" height="76" width="2222" format="[general]"  name=description edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="2921" y="4" height="76" width="1783" format="[general]"  name=button edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="0" x="4713" y="4" height="76" width="329" format="[general]"  name=sort_sequence edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=0 border="0" color="0" x="5344" y="0" height="64" width="1079"  name=button_title  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

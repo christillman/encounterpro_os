@@ -1,0 +1,39 @@
+HA$PBExportHeader$f_delete_result.srf
+global type f_delete_result from function_object
+end type
+
+forward prototypes
+global function integer f_delete_result (string ps_observation_id)
+end prototypes
+
+global function integer f_delete_result (string ps_observation_id);str_popup popup
+str_popup_return popup_return
+integer li_result_sequence
+
+ DECLARE lsp_set_result_na PROCEDURE FOR dbo.sp_set_result_na  
+         @ps_observation_id = :ps_observation_id,   
+         @pi_result_sequence = :li_result_sequence  ;
+
+popup.dataobject = "dw_observation_result_list"
+popup.argument_count = 1
+popup.argument[1] = ps_observation_id
+popup.displaycolumn = 1
+popup.datacolumn = 2
+
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+
+if popup_return.item_count = 1 then
+	openwithparm(w_pop_ok, "Delete " + popup_return.descriptions[1] + "?")
+	if message.doubleparm <> 1 then return 0
+
+	li_result_sequence = integer(popup_return.items[1])
+
+	EXECUTE lsp_set_result_na;
+	if not tf_check() then return -1
+end if
+
+return li_result_sequence
+
+end function
+

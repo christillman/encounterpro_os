@@ -1,0 +1,28 @@
+HA$PBExportHeader$tf_get_domain_item.srf
+global type tf_get_domain_item from function_object
+end type
+
+forward prototypes
+global function integer tf_get_domain_item (string ps_domain_id, string ps_domain_item, ref string ps_domain_item_description)
+end prototypes
+
+global function integer tf_get_domain_item (string ps_domain_id, string ps_domain_item, ref string ps_domain_item_description);string ls_domain_item_description
+integer li_sts
+
+  SELECT domain_item_description
+    INTO :ls_domain_item_description
+    FROM c_Domain (NOLOCK)
+   WHERE domain_id = :ps_domain_id
+	  AND domain_item = :ps_domain_item;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	li_sts = 0
+else
+	ps_domain_item_description = ls_domain_item_description
+	li_sts = 1
+end if
+
+return li_sts
+end function
+

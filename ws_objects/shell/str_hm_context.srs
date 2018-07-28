@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_hm_context.srs
+global type str_hm_context from structure
+	long		maintenance_rule_id
+	string		compliant_filter
+	string		measured_filter
+	string		controlled_filter
+	string		mode
+	string		tabpage
+end type
+

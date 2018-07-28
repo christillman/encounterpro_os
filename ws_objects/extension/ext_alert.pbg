@@ -1,0 +1,11 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_alert.pbl" "";
+@end;
+@begin Objects
+ "extension\\w_chart_alert.srw" "extension\\ext_alert.pbl";
+ "extension\\dw_alert_display.srd" "extension\\ext_alert.pbl";
+ "extension\\dw_alert_display_grid.srd" "extension\\ext_alert.pbl";
+ "extension\\u_component_alert_standard.sru" "extension\\ext_alert.pbl";
+ "extension\\u_component_service_alert.sru" "extension\\ext_alert.pbl";
+@end;

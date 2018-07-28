@@ -1,0 +1,49 @@
+HA$PBExportHeader$str_patient.srs
+global type str_patient from structure
+	string		cpr_id
+	string		race
+	date		date_of_birth
+	time		time_of_birth
+	string		sex
+	string		primary_language
+	string		marital_status
+	string		billing_id
+	string		ssn
+	string		first_name
+	string		last_name
+	string		degree
+	string		name_prefix
+	string		middle_name
+	string		name_suffix
+	long		attachment_id
+	string		primary_provider_id
+	string		secondary_provider_id
+	datetime		last_update
+	string		phone_number
+	long		patient_id
+	datetime		date_of_conception
+	string		patient_status
+	datetime		created
+	string		created_by
+	string		modified_by
+	string		office_id
+	string		locked_by
+	long		attachment_location_id
+	string		attachment_path
+	string		referring_provider_id
+	string		email_address
+	str_id_list		id_list
+	string		nickname
+	string		maiden_name
+	string		address_line_1
+	string		address_line_2
+	string		city
+	string		state
+	string		zip
+	string		country
+	string		attachment_server
+	string		attachment_share
+	str_patient_communications		communications
+	boolean		test_patient
+end type
+

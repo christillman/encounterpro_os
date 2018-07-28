@@ -1,0 +1,17 @@
+HA$PBExportHeader$f_charrange.srf
+global type f_charrange from function_object
+end type
+
+forward prototypes
+global function str_charrange f_charrange (str_charposition pstr_from_position, str_charposition pstr_to_position)
+end prototypes
+
+global function str_charrange f_charrange (str_charposition pstr_from_position, str_charposition pstr_to_position);str_charrange lstr_charrange
+
+lstr_charrange.from_position = pstr_from_position
+lstr_charrange.to_position = pstr_to_position
+
+return lstr_charrange
+
+end function
+

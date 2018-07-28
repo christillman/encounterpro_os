@@ -1,0 +1,9 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "extension\\ext_nomenclature.pbl" "";
+@end;
+@begin Objects
+ "extension\\w_medcin.srw" "extension\\ext_nomenclature.pbl";
+ "extension\\dw_nomenclature_medcin.srd" "extension\\ext_nomenclature.pbl";
+ "extension\\u_component_nomenclature_medcin.sru" "extension\\ext_nomenclature.pbl";
+@end;

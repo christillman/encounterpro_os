@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_ccr_sourcetype.srs
+global type str_ccr_sourcetype from structure
+	str_ccr_codeddescriptiontype		Description
+	str_ccr_actorreferencetype		Actor[]
+	str_ccr_datetimetype		DateTime
+	string		ReferenceID[]
+	string		CommentID[]
+end type
+

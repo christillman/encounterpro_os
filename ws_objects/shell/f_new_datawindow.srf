@@ -1,0 +1,103 @@
+HA$PBExportHeader$f_new_datawindow.srf
+global type f_new_datawindow from function_object
+end type
+
+forward prototypes
+global function string f_new_datawindow (str_attributes pstr_attributes)
+end prototypes
+
+global function string f_new_datawindow (str_attributes pstr_attributes);integer li_sts
+str_popup popup
+str_popup_return popup_return
+string ls_context_object
+string ls_description
+string ls_datawindow_document_component_id
+string ls_config_object_id
+string ls_null
+long ll_sts
+long ll_count
+string ls_long_description
+blob lbl_datawindow
+string ls_status
+string ls_version_description
+string ls_copyright_status
+string ls_copyable
+string ls_config_object_type
+string ls_config_object_category
+long ll_version
+string ls_datawindow_script
+
+setnull(ls_null)
+setnull(ls_long_description)
+
+ls_config_object_type = "Datawindow"
+ls_status = "CheckedIn"
+setnull(ls_version_description)
+setnull(ls_copyright_status)
+setnull(ls_copyable)
+setnull(ls_config_object_category)
+ll_version = 1
+
+DO WHILE true
+	popup.title = "Enter title of new datawindow"
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_description = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Config_object
+	WHERE config_object_type = 'Datawindow'
+	AND status = 'OK'
+	AND description = :ls_description;
+	if not tf_check() then return ls_null
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a datawindow with that title.  Please enter a different title for the new datawindow.")
+	else
+		exit
+	end if
+LOOP
+
+popup.title = "Select datawindow Context"
+popup.dataobject = "dw_domain_notranslate_list"
+popup.datacolumn = 2
+popup.displaycolumn = 2
+popup.argument_count = 1
+popup.argument[1] = "CONTEXT_OBJECT"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_context_object = popup_return.items[1]
+
+setnull(lbl_datawindow)
+
+ls_config_object_id = f_new_guid()
+
+ll_sts = sqlca.config_create_object_version(ls_config_object_id, &
+												ls_config_object_type, &
+												ls_context_object, &
+												sqlca.customer_id, &
+												ls_description, &
+												ls_long_description, &
+												ls_config_object_category, &
+												ll_version, &
+												lbl_datawindow, &
+												current_scribe.user_id, &
+												ls_status, &
+												ls_version_description, &
+												ls_copyright_status, &
+												ls_copyable, &
+												ls_null)
+if not tf_check() then return ls_null
+if ll_sts <> 1 then
+	log.log(this, "f_new_datawindow()", "Error creating new datawindow", 4)
+	return ls_null
+end if
+
+return ls_config_object_id
+
+end function
+

@@ -1,0 +1,29 @@
+HA$PBExportHeader$f_empty_attachment_context.srf
+global type f_empty_attachment_context from function_object
+end type
+
+forward prototypes
+global function str_attachment_context f_empty_attachment_context ()
+end prototypes
+
+global function str_attachment_context f_empty_attachment_context ();str_attachment_context lstr_attachment_context
+
+
+setnull(lstr_attachment_context.folder)
+setnull(lstr_attachment_context.description)
+setnull(lstr_attachment_context.cpr_id)
+setnull(lstr_attachment_context.context_object)
+setnull(lstr_attachment_context.context_object_type)
+setnull(lstr_attachment_context.object_key)
+setnull(lstr_attachment_context.workplan_id)
+setnull(lstr_attachment_context.user_id)
+
+lstr_attachment_context.remove = false
+lstr_attachment_context.apply_to_all = false
+lstr_attachment_context.user_cancelled = false
+
+return lstr_attachment_context
+
+
+end function
+

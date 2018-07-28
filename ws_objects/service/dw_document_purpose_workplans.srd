@@ -1,0 +1,57 @@
+HA$PBExportHeader$dw_document_purpose_workplans.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=244 color="536870912" height.autosize=yes )
+table(column=(type=char(24) updatewhereclause=yes key=yes name=context_object dbname="c_Document_Purpose.context_object" )
+ column=(type=char(40) updatewhereclause=yes key=yes name=purpose dbname="c_Document_Purpose.purpose" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="c_Document_Purpose.description" )
+ column=(type=long update=yes updatewhereclause=yes name=new_object_workplan_id dbname="c_Document_Purpose.new_object_workplan_id" )
+ column=(type=long update=yes updatewhereclause=yes name=existing_object_workplan_id dbname="c_Document_Purpose.existing_object_workplan_id" )
+ column=(type=long updatewhereclause=yes name=owner_id dbname="c_Document_Purpose.owner_id" )
+ column=(type=datetime updatewhereclause=yes name=created dbname="c_Document_Purpose.created" )
+ column=(type=char(24) updatewhereclause=yes name=created_by dbname="c_Document_Purpose.created_by" )
+ column=(type=datetime updatewhereclause=yes name=last_updated dbname="c_Document_Purpose.last_updated" )
+ column=(type=char(40) updatewhereclause=yes name=id dbname="id" )
+ column=(type=char(80) updatewhereclause=yes name=c_workplan_new_description dbname="c_Workplan.new_description" )
+ column=(type=char(80) updatewhereclause=yes name=c_workplan_exists_description dbname="c_Workplan.exists_description" )
+ retrieve="SELECT p.context_object,   
+         p.purpose,   
+         p.description,   
+         p.new_object_workplan_id,   
+         p.existing_object_workplan_id,   
+         p.owner_id,   
+         p.created,   
+         p.created_by,   
+         p.last_updated,   
+         id=CAST(p.id AS varchar(40)),   
+         wp_new.description as new_description,   
+         wp_exist.description as exists_description
+FROM c_Document_Purpose p
+	LEFT OUTER JOIN c_Workplan wp_new 
+	ON p.new_object_workplan_id = wp_new.workplan_id 
+	LEFT OUTER JOIN c_Workplan wp_exist 
+	ON p.existing_object_workplan_id = wp_exist.workplan_id
+WHERE p.context_object = :context_object
+" update="c_Document_Purpose" updatewhere=0 updatekeyinplace=no arguments=(("context_object", string)) )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="18" y="12" height="96" width="1001" format="[general]" html.valueishtml="0"  name=purpose visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33538240" )
+text(band=detail alignment="1" text="New Object Workplan:" border="0" color="0" x="1193" y="24" height="64" width="727" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33538240" )
+text(band=detail alignment="1" text="Existing Object Workplan:" border="0" color="0" x="1134" y="136" height="64" width="786" html.valueishtml="0"  name=t_2 visible="1"  slideup=allabove  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33538240" )
+line(band=detail x1="18" y1="232" x2="3342" y2="232"  name=l_1 visible="1"  slideup=allabove pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="16777215" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="6" color="33554432" x="1947" y="132" height="76" width="1170" format="[general]" html.valueishtml="0"  name=c_workplan_exists_description visible="1"  slideup=allabove height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+button(band=detail text="Edit" enabled=yes action="0" border="1" color="0" x="3150~tlong(describe(~"c_workplan_exists_description.width~")) + 1980" y="124" height="76" width="169" vtextalign="0" htextalign="0"  name=b_edit_existing visible="1~tif(isnull(existing_object_workplan_id), 0, 1)"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="6" color="33554432" x="1947" y="20" height="76" width="1170" format="[general]" html.valueishtml="0"  name=c_workplan_new_description visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+button(band=detail text="Edit" enabled=yes action="0" border="1" color="0" x="3150~tlong(describe(~"c_workplan_new_description.width~")) + 1980" y="12" height="76" width="169" vtextalign="0" htextalign="0"  name=b_edit_new visible="1~tif(isnull( new_object_workplan_id), 0, 1)"  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="67108864" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

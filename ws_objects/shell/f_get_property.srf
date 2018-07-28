@@ -1,0 +1,22 @@
+HA$PBExportHeader$f_get_property.srf
+global type f_get_property from function_object
+end type
+
+forward prototypes
+global function str_property_value f_get_property (string ps_context_object, string ps_property, long pl_object_key, str_attributes pstr_context_attributes)
+end prototypes
+
+global function str_property_value f_get_property (string ps_context_object, string ps_property, long pl_object_key, str_attributes pstr_context_attributes);string ls_cpr_id
+
+// This form of f_get_property() assumes that the current_patient is the desired patient.  To specifiy explicitely the patient, use f_get_patient_property()
+
+if isnull(current_patient) then
+	setnull(ls_cpr_id)
+else
+	ls_cpr_id = current_patient.cpr_id
+end if
+
+return f_get_patient_property(ls_cpr_id, pl_object_key, ps_context_object, ps_property, pstr_context_attributes)
+
+end function
+

@@ -1,0 +1,14 @@
+HA$PBExportHeader$str_external_source.srs
+global type str_external_source from structure
+	string		external_source
+	string		external_source_type
+	string		description
+	long		in_office_workplan_id
+	long		workplan_id
+	string		component_id
+	string		button
+	boolean		wia_source
+	boolean		on_computer
+	boolean		always_available
+end type
+

@@ -1,0 +1,30 @@
+HA$PBExportHeader$f_get_picture_info.srf
+global type f_get_picture_info from function_object
+end type
+
+forward prototypes
+global subroutine f_get_picture_info (string ps_picture, ref long pl_pixels_x, ref long pl_pixels_y, ref long pl_hresolution, ref long pl_vresolution)
+end prototypes
+
+global subroutine f_get_picture_info (string ps_picture, ref long pl_pixels_x, ref long pl_pixels_y, ref long pl_hresolution, ref long pl_vresolution);oleobject lo_image
+integer li_sts
+
+lo_image = CREATE oleobject
+li_sts = lo_image.connecttonewobject("EncounterPRO.OS.ImageManipulation")
+if li_sts <> 0 then
+	messagebox("Error", string(li_sts))
+	return
+end if
+
+lo_image.GetImageInfo(ps_picture, ref pl_pixels_x, ref pl_pixels_y, ref pl_hresolution, ref pl_vresolution)
+
+lo_image.disconnectobject( )
+DESTROY lo_image
+
+return
+
+
+
+
+end subroutine
+

@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_object_reference.srs
+global type str_object_reference from structure
+	string		ID
+	string		Description
+end type
+

@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_datawindow_nested_datawindows.srs
+global type str_datawindow_nested_datawindows from structure
+	long		nested_datawindow_count
+	str_datawindow_nested_datawindow		nested_datawindow[]
+end type
+

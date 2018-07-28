@@ -1,0 +1,15 @@
+HA$PBExportHeader$str_encounter_assessment.srs
+global type str_encounter_assessment from structure
+	string		assessment_id
+	integer		assessment_sequence
+	string		description
+	string		insurance_id
+	string		icd_9_code
+	long		problem_id
+	long		assessment_billing_id
+	string		bill_flag
+	string		auto_close
+	integer		charge_count
+	str_encounter_charge		charge[]
+end type
+

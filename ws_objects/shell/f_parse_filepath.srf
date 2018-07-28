@@ -1,0 +1,92 @@
+HA$PBExportHeader$f_parse_filepath.srf
+global type f_parse_filepath from function_object
+end type
+
+forward prototypes
+global function integer f_parse_filepath (string ps_filepath, ref string ps_drive, ref string ps_directory, ref string ps_filename, ref string ps_extension)
+end prototypes
+
+global function integer f_parse_filepath (string ps_filepath, ref string ps_drive, ref string ps_directory, ref string ps_filename, ref string ps_extension);string ls_temp
+integer li_pos
+
+if isnull(ps_filepath) then
+	setnull(ps_drive)
+	setnull(ps_directory)
+	setnull(ps_filename)
+	setnull(ps_extension)
+	return 0
+end if
+
+// first check for UNC
+if left(ps_filepath, 2) = "\\" then
+	// found UNC
+	li_pos = pos(ps_filepath, "\", 3)
+	if li_pos = 0 then
+		// didn't find a backslash so entire string is nodename
+		ps_drive = ps_filepath
+		ps_directory = ""
+		ps_filename = ""
+		ps_extension = ""
+		return 1
+	else
+		ps_drive = left(ps_filepath, li_pos - 1)
+		ps_filepath = mid(ps_filepath, li_pos)
+	end if
+else
+	ps_drive = ""
+end if
+
+// first flip it so we can work from right to left
+ls_temp = reverse(ps_filepath)
+
+// find the extension
+li_pos = pos(ls_temp, ".")
+if li_pos = 0 then
+	// didn't find a period
+	ps_extension = ""
+else
+	ps_extension = reverse(left(ls_temp, li_pos - 1))
+	ls_temp = mid(ls_temp, li_pos + 1)
+end if
+
+// find the filename
+li_pos = pos(ls_temp, "\")
+if li_pos = 0 then
+	// didn't find a backslash
+	ps_directory = ""
+	// flip it back to find the drive
+	ls_temp = reverse(ls_temp)
+	li_pos = pos(ls_temp, ":")
+	if li_pos = 0 then
+		// didn't find a colon
+		ps_filename = ls_temp
+	else
+		ps_filename = mid(ls_temp, li_pos + 1)
+		if ps_drive = "" then ps_drive = left(ls_temp, li_pos)
+	end if
+else
+	// found a backslash
+	ps_filename = reverse(left(ls_temp, li_pos - 1))
+	ls_temp = mid(ls_temp, li_pos + 1)
+	// flip it back to find the drive
+	ls_temp = reverse(ls_temp)
+	li_pos = pos(ls_temp, ":")
+	if li_pos = 0 then
+		// didn't find a colon
+		ps_directory = ls_temp
+	else
+		ps_directory = mid(ls_temp, li_pos + 1)
+		if ps_drive = "" then ps_drive = left(ls_temp, li_pos)
+	end if
+end if
+
+
+return 1
+
+
+
+
+
+
+end function
+

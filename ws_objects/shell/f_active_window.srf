@@ -1,0 +1,49 @@
+HA$PBExportHeader$f_active_window.srf
+global type f_active_window from function_object
+end type
+
+forward prototypes
+global function window f_active_window ()
+end prototypes
+
+global function window f_active_window ();window lw_active_window
+powerobject lo_object
+integer li_iterations
+
+// A bug in PowerBuilder is causing the parent window of the w_pop_time_interval popup
+// to sometimes be incorrect, which causes encounterpro to freeze when the popup closes.
+// This sections attempts to identify the current active window and uses it as the
+// parent of the popup
+li_iterations = 0
+lo_object = getfocus()
+DO WHILE isvalid(lo_object) and li_iterations < 20
+	if left(lo_object.classname(), 2) = "w_" then
+		lw_active_window = lo_object
+		exit
+	end if
+	li_iterations += 1
+	lo_object = lo_object.getparent()
+LOOP
+
+// If we couldn't find a parent window looking at the focus, then see if the current service has a window
+if not isvalid(lw_active_window) then
+	if not isnull(current_service) and isvalid(current_service) then
+		if not isnull(current_service.service_window) and isvalid(current_service.service_window) then
+			lw_active_window = current_service.service_window
+		end if
+	end if
+end if
+
+// If we still don't have an active window, then just use the application main window.
+if not isvalid(lw_active_window) then
+	lw_active_window = main_window
+end if
+
+return lw_active_window
+
+
+
+
+
+end function
+

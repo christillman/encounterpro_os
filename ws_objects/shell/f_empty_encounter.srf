@@ -1,0 +1,32 @@
+HA$PBExportHeader$f_empty_encounter.srf
+global type f_empty_encounter from function_object
+end type
+
+forward prototypes
+global function str_encounter_description f_empty_encounter ()
+end prototypes
+
+global function str_encounter_description f_empty_encounter ();str_encounter_description lstr_encounter_description
+
+
+setnull(lstr_encounter_description.encounter_id)
+setnull(lstr_encounter_description.encounter_date)
+setnull(lstr_encounter_description.encounter_type)
+setnull(lstr_encounter_description.indirect_flag)
+setnull(lstr_encounter_description.description)
+setnull(lstr_encounter_description.discharge_date)
+setnull(lstr_encounter_description.attending_doctor)
+setnull(lstr_encounter_description.referring_doctor)
+setnull(lstr_encounter_description.supervising_doctor)
+setnull(lstr_encounter_description.new_flag)
+setnull(lstr_encounter_description.billing_posted)
+setnull(lstr_encounter_description.encounter_status)
+setnull(lstr_encounter_description.patient_name)
+setnull(lstr_encounter_description.office_id)
+setnull(lstr_encounter_description.bill_flag)
+
+return lstr_encounter_description
+
+
+end function
+

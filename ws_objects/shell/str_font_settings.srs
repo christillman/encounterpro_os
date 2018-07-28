@@ -1,0 +1,15 @@
+HA$PBExportHeader$str_font_settings.srs
+global type str_font_settings from structure
+	integer		fontsize
+	boolean		bold
+	boolean		underline
+	boolean		italic
+	boolean		subscript
+	boolean		superscript
+	boolean		strikeout
+	alignment		alignment
+	long		forecolor
+	long		textbackcolor
+	string		fontname
+end type
+

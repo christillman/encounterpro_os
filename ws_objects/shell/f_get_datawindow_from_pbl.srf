@@ -1,0 +1,114 @@
+HA$PBExportHeader$f_get_datawindow_from_pbl.srf
+global type f_get_datawindow_from_pbl from function_object
+end type
+
+forward prototypes
+global function integer f_get_datawindow_from_pbl (ref string ps_datawindow_script)
+end prototypes
+
+global function integer f_get_datawindow_from_pbl (ref string ps_datawindow_script);str_popup popup
+str_popup_return popup_return
+string ls_extensions[]
+integer li_extension_count
+string ls_filter
+long i
+integer li_sts
+string lsa_paths[]
+string lsa_files[]
+str_file_attributes lstr_file_attributes
+long ll_filebytes
+blob lbl_file
+long ll_count
+string ls_new_script
+string ls_error
+string ls_null
+string ls_filepath
+string ls_list
+string ls_lines[]
+long ll_line_count
+string ls_fields[]
+long ll_field_count
+string ls_datawindows[]
+long ll_datawindow_count
+integer li_index
+
+setnull(ls_null)
+
+ls_filter = "PBL files (*.pbl), *.pbl"
+
+li_sts = windows_api.comdlg32.getopenfilename( handle(w_main), &
+															"Select PBL File Containing Datawindow", &
+															lsa_paths, &
+															lsa_files, &
+															ls_filter)
+if li_sts < 0 then return -1
+
+ll_count = upperbound(lsa_paths)
+if isnull(ll_count) or ll_count <= 0 then return 0
+
+if ll_count > 1 then
+	openwithparm(w_pop_message, "Multiple files selected.  Please select only one file.")
+	return 0
+end if
+
+for i = 1 to ll_count
+	// Skip the shorthand directories
+	if lsa_files[i] = "." or lsa_files[i] = ".." then continue
+	
+	// Skip the file if we can't get its properties
+	li_sts = log.file_attributes(lsa_paths[i], lstr_file_attributes)
+	if li_sts <= 0 then continue
+	
+	// Skip the directories
+	if lstr_file_attributes.subdirectory then continue
+
+	// Found one !!
+	ls_filepath = lsa_paths[i]
+	exit
+next
+
+
+
+// Now get the desired datawindow from the library
+
+ls_list = librarydirectory(ls_filepath, DirDataWindow!)
+if isnull(ls_list) or ls_list = "" then
+	openwithparm(w_pop_message, "The selected library contains no datawindows")
+	return 0
+end if
+
+ll_line_count = f_parse_string(ls_list, "~n", ls_lines)
+if ll_line_count <= 0 then
+	openwithparm(w_pop_message, "The selected library contains no datawindows")
+	return 0
+end if
+
+for i = 1 to ll_line_count
+	ll_field_count = f_parse_string(ls_lines[i], "~t", ls_fields)
+	if ll_field_count >= 1 then
+		ll_datawindow_count++
+		ls_datawindows[ll_datawindow_count] = ls_fields[1]
+	end if
+next
+
+popup.data_row_count = ll_datawindow_count
+popup.items = ls_datawindows
+popup.title = "Select Datawindow"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return -1
+
+li_index = popup_return.item_indexes[1]
+
+ls_new_script = libraryexport(ls_filepath, ls_datawindows[li_index], ExportDataWindow!)
+
+if len(ls_new_script) > 0 then
+	ps_datawindow_script = ls_new_script
+	return 1
+end if
+
+return 0
+
+
+end function
+

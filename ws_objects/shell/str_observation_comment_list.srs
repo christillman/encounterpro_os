@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_observation_comment_list.srs
+global type str_observation_comment_list from structure
+	long		comment_count
+	str_observation_comment		comment[]
+end type
+

@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_external_observation_attachment_list.srs
+global type str_external_observation_attachment_list from structure
+	integer		attachment_count
+	str_external_observation_attachment		attachments[]
+end type
+

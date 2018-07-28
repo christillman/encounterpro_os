@@ -1,0 +1,19 @@
+HA$PBExportHeader$f_destroy_observation_sources.srf
+global type f_destroy_observation_sources from function_object
+end type
+
+forward prototypes
+global function integer f_destroy_observation_sources (integer pi_source_count, ref u_component_observation puoa_source[])
+end prototypes
+
+global function integer f_destroy_observation_sources (integer pi_source_count, ref u_component_observation puoa_source[]);integer i
+integer li_sts
+
+for i = 1 to pi_source_count
+	li_sts = component_manager.destroy_component(puoa_source[i])
+next
+
+return 1
+
+end function
+

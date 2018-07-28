@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_attachment_type.srs
+global type str_attachment_type from structure
+	string		FileName
+	string		FileType
+	string		AttachmentName
+	blob		AttachmentData
+	datetime		AttachmentDate
+end type
+

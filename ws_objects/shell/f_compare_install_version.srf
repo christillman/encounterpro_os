@@ -1,0 +1,54 @@
+HA$PBExportHeader$f_compare_install_version.srf
+global type f_compare_install_version from function_object
+end type
+
+forward prototypes
+global function integer f_compare_install_version (string ps_myversion, string ps_newversion)
+end prototypes
+
+global function integer f_compare_install_version (string ps_myversion, string ps_newversion);//
+//
+// Returns:		1		new version is later than the current version
+//					0		the versions are equal
+//					-1		new version is earlier than the current version
+//
+//
+
+string ls_myversion
+string ls_newversion
+string lsa_myparts[]
+string lsa_newparts[]
+integer li_mycount
+integer li_newcount
+integer i
+
+li_mycount = f_parse_string(ps_myversion, ".", lsa_myparts)
+li_newcount = f_parse_string(ps_newversion, ".", lsa_newparts)
+
+i = 0
+
+DO WHILE i < li_mycount and i < li_newcount
+	i += 1
+	
+	if lower(lsa_myparts[i]) < lower(lsa_newparts[i]) then
+		return 1
+	elseif lower(lsa_newparts[i]) < lower(lsa_myparts[i]) then
+		return -1
+	end if
+LOOP
+
+// All the comparable parts were equal...
+
+// If the new version has more parts than the current version then it's later than the current version
+if li_newcount > li_mycount then
+	return 1
+elseif li_mycount > li_newcount then
+	return -1
+else
+	// If we get here then the versions are equal
+	return 0
+end if
+
+
+end function
+

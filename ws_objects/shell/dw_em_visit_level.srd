@@ -1,0 +1,13 @@
+HA$PBExportHeader$dw_em_visit_level.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=visit_level dbname="em_Visit_Level.visit_level" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=description dbname="em_Visit_Level.description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"em_Visit_Level~" ) COLUMN(NAME=~"em_Visit_Level.visit_level~") COLUMN(NAME=~"em_Visit_Level.description~") COMPUTE(NAME=~"selected_flag=0~")) " update="em_Visit_Level" updatewhere=1 updatekeyinplace=no )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1198" format="[general]"  name=description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,25 @@
+HA$PBExportHeader$dw_maintenance_open_assessment_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=problem_id dbname="p_Assessment.problem_id" )
+ column=(type=datetime updatewhereclause=yes name=begin_date dbname="p_Assessment.begin_date" )
+ column=(type=datetime updatewhereclause=yes name=end_date dbname="p_Assessment.end_date" )
+ column=(type=char(80) updatewhereclause=yes name=assessment dbname="p_Assessment.assessment" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Maintenance_Assessment~" )  TABLE(NAME=~"p_Assessment~" ) COLUMN(NAME=~"p_Assessment.problem_id~") COLUMN(NAME=~"p_Assessment.begin_date~") COLUMN(NAME=~"p_Assessment.end_date~") COLUMN(NAME=~"p_Assessment.assessment~")    JOIN (LEFT=~"c_Maintenance_Assessment.assessment_id~"    OP =~"=~"RIGHT=~"p_Assessment.assessment_id~" )WHERE(    EXP1 =~"p_Assessment.cpr_id~"   OP =~"=~"    EXP2 =~":cpr_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Maintenance_Assessment.maintenance_rule_id~"   OP =~"=~"    EXP2 =~":maintenance_rule_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Assessment.end_date~"   OP =~"is~"    EXP2 =~"NULL~" ) ) ARG(NAME = ~"cpr_id~" TYPE = string)  ARG(NAME = ~"maintenance_rule_id~" TYPE = number) " arguments=(("cpr_id", string),("maintenance_rule_id", number))  sort="begin_date D " )
+text(band=header alignment="2" text="P Assessment
+Problem Id"border="0" color="0" x="5" y="4" height="128" width="393"  name=p_assessment_problem_id_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Begin Date"border="0" color="0" x="402" y="4" height="128" width="603"  name=p_assessment_begin_date_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+End Date"border="0" color="0" x="1010" y="4" height="128" width="603"  name=p_assessment_end_date_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Assessment"border="0" color="0" x="1618" y="4" height="128" width="2222"  name=p_assessment_assessment_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=problem_id edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="402" y="4" height="76" width="603" format="[shortdate] [time]"  name=begin_date edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="1010" y="4" height="76" width="603" format="[shortdate] [time]"  name=end_date edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1618" y="4" height="76" width="2222" format="[general]"  name=assessment edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

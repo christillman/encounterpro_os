@@ -1,0 +1,9 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_epro_todo.pbl" "";
+@end;
+@begin Objects
+ "service\\dw_todo_item_header.srd" "service\\svc_epro_todo.pbl";
+ "service\\w_epro_todo_item_old.srw" "service\\svc_epro_todo.pbl";
+ "service\\w_epro_todo_item.srw" "service\\svc_epro_todo.pbl";
+@end;

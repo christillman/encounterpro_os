@@ -1,0 +1,16 @@
+HA$PBExportHeader$dw_location_display_list_small.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=76 color="536870912" )
+table(column=(type=char(12) updatewhereclause=yes name=location_domain dbname="c_Location.location_domain" )
+ column=(type=char(24) updatewhereclause=yes key=yes name=location dbname="c_Location.location" )
+ column=(type=char(40) updatewhereclause=yes name=description dbname="c_Location.description" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_Location.sort_sequence" )
+ column=(type=char(1) updatewhereclause=yes name=diffuse_flag dbname="c_Location.diffuse_flag" )
+ column=(type=char(12) updatewhereclause=yes name=status dbname="c_Location.status" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Location~" ) COLUMN(NAME=~"c_Location.location_domain~") COLUMN(NAME=~"c_Location.location~") COLUMN(NAME=~"c_Location.description~") COLUMN(NAME=~"c_Location.sort_sequence~") COLUMN(NAME=~"c_Location.diffuse_flag~") COLUMN(NAME=~"c_Location.status~")WHERE(    EXP1 =~"c_Location.location_domain~"   OP =~"=~"    EXP2 =~":location_domain~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Location.status~"   OP =~"=~"    EXP2 =~"'OK'~" ) ) ARG(NAME = ~"location_domain~" TYPE = string) " update="c_Location" updatewhere=1 updatekeyinplace=no arguments=(("location_domain", string))  sort="sort_sequence A description A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="72" width="832" format="[general]"  name=description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

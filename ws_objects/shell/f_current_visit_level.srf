@@ -1,0 +1,36 @@
+HA$PBExportHeader$f_current_visit_level.srf
+global type f_current_visit_level from function_object
+end type
+
+forward prototypes
+global function integer f_current_visit_level (string ps_cpr_id, long pl_encounter_id)
+end prototypes
+
+global function integer f_current_visit_level (string ps_cpr_id, long pl_encounter_id);integer li_calculated_history
+integer li_calculated_exam
+integer li_calculated_decision
+integer li_visit_level
+string ls_temp
+integer li_null
+string ls_em_documentation_guide
+string ls_new_flag
+
+setnull(li_null)
+
+if isnull(ps_cpr_id) or isnull(pl_encounter_id) then return li_null
+
+ls_temp = f_get_encounter_property(ps_cpr_id, pl_encounter_id, "EM_ENCOUNTER_LEVEL")
+li_visit_level = integer(ls_temp)
+
+ls_em_documentation_guide = f_get_encounter_property(ps_cpr_id, pl_encounter_id, "em_documentation_guide")
+if isnull(ls_em_documentation_guide) then ls_em_documentation_guide = "1997 E&M"
+	
+if isnull(li_visit_level) then
+	li_visit_level = f_calculated_visit_level(ps_cpr_id, pl_encounter_id, ls_em_documentation_guide)
+end if
+
+return li_visit_level
+
+
+end function
+

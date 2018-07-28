@@ -1,0 +1,105 @@
+HA$PBExportHeader$f_new_drug.srf
+global type f_new_drug from function_object
+end type
+
+forward prototypes
+global function str_drug_definition f_new_drug (string ps_drug_type)
+end prototypes
+
+global function str_drug_definition f_new_drug (string ps_drug_type);str_popup popup
+str_popup_return popup_return
+long ll_sts
+long ll_count
+u_ds_data luo_data
+str_drug_definition lstr_drug
+str_drug_definition lstr_error
+
+lstr_drug = f_empty_drug()
+lstr_error = f_empty_drug()
+
+
+if isnull(ps_drug_type) or lower(ps_drug_type) = "drug" then
+	popup.dataobject = "dw_drug_type_pick"
+	popup.displaycolumn = 1
+	popup.datacolumn = 1
+	
+	openwithparm(w_pop_pick, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return lstr_error
+	
+	lstr_drug.drug_type = popup_return.items[1]
+else
+	lstr_drug.drug_type = ps_drug_type
+end if
+
+DO WHILE true
+	popup.title = "Enter the common name of the new " + lower(lstr_drug.drug_type)
+	popup.displaycolumn = 40
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return lstr_error
+	
+	lstr_drug.common_name = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_drug_Definition
+	WHERE common_name = :lstr_drug.common_name;
+	if not tf_check() then return lstr_error
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a drug with that name.  Please enter a different name for the new drug.")
+	else
+		exit
+	end if
+LOOP
+
+if lower(lstr_drug.drug_type) = "single drug" then
+	popup.title = "Enter the generic name of the new " + lower(lstr_drug.drug_type)
+	popup.displaycolumn = 80
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return lstr_error
+	
+	lstr_drug.generic_name = popup_return.items[1]
+end if
+
+lstr_drug.status = 'OK'
+
+openwithparm(w_pop_yes_no, "Is this a controlled substance?")
+popup_return = message.powerobjectparm
+if popup_return.item = "YES" then
+	lstr_drug.controlled_substance_flag = "Y"
+else
+	lstr_drug.controlled_substance_flag = "N"
+end if
+
+
+sqlca.sp_new_drug_definition(lstr_drug.drug_type, &
+										lstr_drug.common_name, &
+										lstr_drug.generic_name, &
+										lstr_drug.status, & 
+										lstr_drug.controlled_substance_flag, & 
+										lstr_drug.default_duration_amount, & 
+										lstr_drug.default_duration_unit, & 
+										lstr_drug.default_duration_prn, & 
+										lstr_drug.max_dose_per_day, & 
+										lstr_drug.max_dose_unit, & 
+										sqlca.customer_id, & 
+										lstr_drug.drug_id )
+if not tf_check() then return lstr_error
+
+// Add the new drug to the common list for this user's specialty
+if current_user.specialty_id <> "$" and not isnull(current_user.specialty_id) then
+	INSERT INTO c_Common_Drug (
+		specialty_id,
+		drug_id)
+	VALUES (
+		:current_user.specialty_id,
+		:lstr_drug.drug_id);
+	if not tf_check() then return lstr_error
+end if
+
+return lstr_drug
+
+end function
+

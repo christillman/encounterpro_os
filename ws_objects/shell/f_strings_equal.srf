@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_strings_equal.srf
+global type f_strings_equal from function_object
+end type
+
+forward prototypes
+global function boolean f_strings_equal (string ps_string1, string ps_string2)
+end prototypes
+
+global function boolean f_strings_equal (string ps_string1, string ps_string2);// This function compares two strings and returns true if they are equal.
+// It differs from the equality operator in that two nulls are considered
+// equal for the purposes of this comparison
+
+if isnull(ps_string1) and isnull(ps_string2) then return true
+
+if lower(ps_string1) = lower(ps_string2) then return true
+
+return false
+
+end function
+

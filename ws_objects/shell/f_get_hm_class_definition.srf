@@ -1,0 +1,168 @@
+HA$PBExportHeader$f_get_hm_class_definition.srf
+global type f_get_hm_class_definition from function_object
+end type
+
+forward prototypes
+global function integer f_get_hm_class_definition (long pl_maintenance_rule_id, ref str_hm_class_definition pstr_hm_class)
+end prototypes
+
+global function integer f_get_hm_class_definition (long pl_maintenance_rule_id, ref str_hm_class_definition pstr_hm_class);string ls_sex
+string ls_race
+long ll_age_range_id
+long ll_interval
+string ls_interval_unit
+long ll_warning_days
+u_ds_data luo_data1
+u_ds_data luo_data2
+long i, j
+
+
+pstr_hm_class.maintenance_rule_id = pl_maintenance_rule_id
+
+SELECT assessment_flag,
+		sex,
+		race,
+		description,
+		age_range_id,
+		interval,
+		interval_unit,
+		warning_days,
+		status,
+		maintenance_rule_type,
+		filter_from_maintenance_rule_id,
+		compliance_ok_percent,
+		compliance_warning_percent,
+		measured_ok_percent,
+		measured_warning_percent,
+		controlled_ok_percent,
+		controlled_warning_percent
+INTO :pstr_hm_class.assessment_flag,
+		:ls_sex,
+		:ls_race,
+		:pstr_hm_class.description,
+		:ll_age_range_id,
+		:ll_interval,
+		:ls_interval_unit,
+		:ll_warning_days,
+		:pstr_hm_class.status,
+		:pstr_hm_class.maintenance_rule_type,
+		:pstr_hm_class.filter_maintenance_rule_id,
+		:pstr_hm_class.compliance_ok_percent,
+		:pstr_hm_class.compliance_warning_percent,
+		:pstr_hm_class.measured_ok_percent,
+		:pstr_hm_class.measured_warning_percent,
+		:pstr_hm_class.controlled_ok_percent,
+		:pstr_hm_class.controlled_warning_percent
+FROM c_Maintenance_Patient_Class
+WHERE maintenance_rule_id = :pl_maintenance_rule_id;
+if not tf_check() then return -1
+
+pstr_hm_class.criteria_count++
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].property = "sex"
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].value = ls_sex
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].operation = "="
+
+pstr_hm_class.criteria_count++
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].property = "race"
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].value = ls_race
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].operation = "="
+
+pstr_hm_class.criteria_count++
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].property = "age_range"
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].value = string(ll_age_range_id)
+pstr_hm_class.criteria[pstr_hm_class.criteria_count].operation = "In Age Range"
+
+
+//
+// No attempt is made anymore to read the v4 protocol and action fields.  v5 uses only the 
+//
+//pstr_hm_class.protocol_count = 1
+//pstr_hm_class.protocol[1].title = "Periodic Treatment"
+//pstr_hm_class.protocol[1].description = "Periodic Treatment"
+//pstr_hm_class.protocol[1].interval = ll_interval
+//pstr_hm_class.protocol[1].interval_unit = ls_interval_unit
+//
+//if not isnull(ll_warning_days) then
+//	pstr_hm_class.action_count = 1
+//	pstr_hm_class.action[1].action = "H.M. List Warning Color"
+//	pstr_hm_class.action[1].action_time = -ll_warning_days
+//	pstr_hm_class.action[1].action_time_unit = "Day"
+//	setnull(pstr_hm_class.action[1].action_recipient)
+//end if
+
+
+luo_data1 = CREATE u_ds_data
+luo_data2 = CREATE u_ds_data
+
+luo_data1.set_dataobject("dw_maintenance_rule_assessments")
+pstr_hm_class.assessment_count = luo_data1.retrieve(pl_maintenance_rule_id)
+if pstr_hm_class.assessment_count < 0 then return -1
+
+for i = 1 to pstr_hm_class.assessment_count
+	pstr_hm_class.assessment[i].assessment_id = luo_data1.object.assessment_id[i]
+	pstr_hm_class.assessment[i].assessment_current_flag = luo_data1.object.assessment_current_flag[i]
+	pstr_hm_class.assessment[i].primary_flag = luo_data1.object.primary_flag[i]
+next
+
+luo_data1.set_dataobject("dw_maintenance_rule_metrics")
+pstr_hm_class.metric_count = luo_data1.retrieve(pl_maintenance_rule_id)
+if pstr_hm_class.metric_count < 0 then return -1
+
+for i = 1 to pstr_hm_class.metric_count
+	pstr_hm_class.metric[i].metric_sequence = luo_data1.object.metric_sequence[i]
+	pstr_hm_class.metric[i].description = luo_data1.object.description[i]
+	pstr_hm_class.metric[i].title = luo_data1.object.title[i]
+	pstr_hm_class.metric[i].observation_id = luo_data1.object.observation_id[i]
+	pstr_hm_class.metric[i].result_sequence = luo_data1.object.result_sequence[i]
+	pstr_hm_class.metric[i].interval = luo_data1.object.interval[i]
+	pstr_hm_class.metric[i].interval_unit = luo_data1.object.interval_unit[i]
+next
+
+luo_data1.set_dataobject("dw_maintenance_rule_policies")
+pstr_hm_class.policy_count = luo_data1.retrieve(pl_maintenance_rule_id)
+if pstr_hm_class.policy_count < 0 then return -1
+
+for i = 1 to pstr_hm_class.policy_count
+	pstr_hm_class.policy[i].policy_sequence = luo_data1.object.policy_sequence[i]
+	pstr_hm_class.policy[i].policy_event = luo_data1.object.policy_event[i]
+	pstr_hm_class.policy[i].include_new_flag = luo_data1.object.include_new_flag[i]
+	pstr_hm_class.policy[i].time_offset_amount = luo_data1.object.time_offset_amount[i]
+	pstr_hm_class.policy[i].time_offset_unit = luo_data1.object.time_offset_unit[i]
+	pstr_hm_class.policy[i].action_workplan_id = luo_data1.object.action_workplan_id[i]
+	pstr_hm_class.policy[i].action_workplan_recipient = luo_data1.object.action_workplan_recipient[i]
+next
+
+luo_data1.set_dataobject("dw_c_maintenance_protocol")
+luo_data2.set_dataobject("dw_c_maintenance_protocol_items")
+
+pstr_hm_class.protocol_count = luo_data1.retrieve(pl_maintenance_rule_id)
+if pstr_hm_class.protocol_count < 0 then return -1
+
+for i = 1 to pstr_hm_class.protocol_count
+	pstr_hm_class.protocol[i].protocol_sequence = luo_data1.object.protocol_sequence[i]
+	pstr_hm_class.protocol[i].title = luo_data1.object.title[i]
+	pstr_hm_class.protocol[i].description = luo_data1.object.description[i]
+	pstr_hm_class.protocol[i].interval = luo_data1.object.interval[i]
+	pstr_hm_class.protocol[i].interval_unit = luo_data1.object.interval_unit[i]
+	
+	pstr_hm_class.protocol[i].protocol_item_count = luo_data2.retrieve(pl_maintenance_rule_id, pstr_hm_class.protocol[i].protocol_sequence)
+	if pstr_hm_class.protocol[i].protocol_item_count < 0 then return -1
+	
+	for j = 1 to pstr_hm_class.protocol[i].protocol_item_count
+		pstr_hm_class.protocol[i].protocol_item[j].protocol_item_sequence = luo_data2.object.protocol_item_sequence[j]
+		pstr_hm_class.protocol[i].protocol_item[j].description = luo_data2.object.description[j]
+		pstr_hm_class.protocol[i].protocol_item[j].context_object = luo_data2.object.context_object[j]
+		pstr_hm_class.protocol[i].protocol_item[j].assessment_type = luo_data2.object.assessment_type[j]
+		pstr_hm_class.protocol[i].protocol_item[j].assessment_id = luo_data2.object.assessment_id[j]
+		pstr_hm_class.protocol[i].protocol_item[j].treatment_type = luo_data2.object.treatment_type[j]
+		pstr_hm_class.protocol[i].protocol_item[j].treatment_key = luo_data2.object.treatment_key[j]
+	next
+next
+
+
+
+return 1
+
+
+end function
+

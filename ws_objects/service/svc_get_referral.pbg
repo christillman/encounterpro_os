@@ -1,0 +1,9 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_get_referral.pbl" "";
+@end;
+@begin Objects
+ "service\\w_referral_old.srw" "service\\svc_get_referral.pbl";
+ "service\\w_referral.srw" "service\\svc_get_referral.pbl";
+ "service\\u_component_service_review_referral.sru" "service\\svc_get_referral.pbl";
+@end;

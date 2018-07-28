@@ -1,0 +1,84 @@
+HA$PBExportHeader$f_configure_component.srf
+global type f_configure_component from function_object
+end type
+
+forward prototypes
+global function integer f_configure_component (string ps_component_id)
+end prototypes
+
+global function integer f_configure_component (string ps_component_id);str_attributes lstr_attributes
+integer li_sts
+u_ds_data luo_data
+integer li_count
+integer i
+integer li_attribute_sequence
+string ls_temp
+string ls_id
+str_attributes lstr_state_attributes
+string ls_param_mode
+string ls_component_id
+string ls_description
+
+ls_param_mode = "Config"
+
+if isnull(ps_component_id) then
+	log.log(this, "f_configure_component()", "Null component_id", 4)
+	return -1
+end if
+
+SELECT CAST(id AS varchar(38)), description
+INTO :ls_id, :ls_description
+FROM dbo.fn_components()
+WHERE component_id = :ps_component_id;
+if not tf_check() then return -1
+if sqlca.sqlcode = 100 then
+	log.log(this, "f_configure_component()", "component not found (" + ps_component_id + ")", 4)
+	return -1
+end if
+
+if li_sts = 0 and not config_mode then
+	if not f_any_params(ls_id, ls_param_mode) then
+		openwithparm(w_pop_message, "The " + ls_description + " component has no ~"" + ls_param_mode + "~" parameters")
+		return 0
+	end if
+end if
+
+// Get the existing attributes
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_c_component_attribute")
+li_count = luo_data.retrieve(ps_component_id)
+
+if li_count < 0 then
+	log.log(this, "configure_report()", "Error getting attributes", 4)
+	return -1
+end if
+
+f_attribute_ds_to_str(luo_data, lstr_attributes)
+
+li_sts = f_get_params_with_state(ls_id, ls_param_mode, lstr_attributes, lstr_state_attributes)
+if li_sts < 0 then return -1
+
+// Transfer the attributes back into the datawindow
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+// Make sure each row has the correct specialty_id
+for i = 1 to luo_data.rowcount()
+	ls_component_id = luo_data.object.component_id[i]
+	// OK this sucks, but the f_attribute_str_to_ds_with_removal function actually recognises the component_id column as a special column to hold the parent component's guid.  But this
+	// table predates that and [component_id] actually means [component_id].  So, if we see a value longer than 24 characters, we'll treat it as if
+	// it's a new record and replace the component_id with the correct value
+	if isnull(ls_component_id) or len(ls_component_id) > 24 then
+		luo_data.object.component_id[i] = ps_component_id
+	end if
+next
+
+li_sts = luo_data.update()
+if li_sts < 0 then return -1
+
+DESTROY luo_data			
+
+return 1
+
+
+end function
+

@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_hm_treatment_item.srs
+global type str_hm_treatment_item from structure
+	long maintenance_treatment_sequence
+	string treatment_type
+	string treatment_key
+	string description
+	string open_flag
+	string primary_flag
+	datetime created
+	string created_by
+end type
+

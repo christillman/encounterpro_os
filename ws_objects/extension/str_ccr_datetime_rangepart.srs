@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_ccr_datetime_rangepart.srs
+global type str_ccr_datetime_rangepart from structure
+	datetime		ExactDateTime
+	str_ccr_measuretype		Age
+	str_ccr_codeddescriptiontype		ApproximateDateTime
+end type
+

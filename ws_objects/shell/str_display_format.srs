@@ -1,0 +1,8 @@
+HA$PBExportHeader$str_display_format.srs
+global type str_display_format from structure
+	string		display_format
+	string		format_object
+	integer		item_count
+	str_display_format_item		item[]
+end type
+

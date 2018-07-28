@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_sql_context.srs
+global type str_sql_context from structure
+	str_complete_context		context
+	str_attributes		attributes
+	string		sql
+	string		script_name
+	string		error
+	u_ds_data		data
+	string		final_sql
+end type
+

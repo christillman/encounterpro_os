@@ -1,0 +1,146 @@
+HA$PBExportHeader$f_config_object_install.srf
+global type f_config_object_install from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_install (string ps_config_object_id, long pl_version)
+end prototypes
+
+global function integer f_config_object_install (string ps_config_object_id, long pl_version);integer li_sts
+long ll_sts
+u_config_object_manager lo_config_object_manager
+string ls_config_object_data
+blob lbl_objectdata
+str_popup popup
+str_popup_return popup_return
+string ls_object_xml
+string ls_status
+long ll_installed_version
+string ls_installed_version_status
+datetime ldt_installed_version_date
+long ll_owner_id
+string ls_config_object_type
+integer li_concurrent_install_flag
+string ls_object_component_id
+u_component_config_object luo_config_object
+
+if isnull(ps_config_object_id) then
+	log.log(this, "f_config_object_install()", "config_object_id is null", 4)
+	return -1
+end if
+
+if isnull(pl_version) then
+	log.log(this, "f_config_object_install()", "Version is null", 4)
+	return -1
+end if
+
+SELECT status
+INTO :ls_status
+FROM c_Config_Object_Version
+WHERE config_object_id = :ps_config_object_id
+AND version = :pl_version;
+if not tf_check() then return -1
+if sqlca.sqlnrows <> 1 then
+	// If the desired version is not local then download the version
+	ll_sts =  sqlca.config_download_library_object(ps_config_object_id, pl_version, current_user.user_id)
+	if not tf_check() then return -1
+	if ll_sts < 0 then
+		log.log(this, "f_config_object_install()", "Error downloading config object", 4)
+		return -1
+	end if
+	
+	SELECT status
+	INTO :ls_status
+	FROM c_Config_Object_Version
+	WHERE config_object_id = :ps_config_object_id
+	AND version = :pl_version;
+	if not tf_check() then return -1
+	if sqlca.sqlnrows <> 1 then
+		log.log(this, "f_config_object_install()", "Config object version record not found (" + ps_config_object_id + ", " + string(pl_version) + ")", 4)
+		return -1
+	end if
+end if
+
+SELECT installed_version, installed_version_status, owner_id, config_object_type
+INTO :ll_installed_version, :ls_installed_version_status, :ll_owner_id, :ls_config_object_type
+FROM c_Config_Object
+WHERE config_object_id = :ps_config_object_id;
+if not tf_check() then return -1
+if sqlca.sqlnrows = 0 then
+	log.log(this, "f_config_object_install()", "Config Object record not found (" + ps_config_object_id + ")", 4)
+	return -1
+end if
+if sqlca.sqlnrows = 1 and ll_installed_version >= 0 and lower(ls_installed_version_status) = "checkedout" and ll_owner_id = sqlca.customer_id then
+	openwithparm(w_pop_yes_no, "This " + lower(ls_config_object_type) + " is checked out for editing.  If you continue then all of the changes made since the checkout will be lost.  Do you wish to continue?")
+	popup_return = message.powerobjectparm
+	if popup_return.item <> "YES" then return 0
+	
+	ll_sts = f_config_object_cancel_checkout(ps_config_object_id)
+	if ll_sts <= 0 then
+		openwithparm(w_pop_message, "Cancel Checkout Failed")
+		return -1
+	end if
+end if
+
+setnull(li_concurrent_install_flag)
+
+SELECT concurrent_install_flag, object_component_id
+INTO :li_concurrent_install_flag, :ls_object_component_id
+FROM c_Config_Object_Type
+WHERE config_object_type = :ls_config_object_type;
+if not tf_check() then return -1
+if sqlca.sqlnrows <> 1 then
+	log.log(this, "f_config_object_install()", "config_object_type record not found (" + ls_config_object_type + ")", 4)
+	return -1
+end if
+
+
+luo_config_object = component_manager.get_component(ls_object_component_id)
+if isnull(luo_config_object) then
+	log.log(this, "f_check_in_config_object_silent()", "Error getting config object component (" + ls_object_component_id + ")", 4)
+	return -1
+end if
+
+li_sts = luo_config_object.install(ps_config_object_id, pl_version)
+if ll_sts < 0 then
+	log.log(this, "f_check_in_config_object_silent()", "Error encapsulating config object (" + ps_config_object_id + ")", 4)
+	return -1
+end if
+
+component_manager.destroy_component(luo_config_object)
+
+// If we get here then the install succeeded.  Now make sure that the installed_version fields are correct in the c_Config_Object table
+SELECT status, status_date_time
+INTO :ls_installed_version_status, :ldt_installed_version_date
+FROM c_Config_Object_Version
+WHERE config_object_id = :ps_config_object_id
+AND version = :pl_version;
+if not tf_check() then return -1
+if sqlca.sqlnrows <> 1 then
+	log.log(this, "f_config_object_install()", "Install succeeded but version record not found (" + ps_config_object_id + ", " + string(pl_version) + ")", 4)
+	return -1
+end if
+
+UPDATE c_Config_Object
+SET installed_version = :pl_version,
+	installed_version_status = :ls_installed_version_status,
+	installed_version_date = :ldt_installed_version_date
+WHERE  config_object_id = :ps_config_object_id;
+if not tf_check() then return -1
+
+// If multiple concurrent installs are not allowed then clear the installed_version of all the other config objects
+if li_concurrent_install_flag = 0 then
+	UPDATE c_Config_Object
+	SET installed_version = NULL,
+		installed_version_status = NULL,
+		installed_version_date = NULL
+	WHERE  config_object_id <> :ps_config_object_id
+	AND installed_version IS NOT NULL;
+	if not tf_check() then return -1
+end if
+
+return 1
+
+
+end function
+

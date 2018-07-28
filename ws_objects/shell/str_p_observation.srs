@@ -1,0 +1,23 @@
+HA$PBExportHeader$str_p_observation.srs
+global type str_p_observation from structure
+	string		cpr_id
+	long		treatment_id
+	long		observation_sequence
+	string		observation_id
+	long		encounter_id
+	long		attachment_id
+	datetime		result_expected_date
+	string		observation_tag
+	string		abnormal_flag
+	integer		severity
+	string		composite_flag
+	long		parent_observation_sequence
+	long		stage
+	string		observed_by
+	datetime		created
+	string		created_by
+	long		result_count
+	str_p_observation_result		results[]
+	str_p_observations		child_observations
+end type
+

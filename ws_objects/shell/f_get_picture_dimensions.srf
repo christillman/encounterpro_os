@@ -1,0 +1,46 @@
+HA$PBExportHeader$f_get_picture_dimensions.srf
+global type f_get_picture_dimensions from function_object
+end type
+
+forward prototypes
+global subroutine f_get_picture_dimensions (string ps_picture, ref long pl_inches_x, ref long pl_inches_y)
+end prototypes
+
+global subroutine f_get_picture_dimensions (string ps_picture, ref long pl_inches_x, ref long pl_inches_y);
+// Returns the width and height of the image in 1000ths of an inch
+//
+
+oleobject lo_image
+integer li_sts
+long ll_screen_resolution_x
+long ll_screen_resolution_y
+long ll_pixels_x
+long ll_pixels_y
+long ll_hresolution
+long ll_vresolution
+
+ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
+ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+
+lo_image = CREATE oleobject
+li_sts = lo_image.connecttonewobject("EncounterPRO.OS.ImageManipulation")
+if li_sts <> 0 then
+	messagebox("Error", string(li_sts))
+	return
+end if
+
+lo_image.GetImageInfo(ps_picture, ref ll_pixels_x, ref ll_pixels_y, ref ll_hresolution, ref ll_vresolution)
+
+lo_image.disconnectobject( )
+DESTROY lo_image
+
+pl_inches_x = (1000 * ll_pixels_x) / ll_screen_resolution_x
+pl_inches_y = (1000 * ll_pixels_y) / ll_screen_resolution_y
+
+return
+
+
+
+
+end subroutine
+

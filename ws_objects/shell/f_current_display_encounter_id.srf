@@ -1,0 +1,20 @@
+HA$PBExportHeader$f_current_display_encounter_id.srf
+global type f_current_display_encounter_id from function_object
+end type
+
+forward prototypes
+global function long f_current_display_encounter_id ()
+end prototypes
+
+global function long f_current_display_encounter_id ();long ll_encounter_id
+
+if isnull(current_patient) or isnull(current_display_encounter) then
+	setnull(ll_encounter_id)
+else
+	ll_encounter_id = current_display_encounter.encounter_id
+end if
+
+return ll_encounter_id
+
+end function
+

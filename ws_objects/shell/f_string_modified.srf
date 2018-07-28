@@ -1,0 +1,21 @@
+HA$PBExportHeader$f_string_modified.srf
+global type f_string_modified from function_object
+end type
+
+forward prototypes
+global function boolean f_string_modified (string ps_string1, string ps_string2)
+end prototypes
+
+global function boolean f_string_modified (string ps_string1, string ps_string2);
+if isnull(ps_string1) and isnull(ps_string2) then return false
+
+if isnull(ps_string1) and not isnull(ps_string2) then return true
+
+if not isnull(ps_string1) and isnull(ps_string2) then return true
+
+if ps_string1 = ps_string2 then return false
+
+return true
+
+end function
+

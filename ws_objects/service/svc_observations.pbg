@@ -1,0 +1,48 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_observations.pbl" "";
+@end;
+@begin Objects
+ "service\\u_tabpage_history_parents.sru" "service\\svc_observations.pbl";
+ "service\\u_tabpage_history_parents_patient.sru" "service\\svc_observations.pbl";
+ "service\\w_observation_result_pick.srw" "service\\svc_observations.pbl";
+ "service\\w_history_questionnaire.srw" "service\\svc_observations.pbl";
+ "service\\w_freeform_history.srw" "service\\svc_observations.pbl";
+ "service\\u_tabpage_history_parents_encounter.sru" "service\\svc_observations.pbl";
+ "service\\u_tab_history_parents.sru" "service\\svc_observations.pbl";
+ "service\\w_svc_history_display.srw" "service\\svc_observations.pbl";
+ "service\\w_svc_history_yesno.srw" "service\\svc_observations.pbl";
+ "service\\dw_vitals.srd" "service\\svc_observations.pbl";
+ "service\\w_do_vitals.srw" "service\\svc_observations.pbl";
+ "service\\u_component_service_freeform_history.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_edit_trt_results.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_obs_attachment.sru" "service\\svc_observations.pbl";
+ "service\\u_dw_vitals.sru" "service\\svc_observations.pbl";
+ "service\\dw_physical_exam.srd" "service\\svc_observations.pbl";
+ "service\\w_physical_exam.srw" "service\\svc_observations.pbl";
+ "service\\u_component_service_history.sru" "service\\svc_observations.pbl";
+ "service\\u_standard_exams.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_observation_comment.sru" "service\\svc_observations.pbl";
+ "service\\u_dw_observations_pick_results.sru" "service\\svc_observations.pbl";
+ "service\\u_results_by_treatment_atchments.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_observation_grid.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_vitals.sru" "service\\svc_observations.pbl";
+ "service\\w_observation_comment.srw" "service\\svc_observations.pbl";
+ "service\\u_component_service_physical.sru" "service\\svc_observations.pbl";
+ "service\\w_observation_comment_with_list.srw" "service\\svc_observations.pbl";
+ "service\\dw_sp_get_treatment_observed_by.srd" "service\\svc_observations.pbl";
+ "service\\u_component_service_history_display.sru" "service\\svc_observations.pbl";
+ "service\\u_st_funtional_level.sru" "service\\svc_observations.pbl";
+ "service\\u_component_service_external_source.sru" "service\\svc_observations.pbl";
+ "service\\u_dw_observation_grid.sru" "service\\svc_observations.pbl";
+ "service\\w_punctuation_control.srw" "service\\svc_observations.pbl";
+ "service\\u_component_service_history_yesno.sru" "service\\svc_observations.pbl";
+ "service\\w_observation_grid.srw" "service\\svc_observations.pbl";
+ "service\\u_tabpage_history_parents_treatments.sru" "service\\svc_observations.pbl";
+ "service\\dw_history_parents_treatments.srd" "service\\svc_observations.pbl";
+ "service\\dw_treatment_observed_by.srd" "service\\svc_observations.pbl";
+ "service\\w_svc_results_by_treatment_display.srw" "service\\svc_observations.pbl";
+ "service\\w_svc_external_source.srw" "service\\svc_observations.pbl";
+ "service\\u_dw_parent_observation_list.sru" "service\\svc_observations.pbl";
+ "service\\dw_previous_exams.srd" "service\\svc_observations.pbl";
+@end;

@@ -1,0 +1,44 @@
+HA$PBExportHeader$f_modify_patient.srf
+global type f_modify_patient from function_object
+end type
+
+forward prototypes
+global function integer f_modify_patient (string ps_cpr_id, string ps_patient_field, string ps_new_value)
+end prototypes
+
+global function integer f_modify_patient (string ps_cpr_id, string ps_patient_field, string ps_new_value);integer li_sts
+string ls_progress_type
+long ll_attachment_id
+datetime ldt_progress_date_time
+long ll_risk_level
+long ll_object_key
+long ll_patient_workplan_item_id
+
+setnull(ll_object_key)
+setnull(ll_attachment_id)
+setnull(ldt_progress_date_time)
+setnull(ll_risk_level)
+setnull(ll_patient_workplan_item_id)
+
+ls_progress_type = "Modify"
+
+li_sts = f_set_progress(ps_cpr_id, &
+								"Patient", &
+								ll_object_key, &
+								ls_progress_type, &
+								ps_patient_field, &
+								ps_new_value, &
+								ldt_progress_date_time, &
+								ll_risk_level, &
+								ll_attachment_id, &
+								ll_patient_workplan_item_id)
+if li_sts < 0 then return -1
+
+
+return 1
+
+
+
+
+end function
+

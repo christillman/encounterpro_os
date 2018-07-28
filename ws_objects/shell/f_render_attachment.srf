@@ -1,0 +1,23 @@
+HA$PBExportHeader$f_render_attachment.srf
+global type f_render_attachment from function_object
+end type
+
+forward prototypes
+global function integer f_render_attachment (long pl_attachment_id, string ps_file_type, ref string ps_file, integer pi_width, integer pi_height)
+end prototypes
+
+global function integer f_render_attachment (long pl_attachment_id, string ps_file_type, ref string ps_file, integer pi_width, integer pi_height);u_component_attachment luo_attachment
+integer li_sts
+
+li_sts = current_patient.attachments.attachment(luo_attachment, pl_attachment_id)
+if li_sts <= 0 then return -1
+
+luo_attachment.render(ps_file_type, ps_file, pi_width, pi_height)
+
+component_manager.destroy_component(luo_attachment)
+
+return 1
+
+
+end function
+

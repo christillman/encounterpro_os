@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_medication.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_medication.sru" "service\\svc_medication.pbl";
+ "service\\w_do_medication.srw" "service\\svc_medication.pbl";
+@end;

@@ -1,0 +1,4 @@
+﻿CREATE NONCLUSTERED INDEX [idx_pt_wp_Item_ID_and_Attribute]
+    ON [dbo].[p_Patient_WP_Item_Attribute]([patient_workplan_item_id] ASC, [attribute] ASC) WITH (FILLFACTOR = 85, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = ON, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF, ONLINE = OFF, MAXDOP = 0)
+    ON [PRIMARY];
+

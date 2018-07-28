@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_exam_default_result.srs
+global type str_exam_default_result from structure
+	long		exam_sequence
+	long		branch_id
+	string		observation_id
+	integer		result_sequence
+	string		location
+	string		user_id
+	string		result_value
+	string		result_unit
+end type
+

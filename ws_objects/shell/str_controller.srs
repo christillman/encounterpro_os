@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_controller.srs
+global type str_controller from structure
+	string		config_object_id
+	long		hotspot_count
+	str_controller_hotspot		hotspot[]
+end type
+

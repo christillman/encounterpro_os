@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_get_officemed.pbl" "";
+@end;
+@begin Objects
+ "service\\u_component_service_get_officemed.sru" "service\\svc_get_officemed.pbl";
+ "service\\w_office_drug_treatment.srw" "service\\svc_get_officemed.pbl";
+@end;

@@ -1,0 +1,82 @@
+HA$PBExportHeader$f_save_controller_config_object.srf
+global type f_save_controller_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_save_controller_config_object (str_controller pstr_controller)
+end prototypes
+
+global function integer f_save_controller_config_object (str_controller pstr_controller);integer li_sts
+string ls_context_object
+str_config_object_info lstr_config_object
+u_ds_data luo_mappings
+u_ds_data luo_attributes
+string ls_current_status
+long i
+long j
+string ls_value
+string ls_long_value
+long ll_row
+string ls_service_id
+u_ds_data luo_controller_hotspots
+ 
+// We need to already have a config_object_id in order to save it.  The config search screen will create the config_object_id before the user ever gets a chance to edit it
+if isnull(pstr_controller.config_object_id) or trim(pstr_controller.config_object_id) = "" then
+	log.log(this, "f_save_controller_config_object()", "No config_object_id", 4)
+	return -1
+end if
+
+li_sts = f_get_config_object_info(pstr_controller.config_object_id, lstr_config_object)
+if li_sts <= 0 then
+	log.log(this, "f_save_controller_config_object()", "Error getting config object info(" + pstr_controller.config_object_id + ")", 4)
+	return -1
+end if
+
+
+// See if the c_controller record exists yet
+SELECT status
+INTO :ls_current_status
+FROM dbo.c_controller
+WHERE config_object_id = :pstr_controller.config_object_id;
+if not tf_check() then return -1
+
+tf_begin_transaction(this, "controller Config Object Save")
+
+
+// Delete the existing hotspots
+DELETE h
+FROM dbo.c_Controller_Hotspots h
+WHERE config_object_id = :pstr_controller.config_object_id;
+if not tf_check() then
+	tf_rollback()
+	return -1
+end if
+
+luo_controller_hotspots = CREATE u_ds_data
+luo_controller_hotspots.set_dataobject("dw_controller_hotspots")
+
+for i = 1 to pstr_controller.hotspot_count
+	ll_row = luo_controller_hotspots.insertrow(0)
+	luo_controller_hotspots.object.config_object_id[ll_row] = pstr_controller.config_object_id
+	luo_controller_hotspots.object.context_object[ll_row] = pstr_controller.hotspot[i].context_object
+	luo_controller_hotspots.object.hotspot_name[ll_row] = pstr_controller.hotspot[i].hotspot_name
+	luo_controller_hotspots.object.description[ll_row] = pstr_controller.hotspot[i].description
+	luo_controller_hotspots.object.status[ll_row] = pstr_controller.hotspot[i].status
+	luo_controller_hotspots.object.created_by[ll_row] = current_scribe.user_id
+	luo_controller_hotspots.object.menu_config_object_id[ll_row] = pstr_controller.hotspot[i].menu_config_object_id
+next
+
+li_sts = luo_controller_hotspots.update()
+if li_sts <= 0 then
+	tf_rollback()
+	return -1
+end if
+
+tf_commit_transaction()
+
+DESTROY luo_controller_hotspots
+
+return 1
+
+end function
+

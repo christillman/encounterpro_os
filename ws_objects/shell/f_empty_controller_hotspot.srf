@@ -1,0 +1,23 @@
+HA$PBExportHeader$f_empty_controller_hotspot.srf
+global type f_empty_controller_hotspot from function_object
+end type
+
+forward prototypes
+global function str_controller_hotspot f_empty_controller_hotspot ()
+end prototypes
+
+global function str_controller_hotspot f_empty_controller_hotspot ();str_controller_hotspot lstr_hotspot
+	
+setnull(lstr_hotspot.hotspot_id)
+setnull(lstr_hotspot.context_object)
+setnull(lstr_hotspot.hotspot_name)
+setnull(lstr_hotspot.description)
+setnull(lstr_hotspot.menu_config_object_id)
+setnull(lstr_hotspot.status)
+setnull(lstr_hotspot.created)
+setnull(lstr_hotspot.created_by)
+
+return lstr_hotspot
+
+end function
+

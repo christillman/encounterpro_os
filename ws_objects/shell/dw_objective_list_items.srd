@@ -1,0 +1,18 @@
+HA$PBExportHeader$dw_objective_list_items.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=4 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(24) update=yes updatewhereclause=yes name=observation_id dbname="c_Observation_Tree.child_observation_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=location dbname="c_Observation_Tree.location" )
+ column=(type=long update=yes updatewhereclause=yes name=result_sequence dbname="c_Observation_Tree.result_sequence" )
+ column=(type=long update=yes updatewhereclause=yes name=result_sequence_2 dbname="c_Observation_Tree.result_sequence_2" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="c_Observation_Tree.sort_sequence" )
+ column=(type=long updatewhereclause=yes key=yes identity=yes name=branch_id dbname="c_Observation_Tree.branch_id" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Observation_Tree~" )  TABLE(NAME=~"c_Observation~" ) COLUMN(NAME=~"c_Observation_Tree.child_observation_id~") COLUMN(NAME=~"c_Observation_Tree.location~") COLUMN(NAME=~"c_Observation_Tree.result_sequence~") COLUMN(NAME=~"c_Observation_Tree.result_sequence_2~") COLUMN(NAME=~"c_Observation_Tree.sort_sequence~") COLUMN(NAME=~"c_Observation_Tree.branch_id~") COMPUTE(NAME=~"COALESCE(c_Observation_Tree.description , c_Observation.description) as description~") COMPUTE(NAME=~"selected_flag = 0~")    JOIN (LEFT=~"c_Observation_Tree.child_observation_id~"    OP =~"=~"RIGHT=~"c_Observation.observation_id~" )WHERE(    EXP1 =~"( ( c_Observation_Tree.parent_observation_id~"   OP =~"=~"    EXP2 =~":observation_id ) )~" ) ) ARG(NAME = ~"observation_id~" TYPE = string) " update="c_Observation_Tree" updatewhere=1 updatekeyinplace=no arguments=(("observation_id", string))  sort="sort_sequence A description A " )
+column(band=detail id=7 alignment="0" tabsequence=0 border="0" color="0" x="9" y="8" height="64" width="869"  name=description  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

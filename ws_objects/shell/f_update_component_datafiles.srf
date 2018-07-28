@@ -1,0 +1,166 @@
+HA$PBExportHeader$f_update_component_datafiles.srf
+global type f_update_component_datafiles from function_object
+end type
+
+forward prototypes
+global function integer f_update_component_datafiles (u_xml_document po_xml, str_patient_materials pstr_patient_materials, string ps_config_object_id, string ps_component_id)
+end prototypes
+
+global function integer f_update_component_datafiles (u_xml_document po_xml, str_patient_materials pstr_patient_materials, string ps_config_object_id, string ps_component_id);PBDOM_ELEMENT lo_root
+PBDOM_ELEMENT lo_elem[]
+PBDOM_ELEMENT lo_elem2[]
+string ls_root
+long ll_count
+long i
+string ls_tag
+//string ls_report_id
+string ls_value
+long ll_idx
+long ll_material_id
+integer li_sts
+string ls_material_id
+str_patient_material lstr_patient_material
+
+TRY
+	lo_root = po_xml.XML_Document.GetRootElement()
+	ls_root = lo_root.getname()
+	
+	lo_root.GetChildElements(ref lo_elem)
+	ll_count = UpperBound(lo_elem)
+	
+CATCH (pbdom_exception lo_error)
+	log.log(this, "xx_configure_document()", "Error - " + lo_error.text, 4)
+	return -1
+END TRY
+
+if isnull(ls_root) or lower(ls_root) <> lower("JMJComponentData") then
+	log.log(this, "xx_configure_document()", "Error - Document root is not 'JMJComponentData'", 4)
+	return -1
+end if
+
+for i = 1 to ll_count
+	ls_tag = lo_elem[i].getname()
+	if lower(ls_tag) = "datafile" then
+
+
+
+
+
+		TRY
+			lo_elem[i].GetChildElements(ref lo_elem2)
+			ll_count = UpperBound(lo_elem2)
+		CATCH (pbdom_exception lo_error2)
+			log.log(this, "update_datafile()", "Error - " + lo_error2.text, 4)
+			return -1
+		END TRY
+		
+		for i = 1 to ll_count
+			ls_tag = lo_elem2[i].getname()
+			ls_value = lo_elem2[i].gettexttrim( )
+			
+			CHOOSE CASE upper(ls_tag)
+				CASE "ID"
+					lstr_patient_material.id = ls_value
+				CASE "VERSION"
+					if isnumber(ls_value) then
+						lstr_patient_material.version = long(ls_value)
+					end if
+				CASE "TITLE"
+					lstr_patient_material.title = ls_value
+				CASE "ATTRIBUTE"
+					lstr_patient_material.attribute = ls_value
+				CASE "CATEGORY"
+					lstr_patient_material.category_description = ls_value
+				CASE "FILENAME"
+					lstr_patient_material.filename = ls_value
+				CASE "FILETYPE"
+					lstr_patient_material.extension = ls_value
+				CASE "MATERIALDATA"
+					// Convert the hexbinary attachment into a blob
+					TRY
+						lstr_patient_material.material_object = common_thread.eprolibnet4.converthextobinary(ls_value)
+					CATCH (throwable lt_error)
+						log.log(this, "update_datafile()", "Error calling hex to binary conversion (" + lt_error.text + ")", 4)
+						return -1
+					END TRY
+				CASE "MATERIALURL"
+					lstr_patient_material.url = ls_value
+				CASE "CREATED"
+				CASE "OWNERID"
+					if isnumber(ls_value) then
+						lstr_patient_material.owner_id = long(ls_value)
+					end if
+			END CHOOSE
+		next
+		
+		// Make sure we have an attribute
+		if isnull(lstr_patient_material.attribute) or trim(lstr_patient_material.attribute) = "" then return 0
+		
+		// Now see if we have this file already
+		ll_idx = 0
+		for i = 1 to pstr_patient_materials.material_count
+			if lower(pstr_patient_materials.material[i].attribute) = lower(lstr_patient_material.attribute) then
+				ll_idx = i
+				exit
+			end if
+		next
+		
+		if ll_idx > 0 then
+			// See if the material changed
+			if len(pstr_patient_materials.material[ll_idx].material_object) > 0 then
+				// if this was a file then see if the content changed
+				if lstr_patient_material.material_object = pstr_patient_materials.material[ll_idx].material_object then
+					// Material exists and hasn't changed
+					return 0
+				else
+					// Material exists and has changed
+					li_sts = f_update_material(pstr_patient_materials.material[ll_idx])
+					if li_sts <= 0 then return -1
+				end if
+			else
+				// if this was a URL then see if the URL changed
+				if lstr_patient_material.url = pstr_patient_materials.material[ll_idx].url then
+					// Material exists and hasn't changed
+					return 0
+				else
+					// Material exists and has changed
+					li_sts = f_update_material(pstr_patient_materials.material[ll_idx])
+					if li_sts <= 0 then return -1
+				end if
+			end if
+		else
+			// Material doesn't exist yet
+			setnull(lstr_patient_material.id)
+			
+			li_sts = f_update_material(lstr_patient_material)
+			if li_sts <= 0 then return -1
+			
+			if len(ps_config_object_id) > 0 then
+				ls_material_id = string(lstr_patient_material.material_id)
+		
+				// For now the report is the only config object we're working with, but to make this more generic this INSERT
+				// statement must be replaced with code that updates the appropriate config object attributes
+				INSERT INTO c_Report_Attribute (
+					report_id,
+					attribute,
+					value,
+					component_attribute,
+					component_id )
+				VALUES (
+					:ps_config_object_id,
+					:lstr_patient_material.attribute,
+					:ls_material_id,
+					'Y',
+					:ps_component_id);
+				if not tf_check() then return -1
+			end if
+		end if
+	end if
+next
+
+
+return 1
+
+
+end function
+

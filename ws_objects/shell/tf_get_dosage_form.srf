@@ -1,0 +1,23 @@
+HA$PBExportHeader$tf_get_dosage_form.srf
+global type tf_get_dosage_form from function_object
+end type
+
+forward prototypes
+global function integer tf_get_dosage_form (string ps_dosage_form, ref string ps_description)
+end prototypes
+
+global function integer tf_get_dosage_form (string ps_dosage_form, ref string ps_description);string ls_description
+
+
+SELECT description
+INTO :ls_description
+FROM c_Dosage_Form (NOLOCK)
+WHERE dosage_form = :ps_dosage_form;
+
+if not tf_check() then return -1
+
+ps_description = ls_description
+
+return 1
+end function
+

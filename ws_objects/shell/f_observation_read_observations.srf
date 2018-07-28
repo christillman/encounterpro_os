@@ -1,0 +1,143 @@
+HA$PBExportHeader$f_observation_read_observations.srf
+global type f_observation_read_observations from function_object
+end type
+
+forward prototypes
+global function integer f_observation_read_observations (u_component_observation po_observation, u_xml_document po_xml)
+end prototypes
+
+global function integer f_observation_read_observations (u_component_observation po_observation, u_xml_document po_xml);PBDOM_ELEMENT pbdom_root
+PBDOM_ELEMENT ldom_observations[]
+PBDOM_ELEMENT ldom_results[]
+integer li_sts
+string ls_root
+long i, j, k
+string ls_file
+blob lbl_xml_file
+boolean lb_success
+string ls_document_id
+PBDOM_ATTRIBUTE ldom_attributes[]
+int m
+string ls_result
+string ls_owner_key
+string ls_temp
+string ls_extension
+string ls_date
+string ls_time
+string ls_result_description
+long ll_count
+
+pbdom_root = po_xml.XML_Document.GetRootElement()
+
+ls_root = pbdom_root.GetName()
+
+if isnull(ls_root) or lower(ls_root) <> "observation" then return 0
+
+// This is an observation document so unwrap it into the observation structure array
+
+pbdom_root.GetChildElements(ref ldom_observations)
+ll_count = UpperBound(ldom_observations)
+
+for i = 1 to ll_count
+	po_observation.observation_count += 1
+	po_observation.observations[po_observation.observation_count].external_item_id = ldom_observations[i].getname()
+	po_observation.observations[po_observation.observation_count].observation_id = po_observation.internal_observation_id(po_observation.observations[po_observation.observation_count].external_item_id)
+	po_observation.observations[po_observation.observation_count].result_count = 0
+	po_observation.observations[po_observation.observation_count].attachment_list.attachment_count = 0
+	po_observation.observations[po_observation.observation_count].xml_results = ""
+	po_observation.observations[po_observation.observation_count].owner_id = po_observation.owner_id
+	po_observation.observations[po_observation.observation_count].description = po_observation.observations[po_observation.observation_count].external_item_id
+	
+	// Override the default values from the attributes
+	if ldom_observations[i].HasAttributes() then
+		ldom_observations[i].GetAttributes(ref ldom_attributes)
+		for k = 1 to UpperBound(ldom_attributes)
+			choose case lower(ldom_attributes[j].GetName())
+				case "description"
+					po_observation.observations[po_observation.observation_count].description = ldom_attributes[j].GetText()
+			end choose
+		next	
+	end if
+
+	
+	
+	ldom_observations[i].GetChildElements(ref ldom_results)
+	po_observation.observations[po_observation.observation_count].result_count = UpperBound(ldom_results)
+	
+	for j = 1 to po_observation.observations[po_observation.observation_count].result_count
+		// Set the default values for this result
+		
+		ls_result = ldom_results[j].GetName()
+		po_observation.observations[po_observation.observation_count].result[j].id_count = po_observation.get_mapped_results(po_observation.observations[po_observation.observation_count].external_item_id, &
+																				ls_result, &
+																				po_observation.observations[po_observation.observation_count].result[j].observation_id, &
+																				po_observation.observations[po_observation.observation_count].result[j].result_sequence)
+		po_observation.observations[po_observation.observation_count].result[j].result_value = ldom_results[j].GetText()
+		po_observation.observations[po_observation.observation_count].result[j].result_type = "PERFORM"
+		po_observation.observations[po_observation.observation_count].result[j].location = "NA"
+		setnull(po_observation.observations[po_observation.observation_count].result[j].result_unit)
+		po_observation.observations[po_observation.observation_count].result[j].print_result_flag = "Y"
+		po_observation.observations[po_observation.observation_count].result[j].abnormal_flag = "N"
+		setnull(po_observation.observations[po_observation.observation_count].result[j].abnormal_nature)
+		setnull(po_observation.observations[po_observation.observation_count].result[j].severity)
+		setnull(po_observation.observations[po_observation.observation_count].result[j].result_date_time)
+		setnull(po_observation.observations[po_observation.observation_count].result[j].observed_by)
+		setnull(ls_extension)
+		setnull(ls_result_description)
+		
+		// Override the default values from the attributes
+		if ldom_results[j].HasAttributes() then
+			ldom_results[j].GetAttributes(ref ldom_attributes)
+			for k = 1 to UpperBound(ldom_attributes)
+				choose case lower(ldom_attributes[j].GetName())
+					case "datetime"
+						ls_temp = ldom_attributes[j].GetText()
+						f_split_string(ls_temp, " ", ls_date, ls_time)
+						if isdate(ls_date) then
+							if istime(ls_time) then
+								po_observation.observations[po_observation.observation_count].result[j].result_date_time = datetime(date(ls_date), time(ls_time))
+							else
+								po_observation.observations[po_observation.observation_count].result[j].result_date_time = datetime(date(ls_date), time(""))
+							end if
+						end if
+					case "print_result_flag"
+						po_observation.observations[po_observation.observation_count].result[j].print_result_flag = ldom_attributes[j].GetText()
+					case "result_unit"
+						po_observation.observations[po_observation.observation_count].result[j].result_unit = ldom_attributes[j].GetText()
+					case "abnormal_flag"
+						po_observation.observations[po_observation.observation_count].result[j].abnormal_flag = ldom_attributes[j].GetText()
+					case "abnormal_nature"
+						po_observation.observations[po_observation.observation_count].result[j].abnormal_nature = ldom_attributes[j].GetText()
+					case "severity"
+						po_observation.observations[po_observation.observation_count].result[j].severity = integer(ldom_attributes[j].GetText())
+					case "observed_by"
+						po_observation.observations[po_observation.observation_count].result[j].observed_by = ldom_attributes[j].GetText()
+					case "location"
+						ls_temp = ldom_attributes[j].GetText()
+						po_observation.observations[po_observation.observation_count].result[j].location = po_observation.internal_location(po_observation.observations[po_observation.observation_count].external_item_id, ls_temp)
+					case "extension"
+						ls_extension = ldom_attributes[j].GetText()
+					case "description"
+						ls_result_description = ldom_attributes[j].GetText()
+				end choose
+			next	
+		end if
+		
+		// If the result has a value but no unit then assume TEXT as the unit
+		if len(po_observation.observations[po_observation.observation_count].result[j].result_value) > 0 and isnull(po_observation.observations[po_observation.observation_count].result[j].result_unit) then
+			po_observation.observations[po_observation.observation_count].result[j].result_unit = po_observation.internal_result_unit(po_observation.observations[po_observation.observation_count].external_item_id, &
+																							ls_result, &
+																							po_observation.observations[po_observation.observation_count].result[j].result_value)
+		end if
+		
+		
+		
+	next
+	
+next
+
+return 1
+
+
+end function
+

@@ -1,0 +1,18 @@
+HA$PBExportHeader$str_external_observation_result.srs
+global type str_external_observation_result from structure
+	long		id_count
+	string		observation_id[]
+	integer		result_sequence[]
+	string		result_type
+	string		location
+	datetime		result_date_time
+	string		result_value
+	string		result_unit
+	string		abnormal_flag
+	string		abnormal_nature
+	integer		severity
+	string		observed_by
+	string		print_result_flag
+	str_external_observation_attachment_list		attachment_list
+end type
+

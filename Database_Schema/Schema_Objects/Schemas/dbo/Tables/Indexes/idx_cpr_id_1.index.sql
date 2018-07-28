@@ -1,0 +1,3 @@
+﻿CREATE CLUSTERED INDEX [idx_cpr_id]
+    ON [dbo].[p_Attachment_Progress]([cpr_id] ASC, [attachment_id] ASC, [progress_type] ASC) WITH (FILLFACTOR = 70, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = ON, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF, ONLINE = OFF, MAXDOP = 0);
+

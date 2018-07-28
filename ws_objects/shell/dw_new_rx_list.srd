@@ -1,0 +1,13 @@
+HA$PBExportHeader$dw_new_rx_list.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=128 color="553648127"  height.autosize=yes)
+table(column=(type=char(80) updatewhereclause=no name=rx_sig dbname="rx_sig" )
+ column=(type=number updatewhereclause=no name=treatment_id dbname="treatment_id" )
+ column=(type=long updatewhereclause=no name=signed dbname="signed" initial="0" )
+ )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="48" height="76" width="1550" format="[general]"  name=rx_sig height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.autohscroll=yes edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

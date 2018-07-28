@@ -1,0 +1,40 @@
+HA$PBExportHeader$f_appointment_string.srf
+global type f_appointment_string from function_object
+end type
+
+forward prototypes
+global function string f_appointment_string (datetime pdt_appointment_date_time, real pr_duration_amount, string ps_duration_unit, string ps_duration_prn)
+end prototypes
+
+global function string f_appointment_string (datetime pdt_appointment_date_time, real pr_duration_amount, string ps_duration_unit, string ps_duration_prn);string ls_duration
+
+ls_duration = ""
+
+if not isnull(pdt_appointment_date_time) then
+	ls_duration = string(pdt_appointment_date_time)
+else
+	if pr_duration_amount > 0 and not isnull(ps_duration_unit) then
+		ls_duration = "in " + f_pretty_amount_unit(pr_duration_amount, ps_duration_unit)
+	elseif pr_duration_amount < 0 then
+		CHOOSE CASE pr_duration_amount
+			CASE -1
+				ls_duration = "indefinite"
+			CASE -2
+				ls_duration = "first available appointment"
+			CASE -3
+				ls_duration = "asap"
+			CASE -99
+				ls_duration = "emergency"
+		END CHOOSE
+	end if
+	
+	if len(ps_duration_prn) > 0 then
+		if ls_duration <> "" then ls_duration += " "
+		ls_duration += "if " + ps_duration_prn
+	end if
+end if
+
+return lower(ls_duration)
+
+end function
+

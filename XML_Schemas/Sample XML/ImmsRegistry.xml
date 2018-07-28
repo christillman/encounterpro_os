@@ -1,0 +1,29 @@
+<ImmsRegistry>
+  <Patient>
+    <cpr_id>X123</cpr_id>
+    <last_name>Smith</last_name>
+    <first_name>Andrew</first_name>
+    <middle_name />
+    <date_of_birth>2/16/1988 00:00:00</date_of_birth>
+    <sex>M</sex>
+    <phone_number>(307)555-1258</phone_number>
+    <ssn />
+    <address_line_1 />
+    <address_line_2 />
+    <city />
+    <state />
+    <zip />
+    <treatment>
+      <treatmenttype>IMMUNIZATION</treatmenttype>
+      <vaccinecode />
+      <vaccinename>Menactra Menningococcal Vaccination</vaccinename>
+      <admindate>9/22/2006 11:21:31</admindate>
+      <doseamount />
+      <doseunit />
+      <lotnumber>U1812AA</lotnumber>
+      <manufacturer>AVENTISPASTEUR</manufacturer>
+      <administer_id>1KIRSTEN_SHOTNURSE_R</administer_id>
+      <administer_name>Kirsten Shotnurse, RN</administer_name>
+    </treatment>
+  </Patient>
+</ImmsRegistry>

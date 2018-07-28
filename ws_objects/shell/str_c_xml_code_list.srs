@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_c_xml_code_list.srs
+global type str_c_xml_code_list from structure
+	long		code_count
+	str_c_xml_code		code[]
+end type
+

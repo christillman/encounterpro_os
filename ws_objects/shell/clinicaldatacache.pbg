@@ -1,0 +1,26 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "EncounterPRO Shell\\clinicaldatacache.pbl" "";
+@end;
+@begin Objects
+ "EncounterPRO Shell\\f_edas_interpret_nested_address.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_set_property_display_value.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\u_ds_clinical_data_cache.sru" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\u_clinical_data_cache.sru" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\str_edas_which_object.srs" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\dw_epro_object_data.srd" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\u_epro_object_data_cache.sru" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_parse_address.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\str_edas_context.srs" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\dw_epro_object_table_columns.srd" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\dw_fn_epro_object_properties.srd" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\str_epro_object_property.srs" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_example_object.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\u_ds_epro_object_cache.sru" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\str_epro_object_collection.srs" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\str_epro_object_definition.srs" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\dw_fn_epro_properties.srd" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_parse_which_object.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_interpret_address.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+ "EncounterPRO Shell\\f_edas_lookup_property_value.srf" "EncounterPRO Shell\\clinicaldatacache.pbl";
+@end;

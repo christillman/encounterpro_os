@@ -1,0 +1,61 @@
+HA$PBExportHeader$f_set_background_color.srf
+global type f_set_background_color from function_object
+end type
+
+forward prototypes
+global subroutine f_set_background_color (userobject puo_object)
+end prototypes
+
+global subroutine f_set_background_color (userobject puo_object);powerobject lo_x
+statictext lo_statictext
+long ll_windowbackcolor
+tab lo_tab
+datawindow lo_dw
+long ll_dw_backcolor
+long i
+
+// Only set it if it's changed
+if puo_object.backcolor = color_background then return
+
+ll_windowbackcolor = puo_object.backcolor
+puo_object.backcolor = color_background
+
+for i = 1 to upperbound(puo_object.control)
+	CHOOSE CASE puo_object.control[i].typeof()
+		CASE statictext!
+			lo_statictext = puo_object.control[i]
+			if lo_statictext.backcolor = ll_windowbackcolor then
+				lo_statictext.backcolor = color_background
+			end if
+		CASE tab!
+			lo_tab = puo_object.control[i]
+			if lo_tab.backcolor = ll_windowbackcolor then
+				lo_tab.backcolor = color_background
+			end if
+		CASE datawindow!
+			lo_dw = puo_object.control[i]
+			ll_dw_backcolor = long(lo_dw.object.datawindow.header.color)
+			if ll_dw_backcolor = ll_windowbackcolor then
+				lo_dw.object.datawindow.header.color = color_background
+			end if
+			ll_dw_backcolor = long(lo_dw.object.datawindow.detail.color)
+			if ll_dw_backcolor = ll_windowbackcolor then
+				lo_dw.object.datawindow.detail.color = color_background
+			end if
+			ll_dw_backcolor = long(lo_dw.object.datawindow.footer.color)
+			if ll_dw_backcolor = ll_windowbackcolor then
+				lo_dw.object.datawindow.footer.color = color_background
+			end if
+			ll_dw_backcolor = long(lo_dw.object.datawindow.color)
+			if ll_dw_backcolor = ll_windowbackcolor then
+				lo_dw.object.datawindow.color = color_background
+			end if
+	END CHOOSE
+next
+
+
+return
+
+
+end subroutine
+

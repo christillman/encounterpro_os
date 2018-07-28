@@ -1,0 +1,8 @@
+Save Format v3.0(19990112)
+@begin Libraries
+ "service\\svc_chart_encounter.pbl" "";
+@end;
+@begin Objects
+ "service\\w_new_past_encounter.srw" "service\\svc_chart_encounter.pbl";
+ "service\\u_component_service_past_encounter.sru" "service\\svc_chart_encounter.pbl";
+@end;

@@ -1,0 +1,14 @@
+HA$PBExportHeader$dw_child_treatments_of_types_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=24 color="553648127" )
+detail(height=60 color="553648127" )
+table(column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=long updatewhereclause=yes identity=yes name=treatment_id dbname="p_Treatment_Item.treatment_id" )
+ column=(type=char(80) updatewhereclause=yes name=treatment_description dbname="p_Treatment_Item.treatment_description" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"p_Treatment_Item~" ALIAS=~"p_Treatment_Item_a~" )  TABLE(NAME=~"p_Treatment_Item~" ALIAS=~"p_Treatment_Item_b~" ) COMPUTE(NAME=~"selected_flag=0~") COLUMN(NAME=~"p_Treatment_Item_b.treatment_id~") COLUMN(NAME=~"p_Treatment_Item_b.treatment_description~")    JOIN (LEFT=~"p_Treatment_Item_a.cpr_id~"    OP =~"=~"RIGHT=~"p_Treatment_Item_b.cpr_id~" )    JOIN (LEFT=~"p_Treatment_Item_b.parent_treatment_id~"    OP =~"=~"RIGHT=~"p_Treatment_Item_a.treatment_id~" )WHERE(    EXP1 =~"p_Treatment_Item_a.cpr_id~"   OP =~"=~"    EXP2 =~":cpr_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Treatment_Item_a.open_encounter_id~"   OP =~"=~"    EXP2 =~":encounter_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Treatment_Item_a.treatment_type~"   OP =~"in~"    EXP2 =~":treatment_types~" ) ) ARG(NAME = ~"cpr_id~" TYPE = string)  ARG(NAME = ~"encounter_id~" TYPE = number)  ARG(NAME = ~"treatment_types~" TYPE = stringlist) " arguments=(("cpr_id", string),("encounter_id", number),("treatment_types", stringlist))  sort="treatment_id A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="233" y="4" height="56" width="640" format="[general]"  name=treatment_description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+text(band=footer alignment="0" text="i i i"border="0" color="0" x="754" y="0" height="64" width="87"  name=more_rows  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+text(band=footer alignment="0" text=""border="0" color="0" x="741" y="28" height="48" width="119"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

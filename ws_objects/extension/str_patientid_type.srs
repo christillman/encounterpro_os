@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_patientid_type.srs
+global type str_patientid_type from structure
+	long		OwnerID
+	string		PatientIDDomain
+	string		PatientID
+end type
+

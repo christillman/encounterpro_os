@@ -1,0 +1,9 @@
+HA$PBExportHeader$str_property_suffix.srs
+global type str_property_suffix from structure
+	string		datatype
+	boolean		display_code
+	string		format_string
+	long		lookup_owner_id
+	string		lookup_code_domain
+end type
+

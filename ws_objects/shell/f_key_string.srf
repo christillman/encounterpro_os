@@ -1,0 +1,25 @@
+HA$PBExportHeader$f_key_string.srf
+global type f_key_string from function_object
+end type
+
+forward prototypes
+global function string f_key_string (string ps_key)
+end prototypes
+
+global function string f_key_string (string ps_key);string ls_key
+integer i
+string ls_char
+
+ls_key = upper(ps_key)
+
+if len(ls_key) > 24 then ls_key = left(ls_key, 24)
+for i = 1 to len(ls_key)
+	ls_char = mid(ls_key, i, 1)
+	if ls_char < "A" or ls_char > "Z" then ls_key = replace(ls_key, i, 1, "_")
+next
+
+return ls_key
+
+
+end function
+

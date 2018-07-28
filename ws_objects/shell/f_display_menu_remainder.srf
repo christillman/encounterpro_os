@@ -1,0 +1,72 @@
+HA$PBExportHeader$f_display_menu_remainder.srf
+global type f_display_menu_remainder from function_object
+end type
+
+forward prototypes
+global function integer f_display_menu_remainder (long pl_menu_id, boolean pb_auto_singleton, integer pi_item_number, str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_display_menu_remainder (long pl_menu_id, boolean pb_auto_singleton, integer pi_item_number, str_attributes pstr_attributes);str_popup popup
+str_popup_return popup_return
+str_menu lstr_menu
+integer button_pressed
+integer li_sts
+window lw_pop_buttons
+integer i
+integer lia_button_menu_item[]
+
+lstr_menu = datalist.get_menu(pl_menu_id)
+
+if isnull(pi_item_number) or pi_item_number <= 0 then pi_item_number = 0
+
+popup.button_count = 0
+
+for i = 1 to lstr_menu.menu_item_count
+	// Skip if we're only showing the end of the menu.
+	if i < pi_item_number then continue
+	
+	popup.button_count += 1
+	popup.button_icons[popup.button_count] = lstr_menu.menu_item[i].button
+	popup.button_helps[popup.button_count] = lstr_menu.menu_item[i].button_help
+	popup.button_titles[popup.button_count] = lstr_menu.menu_item[i].button_title
+	lia_button_menu_item[popup.button_count] = i
+next
+
+
+if (popup.button_count = 1 and not pb_auto_singleton) or (popup.button_count > 1) or config_mode then
+	popup.button_count += 1
+	popup.button_icons[popup.button_count] = "button11.bmp"
+	popup.button_helps[popup.button_count] = "Cancel"
+	popup.button_titles[popup.button_count] = "Cancel"
+end if
+
+popup.button_titles_used = true
+
+
+if config_mode then
+	popup.item = string(lstr_menu.menu_id)
+	popup.title = lstr_menu.description
+	popup.title += " (" + string(lstr_menu.menu_id) + ")"
+	if pi_item_number > 1 then
+		popup.title += " #" + string(pi_item_number) + "+"
+	end if
+else
+	popup.title = ""
+end if
+
+if popup.button_count > 1 then
+	openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
+	button_pressed = message.doubleparm
+	if button_pressed < 1 or button_pressed >= popup.button_count then return 0
+elseif popup.button_count = 1 then
+	button_pressed = 1
+else
+	return 0
+end if
+
+li_sts = f_do_menu_item_with_attributes(lstr_menu.menu_id, lstr_menu.menu_item[lia_button_menu_item[button_pressed]].menu_item_id, pstr_attributes)
+
+return li_sts
+
+end function
+

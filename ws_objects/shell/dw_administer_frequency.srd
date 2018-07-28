@@ -1,0 +1,17 @@
+HA$PBExportHeader$dw_administer_frequency.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=100 color="553648127" )
+table(column=(type=char(12) update=yes updatewhereclause=yes key=yes name=administer_frequency dbname="c_Administration_Frequency.administer_frequency" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=description dbname="c_Administration_Frequency.description" )
+ column=(type=long update=yes updatewhereclause=yes name=selected_flag dbname="selected_flag" )
+ column=(type=char(95) updatewhereclause=yes name=display_desc dbname="display_desc" )
+ column=(type=char(8) updatewhereclause=yes name=status dbname="c_Administration_Frequency.status" )
+ column=(type=long update=yes updatewhereclause=yes name=frequency dbname="c_Administration_Frequency.frequency" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="sort_sequence" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Administration_Frequency~" ) COLUMN(NAME=~"c_Administration_Frequency.administer_frequency~") COLUMN(NAME=~"c_Administration_Frequency.description~") COMPUTE(NAME=~"selected_flag=0~") COMPUTE(NAME=~"display_desc=administer_frequency + ' - ' + description~") COLUMN(NAME=~"c_Administration_Frequency.status~") COLUMN(NAME=~"c_Administration_Frequency.frequency~") COMPUTE(NAME=~"sort_sequence=isnull(sort_sequence,9999)~")WHERE(    EXP1 =~"c_Administration_Frequency.status~"   OP =~"=~"    EXP2 =~"'OK'~" ) ) " update="c_Administration_Frequency" updatewhere=1 updatekeyinplace=no  sort="sort_sequence A display_desc A " )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="76" width="1435" format="[general]" html.valueishtml="0"  name=display_desc visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="0" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

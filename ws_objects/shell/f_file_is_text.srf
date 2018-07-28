@@ -1,0 +1,17 @@
+HA$PBExportHeader$f_file_is_text.srf
+global type f_file_is_text from function_object
+end type
+
+forward prototypes
+global function boolean f_file_is_text (string ps_extension)
+end prototypes
+
+global function boolean f_file_is_text (string ps_extension);
+CHOOSE CASE lower(ps_extension)
+	CASE "txt", "xml", "htm", "html", "csv"
+		return true
+	CASE ELSE
+		return false
+END CHOOSE
+end function
+

@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_id_list.srs
+global type str_id_list from structure
+	long		id_count
+	str_id_instance		id[]
+end type
+

@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_datawindow_mappings.srs
+global type str_datawindow_mappings from structure
+	long		mapping_count
+	str_datawindow_mapping		mapping[]
+end type
+

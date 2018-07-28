@@ -1,0 +1,22 @@
+HA$PBExportHeader$dw_allergy_assessment_reactive_drug_list.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="553648127"  height.autosize=yes)
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=assessment_id dbname="c_Allergy_Drug.assessment_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=drug_id dbname="c_Allergy_Drug.drug_id" )
+ column=(type=char(40) updatewhereclause=yes name=common_name dbname="c_Drug_Definition.common_name" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Allergy_Drug~" )  TABLE(NAME=~"c_Drug_Definition~" ) COLUMN(NAME=~"c_Allergy_Drug.assessment_id~") COLUMN(NAME=~"c_Allergy_Drug.drug_id~") COLUMN(NAME=~"c_Drug_Definition.common_name~")    JOIN (LEFT=~"c_Allergy_Drug.drug_id~"    OP =~"=~"RIGHT=~"c_Drug_Definition.drug_id~" )WHERE(    EXP1 =~"c_Allergy_Drug.assessment_id~"   OP =~"=~"    EXP2 =~":assessment_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Drug_Definition.status~"   OP =~"=~"    EXP2 =~"'OK'~" ) ) ARG(NAME = ~"assessment_id~" TYPE = string) " update="c_Allergy_Drug" updatewhere=0 updatekeyinplace=no arguments=(("assessment_id", string))  sort="common_name A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1577" format="[general]" html.valueishtml="0"  name=common_name visible="1" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

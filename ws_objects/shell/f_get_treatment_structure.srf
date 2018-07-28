@@ -1,0 +1,90 @@
+HA$PBExportHeader$f_get_treatment_structure.srf
+global type f_get_treatment_structure from function_object
+end type
+
+forward prototypes
+global function integer f_get_treatment_structure (string ps_cpr_id, long pl_treatment_id, ref str_treatment_description pstr_treatment)
+end prototypes
+
+global function integer f_get_treatment_structure (string ps_cpr_id, long pl_treatment_id, ref str_treatment_description pstr_treatment);string ls_description
+integer li_sts
+boolean lb_default_grant
+u_ds_data luo_data
+long ll_count
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_treatment_data_single")
+
+ll_count = luo_data.retrieve(ps_cpr_id, pl_treatment_id)
+if isnull(ll_count) or ll_count <= 0 then
+	log.log(this, "f_get_treatment_structure()", "Error getting treatment data (" + ps_cpr_id + ", " + string(pl_treatment_id) + ")", 4)
+	return -1
+end if
+
+pstr_treatment = f_empty_treatment()
+
+pstr_treatment.treatment_id = luo_data.object.treatment_id[1]
+pstr_treatment.treatment_type = luo_data.object.treatment_type[1]
+pstr_treatment.treatment_description = luo_data.object.treatment_description[1]
+pstr_treatment.begin_date = luo_data.object.begin_date[1]
+pstr_treatment.end_date = luo_data.object.end_date[1]
+pstr_treatment.treatment_status = luo_data.object.treatment_status[1]
+pstr_treatment.open_encounter_id = luo_data.object.open_encounter_id[1]
+pstr_treatment.close_encounter_id = luo_data.object.close_encounter_id[1]
+pstr_treatment.parent_treatment_id = luo_data.object.parent_treatment_id[1]
+pstr_treatment.observation_id = luo_data.object.observation_id[1]
+// Check for previous bug that set observation_id to empty string
+if trim(pstr_treatment.observation_id) = "" then setnull(pstr_treatment.observation_id)
+pstr_treatment.drug_id = luo_data.object.drug_id[1]
+pstr_treatment.package_id = luo_data.object.package_id[1]
+pstr_treatment.specialty_id = luo_data.object.specialty_id[1]
+pstr_treatment.procedure_id = luo_data.object.procedure_id[1]
+pstr_treatment.location = luo_data.object.location[1]
+pstr_treatment.ordered_by = luo_data.object.ordered_by[1]
+pstr_treatment.material_id = luo_data.object.material_id[1]
+pstr_treatment.treatment_mode = luo_data.object.treatment_mode[1]
+pstr_treatment.observation_type = luo_data.object.observation_type[1]
+pstr_treatment.created = luo_data.object.created[1]
+pstr_treatment.created_by = luo_data.object.created_by[1]
+
+
+pstr_treatment.dose_amount = luo_data.object.dose_amount[1]
+pstr_treatment.dose_unit = luo_data.object.dose_unit[1]
+pstr_treatment.duration_amount = luo_data.object.duration_amount[1]
+pstr_treatment.duration_unit = luo_data.object.duration_unit[1]
+pstr_treatment.duration_prn = luo_data.object.duration_prn[1]
+pstr_treatment.dispense_amount = luo_data.object.dispense_amount[1]
+pstr_treatment.office_dispense_amount = luo_data.object.office_dispense_amount[1]
+pstr_treatment.dispense_unit = luo_data.object.dispense_unit[1]
+pstr_treatment.administration_sequence = luo_data.object.administration_sequence[1]
+pstr_treatment.administer_frequency = luo_data.object.administer_frequency[1]
+pstr_treatment.refills = luo_data.object.refills[1]
+pstr_treatment.brand_name_required = luo_data.object.brand_name_required[1]
+pstr_treatment.maker_id = luo_data.object.maker_id[1]
+pstr_treatment.lot_number = luo_data.object.lot_number[1]
+pstr_treatment.expiration_date = luo_data.object.expiration_date[1]
+pstr_treatment.specimen_id = luo_data.object.specimen_id[1]
+
+
+//pstr_treatment.problem_count = get_treatment_assessments(pstr_treatment.treatment_id, pstr_treatment.problem_ids)
+
+// if the treatment description is 80 characters long then it may be more, so get the 
+// progress record if there is one
+if len(pstr_treatment.treatment_description) = 80 then
+	ls_description = f_get_progress_value(ps_cpr_id, &
+											"Treatment", &
+											pl_treatment_id, &
+											"Modify", &
+											"treatment_description")
+	if left(ls_description, 80) = pstr_treatment.treatment_description then
+		pstr_treatment.treatment_description = ls_description
+	end if
+end if
+
+
+return 1
+
+
+
+end function
+

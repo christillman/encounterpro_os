@@ -1,0 +1,94 @@
+HA$PBExportHeader$f_temp_file2.srf
+global type f_temp_file2 from function_object
+end type
+
+forward prototypes
+global function string f_temp_file2 (string ps_extension)
+global function string f_temp_file2 (string ps_extension, string ps_subdir)
+end prototypes
+
+global function string f_temp_file2 (string ps_extension);string ls_temp_file
+string ls_filename
+integer i
+
+if left(ps_extension, 1) = "." then
+	ps_extension = mid(ps_extension, 2)
+end if
+
+ls_filename = temp_path
+if right(ls_filename, 1) <> "\" then ls_filename += "\"
+
+ls_filename += "jmj_" + string(computer_id) + "_"
+
+if not isnull(current_patient) then
+	ls_filename += current_patient.cpr_id + "_"
+end if
+
+temp_file_count++
+
+ls_filename += "_" + string(datetime(today(), now()), "yymmddhhmmss")+"_"+String(temp_file_count)
+
+ls_temp_file = ls_filename + "." + ps_extension
+
+if fileexists(ls_temp_file) then
+	for i = 1 to 1000
+		ls_temp_file = ls_filename + "_" + string(i) + "." + ps_extension
+		if not fileexists(ls_temp_file) then exit
+	next
+	if i >= 1000 then setnull(ls_temp_file)
+end if
+
+return ls_temp_file
+
+
+end function
+
+global function string f_temp_file2 (string ps_extension, string ps_subdir);string ls_temp_file
+string ls_filename
+integer i
+
+if isnull(ps_extension) then
+	log.log(this, "f_temp_file2()", "Null file extension", 4)
+	return ps_extension
+end if
+
+if left(ps_extension, 1) = "." then
+	ps_extension = mid(ps_extension, 2)
+end if
+
+ls_filename = temp_path
+
+if len(ps_subdir) > 0 then
+	ls_filename += "\" + ps_subdir
+	if not directoryexists(ls_filename) then
+		createdirectory(ls_filename)
+	end if
+end if
+
+if right(ls_filename, 1) <> "\" then ls_filename += "\"
+
+ls_filename += "jmj_" + string(computer_id) + "_"
+
+if not isnull(current_patient) then
+	ls_filename += current_patient.cpr_id + "_"
+end if
+
+temp_file_count++
+
+ls_filename += "_" + string(datetime(today(), now()), "yymmddhhmmss")+"_"+String(temp_file_count)
+
+ls_temp_file = ls_filename + "." + ps_extension
+
+if fileexists(ls_temp_file) then
+	for i = 1 to 1000
+		ls_temp_file = ls_filename + "_" + string(i) + "." + ps_extension
+		if not fileexists(ls_temp_file) then exit
+	next
+	if i >= 1000 then setnull(ls_temp_file)
+end if
+
+return ls_temp_file
+
+
+end function
+

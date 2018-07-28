@@ -1,0 +1,16 @@
+HA$PBExportHeader$str_actor_type.srs
+global type str_actor_type from structure
+	str_id_instance		objectid[]
+	string		actorclass
+	string		actorcategory
+	str_person_type		person
+	str_organization_type		organization
+	str_informationsystem_type		informationsystem
+	str_address_type		address[]
+	str_communication_type		communication[]
+	string		name
+	long		actor_id
+	string		user_id
+	string		actorobjectid
+end type
+

@@ -1,0 +1,39 @@
+HA$PBExportHeader$f_datetime_add_seconds.srf
+global type f_datetime_add_seconds from function_object
+end type
+
+forward prototypes
+global function datetime f_datetime_add_seconds (datetime pdt_datetime, long pl_seconds)
+end prototypes
+
+global function datetime f_datetime_add_seconds (datetime pdt_datetime, long pl_seconds);date ld_date
+time lt_time
+time lt_time2
+long ll_days
+long ll_seconds
+
+ld_date = date(pdt_datetime)
+lt_time = time(pdt_datetime)
+
+// Get the number of days by dividing the seconds by the number of seconds in a day (86400)
+ll_days = pl_seconds / 86400
+
+// Get the number of seconds not counting the complete days
+ll_seconds = mod(pl_seconds, 86400)
+
+// Increment the day
+ld_date = relativedate(ld_date, ll_days)
+
+// Increment the time
+lt_time2 = relativetime(lt_time, ll_seconds)
+
+// If the time got smaller then we must have crossed midnight so add one to the day
+if lt_time2 < lt_time then
+	ld_date = relativedate(ld_date, 1)
+end if
+
+return datetime(ld_date, lt_time2)
+
+
+end function
+

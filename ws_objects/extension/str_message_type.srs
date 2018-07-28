@@ -1,0 +1,12 @@
+HA$PBExportHeader$str_message_type.srs
+global type str_message_type from structure
+	string		messageid
+	string		threadid
+	str_actor_type		messagerecipient[]
+	str_actor_type		messagesender
+	string		messagesubject
+	string		messagebody
+	datetime		messagesent
+	str_attachment_type		messageattachment[]
+end type
+

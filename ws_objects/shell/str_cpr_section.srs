@@ -1,0 +1,11 @@
+HA$PBExportHeader$str_cpr_section.srs
+global type str_cpr_section from structure
+	string		section_id
+	string		description
+	string		bitmap
+	long		section_sequence
+	userobject		section_object
+	integer		page_count
+	str_cpr_page		page[]
+end type
+

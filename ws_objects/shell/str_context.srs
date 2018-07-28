@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_context.srs
+global type str_context from structure
+	string		cpr_id
+	string		context_object
+	long		object_key
+end type
+

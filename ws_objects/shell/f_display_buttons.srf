@@ -1,0 +1,64 @@
+HA$PBExportHeader$f_display_buttons.srf
+global type f_display_buttons from function_object
+end type
+
+forward prototypes
+global function integer f_display_buttons (str_buttons pstr_buttons, integer pi_start_button, integer pi_end_button)
+end prototypes
+
+global function integer f_display_buttons (str_buttons pstr_buttons, integer pi_start_button, integer pi_end_button);str_popup popup
+str_popup_return popup_return
+integer button_pressed
+integer li_sts
+window lw_pop_buttons
+integer i
+integer li_first
+integer li_last
+
+// If pi_start_button is null or <= 0 then start at button #1
+if isnull(pi_start_button) or pi_start_button <= 0 then
+	li_first = 1
+else
+	li_first = pi_start_button
+end if
+
+// If pi_end_button is null or <= 0 then end at the last button
+if isnull(pi_end_button) or pi_end_button <= 0 then
+	li_last = pstr_buttons.button_count
+else
+	li_last = pi_end_button
+end if
+
+for i = li_first to li_last
+	popup.button_count += 1
+	popup.button_icons[popup.button_count] = pstr_buttons.button[i].picture
+	popup.button_helps[popup.button_count] = pstr_buttons.button[i].help
+	popup.button_titles[popup.button_count] = pstr_buttons.button[i].title
+next
+
+
+if (popup.button_count > 1) or (popup.button_count = 1 and not pstr_buttons.auto_singleton) then
+	popup.button_count += 1
+	popup.button_icons[popup.button_count] = "button11.bmp"
+	popup.button_helps[popup.button_count] = "Cancel"
+	popup.button_titles[popup.button_count] = "Cancel"
+end if
+
+popup.button_titles_used = true
+
+if popup.button_count > 1 then
+	openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
+	button_pressed = message.doubleparm
+	if button_pressed < 1 or button_pressed >= popup.button_count then return 0
+elseif popup.button_count = 1 then
+	button_pressed = 1
+else
+	return 0
+end if
+
+// If we get here then the user clicked a button that wasn't the "Cancel" button
+return button_pressed + li_first - 1
+
+
+end function
+

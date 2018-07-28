@@ -1,0 +1,21 @@
+HA$PBExportHeader$str_ccr_structuredproducttype.srs
+global type str_ccr_structuredproducttype from structure
+	string		ccrdataobjectid
+	str_ccr_datetimetype		datetime[]
+	str_ccr_idtype		ids[]
+	str_ccr_codeddescriptiontype		objecttype
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		status
+	str_ccr_slrcgroup		slrcgroup
+	str_ccr_product_type		product[]
+	str_ccr_measuretype		quantity[]
+	str_ccr_direction		directions[]
+	str_ccr_codeddescriptiontype_2		patientinstructions[]
+	str_ccr_codeddescriptiontype_2		fulfillmentinstructions[]
+	str_ccr_refill		refills[]
+	string		seriesnumber
+	str_ccr_ccrcodeddataobjecttype		consent
+	str_ccr_reaction		reaction
+	string		fulfillmenthistory
+end type
+

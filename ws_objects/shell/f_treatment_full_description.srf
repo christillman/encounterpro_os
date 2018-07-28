@@ -1,0 +1,50 @@
+HA$PBExportHeader$f_treatment_full_description.srf
+global type f_treatment_full_description from function_object
+end type
+
+forward prototypes
+global function string f_treatment_full_description (str_treatment_description pstr_treatment, str_encounter_description pstr_encounter)
+end prototypes
+
+global function string f_treatment_full_description (str_treatment_description pstr_treatment, str_encounter_description pstr_encounter);String		ls_description
+Integer 		li_encounter_count
+Integer 		li_sts
+string ls_status
+
+Setnull(ls_description)
+// IF we get a non-valid encounter object, THEN treat it as null
+IF NOT isvalid(pstr_encounter) THEN setnull(pstr_encounter.encounter_id)
+
+ls_description = string(pstr_treatment.begin_date, date_format_string) + " "
+
+// If there is an end date, then check for...
+IF NOT isnull(pstr_treatment.end_date) then
+	// If no reference encounter was passed in, then just add the end date
+	if isnull(pstr_encounter) then
+		ls_description += ": " + string(pstr_treatment.end_date, date_format_string) + " "
+	elseif NOT f_flag_to_bool(datalist.treatment_type_in_office_flag(pstr_treatment.treatment_type)) &
+	 and date(pstr_treatment.begin_date) <> date(pstr_treatment.end_date) THEN
+		// If there is an end date, and there is a reference encounter, and the treatment
+		// wasn't done in the office, and the end date is different from the begin date then ...
+		ls_description += ": " + string(pstr_treatment.end_date, date_format_string) + " "
+	END IF
+end if
+
+ls_description += pstr_treatment.treatment_description
+
+// IF the treatment was closed during the encounter, THEN print the suffix
+IF NOT isnull(pstr_encounter.encounter_id) and not isnull(pstr_treatment.treatment_status) THEN
+	IF pstr_treatment.end_date <= pstr_encounter.encounter_date OR pstr_treatment.close_encounter_id = pstr_encounter.encounter_id THEN
+		ls_status = wordcap(pstr_treatment.treatment_status)
+		if ls_status <> "Closed" OR datalist.treatment_type_in_office_flag(pstr_treatment.treatment_type) = "N" then
+			ls_description += " (" + ls_status + ")"
+		end if
+	END IF
+END IF
+
+RETURN ls_description
+
+
+
+end function
+

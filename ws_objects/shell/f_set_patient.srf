@@ -1,0 +1,30 @@
+HA$PBExportHeader$f_set_patient.srf
+global type f_set_patient from function_object
+end type
+
+forward prototypes
+global function integer f_set_patient (string ps_cpr_id)
+end prototypes
+
+global function integer f_set_patient (string ps_cpr_id);// f_set_patient
+//
+// This function sets the current_patient object and locks the patient
+//
+// Parameters:		ps_cpr_id	cpr_id of patient
+//
+// Returns:			-1	Failure
+//						0 Successful load but could not lock patient
+//						1 Success
+
+integer li_sts
+
+if isnull(ps_cpr_id) then return -1
+
+current_patient = current_patient_hold
+
+li_sts = current_patient.load(ps_cpr_id)
+
+return li_sts
+
+end function
+

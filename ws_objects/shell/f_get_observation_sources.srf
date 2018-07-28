@@ -1,0 +1,41 @@
+HA$PBExportHeader$f_get_observation_sources.srf
+global type f_get_observation_sources from function_object
+end type
+
+forward prototypes
+global function integer f_get_observation_sources (string ps_observation_id, ref u_component_observation puoa_source[])
+end prototypes
+
+global function integer f_get_observation_sources (string ps_observation_id, ref u_component_observation puoa_source[]);u_ds_data luo_data
+u_component_observation luo_source
+integer li_count
+long ll_rows
+long i
+string ls_component_id
+integer li_attribute_count
+string lsa_attributes[]
+string lsa_values[]
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_sp_get_observation_sources")
+ll_rows = luo_data.retrieve(computer_id, ps_observation_id)
+
+li_count = 0
+li_attribute_count = 1
+lsa_attributes[1] = "external_source"
+
+for i = 1 to ll_rows
+	ls_component_id = luo_data.object.component_id[i]
+	lsa_values[1] = luo_data.object.external_source[i]
+	luo_source = component_manager.get_component(ls_component_id, li_attribute_count, lsa_attributes, lsa_values)
+	if not isnull(luo_source) then
+		li_count += 1
+		puoa_source[li_count] = luo_source
+	end if
+next
+
+return li_count
+
+
+end function
+

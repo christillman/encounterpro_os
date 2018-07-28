@@ -1,0 +1,10 @@
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\bin\Release\EproLibBaseTest.exe
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\ResolveAssemblyReference.cache
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.fDocumentWrapper.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.Form1.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.fResult.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.fSecurityManager.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.fWrapper.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EncounterPRO.OS.ComponentTest.SaveSettingsForm.resources
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EproLibBaseTest.csproj.GenerateResource.Cache
+C:\Users\mark.ICT\EncounterPRO-OS\Projects\Components\EncounterPRO.OS.ComponentTest\EncounterPRO.OS.ComponentTest\obj\Release\EproLibBaseTest.exe

@@ -1,0 +1,12 @@
+HA$PBExportHeader$f_edas_interpret_address.srf
+global type f_edas_interpret_address from function_object
+end type
+
+forward prototypes
+global function str_property_value f_edas_interpret_address (string ps_edas_address, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_edas_interpret_address (string ps_edas_address, str_complete_context pstr_context, str_attributes pstr_attributes);return f_edas_interpret_nested_address("Root", "", ps_edas_address, pstr_context, pstr_attributes)
+
+end function
+

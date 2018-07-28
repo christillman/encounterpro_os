@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[em_Visit_Code_Item]
+    ADD CONSTRAINT [PK_em_Visit_Code_Item_40] PRIMARY KEY CLUSTERED ([visit_code_group] ASC, [new_flag] ASC, [visit_level] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
+

@@ -1,0 +1,7 @@
+HA$PBExportHeader$str_observation_results.srs
+global type str_observation_results from structure
+	string		observation_id
+	long		result_count
+	str_c_observation_result		result[]
+end type
+

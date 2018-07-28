@@ -1,0 +1,6 @@
+HA$PBExportHeader$str_amount_type.srs
+global type str_amount_type from structure
+	string		quantity
+	string		unit
+end type
+

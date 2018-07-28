@@ -1,0 +1,10 @@
+HA$PBExportHeader$str_document_element_set_collection.srs
+global type str_document_element_set_collection from structure
+	string		collectiontype
+	string		collectiondefinition
+	string		collectionobject
+	long		collectionobjectcount
+	string		collectionobjectkey[]
+	u_ds_data		collectiondata
+end type
+

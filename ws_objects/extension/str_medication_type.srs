@@ -1,0 +1,22 @@
+HA$PBExportHeader$str_medication_type.srs
+global type str_medication_type from structure
+	string		genericname
+	string		brandname
+	string		manufacturer
+	string		lotnumber
+	string		preparation
+	str_code_type		code[]
+	str_date_type		medication_date[]
+	string		dosestrength
+	string		quantity
+	str_amount_type		amount
+	string		route
+	string		site
+	string		frequency
+	str_indication_type		indication[]
+	string		instructions
+	string		refill
+	str_rxhistory_type		orderrxhistory[]
+	str_rxhistory_type		fulfillment[]
+end type
+
