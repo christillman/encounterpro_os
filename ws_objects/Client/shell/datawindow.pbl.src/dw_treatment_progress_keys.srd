@@ -1,0 +1,75 @@
+﻿$PBExportHeader$dw_treatment_progress_keys.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(12) update=yes updatewhereclause=yes key=yes name=cpr_id dbname="p_Treatment_Progress.cpr_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=treatment_id dbname="p_Treatment_Progress.treatment_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=treatment_progress_sequence dbname="p_Treatment_Progress.treatment_progress_sequence" )
+ column=(type=long update=yes updatewhereclause=yes name=encounter_id dbname="p_Treatment_Progress.encounter_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=user_id dbname="p_Treatment_Progress.user_id" )
+ column=(type=datetime update=yes updatewhereclause=yes name=progress_date_time dbname="p_Treatment_Progress.progress_date_time" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=progress_type dbname="p_Treatment_Progress.progress_type" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=progress_key dbname="p_Treatment_Progress.progress_key" )
+ column=(type=long update=yes updatewhereclause=yes name=attachment_id dbname="p_Treatment_Progress.attachment_id" )
+ column=(type=datetime update=yes updatewhereclause=yes name=created dbname="p_Treatment_Progress.created" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=created_by dbname="p_Treatment_Progress.created_by" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=progress_value dbname="p_Treatment_Progress.progress_value" )
+ column=(type=long update=yes updatewhereclause=yes name=risk_level dbname="p_Treatment_Progress.risk_level" )
+ column=(type=char(4099) updatewhereclause=no name=progress dbname="p_Treatment_Progress.progress" )
+ retrieve="  SELECT p_Treatment_Progress.cpr_id,   
+         p_Treatment_Progress.treatment_id,   
+         p_Treatment_Progress.treatment_progress_sequence,   
+         p_Treatment_Progress.encounter_id,   
+         p_Treatment_Progress.user_id,   
+         p_Treatment_Progress.progress_date_time,   
+         p_Treatment_Progress.progress_type,   
+         p_Treatment_Progress.progress_key,   
+         p_Treatment_Progress.attachment_id,   
+         p_Treatment_Progress.created,   
+         p_Treatment_Progress.created_by,   
+         p_Treatment_Progress.progress_value,   
+         p_Treatment_Progress.risk_level,   
+         p_Treatment_Progress.progress  
+    FROM p_Treatment_Progress  
+   WHERE ( p_Treatment_Progress.cpr_id = :cpr_id ) AND  
+         ( p_Treatment_Progress.treatment_id = :treatment_id ) AND  
+         ( p_Treatment_Progress.progress_type = :progress_type ) AND  
+         ( p_Treatment_Progress.progress_key like :progress_key ) AND  
+         ( p_Treatment_Progress.progress_key is not NULL )   
+ORDER BY p_Treatment_Progress.encounter_id ASC,   
+         p_Treatment_Progress.treatment_id ASC,   
+         p_Treatment_Progress.progress_type ASC,   
+         p_Treatment_Progress.progress_key ASC,   
+         p_Treatment_Progress.created ASC   
+" update="p_Treatment_Progress" updatewhere=1 updatekeyinplace=no arguments=(("cpr_id", string),("treatment_id", number),("progress_type", string),("progress_key", string))  sort="progress_key A treatment_progress_sequence D " )
+text(band=header alignment="2" text="Cpr Id" border="0" color="0" x="5" y="4" height="64" width="357" html.valueishtml="0"  name=cpr_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Treatment Id" border="0" color="0" x="366" y="4" height="64" width="329" html.valueishtml="0"  name=treatment_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Treatment Progress Sequence" border="0" color="0" x="699" y="4" height="64" width="805" html.valueishtml="0"  name=treatment_progress_sequence_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Encounter Id" border="0" color="0" x="1513" y="4" height="64" width="334" html.valueishtml="0"  name=encounter_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="User Id" border="0" color="0" x="1851" y="4" height="64" width="686" html.valueishtml="0"  name=user_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Progress Date Time" border="0" color="0" x="2542" y="4" height="64" width="603" html.valueishtml="0"  name=progress_date_time_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Progress Type" border="0" color="0" x="3150" y="4" height="64" width="686" html.valueishtml="0"  name=progress_type_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Progress Key" border="0" color="0" x="3840" y="4" height="64" width="686" html.valueishtml="0"  name=progress_key_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Progress" border="0" color="0" x="4530" y="4" height="64" width="3511" html.valueishtml="0"  name=progress_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Attachment Id" border="0" color="0" x="8046" y="4" height="64" width="370" html.valueishtml="0"  name=attachment_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Created" border="0" color="0" x="8421" y="4" height="64" width="603" html.valueishtml="0"  name=created_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Created By" border="0" color="0" x="9029" y="4" height="64" width="686" html.valueishtml="0"  name=created_by_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=10 border="0" color="0" x="5" y="4" height="76" width="357" format="[general]" html.valueishtml="0"  name=cpr_id visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=20 border="0" color="0" x="366" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=treatment_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="0" x="699" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=treatment_progress_sequence visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=30 border="0" color="0" x="1513" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=encounter_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=40 border="0" color="0" x="1851" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=user_id visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=50 border="0" color="0" x="2542" y="4" height="76" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=progress_date_time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="0" x="3150" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=progress_type visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="0" color="0" x="3840" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=progress_key visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=90 border="0" color="0" x="8046" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=attachment_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=100 border="0" color="0" x="8421" y="4" height="76" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=created visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=110 border="0" color="0" x="9029" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=created_by visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="0" tabsequence=32766 border="0" color="0" x="9714" y="0" height="64" width="1083" format="[general]" html.valueishtml="0"  name=progress_value visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="0" x="10798" y="0" height="64" width="82" format="[general]" html.valueishtml="0"  name=risk_level visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=32766 border="0" color="0" x="10880" y="0" height="64" width="3511" format="[general]" html.valueishtml="0"  name=progress visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

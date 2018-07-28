@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_ccr_body.srs
+global type str_ccr_body from structure
+	str_ccr_problemtype		problems[]
+	str_ccr_alert_type		alerts[]
+	str_ccr_structuredproducttype		medications[]
+	str_ccr_structuredproducttype		immunizations[]
+	str_ccr_resulttype		vitalsigns[]
+	str_ccr_resulttype		results[]
+end type
+

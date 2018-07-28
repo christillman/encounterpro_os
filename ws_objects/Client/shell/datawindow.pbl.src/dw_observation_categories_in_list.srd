@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_observation_categories_in_list.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=68 color="536870912"  height.autosize=yes)
+table(column=(type=char(24) updatewhereclause=yes name=treatment_type dbname="c_Observation_Category.treatment_type" )
+ column=(type=char(24) updatewhereclause=yes name=observation_category_id dbname="c_Observation_Category.observation_category_id" )
+ column=(type=char(80) updatewhereclause=yes name=category_description dbname="c_Observation_Category.description" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_Observation_Category.sort_sequence" )
+ column=(type=char(80) updatewhereclause=yes name=treatment_type_description dbname="c_Treatment_Type.description" )
+ column=(type=char(162) updatewhereclause=yes name=description dbname="description" )
+ retrieve="PBSELECT( VERSION(400) DISTINCT ()TABLE(NAME=~"c_Observation_Category~" )  TABLE(NAME=~"c_Observation_Observation_Cat~" )  TABLE(NAME=~"c_Treatment_Type~" ) COLUMN(NAME=~"c_Observation_Category.treatment_type~") COLUMN(NAME=~"c_Observation_Category.observation_category_id~") COLUMN(NAME=~"c_Observation_Category.description~") COLUMN(NAME=~"c_Observation_Category.sort_sequence~") COLUMN(NAME=~"c_Treatment_Type.description~") COMPUTE(NAME=~"description=c_treatment_type.description + ', ' + c_Observation_Category.description~")    JOIN (LEFT=~"c_Observation_Category.treatment_type~"    OP =~"=~"RIGHT=~"c_Observation_Observation_Cat.treatment_type~" )    JOIN (LEFT=~"c_Observation_Category.observation_category_id~"    OP =~"=~"RIGHT=~"c_Observation_Observation_Cat.observation_category_id~" )    JOIN (LEFT=~"c_Observation_Observation_Cat.treatment_type~"    OP =~"=~"RIGHT=~"c_Treatment_Type.treatment_type~" )WHERE(    EXP1 =~"c_Observation_Observation_Cat.observation_id~"   OP =~"=~"    EXP2 =~":observation_id~" ) ) ARG(NAME = ~"observation_id~" TYPE = string) " arguments=(("observation_id", string))  sort="treatment_type_description A category_description A " )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="64" width="1271" format="[general]"  name=description height.autosize=yes edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

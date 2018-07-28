@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_component_collection.srs
+global type str_component_collection from structure
+	long		attribute_count
+	str_component_attribute		attribute[]
+end type
+

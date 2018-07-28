@@ -1,0 +1,116 @@
+﻿$PBExportHeader$f_get_preferences.srf
+global type f_get_preferences from function_object
+end type
+
+forward prototypes
+global subroutine f_get_preferences ()
+end prototypes
+
+global subroutine f_get_preferences ();Integer li_count, li_return
+ContextKeyword lcx_key
+string ls_temp
+integer li_sts
+string lsa_values[]
+long ll_temp
+
+enable_contraindication_checking = datalist.get_preference_boolean("PREFERENCES", "Enable Contraindication Checking", false)
+contraindication_external_source = datalist.get_preference("PREFERENCES", "contraindication_external_source","Contraindication")
+
+bill_test_collection = datalist.get_preference_boolean("PREFERENCES", "bill_test_collection", false)
+auto_patient_select = datalist.get_preference_boolean("PREFERENCES", "auto_patient_select", false)
+auto_room_select = datalist.get_preference_boolean("PREFERENCES", "auto_room_select", false)
+computer_secure = datalist.get_preference_boolean("PREFERENCES", "computer_secure", false)
+rx_use_signature_stamp = datalist.get_preference_boolean("PREFERENCES", "rx_use_signature_stamp", false)
+
+ls_temp = datalist.get_preference("SYSTEM", "idle_logoff")
+if isnull(ls_temp) then
+	common_thread.idle_timeout = 0
+	idle(0)
+else
+	common_thread.idle_timeout = long(ls_temp)
+	idle(common_thread.idle_timeout)
+end if
+
+temp_path = datalist.get_preference("SYSTEM", "temp_path")
+if isnull(temp_path) then
+	li_return = GetContextService("ContextKeyword", lcx_key)
+	lcx_key.GetContextKeywords("TEMP", lsa_values)
+	li_count = UpperBound(lsa_values)
+	if li_count >= 1 then
+		temp_path = lsa_values[1]
+	else
+		lcx_key.GetContextKeywords("TMP", lsa_values)
+		li_count = UpperBound(lsa_values)
+		if li_count >= 1 then
+			temp_path = lsa_values[1]
+		else
+			temp_path = "c:\temp"
+		end if
+	end if
+end if
+if right(temp_path, 1) = "\" then temp_path = left(temp_path, len(temp_path) - 1)
+
+temp_path += "\" + string(computer_id)
+
+if not log.of_directoryexists(temp_path) then
+	log.of_createdirectory(temp_path)
+end if
+
+debug_path = datalist.get_preference("SYSTEM", "debug_path")
+if isnull(debug_path) then
+	debug_path = temp_path + "\Debug"
+end if
+if not log.of_directoryexists(debug_path) then
+	log.of_createdirectory(debug_path)
+end if
+
+temp_image = datalist.get_preference("SYSTEM", "temp_image", "tmpimg.tif")
+
+default_encounter_type = datalist.get_preference("PREFERENCES", "default_encounter_type", "SICK")
+
+original_unit_preference = datalist.get_preference("PREFERENCES", "unit", "METRIC")
+unit_preference = original_unit_preference
+
+date_format_string = datalist.get_preference("PREFERENCES", "date_format_string","[shortdate]")
+
+time_format_string = datalist.get_preference("PREFERENCES", "time_format_string","[time]")
+
+followup_specialty = datalist.get_preference("PREFERENCES", "followup_specialty", "FOLLOWUP")
+
+logon_timeout = datalist.get_preference_int("PREFERENCES", "logon_timeout", 15)
+
+refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
+
+rx_gravityprompt = datalist.get_preference("PREFERENCES", "rx_gravityprompt", "I hereby prescribe these medications")
+
+vaccine_gravityprompt = datalist.get_preference("PREFERENCES", "vaccine_gravityprompt", "I hereby authorize these vaccines to be administered")
+
+encounter_gravityprompt = datalist.get_preference("PREFERENCES", "encounter_gravityprompt", "The information in this encounter record is accurate to the best of my knowledge")
+
+color_service_ordered = datalist.get_preference_int("PREFERENCES", "color_service_ordered", COLOR_LIGHT_YELLOW)
+
+COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_EPRO_BLUE)
+
+color_text_normal = datalist.get_preference_int("PREFERENCES", "color_text_normal", COLOR_BLACK)
+
+color_text_warning = datalist.get_preference_int("PREFERENCES", "color_text_warning", COLOR_LIGHT_YELLOW)
+
+color_text_error = datalist.get_preference_int("PREFERENCES", "color_text_error", COLOR_RED)
+
+color_object = datalist.get_preference_int("PREFERENCES", "color_object", COLOR_LIGHT_GREY)
+
+color_object_selected = datalist.get_preference_int("PREFERENCES", "color_object_selected", COLOR_DARK_GREY)
+
+default_group_id = datalist.get_preference_int("PREFERENCES", "default_group_id")
+
+default_rtf_font_name = datalist.get_preference("PREFERENCES", "default_rtf_font_name", "Times New Roman")
+
+ls_temp = datalist.get_preference("PREFERENCES", "abnormal_result_font_settings")
+if isnull(ls_temp) then ls_temp = "bold"
+abnormal_result_font_settings = f_interpret_font_settings(ls_temp)
+
+common_thread.load_preferences( )
+
+
+end subroutine
+

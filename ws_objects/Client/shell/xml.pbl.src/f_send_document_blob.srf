@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_send_document_blob.srf
+global type f_send_document_blob from function_object
+end type
+
+forward prototypes
+global function integer f_send_document_blob (string ps_document_type, long pl_addressee, blob pbl_document, string ps_sendermessageid, string ps_sender_user_id, string ps_recipient_user_id, boolean pb_test_message)
+end prototypes
+
+global function integer f_send_document_blob (string ps_document_type, long pl_addressee, blob pbl_document, string ps_sendermessageid, string ps_sender_user_id, string ps_recipient_user_id, boolean pb_test_message);string ls_hex
+
+// validate the parameters
+if isnull(ps_document_type) then
+	log.log(this, "f_send_document_blob()", "Null document type", 4)
+	return -1
+end if
+
+if isnull(pl_addressee) then
+	log.log(this, "f_send_document_blob()", "Null addressee", 4)
+	return -1
+end if
+
+if isnull(pbl_document) then
+	log.log(this, "f_send_document_blob()", "Null document", 4)
+	return -1
+end if
+
+// Convert the blob to a hex-encoded string
+TRY
+	ls_hex = common_thread.eprolibnet4.convertbinarytohex(pbl_document)
+CATCH (throwable lt_error)
+	log.log(this, "f_send_document_blob()", "Error calling binary to hex conversion (" + lt_error.text + ")", 4)
+	return -1
+END TRY
+
+// Send the document as a string
+return f_send_document(ps_document_type, pl_addressee, "Hex", ls_hex, ps_SenderMessageID, ps_sender_user_id, ps_recipient_user_id, pb_test_message)
+
+
+end function
+

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$f_fkey_handler.srf
+global type f_fkey_handler from function_object
+end type
+
+forward prototypes
+global function boolean f_fkey_handler (keycode key, unsignedlong keyflags)
+end prototypes
+
+global function boolean f_fkey_handler (keycode key, unsignedlong keyflags);return f_fkey_handler2(key, keyflags, "")
+
+end function
+

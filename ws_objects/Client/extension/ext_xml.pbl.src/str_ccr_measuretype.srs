@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_ccr_measuretype.srs
+global type str_ccr_measuretype from structure
+	string		value
+	str_ccr_units_type		units
+	str_ccr_codetype		code[]
+	long		SequencePosition
+	str_ccr_codeddescriptiontype		Modifier
+end type
+

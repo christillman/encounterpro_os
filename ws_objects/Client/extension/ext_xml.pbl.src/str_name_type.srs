@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_name_type.srs
+global type str_name_type from structure
+	string		first_name
+	string		middle_name
+	string		last_name
+	string		suffix
+	string		degree
+end type
+

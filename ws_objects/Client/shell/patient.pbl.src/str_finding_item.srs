@@ -1,0 +1,36 @@
+﻿$PBExportHeader$str_finding_item.srs
+global type str_finding_item from structure
+	string		cpr_id
+	long		encounter_id
+	string		finding_list
+	long		finding_sequence
+	long		medcinid
+	string		prefix
+	string		nodekey
+	string		positive
+	string		description
+	integer		termtype
+	unsignedinteger		flags
+	unsignedinteger		eflags
+	string		subs
+	boolean		calculateddx
+	unsignedinteger		aflags
+	unsignedinteger		caflags
+	unsignedinteger		qflags
+	integer		nodelevel
+	string		modifier
+	string		status
+	string		result
+	string		icd5th
+	string		cptmod
+	long		onset
+	long		duration
+	real		result_amount
+	string		result_unit
+	string		result_qualifier
+	integer		scale
+	string		comments
+	long		attachment_id
+	string		user_id
+end type
+

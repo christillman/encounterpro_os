@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_treatment_list.srs
+global type str_treatment_list from structure
+	string		list_assessment_id
+	string		list_user_id
+	string		description
+end type
+

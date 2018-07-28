@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_pick_component.srs
+global type str_pick_component from structure
+	string		component_type
+	string		context_object
+	string		mode
+end type
+

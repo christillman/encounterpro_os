@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_elements.srs
+global type str_elements from structure
+	long		element_count
+	str_element		element[]
+end type
+

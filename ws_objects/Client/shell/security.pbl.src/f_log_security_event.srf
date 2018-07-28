@@ -1,0 +1,36 @@
+﻿$PBExportHeader$f_log_security_event.srf
+global type f_log_security_event from function_object
+end type
+
+forward prototypes
+global function integer f_log_security_event (string ps_action, string ps_action_status, string ps_action_for_user_id)
+end prototypes
+
+global function integer f_log_security_event (string ps_action, string ps_action_status, string ps_action_for_user_id);
+
+if isnull(current_user) or isnull(current_scribe) then return 0
+
+INSERT INTO o_User_Logins (
+	user_id ,
+	computer_id ,
+	office_id ,
+	action,
+	action_status,
+	action_for_user_id,
+	scribe_for_user_id )
+VALUES (
+	:current_scribe.user_id ,
+	:computer_id ,
+	:office_id ,
+	:ps_action ,
+	:ps_action_status,
+	:ps_action_for_user_id,
+	:current_user.user_id);
+if not tf_check() then return -1
+
+
+return 1
+
+
+end function
+

@@ -1,0 +1,120 @@
+﻿$PBExportHeader$f_observation_read_jmjmessage.srf
+global type f_observation_read_jmjmessage from function_object
+end type
+
+forward prototypes
+global function integer f_observation_read_jmjmessage (u_component_observation po_observation, pbdom_element puo_jmjmessage)
+end prototypes
+
+global function integer f_observation_read_jmjmessage (u_component_observation po_observation, pbdom_element puo_jmjmessage);u_xml_document lo_payload_document
+PBDOM_ELEMENT pbdom_root
+PBDOM_ELEMENT pbdom_element_array[]
+PBDOM_ATTRIBUTE pbdom_attribute_array[]
+integer li_sts
+long i
+string ls_document_id
+long ll_owner_id
+string ls_document_type
+string ls_payload
+string ls_element
+string ls_temp
+string ls_description
+string ls_xml_description
+string ls_extension
+string ls_root
+string ls_text
+
+
+
+setnull(ls_document_id)
+setnull(ll_owner_id)
+setnull(ls_document_type)
+setnull(ls_payload)
+setnull(ls_description)
+setnull(ls_xml_description)
+
+puo_jmjmessage.GetChildElements(ref pbdom_element_array)
+for i = 1 to UpperBound(pbdom_element_array)
+	ls_element = pbdom_element_array[i].getname()
+	ls_temp = pbdom_element_array[i].gettext()
+	if len(ls_temp) > 0 then
+		CHOOSE CASE lower(ls_element)
+			CASE "jmjmessageid"
+				ls_document_id = ls_temp
+			CASE "ownerid"
+				if isnumber(ls_temp) then ll_owner_id = long(ls_temp)
+			CASE "documenttype"
+				ls_document_type = ls_temp
+			CASE "description"
+				ls_description = ls_temp
+			CASE "payload"
+				ls_payload = ls_temp
+		END CHOOSE
+	end if
+next
+
+
+// Add the observation structure
+po_observation.observation_count += 1
+setnull(po_observation.observations[po_observation.observation_count].observation_id)
+po_observation.observations[po_observation.observation_count].result_count = 0
+po_observation.observations[po_observation.observation_count].external_item_id = ls_document_id
+
+// Add the attachment
+po_observation.observations[po_observation.observation_count].attachment_list.attachment_count = 1
+setnull(po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].filename)
+
+li_sts = f_get_xml_document(ls_payload , lo_payload_document)
+if li_sts > 0 then
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].xml_document = lo_payload_document
+	
+	// Since we have an XML document, see if we can glean some data about it
+	pbdom_root = lo_payload_document.XML_Document.GetRootElement()
+	
+	ls_root = pbdom_root.GetName()
+	ls_text = pbdom_root.GetText()
+	ls_xml_description = ls_root
+	
+	if pbdom_root.HasAttributes() then
+		// Scan the attributes for an extension and/or a description
+		
+		pbdom_root.GetAttributes(ref pbdom_attribute_array[])
+		
+		for i=1 to UpperBound(pbdom_attribute_array)
+			choose case lower(pbdom_attribute_array[i].GetName())
+				case "extension"
+					ls_extension = pbdom_attribute_array[i].GetText()
+				case "description"
+					ls_xml_description = pbdom_attribute_array[i].GetText()
+			end choose
+		next
+	end if
+end if
+
+
+// Now, figure out the best description for this message from what we have
+if isnull(ls_description) then
+	if isnull(ls_xml_description) then
+		if isnull(ls_document_type) then
+			ls_description = "XML Document"
+		else
+			ls_description = ls_document_type + " Document"
+		end if
+	else
+		ls_description = ls_xml_description
+	end if
+end if
+
+// Set the rest of the attributes
+po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_type = "XML"
+po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].extension = "xml"
+po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment = blob(ls_payload)
+po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_comment_title = ls_description
+
+
+
+return 1
+
+
+end function
+

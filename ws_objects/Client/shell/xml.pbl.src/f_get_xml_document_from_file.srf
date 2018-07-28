@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_get_xml_document_from_file.srf
+global type f_get_xml_document_from_file from function_object
+end type
+
+forward prototypes
+global function integer f_get_xml_document_from_file (string ps_xml_file, ref u_xml_document po_xml_document)
+end prototypes
+
+global function integer f_get_xml_document_from_file (string ps_xml_file, ref u_xml_document po_xml_document);blob lbl_xml_file
+integer li_sts
+u_xml_document lo_xml
+
+li_sts = log.file_read(ps_xml_file, lbl_xml_file)
+if li_sts <= 0 then return -1
+
+li_sts = f_get_xml_document(f_blob_to_string(lbl_xml_file), po_xml_document)
+
+return li_sts
+
+
+
+end function
+

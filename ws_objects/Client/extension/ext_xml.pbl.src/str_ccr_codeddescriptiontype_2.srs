@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_ccr_codeddescriptiontype_2.srs
+global type str_ccr_codeddescriptiontype_2 from structure
+	string		text
+	str_ccr_objectattribute		objectattribute[]
+	str_ccr_codetype		code[]
+	long		SequencePosition
+	str_ccr_codeddescriptiontype		Modifier
+end type
+

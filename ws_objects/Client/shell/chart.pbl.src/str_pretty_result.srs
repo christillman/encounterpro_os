@@ -1,0 +1,18 @@
+﻿$PBExportHeader$str_pretty_result.srs
+global type str_pretty_result from structure
+	string		cpr_id
+	long		observation_sequence
+	long		location_result_sequence
+	string		test_name
+	string		result
+	string		abnormal_flag
+	string		abnormal_nature
+	string		normal_range
+	string		observed_by
+	long		root_sequence
+	long		parent_sequence
+	string		parent_observation_description
+	long		sort_sequence
+	datetime		result_date_time
+end type
+

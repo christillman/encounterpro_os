@@ -1,0 +1,33 @@
+﻿$PBExportHeader$str_p_observation_result.srs
+global type str_p_observation_result from structure
+	string		cpr_id
+	long		treatment_id
+	long		observation_sequence
+	long		location_result_sequence
+	string		location
+	string		observation_id
+	integer		result_sequence
+	string		result_type
+	long		encounter_id
+	datetime		result_date_time
+	long		attachment_id
+	string		result_value
+	string		result_unit
+	string		abnormal_flag
+	string		abnormal_nature
+	string		observed_by
+	datetime		created
+	string		created_by
+	string		result
+	integer		severity
+	string		normal_range
+	long		root_observation_sequence
+	string		result_amount_flag
+	string		print_result_flag
+	string		print_result_separator
+	string		unit_preference
+	long		sort_sequence
+	string		display_mask
+	string		location_description
+end type
+

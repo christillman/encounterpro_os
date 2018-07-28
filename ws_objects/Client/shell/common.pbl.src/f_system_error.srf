@@ -1,0 +1,21 @@
+﻿$PBExportHeader$f_system_error.srf
+global type f_system_error from function_object
+end type
+
+forward prototypes
+global subroutine f_system_error ()
+end prototypes
+
+global subroutine f_system_error ();string ls_msg
+
+ls_msg  =   "errornum:"+string(error.number)
+ls_msg += "~nmessage :"+error.text
+ls_msg += "~nwhere   :"+error.windowmenu
+ls_msg += "~nobject  :"+error.object
+ls_msg += "~nevent   :"+error.objectevent
+ls_msg += "~nline    :"+string(error.line)
+
+log.log(this, "SYSTEM ERROR", ls_msg, 4)
+
+end subroutine
+

@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_get_assessment_treatment_def.srf
+global type f_get_assessment_treatment_def from function_object
+end type
+
+forward prototypes
+global function integer f_get_assessment_treatment_def (long pl_definition_id, ref str_assessment_treatment_definition pstr_treatment_def)
+end prototypes
+
+global function integer f_get_assessment_treatment_def (long pl_definition_id, ref str_assessment_treatment_definition pstr_treatment_def);u_ds_data luo_data
+long ll_count
+
+pstr_treatment_def = f_empty_assessment_treatment_definition()
+
+SELECT definition_id,
+		assessment_id,
+		treatment_type,
+		treatment_description,
+		workplan_id,
+		followup_workplan_id,
+		user_id,
+		sort_sequence,
+		instructions,
+		parent_definition_id,
+		child_flag,
+		treatment_mode
+INTO	:pstr_treatment_def.definition_id,
+		:pstr_treatment_def.assessment_id,
+		:pstr_treatment_def.treatment_type,
+		:pstr_treatment_def.treatment_description,
+		:pstr_treatment_def.workplan_id,
+		:pstr_treatment_def.followup_workplan_id,
+		:pstr_treatment_def.user_id,
+		:pstr_treatment_def.sort_sequence,
+		:pstr_treatment_def.instructions,
+		:pstr_treatment_def.parent_definition_id,
+		:pstr_treatment_def.child_flag,
+		:pstr_treatment_def.treatment_mode
+FROM u_Assessment_Treat_Definition
+WHERE definition_id = :pl_definition_id;
+if not tf_check() then return -1
+if sqlca.sqlcode = 100 then return 0
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_u_assessment_treat_def_attrib")
+ll_count = luo_data.retrieve(pl_definition_id)
+if ll_count < 0 then return -1
+
+f_attribute_ds_to_str(luo_data, pstr_treatment_def.attributes)
+
+DESTROY luo_data
+
+return 1
+
+end function
+

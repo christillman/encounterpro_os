@@ -2,9 +2,9 @@ Save Format v3.0(19990112)
 @begin Unchecked
 @end;
 @begin Targets
- 0 "Client\cpr.pbt";
- 1 "Client\server.pbt";
- 2 "Client\dbmaint.pbt";
+ 0 "Client\\cpr.pbt";
+ 1 "Client\\server.pbt";
+ 2 "Client\\dbmaint.pbt";
 @end;
-DefaultTarget "Client\cpr.pbt";
-DefaultRemoteTarget "Client\cpr.pbt";
+DefaultTarget "Client\\cpr.pbt";
+DefaultRemoteTarget "Client\\cpr.pbt";

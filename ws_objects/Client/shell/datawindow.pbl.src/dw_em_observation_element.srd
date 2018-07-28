@@ -1,0 +1,17 @@
+﻿$PBExportHeader$dw_em_observation_element.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=history_type dbname="em_Observation_Element.history_type" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=history_category dbname="em_Observation_Element.history_category" )
+ column=(type=char(40) update=yes updatewhereclause=yes key=yes name=history_element dbname="em_Observation_Element.history_element" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=observation_id dbname="em_Observation_Element.observation_id" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"em_Observation_Element~" ) COLUMN(NAME=~"em_Observation_Element.history_type~") COLUMN(NAME=~"em_Observation_Element.history_category~") COLUMN(NAME=~"em_Observation_Element.history_element~") COLUMN(NAME=~"em_Observation_Element.observation_id~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"em_Observation_Element.observation_id~"   OP =~"=~"    EXP2 =~":observation_id~" ) ) ARG(NAME = ~"observation_id~" TYPE = string) " update="em_Observation_Element" updatewhere=1 updatekeyinplace=no arguments=(("observation_id", string)) )
+column(band=detail id=1 alignment="0" tabsequence=0 border="6" color="0" x="18" y="12" height="96" width="480"  name=history_type  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=2 alignment="0" tabsequence=0 border="6" color="0" x="521" y="12" height="96" width="434"  name=history_category  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="6" color="0" x="978" y="12" height="96" width="919"  name=history_element  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

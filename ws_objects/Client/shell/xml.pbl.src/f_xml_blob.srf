@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_xml_blob.srf
+global type f_xml_blob from function_object
+end type
+
+forward prototypes
+global function blob f_xml_blob (string ps_xml_blob)
+end prototypes
+
+global function blob f_xml_blob (string ps_xml_blob);blob lbl_data
+
+// Remove white space
+
+
+TRY
+	lbl_data = common_thread.eprolibnet4.converthextobinary(ps_xml_blob)
+	if len(lbl_data) = 0 then setnull(lbl_data)
+CATCH (oleruntimeerror lt_error)
+	log.log(this, "f_xml_blob()", "Error converting hex-encoded binary to blob~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+	setnull(lbl_data)
+END TRY
+
+return lbl_data
+
+
+end function
+

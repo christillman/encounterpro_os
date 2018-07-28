@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_xml_time.srf
+global type f_xml_time from function_object
+end type
+
+forward prototypes
+global function time f_xml_time (string ps_xml_datetime)
+end prototypes
+
+global function time f_xml_time (string ps_xml_datetime);string ls_date
+string ls_time
+time lt_time
+
+if pos(upper(ps_xml_datetime), "T") > 0 then
+	f_split_string(upper(ps_xml_datetime), "T", ls_date, ls_time)
+elseif pos(upper(ps_xml_datetime), " ") > 0 then
+	f_split_string(upper(ps_xml_datetime), " ", ls_date, ls_time)
+elseif len(ps_xml_datetime) >= 12 then
+	ls_date = left(ps_xml_datetime, 8)
+	ls_time = mid(ps_xml_datetime, 9)
+else
+	ls_time = ps_xml_datetime
+	ls_date = ""
+end if
+
+if match(ls_time, "^[0-9][0-9][0-9][0-9]$") then
+	ls_date = ""
+	ls_time = left(ls_time, 2) + ":" + right(ls_time, 2)
+elseif match(ls_time, "^[0-9][0-9][0-9][0-9][0-9][0-9]$") then
+	ls_date = ""
+	ls_time = left(ls_time, 2) + ":" + mid(ls_time, 3, 2) + ":" + right(ls_time, 2)
+end if
+
+if istime(ls_time) then
+	lt_time = time(ls_time)
+else
+	if istime(ls_date) then
+		lt_time = time(ls_date)
+	else
+		setnull(lt_time)
+	end if
+end if
+
+return lt_time
+
+end function
+

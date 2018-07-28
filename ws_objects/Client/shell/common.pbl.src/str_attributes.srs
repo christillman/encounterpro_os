@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_attributes.srs
+global type str_attributes from structure
+	long		attribute_count
+	str_attribute		attribute[]
+end type
+

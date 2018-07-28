@@ -1,0 +1,20 @@
+﻿$PBExportHeader$str_progress.srs
+global type str_progress from structure
+	long		progress_sequence
+	long		encounter_id
+	string		user_id
+	datetime		progress_date_time
+	string		progress_type
+	string		progress_key
+	string		progress
+	long		attachment_id
+	long		patient_workplan_item_id
+	long		risk_level
+	datetime		created
+	string		created_by
+	string		progress_key_description
+	string		progress_note_description
+	string		progress_full_description
+	str_progress_type		progress_type_properties
+end type
+

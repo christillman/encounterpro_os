@@ -1,0 +1,68 @@
+﻿$PBExportHeader$f_pretty_result.srf
+global type f_pretty_result from function_object
+end type
+
+forward prototypes
+global function string f_pretty_result (string ps_result, string ps_location, string ps_location_description, string ps_result_value, string ps_result_unit, string ps_result_amount_flag, string ps_print_result_flag, string ps_print_result_separator, string ps_abnormal_flag, string ps_unit_preference, string ps_display_mask, boolean pb_amount_only, boolean pb_display_location, boolean pb_display_unit)
+end prototypes
+
+global function string f_pretty_result (string ps_result, string ps_location, string ps_location_description, string ps_result_value, string ps_result_unit, string ps_result_amount_flag, string ps_print_result_flag, string ps_print_result_separator, string ps_abnormal_flag, string ps_unit_preference, string ps_display_mask, boolean pb_amount_only, boolean pb_display_location, boolean pb_display_unit);u_unit luo_unit
+string ls_find
+string ls_result_item
+string ls_pretty_result
+string ls_null
+string ls_result_amount
+
+setnull(ls_null)
+ls_pretty_result = ""
+ls_result_amount = ""
+
+if isnull(ps_print_result_separator) then ps_print_result_separator = "="
+
+// If we're supposed to print the result description
+if ps_print_result_flag = "Y" and (ps_result_amount_flag = "N" or not pb_amount_only) then
+	ls_pretty_result += ps_result
+end if
+
+// If we have a real location
+if not isnull(ps_location) and ps_location <> "NA" and pb_display_location then
+	if isnull(ps_location_description) or trim(ps_location_description) = "" then
+		ps_location_description = datalist.location_description(ps_location)
+	end if
+	
+	if len(ps_location_description) > 0 then
+		if len(ls_pretty_result) > 0 then
+			ls_pretty_result = ps_location_description + ": " + ls_pretty_result
+		else
+			ls_pretty_result = ps_location_description
+		end if
+	end if
+end if
+
+// Get the result amount
+if ps_result_amount_flag = "Y" and not isnull(ps_result_value) and trim(ps_result_value) <> "" then
+	luo_unit = unit_list.find_unit(ps_result_unit)
+	if isnull(luo_unit) then
+		ls_result_amount = ""
+	else
+		if pb_display_unit then
+			ls_result_amount = luo_unit.pretty_amount_unit(ps_result_value, ps_unit_preference, ps_display_mask)
+		else
+			ls_result_amount = luo_unit.pretty_amount(ps_result_value, ps_unit_preference, ps_display_mask)
+		end if
+	end if	
+end if
+
+// Add the result amount
+if ls_result_amount <> "" then
+	if ls_pretty_result <> "" then ls_pretty_result += ps_print_result_separator
+	ls_pretty_result += ls_result_amount
+end if
+
+// If we don't have anything then return null
+if trim(ls_pretty_result) = "" then setnull(ls_pretty_result)
+
+return ls_pretty_result
+
+end function
+

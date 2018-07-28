@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_ccr_codetype.srs
+global type str_ccr_codetype from structure
+	string		Value
+	string		CodingSystem
+	string		Version
+end type
+

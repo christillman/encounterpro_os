@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_assessment_followup_treatments.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="536870912" )
+table(column=(type=char(64) updatewhereclause=yes name=icon dbname="c_Treatment_Type.icon" )
+ column=(type=char(255) updatewhereclause=yes name=treatment_description dbname="u_assessment_treat_definition.treatment_description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"u_assessment_treat_definition~" )  TABLE(NAME=~"c_Treatment_Type~" ) COLUMN(NAME=~"c_Treatment_Type.icon~") COLUMN(NAME=~"u_assessment_treat_definition.treatment_description~") COMPUTE(NAME=~"selected_flag = 1~")    JOIN (LEFT=~"u_assessment_treat_definition.treatment_type~"    OP =~"=~"RIGHT=~"c_Treatment_Type.treatment_type~" )WHERE(    EXP1 =~"u_assessment_treat_definition.parent_definition_id~"   OP =~"=~"    EXP2 =~":pl_parent_def_id~" ) ) ARG(NAME = ~"pl_parent_def_id~" TYPE = number) " arguments=(("pl_parent_def_id", number)) )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="137" y="8" height="80" width="1669" format="[general]"  name=treatment_description edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="80269524" )
+compute(band=detail alignment="0" expression="bitmap( icon )"border="6" color="0" x="9" y="12" height="80" width="96" format="[GENERAL]"  name=treat_icon  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="80269524" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

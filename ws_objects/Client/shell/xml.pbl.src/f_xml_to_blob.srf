@@ -1,0 +1,57 @@
+﻿$PBExportHeader$f_xml_to_blob.srf
+global type f_xml_to_blob from function_object
+end type
+
+forward prototypes
+global function blob f_xml_to_blob (string ps_xml)
+end prototypes
+
+global function blob f_xml_to_blob (string ps_xml);int li_pos1, li_pos2, li_pos3
+blob lbl_blob
+string ls_lowerxml
+string ls_encoding
+
+// First try to determine what encoding system is used
+
+if isnull(ps_xml) then
+	setnull(lbl_blob)
+	return lbl_blob
+end if
+
+if len(ps_xml) = 0 then
+	return lbl_blob
+end if
+
+ls_lowerxml = lower(ps_xml)
+
+li_pos1 = pos(ls_lowerxml, "encoding")
+if li_pos1 > 0 then
+	li_pos2 = pos(ls_lowerxml, "~"", li_pos1 + 8)
+	if li_pos2 > 0 then
+		li_pos3 = pos(ls_lowerxml, "~"", li_pos2 + 1)
+		if li_pos3 > li_pos2 then
+			ls_encoding = mid(ls_lowerxml, li_pos2 + 1, li_pos3 - li_pos2)
+			CHOOSE CASE ls_encoding
+				CASE "utf-16", "utf-16le"
+					lbl_blob = blob(ps_xml, EncodingUTF16LE!)
+				CASE "utf-16be"
+					lbl_blob = blob(ps_xml, EncodingUTF16BE!)
+				CASE ELSE
+					lbl_blob = blob(ps_xml, EncodingUTF8!)
+			END CHOOSE
+		else
+			lbl_blob = blob(ps_xml, EncodingUTF8!)
+		end if
+	else
+		lbl_blob = blob(ps_xml, EncodingUTF8!)
+	end if
+else
+	lbl_blob = blob(ps_xml, EncodingUTF8!)
+end if
+
+
+return lbl_blob
+
+
+end function
+

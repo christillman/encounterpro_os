@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_amountunit_type.srs
+global type str_amountunit_type from structure
+	string		Amount
+	str_unit_type		Unit
+end type
+

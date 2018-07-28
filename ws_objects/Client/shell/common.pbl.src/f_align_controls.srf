@@ -1,0 +1,190 @@
+﻿$PBExportHeader$f_align_controls.srf
+global type f_align_controls from function_object
+end type
+
+forward prototypes
+global subroutine f_align_control (windowobject po_reference, windowobject po_object_to_center, string ps_alignment)
+global subroutine f_align_controls (windowobject po_reference, windowobject po_object_to_center, string ps_alignment)
+end prototypes
+
+global subroutine f_align_control (windowobject po_reference, windowobject po_object_to_center, string ps_alignment);long i
+dragobject dobj
+line ln
+rectangle rect
+datawindow dw
+picturebutton pb
+
+long ll_left
+long ll_center
+long ll_right
+
+CHOOSE CASE po_reference.typeof()
+	CASE line!
+		ln = po_reference
+		ll_left = ln.beginx
+		ll_center = (ln.beginx + ln.endx) / 2
+		ll_right = ln.endx
+	CASE rectangle!
+		rect = po_reference
+		ll_left = rect.x
+		ll_center = rect.x + (rect.width / 2)
+		ll_right = rect.x + rect.width
+	CASE datawindow! // datawindows can get zoomed
+		dw = po_reference
+		ll_left = dw.x
+		ll_center = dw.x + (dw.width / 2)
+		ll_right = dw.x + dw.width
+	CASE picturebutton!
+		pb = po_reference
+		ll_left = pb.x
+		ll_center = pb.x + (pb.width / 2)
+		ll_right = pb.x + pb.width
+	CASE ELSE
+		dobj = po_reference
+		ll_left = dobj.x
+		ll_center = dobj.x + (dobj.width / 2)
+		ll_right = dobj.x + dobj.width
+END CHOOSE
+
+if upper(ps_alignment) = "CENTER" then
+	CHOOSE CASE po_object_to_center.typeof()
+		CASE line!
+			ln = po_reference
+			ln.beginx = ll_center - ((ln.endx - ln.beginx) / 2)
+		CASE rectangle!
+			rect = po_reference
+			rect.x = ll_center - (rect.width / 2)
+		CASE datawindow! // datawindows can get zoomed
+			dw = po_reference
+			dw.x = ll_center - (dw.width / 2)
+		CASE picturebutton!
+			pb = po_reference
+			pb.x = ll_center - (pb.width / 2)
+		CASE ELSE
+			dobj = po_reference
+			dobj.x = ll_center - (dobj.width / 2)
+	END CHOOSE
+elseif upper(ps_alignment) = "RIGHT" then
+	CHOOSE CASE po_object_to_center.typeof()
+		CASE line!
+			ln = po_reference
+			ln.beginx = ll_center - ((ln.endx - ln.beginx) / 2)
+		CASE rectangle!
+			rect = po_reference
+			rect.x = ll_center - (rect.width / 2)
+		CASE datawindow! // datawindows can get zoomed
+			dw = po_reference
+			dw.x = ll_center - (dw.width / 2)
+		CASE picturebutton!
+			pb = po_reference
+			pb.x = ll_center - (pb.width / 2)
+		CASE ELSE
+			dobj = po_reference
+			dobj.x = ll_center - (dobj.width / 2)
+	END CHOOSE
+else
+	// Default to left alignment
+end if
+
+
+end subroutine
+
+global subroutine f_align_controls (windowobject po_reference, windowobject po_object_to_center, string ps_alignment);long i
+dragobject dobj
+line ln
+rectangle rect
+datawindow dw
+picturebutton pb
+
+long ll_left
+long ll_center
+long ll_right
+
+CHOOSE CASE po_reference.typeof()
+	CASE line!
+		ln = po_reference
+		ll_left = ln.beginx
+		ll_center = (ln.beginx + ln.endx) / 2
+		ll_right = ln.endx
+	CASE rectangle!
+		rect = po_reference
+		ll_left = rect.x
+		ll_center = rect.x + (rect.width / 2)
+		ll_right = rect.x + rect.width
+	CASE datawindow! // datawindows can get zoomed
+		dw = po_reference
+		ll_left = dw.x
+		ll_center = dw.x + (dw.width / 2)
+		ll_right = dw.x + dw.width
+	CASE picturebutton!
+		pb = po_reference
+		ll_left = pb.x
+		ll_center = pb.x + (pb.width / 2)
+		ll_right = pb.x + pb.width
+	CASE ELSE
+		dobj = po_reference
+		ll_left = dobj.x
+		ll_center = dobj.x + (dobj.width / 2)
+		ll_right = dobj.x + dobj.width
+END CHOOSE
+
+if upper(ps_alignment) = "CENTER" then
+	CHOOSE CASE po_object_to_center.typeof()
+		CASE line!
+			ln = po_object_to_center
+			ln.beginx = ll_center - ((ln.endx - ln.beginx) / 2)
+		CASE rectangle!
+			rect = po_object_to_center
+			rect.x = ll_center - (rect.width / 2)
+		CASE datawindow! // datawindows can get zoomed
+			dw = po_object_to_center
+			dw.x = ll_center - (dw.width / 2)
+		CASE picturebutton!
+			pb = po_object_to_center
+			pb.x = ll_center - (pb.width / 2)
+		CASE ELSE
+			dobj = po_object_to_center
+			dobj.x = ll_center - (dobj.width / 2)
+	END CHOOSE
+elseif upper(ps_alignment) = "RIGHT" then
+	CHOOSE CASE po_object_to_center.typeof()
+		CASE line!
+			ln = po_object_to_center
+			ln.beginx = ll_right - ln.endx + ln.beginx
+		CASE rectangle!
+			rect = po_object_to_center
+			rect.x = ll_right - rect.width
+		CASE datawindow! // datawindows can get zoomed
+			dw = po_object_to_center
+			dw.x = ll_right - dw.width
+		CASE picturebutton!
+			pb = po_object_to_center
+			pb.x = ll_right - pb.width
+		CASE ELSE
+			dobj = po_object_to_center
+			dobj.x = ll_right - dobj.width
+	END CHOOSE
+else
+	// Default to left alignment
+	CHOOSE CASE po_object_to_center.typeof()
+		CASE line!
+			ln = po_object_to_center
+			ln.beginx = ll_left
+		CASE rectangle!
+			rect = po_object_to_center
+			rect.x = ll_left
+		CASE datawindow! // datawindows can get zoomed
+			dw = po_object_to_center
+			dw.x = ll_left
+		CASE picturebutton!
+			pb = po_object_to_center
+			pb.x = ll_left
+		CASE ELSE
+			dobj = po_object_to_center
+			dobj.x = ll_left
+	END CHOOSE
+end if
+
+
+end subroutine
+

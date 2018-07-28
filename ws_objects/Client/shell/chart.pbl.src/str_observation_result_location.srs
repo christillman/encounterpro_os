@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_observation_result_location.srs
+global type str_observation_result_location from structure
+	string		observation_id
+	integer		result_sequence
+	string		location
+	string		name
+end type
+

@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_authority_type.srs
+global type str_authority_type from structure
+	datetime		StartDate
+	datetime		EndDate
+	string		Sequence
+	str_actor_type		Authority
+end type
+

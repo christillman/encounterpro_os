@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_review_object_service.srf
+global type f_review_object_service from function_object
+end type
+
+forward prototypes
+global function string f_review_object_service (string ps_context_object)
+end prototypes
+
+global function string f_review_object_service (string ps_context_object);string ls_service
+
+setnull(ls_service)
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "general"
+	CASE "patient"
+		ls_service = "CHART"
+	CASE "encounter"
+		ls_service = "CHART"
+	CASE "assessment"
+		ls_service = "ASSESSMENT_REVIEW"
+	CASE "treatment"
+		ls_service = "TREATMENT_REVIEW"
+	CASE "observation"
+	CASE "attachment"
+		ls_service = "ATTACMENT"
+END CHOOSE
+
+
+return ls_service
+
+end function
+

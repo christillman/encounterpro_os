@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_cpr_page_attribute.srs
+global type str_cpr_page_attribute from structure
+	long		attribute_Sequence                  
+	string		attribute
+	string		value
+end type
+

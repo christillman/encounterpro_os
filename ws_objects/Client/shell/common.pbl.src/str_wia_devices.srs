@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_wia_devices.srs
+global type str_wia_devices from structure
+	long		device_count
+	str_wia_device		device[]
+end type
+

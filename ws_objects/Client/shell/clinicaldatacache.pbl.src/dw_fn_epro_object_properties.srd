@@ -1,0 +1,48 @@
+﻿$PBExportHeader$dw_fn_epro_object_properties.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(64) updatewhereclause=yes name=property_name dbname="property_name" )
+ column=(type=char(12) updatewhereclause=yes name=property_datatype dbname="property_datatype" )
+ column=(type=char(64) updatewhereclause=yes name=property_column dbname="property_column" )
+ column=(type=char(32766) updatewhereclause=no name=property_formula dbname="property_formula" )
+ column=(type=long updatewhereclause=yes name=cache_column_length dbname="cache_column_length" )
+ column=(type=long updatewhereclause=yes name=property_id dbname="property_id" )
+ column=(type=char(12) updatewhereclause=yes name=property_type dbname="property_type" )
+ retrieve="SELECT 	[property_name] ,
+	[property_datatype] ,
+	[property_column] ,
+	[property_formula] ,
+	[cache_column_length] ,
+	[property_id] ,
+	[property_type]
+FROM dbo.fn_epro_object_properties(:epro_object)
+
+" arguments=(("epro_object", string)) )
+text(band=header alignment="2" text="Property Name" border="0" color="33554432" x="5" y="4" height="64" width="1783" html.valueishtml="0"  name=property_name_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Datatype" border="0" color="33554432" x="1792" y="4" height="64" width="480" html.valueishtml="0"  name=property_datatype_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Column" border="0" color="33554432" x="2277" y="4" height="64" width="1783" html.valueishtml="0"  name=property_column_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Formula" border="0" color="33554432" x="4064" y="4" height="64" width="5760" html.valueishtml="0"  name=property_formula_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cache Column Length" border="0" color="33554432" x="9833" y="4" height="64" width="585" html.valueishtml="0"  name=cache_column_length_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Property Id" border="0" color="33554432" x="10423" y="4" height="64" width="329" html.valueishtml="0"  name=property_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="76" width="1783" format="[general]" html.valueishtml="0"  name=property_name visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="1792" y="4" height="76" width="357" format="[general]" html.valueishtml="0"  name=property_datatype visible="1" edit.limit=12 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="2277" y="4" height="76" width="1783" format="[general]" html.valueishtml="0"  name=property_column visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="4064" y="4" height="76" width="5760" format="[general]" html.valueishtml="0"  name=property_formula visible="1" edit.limit=32000 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="9833" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=cache_column_length visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="10423" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=property_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=0 border="0" color="33554432" x="10752" y="0" height="64" width="325" html.valueishtml="0"  name=property_type visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

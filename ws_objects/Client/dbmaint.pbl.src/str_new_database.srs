@@ -1,0 +1,13 @@
+﻿$PBExportHeader$str_new_database.srs
+global type str_new_database from structure
+	string		database_name
+	string		primary_path
+	string		attachments_path
+	string		workflow_path
+	string		log_path
+	long		initial_data_size
+	long		initial_attachments_size
+	long		initial_workflow_size
+	long		initial_log_size
+end type
+

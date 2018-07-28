@@ -1,0 +1,31 @@
+﻿$PBExportHeader$f_get_risk_level.srf
+global type f_get_risk_level from function_object
+end type
+
+forward prototypes
+global subroutine f_get_risk_level (ref long pl_risk_level, ref string ps_risk_description)
+end prototypes
+
+global subroutine f_get_risk_level (ref long pl_risk_level, ref string ps_risk_description);str_popup popup
+str_popup_return popup_return
+
+popup.dataobject = "dw_em_risk_pick"
+popup.datacolumn = 1
+popup.displaycolumn = 2
+popup.add_blank_row = true
+popup.blank_text = "N/A"
+
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return
+
+if popup_return.items[1] = "" then
+	setnull(pl_risk_level)
+else
+	pl_risk_level = long(popup_return.items[1])
+end if
+
+ps_risk_description = popup_return.descriptions[1]
+
+end subroutine
+

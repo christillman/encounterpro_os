@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_grids.srs
+global type str_grids from structure
+	long		grid_count
+	str_grid		grid[]
+	long		observed_by_count
+	string		observed_by[]
+	long		long_result_count
+	string		long_result[]
+end type
+

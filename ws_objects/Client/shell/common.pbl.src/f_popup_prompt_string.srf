@@ -1,0 +1,24 @@
+﻿$PBExportHeader$f_popup_prompt_string.srf
+global type f_popup_prompt_string from function_object
+end type
+
+forward prototypes
+global function string f_popup_prompt_string (string ps_prompt)
+end prototypes
+
+global function string f_popup_prompt_string (string ps_prompt);str_popup popup
+str_popup_return popup_return
+string ls_null
+
+setnull(ls_null)
+
+popup.title = ps_prompt
+
+openwithparm(w_pop_prompt_string, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+return popup_return.items[1]
+
+end function
+

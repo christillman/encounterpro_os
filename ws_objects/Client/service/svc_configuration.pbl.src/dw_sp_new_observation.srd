@@ -1,0 +1,13 @@
+﻿$PBExportHeader$dw_sp_new_observation.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=96 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=108 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=observation_id dbname="observation_id" )
+ procedure="1 execute dbo.sp_new_observation @ps_collection_location_domain = :ps_collection_location_domain, @ps_perform_location_domain = :ps_perform_location_domain, @ps_collection_procedure_id = :ps_collection_procedure_id, @ps_perform_procedure_id = :ps_perform_procedure_id, @ps_description = :ps_description, @ps_composite_flag = :ps_composite_flag, @ps_exclusive_flag = :ps_exclusive_flag, @ps_in_context_flag = :ps_in_context_flag, @ps_location_pick_flag = :ps_location_pick_flag, @ps_location_bill_flag = :ps_location_bill_flag, @ps_observation_type = :ps_observation_type, @ps_default_view = :ps_default_view, @ps_display_style = :ps_display_style" arguments=(("ps_collection_location_domain", string),("ps_perform_location_domain", string),("ps_collection_procedure_id", string),("ps_perform_procedure_id", string),("ps_description", string),("ps_composite_flag", string),("ps_exclusive_flag", string),("ps_in_context_flag", string),("ps_location_pick_flag", string),("ps_location_bill_flag", string),("ps_observation_type", string),("ps_default_view", string),("ps_display_style", string)) )
+text(band=header alignment="2" text="Observation Id" border="0" color="33554432" x="18" y="16" height="64" width="686" html.valueishtml="0"  name=observation_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="6" color="33554432" x="18" y="16" height="76" width="686" format="[general]" html.valueishtml="0"  name=observation_id visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

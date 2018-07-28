@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_c_report_command.srs
+global type str_c_report_command from structure
+	string		context_object
+	string		command
+	string		argument
+end type
+

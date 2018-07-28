@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_new_disease.srf
+global type f_new_disease from function_object
+end type
+
+forward prototypes
+global function long f_new_disease ()
+end prototypes
+
+global function long f_new_disease ();str_popup popup
+str_popup_return popup_return
+long ll_sts
+long ll_count
+u_ds_data luo_data
+long ll_disease_id
+string ls_description
+
+DO WHILE true
+	popup.title = "Enter the name of the new disease"
+	popup.displaycolumn = 80
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return -1
+	
+	ls_description = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Disease
+	WHERE description = :ls_description;
+	if not tf_check() then return -1
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a disease with that name.  Please enter a different name for the new disease.")
+	else
+		exit
+	end if
+LOOP
+
+ll_disease_id = sqlca.jmj_new_disease(ls_description)
+if not tf_check() then return -1
+
+return ll_disease_id
+
+end function
+

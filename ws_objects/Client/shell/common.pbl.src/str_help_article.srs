@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_help_article.srs
+global type str_help_article from structure
+	string		help_context
+	string		which_help
+	string		article
+	string		epro_domain
+	boolean		user_may_edit
+end type
+

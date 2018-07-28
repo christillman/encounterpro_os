@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_epro_object_definition.srs
+global type str_epro_object_definition from structure
+	string		epro_object
+	string		object_type
+	string		description
+	string		default_which_object
+	string		base_tablename
+	string		base_table_key_column
+	string		base_table_filter
+	string		base_table_sort
+	string		object_help
+	string		default_display_property_name
+end type
+

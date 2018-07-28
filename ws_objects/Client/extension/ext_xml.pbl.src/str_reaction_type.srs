@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_reaction_type.srs
+global type str_reaction_type from structure
+	string		description
+	string		severity
+end type
+

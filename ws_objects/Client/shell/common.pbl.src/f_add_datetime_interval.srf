@@ -1,0 +1,61 @@
+﻿$PBExportHeader$f_add_datetime_interval.srf
+global type f_add_datetime_interval from function_object
+end type
+
+forward prototypes
+global function datetime f_add_datetime_interval (datetime pdt_from_date_time, string ps_interval, boolean pb_add)
+end prototypes
+
+global function datetime f_add_datetime_interval (datetime pdt_from_date_time, string ps_interval, boolean pb_add);string ls_amount
+long ll_amount
+string ls_unit
+datetime ldt_to_date_time
+
+f_split_string(ps_interval, " ", ls_amount, ls_unit)
+ll_amount = long(ls_amount)
+if ll_amount = 0 or isnull(ls_amount) then return pdt_from_date_time
+
+if not pb_add then
+	ll_amount = -ll_amount
+end if
+
+ldt_to_date_time = pdt_from_date_time
+
+CHOOSE CASE lower(left(trim(ls_unit), 2))
+	CASE "ye"
+		SELECT DATEADD(year, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+	CASE "mo"
+		SELECT DATEADD(month, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+	CASE "da"
+		SELECT DATEADD(day, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+	CASE "ho"
+		SELECT DATEADD(hour, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+	CASE "mi"
+		SELECT DATEADD(minute, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+	CASE "se"
+		SELECT DATEADD(second, :ll_amount, :pdt_from_date_time)
+		INTO :ldt_to_date_time
+		FROM c_1_Record;
+		if not tf_check() then return pdt_from_date_time
+END CHOOSE
+
+return ldt_to_date_time
+
+
+end function
+

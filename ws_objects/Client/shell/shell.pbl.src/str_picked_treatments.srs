@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_picked_treatments.srs
+global type str_picked_treatments from structure
+	long		assessment_count
+	str_picked_assessment		assessments[]
+end type
+

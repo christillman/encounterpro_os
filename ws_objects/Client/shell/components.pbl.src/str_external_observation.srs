@@ -1,0 +1,12 @@
+﻿$PBExportHeader$str_external_observation.srs
+global type str_external_observation from structure
+	string		observation_id
+	integer		result_count
+	str_external_observation_result		result[]
+	str_external_observation_attachment_list		attachment_list
+	string		external_item_id
+	string		xml_results
+	long		owner_id
+	string		description
+end type
+

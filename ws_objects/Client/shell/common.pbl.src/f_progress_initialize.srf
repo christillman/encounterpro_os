@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_progress_initialize.srf
+global type f_progress_initialize from function_object
+end type
+
+forward prototypes
+global subroutine f_progress_initialize (long pl_minvalue, long pl_maxvalue)
+end prototypes
+
+global subroutine f_progress_initialize (long pl_minvalue, long pl_maxvalue);if isvalid(w_main) and not isnull(w_main) then
+	if isvalid(w_main.uo_help_bar) and not isnull(w_main.uo_help_bar) then
+		w_main.uo_help_bar.initialize_progress(pl_minvalue, pl_maxvalue)
+	end if
+end if
+
+end subroutine
+

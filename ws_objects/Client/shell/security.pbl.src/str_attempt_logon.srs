@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_attempt_logon.srs
+global type str_attempt_logon from structure
+	string		user_id
+	boolean		sticky_logon
+end type
+

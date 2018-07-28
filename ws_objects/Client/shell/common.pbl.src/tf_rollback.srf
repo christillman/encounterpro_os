@@ -1,0 +1,12 @@
+﻿$PBExportHeader$tf_rollback.srf
+global type tf_rollback from function_object
+end type
+
+forward prototypes
+global subroutine tf_rollback ()
+end prototypes
+
+global subroutine tf_rollback ();sqlca.rollback_transaction()
+
+end subroutine
+

@@ -1,0 +1,18 @@
+﻿$PBExportHeader$f_message.srf
+global type f_message from function_object
+end type
+
+forward prototypes
+global subroutine f_message (integer pi_message)
+end prototypes
+
+global subroutine f_message (integer pi_message);string ls_message
+
+ls_message = f_get_message(pi_message)
+if not isnull(ls_message) then
+	openwithparm(w_pop_message, ls_message)
+end if
+
+
+end subroutine
+

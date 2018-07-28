@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_ccr_datetimetype_2.srs
+global type str_ccr_datetimetype_2 from structure
+	str_ccr_codeddescriptiontype		datetimetype
+	datetime		exactdatetime
+	str_ccr_measuretype		age
+	str_ccr_codeddescriptiontype		approximatedatetime
+	str_ccr_datetime_range		datetimerange[]
+	long		SequencePosition
+	str_ccr_codeddescriptiontype		Modifier
+end type
+

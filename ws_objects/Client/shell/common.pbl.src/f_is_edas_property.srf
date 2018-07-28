@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_is_edas_property.srf
+global type f_is_edas_property from function_object
+end type
+
+forward prototypes
+global function boolean f_is_edas_property (string ps_property)
+end prototypes
+
+global function boolean f_is_edas_property (string ps_property);long ll_pos1
+long ll_pos2
+long ll_pos3
+
+// Allow the property to specified in the format <property_name>[(<object_type>.<object_property>)]
+ll_pos1 = pos(ps_property, "(")
+ll_pos2 = pos(ps_property, ")")
+ll_pos3 = pos(ps_property, ".")
+if ll_pos3 > 0 and (ll_pos1 = 0 or ll_pos3 < ll_pos1) then
+	// If the first period is before the first paren, or there is a period and no paren, then we know this is EDAS format
+	return true
+end if
+
+return false
+
+
+end function
+

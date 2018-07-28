@@ -1,0 +1,100 @@
+﻿$PBExportHeader$f_send_document.srf
+global type f_send_document from function_object
+end type
+
+forward prototypes
+global function integer f_send_document (string ps_document_type, long pl_addressee, string ps_encoding, string ps_document, string ps_sendermessageid, string ps_sender_user_id, string ps_recipient_user_id, boolean pb_test_message)
+end prototypes
+
+global function integer f_send_document (string ps_document_type, long pl_addressee, string ps_encoding, string ps_document, string ps_sendermessageid, string ps_sender_user_id, string ps_recipient_user_id, boolean pb_test_message);integer li_sts
+PBDOM_Document lo_xml_document
+string ls_xml_string
+boolean lb_success
+blob lbl_xml
+PBDOM_Element lo_root
+PBDOM_Element lo_payload
+string ls_options
+long ll_sts
+string ls_xml_return_string
+u_xml_document lo_return
+string ls_status
+string ls_statustext
+any la_rtn
+
+// validate the parameters
+if isnull(ps_document_type) then
+	log.log(this, "f_send_document_blob()", "Null document type", 4)
+	return -1
+end if
+
+if isnull(pl_addressee) then
+	log.log(this, "f_send_document_blob()", "Null addressee", 4)
+	return -1
+end if
+
+if isnull(ps_document) or len(ps_document) = 0 then
+	log.log(this, "f_send_document_blob()", "Null document", 4)
+	return -1
+end if
+
+// Get a wrapper xml document
+lo_xml_document = f_message_wrapper(ps_document_type, pl_addressee, ps_sendermessageid, ps_sender_user_id, ps_recipient_user_id)
+if isnull(lo_xml_document) then
+	log.log(this, "f_send_document_blob()", "Error creating message wrapper", 4)
+	return -1
+end if
+
+// Add the payload
+lo_root = lo_xml_document.getrootelement()
+lo_payload = CREATE PBDOM_Element
+lo_payload.setname("Payload")
+if len(ps_encoding) > 0 then
+	lo_payload.setattribute("Encoding", ps_encoding)
+end if
+lo_payload.addcontent(ps_document)
+lo_root.addcontent(lo_payload)
+
+
+// Stream the xml document to a string
+ls_xml_string = f_xml_document_string(lo_xml_document)
+
+li_sts = common_thread.sendtoepie(ls_xml_string, pb_test_message, ls_xml_return_string)
+if li_sts < 0 then
+	log.log(this, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned error (" + string(li_sts) + ")", 4)
+	return -1
+elseif li_sts = 0 then
+	log.log(this, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned an empty string", 4)
+	return -1
+end if
+
+if len(ls_xml_return_string) > 0 then
+	li_sts = f_get_xml_document(ls_xml_return_string, lo_return)
+	if li_sts <= 0 then
+		log.log(this, "f_send_document()", "Error sending document:  Return Status not recognized as XML document", 4)
+		ll_sts = -1
+	end if
+	ls_status = lo_return.get_value("Status")
+	if isnull(ls_status) then
+		log.log(this, "f_send_document()", "Error sending document:  Return document does not contain Status tag", 4)
+		ll_sts = -1
+	end if
+	if lower(ls_status) = "success" then
+		li_sts = 1
+	else
+		ls_statustext = lo_return.get_value("StatusText")
+		if isnull(ls_statustext) then ls_statustext = "Null"
+		log.log(this, "f_send_document()", "Error sending document:  Status returned = " + ls_status + ", Message = " + ls_statustext, 4)
+		ll_sts = -1
+	end if
+else
+	log.log(this, "f_send_document()", "Error sending document:  No Return Status", 4)
+	ll_sts = -1
+end if
+
+if ll_sts < 0 then return -1
+
+Return 1
+
+
+end function
+

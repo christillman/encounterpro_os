@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_wia_sources.srs
+global type str_wia_sources from structure
+	integer		source_type_count
+	str_wia_source_type		source_type[]
+end type
+

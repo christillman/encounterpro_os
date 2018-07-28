@@ -1,0 +1,140 @@
+﻿$PBExportHeader$f_edas_lookup_property_value.srf
+global type f_edas_lookup_property_value from function_object
+end type
+
+forward prototypes
+global function integer f_edas_lookup_property_value (str_epro_object_definition pstr_epro_object, string ps_epro_object_key, ref str_property_specification pstr_property, str_complete_context pstr_context, str_attributes pstr_attributes, ref str_property_value pstr_property_value)
+end prototypes
+
+global function integer f_edas_lookup_property_value (str_epro_object_definition pstr_epro_object, string ps_epro_object_key, ref str_property_specification pstr_property, str_complete_context pstr_context, str_attributes pstr_attributes, ref str_property_value pstr_property_value);//str_property lstr_property  -- replaced with pstr_property.property
+integer li_sts
+string ls_referenced_object_key
+string ls_component_id
+u_component_property luo_property
+str_attributes lstr_attributes
+string ls_observation_id
+string ls_result_sequence
+integer li_result_sequence
+long ll_object_key
+string ls_temp
+long ll_pos1
+long ll_pos2
+long ll_pos3
+string ls_filter_property
+str_property lstr_filter_property
+str_property_value lstr_filter_property_value
+string ls_filter_property_value
+string ls_object_key
+
+str_property_value lstr_object_key
+u_ds_epro_object_cache luo_data_parent
+u_ds_epro_object_cache luo_data_target
+string ls_null
+
+setnull(ls_null)
+
+// Set the referenced_epro_object in the value structure
+pstr_property_value.referenced_epro_object = pstr_property.property.property_value_object
+pstr_property_value.property = pstr_property.property
+
+CHOOSE CASE lower(pstr_property.property.property_type)
+	CASE "object", "built in", "user defined"
+//		if len(pstr_property.property.property_value_object) > 0 &
+//		  and len(pstr_property.referenced_epro_object.base_tablename) > 0 then
+		if len(pstr_property.property.property_value_object) > 0 then
+			// This property references another Epro Object that is not a virtual object
+			
+			// If the object reference has a filter that needs resolving from the referring object, then resolve it here
+			// The signal is if there is a token in the property_value_object_filter that has multiple parts (i.e. has a period in the token)
+			ll_pos1 = pos(lower(pstr_property.property.property_value_object_filter), "%" + lower(pstr_property.property.property_object) + ".")
+			DO WHILE ll_pos1 > 0
+				ll_pos2 = ll_pos1 + len(pstr_property.property.property_object) + 2
+				ll_pos3 = pos(pstr_property.property.property_value_object_filter, "%", ll_pos2)
+				if ll_pos3 > 0 then
+					// We have the token
+					ls_filter_property = mid(pstr_property.property.property_value_object_filter, ll_pos2, ll_pos3 - ll_pos2)
+					// Get the property spec
+					li_sts = datalist.find_epro_object_property(pstr_epro_object.epro_object, ls_filter_property, lstr_filter_property)
+					if li_sts <= 0 then 	return -1
+					// Get the value
+					li_sts = datalist.epro_object_data_cache.get_property(pstr_epro_object, lstr_filter_property, ps_epro_object_key, pstr_context, lstr_filter_property_value)
+					if li_sts <= 0 then return li_sts
+					// Substitute in the value for the token
+					if len(lstr_filter_property_value.value) > 0 then
+						ls_filter_property_value = lstr_filter_property_value.value
+					else
+						ls_filter_property_value = ""
+					end if
+					pstr_property.property.property_value_object_filter = REPLACE(pstr_property.property.property_value_object_filter, ll_pos1, ll_pos3 - ll_pos1 + 1, ls_filter_property_value)
+				end if
+				
+				// See if there's another token
+				ll_pos1 = pos(lower(pstr_property.property.property_value_object_filter), "%" + lower(pstr_property.property.property_object) + ".", ll_pos1 + LEN(ls_filter_property_value))
+			LOOP
+			
+			// Find the desired object key
+			li_sts = datalist.epro_object_data_cache.find_object_key(pstr_epro_object, ps_epro_object_key, pstr_property, pstr_context, pstr_property_value)
+			if li_sts <= 0 then
+				// Didn't find one
+				return -1
+			end if
+		else
+			li_sts = datalist.epro_object_data_cache.get_property(pstr_epro_object, pstr_property, ps_epro_object_key, pstr_context, pstr_property_value)
+			if li_sts <= 0 then return li_sts
+		end if
+			
+CASE "observation"
+		CHOOSE CASE lower(pstr_epro_object.object_type)
+			CASE "context"
+				// Get observation_id and result_sequence from the script
+				f_split_string(pstr_property.property.script, "|", ls_observation_id, ls_result_sequence)
+				li_result_sequence = integer(ls_result_sequence)
+				pstr_property_value.value = sqlca.fn_patient_object_last_result(pstr_context.cpr_id, &
+																									pstr_property.property.property_object, &
+																									ll_object_key, &
+																									ls_observation_id, &
+																									li_result_sequence)
+				pstr_property_value.display_value = pstr_property_value.value		
+			CASE "global"
+			CASE "dependent"
+			CASE ELSE
+				log.log(this, "f_edas_lookup_property_value()", "Invalid parent object type (" + pstr_epro_object.object_type + ")", 4)
+				return -1
+		END CHOOSE
+	CASE "sql"
+		// The assessment key may not be the problem_id.  If not, the look it up.
+		if lower(pstr_epro_object.epro_object) = "assessment" and lower(pstr_epro_object.base_table_key_column) = "id" then
+				SELECT max(problem_id)
+				INTO :ll_object_key
+				FROM p_Assessment
+				WHERE cpr_id = :pstr_context.cpr_id
+				AND id = :ps_epro_object_key;
+				if not tf_check() then return -1
+				
+				ls_object_key = string(ll_object_key)
+			else
+				ls_object_key = ps_epro_object_key
+			end if
+				
+		pstr_property_value = f_sql_property(pstr_property.property, pstr_context.cpr_id, ls_object_key, pstr_attributes)
+	CASE ELSE
+		// Use the associated scripting component to process the property
+		ls_component_id = datalist.property_type_component_id(pstr_property.property.property_type)
+		if isnull(ls_component_id) then
+			log.log(this, "f_get_property()", "property type component_id not found (" +pstr_property.property.property_type + ")", 4)
+			return -1
+		end if
+		
+		lstr_attributes = f_get_context_attributes()
+		f_attribute_add_attributes(lstr_attributes, pstr_attributes)
+		
+		luo_property = component_manager.get_component(ls_component_id)
+		pstr_property_value.value = luo_property.get_property(pstr_property.property.property_id, lstr_attributes)
+		pstr_property_value.display_value = pstr_property_value.value
+		component_manager.destroy_component(luo_property)
+END CHOOSE
+
+return 1
+
+end function
+

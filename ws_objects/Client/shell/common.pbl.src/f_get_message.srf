@@ -1,0 +1,54 @@
+﻿$PBExportHeader$f_get_message.srf
+global type f_get_message from function_object
+end type
+
+forward prototypes
+global function string f_get_message (integer pi_message)
+end prototypes
+
+global function string f_get_message (integer pi_message);string ls_message
+
+CHOOSE CASE pi_message
+	CASE 1
+		ls_message = "You have exceeded 100 patients with a demonstration license.  You will not be allowed to create any more encounters."
+	CASE 2
+		ls_message = "The license for this installation has expired.  You will not be allowed to create a new encouner."
+	CASE 3
+		ls_message = "This installation is not properly licensed.  You will not be allowed to create a new encouner."
+	CASE 4
+		ls_message = "License Service is not running. You will not be able to create new encounters.  Please restart the license service.  If problem persists, please contact JMJ Technologies, Inc. or your authorized EncounterPRO reseller."
+	CASE 5
+		ls_message = "Unable to Find License. You will not be able to create new encounters.  Please contact JMJ Technologies, Inc. or your authorized EncounterPRO reseller."
+	CASE 6
+		ls_message = "License has expired. You will not be able to create new encounters.  Please contact JMJ Technologies, Inc. or your authorized EncounterPRO reseller."
+	CASE 7
+		ls_message = "This is a licensed user who has already been recently reactivated.  You may not reactivate this user at this time."
+	CASE 8
+		ls_message = "Activating this user would violate your license.  This user may not be activated at this time."
+	CASE 9
+		ls_message = "You are already at your limit for active physicians."
+	CASE 10
+		ls_message = "You are already at your limit for active physician extenders."
+	CASE 11
+		ls_message = "This installation has too many active physicians.  You will not be able to create new encounters.  Please reduce the number of active physicians in accordance with your license."
+	CASE 12
+		ls_message = "This installation has too many active physician extenders.  You will not be able to create new encounters.  Please reduce the number of active physician extenders in accordance with your license."
+	CASE 13
+		ls_message = "License Service is not running.  You will be able to create new encounters while database contains fewer than 100 patients."
+	CASE 14
+		ls_message = "This is a demonstration installation.  All clinical data herein is fictitious.  Do not chart any actual patient encounters.  Do not configure any short lists, examinations, progress notes or histories that cannot be deleted.  Nothing in this database can be transferred to a database containing the charts of actual patients."
+	CASE 15
+		ls_message = "This installation is not properly licensed and contains more than 100 patients.  You will not be able to create new encounters."
+	CASE 16
+		ls_message = "This database is configured to use Application Role security, and you are connecting using the DBLib (MSS) drivers.  This combination is not allowed.  Please contact your system administrator or JMJ Technical Support for assistance."
+	CASE 17
+		ls_message = "This computer session is operating with less than 16-bit color.  The performance of EncounterPRO will be noticeably degraded if this computer is not configured to use at least 16-bit color.  Please see your system administrator for assistance."
+	CASE ELSE
+		setnull(ls_message)
+END CHOOSE
+
+return ls_message
+
+
+end function
+

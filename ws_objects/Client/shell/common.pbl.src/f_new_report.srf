@@ -1,0 +1,195 @@
+﻿$PBExportHeader$f_new_report.srf
+global type f_new_report from function_object
+end type
+
+forward prototypes
+global function string f_new_report (str_attributes pstr_attributes)
+end prototypes
+
+global function string f_new_report (str_attributes pstr_attributes);long i
+str_popup popup
+str_popup_return popup_return
+string ls_context_object
+string ls_description
+string ls_component_id
+string ls_report_category
+string ls_report_id
+string ls_null
+string ls_machine_component_id
+long ll_sts
+long ll_count
+u_ds_data luo_data
+long ll_display_script_id
+string ls_version_description
+str_config_object_info lstr_config_object_info
+string ls_document_component_id
+string ls_component_guid
+string ls_document_component_guid
+
+setnull(ls_null)
+setnull(ls_machine_component_id)
+setnull(ls_version_description)
+
+DO WHILE true
+	popup.title = "Enter title of new report"
+	openwithparm(w_pop_prompt_string, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_description = popup_return.items[1]
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Report_Definition
+	WHERE description = :ls_description;
+	if not tf_check() then return ls_null
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "There is already a report with that title.  Please enter a different title for the new report.")
+	else
+		exit
+	end if
+LOOP
+
+popup.title = "Select Report Context"
+popup.dataobject = "dw_domain_notranslate_list"
+popup.datacolumn = 2
+popup.displaycolumn = 2
+popup.argument_count = 1
+popup.argument[1] = "CONTEXT_OBJECT"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_context_object = popup_return.items[1]
+
+
+ls_component_id = f_attribute_find_attribute(pstr_attributes, "component_id")
+if isnull(ls_component_id) then
+	popup.title = "Select Report Component"
+	popup.dataobject = "dw_domain_translate_list"
+	popup.datacolumn = 2
+	popup.displaycolumn = 3
+	popup.argument_count = 1
+	popup.argument[1] = "Report Component"
+	popup.add_blank_row = true
+	popup.blank_text = "Other"
+	popup.blank_at_bottom = true
+	openwithparm(w_pop_pick, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	if len(popup_return.items[1]) > 0 then
+		ls_component_id = popup_return.items[1]
+	else
+		popup.title = "Select Document Component"
+		popup.dataobject = "dw_component_pick"
+		popup.datacolumn = 1
+		popup.displaycolumn = 4
+		popup.argument_count = 1
+		popup.argument[1] = "Document"
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return ls_null
+		
+		ls_component_id = popup_return.items[1]
+	end if
+end if
+
+popup.title = "Select Report Category"
+popup.dataobject = "dw_report_category_pick"
+popup.datacolumn = 2
+popup.displaycolumn = 2
+popup.argument_count = 1
+popup.argument[1] = ls_context_object
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then
+	setnull(ls_report_category)
+else
+	ls_report_category = popup_return.items[1]
+end if
+
+// Set the component variables
+if upper(ls_component_id) = "RPT_RTF" then
+	setnull(ls_document_component_id)
+	ls_component_guid = "{08D7A828-5908-494B-98D7-F73E3B3793FE}"
+	ls_document_component_guid = "{08D7A828-5908-494B-98D7-F73E3B3793FE}"
+else
+	// Only the RTF report is still a REPORT component.  Any other new report will be a DOCUMENT component
+	ls_document_component_id = ls_component_id
+	ls_component_id = "RPT_Document"
+	ls_component_guid = "{24CE12C2-E98F-412D-BD27-E3D2503F1858}"
+	SELECT CAST(id AS varchar(40))
+	INTO :ls_document_component_guid
+	FROM dbo.fn_components()
+	WHERE component_id = :ls_document_component_id;
+	if not tf_check() then return ls_null
+end if
+
+// Remove the component attributes because we have it local variables for special handling
+f_attribute_delete_attribute(pstr_attributes, "component_id")
+
+/////////////////////////////////////////////////////////////////
+// Create the report
+/////////////////////////////////////////////////////////////////
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_new_report_ds")
+ll_count = luo_data.retrieve(ls_description , &
+										ls_context_object , &
+										ls_report_category , &
+										ls_component_id , &
+										ls_machine_component_id , &
+										current_user.user_id , &
+										sqlca.customer_id , &
+										'OK' )
+if ll_count <= 0 then
+	return ls_null
+end if
+
+ls_report_id = luo_data.object.report_id[1]
+
+if isnull(ls_report_id) or trim(ls_report_id) = "" then
+	setnull(ls_report_id)
+end if
+
+DESTROY luo_data
+/////////////////////////////////////////////////////////////////
+
+// Add the component attribute
+if len(ls_document_component_id) > 0 then
+	sqlca.sp_set_report_attribute(ls_report_id, "document_component_id", ls_document_component_id, ls_component_guid)
+	if not tf_check() then return ls_report_id
+end if
+
+// Add the attributes
+for i = 1 to pstr_attributes.attribute_count
+	sqlca.sp_set_report_attribute(ls_report_id, pstr_attributes.attribute[i].attribute, pstr_attributes.attribute[i].value, ls_document_component_guid)
+	if not tf_check() then return ls_report_id
+next
+
+// If this is an RTF report then go ahead and create the root RTF script and attach it to the report
+if upper(ls_component_id) = "RPT_RTF" then
+	ll_display_script_id = sqlca.sp_new_display_script(ls_context_object, &
+																		ls_description, &
+																		ls_description, &
+																		current_user.user_id, &
+																		"RTF", &
+																		ls_report_id)
+	if not tf_check() then return ls_report_id
+	if isnull(ll_display_script_id) or ll_display_script_id = 0 then return ls_report_id
+	
+	sqlca.sp_set_report_attribute(ls_report_id, "display_script_id", string(ll_display_script_id), ls_component_guid)
+	if not tf_check() then return ls_report_id
+
+	ll_sts = f_get_config_object_info(ls_report_id, lstr_config_object_info)
+	if ll_sts < 0 then return ls_report_id
+
+	ll_sts = f_check_out_config_object_2(lstr_config_object_info, ls_version_description)
+	if ll_sts < 0 then return ls_report_id
+end if
+
+
+return ls_report_id
+
+end function
+

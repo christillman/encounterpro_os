@@ -1,0 +1,75 @@
+﻿$PBExportHeader$tf_get_procedure_detail_vaccine.srf
+global type tf_get_procedure_detail_vaccine from function_object
+end type
+
+forward prototypes
+global function integer tf_get_procedure_detail_vaccine (string ps_procedure_id, ref string ps_description, ref string ps_cpt_code, ref string ps_procedure_category_id, ref string ps_category_description, ref decimal pdc_charge, ref string ps_vaccine_id, ref long pl_billing_id, ref real pr_units)
+end prototypes
+
+global function integer tf_get_procedure_detail_vaccine (string ps_procedure_id, ref string ps_description, ref string ps_cpt_code, ref string ps_procedure_category_id, ref string ps_category_description, ref decimal pdc_charge, ref string ps_vaccine_id, ref long pl_billing_id, ref real pr_units);string ls_description
+string ls_cpt_code
+string ls_procedure_category_id
+string ls_category_description
+decimal ldc_charge
+string ls_vaccine_id
+long ll_billing_id
+integer li_sts
+string ls_procedure_type
+real lr_units
+
+tf_begin_transaction(this, "tf_get_procedure_detail()")
+
+  SELECT description,
+  			procedure_type,
+  			cpt_code,
+			procedure_category_id,
+			charge,
+			vaccine_id,
+			billing_code,
+			units
+    INTO :ls_description,
+	 		:ls_procedure_type,
+	 		:ls_cpt_code,
+			:ls_procedure_category_id,
+			:ldc_charge,
+			:ls_vaccine_id,
+			:ll_billing_id,
+			:lr_units
+    FROM c_Procedure (NOLOCK)
+   WHERE procedure_id = :ps_procedure_id;
+
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	li_sts = 0
+else
+	li_sts = 1
+  SELECT description
+    INTO :ls_category_description
+    FROM c_Procedure_Category (NOLOCK)
+   WHERE procedure_type = :ls_procedure_type
+	AND procedure_category_id = :ls_procedure_category_id;
+
+	if not tf_check() then return -1
+	if sqlca.sqlcode = 100 then
+		setnull(ls_procedure_category_id)
+	end if
+end if
+
+tf_commit()
+
+if li_sts = 1 then
+	ps_description = ls_description
+	ps_cpt_code = ls_cpt_code
+	ps_procedure_category_id = ls_procedure_category_id
+	ps_category_description = ls_category_description
+	pdc_charge = ldc_charge
+	ps_vaccine_id = ls_vaccine_id
+	pl_billing_id = ll_billing_id
+	pr_units = lr_units
+end if
+
+return li_sts
+
+end function
+

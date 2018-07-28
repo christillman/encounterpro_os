@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_get_patient_id.srf
+global type f_get_patient_id from function_object
+end type
+
+forward prototypes
+global function string f_get_patient_id (string ps_domain, string ps_value)
+end prototypes
+
+global function string f_get_patient_id (string ps_domain, string ps_value);/*************************************************************************
+*
+* description: find the patient id (cpr) from a domain
+*
+* 
+*
+*
+*************************************************************************/
+
+string		ls_cprid
+
+setnull(ls_cprid)
+Choose Case upper(ps_domain)
+	Case "JMJBILLINGID"
+		// look up by billing id
+		SELECT cpr_id
+		INTO :ls_cprid
+		FROM p_Patient
+		WHERE	p_Patient.billing_id = :ps_value
+		and patient_status = 'ACTIVE';
+		IF NOT tf_check() THEN RETURN ls_cprid
+		if sqlca.sqlcode = 100 then
+			setnull(ls_cprid)
+		end if
+		if not isnull(ls_cprid) then
+			if not isnull(current_patient) then // if the patient is not matching
+				if ls_cprid <> current_patient.cpr_id then
+					log.log(this,"process_jmj_xml","invalid cprid ("+current_patient.cpr_id+","+ls_cprid+")",4)
+					setnull(ls_cprid)
+				end if
+			end if
+		end if
+	Case "LABCORP"
+		// look up from patient progress
+	Case "QUEST"
+		// look up from patient progress
+End Choose
+
+return ls_cprid
+end function
+

@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_grid_row.srs
+global type str_grid_row from structure
+	date		row_date
+	long		row_stage
+	string		row_title
+	str_grid_column		column[]
+	boolean		abnormal_flag
+end type
+

@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_edas_which_object.srs
+global type str_edas_which_object from structure
+	string		which_object_string
+	string		object_identifier
+	string		filter_statement
+	long		ordinal		descriptor "comment" = "Which instance.  Positive = count forward from first instance.  Negative = count backwards from the last instance."
+	long		recent_set_count		descriptor "comment" = "Causes ordinal to be interpreted within the last n object instances"
+	string		object_key
+end type
+

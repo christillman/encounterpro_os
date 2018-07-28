@@ -1,0 +1,13 @@
+﻿$PBExportHeader$str_drug_administration.srs
+global type str_drug_administration from structure
+	string		drug_id
+	integer		administration_sequence
+	string		administer_frequency
+	integer		times_per_day
+	real		administer_amount
+	string		administer_unit
+	string		mult_by_what
+	string		calc_per
+	string		description
+end type
+

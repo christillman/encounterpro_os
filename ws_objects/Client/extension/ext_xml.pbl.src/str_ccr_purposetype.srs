@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_ccr_purposetype.srs
+global type str_ccr_purposetype from structure
+	str_ccr_datetimetype		datetime[]
+	str_ccr_codeddescriptiontype		description[]
+	string		orderrequest[]
+	string		indications[]
+	string		referenceid[]
+	string		commentid[]
+end type
+

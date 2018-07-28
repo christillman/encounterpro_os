@@ -1,0 +1,23 @@
+﻿$PBExportHeader$str_assessment_treatment_definition.srs
+global type str_assessment_treatment_definition from structure
+	long		definition_id
+	string		assessment_id
+	string		treatment_type
+	string		treatment_description
+	string		treatment_mode
+	long		workplan_id
+	long		followup_workplan_id
+	string		user_id
+	integer		sort_sequence
+	string		instructions
+	long		parent_definition_id
+	string		child_flag
+	str_attributes		attributes
+	integer		update_flag
+	boolean		common_list
+	long		open_encounter_id
+	datetime		begin_date
+	datetime		end_date
+	long		problem_id
+end type
+

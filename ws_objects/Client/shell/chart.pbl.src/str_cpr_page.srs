@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_cpr_page.srs
+global type str_cpr_page from structure
+	string		description
+	string		page_class                    
+	long		page_id               
+	u_cpr_page_base		page_object
+	string		bitmap
+	integer		attribue_count
+	str_cpr_page_param		attribute[]
+end type
+

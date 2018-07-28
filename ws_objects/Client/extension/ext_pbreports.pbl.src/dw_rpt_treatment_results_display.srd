@@ -1,0 +1,23 @@
+﻿$PBExportHeader$dw_rpt_treatment_results_display.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=100 color="553648127" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=0 color="553648127"  height.autosize=yes)
+table(column=(type=long updatewhereclause=no name=treatment_id dbname="treatment_id" )
+ column=(type=char(80) updatewhereclause=no name=treatment_description dbname="treatment_description" )
+ column=(type=char(80) updatewhereclause=no name=observation dbname="observation" )
+ column=(type=char(80) updatewhereclause=no name=result dbname="result" )
+ column=(type=char(128) updatewhereclause=no name=treatment_icon dbname="treatment_icon" )
+ column=(type=long updatewhereclause=no name=treatment_sort dbname="treatment_sort" )
+ column=(type=long updatewhereclause=no name=result_sort dbname="result_sort" )
+  sort="treatment_sort A result_sort A " )
+group(level=1 header.height=96 trailer.height=0 by=("treatment_id" ) header.color="536870912" trailer.color="536870912" )
+text(band=header alignment="0" text="Recent Procedures"border="0" color="0" x="5" y="0" height="100" width="997"  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.underline="1" background.mode="2" background.color="16777215" )
+compute(band=header.1 alignment="0" expression="bitmap(treatment_icon)"border="0" color="0" x="14" y="12" height="76" width="105" format="[general]"  name=icon  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=header.1 id=2 alignment="0" tabsequence=32766 border="0" color="0" x="142" y="12" height="76" width="2985" format="[general]"  name=treatment_description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="242" y="4" height="56" width="754" format="[general]"  name=observation visible="1~tif(isnull(observation), 0, 1)" height.autosize=yes edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1010~tif(observation='', 242, 1010)" y="4" height="56" width="2112" format="[general]"  name=result visible="1~tif(isnull(observation), 0, 1)" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+
+sparse(names="observation")htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

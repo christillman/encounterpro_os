@@ -1,0 +1,27 @@
+﻿$PBExportHeader$dw_exam_selection.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(40) updatewhereclause=yes name=exam_description dbname="u_Exam_Definition.description" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=exam_sequence dbname="u_Exam_Selection.exam_sequence" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=exam_selection_sequence dbname="u_Exam_Selection.exam_selection_sequence" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=treatment_type dbname="u_Exam_Selection.treatment_type" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=user_id dbname="u_Exam_Selection.user_id" )
+ column=(type=long update=yes updatewhereclause=yes name=age_range_id dbname="u_Exam_Selection.age_range_id" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=sex dbname="u_Exam_Selection.sex" )
+ column=(type=char(12) update=yes updatewhereclause=yes name=race dbname="u_Exam_Selection.race" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="u_Exam_Selection.sort_sequence" )
+ column=(type=char(40) updatewhereclause=yes name=age_range_description dbname="c_Age_Range.description" )
+ column=(type=char(64) updatewhereclause=yes name=treatment_type_icon dbname="c_Treatment_Type.icon" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"u_Exam_Definition~" )  TABLE(NAME=~"u_Exam_Selection~" )  TABLE(NAME=~"c_Age_Range~" )  TABLE(NAME=~"c_Treatment_Type~" ) COMPUTE(NAME=~"selected_flag=0~") COLUMN(NAME=~"u_Exam_Definition.description~") COLUMN(NAME=~"u_Exam_Selection.exam_sequence~") COLUMN(NAME=~"u_Exam_Selection.exam_selection_sequence~") COLUMN(NAME=~"u_Exam_Selection.treatment_type~") COLUMN(NAME=~"u_Exam_Selection.user_id~") COLUMN(NAME=~"u_Exam_Selection.age_range_id~") COLUMN(NAME=~"u_Exam_Selection.sex~") COLUMN(NAME=~"u_Exam_Selection.race~") COLUMN(NAME=~"u_Exam_Selection.sort_sequence~") COLUMN(NAME=~"c_Age_Range.description~") COLUMN(NAME=~"c_Treatment_Type.icon~")    JOIN (LEFT=~"u_Exam_Selection.age_range_id~"    OP =~"=~"RIGHT=~"c_Age_Range.age_range_id~"    OUTER1 =~"u_Exam_Selection.age_range_id~" )    JOIN (LEFT=~"u_Exam_Definition.exam_sequence~"    OP =~"=~"RIGHT=~"u_Exam_Selection.exam_sequence~" )    JOIN (LEFT=~"u_Exam_Selection.treatment_type~"    OP =~"=~"RIGHT=~"c_Treatment_Type.treatment_type~" )WHERE(    EXP1 =~"u_Exam_Definition.root_observation_id~"   OP =~"=~"    EXP2 =~":root_observation_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"u_Exam_Selection.treatment_type~"   OP =~"=~"    EXP2 =~":treatment_type~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"u_Exam_Selection.user_id~"   OP =~"=~"    EXP2 =~":user_id~" ) ) ARG(NAME = ~"root_observation_id~" TYPE = string)  ARG(NAME = ~"treatment_type~" TYPE = string)  ARG(NAME = ~"user_id~" TYPE = string) " update="u_Exam_Selection" updatewhere=0 updatekeyinplace=no arguments=(("root_observation_id", string),("treatment_type", string),("user_id", string))  sort="sort_sequence A exam_selection_sequence A " )
+text(band=detail alignment="0" text="" border="6" color="0" x="155" y="12" height="96" width="1870"  name=t_background  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="2" expression="if(isnull(age_range_description), 'Any Age', age_range_description) + ~", ~" +
+if(sex=~"M~", ~"Male~", if(sex=~"F~", ~"Female~", ~"Any Gender~")) + ~", ~" +
+if(isnull(race), 'Any Race', race) "border="0" color="0" x="1042" y="24" height="64" width="969" format="[GENERAL]"  name=compute_criteria  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="169" y="24" height="64" width="855" format="[general]"  name=exam_description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+compute(band=detail alignment="0" expression="bitmap(treatment_type_icon)"border="6" color="0" x="14" y="12" height="96" width="119" format="[GENERAL]"  name=compute_1  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

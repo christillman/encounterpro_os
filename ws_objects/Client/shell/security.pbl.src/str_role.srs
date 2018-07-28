@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_role.srs
+global type str_role from structure
+	string		role_id
+	string		role_name
+	string		description
+	long		color
+end type
+

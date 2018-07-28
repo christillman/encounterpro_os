@@ -1,0 +1,307 @@
+﻿$PBExportHeader$f_edas_parse_which_object.srf
+global type f_edas_parse_which_object from function_object
+end type
+
+forward prototypes
+global function integer f_edas_parse_which_object (string ps_which_object, ref str_edas_which_object pstr_which_object, ref string ps_remainder, ref string ps_error_message)
+end prototypes
+
+global function integer f_edas_parse_which_object (string ps_which_object, ref str_edas_which_object pstr_which_object, ref string ps_remainder, ref string ps_error_message);// This method takes the ps_which_object string and parses out the object_identifier, filter_statement and ordinal parts.  The right parenthesis must exist.
+// The parsed peices are passed back in the pstr_which_object structure
+// If there is text after the right parenthesis it is passed back as the ps_remainder param
+// If there is an error then an error message is passed back in the ps_error_message param and the method returns -1
+//
+integer li_sts
+long ll_p_pos
+long ll_q_pos
+long ll_r_pos
+string ls_first
+long ll_first
+long ll_close_quote
+string ls_char_before_close_quote
+string ls_ordinal
+string ls_which_object_string
+string ls_recent_set_count
+string ls_temp
+
+ll_first = 0
+
+
+setnull(pstr_which_object.which_object_string)
+setnull(pstr_which_object.object_identifier)
+setnull(pstr_which_object.filter_statement)
+setnull(pstr_which_object.ordinal)
+setnull(pstr_which_object.recent_set_count)
+setnull(pstr_which_object.object_key)
+
+setnull(ps_remainder)
+
+if isnull(ps_which_object) or ps_which_object = "" then return 1
+
+ls_which_object_string = ps_which_object
+
+// If the caller passed in the left paren, then remove it
+if left(ls_which_object_string, 1) = "(" then
+	ls_which_object_string = mid(ls_which_object_string, 2)
+else
+	// If we don't start with a paren, then the entire string must be one which_object string.  Add a right paren so that we find it in the right place
+	ls_which_object_string += ")"
+end if
+
+if isnull(ls_which_object_string) or ls_which_object_string = "" then
+	ps_error_message = "Empty <WhichObject>"
+	return -1
+end if
+
+ll_first = 100000
+ll_p_pos = pos(ls_which_object_string, ".")
+if ll_p_pos > 0 and ll_p_pos < ll_first then
+	ll_first = ll_p_pos
+	ls_first = "p"
+end if
+
+ll_q_pos = pos(ls_which_object_string, "~"")
+if ll_q_pos > 0 and ll_q_pos < ll_first then
+	ll_first = ll_q_pos
+	ls_first = "q"
+end if
+
+ll_r_pos = pos(ls_which_object_string, ")")
+if ll_r_pos > 0 and ll_r_pos < ll_first then
+	ll_first = ll_r_pos
+	ls_first = "r"
+end if
+
+if ll_first >= 100000 then
+	ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+	return -1
+end if
+
+CHOOSE CASE ls_first
+	CASE "p"
+		// We found a period first so the first part must be an object identifier
+		pstr_which_object.object_identifier = left(ls_which_object_string, ll_first - 1)
+		ls_which_object_string = mid(ls_which_object_string, ll_first + 1)
+		
+		// The next character must be either a quote or a right paren or a number
+		if left(ls_which_object_string, 1) = "~"" then
+			// Found an open quote right after the period
+			
+			// Find the close quote.  It won't have a "~" before it
+			ll_close_quote = 1
+			do 
+				ll_close_quote = pos(ls_which_object_string, "~"", ll_close_quote + 1)
+				if ll_close_quote = 0 then
+					ps_error_message = "Invalid <WhichObject>.  Matching Quote character not found."
+					return -1
+				end if
+				ls_char_before_close_quote = mid(ls_which_object_string, ll_close_quote - 1, 1)
+			loop while ls_char_before_close_quote = "~~"
+	
+			// The filter statement is the text between the open quote and the close quote
+			pstr_which_object.filter_statement = mid(ls_which_object_string, 2, ll_close_quote - 2)
+			ls_which_object_string = mid(ls_which_object_string, ll_close_quote + 1)
+			
+			// See if we have an ordinal
+			if len(ls_which_object_string) > 0 then
+				if left(ls_which_object_string, 1) = "." then
+					ll_r_pos = pos(ls_which_object_string, ")")
+					if ll_r_pos > 0 then
+						if ll_r_pos <= 2 then
+							// no ordinal found after period
+							ps_error_message = "Invalid <WhichObject>.  No ordinal found after period."
+							return -1
+						else
+							ls_ordinal = mid(ls_which_object_string, 2, ll_r_pos - 1)
+							if pos(ls_ordinal, "-") > 1 then
+								f_split_string(ls_ordinal, "-", ls_recent_set_count, ls_temp)
+								ls_ordinal = ls_temp
+								if isnumber(ls_recent_set_count) then
+									pstr_which_object.recent_set_count = long(ls_recent_set_count)
+								else
+									// If something is supplied before the minus sign it must be numeric
+									ps_error_message = "Invalid <WhichObject>.  Ordinal not valid."
+									return -1
+								end if
+							end if
+							if isnumber(ls_ordinal) then
+								pstr_which_object.ordinal = long(ls_ordinal)
+								ps_remainder = mid(ls_which_object_string, ll_r_pos + 1)
+								pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+								return 1
+							else
+								// should have found a numeric ordinal
+								ps_error_message = "Invalid <WhichObject>.  Ordinal not valid."
+								return -1
+							end if
+						end if
+					else
+						// should have found a right paren
+						ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+						return -1
+					end if
+					
+				elseif left(ls_which_object_string, 1) = ")" then
+					ps_remainder = mid(ls_which_object_string, 2)
+					pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+					return 1
+				else
+					// should have found either "." or ")"
+					ps_error_message = "Invalid <WhichObject>.  syntax error after close quote."
+					return -1
+				end if
+			else
+				// no right paren... error
+				ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+				return -1
+			end if
+			//////// end found quote after period
+
+
+		else
+			ll_r_pos = pos(ls_which_object_string, ")")
+			if ll_r_pos > 0 then
+				if ll_r_pos = 1 then
+					// no ordinal found after period
+					ps_error_message = "Invalid <WhichObject>.  No ordinal found after period."
+					return -1
+				else
+					ls_ordinal = left(ls_which_object_string, ll_r_pos - 1)
+					if pos(ls_ordinal, "-") > 1 then
+						f_split_string(ls_ordinal, "-", ls_recent_set_count, ls_temp)
+						ls_ordinal = ls_temp
+						if isnumber(ls_recent_set_count) then
+							pstr_which_object.recent_set_count = long(ls_recent_set_count)
+						else
+							// If something is supplied before the minus sign it must be numeric
+							ps_error_message = "Invalid <WhichObject>.  Ordinal not valid."
+							return -1
+						end if
+					end if
+					if isnumber(ls_ordinal) then
+						pstr_which_object.ordinal = long(ls_ordinal)
+						ps_remainder = mid(ls_which_object_string, ll_r_pos + 1)
+						pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+						return 1
+					else
+						// should have found a numeric ordinal
+						ps_error_message = "Invalid <WhichObject>.  Ordinal not numeric."
+						return -1
+					end if
+				end if
+			else
+				// should have found a right paren
+				ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+				return -1
+			end if
+		end if
+		
+	CASE "q"
+		// if the quote wasn't the first character, then we have an error
+		if ll_first <> 1 then
+			ps_error_message = "Invalid <WhichObject>.  Quote character found out of place."
+			return -1
+		end if
+
+		// We found a quote first so the first part must be a filter statement
+
+		// Find the close quote.  It won't have a "~" before it
+		ll_close_quote = 1
+		do 
+			ll_close_quote = pos(ls_which_object_string, "~"", ll_close_quote + 1)
+			if ll_close_quote = 0 then
+				ps_error_message = "Invalid <WhichObject>.  Matching Quote character not found."
+				return -1
+			end if
+			ls_char_before_close_quote = mid(ls_which_object_string, ll_close_quote - 1, 1)
+		loop while ls_char_before_close_quote = "~~"
+
+		// The filter statement is the text between the open quote and the close quote
+		pstr_which_object.filter_statement = mid(ls_which_object_string, 2, ll_close_quote - 2)
+		ls_which_object_string = mid(ls_which_object_string, ll_close_quote + 1)
+		
+		// See if we have an ordinal
+		if len(ls_which_object_string) > 0 then
+			if left(ls_which_object_string, 1) = "." then
+				ll_r_pos = pos(ls_which_object_string, ")")
+				if ll_r_pos > 0 then
+					if ll_r_pos <= 2 then
+						// no ordinal found after period
+						ps_error_message = "Invalid <WhichObject>.  No ordinal found after period."
+						return -1
+					else
+						ls_ordinal = mid(ls_which_object_string, 2, ll_r_pos - 1)
+						if pos(ls_ordinal, "-") > 1 then
+							f_split_string(ls_ordinal, "-", ls_recent_set_count, ls_temp)
+							ls_ordinal = ls_temp
+							if isnumber(ls_recent_set_count) then
+								pstr_which_object.recent_set_count = long(ls_recent_set_count)
+							else
+								// If something is supplied before the minus sign it must be numeric
+								ps_error_message = "Invalid <WhichObject>.  Ordinal not valid."
+								return -1
+							end if
+						end if
+						if isnumber(ls_ordinal) then
+							pstr_which_object.ordinal = long(ls_ordinal)
+							ps_remainder = mid(ls_which_object_string, ll_r_pos + 1)
+							pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+							return 1
+						else
+							// should have found a numeric ordinal
+							ps_error_message = "Invalid <WhichObject>.  Ordinal not numeric."
+							return -1
+						end if
+					end if
+				else
+					// should have found a right paren
+					ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+					return -1
+				end if
+				
+			elseif left(ls_which_object_string, 1) = ")" then
+				ps_remainder = mid(ls_which_object_string, 2)
+				pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+				return 1
+			else
+				// should have found either "." or ")"
+				ps_error_message = "Invalid <WhichObject>.  syntax error after close quote."
+				return -1
+			end if
+		else
+			// no right paren... error
+			ps_error_message = "Invalid <WhichObject>.  No right parenthesis found."
+			return -1
+		end if
+	CASE "r"
+		if ll_first > 1 then
+			// If the first delimiter found was a right paren, then the entire which_object string must be either an object identifier or an ordinal
+			
+			// See if it's an ordinal
+			ls_ordinal = left(ls_which_object_string, ll_first - 1)
+			if pos(ls_ordinal, "-") > 1 then
+				f_split_string(ls_ordinal, "-", ls_recent_set_count, ls_temp)
+				if isnumber(ls_recent_set_count) then
+					pstr_which_object.recent_set_count = long(ls_recent_set_count)
+					ls_ordinal = ls_temp
+				end if
+			end if
+			if isnumber(ls_ordinal) then
+				pstr_which_object.ordinal = long(ls_ordinal)
+			else
+				pstr_which_object.object_identifier = ls_ordinal
+			end if
+			ps_remainder = mid(ls_which_object_string, ll_first + 1)
+			pstr_which_object.which_object_string = left(ps_which_object, len(ps_which_object) - len(ps_remainder))
+			return 1
+		else
+			ps_error_message = "Invalid <WhichObject>.  No <WhichObject>found."
+			return -1
+		end if
+END CHOOSE
+
+return -1
+
+
+end function
+

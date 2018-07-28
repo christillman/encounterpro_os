@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_manage_documents.srf
+global type f_manage_documents from function_object
+end type
+
+forward prototypes
+global function integer f_manage_documents (string ps_context_object, string ps_cpr_id, long pl_object_key)
+end prototypes
+
+global function integer f_manage_documents (string ps_context_object, string ps_cpr_id, long pl_object_key);str_service_info lstr_service
+
+lstr_service.service = common_thread.manage_documents_service
+f_attribute_add_attribute(lstr_service.attributes, "context_object", ps_context_object)
+f_attribute_add_attribute(lstr_service.attributes, "cpr_id", ps_cpr_id)
+f_attribute_add_attribute(lstr_service.attributes, "object_key", string(pl_object_key))
+
+
+return service_list.do_service(lstr_service)
+
+
+
+end function
+

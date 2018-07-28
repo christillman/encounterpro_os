@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_capture_signature.srf
+global type f_capture_signature from function_object
+end type
+
+forward prototypes
+global function integer f_capture_signature (str_capture_signature_request pstr_capture_signature_request, ref str_captured_signature pstr_captured_signature)
+end prototypes
+
+global function integer f_capture_signature (str_capture_signature_request pstr_capture_signature_request, ref str_captured_signature pstr_captured_signature);u_component_observation luo_source
+str_external_source lstr_external_source
+integer li_sts
+u_xml_document luo_xml_document
+str_attributes lstr_attributes
+
+// Find the external source component info
+li_sts = common_thread.get_external_source("Signature", lstr_external_source)
+if li_sts <= 0 then return li_sts
+
+// Set the component attributes
+f_attribute_add_attribute(lstr_attributes, "external_source", lstr_external_source.external_source)
+f_attribute_add_attribute(lstr_attributes, "claimed_id", pstr_capture_signature_request.capture_from_user)
+f_attribute_add_attribute(lstr_attributes, "gravityprompt", pstr_capture_signature_request.capture_prompt)
+f_attribute_add_attribute(lstr_attributes, "title", pstr_capture_signature_request.capture_title)
+f_attribute_add_attribute(lstr_attributes, "allow_user_change", f_boolean_to_string(pstr_capture_signature_request.allow_user_change))
+
+// Instantiate the component
+luo_source = component_manager.get_component(lstr_external_source.component_id, lstr_attributes)
+if isnull(luo_source) then return -1
+
+li_sts = luo_source.do_source()
+
+if luo_source.observation_count < 1 then return 0
+
+if luo_source.observations[1].attachment_list.attachment_count < 1 then return 0
+
+pstr_captured_signature.signature_external_source = lstr_external_source.external_source
+pstr_captured_signature.captured_date_time = datetime(today(), now())
+pstr_captured_signature.capture_title = pstr_capture_signature_request.capture_title
+pstr_captured_signature.capture_prompt = pstr_capture_signature_request.capture_prompt
+
+pstr_captured_signature.captured_signature_file = luo_source.observations[1].attachment_list.attachments[1].attachment
+pstr_captured_signature.captured_signature_file_type = luo_source.observations[1].attachment_list.attachments[1].extension
+
+pstr_captured_signature.signature_render_file = luo_source.observations[1].attachment_list.attachments[1].attachment_render_file
+pstr_captured_signature.signature_render_file_type = luo_source.observations[1].attachment_list.attachments[1].attachment_render_file_type
+
+if len(luo_source.observations[1].attachment_list.attachments[1].attached_by_user_id) > 0 then
+	pstr_captured_signature.captured_from_user = luo_source.observations[1].attachment_list.attachments[1].attached_by_user_id
+else
+	pstr_captured_signature.captured_from_user = pstr_capture_signature_request.capture_from_user
+end if
+
+pstr_captured_signature.observed_by_user = current_scribe.user_id
+
+
+// Destroy the component
+component_manager.destroy_component(luo_source)
+
+
+return 1
+
+end function
+

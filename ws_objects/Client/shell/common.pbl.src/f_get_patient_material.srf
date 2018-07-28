@@ -1,0 +1,99 @@
+﻿$PBExportHeader$f_get_patient_material.srf
+global type f_get_patient_material from function_object
+end type
+
+forward prototypes
+global function str_patient_material f_get_patient_material (long pl_material_id, boolean pb_include_object)
+end prototypes
+
+global function str_patient_material f_get_patient_material (long pl_material_id, boolean pb_include_object);
+str_patient_material lstr_material
+
+setnull(lstr_material.material_id)
+
+if isnull(pl_material_id) then
+	setnull(lstr_material.material_id)
+	return lstr_material
+end if
+
+SELECT title,
+		category,
+		status,
+		extension,
+		CAST(id AS varchar(40)) as id,
+		owner_id,
+		last_updated,
+		owner_key,
+		url,
+		filename,
+		parent_config_object_id,
+		created,
+		created_by,
+		version
+INTO :lstr_material.title,
+		:lstr_material.category,
+		:lstr_material.status,
+		:lstr_material.extension,
+		:lstr_material.id,
+		:lstr_material.owner_id,
+		:lstr_material.last_updated,
+		:lstr_material.owner_key,
+		:lstr_material.url,
+		:lstr_material.filename,
+		:lstr_material.parent_config_object_id,
+		:lstr_material.created,
+		:lstr_material.created_by,
+		:lstr_material.version
+FROM c_Patient_Material
+WHERE material_id = :pl_material_id;
+if not tf_check() then
+	setnull(lstr_material.material_id)
+	return lstr_material
+end if
+if sqlca.sqlcode = 100 then
+	log.log(this, "f_get_patient_material()", "Material_id not found (" + string(pl_material_id) + ")", 3)
+	setnull(lstr_material.material_id)
+	return lstr_material
+end if
+
+if lstr_material.category > 0 then
+	SELECT description
+	INTO :lstr_material.category_description
+	FROM c_Patient_Material_Category
+	WHERE material_category_id = :lstr_material.category;
+	if not tf_check() then
+		setnull(lstr_material.material_id)
+		return lstr_material
+	end if
+	if sqlca.sqlcode = 100 then
+		setnull(lstr_material.category)
+		setnull(lstr_material.category_description)
+	end if
+else
+	setnull(lstr_material.category)
+	setnull(lstr_material.category_description)
+end if
+	
+
+if pb_include_object then
+	SELECTBLOB object
+	INTO :lstr_material.material_object
+	FROM c_Patient_Material
+	WHERE material_id = :pl_material_id;
+	if not tf_check() then
+		setnull(lstr_material.material_id)
+		return lstr_material
+	end if
+	if sqlca.sqlcode = 100 then
+		log.log(this, "f_get_patient_material()", "Material_id not found getting object (" + string(pl_material_id) + ")", 3)
+		setnull(lstr_material.material_id)
+		return lstr_material
+	end if
+end if
+
+// If we get here then we have a valid material structure
+lstr_material.material_id = pl_material_id
+return lstr_material
+
+end function
+

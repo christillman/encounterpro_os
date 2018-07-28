@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_code_type.srs
+global type str_code_type from structure
+	string		code_value
+	string		code_type
+	string		code_version
+end type
+

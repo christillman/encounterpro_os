@@ -1,0 +1,19 @@
+﻿$PBExportHeader$f_parse_version.srf
+global type f_parse_version from function_object
+end type
+
+forward prototypes
+global subroutine f_parse_version (string ps_version, ref string ps_major_release, ref string ps_database_version, ref string ps_build)
+end prototypes
+
+global subroutine f_parse_version (string ps_version, ref string ps_major_release, ref string ps_database_version, ref string ps_build);string ls_temp
+
+f_split_string(ps_version, ".", ps_major_release, ls_temp)
+f_split_string(ls_temp, ".", ps_database_version, ps_build)
+
+
+return
+
+
+end subroutine
+

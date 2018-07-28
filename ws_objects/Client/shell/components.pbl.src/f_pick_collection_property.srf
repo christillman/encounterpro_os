@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_pick_collection_property.srf
+global type f_pick_collection_property from function_object
+end type
+
+forward prototypes
+global function string f_pick_collection_property (str_document_element_set_collection pstr_collection, string ps_current_property, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_pick_collection_property (str_document_element_set_collection pstr_collection, string ps_current_property, str_complete_context pstr_context, str_attributes pstr_attributes);str_popup popup
+str_popup_return popup_return
+string ls_property
+w_data_address_builder_tree lw_edas
+str_edas_context lstr_edas_context
+string ls_null
+string ls_sql
+long i
+
+setnull(ls_null)
+
+CHOOSE CASE upper(pstr_collection.collectiontype)
+	CASE "EDAS"
+		lstr_edas_context.root_object = pstr_collection.collectiondefinition
+		lstr_edas_context.objects_only = false
+		lstr_edas_context.context = pstr_context
+//		lstr_edas_context.attributes = pstr_attributes
+		lstr_edas_context.property = ps_current_property
+		
+		openwithparm(lw_edas,  lstr_edas_context, "w_data_address_builder_tree")
+		ls_property = message.stringparm
+		if len(ls_property) > 0 then
+			return ls_property
+		end if
+	CASE "SQL", "DATAWINDOW"
+		if isnull(pstr_collection.collectiondata) or not isvalid(pstr_collection.collectiondata) then return ls_null
+		
+		popup.data_row_count = integer(pstr_collection.collectiondata.Object.DataWindow.Column.Count)
+		
+		for i = 1 to popup.data_row_count
+			popup.items[i] = pstr_collection.collectiondata.describe("#" + string(i) + ".name")
+		next
+		
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return ls_null
+		
+		return "." + popup_return.items[1]
+END CHOOSE
+
+return ls_null
+
+
+end function
+

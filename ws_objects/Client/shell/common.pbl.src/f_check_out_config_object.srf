@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_check_out_config_object.srf
+global type f_check_out_config_object from function_object
+end type
+
+forward prototypes
+global function integer f_check_out_config_object (ref str_config_object_info pstr_config_object)
+end prototypes
+
+global function integer f_check_out_config_object (ref str_config_object_info pstr_config_object);string ls_version_description
+str_popup popup
+str_popup_return popup_return
+
+popup.title = "Enter description/reason for the new version (i.e. what will change?)"
+popup.multiselect = true // Allow empty string
+openwithparm(w_pop_prompt_string, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return 0
+if len(popup_return.items[1]) > 0 then
+	ls_version_description = popup_return.items[1]
+else
+	setnull(ls_version_description)
+end if
+
+return f_check_out_config_object_2(pstr_config_object, ls_version_description)
+
+
+
+
+end function
+

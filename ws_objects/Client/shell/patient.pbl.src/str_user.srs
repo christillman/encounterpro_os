@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_user.srs
+global type str_user from structure
+	string		user_id
+	string		user_full_name
+	string		user_short_name
+	long		color
+end type
+

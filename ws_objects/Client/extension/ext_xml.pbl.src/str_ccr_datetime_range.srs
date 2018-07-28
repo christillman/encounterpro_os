@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_ccr_datetime_range.srs
+global type str_ccr_datetime_range from structure
+	str_ccr_datetime_rangepart		BeginRange
+	str_ccr_datetime_rangepart		EndRange
+end type
+

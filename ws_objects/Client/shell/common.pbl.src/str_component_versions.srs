@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_component_versions.srs
+global type str_component_versions from structure
+	long		version_count
+	str_component_version		version[]
+end type
+

@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_ccr_refill.srs
+global type str_ccr_refill from structure
+	long		Number[]
+	str_ccr_measuretype		Quantity[]
+	str_ccr_codeddescriptiontype		Status
+	str_ccr_datetimetype		DateTime[]
+	string		Comment[]
+end type
+

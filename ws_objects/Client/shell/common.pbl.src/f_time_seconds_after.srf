@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_time_seconds_after.srf
+global type f_time_seconds_after from function_object
+end type
+
+forward prototypes
+global function decimal f_time_seconds_after (time pt_from_time, time pt_to_time)
+end prototypes
+
+global function decimal f_time_seconds_after (time pt_from_time, time pt_to_time);Long ll_start, ll_end
+Long ll_temp
+decimal ld_seconds
+
+//Check parameters
+If IsNull(pt_from_time) or IsNull(pt_to_time) Then
+	setnull(ld_seconds)
+	return ld_seconds
+end if
+
+ll_start = Long (String (pt_from_time,"fff"))
+ll_temp = Second(pt_from_time) * 1000
+ll_start = ll_start + ll_temp
+ll_temp = Minute(pt_from_time) * 60000
+ll_start = ll_start + ll_temp
+ll_temp = hour(pt_from_time) *  3600000
+ll_start = ll_start + ll_temp
+
+ll_end = Long (String (pt_to_time,"fff"))
+ll_temp = Second(pt_to_time) * 1000
+ll_end = ll_end + ll_temp
+ll_temp = minute(pt_to_time) * 60000
+ll_end = ll_end + ll_temp
+ll_temp = hour(pt_to_time) * 3600000
+ll_end = ll_end + ll_temp
+
+ld_seconds = (ll_end - ll_start) / 1000
+
+return ld_seconds
+
+end function
+

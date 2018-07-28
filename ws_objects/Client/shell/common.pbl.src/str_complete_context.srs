@@ -1,0 +1,20 @@
+﻿$PBExportHeader$str_complete_context.srs
+global type str_complete_context from structure
+	string		cpr_id
+	string		context_object
+	long		encounter_id
+	long		problem_id
+	long		treatment_id
+	long		observation_sequence
+	long		attachment_id
+	string		purpose
+	string		other_object_key_field
+	string		other_object_key_value
+	long		customer_id
+	string		office_id
+	string		user_id
+	string		scribe_user_id
+	long		service_id
+	long		document_id
+end type
+

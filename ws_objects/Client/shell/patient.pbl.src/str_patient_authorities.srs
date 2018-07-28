@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_patient_authorities.srs
+global type str_patient_authorities from structure
+	integer		authority_count
+	str_patient_authority		authority[]
+end type
+

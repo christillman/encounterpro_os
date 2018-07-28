@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_lists.srs
+global type str_lists from structure
+	integer		row_count
+	string		items[]
+	string		item_codes[]
+end type
+

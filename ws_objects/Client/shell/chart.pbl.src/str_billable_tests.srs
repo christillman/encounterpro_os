@@ -1,0 +1,15 @@
+﻿$PBExportHeader$str_billable_tests.srs
+global type str_billable_tests from structure
+	integer		objective_set
+	string		observation_id
+	long		problem_id
+	integer		treatment_sequence
+	string		collected
+	string		performed
+	string		procedure_id
+	string		description
+	string		send_out_flag
+	string		cpt_code
+	decimal {0}	charge
+end type
+

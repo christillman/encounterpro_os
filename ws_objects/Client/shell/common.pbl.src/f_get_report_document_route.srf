@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_get_report_document_route.srf
+global type f_get_report_document_route from function_object
+end type
+
+forward prototypes
+global function string f_get_report_document_route (string ps_report_id, string ps_ordered_by, string ps_ordered_for, string ps_purpose, string ps_cpr_id)
+end prototypes
+
+global function string f_get_report_document_route (string ps_report_id, string ps_ordered_by, string ps_ordered_for, string ps_purpose, string ps_cpr_id);u_ds_data luo_data
+long ll_count
+string ls_null
+string ls_document_route
+boolean lb_found
+string ls_default_document_route
+long i
+string ls_report_description
+str_attributes lstr_attributes
+long ll_null
+
+setnull(ls_null)
+setnull(ll_null)
+
+setnull(ls_document_route)
+
+// If the dispatch_method was not passed in then determine the dispatch_method from the recipient
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_get_document_dispatch_methods")
+ll_count = luo_data.retrieve(ps_report_id, ps_ordered_by, ps_ordered_for, ps_purpose)
+if ll_count < 0 then
+	return ls_null
+elseif ll_count = 0 then
+	log.log(this, "order_document()", "No routes available for report (" + ls_report_description + ")", 4)
+	openwithparm(w_pop_message, "There are no routes available by which to send this document")
+	return ls_null
+elseif ll_count = 1 then
+	ls_document_route = luo_data.object.document_route[1]
+else
+	ls_default_document_route = f_get_patient_property_value(ps_cpr_id, ll_null, "Patient", "Default Route For " + ls_report_description, lstr_attributes)
+	lb_found = false
+	for i = 1 to ll_count
+		ls_document_route = luo_data.object.document_route[i]
+		if lower(ls_document_route) = lower(ls_default_document_route) then
+			lb_found = true
+			exit
+		end if
+	next
+	if not lb_found then
+		ls_document_route = luo_data.object.document_route[1]
+	end if
+end if
+
+DESTROY luo_data
+
+
+return ls_document_route
+
+end function
+

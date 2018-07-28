@@ -1,0 +1,43 @@
+﻿$PBExportHeader$dw_assessments_icd9.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=problem_id dbname="p_Assessment.problem_id" dbalias=".problem_id" )
+ column=(type=long updatewhereclause=yes name=diagnosis_sequence dbname="p_Assessment.diagnosis_sequence" dbalias=".diagnosis_sequence" )
+ column=(type=char(1) updatewhereclause=yes name=p_assessment_current_flag dbname="p_Assessment.current_flag" dbalias=".current_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Assessment_Definition~" )  TABLE(NAME=~"p_Assessment~" ) COLUMN(NAME=~"p_Assessment.problem_id~") COLUMN(NAME=~"p_Assessment.diagnosis_sequence~") COLUMN(NAME=~"p_Assessment.current_flag~")    JOIN (LEFT=~"c_Assessment_Definition.assessment_id~"    OP =~"=~"RIGHT=~"p_Assessment.assessment_id~" )WHERE(    EXP1 =~"p_Assessment.cpr_id~"   OP =~"=~"    EXP2 =~":cpr_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Assessment_Definition.icd_9_code~"   OP =~"like~"    EXP2 =~":icd_9_part~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Assessment.current_flag~"   OP =~"=~"    EXP2 =~"'Y'~" ) ) ARG(NAME = ~"cpr_id~" TYPE = string)  ARG(NAME = ~"icd_9_part~" TYPE = string) " arguments=(("cpr_id", string),("icd_9_part", string)) )
+text(band=header alignment="2" text="P Assessment
+Problem Id" border="0" color="0" x="5" y="4" height="128" width="393" html.valueishtml="0"  name=p_assessment_problem_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Diagnosis Sequence" border="0" color="0" x="402" y="4" height="128" width="544" html.valueishtml="0"  name=p_assessment_diagnosis_sequence_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Open Encounter Id" border="0" color="0" x="951" y="4" height="128" width="494" html.valueishtml="0"  name=p_assessment_open_encounter_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Assessment Type" border="0" color="0" x="1449" y="4" height="128" width="480" html.valueishtml="0"  name=p_assessment_assessment_type_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Assessment Id" border="0" color="0" x="1938" y="4" height="128" width="686" html.valueishtml="0"  name=p_assessment_assessment_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Assessment" border="0" color="0" x="2629" y="4" height="128" width="2222" html.valueishtml="0"  name=p_assessment_assessment_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Begin Date" border="0" color="0" x="4855" y="4" height="128" width="603" html.valueishtml="0"  name=p_assessment_begin_date_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+Assessment Status" border="0" color="0" x="5463" y="4" height="128" width="526" html.valueishtml="0"  name=p_assessment_assessment_status_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="P Assessment
+End Date" border="0" color="0" x="5993" y="4" height="128" width="603" html.valueishtml="0"  name=p_assessment_end_date_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=problem_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="402" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=diagnosis_sequence visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=0 border="0" color="0" x="6597" y="0" height="64" width="27" html.valueishtml="0"  name=p_assessment_current_flag visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

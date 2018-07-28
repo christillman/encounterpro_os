@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_access_control_list.srs
+global type str_access_control_list from structure
+	integer		access_count
+	str_access_control_item		access_list[]
+	boolean		default_grant
+end type
+

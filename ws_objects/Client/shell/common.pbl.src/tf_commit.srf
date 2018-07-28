@@ -1,0 +1,12 @@
+﻿$PBExportHeader$tf_commit.srf
+global type tf_commit from function_object
+end type
+
+forward prototypes
+global subroutine tf_commit ()
+end prototypes
+
+global subroutine tf_commit ();sqlca.commit_transaction()
+
+end subroutine
+

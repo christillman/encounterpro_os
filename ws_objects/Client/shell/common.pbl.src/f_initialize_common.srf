@@ -1,0 +1,167 @@
+﻿$PBExportHeader$f_initialize_common.srf
+global type f_initialize_common from function_object
+end type
+
+forward prototypes
+global function integer f_initialize_common (string ps_module)
+end prototypes
+
+global function integer f_initialize_common (string ps_module);string ls_temp
+string ls_version
+integer li_sts, i
+decimal ld_temp
+string ls_decimal_character
+string ls_message
+string ls_security
+long ll_count
+string ls_description
+
+if cpr_mode <> "SERVER" then
+	// Issue the startup message
+	ls_message = "Session started on " + log.get_computername() + " @ " + string(datetime(today(), now()), "[shortdate] [time]")
+	ls_message += ",  Version " + f_app_version()
+	log.log(this, "f_initialize_common()", ls_message, 2)
+end if
+
+// Connect to the database
+sqlca.mylog = log
+
+if not sqlca.connected then
+	li_sts = sqlca.dbconnect(ps_module)
+	if li_sts <= 0 then return -1
+end if
+
+log.set_cprdb(sqlca)
+
+
+// Initialize the cacheing system
+datalist = CREATE u_list_data
+
+component_manager = CREATE u_component_manager
+component_manager.initialize()
+
+
+
+// Determine our computer id
+if cpr_mode = "DBMAINT" then
+	user_list = CREATE u_component_security_pin
+	common_thread.practice_user_id =  '$!!' + string(sqlca.customer_id)
+	return 1
+else
+	////////////////////////////////////////////////////////////////////////////////
+	// Find the pracitce user_id
+	////////////////////////////////////////////////////////////////////////////////
+	SELECT user_id
+	INTO :common_thread.practice_user_id
+	FROM c_User
+	WHERE actor_class = 'Practice'
+	AND owner_id = :sqlca.customer_id;
+	if not tf_check() then return -1
+	if sqlca.sqlcode = 100 then
+		SELECT min(user_id)
+		INTO :common_thread.practice_user_id
+		FROM c_User
+		WHERE actor_class = 'Practice'
+		AND status = 'OK';
+		if not tf_check() then return -1
+		if sqlca.sqlcode = 100 then
+			// didn't find it so make it
+			common_thread.practice_user_id = '$!!' + string(sqlca.customer_id)
+			SELECT count(*)
+			INTO :ll_count
+			FROM c_User
+			WHERE user_id = :common_thread.practice_user_id;
+			if not tf_check() then return -1
+			
+			if ll_count > 0 then
+				UPDATE c_User
+				SET actor_class = 'Practice'
+				WHERE user_id = :common_thread.practice_user_id;
+				if not tf_check() then return -1
+			else
+				SELECT CAST(description AS varchar(64))
+				INTO :ls_description
+				FROM c_Office
+				WHERE office_id = :office_id;
+				if not tf_check() then return -1
+				if sqlca.sqlcode = 100 then
+					ls_description = "EncounterPRO Customer"
+				end if
+				
+				INSERT INTO c_User (
+					user_id,
+					user_status,
+					user_full_name,
+					actor_class,
+					owner_id)
+				VALUES ( 
+					:common_thread.practice_user_id,
+					'Actor',
+					:ls_description,
+					'Practice',
+					:sqlca.customer_id );
+				if not tf_check() then return -1
+			end if
+		end if
+	end if
+	
+	////////////////////////////////////////////////////////////////////////////////
+end if
+
+li_sts = f_set_computer()
+if li_sts <= 0 then
+	log.log(this, "f_initialize_common()", "Unable to set the computer", 5)
+	return -1
+end if
+
+
+//user_list = component_manager.get_component("")
+ls_security = datalist.get_preference("SYSTEM", "Authentication System", "PIN")
+CHOOSE CASE lower(ls_security)
+	CASE "jmj secure"
+		user_list = CREATE u_component_security_jmj_secure
+	CASE "pin"
+		user_list = CREATE u_component_security_pin
+	CASE ELSE
+		user_list = CREATE u_component_security_pin
+		ls_message = "Unrecognized authentication system (" + ls_security + ")."
+		log.log(this, "f_initialize_common()", ls_message, 4)
+		if cpr_mode = "CLIENT" then
+			openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
+		end if
+		halt close
+END CHOOSE
+li_sts = user_list.initialize()
+if li_sts <= 0 then
+	ls_message = "Error initializing authentication system."
+	log.log(this, "f_initialize_common()", ls_message, 4)
+	if cpr_mode = "CLIENT" then
+		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
+	end if
+	halt close
+end if
+
+ld_temp = round((3 / 2), 1)
+ls_temp = string(ld_temp)
+ls_decimal_character = mid(ls_temp, 2, 1)
+
+decimal_character = datalist.get_preference("PREFERENCES", "decimal_character")
+if isnull(decimal_character) then
+	datalist.update_preference("PREFERENCES", "Global", "Global", "decimal_character", ls_decimal_character)
+	decimal_character = ls_decimal_character
+elseif decimal_character <> ls_decimal_character then
+	ls_message = "Database decimal character (" &
+			+ decimal_character &
+			+ ") does not match computer decimal character (" &
+			+ ls_decimal_character + ")."
+	log.log(this, "f_initialize_common()", ls_message, 4)
+	if cpr_mode = "CLIENT" then
+		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
+	end if
+	halt close
+end if
+
+return 1
+
+end function
+

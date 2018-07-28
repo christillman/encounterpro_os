@@ -1,0 +1,17 @@
+﻿$PBExportHeader$f_please_wait_progress_bump.srf
+global type f_please_wait_progress_bump from function_object
+end type
+
+forward prototypes
+global subroutine f_please_wait_progress_bump (integer pi_index)
+end prototypes
+
+global subroutine f_please_wait_progress_bump (integer pi_index);
+if not isvalid(common_thread.please_wait) then return
+
+common_thread.please_wait.bump_progress(pi_index)
+
+return
+
+end subroutine
+

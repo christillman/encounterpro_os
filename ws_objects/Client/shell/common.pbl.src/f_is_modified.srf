@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_is_modified.srf
+global type f_is_modified from function_object
+end type
+
+forward prototypes
+global function boolean f_is_modified (any pa_original, string ps_new)
+end prototypes
+
+global function boolean f_is_modified (any pa_original, string ps_new);
+// See if they're both null
+If (isnull(pa_original) And isnull(ps_new)) then return false
+
+// See if only one is null
+If (isnull(pa_original) And Not isnull(ps_new)) &
+ OR (not isnull(pa_original) And isnull(ps_new)) Then
+	Return true
+end if
+
+// If both are not null then compare directly using appropriate data type
+CHOOSE CASE ClassName(pa_original)
+	CASE "string"
+		If String(pa_original) <> ps_new then return true
+	CASE "integer"
+		If integer(pa_original) <> integer(ps_new) then return true
+	CASE "long"
+		If long(pa_original) <> long(ps_new) then return true
+	CASE "datetime"
+		If datetime(pa_original) <> datetime(ps_new) then return true
+	CASE "real"
+		If real(pa_original) <> real(ps_new) then return true
+END CHOOSE
+
+Return false
+
+
+end function
+

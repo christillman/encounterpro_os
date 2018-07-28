@@ -1,0 +1,35 @@
+﻿$PBExportHeader$tf_get_conversion.srf
+global type tf_get_conversion from function_object
+end type
+
+forward prototypes
+global function integer tf_get_conversion (string ps_unit_from, string ps_unit_to, ref real pr_conversion_factor, ref real pr_conversion_difference)
+end prototypes
+
+global function integer tf_get_conversion (string ps_unit_from, string ps_unit_to, ref real pr_conversion_factor, ref real pr_conversion_difference);real lr_conversion_factor
+real lr_conversion_difference
+integer li_sts
+
+tf_begin_transaction(this, "")
+  SELECT c_unit_conversion.conversion_factor,
+			c_unit_conversion.conversion_difference
+    INTO :lr_conversion_factor,
+			:lr_conversion_difference
+    FROM c_unit_conversion  
+   WHERE ( c_unit_conversion.unit_from = :ps_unit_from ) AND  
+         ( c_unit_conversion.unit_to = :ps_unit_to )   ;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	li_sts = 0
+else
+	pr_conversion_factor = lr_conversion_factor
+	pr_conversion_difference = lr_conversion_difference
+	li_sts = 1
+end if
+
+tf_commit()
+
+return li_sts
+end function
+

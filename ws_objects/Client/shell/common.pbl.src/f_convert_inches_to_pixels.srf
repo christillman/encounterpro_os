@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_convert_inches_to_pixels.srf
+global type f_convert_inches_to_pixels from function_object
+end type
+
+forward prototypes
+global subroutine f_convert_inches_to_pixels (long pl_inches_x, long pl_inches_y, ref long pl_pixels_x, ref long pl_pixels_y)
+end prototypes
+
+global subroutine f_convert_inches_to_pixels (long pl_inches_x, long pl_inches_y, ref long pl_pixels_x, ref long pl_pixels_y);long ll_screen_resolution_x
+long ll_screen_resolution_y
+
+ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
+ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+
+// pl_inches_x and pl_inches_y are in thousandths of an inch.  Screen resolution is in pixels per inch.
+
+pl_pixels_x = ll_screen_resolution_x * pl_inches_x / 1000
+pl_pixels_y = ll_screen_resolution_y * pl_inches_y / 1000
+
+
+end subroutine
+

@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_display_jmj_image.srf
+global type f_display_jmj_image from function_object
+end type
+
+forward prototypes
+global function integer f_display_jmj_image (string ps_file)
+end prototypes
+
+global function integer f_display_jmj_image (string ps_file);oleobject luo_ImageViewer
+integer li_sts
+
+if isnull(ps_file) or trim(ps_file) = "" then return 0
+
+luo_ImageViewer = CREATE oleobject
+li_sts = luo_ImageViewer.connecttonewobject("EPImageViewer.Image")
+if li_sts < 0 then
+	DESTROY luo_ImageViewer
+	log.log(this, "display_image()", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
+	return -1
+end if
+
+luo_ImageViewer.LoadImageFromFile(ps_file, true)
+
+luo_ImageViewer.disconnectobject()
+
+DESTROY luo_ImageViewer
+
+return 1
+
+
+end function
+

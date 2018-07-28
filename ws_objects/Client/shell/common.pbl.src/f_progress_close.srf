@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_progress_close.srf
+global type f_progress_close from function_object
+end type
+
+forward prototypes
+global subroutine f_progress_close ()
+end prototypes
+
+global subroutine f_progress_close ();if isvalid(w_main) and not isnull(w_main) then
+	if isvalid(w_main.uo_help_bar) and not isnull(w_main.uo_help_bar) then
+		w_main.uo_help_bar.close_progress()
+	end if
+end if
+
+end subroutine
+

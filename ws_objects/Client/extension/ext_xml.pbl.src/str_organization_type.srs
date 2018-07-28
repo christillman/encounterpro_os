@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_organization_type.srs
+global type str_organization_type from structure
+	str_id_instance		objectid[]
+	string		name
+	str_person_type		contact
+	str_person_type		director
+end type
+

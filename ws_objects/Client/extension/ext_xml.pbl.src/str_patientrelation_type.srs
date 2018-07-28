@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_patientrelation_type.srs
+global type str_patientrelation_type from structure
+	str_actor_type		RelationActor
+	string		Relationship[]
+	string		RelationshipDescription
+end type
+

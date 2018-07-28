@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_return_attributes.srs
+global type str_return_attributes from structure
+	string		return_status
+	str_attributes		attributes
+end type
+

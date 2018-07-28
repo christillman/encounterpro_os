@@ -1,0 +1,33 @@
+﻿$PBExportHeader$f_get_treatment_component.srf
+global type f_get_treatment_component from function_object
+end type
+
+forward prototypes
+global function u_component_treatment f_get_treatment_component (string ps_treatment_type)
+end prototypes
+
+global function u_component_treatment f_get_treatment_component (string ps_treatment_type);u_component_treatment         luo_treatment
+string ls_component_id
+string ls_component_class
+
+setnull(luo_treatment)
+
+ls_component_id = datalist.treatment_type_component(ps_treatment_type)
+if isnull(ls_component_id) then
+	return luo_treatment
+end if
+
+luo_treatment = component_manager.get_component(ls_component_id)
+if isnull(luo_treatment) then
+	log.log(this, "f_get_treatment_component()", "Error getting treatment component", 4)
+	return luo_treatment
+else
+	luo_treatment.treatment_type = ps_treatment_type				
+	luo_treatment.id = datalist.treatment_type_id(ps_treatment_type)
+end if
+
+Return luo_treatment
+
+
+end function
+

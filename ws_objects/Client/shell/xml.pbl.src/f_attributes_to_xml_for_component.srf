@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_attributes_to_xml_for_component.srf
+global type f_attributes_to_xml_for_component from function_object
+end type
+
+forward prototypes
+global function string f_attributes_to_xml_for_component (string ps_root, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_attributes_to_xml_for_component (string ps_root, str_attributes pstr_attributes);u_ds_data luo_data
+string ls_xml
+long ll_count
+
+// Load the attributes into the datastore
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_jmj_xml_attributes")
+f_attribute_str_to_ds(pstr_attributes, luo_data)
+
+// Pick the right export template
+CHOOSE CASE lower(ps_root)
+	CASE "credentialattributes"
+		luo_data.object.Datawindow.Export.XML.UseTemplate = "credentialattributes"
+	CASE ELSE
+		luo_data.object.Datawindow.Export.XML.UseTemplate = "componentattributes"
+END CHOOSE
+
+// Get the xml string
+ls_xml = luo_data.Object.DataWindow.Data.XML
+
+DESTROY luo_data
+
+return ls_xml
+
+end function
+

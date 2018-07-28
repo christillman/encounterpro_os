@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_external_sources.srs
+global type str_external_sources from structure
+	long		external_source_count
+	str_external_source		external_source[]
+end type
+

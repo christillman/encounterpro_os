@@ -1,0 +1,178 @@
+﻿$PBExportHeader$f_edas_interpret_nested_address.srf
+global type f_edas_interpret_nested_address from function_object
+end type
+
+forward prototypes
+global function str_property_value f_edas_interpret_nested_address (string ps_from_object, string ps_object_key, string ps_edas_address, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_edas_interpret_nested_address (string ps_from_object, string ps_object_key, string ps_edas_address, str_complete_context pstr_context, str_attributes pstr_attributes);// This function takes an EDAS property address and interprets it using the passed in context.  The result is returned as a property value structure
+//
+// EncounterPRO Data Addressing Syntax
+// %<object>[(<WhichObject>)][.<property_specification>]%  (e.g. %Treatment.ordered_for.address.address_line_1%)
+// This is the standard style for referencing data in the EncounterPRO database.  See EncounterPRO Data Addressing Syntax documentation for more information
+//
+str_property_value lstr_property_value
+str_property_value lstr_temp_property_value
+str_property_value lstr_display_property_value
+str_property_address lstr_property_address
+str_epro_object_definition lstr_object_def
+//str_property lstr_display_property
+str_property_specification lstr_display_property
+long i
+string ls_current_object_key
+string ls_null
+integer li_sts
+string ls_left
+string ls_right
+string ls_referenced_epro_object
+string ls_class_filter
+string ls_raw_string
+string ls_interpreted_string
+
+setnull(ls_null)
+
+lstr_property_value = f_empty_property_value()
+
+if isnull(ps_edas_address) or ps_edas_address = "" then return lstr_property_value
+
+if left(ps_edas_address, 1) = "~"" then
+	// value is a literal
+	if right(ps_edas_address, 1) = "~"" then
+		ls_raw_string = mid(ps_edas_address, 2, len(ps_edas_address) - 2)
+	else
+		ls_raw_string = mid(ps_edas_address, 2, len(ps_edas_address) - 1)
+	end if
+	
+	if ls_raw_string = "" then
+		setnull(lstr_property_value.value)
+		lstr_property_value.display_value = lstr_property_value.value
+		lstr_property_value.datatype = "string"
+		return lstr_property_value
+	end if
+	
+	ls_interpreted_string = f_attribute_value_substitute_string(ls_raw_string, pstr_context, pstr_attributes)
+	if ls_interpreted_string = "" then
+		setnull(lstr_property_value.value)
+		lstr_property_value.display_value = lstr_property_value.value
+		lstr_property_value.datatype = "string"
+		return lstr_property_value
+	end if
+	
+	lstr_property_value.value = ls_interpreted_string
+	lstr_property_value.display_value = lstr_property_value.value
+	
+	if isnumber(lstr_property_value.value) then
+		lstr_property_value.datatype = "number"
+	else
+		f_split_string(lstr_property_value.value, " ", ls_left, ls_right)
+		if ls_right = "" then
+			if isdate(ls_left) then
+				lstr_property_value.datatype = "datetime"
+			else
+				lstr_property_value.datatype = "string"
+			end if
+		else
+			if isdate(ls_left) and istime(ls_right) then
+				lstr_property_value.datatype = "datetime"
+			else
+				lstr_property_value.datatype = "string"
+			end if
+		end if
+	end if
+	return lstr_property_value
+end if
+
+
+// If there is no from object or the address does not start with a period, then use "Root" as the from object
+if left(ps_edas_address, 1) <> "." or isnull(ps_from_object) or trim(ps_from_object) = "" then
+	ps_from_object = "Root"
+	ls_current_object_key = ""
+else
+	ls_current_object_key = ps_object_key
+end if
+
+// Set the initial object and key
+lstr_object_def = datalist.epro_object_definition(ps_from_object)
+
+// Parse the address
+lstr_property_address = f_edas_parse_address(ps_from_object, ps_edas_address)
+if lstr_property_address.return_status <= 0 then
+	log.log(this, "f_edas_interpret_address()", "EDAS Error: " + lstr_property_address.error_message, 3)
+	return lstr_property_value
+end if
+
+
+for i = 1 to lstr_property_address.property_count
+	// If we don't have an epro object in hand then we can't go any further
+	if isnull(lstr_object_def.epro_object) then exit
+
+	// If we don't have an object key in hand then we can't go any further
+	if isnull(ls_current_object_key) and lower(lstr_object_def.epro_object) <> "root" then
+		exit
+	end if
+	
+	// Clear class filter
+	setnull(ls_class_filter)
+	
+	if lower(lstr_property_address.property[i].referenced_epro_object.object_type) = "class" then
+		// lstr_temp_property_value stays the same except for the referenced object
+		lstr_temp_property_value.referenced_epro_object = lstr_property_address.property[i].referenced_epro_object.epro_object
+		lstr_temp_property_value.value = lstr_property_address.property[i].which_object.object_identifier
+		if len(lstr_property_address.property[i].which_object.object_identifier) > 0 and len(lstr_property_address.property[i].property.property_value_object_cat_fld) > 0 then
+			// Assume string datatype so enclose in single quotes
+			ls_class_filter = lstr_property_address.property[i].which_object.object_identifier + "='" + lstr_property_address.property[i].property.property_value_object_cat_fld + "'"
+		end if
+	else
+		// Lookup property value
+		lstr_temp_property_value = f_empty_property_value()
+		li_sts = f_edas_lookup_property_value(lstr_object_def, &
+															ls_current_object_key, &
+															lstr_property_address.property[i], &
+															pstr_context, &
+															pstr_attributes, &
+															lstr_temp_property_value)
+		if li_sts <= 0 then
+			// Set the datatype even if we're not returning anything
+			lstr_temp_property_value.datatype = lstr_property_address.property[lstr_property_address.property_count].property.return_data_type
+			lstr_temp_property_value.property = lstr_property_address.property[lstr_property_address.property_count].property
+			return lstr_temp_property_value
+		end if
+	end if
+	
+	// If this is the last property in the path, then get the display property too
+	if i = lstr_property_address.property_count then
+		lstr_property_value = lstr_temp_property_value
+	else
+		// find the object for the next property reference
+		lstr_object_def = datalist.epro_object_definition(lstr_temp_property_value.referenced_epro_object)
+		ls_current_object_key = lstr_temp_property_value.value
+		// Add the object filter from the referring property to the native filter for the referred-to object
+		if len(lstr_property_address.property[i].property.property_value_object_filter) > 0 then
+			if len(lstr_object_def.base_table_filter) > 0 then
+				lstr_object_def.base_table_filter = "(" + lstr_object_def.base_table_filter + ") AND (" + lstr_property_address.property[i].property.property_value_object_filter + ")"
+			else
+				lstr_object_def.base_table_filter = lstr_property_address.property[i].property.property_value_object_filter
+			end if
+		end if
+		// Add the class filter if there is one
+		if len(ls_class_filter) > 0 then
+			if len(lstr_object_def.base_table_filter) > 0 then
+				lstr_object_def.base_table_filter = "(" + lstr_object_def.base_table_filter + ") AND (" + ls_class_filter + ")"
+			else
+				lstr_object_def.base_table_filter = ls_class_filter
+			end if
+		end if
+	end if
+next
+
+// Set the return data type
+lstr_property_value.datatype = lstr_property_address.property[lstr_property_address.property_count].property.return_data_type
+lstr_property_value.property = lstr_property_address.property[lstr_property_address.property_count].property
+
+f_edas_set_property_display_value(lstr_property_address.suffix, lstr_property_value)
+
+return lstr_property_value
+
+end function
+

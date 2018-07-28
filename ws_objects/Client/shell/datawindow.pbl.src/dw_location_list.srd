@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_location_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=68 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=56 color="536870912" )
+table(column=(type=char(12) updatewhereclause=yes name=c_location_domain_location_domain dbname="c_Location_Domain.location_domain" )
+ column=(type=char(40) updatewhereclause=yes name=c_location_domain_description dbname="c_Location_Domain.description" )
+ column=(type=char(24) updatewhereclause=yes name=c_location_location dbname="c_Location.location" )
+ column=(type=char(40) updatewhereclause=yes name=c_location_description dbname="c_Location.description" )
+ column=(type=long updatewhereclause=yes name=c_location_sort_sequence dbname="c_Location.sort_sequence" )
+ column=(type=char(1) updatewhereclause=yes name=c_location_diffuse_flag dbname="c_Location.diffuse_flag" )
+ column=(type=long updatewhereclause=yes name=cselected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Location_Domain~" )  TABLE(NAME=~"c_Location~" ) COLUMN(NAME=~"c_Location_Domain.location_domain~") COLUMN(NAME=~"c_Location_Domain.description~") COLUMN(NAME=~"c_Location.location~") COLUMN(NAME=~"c_Location.description~") COLUMN(NAME=~"c_Location.sort_sequence~") COLUMN(NAME=~"c_Location.diffuse_flag~") COMPUTE(NAME=~"selected_flag=0~")    JOIN (LEFT=~"c_Location_Domain.location_domain~"    OP =~"=~"RIGHT=~"c_Location.location_domain~" )WHERE(    EXP1 =~"c_Location_Domain.location_domain~"   OP =~"=~"    EXP2 =~":ps_location_domain~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Location.status~"   OP =~"=~"    EXP2 =~"'OK'~" ) ) ARG(NAME = ~"ps_location_domain~" TYPE = string) " arguments=(("ps_location_domain", string))  sort="c_location_sort_sequence A c_location_description A " )
+column(band=header id=2 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="12" height="56" width="649" format="[general]"  name=c_location_domain_description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" font.underline="1" background.mode="2" background.color="12632256" )
+compute(band=detail alignment="0" expression="if( c_location_diffuse_flag = ~"Y~",  c_location_description + ~" *~", c_location_description )"border="0" color="0" x="18" y="4" height="52" width="649" format="[general]"  name=description  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

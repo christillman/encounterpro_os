@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_access_control_item.srs
+global type str_access_control_item from structure
+	boolean		grant_access
+	string		user_id
+end type
+

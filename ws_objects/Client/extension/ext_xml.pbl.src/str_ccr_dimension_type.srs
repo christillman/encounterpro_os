@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_ccr_dimension_type.srs
+global type str_ccr_dimension_type from structure
+	string		value
+	str_ccr_units_type		units
+	str_ccr_codetype		code[]
+	str_ccr_codeddescriptiontype		Description
+end type
+

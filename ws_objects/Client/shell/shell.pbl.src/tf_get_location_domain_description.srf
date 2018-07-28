@@ -1,0 +1,25 @@
+﻿$PBExportHeader$tf_get_location_domain_description.srf
+global type tf_get_location_domain_description from function_object
+end type
+
+forward prototypes
+global function integer tf_get_location_domain_description (string ps_location_domain, ref string ps_description)
+end prototypes
+
+global function integer tf_get_location_domain_description (string ps_location_domain, ref string ps_description);string ls_description
+
+SELECT description
+INTO :ls_description
+FROM c_Location_Domain (NOLOCK)
+WHERE location_domain = :ps_location_domain;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 0 then
+	ps_description = ls_description
+	return 1
+else
+	return 0
+end if
+
+end function
+

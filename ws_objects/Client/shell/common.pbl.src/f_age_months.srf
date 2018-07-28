@@ -1,0 +1,44 @@
+﻿$PBExportHeader$f_age_months.srf
+global type f_age_months from function_object
+end type
+
+forward prototypes
+global function long f_age_months (date pd_date_begin, date pd_date_end)
+end prototypes
+
+global function long f_age_months (date pd_date_begin, date pd_date_end);date ld_new_date
+integer li_years, li_month1, li_day1
+integer li_month2, li_day2
+integer li_months
+
+// Don't do negative ages
+if pd_date_end < pd_date_begin then return 0
+
+// Get the month and day values
+li_month1 = month(pd_date_begin)
+li_day1 = day(pd_date_begin)
+
+li_month2 = month(pd_date_end)
+li_day2 = day(pd_date_end)
+
+// Start by multiplying the year difference by 12
+li_months = (year(pd_date_end) - year(pd_date_begin)) * 12
+
+// The add (or subtract) the month difference
+li_months += (li_month2 - li_month1)
+
+// Finally, check to see if the last month counts
+if li_day2 < li_day1 then
+	// If we haven't reached the birth day yet, then subtract one month
+	li_months -= 1
+end if
+
+
+
+
+return real(li_months)
+
+
+
+end function
+

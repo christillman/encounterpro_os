@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_security_alert.srs
+global type str_security_alert from structure
+	string		alert_title
+	string		alert_message
+	boolean		allow_override
+end type
+

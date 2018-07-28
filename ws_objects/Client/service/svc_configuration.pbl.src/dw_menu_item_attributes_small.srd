@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_menu_item_attributes_small.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=40 color="536870912"  height.autosize=yes)
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=menu_id dbname="c_Menu_Item_Attribute.menu_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=menu_item_id dbname="c_Menu_Item_Attribute.menu_item_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=menu_item_attribute_sequence dbname="c_Menu_Item_Attribute.menu_item_attribute_sequence" )
+ column=(type=char(64) update=yes updatewhereclause=yes name=attribute dbname="c_Menu_Item_Attribute.attribute" )
+ column=(type=char(2048) update=yes updatewhereclause=yes name=value dbname="c_Menu_Item_Attribute.value" )
+ column=(type=char(255) updatewhereclause=yes name=attribute_description dbname="attribute_description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Menu_Item_Attribute~" ) COLUMN(NAME=~"c_Menu_Item_Attribute.menu_id~") COLUMN(NAME=~"c_Menu_Item_Attribute.menu_item_id~") COLUMN(NAME=~"c_Menu_Item_Attribute.menu_item_attribute_sequence~") COLUMN(NAME=~"c_Menu_Item_Attribute.attribute~") COLUMN(NAME=~"c_Menu_Item_Attribute.value~") COMPUTE(NAME=~"attribute_description=dbo.fn_attribute_description(attribute, value)~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"c_Menu_Item_Attribute.menu_id~"   OP =~"=~"    EXP2 =~":menu_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Menu_Item_Attribute.menu_item_id~"   OP =~"=~"    EXP2 =~":menu_item_id~" ) ) ARG(NAME = ~"menu_id~" TYPE = number)  ARG(NAME = ~"menu_item_id~" TYPE = number) " update="c_Menu_Item_Attribute" updatewhere=0 updatekeyinplace=no arguments=(("menu_id", number),("menu_item_id", number))  sort="menu_item_attribute_sequence A " )
+compute(band=detail alignment="0" expression="attribute + ~" = ~" + if(isnull( attribute_description ), ~"<Null>~",  attribute_description )"border="0" color="0" x="9" y="0" height="56" width="1001" format="[GENERAL]" html.valueishtml="0"  name=compute_attribute visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256"  height.autosize=yes)
+column(band=detail id=6 alignment="0" tabsequence=0 border="0" color="0" x="10400" y="0" height="56" width="3950" html.valueishtml="0"  name=attribute_description visible="1"  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

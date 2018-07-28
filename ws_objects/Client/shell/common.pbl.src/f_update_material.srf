@@ -1,0 +1,82 @@
+﻿$PBExportHeader$f_update_material.srf
+global type f_update_material from function_object
+end type
+
+forward prototypes
+global function integer f_update_material (ref str_patient_material pstr_material)
+end prototypes
+
+global function integer f_update_material (ref str_patient_material pstr_material);long ll_new_material_id
+str_patient_material lstr_patient_material
+
+// Make sure each updateable field is either valid or null
+if pstr_material.category <= 0 then
+	if len(pstr_material.category_description) > 0 then
+		SELECT max(material_category_id)
+		INTO :pstr_material.category
+		FROM c_Patient_Material_Category
+		WHERE description = :pstr_material.category_description;
+		if not tf_check() then return -1
+	else
+		setnull(pstr_material.category)
+	end if
+end if
+
+if trim(pstr_material.title) = "" then setnull(pstr_material.title)
+if trim(pstr_material.extension) = "" then setnull(pstr_material.extension)
+if trim(pstr_material.filename) = "" then setnull(pstr_material.filename)
+
+if len(pstr_material.material_object) > 0 then
+	setnull(pstr_material.url)
+else
+	if isnull(pstr_material.url) or trim(pstr_material.url) = "" then
+		log.log(this, "f_update_material()", "No material object or URL is present", 4)
+		return -1
+	end if
+	setnull(pstr_material.material_object)
+end if
+
+sqlca.begin_transaction( this, "Update Material")
+ll_new_material_id = sqlca.jmj_new_material(pstr_material.title, &
+															pstr_material.category,  &
+															pstr_material.status,  &
+															pstr_material.extension,  &
+															pstr_material.id,  &
+															pstr_material.url,  &
+															current_scribe.user_id, &
+															pstr_material.filename, &
+															pstr_material.material_id, &
+															pstr_material.parent_config_object_id )
+if not tf_check() then return -1
+
+if ll_new_material_id > 0 then
+	lstr_patient_material = f_get_patient_material(ll_new_material_id, true)
+	if lstr_patient_material.material_id = ll_new_material_id then
+		// If we had object data then update the blob column
+		if len(pstr_material.material_object) > 0 then
+			UpdateBlob c_patient_material
+			Set object = :pstr_material.material_object 
+			Where material_id = :pstr_material.material_id;
+			If not tf_check() Then return -1
+		end if
+		
+		sqlca.commit_transaction( )
+
+		pstr_material = lstr_patient_material
+		return 1
+	else
+		log.log(this, "f_update_material()", "An error occured retrieving new material record", 4)
+		sqlca.rollback_transaction( )
+		return -1
+	end if
+else
+	log.log(this, "f_update_material()", "An error occured creating new material record", 4)
+	sqlca.rollback_transaction( )
+	return -1
+end if
+
+sqlca.rollback_transaction( )
+return -1
+
+end function
+

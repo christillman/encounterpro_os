@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_observation_stack.srs
+global type str_observation_stack from structure
+	integer		depth
+	string		root_observation_id
+	string		observation_id[]
+	long		branch_id[]
+	string		description[]
+	integer		child_ordinal[]
+end type
+

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_open_please_wait.srf
+global type f_open_please_wait from function_object
+end type
+
+forward prototypes
+global function boolean f_open_please_wait (ref w_pop_please_wait pw_window)
+end prototypes
+
+global function boolean f_open_please_wait (ref w_pop_please_wait pw_window);boolean lb_mywindow
+
+open(pw_window)
+if pw_window.new_window then
+	lb_mywindow = true
+	pw_window.new_window = false
+else
+	lb_mywindow = false
+end if
+
+return lb_mywindow
+
+end function
+

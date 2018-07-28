@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_ccr_objectattribute.srs
+global type str_ccr_objectattribute from structure
+	string		attribute
+	str_ccr_attributevalue		attributevalue[]
+	str_ccr_codetype		code[]
+end type
+

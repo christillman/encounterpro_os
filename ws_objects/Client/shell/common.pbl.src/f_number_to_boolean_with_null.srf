@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_number_to_boolean_with_null.srf
+global type f_number_to_boolean_with_null from function_object
+end type
+
+forward prototypes
+global function boolean f_number_to_boolean_with_null (long pl_number)
+end prototypes
+
+global function boolean f_number_to_boolean_with_null (long pl_number);boolean lb_return
+
+if isnull(pl_number) then
+	setnull(lb_return)
+elseif pl_number = 0 then
+	lb_return = false
+else
+	lb_return = true
+end if
+
+return lb_return
+
+
+end function
+

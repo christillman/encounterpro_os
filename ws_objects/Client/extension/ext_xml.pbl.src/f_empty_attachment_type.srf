@@ -1,0 +1,20 @@
+﻿$PBExportHeader$f_empty_attachment_type.srf
+global type f_empty_attachment_type from function_object
+end type
+
+forward prototypes
+global function str_attachment_type f_empty_attachment_type ()
+end prototypes
+
+global function str_attachment_type f_empty_attachment_type ();str_attachment_type lstr_attachment
+
+setnull(lstr_attachment.FileName)
+setnull(lstr_attachment.FileType)
+setnull(lstr_attachment.AttachmentName)
+setnull(lstr_attachment.AttachmentData)
+setnull(lstr_attachment.AttachmentDate)
+
+return lstr_attachment
+
+end function
+

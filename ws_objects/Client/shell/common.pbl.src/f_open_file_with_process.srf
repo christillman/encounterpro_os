@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_open_file_with_process.srf
+global type f_open_file_with_process from function_object
+end type
+
+forward prototypes
+global function integer f_open_file_with_process (string ps_file, string ps_action, boolean pb_wait_for_completion, ref unsignedlong pul_process_id)
+end prototypes
+
+global function integer f_open_file_with_process (string ps_file, string ps_action, boolean pb_wait_for_completion, ref unsignedlong pul_process_id);string ls_open_command
+integer li_sts
+boolean lb_use_command
+string ls_special1
+string ls_special2
+str_c_attachment_extension lstr_extension
+inet l_Inet
+long ll_sts
+
+if isnull(ps_file) then
+	log.log(this, "f_open_file()", "Null file", 4)
+	return 0
+end if
+
+//if not fileexists(ps_file) then
+//	log.log(this, "f_open_file()", "attachment file not found (" + ps_file + ")", 4)
+//	return 0
+//end if
+
+lstr_extension = datalist.extension(ps_file)
+
+CHOOSE CASE lower(ps_action)
+	CASE "edit"
+		ls_open_command = lstr_extension.edit_command
+		if isnull(ls_open_command) then ls_open_command = datalist.get_preference("SYSTEM", "default_attachment_edit_command")
+		if isnull(ls_open_command) then ls_open_command = "shell edit"
+	CASE "open"
+		ls_open_command = lstr_extension.open_command
+		if isnull(ls_open_command) then ls_open_command = datalist.get_preference("SYSTEM", "default_attachment_open_command")
+		if isnull(ls_open_command) then ls_open_command = "shell open"
+	CASE "print"
+		ls_open_command = lstr_extension.print_command
+		if isnull(ls_open_command) then ls_open_command = datalist.get_preference("SYSTEM", "default_attachment_print_command")
+		if isnull(ls_open_command) then ls_open_command = "shell print"
+	CASE ELSE
+END CHOOSE
+
+// Substitute the file and description into the command
+ls_open_command = f_string_substitute(ls_open_command, "%Description%", lstr_extension.description)
+ls_open_command = f_string_substitute(ls_open_command, "%File%", ps_file)
+ls_open_command = f_string_substitute(ls_open_command, "%Printer%", common_thread.current_printer())
+
+
+// Interpret the special command
+f_split_string(ls_open_command, " ", ls_special1, ls_special2)
+CHOOSE CASE lower(ls_special1)
+	CASE "shell"
+		li_sts = windows_api.shell32.open_file_ex(ps_file, ls_special2, pb_wait_for_completion, pul_process_id)
+	CASE "jmj_image"
+		li_sts = f_display_jmj_image(ps_file)
+		// f_display_jmj_image is an in-process modal window, so there won't be a process_id
+		pul_process_id = 0
+	CASE "browser"
+		// Open html file with HyperlinkToURL
+		// So, a new browser is launched
+		// (with the code using ShellExecuteEx, it is not sure)
+		GetContextService("Internet", l_Inet)
+		li_sts = l_Inet.HyperlinkToURL(ps_file)
+		pul_process_id = 0
+	CASE ELSE
+		li_sts = windows_api.kernel32.run_command(ls_open_command, pb_wait_for_completion, pul_process_id)
+END CHOOSE
+
+if li_sts > 0 then
+	return 1
+else
+	return -1
+end if
+
+
+end function
+

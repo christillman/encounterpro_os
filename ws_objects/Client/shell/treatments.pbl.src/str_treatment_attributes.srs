@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_treatment_attributes.srs
+global type str_treatment_attributes from structure
+	integer		attribute_count
+	string		attribute_names[]
+	string		attribute_values[]
+	u_component_treatment		param_class
+end type
+

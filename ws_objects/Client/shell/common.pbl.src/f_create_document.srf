@@ -1,0 +1,70 @@
+﻿$PBExportHeader$f_create_document.srf
+global type f_create_document from function_object
+end type
+
+forward prototypes
+global function integer f_create_document (string ps_document_component_id, str_attributes pstr_attributes, ref str_external_observation_attachment pstr_attachment)
+end prototypes
+
+global function integer f_create_document (string ps_document_component_id, str_attributes pstr_attributes, ref str_external_observation_attachment pstr_attachment);u_component_document luo_document
+integer li_sts
+integer i, j
+boolean lb_found
+string ls_message
+string ls_destination
+string ls_file
+unsignedlong lul_pid
+string ls_report_printer
+boolean lb_suppress_display
+string ls_context_object
+
+
+
+luo_document = component_manager.get_component(ps_document_component_id, pstr_attributes)
+if isnull(luo_document) then
+	log.log(this, "xx_printreport()", "error getting component (" + ps_document_component_id + ")", 4)
+	return -1
+end if
+
+TRY
+	li_sts = luo_document.create_document()
+	if li_sts < 0 then
+		log.log(this, "xx_printreport()", "Error calling document component (" + ps_document_component_id + ")", 4)
+		return -1
+	end if
+CATCH (exception le_error)
+	log.log(this, "xx_printreport()", "Error calling document component (" + ps_document_component_id + "): " + le_error.text, 4)
+	return -1
+END TRY
+
+if li_sts = 0 then
+	return 0
+end if
+
+// Now post the attachments
+lb_found = false
+for i = 1 to luo_document.observation_count
+	// Now post the attachments
+	for j = 1 to luo_document.observations[i].attachment_list.attachment_count
+		if not lb_found then
+			// Get a local copy to make the coding easier
+			pstr_attachment = luo_document.observations[i].attachment_list.attachments[j]
+			lb_found = true
+			exit
+		end if
+	next
+	if lb_found then exit
+next
+
+component_manager.destroy_component(luo_document)
+
+if not lb_found then return 0
+
+
+return 1
+
+
+
+
+end function
+

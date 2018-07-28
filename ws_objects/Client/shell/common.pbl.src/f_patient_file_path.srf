@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_patient_file_path.srf
+global type f_patient_file_path from function_object
+end type
+
+forward prototypes
+global function string f_patient_file_path (string ps_cpr_id)
+end prototypes
+
+global function string f_patient_file_path (string ps_cpr_id);string ls_path
+str_patient lstr_patient
+string ls_attachment_server
+string ls_attachment_share
+string ls_attachment_path
+integer li_sts
+string ls_null
+
+setnull(ls_null)
+
+if isnull(ps_cpr_id) then
+	ls_path = f_default_attachment_path() + "\AttachmentFiles"
+elseif isnull(current_patient) then
+	li_sts = f_get_patient(ps_cpr_id, lstr_patient)
+	if li_sts <= 0 then return ls_null
+	
+	ls_attachment_server = lstr_patient.attachment_server
+	ls_attachment_share = lstr_patient.attachment_share
+	ls_attachment_path = lstr_patient.attachment_path
+elseif ps_cpr_id = current_patient.cpr_id then
+	ls_attachment_server = current_patient.attachment_server
+	ls_attachment_share = current_patient.attachment_share
+	ls_attachment_path = current_patient.attachment_path
+else
+	li_sts = f_get_patient(ps_cpr_id, lstr_patient)
+	if li_sts <= 0 then return ls_null
+	
+	ls_attachment_server = lstr_patient.attachment_server
+	ls_attachment_share = lstr_patient.attachment_share
+	ls_attachment_path = lstr_patient.attachment_path
+end if
+
+if len(ls_attachment_server) > 1 then
+	ls_path = "\\" + ls_attachment_server
+else
+	ls_path = ls_attachment_server + ":"
+end if
+ls_path += "\" + ls_attachment_share
+ls_path += "\" + ls_attachment_path
+
+if right(ls_path, 1) <> "\" then ls_path += "\"
+
+return ls_path
+
+
+end function
+

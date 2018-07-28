@@ -1,0 +1,22 @@
+﻿$PBExportHeader$str_c_xml_code.srs
+global type str_c_xml_code from structure
+	long		code_id
+	long		owner_id
+	string		code_domain
+	string		code_version
+	string		code
+	string		code_description
+	long		epro_owner_id
+	string		epro_domain
+	string		epro_id
+	string		epro_description
+	integer		unique_flag
+	datetime		created
+	string		created_by
+	datetime		last_updated
+	string		id
+	string		status
+	string		description
+	long		mapping_owner_id
+end type
+

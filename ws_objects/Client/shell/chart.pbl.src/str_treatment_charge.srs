@@ -1,0 +1,23 @@
+﻿$PBExportHeader$str_treatment_charge.srs
+global type str_treatment_charge from structure
+	string		cpr_id
+	long		encounter_id
+	long		encounter_charge_id
+	string		procedure_type
+	long		treatment_id
+	long		treatment_billing_id
+	string		procedure_id
+	string		description
+	string		cpt_code
+	string		modifier
+	string		other_modifiers
+	real		units
+	decimal { 2 }		charge
+	string		bill_flag
+	string		created_by
+	datetime		last_updated
+	string		last_updated_by
+	string		posted
+	long		procedure_type_sort_sequence
+end type
+

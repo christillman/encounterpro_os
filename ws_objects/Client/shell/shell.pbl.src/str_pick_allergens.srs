@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_pick_allergens.srs
+global type str_pick_allergens from structure
+	string		tests_treatment_type
+	string		title
+	boolean		allow_multiple
+	string		search_common_name
+end type
+

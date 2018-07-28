@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_p_observation_stage.srs
+global type str_p_observation_stage from structure
+	long		stage
+	str_p_observation		parent_observation
+	long		child_observation_count
+	str_p_observation		child_observation[]
+end type
+

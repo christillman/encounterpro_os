@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_propertyset_type.srs
+global type str_propertyset_type from structure
+	string		cprid
+	string		contextobject
+	long		objectkey
+	string		propertytype
+	string		property
+	string		value
+end type
+

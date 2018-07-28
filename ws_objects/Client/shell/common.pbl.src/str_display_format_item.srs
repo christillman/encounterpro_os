@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_display_format_item.srs
+global type str_display_format_item from structure
+	long		item_sequence
+	string		command
+	string		argument
+	integer		sort_sequence
+end type
+

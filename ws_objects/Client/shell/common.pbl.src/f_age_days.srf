@@ -1,0 +1,12 @@
+﻿$PBExportHeader$f_age_days.srf
+global type f_age_days from function_object
+end type
+
+forward prototypes
+global function long f_age_days (date ld_date_begin, date ld_date_end)
+end prototypes
+
+global function long f_age_days (date ld_date_begin, date ld_date_end);return daysafter(ld_date_begin, ld_date_end)
+
+end function
+

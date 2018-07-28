@@ -1,0 +1,172 @@
+﻿$PBExportHeader$f_edas_parse_address.srf
+global type f_edas_parse_address from function_object
+end type
+
+forward prototypes
+global function str_property_address f_edas_parse_address (string ps_root_object, string ps_property_address)
+end prototypes
+
+global function str_property_address f_edas_parse_address (string ps_root_object, string ps_property_address);str_property_address lstr_property_address
+long ll_pos_paren
+long ll_pos_period
+string ls_property_specification
+integer li_sts
+string ls_which_object
+str_property_specification lstr_property_specification
+string ls_error_message
+long ll_count
+string ls_this_property_specification
+string ls_remainder
+string ls_property_name
+string ls_epro_object
+long ll_pos_rparen
+string ls_suffix_param
+string ls_left
+string ls_right
+
+lstr_property_address = f_empty_property_address()
+
+lstr_property_address.property_address = trim(ps_property_address)
+lstr_property_address.suffix.display_code = false
+setnull(lstr_property_address.suffix.format_string)
+setnull(lstr_property_address.suffix.lookup_owner_id)
+setnull(lstr_property_address.suffix.lookup_code_domain)
+
+
+if isnull(lstr_property_address.property_address) or lstr_property_address.property_address = "" then
+	lstr_property_address.error_message = "Property Address Not Found"
+	lstr_property_address.return_status = -1
+	return lstr_property_address
+end if
+
+ll_count = 0
+ls_remainder = lstr_property_address.property_address
+ls_epro_object = ps_root_object
+
+// strip off any leading dot
+if left(ls_remainder, 1) = "." then
+	ls_remainder = mid(ls_remainder, 2)
+end if
+
+DO WHILE len(ls_remainder) > 0
+	// failsafe
+	ll_count++
+	if ll_count > 100 then
+		lstr_property_address.error_message = "Property Specification Syntax Error.  Could not parse property specification."
+		lstr_property_address.return_status = -1
+		return lstr_property_address
+	end if
+	
+	// Initialize property
+	setnull(lstr_property_specification.property.property_name)
+	setnull(lstr_property_specification.which_object.which_object_string)
+	setnull(lstr_property_specification.which_object.object_identifier)
+	setnull(lstr_property_specification.which_object.filter_statement)
+	setnull(lstr_property_specification.which_object.ordinal)
+	setnull(lstr_property_specification.which_object.recent_set_count)
+	setnull(lstr_property_specification.which_object.object_key)
+	
+	ls_this_property_specification = ls_remainder
+	
+	ll_pos_period = pos(ls_this_property_specification, ".")
+	ll_pos_paren = pos(ls_this_property_specification, "(")
+
+	// If the the next delimieter is a paren, then this property has a which_object string
+	if ll_pos_paren > 0 and (ll_pos_paren < ll_pos_period or ll_pos_period = 0) then 
+		f_split_string(ls_this_property_specification, "(", ls_property_name, ls_which_object)
+		
+		// If the property name is "DisplayFormat" or "CodeLookup" then the stuff between the parentheses are params for the suffix rather than a WhichObject spec
+		if lower(ls_property_name) = "displayformat" or lower(ls_property_name) = "codelookup" then
+			ll_pos_rparen = pos(ls_which_object, ")")
+			if ll_pos_rparen > 0 then
+				f_split_string(ls_which_object, ")", ls_suffix_param, ls_remainder)
+				
+				if lower(ls_property_name) = "displayformat" then
+					lstr_property_address.suffix.format_string = trim(ls_suffix_param)
+				elseif lower(ls_property_name) = "codelookup" then
+					f_split_string(ls_suffix_param, ",", ls_left, ls_right)
+					if isnumber(ls_left) and len(trim(ls_right)) > 0 then
+						lstr_property_address.suffix.lookup_owner_id = long(ls_left)
+						lstr_property_address.suffix.lookup_code_domain = trim(ls_right)
+					else
+						lstr_property_address.error_message = ls_property_name + "::Property Specification Syntax Error.  Invalid suffix param.  Correct Syntax is CodeLookup(<CodeOwnerID>, <CodeDomain>)"
+						lstr_property_address.return_status = -1
+						return lstr_property_address
+					end if
+				end if
+			else
+				lstr_property_address.error_message = ls_property_name + "::Property Specification Syntax Error.  No close parenthesis after suffix param."
+				lstr_property_address.return_status = -1
+				return lstr_property_address
+			end if
+		else
+			// Normal WhichObject spec
+			
+			// Add back the left paren so the parse function can distinguish between passed in string that have parens (and may have remainders)
+			// and passed in strings that are complete clauses (without parens)
+			ls_which_object = "(" + ls_which_object
+			
+			li_sts = f_edas_parse_which_object( ls_which_object, &
+															lstr_property_specification.which_object, &
+															ls_remainder, &
+															ls_error_message)
+			if li_sts <= 0 then
+				lstr_property_address.error_message = ls_property_name + "::" + ls_error_message
+				lstr_property_address.return_status = -1
+				return lstr_property_address
+			end if
+			
+			if len(ls_remainder) > 0 then
+				if left(ls_remainder, 1) = "." then
+					ls_remainder = mid(ls_remainder, 2)
+				else
+					lstr_property_address.error_message = ls_property_name + "::Property Specification Syntax Error.  No period after close parenthesis."
+					lstr_property_address.return_status = -1
+					return lstr_property_address
+				end if
+			end if
+		end if
+	elseif ll_pos_period > 0 then
+		f_split_string(ls_this_property_specification, ".", ls_property_name, ls_remainder)
+	else
+		ls_property_name = ls_this_property_specification
+		ls_remainder = ""
+	end if
+	
+	if lower(ls_property_name) = "displaycode" or lower(ls_property_name) = "displayformat" or lower(ls_property_name) = "codelookup" then
+		// This was a suffix spec, not another property
+		if lower(ls_property_name) = "displaycode" then
+			lstr_property_address.suffix.display_code = true
+		end if
+	else
+		li_sts = datalist.find_epro_object_property(ls_epro_object, ls_property_name, lstr_property_specification.property)
+		if li_sts <= 0 then
+			lstr_property_address.error_message = "Invalid property (" + ls_property_name + ")"
+			lstr_property_address.return_status = -1
+			return lstr_property_address
+		end if
+		
+		// If the property refers to an object, then get the object definition
+		if not isnull(lstr_property_specification.property.property_value_object) then
+			lstr_property_specification.referenced_epro_object = datalist.epro_object_definition(lstr_property_specification.property.property_value_object)
+		end if
+		
+		ls_epro_object = lstr_property_specification.property.property_value_object
+		
+		if lstr_property_address.property_count > 0 then
+			lstr_property_specification.referer_object_identifier = lstr_property_address.property[lstr_property_address.property_count].which_object.object_identifier
+		end if
+
+		lstr_property_address.property_count++
+		lstr_property_address.property[lstr_property_address.property_count] = lstr_property_specification
+		// Set the suffix datatype to the latest property datatype
+		lstr_property_address.suffix.datatype = lstr_property_specification.property.return_data_type
+	end if
+LOOP
+
+lstr_property_address.return_status = 1
+
+return lstr_property_address
+
+end function
+

@@ -1,0 +1,17 @@
+﻿$PBExportHeader$str_ccr_testtype.srs
+global type str_ccr_testtype from structure
+	string		ccrdataobjectid
+	str_ccr_datetimetype		datetime[]
+	str_ccr_idtype		ids[]
+	str_ccr_codeddescriptiontype		objecttype
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		status
+	str_ccr_slrcgroup		slrcgroup
+	str_ccr_codeddescriptiontype		method[]
+	str_ccr_agent		agent[]
+	str_ccr_testresulttype		testresult
+	string		normalresult
+	str_ccr_codeddescriptiontype		flag[]
+	str_ccr_codeddescriptiontype		confidencevalue
+end type
+

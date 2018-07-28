@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_wia_format_info.srs
+global type str_wia_format_info from structure
+	integer		guid[16]
+	long		Tymed
+end type
+

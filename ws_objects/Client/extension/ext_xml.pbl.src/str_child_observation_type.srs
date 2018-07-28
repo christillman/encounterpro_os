@@ -1,0 +1,5 @@
+﻿$PBExportHeader$str_child_observation_type.srs
+global type str_child_observation_type from structure
+	str_observation_type		observation
+end type
+

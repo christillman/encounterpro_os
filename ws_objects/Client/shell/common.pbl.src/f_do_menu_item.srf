@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_do_menu_item.srf
+global type f_do_menu_item from function_object
+end type
+
+forward prototypes
+global function integer f_do_menu_item (long pl_menu_id, long pl_menu_item_id)
+end prototypes
+
+global function integer f_do_menu_item (long pl_menu_id, long pl_menu_item_id);str_attributes lstr_attributes
+
+lstr_attributes.attribute_count = 0
+
+return f_do_menu_item_with_attributes(pl_menu_id, pl_menu_item_id, lstr_attributes)
+
+end function
+

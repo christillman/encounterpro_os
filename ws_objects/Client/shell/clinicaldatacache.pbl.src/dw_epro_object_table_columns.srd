@@ -1,0 +1,75 @@
+﻿$PBExportHeader$dw_epro_object_table_columns.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(64) updatewhereclause=yes name=property_name dbname="property_name" )
+ column=(type=char(64) updatewhereclause=yes name=columnname dbname="columnname" )
+ column=(type=long updatewhereclause=yes name=column_sequence dbname="column_sequence" )
+ column=(type=char(32) updatewhereclause=yes name=column_datatype dbname="column_datatype" )
+ column=(type=long updatewhereclause=yes name=column_length dbname="column_length" )
+ column=(type=number updatewhereclause=yes name=column_identity dbname="column_identity" )
+ column=(type=number updatewhereclause=yes name=column_nullable dbname="column_nullable" )
+ column=(type=char(64) updatewhereclause=yes name=column_definition dbname="column_definition" )
+ column=(type=number updatewhereclause=yes name=default_constraint dbname="default_constraint" )
+ column=(type=char(64) updatewhereclause=yes name=default_constraint_name dbname="default_constraint_name" )
+ column=(type=char(64) updatewhereclause=yes name=default_constraint_text dbname="default_constraint_text" )
+ column=(type=long updatewhereclause=yes name=modification_level dbname="modification_level" )
+ column=(type=datetime updatewhereclause=yes name=last_updated dbname="last_updated" )
+ column=(type=char(32766) updatewhereclause=no name=property_formula dbname="property_formula" )
+ retrieve="  SELECT property_name,   
+         columnname,   
+         column_sequence,   
+         column_datatype,   
+         column_length,   
+         column_identity,   
+         column_nullable,   
+         column_definition,   
+         default_constraint,   
+         default_constraint_name,   
+         default_constraint_text,   
+         modification_level,   
+         last_updated,
+		property_formula
+    FROM dbo.fn_epro_object_table_columns(:epro_object )
+
+" arguments=(("epro_object", string)) )
+text(band=header alignment="2" text="Columnname" border="0" color="33554432" x="5" y="4" height="64" width="1783" html.valueishtml="0"  name=columnname_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Sequence" border="0" color="33554432" x="1792" y="4" height="64" width="485" html.valueishtml="0"  name=column_sequence_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Datatype" border="0" color="33554432" x="2281" y="4" height="64" width="905" html.valueishtml="0"  name=column_datatype_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Length" border="0" color="33554432" x="3191" y="4" height="64" width="402" html.valueishtml="0"  name=column_length_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Identity" border="0" color="33554432" x="3598" y="4" height="64" width="411" html.valueishtml="0"  name=column_identity_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Nullable" border="0" color="33554432" x="4014" y="4" height="64" width="430" html.valueishtml="0"  name=column_nullable_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Column Definition" border="0" color="33554432" x="4448" y="4" height="64" width="1783" html.valueishtml="0"  name=column_definition_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Default Constraint" border="0" color="33554432" x="6235" y="4" height="64" width="471" html.valueishtml="0"  name=default_constraint_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Default Constraint Name" border="0" color="33554432" x="6711" y="4" height="64" width="1783" html.valueishtml="0"  name=default_constraint_name_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Default Constraint Text" border="0" color="33554432" x="8498" y="4" height="64" width="1783" html.valueishtml="0"  name=default_constraint_text_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Modification Level" border="0" color="33554432" x="10286" y="4" height="64" width="466" html.valueishtml="0"  name=modification_level_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Last Updated" border="0" color="33554432" x="10757" y="4" height="64" width="603" html.valueishtml="0"  name=last_updated_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="1033" y="4" height="76" width="745" format="[general]" html.valueishtml="0"  name=columnname visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=32766 border="0" color="33554432" x="1792" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=column_sequence visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="33554432" x="2281" y="4" height="76" width="905" format="[general]" html.valueishtml="0"  name=column_datatype visible="1" edit.limit=32 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="3191" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=column_length visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="33554432" x="3598" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=column_identity visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="33554432" x="4014" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=column_nullable visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="4448" y="4" height="76" width="1783" format="[general]" html.valueishtml="0"  name=column_definition visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=32766 border="0" color="33554432" x="6235" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=default_constraint visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="33554432" x="6711" y="4" height="76" width="1783" format="[general]" html.valueishtml="0"  name=default_constraint_name visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=32766 border="0" color="33554432" x="8498" y="4" height="76" width="1783" format="[general]" html.valueishtml="0"  name=default_constraint_text visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=32766 border="0" color="33554432" x="10286" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=modification_level visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=32766 border="0" color="33554432" x="10757" y="4" height="76" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=last_updated visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="9" y="4" height="64" width="978" format="[general]" html.valueishtml="0"  name=property_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="0" tabsequence=0 border="0" color="33554432" x="11360" y="0" height="64" width="4389" html.valueishtml="0"  name=property_formula visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

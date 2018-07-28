@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_treatment_definition.srs
+global type str_treatment_definition from structure
+	str_item_definition		treatment_definition
+	long		open_encounter_id
+	datetime		begin_date
+	datetime		end_date
+end type
+

@@ -1,0 +1,75 @@
+﻿$PBExportHeader$f_user_logon.srf
+global type f_user_logon from function_object
+end type
+
+forward prototypes
+global subroutine f_user_logon ()
+end prototypes
+
+global subroutine f_user_logon ();str_pick_users lstr_pick_users
+integer li_sts
+str_security_alert lstr_security_alert
+string ls_response
+
+if not isnull(current_scribe) then current_scribe.check_logon()
+
+if isnull(current_scribe) then
+	current_scribe = user_list.attempt_logon()
+	if not isnull(current_scribe) then
+		// Do these things when a user logs on
+		current_scribe.get_preferences()
+		datalist.clear_cache("display_scripts")  // force a display_script reload
+		common_thread.default_display_style = datalist.get_preference("PREFERENCES", "default_display_style")
+	end if
+	
+	// Determine which user the logged in person is scribing for
+	current_user = current_scribe
+	if not isnull(current_scribe) then
+		
+		if datalist.get_preference_boolean("PREFERENCES", "Enable Scribing", false) &
+		 AND user_list.is_user_privileged(current_scribe.user_id, "Scribe", false) then
+			lstr_pick_users.actor_class = "Consultant"
+			lstr_pick_users.pick_screen_title = "Select User For Whom You Are Scribing"
+			li_sts = user_list.pick_users(lstr_pick_users)
+			if li_sts <= 0 then
+				setnull(current_user)
+			else
+				lstr_security_alert.alert_title = "Scribe Statement"
+				lstr_security_alert.alert_message = "By logging into the EncounterPRO® Electronic Health Record as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into the EncounterPRO EHR as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information."
+				openwithparm(w_security_disclaimer, lstr_security_alert)
+				ls_response = message.stringparm
+				if ls_response = "YES" then
+					current_user = user_list.find_user(lstr_pick_users.selected_users.user[1].user_id)
+				else
+					setnull(current_user)
+				end if
+			end if
+			if isnull(current_user) then
+				current_user = current_scribe
+				openwithparm(w_pop_message, "You are scribing for yourself")
+			end if
+		end if
+	
+		log.log_db( this, "f_user_logon()", "User " + current_scribe.user_short_name + " has logged on", 2)
+	end if
+
+	// Refresh the main window	
+	main_window.function POST refresh()
+	
+	// If this is EncounterPRO, then set the visible screen
+	if isvalid(w_main) then
+//		w_main.tab_main.logonoff_refresh()
+		if isnull(current_user) then
+			f_set_screen()
+		elseif not current_user.sticky_logon then
+			f_set_screen()
+		end if
+	end if
+
+
+elseif isnull(current_user) then
+	current_user = current_scribe
+end if
+
+end subroutine
+

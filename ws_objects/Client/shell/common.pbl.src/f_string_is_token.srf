@@ -1,0 +1,27 @@
+﻿$PBExportHeader$f_string_is_token.srf
+global type f_string_is_token from function_object
+end type
+
+forward prototypes
+global function boolean f_string_is_token (string ps_string)
+end prototypes
+
+global function boolean f_string_is_token (string ps_string);long ll_pos1
+long ll_pos2
+
+// First check the general structure
+if isnull(ps_string) or len(ps_string) < 3 then return false
+if left(ps_string, 1) <>"%" then return false
+if right(ps_string, 1) <> "%" then return false
+
+// Now make sure there are zero or one spaces
+ll_pos1 = pos(ps_string, " ")
+if ll_pos1 = 0 then return true
+
+ll_pos2 = pos(ps_string, " ", ll_pos1 + 1)
+if ll_pos2 = 0 then return true
+
+return false
+
+end function
+

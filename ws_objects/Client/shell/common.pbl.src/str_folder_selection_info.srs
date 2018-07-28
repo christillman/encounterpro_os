@@ -1,0 +1,16 @@
+﻿$PBExportHeader$str_folder_selection_info.srs
+global type str_folder_selection_info from structure
+	string		filepath
+	string		cpr_id
+	string		context_object
+	string		context_object_type
+	long		object_key
+	string		attachment_type
+	string		extension
+	string		apply_to_all_flag
+	string		remove_flag
+	string		attachment_folder
+	string		description
+	string		rendered_filepath
+end type
+

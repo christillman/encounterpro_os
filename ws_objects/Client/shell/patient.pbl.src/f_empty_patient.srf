@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_empty_patient.srf
+global type f_empty_patient from function_object
+end type
+
+forward prototypes
+global function str_patient f_empty_patient ()
+end prototypes
+
+global function str_patient f_empty_patient ();str_patient lstr_patient
+
+setnull(lstr_patient.cpr_id)
+setnull(lstr_patient.race)
+setnull(lstr_patient.date_of_birth)
+setnull(lstr_patient.time_of_birth)
+setnull(lstr_patient.sex)
+setnull(lstr_patient.primary_language)
+setnull(lstr_patient.marital_status)
+setnull(lstr_patient.billing_id)
+setnull(lstr_patient.ssn)
+setnull(lstr_patient.first_name)
+setnull(lstr_patient.last_name)
+setnull(lstr_patient.degree)
+setnull(lstr_patient.name_prefix)
+setnull(lstr_patient.middle_name)
+setnull(lstr_patient.name_suffix)
+setnull(lstr_patient.attachment_id)
+setnull(lstr_patient.primary_provider_id)
+setnull(lstr_patient.secondary_provider_id)
+setnull(lstr_patient.last_update)
+setnull(lstr_patient.phone_number)
+setnull(lstr_patient.patient_id)
+setnull(lstr_patient.date_of_conception)
+setnull(lstr_patient.patient_status)
+setnull(lstr_patient.created)
+setnull(lstr_patient.created_by)
+setnull(lstr_patient.modified_by)
+setnull(lstr_patient.office_id)
+setnull(lstr_patient.locked_by)
+setnull(lstr_patient.attachment_location_id)
+setnull(lstr_patient.attachment_path)
+setnull(lstr_patient.referring_provider_id)
+setnull(lstr_patient.email_address)
+setnull(lstr_patient.nickname)
+setnull(lstr_patient.address_line_1)
+setnull(lstr_patient.address_line_2)
+setnull(lstr_patient.city)
+setnull(lstr_patient.state)
+setnull(lstr_patient.zip)
+setnull(lstr_patient.country)
+lstr_patient.id_list.id_count = 0
+lstr_patient.communications.communication_count = 0
+
+return lstr_patient
+
+
+
+end function
+

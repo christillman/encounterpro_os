@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_new_attachment.srf
+global type f_new_attachment from function_object
+end type
+
+forward prototypes
+global function long f_new_attachment (string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_extension, string ps_attachment_type, string ps_attachment_tag, string ps_filename, blob pb_attachment)
+end prototypes
+
+global function long f_new_attachment (string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_extension, string ps_attachment_type, string ps_attachment_tag, string ps_filename, blob pb_attachment);string ls_folder
+string ls_cpr_id
+
+setnull(ls_folder)
+
+if isnull(current_patient) then
+	setnull(ls_cpr_id)
+else
+	ls_cpr_id = current_patient.cpr_id
+end if
+
+return f_new_attachment_2(ls_cpr_id, &
+									ps_context_object, &
+									pl_object_key, &
+									ps_progress_type, &
+									ps_progress_key, &
+									ps_extension, &
+									ps_attachment_type, &
+									ps_attachment_tag, &
+									ps_filename, &
+									pb_attachment, &
+									ls_folder)
+
+
+end function
+

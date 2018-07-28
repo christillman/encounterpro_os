@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_display_attachment_image.srf
+global type f_display_attachment_image from function_object
+end type
+
+forward prototypes
+global function integer f_display_attachment_image (long pl_attachment_id)
+end prototypes
+
+global function integer f_display_attachment_image (long pl_attachment_id);u_component_attachment luo_attachment
+integer li_sts
+oleobject luo_ImageViewer
+string ls_attachment_file
+
+// Get the attachment object
+li_sts = current_patient.attachments.attachment(luo_attachment, pl_attachment_id)
+if li_sts <= 0 then return -1
+
+// Get the attachment file
+ls_attachment_file = f_temp_file(luo_attachment.extension)
+li_sts = luo_attachment.save_as(ls_attachment_file)
+
+// Destroy the attachment object
+component_manager.destroy_component(luo_attachment)
+
+// If we didn't get a file then return
+if li_sts <= 0 then return li_sts
+
+// Get the image display component
+luo_ImageViewer = CREATE oleobject
+li_sts = luo_ImageViewer.connecttonewobject("EPImageViewer.Image")
+if li_sts < 0 then
+	DESTROY luo_ImageViewer
+	log.log(this, "display_image()", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
+	return -1
+end if
+
+// Display the image
+luo_ImageViewer.LoadImageFromFile(ls_attachment_file, true)
+
+// Destroy the image deisplay component
+luo_ImageViewer.disconnectobject()
+DESTROY luo_ImageViewer
+
+return 1
+
+end function
+

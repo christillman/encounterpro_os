@@ -1,0 +1,50 @@
+﻿$PBExportHeader$dw_fn_encounter_audit.srd
+release 10;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes hidegrayline=no )
+header(height=88 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=168 color="536870912"  height.autosize=yes)
+table(column=(type=datetime updatewhereclause=yes name=time dbname="Time" )
+ column=(type=char(64) updatewhereclause=yes name=provider dbname="Provider" )
+ column=(type=char(24) updatewhereclause=yes name=context_object dbname="context_object" )
+ column=(type=long updatewhereclause=yes name=object_key dbname="object_key" )
+ column=(type=char(24) updatewhereclause=yes name=object_type dbname="object_type" )
+ column=(type=char(80) updatewhereclause=yes name=object_description dbname="object_description" )
+ column=(type=char(12) updatewhereclause=yes name=item_type dbname="Item_Type" )
+ column=(type=char(80) updatewhereclause=yes name=item dbname="Item" )
+ column=(type=char(80) updatewhereclause=yes name=action dbname="Action" )
+ column=(type=long updatewhereclause=yes name=event_id dbname="event_id" )
+ column=(type=char(24) updatewhereclause=yes name=user_id dbname="user_id" )
+ retrieve="SELECT 	[Time],
+	Provider ,
+	context_object ,
+	object_key ,
+	object_type ,
+	object_description ,
+	Item_Type ,
+	Item ,
+	Action ,
+	event_id ,
+	user_id
+FROM dbo.fn_encounter_audit(:ps_cpr_id, :pl_encounter_id, :ps_include_object_updates)
+" arguments=(("ps_cpr_id", string),("pl_encounter_id", number),("ps_include_object_updates", string))  sort="time A " )
+text(band=header alignment="0" text="Event Time" border="0" color="0" x="9" y="8" height="64" width="320" html.valueishtml="0"  name=t_1 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Event" border="0" color="0" x="626" y="8" height="64" width="320" html.valueishtml="0"  name=t_2 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header alignment="0" text="Who" border="0" color="0" x="2423~tlong(describe(~"compute_action.width~")) + 654" y="8" height="64" width="320" html.valueishtml="0"  name=t_3 visible="1"  font.face="Tahoma" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+line(band=header x1="0" y1="80" x2="2802" y2="80"  name=l_header visible="1" pen.style="0" pen.width="5" pen.color="0"  background.mode="2" background.color="16777215" )
+compute(band=detail alignment="0" expression=" context_object + ' - ' +  object_description "border="0" color="33554432" x="5" y="72" height="64" width="1778" format="[GENERAL]" html.valueishtml="0"  name=compute_object visible="1"  slideup=allabove  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="64" width="603" format="[shortdate] [time]" html.valueishtml="0"  name=time visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+compute(band=detail alignment="0" expression=" item +  if( lower(item_type) = 'progress', '', ' ' + item_type) +  if(isnull(action), '', ' - ' + action)"border="0" color="33554432" x="626" y="4" height="64" width="1769" format="[GENERAL]" html.valueishtml="0"  name=compute_action visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912"  height.autosize=yes)
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="2423~tlong(describe(~"compute_action.width~")) + 654" y="4" height="64" width="599" format="[general]" html.valueishtml="0"  name=provider visible="1" edit.limit=64 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

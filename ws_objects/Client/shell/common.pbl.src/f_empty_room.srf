@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_empty_room.srf
+global type f_empty_room from function_object
+end type
+
+forward prototypes
+global function str_room f_empty_room ()
+end prototypes
+
+global function str_room f_empty_room ();str_room lstr_room
+
+setnull(lstr_room.room_id)
+setnull(lstr_room.room_name)
+setnull(lstr_room.room_sequence)
+setnull(lstr_room.room_type)
+setnull(lstr_room.room_status)
+setnull(lstr_room.computer_id)
+setnull(lstr_room.office_id)
+setnull(lstr_room.status)
+setnull(lstr_room.default_encounter_type)
+setnull(lstr_room.sort)
+setnull(lstr_room.in_room_user_id)
+setnull(lstr_room.dirty_flag)
+
+return lstr_room
+
+
+
+end function
+

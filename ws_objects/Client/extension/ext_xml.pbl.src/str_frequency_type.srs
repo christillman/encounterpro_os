@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_frequency_type.srs
+global type str_frequency_type from structure
+	string		Abbreviation
+	string		Description
+	decimal{0}		TimesPerDayCalc
+end type
+

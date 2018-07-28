@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_jmjdocument_messageid_type.srs
+global type str_jmjdocument_messageid_type from structure
+	string		sendermessageid
+	string		epiemessageid
+end type
+

@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_menu.srs
+global type str_menu from structure
+	long		menu_id
+	long		alternate_menu_id
+	string		description
+	string		specialty_id
+	string		context_object
+	integer		menu_item_count
+	str_menu_item		menu_item[]
+end type
+

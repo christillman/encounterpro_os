@@ -1,0 +1,152 @@
+﻿$PBExportHeader$f_get_stamp.srf
+global type f_get_stamp from function_object
+end type
+
+forward prototypes
+global function str_stamp f_get_stamp ()
+end prototypes
+
+global function str_stamp f_get_stamp ();string ls_pref
+string ls_then
+datetime ldt_now1
+datetime ldt_now2
+datetime ldt_then
+string ls_date
+string ls_time
+str_stamp lstr_stamp
+string ls_temp
+string ls_mod
+string ls_left
+string ls_right
+long ll_count
+integer li_demo
+long ll_ph
+long ll_pa
+date ld_exp
+long ll_cn
+long ll_lt
+integer li_sts
+string ls_
+
+// license:		Null = Stale Stamp (license service not running)
+//					D = Demonstration License
+//					E = Expired License
+//					N = License Service couldn't find license
+//					P = Production License
+//					XP = Active physicians exceeds license
+//					XE = Active extendors exceeds license
+
+// Initialize Stamp
+setnull(lstr_stamp.license)
+lstr_stamp.providers = 0
+lstr_stamp.extenders = 0
+lstr_stamp.expiration_date = date("1/1/1990")
+lstr_stamp.license_type = 0
+setnull(lstr_stamp.compno)
+
+/*
+SELECT count(*)
+INTO :li_demo
+FROM c_Domain
+WHERE domain_id = 'SYSTEM'
+AND domain_item = 'DEMOMODE';
+if not tf_check() then li_demo = 0
+*/
+
+// Msc temp fix until license stability issues are worked out
+lstr_stamp.license = "P"
+lstr_stamp.providers = 100
+lstr_stamp.extenders = 100
+lstr_stamp.license_type = 0
+setnull(lstr_stamp.message)
+lstr_stamp.create_encounters = true
+return lstr_stamp
+
+
+ls_pref = f_get_global_preference("SYSTEM", "system_stamp")
+f_split_string(ls_pref, "|", ls_then, ls_temp)
+f_split_string(ls_then, " ", ls_date, ls_time)
+if li_sts <> 3 then
+	setnull(ldt_then)
+else
+	ldt_then = datetime(date(ls_date), time(ls_time))
+end if
+ldt_now1 = datetime(today(), relativetime(now(), 60))
+ldt_now2 = datetime(today(), relativetime(now(), -300))
+
+if not isnull(ls_pref) AND ldt_then <= ldt_now1 AND ldt_then >= ldt_now2 then
+	f_split_string(ls_temp,",",ls_mod, ls_right)
+	f_split_string(ls_right,",",ls_left,ls_right)
+	ll_ph = integer(ls_left)
+	f_split_string(ls_right,",",ls_left,ls_right)
+	ll_pa = integer(ls_left)
+	f_split_string(ls_right,",",ls_left,ls_right)
+	ll_cn = integer(ls_left)
+	f_split_string(ls_right,",",ls_left,ls_right)
+	if isdate(ls_left) then
+		ld_exp = date(ls_left)
+	else
+		setnull(ld_exp)
+	end if
+	f_split_string(ls_right,",",ls_left,ls_right)
+	ll_lt = integer(ls_left)
+
+	if ls_mod = "P" then
+		SELECT count(*)
+		INTO :ll_count
+		FROM c_User
+		WHERE license_flag = 'P'
+		AND user_status = 'OK';
+		if not tf_check() then return lstr_stamp
+		
+		if ll_count > ll_ph then
+			ls_mod = "XP"
+		else
+			SELECT count(*)
+			INTO :ll_count
+			FROM c_User
+			WHERE license_flag = 'E'
+			AND user_status = 'OK';
+			if not tf_check() then return lstr_stamp
+			
+			if ll_count > ll_pa then
+				ls_mod = "XE"
+			end if
+		end if
+	end if
+end if
+
+lstr_stamp.license = ls_mod
+lstr_stamp.providers = ll_ph
+lstr_stamp.extenders = ll_pa
+lstr_stamp.expiration_date = ld_exp
+lstr_stamp.license_type = ll_lt
+lstr_stamp.compno = ll_cn
+
+CHOOSE CASE lstr_stamp.license
+	CASE "D"
+		lstr_stamp.message = f_get_message(14)
+	CASE "E"
+		lstr_stamp.message = f_get_message(6)
+	CASE "N"
+		lstr_stamp.message = f_get_message(5)
+	CASE "P"
+		setnull(lstr_stamp.message)
+	CASE "XP"
+		lstr_stamp.message = f_get_message(11)
+	CASE "XE"
+		lstr_stamp.message = f_get_message(12)
+	CASE ELSE
+		lstr_stamp.message = f_get_message(4)
+END CHOOSE
+
+if (isnull(lstr_stamp.license) OR lstr_stamp.license <> "P") and component_manager.mod_count > 100 then
+	lstr_stamp.create_encounters = false
+else
+	lstr_stamp.create_encounters = true
+end if
+
+return lstr_stamp
+
+end function
+

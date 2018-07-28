@@ -1,0 +1,326 @@
+﻿$PBExportHeader$f_configure_local_interface_transport.srf
+global type f_configure_local_interface_transport from function_object
+end type
+
+forward prototypes
+global function integer f_configure_local_interface_transport (long pl_interfaceserviceid, ref long pl_transportsequence)
+end prototypes
+
+global function integer f_configure_local_interface_transport (long pl_interfaceserviceid, ref long pl_transportsequence);str_popup popup
+str_popup_return popup_return
+string ls_id
+str_params lstr_params
+str_attributes lstr_attributes
+string ls_value
+integer li_sts
+long ll_attribute_count
+long i
+string ls_interfaceservicetype
+string ls_commcomponent
+string ls_transportdescription
+string ls_documenttype
+long ll_count
+string ls_interfacedescription
+string ls_purpose
+string ls_document_route
+string ls_document_route_suffix
+string ls_original_document_route
+string ls_original_document_route_suffix
+string ls_new_document_route
+string ls_document_format
+string ls_send_from
+string ls_direction
+u_ds_data luo_data
+string ls_receive_flag
+string ls_send_flag
+string ls_original_document_format
+string ls_original_documenttype
+string ls_original_send_from
+string ls_original_commcomponent
+
+if isnull(pl_interfaceserviceid) then
+	log.log(this, "new_interface_transport()", "NULL interface service id", 4)
+	return -1
+end if
+
+// Get some info about the interface
+SELECT description, interfaceservicetype, document_route, receive_flag, send_flag
+INTO :ls_interfacedescription, :ls_interfaceservicetype, :ls_document_route, :ls_receive_flag, :ls_send_flag
+FROM c_component_interface
+WHERE interfaceserviceid = :pl_interfaceserviceid;
+if not tf_check() then return -1
+if sqlca.sqlnrows = 0 then
+	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	return -1
+end if
+
+// Get the existing attributes for this transport
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_practice_interface_transport_properties")
+
+if isnull(pl_transportsequence) then
+	setnull(ls_original_document_route)
+	setnull(ls_original_document_route_suffix)
+	
+	// If this is a new transport then figure out if it's incoming or outgoing.
+	popup.data_row_count = 0
+	if ls_receive_flag = "Y" then
+		popup.data_row_count += 1
+		popup.items[popup.data_row_count] = "In"
+	end if
+	if ls_send_flag = "Y" then
+		popup.data_row_count += 1
+		popup.items[popup.data_row_count] = "Out"
+	end if
+	popup.title = "New Transport Direction"
+	if popup.data_row_count = 0 then
+		log.log(this, "configure_interface_transport()", "Interface does not allow either sending or receiving (" + string(pl_interfaceserviceid) + ")", 4)
+		return -1
+	end if
+	if popup.data_row_count = 1 then
+		ls_direction = popup.items[1]
+	else
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return 0
+		ls_direction = popup_return.items[1]
+	end if
+	ls_direction = left(ls_direction, 1)
+else
+	SELECT direction
+	INTO :ls_direction
+	FROM c_component_interface_route
+	WHERE interfaceserviceid = :pl_interfaceserviceid
+	AND transportsequence = :pl_transportsequence;
+	if not tf_check() then return -1
+	
+	ll_attribute_count = luo_data.retrieve(sqlca.customer_id, pl_interfaceserviceid, pl_transportsequence)
+	
+	f_attribute_ds_to_str(luo_data, lstr_attributes)
+	
+	ls_original_document_route_suffix = f_attribute_find_attribute(lstr_attributes, "document_route_suffix")
+	if len(ls_original_document_route_suffix) > 0 then
+		ls_original_document_route = ls_document_route + "." + ls_original_document_route_suffix
+	else
+		ls_original_document_route = ls_document_route
+	end if
+	
+	SELECT document_format, document_type, send_from, sender_component_id
+	INTO 		:ls_original_document_format,
+				:ls_original_documenttype,
+				:ls_original_send_from,
+				:ls_original_commcomponent
+	FROM c_Document_Route
+	WHERE document_route = :ls_original_document_route;
+	if not tf_check() then return -1
+end if
+
+// Define the new interface transport
+if ls_direction = "O" then
+	ls_id = "{18D9F50E-5DC2-4322-960E-BCC418B1B57E}"  // New outgoing transport
+else
+	ls_id = "{184E2FB6-7532-4860-ABC3-1550341CF96F}"  // New incoming transport
+end if
+
+li_sts = f_get_params(ls_id, "Config", lstr_attributes)
+if li_sts < 0 then return -1
+
+// Get attributes returned from wizard
+ls_commcomponent = f_attribute_find_attribute(lstr_attributes, "component_id")
+if isnull(ls_commcomponent) then
+	openwithparm(w_pop_message, "Comm Component is required")
+	return 0
+end if
+ls_transportdescription = f_attribute_find_attribute(lstr_attributes, "transportdescription")
+if isnull(ls_transportdescription) then
+	openwithparm(w_pop_message, "Transport Description is required")
+	return 0
+end if
+ls_documenttype = f_attribute_find_attribute(lstr_attributes, "documenttype")
+ls_purpose = f_attribute_find_attribute(lstr_attributes, "purpose")
+ls_document_route_suffix = f_attribute_find_attribute(lstr_attributes, "document_route_suffix")
+ls_document_format = f_attribute_find_attribute(lstr_attributes, "document_format")
+if isnull(ls_document_format) or lower(ls_document_format) <> "machine" then ls_document_format = "Human"
+ls_send_from = f_attribute_find_attribute(lstr_attributes, "send_from")
+if isnull(ls_send_from) or lower(ls_send_from) <> "client" then ls_send_from = "Server"
+
+// validate the document_route_suffix
+if len(ls_document_route_suffix) > 0 then
+	ls_new_document_route = ls_document_route + "." + ls_document_route_suffix
+	if len(ls_new_document_route) > 24 then
+		openwithparm(w_pop_message, "The document route suffix is too long.  The combination of the document route and document route suffix must not exceed 24 characters")
+		return -1
+	end if
+else
+	ls_new_document_route = ls_document_route
+end if
+
+if not isnull(pl_transportsequence) and ls_original_document_route <> ls_new_document_route then
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Document_Route
+	WHERE document_route = :ls_new_document_route;
+	if not tf_check() then return -1
+	
+	if ll_count > 0 then
+		openwithparm(w_pop_message, "The document route ~"" + ls_new_document_route + "~" already exists.  Document route suffix must be unique within the interface or left blank.")
+		return -1
+	end if
+end if
+
+if isnull(pl_transportsequence) then
+	SELECT max(transportsequence)
+	INTO :pl_transportsequence
+	FROM c_component_interface_route
+	WHERE subscriber_owner_id = :sqlca.customer_id
+	AND interfaceserviceid = :pl_interfaceserviceid;
+	if not tf_check() then return -1
+	
+	if isnull(pl_transportsequence) or pl_transportsequence <= 0 then
+		pl_transportsequence = 1
+	else
+		pl_transportsequence += 1
+	end if
+	
+	INSERT INTO c_component_interface_route  
+				( ownerid,   
+				  subscriber_owner_id,   
+				  interfaceservicetype,   
+				  interfaceserviceid,   
+				  interfacedescription,   
+				  transportsequence,   
+				  transportdescription,   
+				  commcomponent,   
+				  documenttype,   
+				  direction,   
+				  epie_transform,   
+				  status,   
+				  purpose,   
+				  document_route_suffix )  
+	  VALUES ( :sqlca.customer_id,   
+				  :sqlca.customer_id,   
+				  :ls_interfaceservicetype,   
+				  :pl_interfaceserviceid,   
+				  :ls_interfacedescription,   
+				  :pl_transportsequence,   
+				  :ls_transportdescription,   
+				  :ls_commcomponent,   
+				  :ls_documenttype,   
+				  :ls_direction,   
+				  'N',   
+				  'OK',   
+				  :ls_purpose,   
+				  :ls_document_route_suffix )  ;
+	if not tf_check() then return -1
+else
+	UPDATE c_component_interface_route  
+	SET transportdescription = :ls_transportdescription,   
+		  commcomponent = :ls_commcomponent,   
+		  documenttype = :ls_documenttype,   
+		  purpose = :ls_purpose,   
+		  document_route_suffix = :ls_document_route_suffix
+	WHERE interfaceserviceid = :pl_interfaceserviceid
+	AND transportsequence = :pl_transportsequence;
+	if not tf_check() then return -1
+end if
+
+
+if ls_direction = "O" and len(ls_new_document_route) > 0 then
+	if isnull(ls_original_document_route) or (ls_original_document_route <> ls_new_document_route) then
+		// remove the old document_route if necessary
+		if len(ls_original_document_route) > 0 then
+			DELETE dbo.c_Document_Route 
+			WHERE document_route = :ls_original_document_route;
+			if not tf_check() then return -1
+		end if
+		
+		// Add the document route for this transport
+		INSERT INTO dbo.c_Document_Route (
+				document_route,
+				sent_status,
+				status,
+				owner_id,
+				last_updated,
+				id,
+				document_format,
+				sender_id_key,
+				receiver_id_key,
+				send_via_addressee,
+				document_type,
+				communication_type,
+				sending_status,
+				send_from,
+				sender_component_id)
+		VALUES (
+				:ls_new_document_route,
+				'Sent',
+				'OK',
+				:sqlca.customer_id,
+				getdate(),
+				newid(),
+				:ls_document_format,
+				NULL,
+				NULL,
+				:pl_interfaceserviceid,
+				:ls_documenttype,
+				NULL,
+				'Sending',
+				:ls_send_from,
+				:ls_commcomponent );
+		if not tf_check() then return -1
+	elseif len(ls_original_document_route) > 0 then
+		// We have a document_route that already existed.  See if any of the properties need to be updated
+		if not f_strings_equal(ls_original_document_format, ls_document_format) then
+			UPDATE dbo.c_Document_Route
+			SET document_format = :ls_document_format
+			WHERE document_route = :ls_new_document_route;
+			if not tf_check() then return -1
+		end if
+		
+		if not f_strings_equal(ls_original_documenttype, ls_documenttype) then
+			UPDATE dbo.c_Document_Route
+			SET document_type = :ls_documenttype
+			WHERE document_route = :ls_new_document_route;
+			if not tf_check() then return -1
+		end if
+		
+		if not f_strings_equal(ls_original_send_from, ls_send_from) then
+			UPDATE dbo.c_Document_Route
+			SET send_from = :ls_send_from
+			WHERE document_route = :ls_new_document_route;
+			if not tf_check() then return -1
+		end if
+		
+		if not f_strings_equal(ls_original_commcomponent, ls_commcomponent) then
+			UPDATE dbo.c_Document_Route
+			SET sender_component_id = :ls_commcomponent
+			WHERE document_route = :ls_new_document_route;
+			if not tf_check() then return -1
+		end if
+	end if
+end if
+
+
+// Save the attributes in the properties table
+f_attribute_str_to_ds_with_removal(lstr_attributes, luo_data)
+
+for i = 1 to luo_data.rowcount()
+	if isnull(luo_data.object.subscriber_owner_id[i]) then
+		luo_data.object.subscriber_owner_id[i] = sqlca.customer_id
+		luo_data.object.interfaceserviceid[i] = pl_interfaceserviceid
+		luo_data.object.transportsequence[i] = pl_transportsequence
+		luo_data.object.property[i] = luo_data.object.attribute[i]
+		luo_data.object.last_updated[i] = datetime(today(), now())
+	end if
+next
+
+li_sts = luo_data.update()
+
+DESTROY luo_data
+
+return 1
+
+
+
+end function
+

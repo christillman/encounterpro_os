@@ -1,0 +1,18 @@
+﻿$PBExportHeader$str_observation_comment.srs
+global type str_observation_comment from structure
+	long		observation_comment_id
+	string		comment_type
+	string		comment_title
+	string		comment
+	datetime		comment_date_time
+	string		abnormal_flag
+	integer		severity
+	long		encounter_id
+	long		attachment_id
+	long		root_observation_sequence
+	string		user_id
+	string		created_by
+	datetime		created
+	str_observation_comment_list		previous_comments
+end type
+

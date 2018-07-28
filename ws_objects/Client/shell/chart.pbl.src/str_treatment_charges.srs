@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_treatment_charges.srs
+global type str_treatment_charges from structure
+	long		charge_count
+	str_treatment_charge		charge[]
+end type
+

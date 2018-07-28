@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_doc_file_save_params.srs
+global type str_doc_file_save_params from structure
+	string		file_path
+	string		file_type
+	boolean		include_column_headings
+	string		encoding
+end type
+

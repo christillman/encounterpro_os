@@ -1,0 +1,24 @@
+﻿$PBExportHeader$f_empty_id_instance.srf
+global type f_empty_id_instance from function_object
+end type
+
+forward prototypes
+global function str_id_instance f_empty_id_instance ()
+end prototypes
+
+global function str_id_instance f_empty_id_instance ();str_id_instance lstr_id
+
+
+setnull(lstr_id.iddomain)
+setnull(lstr_id.idvalue)
+setnull(lstr_id.epro_domain)
+setnull(lstr_id.epro_value)
+setnull(lstr_id.owner_id)
+setnull(lstr_id.customer_id)
+
+
+return lstr_id
+
+
+end function
+

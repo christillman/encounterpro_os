@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_treatment_full_description_progress.srf
+global type f_treatment_full_description_progress from function_object
+end type
+
+forward prototypes
+global function string f_treatment_full_description_progress (str_treatment_description pstr_treatment, str_encounter_description pstr_encounter, string ps_progress_type)
+end prototypes
+
+global function string f_treatment_full_description_progress (str_treatment_description pstr_treatment, str_encounter_description pstr_encounter, string ps_progress_type);String		ls_description
+str_progress_list lstr_progress
+integer li_sts
+integer i
+string ls_progress_key
+
+setnull(ls_progress_key)
+
+ls_description = f_treatment_full_description(pstr_treatment, pstr_encounter)
+if isnull(ls_description) then return ls_description
+
+lstr_progress = f_get_progress(current_patient.cpr_id, "Treatment", pstr_treatment.treatment_id, ps_progress_type, ls_progress_key)
+for i = 1 to lstr_progress.progress_count
+	ls_description += "~r~n" + lstr_progress.progress[i].progress_full_description
+next
+
+return ls_description
+
+end function
+

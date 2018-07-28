@@ -1,0 +1,80 @@
+﻿$PBExportHeader$f_config_object_import_old.srf
+global type f_config_object_import_old from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_import_old (string ps_config_object_id, boolean pb_show_beta)
+end prototypes
+
+global function integer f_config_object_import_old (string ps_config_object_id, boolean pb_show_beta);long ll_sts
+u_config_object_manager lo_config_object_manager
+string ls_config_object_data
+blob lbl_objectdata
+str_popup popup
+str_popup_return popup_return
+long ll_version
+string ls_object_xml
+string ls_min_release_status
+str_config_object_info lstr_config_object_info
+integer li_sts
+
+if lower(sqlca.database_mode) = "testing" and pb_show_beta then
+	ls_min_release_status = "Testing"
+elseif pb_show_beta then
+	ls_min_release_status = "Beta"
+else
+	ls_min_release_status = "Production"
+end if
+
+popup.dataobject = "dw_config_object_versions"
+popup.datacolumn = 1
+popup.displaycolumn = 3
+popup.argument_count = 2
+popup.argument[1] = ps_config_object_id
+popup.argument[2] = ls_min_release_status
+popup.auto_singleton = true
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return 0
+
+ll_version = long(popup_return.items[1])
+
+if isnull(ll_version) then
+	log.log(this, "f_config_object_import()", "No max version found in the library (" + ps_config_object_id + ")", 4)
+	return -1
+end if
+
+// Download the version
+ll_sts =  sqlca.config_download_library_object(ps_config_object_id, ll_version, current_user.user_id)
+if not tf_check() then return -1
+if ll_sts < 0 then
+	log.log(this, "f_config_object_import()", "Error downloading config object", 4)
+	return -1
+end if
+
+// Get the object data
+SELECTBLOB objectdata
+INTO :lbl_objectdata
+FROM c_Config_Object_Version
+WHERE config_object_id = :ps_config_object_id
+AND version = :ll_version;
+if not tf_check() then return -1
+if sqlca.sqlnrows <> 1 then
+	log.log(this, "f_config_object_import()", "Version record not found (" + ps_config_object_id + ", " + string(ll_version) + ")", 4)
+	return -1
+end if
+if isnull(lbl_objectdata) then
+	log.log(this, "f_config_object_import()", "Null object data (" + ps_config_object_id + ", " + string(ll_version) + ")", 4)
+	return -1
+end if
+
+ls_object_xml = f_blob_to_string(lbl_objectdata)
+
+//li_sts = f_config_object_import_objectdata(ls_object_xml, lstr_config_object_info)
+if li_sts <= 0 then return li_sts
+
+
+return 1
+
+end function
+

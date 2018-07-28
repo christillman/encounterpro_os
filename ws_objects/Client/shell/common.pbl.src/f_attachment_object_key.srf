@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_attachment_object_key.srf
+global type f_attachment_object_key from function_object
+end type
+
+forward prototypes
+global function long f_attachment_object_key (str_attachment pstr_attachment, string ps_context_object)
+end prototypes
+
+global function long f_attachment_object_key (str_attachment pstr_attachment, string ps_context_object);long ll_null
+
+setnull(ll_null)
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "patient"
+		return ll_null
+	CASE "encounter"
+		return pstr_attachment.encounter_id
+	CASE "assessment"
+		return pstr_attachment.problem_id
+	CASE "treatment"
+		return pstr_attachment.treatment_id
+	CASE "observation"
+		return pstr_attachment.observation_sequence
+	CASE "attachment"
+		return pstr_attachment.attachment_id
+	CASE ELSE
+		return ll_null
+END CHOOSE
+
+
+end function
+

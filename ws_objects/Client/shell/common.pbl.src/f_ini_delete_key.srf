@@ -1,0 +1,173 @@
+﻿$PBExportHeader$f_ini_delete_key.srf
+global type f_ini_delete_key from function_object
+end type
+
+forward prototypes
+global function integer f_ini_delete_key (string as_file, string as_section, string as_key)
+end prototypes
+
+global function integer f_ini_delete_key (string as_file, string as_section, string as_key);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  		of_Delete
+//
+//	Access:  		public
+//
+//	Arguments:		
+//	as_file			The .ini file.
+//	as_section		The section name that the entry to be deleted is in.
+//							(Do not include the brackets with this argument.)
+//	as_key			The key name of the entry that should be deleted from
+//							the specified section.
+//							(Key name is the name to the left of the "=" sign).
+//
+//	Returns:			Integer
+//						 1	success
+//						 0	section does not exist, or key name does not exist
+//							within specified section.
+//						-1	file error
+//						-2 if .INI file does not exist or has not been specified.
+//
+//	Description:  	Removes the specified entry from the specified section 
+//						in the INI file.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	5.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Copyright © 1996 Powersoft Corporation.  All Rights Reserved.
+//	Any distribution of the PowerBuilder Foundation Classes (PFC)
+//	source code by other than Powersoft is prohibited.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+string			ls_newfile
+boolean		lb_skipline
+boolean		lb_sectionfound
+boolean		lb_entryremoved
+integer		li_file
+integer		li_rc = 1
+integer		li_filewriterc
+integer		li_keylength
+long			ll_length
+long			ll_first
+long			ll_last
+long			ll_pos
+string		ls_line
+string		ls_section
+string		ls_temp
+integer li_sts
+long ll_bytes_written
+
+SetPointer (Hourglass!)
+
+// Determine if file exists
+if not FileExists (as_file) then
+	return -2
+end if
+
+// Open file for reading
+ll_length = FileLength (as_file)
+li_file = FileOpen (as_file)
+if li_file = -1 then	return li_file
+
+//////////////////////////////////////////////////////////////////////////////
+// Read the file and locate the desired entry that should be removed.
+//////////////////////////////////////////////////////////////////////////////
+li_keylength = Len (as_key)
+do while li_rc >= 0
+	
+	// Read one line from the input file (check the rc).
+	li_rc = FileRead (li_file, ls_line)
+	if li_rc = -1 then
+		return -1
+	end if
+	
+	if not lb_entryremoved then
+		if li_rc > 0 then
+
+			// Look for a section header components (the OpenBracket and CloseBracket (if any)).
+			ll_first = Pos (ls_line, "[")
+			ll_last = Pos (ls_line, "]")
+			
+			// Was section header found?
+			if ll_first > 0 and ll_last > 0 then
+				// Yes, a section header has been found.
+				// Get the name of the section.				
+				ls_temp = trim(ls_line)
+				if Left (ls_temp, 1) = "[" then
+					ll_pos = Pos (ls_temp, "]")
+					ls_section = Mid (ls_temp, 2, ll_pos - 2)
+					// Determine if this is the section being searched for.							
+					if ls_section = as_section then
+						// The section being searched for has been found.
+						lb_sectionfound = true
+					else
+						// This is not the section being searched for.
+						lb_sectionfound = false
+					end if
+				end if
+			else
+				// Is current line part of the section being searched?
+				if lb_sectionfound then
+					// Yes, Locate the key within the section.
+					ls_temp = (ls_line)
+					// Determine if this is the key being searched for.							
+					if Left (ls_temp, li_keylength) = as_key then
+						// Yes, the key has been found.						
+						ls_temp = trim(Mid (ls_temp, li_keylength + 1))
+						if Char (ls_temp) = "=" then
+							// Start skipping.
+							lb_skipline = true
+							// The desired entry will be removed.
+							lb_entryremoved = true
+						end if
+					end if
+				end if
+			end if
+		end if
+	else
+		// Stop skipping lines.
+		lb_skipline = false
+	end if
+
+	// Add the carriage control.
+	ls_line = ls_line + "~r~n"
+
+	// Create the output file by including all lines not
+	// marked to be skipped.
+	if li_rc >= 0 and not lb_skipline then
+		ls_newfile = ls_newfile + ls_line
+	end if
+loop 
+
+// Close the input file.
+FileClose (li_file)
+
+// If the section or key were not found, return.
+if (not lb_sectionfound) or (not lb_entryremoved) then
+	return 0
+end if
+
+//Replace the file with the section removed.
+li_file = FileOpen (as_file, TextMode!, Write!, LockReadWrite!, Replace!)
+if li_file = -1 then
+	return -1
+end if
+
+ll_bytes_written = FileWriteEX(li_file, ls_newfile)
+FileClose (li_file)
+
+if ll_bytes_written >= 0 then
+	return 1
+else
+	return -1
+end if
+
+
+end function
+

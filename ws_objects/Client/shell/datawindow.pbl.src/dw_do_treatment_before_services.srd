@@ -1,0 +1,36 @@
+﻿$PBExportHeader$dw_do_treatment_before_services.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=service dbname="c_Treatment_Type_Service.service" )
+ column=(type=char(128) updatewhereclause=yes name=button dbname="c_Treatment_Type_Service.button" )
+ column=(type=char(255) updatewhereclause=yes name=button_help dbname="c_Treatment_Type_Service.button_help" )
+ column=(type=char(32) updatewhereclause=yes name=button_title dbname="c_Treatment_Type_Service.button_title" )
+ column=(type=char(80) updatewhereclause=yes name=service_description dbname="o_Service.description" )
+ column=(type=long updatewhereclause=yes identity=yes name=service_sequence dbname="c_Treatment_Type_Service.service_sequence" )
+ column=(type=char(12) updatewhereclause=yes name=observation_tag dbname="c_Treatment_Type_Service.observation_tag" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_Treatment_Type_Service.sort_sequence" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Treatment_Type_Service~" )  TABLE(NAME=~"o_Service~" ) COLUMN(NAME=~"c_Treatment_Type_Service.service~") COLUMN(NAME=~"c_Treatment_Type_Service.button~") COLUMN(NAME=~"c_Treatment_Type_Service.button_help~") COLUMN(NAME=~"c_Treatment_Type_Service.button_title~") COLUMN(NAME=~"o_Service.description~") COLUMN(NAME=~"c_Treatment_Type_Service.service_sequence~") COLUMN(NAME=~"c_Treatment_Type_Service.observation_tag~") COLUMN(NAME=~"c_Treatment_Type_Service.sort_sequence~")    JOIN (LEFT=~"c_Treatment_Type_Service.service~"    OP =~"=~"RIGHT=~"o_Service.service~" )WHERE(    EXP1 =~"c_Treatment_Type_Service.treatment_type~"   OP =~"=~"    EXP2 =~":treatment_type~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Treatment_Type_Service.before_flag~"   OP =~"=~"    EXP2 =~"'Y'~" ) ) ARG(NAME = ~"treatment_type~" TYPE = string) " arguments=(("treatment_type", string))  sort="sort_sequence A button_title A " )
+text(band=header alignment="2" text="C Treatment Type Service
+Service" border="0" color="0" x="5" y="4" height="128" width="686"  name=c_treatment_type_service_service_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Treatment Type Service
+Button" border="0" color="0" x="695" y="4" height="128" width="3511"  name=c_treatment_type_service_button_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Treatment Type Service
+Button Help" border="0" color="0" x="4210" y="4" height="128" width="3511"  name=c_treatment_type_service_button_help_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Treatment Type Service
+Button Title" border="0" color="0" x="7726" y="4" height="128" width="905"  name=c_treatment_type_service_button_title_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="O Service
+Description" border="0" color="0" x="8635" y="4" height="128" width="2222"  name=o_service_description_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="686" format="[general]"  name=service edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="0" x="695" y="4" height="76" width="3511" format="[general]"  name=button edit.limit=128 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="4210" y="4" height="76" width="3511" format="[general]"  name=button_help edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="7726" y="4" height="76" width="905" format="[general]"  name=button_title edit.limit=32 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="8635" y="4" height="76" width="2222" format="[general]"  name=service_description edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="0" x="10857" y="0" height="64" width="82" format="[general]"  name=service_sequence edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="10939" y="0" height="64" width="649" format="[general]"  name=c_treatment_type_service_observation_tag edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=0 border="0" color="0" x="11589" y="0" height="64" width="27"  name=c_treatment_type_service_sort_sequence  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

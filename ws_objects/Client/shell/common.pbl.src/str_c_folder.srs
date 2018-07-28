@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_c_folder.srs
+global type str_c_folder from structure
+	string		folder
+	string		context_object
+	string		context_object_type
+	string		description
+	string		status
+	integer		sort_sequence
+	string		workplan_required_flag
+end type
+

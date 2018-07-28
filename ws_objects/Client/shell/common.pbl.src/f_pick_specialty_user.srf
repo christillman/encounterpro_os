@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_pick_specialty_user.srf
+global type f_pick_specialty_user from function_object
+end type
+
+forward prototypes
+global function string f_pick_specialty_user ()
+end prototypes
+
+global function string f_pick_specialty_user ();string ls_specialty_id
+u_user luo_user
+
+ls_specialty_id = f_pick_specialty("Specific User")
+if ls_specialty_id = "Specific User" then
+	// Pick User
+	luo_user = user_list.pick_user( false, false, false)
+	if isnull(luo_user) then
+		setnull(ls_specialty_id)
+	else
+		ls_specialty_id = luo_user.user_id
+	end if
+end if
+
+return ls_specialty_id
+
+end function
+

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$str_assessment_instance_type.srs
+global type str_assessment_instance_type from structure
+	long		encounterpro_problem_id
+	string		assessmentid
+	str_id_instance		objectid[]
+	str_objecthandling_type		assessmenthandling
+	string		assessmentdefinitionid
+	string		link_openencounter
+	string		assessmenttype
+	string		description
+	string		location
+	string		acuteness
+	string		icd9
+	datetime		begindate
+	str_actor_type		diagnosedby
+	string		assessmentstatus
+	string		link_closeencounter
+	datetime		enddate
+	string		link_treatment[]
+	str_note_type		assessmentnote[]
+	str_message_type		message[]
+end type
+

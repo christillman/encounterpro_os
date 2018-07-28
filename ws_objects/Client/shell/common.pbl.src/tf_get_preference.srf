@@ -1,0 +1,36 @@
+﻿$PBExportHeader$tf_get_preference.srf
+global type tf_get_preference from function_object
+end type
+
+forward prototypes
+global function integer tf_get_preference (string ps_preference_type, string ps_user_id, string ps_preference_id, ref string ps_preference_value)
+end prototypes
+
+global function integer tf_get_preference (string ps_preference_type, string ps_user_id, string ps_preference_id, ref string ps_preference_value);integer li_sts
+string ls_preference_value
+
+li_sts = 1
+
+tf_begin_transaction(this, "tf_get_preference()")
+
+  SELECT preference_value
+    INTO :ls_preference_value
+    FROM o_Preferences
+   WHERE preference_type = :ps_preference_type
+	AND   user_id = :ps_user_id
+	AND   preference_id = :ps_preference_id;
+
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then li_sts = 0
+
+tf_commit()
+
+if li_sts = 1 then
+	ps_preference_value = ls_preference_value
+end if
+
+return li_sts
+
+end function
+

@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_facility_entry.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=76 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=104 color="536870912" )
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=preference_type dbname="o_preferences.preference_type" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=user_id dbname="o_preferences.user_id" )
+ column=(type=char(40) update=yes updatewhereclause=yes key=yes name=preference_id dbname="o_preferences.preference_id" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=preference_value dbname="o_preferences.preference_value" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"o_preferences~" ) COLUMN(NAME=~"o_preferences.preference_type~") COLUMN(NAME=~"o_preferences.user_id~") COLUMN(NAME=~"o_preferences.preference_id~") COLUMN(NAME=~"o_preferences.preference_value~")WHERE(    EXP1 =~"o_preferences.preference_type~"   OP =~"=~"    EXP2 =~"'BILLINGSYSTEM'~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"o_preferences.user_id~"   OP =~"=~"    EXP2 =~"'!JMJ'~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"o_preferences.preference_id~"   OP =~"=~"    EXP2 =~"'FacilityId'~" ) ) " update="o_preferences" updatewhere=0 updatekeyinplace=no )
+text(band=header alignment="0" text="Facility:"border="0" color="0" x="23" y="12" height="64" width="210"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=4 alignment="0" tabsequence=10 border="6" color="0" x="18" y="12" height="76" width="832" format=""  name=preference_value edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

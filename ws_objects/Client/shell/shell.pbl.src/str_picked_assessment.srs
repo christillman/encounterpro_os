@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_picked_assessment.srs
+global type str_picked_assessment from structure
+	string		assessment_type
+	string		assessment_id
+	string		description
+	date		begin_date
+	date		end_date
+	boolean		leave_open
+	string		location
+end type
+

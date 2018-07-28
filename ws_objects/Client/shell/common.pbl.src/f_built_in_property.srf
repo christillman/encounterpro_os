@@ -1,0 +1,88 @@
+﻿$PBExportHeader$f_built_in_property.srf
+global type f_built_in_property from function_object
+end type
+
+forward prototypes
+global function str_property_value f_built_in_property (str_property pstr_property, string ps_cpr_id, long pl_object_key, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_built_in_property (str_property pstr_property, string ps_cpr_id, long pl_object_key, str_attributes pstr_attributes);str_property_value lstr_property_value
+long i
+str_patient_authority lstr_authority
+integer li_sts
+u_user luo_provider
+string ls_from_date
+string ls_to_date
+string ls_preference_type
+string ls_preference_id
+string ls_property
+boolean lb_use_current_patient
+
+lstr_property_value = f_empty_property_value()
+ls_property = pstr_property.function_name
+
+if lower(pstr_property.property_object) <> "general" then
+	// Since this built-in properties must have a patient context, make sure there is one
+	if isnull(ps_cpr_id) then return lstr_property_value
+	
+	lb_use_current_patient = false
+	if not isnull(current_patient) then
+		if current_patient.cpr_id = ps_cpr_id then
+			lb_use_current_patient = true
+		end if
+	end if
+	
+	if lb_use_current_patient then
+		CHOOSE CASE lower(pstr_property.property_object)
+			CASE "general"
+			CASE "patient"
+				lstr_property_value = current_patient.get_property(ls_property, pstr_attributes)
+			CASE "encounter"
+				lstr_property_value = current_patient.encounters.get_property(pl_object_key, ls_property, pstr_attributes)
+			CASE "treatment"
+				lstr_property_value = current_patient.treatments.get_property(pl_object_key, ls_property, pstr_attributes)
+			CASE "assessment"
+				lstr_property_value = current_patient.assessments.get_property(pl_object_key, ls_property, pstr_attributes)
+			CASE "attachment"
+				lstr_property_value = current_patient.attachments.get_property(pl_object_key, ls_property, pstr_attributes)
+		END CHOOSE
+	else
+		lstr_property_value = datalist.clinical_data_cache.get_property(pstr_property, ps_cpr_id, pl_object_key, pstr_attributes)
+	end if
+else
+	CHOOSE CASE lower(ls_property)
+		CASE "age"
+			ls_from_date = f_attribute_find_attribute(pstr_attributes, "from_date")
+			ls_to_date = f_attribute_find_attribute(pstr_attributes, "to_date")
+			if isdate(ls_from_date) and isdate(ls_to_date) then
+				lstr_property_value.value = f_pretty_age(date(ls_from_date), date(ls_to_date))
+			end if
+		CASE "current_user"
+			lstr_property_value.value = current_user.user_id
+		CASE "current_scribe"
+			lstr_property_value.value = current_scribe.user_id
+		CASE "current_date"
+			lstr_property_value.value = string(today())
+		CASE "current_time"
+			lstr_property_value.value = string(now())
+		CASE "current_date_time"
+			lstr_property_value.value = string(datetime(today(), now()))
+		CASE ELSE
+			f_split_string(ls_property, ".", ls_preference_type, ls_preference_id)
+			if ls_preference_id = "" then
+				ls_preference_id = ls_preference_type
+				ls_preference_type = "Property"
+			end if
+			lstr_property_value.value = datalist.get_preference(ls_preference_type, ls_preference_id)
+	END CHOOSE
+	lstr_property_value.display_value = f_property_value_display(ls_property, lstr_property_value.value)
+end if
+
+
+
+return lstr_property_value
+
+
+
+end function
+

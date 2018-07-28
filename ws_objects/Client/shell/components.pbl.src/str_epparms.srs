@@ -1,0 +1,5 @@
+﻿$PBExportHeader$str_epparms.srs
+global type str_epparms from structure
+	string		epdat
+end type
+

@@ -1,0 +1,52 @@
+﻿$PBExportHeader$dw_data_chart_pages.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=136 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long updatewhereclause=yes identity=yes name=section_id dbname="c_Chart_Section.section_id" )
+ column=(type=long updatewhereclause=yes name=section_sort_sequence dbname="c_Chart_Section.sort_sequence" )
+ column=(type=char(40) updatewhereclause=yes name=section_description dbname="c_Chart_Section.description" )
+ column=(type=char(128) updatewhereclause=yes name=section_bitmap dbname="c_Chart_Section.bitmap" )
+ column=(type=char(1) updatewhereclause=yes name=default_flag dbname="c_Chart_Section.default_flag" )
+ column=(type=long updatewhereclause=yes identity=yes name=page_id dbname="c_Chart_Section_Page.page_id" )
+ column=(type=long updatewhereclause=yes name=page_sort_sequence dbname="c_Chart_Section_Page.sort_sequence" )
+ column=(type=char(40) updatewhereclause=yes name=page_description dbname="c_Chart_Section_Page.description" )
+ column=(type=char(80) updatewhereclause=yes name=page_class dbname="c_Chart_Section_Page.page_class" )
+ column=(type=char(128) updatewhereclause=yes name=page_bitmap dbname="c_Chart_Section_Page.bitmap" )
+ column=(type=char(12) updatewhereclause=yes name=tab_location dbname="c_Chart_Section.tab_location" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Chart_Section~" )  TABLE(NAME=~"c_Chart_Section_Page~" ) COLUMN(NAME=~"c_Chart_Section.section_id~") COLUMN(NAME=~"c_Chart_Section.sort_sequence~") COLUMN(NAME=~"c_Chart_Section.description~") COLUMN(NAME=~"c_Chart_Section.bitmap~") COLUMN(NAME=~"c_Chart_Section.default_flag~") COLUMN(NAME=~"c_Chart_Section_Page.page_id~") COLUMN(NAME=~"c_Chart_Section_Page.sort_sequence~") COLUMN(NAME=~"c_Chart_Section_Page.description~") COLUMN(NAME=~"c_Chart_Section_Page.page_class~") COLUMN(NAME=~"c_Chart_Section_Page.bitmap~") COLUMN(NAME=~"c_Chart_Section.tab_location~")    JOIN (LEFT=~"c_Chart_Section.chart_id~"    OP =~"=~"RIGHT=~"c_Chart_Section_Page.chart_id~" )    JOIN (LEFT=~"c_Chart_Section.section_id~"    OP =~"=~"RIGHT=~"c_Chart_Section_Page.section_id~" )WHERE(    EXP1 =~"c_Chart_Section.chart_id~"   OP =~"=~"    EXP2 =~":chart_id~" ) ) ARG(NAME = ~"chart_id~" TYPE = number) " arguments=(("chart_id", number))  sort="section_sort_sequence A section_id A page_sort_sequence A page_id A " )
+text(band=header alignment="2" text="C Chart Section
+Section Id" border="0" color="0" x="5" y="4" height="128" width="421"  name=c_chart_section_section_id_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section
+Sort Sequence" border="0" color="0" x="430" y="4" height="128" width="421"  name=c_chart_section_sort_sequence_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section
+Description" border="0" color="0" x="855" y="4" height="128" width="1129"  name=c_chart_section_description_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section
+Bitmap" border="0" color="0" x="1989" y="4" height="128" width="3506"  name=c_chart_section_bitmap_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section
+Default Flag" border="0" color="0" x="5504" y="4" height="128" width="421"  name=c_chart_section_default_flag_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section Page
+Page Id" border="0" color="0" x="5929" y="4" height="128" width="576"  name=c_chart_section_page_page_id_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section Page
+Sort Sequence" border="0" color="0" x="6510" y="4" height="128" width="576"  name=c_chart_section_page_sort_sequence_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section Page
+Description" border="0" color="0" x="7090" y="4" height="128" width="1125"  name=c_chart_section_page_description_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section Page
+Page Class" border="0" color="0" x="8219" y="4" height="128" width="2222"  name=c_chart_section_page_page_class_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="C Chart Section Page
+Bitmap" border="0" color="0" x="10446" y="4" height="128" width="3511"  name=c_chart_section_page_bitmap_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=section_id edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="430" y="4" height="76" width="329" format="[general]"  name=section_sort_sequence edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="855" y="4" height="76" width="1129" format="[general]"  name=section_description edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="1989" y="4" height="76" width="3506" format="[general]"  name=section_bitmap edit.limit=128 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="5504" y="4" height="76" width="55" format="[general]"  name=default_flag edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=32766 border="0" color="0" x="5929" y="4" height="76" width="329" format="[general]"  name=page_id edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=32766 border="0" color="0" x="6510" y="0" height="76" width="329" format="[general]"  name=page_sort_sequence edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="0" x="7090" y="4" height="76" width="1125" format="[general]"  name=page_description edit.limit=40 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="0" tabsequence=32766 border="0" color="0" x="8219" y="4" height="76" width="2222" format="[general]"  name=page_class edit.limit=80 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=32766 border="0" color="0" x="10450" y="4" height="76" width="3511" format="[general]"  name=page_bitmap edit.limit=128 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=0 border="0" color="0" x="13961" y="0" height="64" width="325"  name=tab_location  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

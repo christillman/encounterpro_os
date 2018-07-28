@@ -1,0 +1,39 @@
+﻿$PBExportHeader$tf_get_treatment_type.srf
+global type tf_get_treatment_type from function_object
+end type
+
+forward prototypes
+global function integer tf_get_treatment_type (string ps_treatment_type, ref string ps_description, ref string ps_in_office_flag, ref string ps_button, ref string ps_icon)
+end prototypes
+
+global function integer tf_get_treatment_type (string ps_treatment_type, ref string ps_description, ref string ps_in_office_flag, ref string ps_button, ref string ps_icon);string ls_description
+string ls_button
+string ls_icon
+string ls_in_office_flag
+integer li_sts
+
+SELECT	description,
+			in_office_flag,
+			button,
+			icon
+INTO	:ls_description,
+		:ls_in_office_flag,
+		:ls_button,
+		:ls_icon
+FROM c_Treatment_Type (NOLOCK)
+WHERE treatment_type = :ps_treatment_type;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	return 0
+else
+	ps_description = ls_description
+	ps_in_office_flag = ls_in_office_flag
+	ps_button = ls_button
+	ps_icon = ls_icon
+	return 1
+end if
+
+
+end function
+

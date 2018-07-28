@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_please_wait_close.srf
+global type f_please_wait_close from function_object
+end type
+
+forward prototypes
+global subroutine f_please_wait_close (integer pi_index)
+end prototypes
+
+global subroutine f_please_wait_close (integer pi_index);if not isvalid(common_thread.please_wait) then return
+
+common_thread.please_wait.close_caller(pi_index)
+
+return
+
+end subroutine
+

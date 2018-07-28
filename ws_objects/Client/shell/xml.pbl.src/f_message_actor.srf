@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_message_actor.srf
+global type f_message_actor from function_object
+end type
+
+forward prototypes
+global function pbdom_element f_message_actor (long pl_addressee, string ps_element)
+end prototypes
+
+global function pbdom_element f_message_actor (long pl_addressee, string ps_element);integer li_sts
+PBDOM_Element lo_null
+PBDOM_Element lo_actor
+PBDOM_Element lo_element
+string ls_owner
+string ls_owner_type
+
+setnull(lo_null)
+
+if isnull(pl_addressee) then
+	log.log(this, "f_message_actor()", "Null addressee", 4)
+	return lo_null
+end if
+
+SELECT owner, owner_type
+INTO :ls_owner, :ls_owner_type
+FROM c_Owner
+WHERE owner_id = :pl_addressee;
+if not tf_check() then return lo_null
+if sqlca.sqlcode = 100 then
+	ls_owner = "Customer # " + string(pl_addressee)
+	ls_owner_type = "JMJCustomer"
+end if
+
+lo_actor = CREATE PBDOM_Element
+lo_actor.setname(ps_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("AddresseeType")
+lo_element.addcontent(ls_owner_type)
+lo_actor.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("AddresseeID")
+lo_element.addcontent(string(pl_addressee))
+lo_actor.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("Description")
+lo_element.addcontent(ls_owner)
+lo_actor.addcontent(lo_element)
+
+Return lo_actor
+
+
+end function
+

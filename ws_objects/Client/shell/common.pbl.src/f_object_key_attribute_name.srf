@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_object_key_attribute_name.srf
+global type f_object_key_attribute_name from function_object
+end type
+
+forward prototypes
+global function string f_object_key_attribute_name (string ps_context_object)
+end prototypes
+
+global function string f_object_key_attribute_name (string ps_context_object);string ls_attribute
+
+setnull(ls_attribute)
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "general"
+	CASE "patient"
+	CASE "encounter"
+		ls_attribute = "encounter_id"
+	CASE "assessment"
+		ls_attribute = "problem_id"
+	CASE "treatment"
+		ls_attribute = "treatment_id"
+	CASE "observation"
+		ls_attribute = "observation_sequence"
+	CASE "attachment"
+		ls_attribute = "attachment_id"
+END CHOOSE
+
+
+return ls_attribute
+
+end function
+

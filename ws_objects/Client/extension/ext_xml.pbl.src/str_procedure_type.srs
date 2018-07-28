@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_procedure_type.srs
+global type str_procedure_type from structure
+	string		description
+	string		attribute[]
+	str_code_type		code[]
+	str_date_type		procedure_date[]
+	str_indication_type		indication[]
+	str_currenthealthstatus_type		currenthealthstatus
+	str_patientknowledge_type		patientknowledge
+end type
+

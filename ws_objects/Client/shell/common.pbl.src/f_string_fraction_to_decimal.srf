@@ -1,0 +1,46 @@
+﻿$PBExportHeader$f_string_fraction_to_decimal.srf
+global type f_string_fraction_to_decimal from function_object
+end type
+
+forward prototypes
+global function decimal f_string_fraction_to_decimal (string ps_string)
+end prototypes
+
+global function decimal f_string_fraction_to_decimal (string ps_string);string ls_left
+string ls_right
+string ls_fraction
+string ls_other
+decimal ld_number
+
+f_split_string(ps_string, " ", ls_left, ls_right)
+f_split_string(trim(ls_right), " ", ls_fraction, ls_other)
+
+// If the left side has a "/" character then it's the fraction and we ignore the right side
+if pos(ls_left, "/") > 0 then
+	ld_number = 0
+	ls_fraction = ls_left
+else
+	ld_number = dec(ls_left)
+end if
+
+CHOOSE CASE trim(ls_fraction)
+	CASE "1/8"
+		ld_number += 1/8
+	CASE "1/4"
+		ld_number += 2/8
+	CASE "3/8"
+		ld_number += 3/8
+	CASE "1/2"
+		ld_number += 4/8
+	CASE "5/8"
+		ld_number += 5/8
+	CASE "3/4"
+		ld_number += 6/8
+	CASE "7/8"
+		ld_number += 7/8
+END CHOOSE
+
+return ld_number
+
+end function
+

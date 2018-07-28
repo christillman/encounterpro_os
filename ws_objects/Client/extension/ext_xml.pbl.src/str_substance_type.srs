@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_substance_type.srs
+global type str_substance_type from structure
+	string		substance_type
+	str_code_type		code[]
+end type
+

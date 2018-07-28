@@ -1,0 +1,5 @@
+﻿$PBExportHeader$str_ccr_signatureid_type.srs
+global type str_ccr_signatureid_type from structure
+	string		SignatureID
+end type
+

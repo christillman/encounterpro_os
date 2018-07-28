@@ -1,0 +1,17 @@
+﻿$PBExportHeader$f_reset_datalist.srf
+global type f_reset_datalist from function_object
+end type
+
+forward prototypes
+global subroutine f_reset_datalist ()
+end prototypes
+
+global subroutine f_reset_datalist ();
+if isvalid(datalist) and not isnull(datalist) then
+	DESTROY datalist
+end if
+
+datalist = CREATE u_list_data
+
+end subroutine
+

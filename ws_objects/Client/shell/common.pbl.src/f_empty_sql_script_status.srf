@@ -1,0 +1,19 @@
+﻿$PBExportHeader$f_empty_sql_script_status.srf
+global type f_empty_sql_script_status from function_object
+end type
+
+forward prototypes
+global function str_sql_script_status f_empty_sql_script_status ()
+end prototypes
+
+global function str_sql_script_status f_empty_sql_script_status ();str_sql_script_status lstr_status
+
+setnull(lstr_status.status)
+setnull(lstr_status.error_index)
+setnull(lstr_status.error_message)
+
+return lstr_status
+
+
+end function
+

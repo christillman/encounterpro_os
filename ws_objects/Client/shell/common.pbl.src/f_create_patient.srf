@@ -1,0 +1,63 @@
+﻿$PBExportHeader$f_create_patient.srf
+global type f_create_patient from function_object
+end type
+
+forward prototypes
+global function integer f_create_patient (ref string ps_cpr_id)
+end prototypes
+
+global function integer f_create_patient (ref string ps_cpr_id);string ls_cpr_id
+long ll_temp
+integer li_sts, i, j
+boolean lb_p_exists
+datetime ldt_date_of_birth
+
+
+ls_cpr_id = left(ps_cpr_id, 12)
+if trim(ls_cpr_id) = "" then setnull(ls_cpr_id)
+
+// remove single quotes
+if not isnull(ls_cpr_id) then
+	ls_cpr_id = f_string_substitute(ls_cpr_id, "'", ".")
+end if
+
+// if cpr_id is provided, make sure it doesn't exist
+if not isnull(ls_cpr_id) then
+	li_sts = tf_patient_exists(ls_cpr_id)
+	if li_sts <> 0 then
+		setnull(ls_cpr_id)
+	end if
+end if
+
+// if we haven't found a cpr_id yet, then generate one
+if isnull(ls_cpr_id) then
+	DO
+		li_sts = tf_get_next_key("!CPR", "CPR_ID", ll_temp)
+		if li_sts <= 0 then
+			log.log(this, "f_create_patient()","Unable to generate cpr_id key", 4)
+			return 0
+		end if
+		ls_cpr_id = string(ll_temp)
+		li_sts = tf_patient_exists(ls_cpr_id)
+		if li_sts < 0 then
+			log.log(this, "f_create_patient()","Unable to check new cpr_id key", 4)
+			return 0
+		end if
+	LOOP UNTIL li_sts = 0
+end if
+
+INSERT INTO p_Patient (
+		cpr_id,
+		patient_status)
+VALUES (
+		:ls_cpr_id,
+		'ACTIVE');
+if not tf_check() then return -1
+
+ps_cpr_id = ls_cpr_id
+
+return 1
+
+
+end function
+

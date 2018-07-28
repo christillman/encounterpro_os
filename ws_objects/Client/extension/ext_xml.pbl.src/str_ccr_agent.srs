@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_ccr_agent.srs
+global type str_ccr_agent from structure
+	str_ccr_structuredproducttype		products[]
+	str_ccr_ccrcodeddataobjecttype		environmentalagents[]
+	str_ccr_problemtype		problems[]
+	string		procedures[]
+	str_ccr_resulttype		results[]
+end type
+

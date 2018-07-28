@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_p_observations.srs
+global type str_p_observations from structure
+	long		observation_count
+	str_p_observation		observation[]
+end type
+

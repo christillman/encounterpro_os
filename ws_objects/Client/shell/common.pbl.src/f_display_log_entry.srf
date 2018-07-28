@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_display_log_entry.srf
+global type f_display_log_entry from function_object
+end type
+
+forward prototypes
+global subroutine f_display_log_entry (str_event_log_entry pstr_log)
+end prototypes
+
+global subroutine f_display_log_entry (str_event_log_entry pstr_log);string ls_msg
+
+ls_msg =   	"Message Severity:   " + string(pstr_log.severity) + " - " + pstr_log.severity_text
+ls_msg += "~nMessage Date/Time:  " + string(pstr_log.date_time)
+ls_msg += "~nEpro Version:       " + f_app_version()
+ls_msg += "~nObject Class:       " + pstr_log.class
+ls_msg += "~nObject Script:      " + pstr_log.script
+ls_msg += "~nError Message:      " + pstr_log.message
+
+openwithparm(w_pop_message, ls_msg)
+
+
+end subroutine
+

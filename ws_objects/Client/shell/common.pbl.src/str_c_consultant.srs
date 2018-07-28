@@ -1,0 +1,25 @@
+﻿$PBExportHeader$str_c_consultant.srs
+global type str_c_consultant from structure
+	string		consultant_id
+	string		specialty_id
+	string		description
+	string		first_name
+	string		middle_name
+	string		last_name
+	string		degree
+	string		name_prefix
+	string		name_suffix
+	string		address1
+	string		address2
+	string		city
+	string		state
+	string		zip
+	string		phone
+	string		phone2
+	string		fax
+	string		contact
+	string		email
+	integer		sort_sequence
+	long		owner_id
+end type
+

@@ -1,0 +1,50 @@
+﻿$PBExportHeader$f_attributes_to_xml.srf
+global type f_attributes_to_xml from function_object
+end type
+
+forward prototypes
+global function pbdom_document f_attributes_to_xml (string ps_root, str_attributes pstr_attributes)
+end prototypes
+
+global function pbdom_document f_attributes_to_xml (string ps_root, str_attributes pstr_attributes);integer li_sts
+PBDOM_Element lo_root
+PBDOM_Element lo_element
+PBDOM_Document lo_document
+PBDOM_Document lo_null
+long i
+string ls_tag
+
+setnull(lo_null)
+
+if isnull(ps_root) or trim(ps_root) = "" then
+	ps_root = "Attributes"
+end if
+
+
+TRY
+	lo_document = CREATE PBDOM_Document
+	lo_document.newdocument(ps_root)
+	
+	lo_root = CREATE PBDOM_Element
+	lo_root.setname(ps_root)
+	
+	for i = 1 to pstr_attributes.attribute_count
+		ls_tag = pstr_attributes.attribute[i].attribute
+		if left(lower(ls_tag), 3) = "xml" then ls_tag = "_" + ls_tag
+		
+		lo_element = CREATE PBDOM_Element
+		lo_element.setname(ls_tag)
+		lo_element.addcontent(pstr_attributes.attribute[i].value)
+		lo_root.addcontent(lo_element)
+	next
+	
+	lo_document = lo_document.setrootelement(lo_root)
+CATCH (throwable lo_error)
+	log.log(this, "f_attributes_to_xml()", "Error creating attributes document (" + lo_error.text + ")", 4)
+	return lo_null
+END TRY
+
+Return lo_document
+
+end function
+

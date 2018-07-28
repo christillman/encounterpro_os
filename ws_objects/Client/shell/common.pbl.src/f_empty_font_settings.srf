@@ -1,0 +1,24 @@
+﻿$PBExportHeader$f_empty_font_settings.srf
+global type f_empty_font_settings from function_object
+end type
+
+forward prototypes
+global function str_font_settings f_empty_font_settings ()
+end prototypes
+
+global function str_font_settings f_empty_font_settings ();str_font_settings lstr_font_settings
+
+setnull(lstr_font_settings.fontsize)
+setnull(lstr_font_settings.bold)
+setnull(lstr_font_settings.underline)
+setnull(lstr_font_settings.italic)
+setnull(lstr_font_settings.alignment)
+setnull(lstr_font_settings.forecolor)
+setnull(lstr_font_settings.textbackcolor)
+setnull(lstr_font_settings.fontname)
+
+return lstr_font_settings
+
+
+end function
+

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_history_observation_list.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(80) updatewhereclause=yes name=description dbname="description" )
+ column=(type=char(24) updatewhereclause=yes name=observation_id dbname="observation_id" )
+ )
+column(band=detail id=1 alignment="0" tabsequence=0 border="0" color="0" x="0" y="0" height="116" width="1102"  name=description  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_id_instance.srs
+global type str_id_instance from structure
+	string		iddomain
+	string		idvalue
+	string		epro_domain
+	long		owner_id
+	string		epro_value
+	long		customer_id
+end type
+

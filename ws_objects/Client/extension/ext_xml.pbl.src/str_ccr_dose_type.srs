@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_ccr_dose_type.srs
+global type str_ccr_dose_type from structure
+	string		value
+	str_ccr_units_type		units
+	str_ccr_codetype		code[]
+	string		Rate[]
+	long		sequenceposition
+	str_ccr_codeddescriptiontype		modifier
+end type
+

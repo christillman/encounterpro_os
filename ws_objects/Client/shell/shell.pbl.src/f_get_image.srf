@@ -1,0 +1,21 @@
+﻿$PBExportHeader$f_get_image.srf
+global type f_get_image from function_object
+end type
+
+forward prototypes
+global function string f_get_image ()
+end prototypes
+
+global function string f_get_image ();
+if isnull(component_manager) or not isvalid(component_manager) then return "TRUE"
+
+if eml <> component_manager.mod then
+	return "FALSE"
+else
+	return w_image_objects.get_image()
+end if
+
+
+
+end function
+

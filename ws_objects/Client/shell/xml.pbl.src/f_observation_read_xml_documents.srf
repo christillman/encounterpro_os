@@ -1,0 +1,117 @@
+﻿$PBExportHeader$f_observation_read_xml_documents.srf
+global type f_observation_read_xml_documents from function_object
+end type
+
+forward prototypes
+global function integer f_observation_read_xml_documents (u_component_observation po_observation, string ps_xml, string ps_external_item_id)
+end prototypes
+
+global function integer f_observation_read_xml_documents (u_component_observation po_observation, string ps_xml, string ps_external_item_id);u_xml_document pbdom_doc
+u_xml_document pbdom_new_doc
+PBDOM_ELEMENT pbdom_root
+PBDOM_ELEMENT pbdom_element_array[]
+integer li_sts
+string ls_root
+long i, j
+string ls_file
+blob lbl_xml_file
+boolean lb_success
+long ll_original_observation_count
+string ls_document_id
+PBDOM_ATTRIBUTE pbdom_attribute_array0[]
+int m
+
+li_sts = f_get_xml_document(ps_xml, pbdom_doc)
+if li_sts <= 0 then return -1
+
+pbdom_root = pbdom_doc.XML_Document.GetRootElement()
+
+ls_root = pbdom_root.GetName()
+
+if lower(ls_root) = "jmjmultidocument" then
+	// This is a multiple document so get each child element and treat it as a separate document
+	
+	pbdom_root.GetChildElements(ref pbdom_element_array)
+	for i = 1 to UpperBound(pbdom_element_array)
+		
+		//  Get the document_id from the attribute of the root element
+		ls_document_id = ""
+		if pbdom_element_array[i].HasAttributes() then
+			pbdom_element_array[i].GetAttributes(ref pbdom_attribute_array0[])
+			for m=1 to UpperBound(pbdom_attribute_array0)
+				CHOOSE CASE lower(pbdom_attribute_array0[m].GetName())
+					CASE "documentid"
+						ls_document_id = pbdom_attribute_array0[m].GetText()
+				END CHOOSE
+			next	
+		end if
+		
+		pbdom_new_doc = CREATE u_XML_Document
+		pbdom_element_array[i].detach()
+		pbdom_new_doc.add_root(pbdom_element_array[i])
+		
+		ll_original_observation_count = po_observation.observation_count
+
+		li_sts = f_observation_add_xml_document(po_observation, pbdom_new_doc)
+		if li_sts < 0 then
+			log.log(this, "read_xml_documents()", "Error adding xml document", 4)
+			return -1
+		end if
+		
+		for j = ll_original_observation_count + 1 to po_observation.observation_count
+			if len(ls_document_id) > 0 then
+				po_observation.observations[j].external_item_id = ls_document_id
+			else
+				// in a multi-document setting only set the first document to the external_item_id
+				if j = ll_original_observation_count + 1 then
+					po_observation.observations[j].external_item_id = ps_external_item_id
+				else
+					po_observation.observations[j].external_item_id = ""
+				end if
+			end if
+		next
+	next
+elseif lower(ls_root) = "jmjmessagebag" then
+	// This is a multiple document so get each child element and treat it as a separate document
+	pbdom_root.GetChildElements(ref pbdom_element_array)
+	for i = 1 to UpperBound(pbdom_element_array)
+		li_sts = f_observation_read_jmjmessage(po_observation, pbdom_element_array[i])
+	next
+elseif lower(ls_root) = "jmjmessage" then
+	li_sts = f_observation_read_jmjmessage(po_observation, pbdom_root)
+else
+	//  Get the document_id from the attribute of the root element
+	ls_document_id = ""
+	if pbdom_root.HasAttributes() then
+		pbdom_root.GetAttributes(ref pbdom_attribute_array0[])
+		for m=1 to UpperBound(pbdom_attribute_array0)
+			CHOOSE CASE lower(pbdom_attribute_array0[m].GetName())
+				CASE "documentid"
+					ls_document_id = pbdom_attribute_array0[m].GetText()
+			END CHOOSE
+		next	
+	end if
+		
+	ll_original_observation_count = po_observation.observation_count
+	
+	li_sts = f_observation_add_xml_document(po_observation, pbdom_doc)
+	if li_sts < 0 then
+		log.log(this, "read_xml_documents()", "Error adding xml document", 4)
+		return -1
+	end if
+	
+	// Set the external_item_id
+	for j = ll_original_observation_count + 1 to po_observation.observation_count
+		if len(ls_document_id) > 0 then
+			po_observation.observations[j].external_item_id = ls_document_id
+		else
+			po_observation.observations[j].external_item_id = ps_external_item_id
+		end if
+	next
+end if
+
+return 1
+
+
+end function
+

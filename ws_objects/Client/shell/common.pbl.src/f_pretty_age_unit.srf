@@ -1,0 +1,45 @@
+﻿$PBExportHeader$f_pretty_age_unit.srf
+global type f_pretty_age_unit from function_object
+end type
+
+forward prototypes
+global subroutine f_pretty_age_unit (date pd_date_of_birth, date pd_current_date, ref long pl_age, ref string ps_age_unit)
+end prototypes
+
+global subroutine f_pretty_age_unit (date pd_date_of_birth, date pd_current_date, ref long pl_age, ref string ps_age_unit);long ll_days
+
+ll_days = daysafter(pd_date_of_birth, pd_current_date)
+
+if ll_days < 7 then
+	pl_age = ll_days
+	if pl_age = 1 then
+		ps_age_unit = "Day"
+	else
+		ps_age_unit = "DAY"
+	end if
+elseif ll_days <= 56 then
+	pl_age = ll_days / 7
+	if pl_age = 1 then
+		ps_age_unit = "Week"
+	else
+		ps_age_unit = "WEEK"
+	end if
+elseif ll_days <= 1080 then
+	pl_age = f_age_months(pd_date_of_birth, pd_current_date)
+	if pl_age = 1 then
+		ps_age_unit = "Month"
+	else
+		ps_age_unit = "MONTH"
+	end if
+else
+	pl_age = f_age_years(pd_date_of_birth, pd_current_date)
+	if pl_age = 1 then
+		ps_age_unit = "Year"
+	else
+		ps_age_unit = "YEAR"
+	end if
+end if
+
+
+end subroutine
+

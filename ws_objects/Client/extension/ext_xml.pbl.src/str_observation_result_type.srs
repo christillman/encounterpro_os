@@ -1,0 +1,20 @@
+﻿$PBExportHeader$str_observation_result_type.srs
+global type str_observation_result_type from structure
+	str_id_instance		objectid[]
+	string		location
+	string		result_definition_id
+	datetime		encounter_date
+	datetime		resultdate
+	string		resulttype
+	string		result
+	string		resultvalue
+	string		resultunit
+	str_attachment_type		resultfile
+	string		abnormalflag
+	string		abnormalnature
+	integer		severity
+	str_actor_type		observedby
+	string		referencerange
+	string		resultstatus
+end type
+

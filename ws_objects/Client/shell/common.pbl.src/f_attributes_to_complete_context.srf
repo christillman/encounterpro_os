@@ -1,0 +1,58 @@
+﻿$PBExportHeader$f_attributes_to_complete_context.srf
+global type f_attributes_to_complete_context from function_object
+end type
+
+forward prototypes
+global function str_complete_context f_attributes_to_complete_context (str_attributes pstr_attributes)
+end prototypes
+
+global function str_complete_context f_attributes_to_complete_context (str_attributes pstr_attributes);str_complete_context lstr_context
+string ls_temp
+
+lstr_context = f_empty_context()
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "cpr_id")
+if not isnull(ls_temp) then
+	lstr_context.cpr_id = ls_temp
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "context_object")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.context_object = ls_temp
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "encounter_id")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.encounter_id = long(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "problem_id")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.problem_id = long(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "treatment_id")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.treatment_id = long(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "observation_sequence")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.observation_sequence = long(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "attachment_id")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.attachment_id = long(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "purpose")
+if not isnull(ls_temp) and isnumber(ls_temp) then
+	lstr_context.purpose = trim(ls_temp)
+end if
+
+return lstr_context
+
+
+end function
+

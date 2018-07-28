@@ -1,0 +1,17 @@
+﻿$PBExportHeader$dw_qualifier_domain_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=12632256 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=88 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=qualifier_domain_id dbname="c_Observation_Result_Qualifier.qualifier_domain_id" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_Observation_Result_Qualifier.sort_sequence" )
+ column=(type=char(80) updatewhereclause=yes name=domain_description dbname="c_Qualifier_Domain.description" )
+ column=(type=char(1) updatewhereclause=yes name=exclusive_flag dbname="c_Qualifier_Domain.exclusive_flag" )
+ column=(type=char(12) updatewhereclause=yes name=status dbname="c_Qualifier_Domain.status" )
+ column=(type=char(80) updatewhereclause=yes name=category_description dbname="c_Qualifier_Domain_Category.description" )
+ column=(type=char(40) updatewhereclause=yes name=prefix dbname="c_Qualifier_Domain_Category.prefix" )
+ column=(type=char(12) updatewhereclause=yes name=qualifier_class dbname="c_Qualifier_Domain_Category.qualifier_class" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Qualifier_Domain~" )  TABLE(NAME=~"c_Observation_Result_Qualifier~" )  TABLE(NAME=~"c_Qualifier_Domain_Category~" ) COLUMN(NAME=~"c_Observation_Result_Qualifier.qualifier_domain_id~") COLUMN(NAME=~"c_Observation_Result_Qualifier.sort_sequence~") COLUMN(NAME=~"c_Qualifier_Domain.description~") COLUMN(NAME=~"c_Qualifier_Domain.exclusive_flag~") COLUMN(NAME=~"c_Qualifier_Domain.status~") COLUMN(NAME=~"c_Qualifier_Domain_Category.description~") COLUMN(NAME=~"c_Qualifier_Domain_Category.prefix~") COLUMN(NAME=~"c_Qualifier_Domain_Category.qualifier_class~")    JOIN (LEFT=~"c_Observation_Result_Qualifier.qualifier_domain_id~"    OP =~"=~"RIGHT=~"c_Qualifier_Domain.qualifier_domain_id~" )    JOIN (LEFT=~"c_Qualifier_Domain_Category.qualifier_domain_category_id~"    OP =~"=~"RIGHT=~"c_Qualifier_Domain.qualifier_domain_category_id~" )WHERE(    EXP1 =~"( ( c_Observation_Result_Qualifier.observation_id~"   OP =~"=~"    EXP2 =~":observation_id )~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"( c_Observation_Result_Qualifier.result_sequence~"   OP =~"=~"    EXP2 =~":result_sequence ) )~" ) ) ARG(NAME = ~"observation_id~" TYPE = string)  ARG(NAME = ~"result_sequence~" TYPE = number) " arguments=(("observation_id", string),("result_sequence", number)) )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="8" height="68" width="649" format="[general]"  name=domain_description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-9" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_is_external_source_available.srf
+global type f_is_external_source_available from function_object
+end type
+
+forward prototypes
+global function boolean f_is_external_source_available (string ps_external_source)
+end prototypes
+
+global function boolean f_is_external_source_available (string ps_external_source);long i
+str_external_sources lstr_sources
+
+// If no external_source_type is specified then display all available
+lstr_sources = common_thread.get_external_sources(ps_external_source)
+
+for i = 1 to lstr_sources.external_source_count
+	if lower(lstr_sources.external_source[i].external_source) = lower(ps_external_source) then return true
+	if lower(lstr_sources.external_source[i].external_source_type) = lower(ps_external_source) then return true
+next
+
+return false
+
+end function
+

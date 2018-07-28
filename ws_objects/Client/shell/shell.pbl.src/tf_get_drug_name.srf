@@ -1,0 +1,36 @@
+﻿$PBExportHeader$tf_get_drug_name.srf
+global type tf_get_drug_name from function_object
+end type
+
+forward prototypes
+global function integer tf_get_drug_name (string ps_drug_id, ref string ps_drug_name)
+end prototypes
+
+global function integer tf_get_drug_name (string ps_drug_id, ref string ps_drug_name);integer li_sts
+string ls_drug_name
+
+tf_begin_transaction(this, "tf_get_drug_name(" + ps_drug_id + ")")
+
+select common_name
+into :ls_drug_name
+from c_drug_definition
+where drug_id = :ps_drug_id;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 100 then
+	li_sts = 0
+else
+	li_sts = 1
+end if
+
+tf_commit()
+
+if li_sts = 1 then
+	ps_drug_name = ls_drug_name
+end if
+
+return li_sts
+
+
+end function
+

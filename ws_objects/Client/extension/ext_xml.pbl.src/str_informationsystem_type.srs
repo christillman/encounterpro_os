@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_informationsystem_type.srs
+global type str_informationsystem_type from structure
+	str_id_instance		objectid[]
+	string		name
+	string		informationsystem_type
+	string		version
+end type
+

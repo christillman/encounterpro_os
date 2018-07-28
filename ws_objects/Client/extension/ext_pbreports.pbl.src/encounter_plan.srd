@@ -1,0 +1,23 @@
+﻿$PBExportHeader$encounter_plan.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=72 color="536870912"  height.autosize=yes)
+table(column=(type=long updatewhereclause=no name=problem_id dbname="problem_id" )
+ column=(type=number updatewhereclause=no name=diagnosis_sequence dbname="diagnosis_sequence" )
+ column=(type=char(80) updatewhereclause=no name=assessment dbname="assessment" )
+ column=(type=char(40) updatewhereclause=no name=treatment_group dbname="treatment_group" )
+ column=(type=number updatewhereclause=no name=treatment_sort dbname="treatment_sort" )
+ column=(type=char(24) updatewhereclause=no name=treatment_type dbname="treatment_type" )
+ column=(type=char(4000) updatewhereclause=no name=treatment dbname="treatment" )
+ column=(type=number updatewhereclause=no name=child_flag dbname="child_flag" )
+  sort="problem_id D diagnosis_sequence A treatment_sort A " )
+group(level=1 header.height=232 trailer.height=0 by=("problem_id" , "diagnosis_sequence" ) header.color="536870912" trailer.color="536870912" )
+column(band=header.1 id=3 alignment="0" tabsequence=20 border="0" color="0" x="576" y="64" height="76" width="2395" format="[general]"  name=assessment height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header.1 alignment="0" text="ASSESSMENT:"border="0" color="0" x="14" y="56" height="80" width="539"  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+text(band=header.1 alignment="1" text="PLAN:"border="0" color="0" x="14" y="148" height="80" width="229"  slideup=allabove  font.face="Arial" font.height="-12" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
+column(band=detail id=4 alignment="0" tabsequence=32766 border="0" color="0" x="160~t161 + ( child_flag * 161)" y="4" height="64" width="375" format="[general]"  name=treatment_group edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400~tif(  treatment_group = ~"Comments:~" or treatment_group=~"Prog Notes:~", 700, 400 )"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="553~t554 + ( child_flag * 161)" y="4" height="64" width="2423" format="[general]"  name=treatment height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+
+sparse(names="treatment_group")htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

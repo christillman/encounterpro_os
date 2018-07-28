@@ -1,0 +1,123 @@
+﻿$PBExportHeader$f_create_dotnet_test_case.srf
+global type f_create_dotnet_test_case from function_object
+end type
+
+forward prototypes
+global function string f_create_dotnet_test_case (u_component_base_class puo_component)
+end prototypes
+
+global function string f_create_dotnet_test_case (u_component_base_class puo_component);string ls_filename
+string ls_runtime_filename
+long i
+pbdom_document lo_xml
+pbdom_element lo_root
+pbdom_element lo_element
+string ls_description
+string ls_null
+blob lbl_data
+string ls_xml
+integer li_sts
+
+setnull(ls_null)
+
+ls_description = f_string_to_filename(puo_component.component_description)
+
+i = 0
+DO WHILE true
+	ls_filename = ls_description
+	if i > 0 then ls_filename += "(" + string(i) + ")"
+	ls_runtime_filename = debug_path + "\" + ls_filename + "_runtime.xml"
+	ls_filename = debug_path + "\" + ls_filename + ".jmjcmptst"
+	if not fileexists(ls_filename) then exit
+	
+	i++
+	if i = 100 then return ls_null
+LOOP
+
+
+TRY
+	lo_xml = CREATE PBDOM_Document
+	lo_xml.newdocument("JMJComponentTestCase")
+	lo_root = lo_xml.Getrootelement()
+CATCH (throwable lo_error)
+	log.log(this, "dotnet_create_test_case()", "Error creating document (" + lo_error.text + ")", 4)
+	return ls_null
+END TRY
+
+
+// Create the child elements
+lo_element = CREATE PBDOM_Element
+lo_element.setname("component_wrapper_class")
+if len(puo_component.dotnet_component_wrapper_class) > 0 then
+	lo_element.addcontent(puo_component.dotnet_component_wrapper_class)
+end if
+lo_root.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("component_class")
+if len(puo_component.dotnet_component_class) > 0 then
+	lo_element.addcontent(puo_component.dotnet_component_class)
+end if
+lo_root.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("component_version")
+if len(puo_component.dotnet_component_version) > 0 then
+	lo_element.addcontent(puo_component.dotnet_component_version)
+end if
+
+lo_root.addcontent(lo_element)
+lo_element = CREATE PBDOM_Element
+lo_element.setname("component_attributes_xml")
+if len(puo_component.dotnet_component_attributes_xml) > 0 then
+	lo_element.addcontent(puo_component.dotnet_component_attributes_xml)
+end if
+
+lo_root.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("credential_attributes_xml")
+if len(puo_component.dotnet_credential_attributes_xml) > 0 then
+	lo_element.addcontent(puo_component.dotnet_credential_attributes_xml)
+end if
+
+lo_root.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("context_xml")
+if len(puo_component.dotnet_context_xml) > 0 then
+	lo_element.addcontent(puo_component.dotnet_context_xml)
+end if
+
+lo_root.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("runtime_xml")
+if len(puo_component.dotnet_xml_data) > 0 then
+	lo_element.addcontent(puo_component.dotnet_xml_data)
+	lbl_data = f_string_to_blob(puo_component.dotnet_xml_data, "UTF-8")
+	log.file_write(lbl_data, ls_runtime_filename)
+end if
+
+lo_root.addcontent(lo_element)
+
+
+TRY
+	ls_xml = lo_xml.savedocumentintostring()
+	lbl_data = f_string_to_blob(ls_xml, "UTF-8")
+	li_sts = log.file_write(lbl_data, ls_filename)
+	if li_sts < 0 then
+		log.log(this, "dotnet_create_test_case()", "Unable to save document", 4)
+		return ls_null
+	end if
+CATCH (throwable lo_error2)
+	log.log(this, "dotnet_create_test_case()", "Error saving document (" + lo_error.text + ")", 4)
+	return ls_null
+END TRY
+
+
+return ls_filename
+
+
+end function
+

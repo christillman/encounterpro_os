@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_edas_context.srs
+global type str_edas_context from structure
+	string		root_object
+	string		property
+	boolean		objects_only
+	str_complete_context		context
+end type
+

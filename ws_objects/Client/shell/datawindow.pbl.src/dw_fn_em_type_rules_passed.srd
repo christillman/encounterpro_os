@@ -1,0 +1,44 @@
+﻿$PBExportHeader$dw_fn_em_type_rules_passed.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=em_documentation_guide dbname="em_documentation_guide" )
+ column=(type=char(24) updatewhereclause=yes name=em_component dbname="em_component" )
+ column=(type=char(24) updatewhereclause=yes name=em_type dbname="em_type" )
+ column=(type=long updatewhereclause=yes name=em_type_level dbname="em_type_level" )
+ column=(type=long updatewhereclause=yes name=rule_id dbname="rule_id" )
+ column=(type=char(1) updatewhereclause=yes name=new_flag dbname="new_flag" )
+ column=(type=char(255) updatewhereclause=yes name=description dbname="description" )
+ column=(type=char(1) updatewhereclause=yes name=passed_flag dbname="passed_flag" )
+ retrieve="select 	em_documentation_guide,
+	em_component,
+	em_type,
+	em_type_level,
+	rule_id,
+	new_flag,
+	description,
+	passed_flag
+FROM fn_em_type_rules_passed(:cpr_id, :encounter_id, :em_documentation_guide)
+
+" arguments=(("cpr_id", string),("encounter_id", number),("em_documentation_guide", string))  sort="em_documentation_guide A em_component A em_type A em_type_level A rule_id A " )
+text(band=header alignment="2" text="Em Documentation Guide" border="0" color="33554432" x="5" y="4" height="64" width="686" html.valueishtml="0"  name=em_documentation_guide_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Em Component" border="0" color="33554432" x="695" y="4" height="64" width="686" html.valueishtml="0"  name=em_component_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Em Type" border="0" color="33554432" x="1385" y="4" height="64" width="686" html.valueishtml="0"  name=em_type_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Em Type Level" border="0" color="33554432" x="2080" y="4" height="64" width="389" html.valueishtml="0"  name=em_type_level_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Rule Id" border="0" color="33554432" x="2473" y="4" height="64" width="329" html.valueishtml="0"  name=rule_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="New Flag" border="0" color="33554432" x="2807" y="4" height="64" width="247" html.valueishtml="0"  name=new_flag_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Description" border="0" color="33554432" x="3058" y="4" height="64" width="3511" html.valueishtml="0"  name=description_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Passed Flag" border="0" color="33554432" x="6574" y="4" height="64" width="334" html.valueishtml="0"  name=passed_flag_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=em_documentation_guide visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="0" color="33554432" x="695" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=em_component visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="0" color="33554432" x="1385" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=em_type visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="1" tabsequence=32766 border="0" color="33554432" x="2080" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=em_type_level visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="1" tabsequence=32766 border="0" color="33554432" x="2473" y="4" height="76" width="329" format="[general]" html.valueishtml="0"  name=rule_id visible="1" edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="0" color="33554432" x="2807" y="4" height="76" width="55" format="[general]" html.valueishtml="0"  name=new_flag visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="33554432" x="3058" y="4" height="76" width="3511" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=32766 border="0" color="33554432" x="6574" y="4" height="76" width="55" format="[general]" html.valueishtml="0"  name=passed_flag visible="1" edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

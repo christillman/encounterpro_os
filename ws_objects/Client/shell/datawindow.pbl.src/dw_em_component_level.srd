@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_em_component_level.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=em_component dbname="em_Component_Level.em_component" )
+ column=(type=long updatewhereclause=yes name=em_component_level dbname="em_Component_Level.em_component_level" )
+ column=(type=char(24) updatewhereclause=yes name=description dbname="em_Component_Level.description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=long updatewhereclause=yes name=calculated_flag dbname="calculated_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"em_Component_Level~" ) COLUMN(NAME=~"em_Component_Level.em_component~") COLUMN(NAME=~"em_Component_Level.em_component_level~") COLUMN(NAME=~"em_Component_Level.description~") COMPUTE(NAME=~"selected_flag=0~") COMPUTE(NAME=~"calculated_flag=0~")WHERE(    EXP1 =~"em_Component_Level.em_component~"   OP =~"=~"    EXP2 =~":em_component~" ) ) ARG(NAME = ~"em_component~" TYPE = string) " arguments=(("em_component", string)) )
+column(band=detail id=3 alignment="0" tabsequence=0 border="6" color="0" x="18" y="12" height="96" width="800" html.valueishtml="0"  name=description visible="1"  font.face="Arial" font.height="-10~tif(len( description ) > 20, -9, -10)" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+text(band=detail alignment="0" text="*" border="0" color="0" x="777" y="20" height="76" width="32" html.valueishtml="0"  name=t_calc visible="1~tif(calculated_flag=0, 0, 1)"  font.face="Arial" font.height="-14" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

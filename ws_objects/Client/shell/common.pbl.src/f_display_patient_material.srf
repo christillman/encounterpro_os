@@ -1,0 +1,42 @@
+﻿$PBExportHeader$f_display_patient_material.srf
+global type f_display_patient_material from function_object
+end type
+
+forward prototypes
+global function integer f_display_patient_material (long pl_material_id)
+end prototypes
+
+global function integer f_display_patient_material (long pl_material_id);string ls_file
+integer li_sts
+str_patient_material lstr_material
+
+if isnull(pl_material_id) then return 0
+
+lstr_material = f_get_patient_material(pl_material_id, true)
+if isnull(lstr_material.material_id) then
+	log.log(this, "f_display_patient_material()", "Error getting material (" + string(pl_material_id) + ")", 4)
+	return -1
+end if
+
+if upper(lstr_material.extension) = "URL" then
+	f_open_browser(lstr_material.url)
+else
+	ls_file = f_temp_file(lstr_material.extension)
+	li_sts = log.file_write(lstr_material.material_object, ls_file)
+	if li_sts <= 0 then
+		log.log(this, "f_display_patient_material()", "Error writing material to file.", 4)
+		return -1
+	end if
+	
+	li_sts = f_open_file(ls_file, false)
+	if li_sts <= 0 then
+		log.log(this, "f_display_patient_material()", "Error opening material file.", 4)
+		return -1
+	end if
+end if
+
+return 1
+
+
+end function
+

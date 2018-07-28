@@ -1,0 +1,13 @@
+﻿$PBExportHeader$f_flag_to_bool.srf
+global type f_flag_to_bool from function_object
+end type
+
+forward prototypes
+global function boolean f_flag_to_bool (string ps_flag)
+end prototypes
+
+global function boolean f_flag_to_bool (string ps_flag);if ps_flag = "Y" or ps_flag = "y" then return true
+return false
+
+end function
+

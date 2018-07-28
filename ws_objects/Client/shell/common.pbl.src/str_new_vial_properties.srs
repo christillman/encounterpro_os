@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_new_vial_properties.srs
+global type str_new_vial_properties from structure
+	string		new_vial_type
+	string		dilute_from_vial_type
+	decimal { 0 }		new_vial_amount
+	string		new_vial_unit
+end type
+

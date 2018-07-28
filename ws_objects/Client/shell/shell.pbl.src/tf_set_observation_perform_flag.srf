@@ -1,0 +1,22 @@
+﻿$PBExportHeader$tf_set_observation_perform_flag.srf
+global type tf_set_observation_perform_flag from function_object
+end type
+
+forward prototypes
+global function integer tf_set_observation_perform_flag (string ps_observation_id, string ps_perform_flag)
+end prototypes
+
+global function integer tf_set_observation_perform_flag (string ps_observation_id, string ps_perform_flag);
+UPDATE c_Observation
+SET perform_flag = :ps_perform_flag
+WHERE observation_id = :ps_observation_id;
+if not tf_check() then return -1
+
+if sqlca.sqlcode = 0 then
+	return 1
+else
+	return 0
+end if
+
+end function
+

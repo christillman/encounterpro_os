@@ -1,0 +1,94 @@
+﻿$PBExportHeader$f_practice_user_id.srf
+global type f_practice_user_id from function_object
+end type
+
+forward prototypes
+global function string f_practice_user_id ()
+end prototypes
+
+global function string f_practice_user_id ();string ls_temp
+string ls_version
+integer li_sts, i
+decimal ld_temp
+string ls_decimal_character
+string ls_message
+string ls_security
+long ll_count
+string ls_description
+string ls_null
+string ls_office_id
+
+setnull(ls_null)
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Find the pracitce user_id
+////////////////////////////////////////////////////////////////////////////////
+SELECT user_id
+INTO :common_thread.practice_user_id
+FROM c_User
+WHERE actor_class = 'Practice'
+AND owner_id = :sqlca.customer_id;
+if not tf_check() then return ls_null
+if sqlca.sqlcode = 100 then
+	SELECT min(user_id)
+	INTO :common_thread.practice_user_id
+	FROM c_User
+	WHERE actor_class = 'Practice'
+	AND status = 'OK';
+	if not tf_check() then return ls_null
+	if sqlca.sqlcode = 100 then
+		// didn't find it so make it
+		common_thread.practice_user_id = '$!!' + string(sqlca.customer_id)
+		SELECT count(*)
+		INTO :ll_count
+		FROM c_User
+		WHERE user_id = :common_thread.practice_user_id;
+		if not tf_check() then return ls_null
+		
+		if ll_count > 0 then
+			UPDATE c_User
+			SET actor_class = 'Practice'
+			WHERE user_id = :common_thread.practice_user_id;
+			if not tf_check() then return ls_null
+		else
+			if len(office_id) > 0 then
+				ls_office_id = office_id
+			else
+				SELECT min(office_id)
+				INTO :ls_office_id
+				FROM c_Office
+				WHERE status = 'OK';
+				if not tf_check() then return ls_null
+			end if
+			SELECT CAST(description AS varchar(64))
+			INTO :ls_description
+			FROM c_Office
+			WHERE office_id = :ls_office_id;
+			if not tf_check() then return ls_null
+			if sqlca.sqlcode = 100 then
+				ls_description = "EncounterPRO Customer"
+			end if
+			
+			INSERT INTO c_User (
+				user_id,
+				user_status,
+				user_full_name,
+				actor_class,
+				owner_id)
+			VALUES ( 
+				:common_thread.practice_user_id,
+				'Actor',
+				:ls_description,
+				'Practice',
+				:sqlca.customer_id );
+			if not tf_check() then return ls_null
+		end if
+	end if
+end if
+
+return common_thread.practice_user_id
+
+end function
+

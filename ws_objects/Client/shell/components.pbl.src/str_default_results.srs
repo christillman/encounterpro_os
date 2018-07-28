@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_default_results.srs
+global type str_default_results from structure
+	integer		default_result_count
+	str_exam_default_result		default_result[]
+end type
+

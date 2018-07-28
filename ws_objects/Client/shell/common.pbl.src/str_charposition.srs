@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_charposition.srs
+global type str_charposition from structure
+	long		line_number
+	long		char_position
+end type
+

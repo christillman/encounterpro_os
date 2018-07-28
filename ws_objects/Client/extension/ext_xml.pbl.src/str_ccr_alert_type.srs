@@ -1,0 +1,13 @@
+﻿$PBExportHeader$str_ccr_alert_type.srs
+global type str_ccr_alert_type from structure
+	string		ccrdataobjectid
+	str_ccr_datetimetype		datetime[]
+	str_ccr_idtype		ids[]
+	str_ccr_codeddescriptiontype		alerttype
+	str_ccr_codeddescriptiontype		description
+	str_ccr_codeddescriptiontype		status
+	str_ccr_slrcgroup		slrcgroup
+	str_ccr_agent		agent[]
+	str_ccr_reaction		reaction[]
+end type
+

@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_sort_grid_by_date.srf
+global type f_sort_grid_by_date from function_object
+end type
+
+forward prototypes
+global subroutine f_sort_grid_by_date (ref str_grid pstr_grid)
+end prototypes
+
+global subroutine f_sort_grid_by_date (ref str_grid pstr_grid);long i, j
+str_grid_row lstr_row
+
+for i = pstr_grid.row_count to 1 step -1
+	for j = 1 to i - 1
+		if pstr_grid.grid_row[i].row_date < pstr_grid.grid_row[j].row_date then
+			// If the ith row is less than the jth row, then swap them
+			lstr_row = pstr_grid.grid_row[i]
+			pstr_grid.grid_row[i] = pstr_grid.grid_row[j]
+			pstr_grid.grid_row[j] = lstr_row
+		end if
+	next
+next
+
+return
+
+end subroutine
+

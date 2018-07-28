@@ -1,0 +1,14 @@
+﻿$PBExportHeader$f_set_global_preference.srf
+global type f_set_global_preference from function_object
+end type
+
+forward prototypes
+global function integer f_set_global_preference (string ps_preference_type, string ps_preference_id, string ps_preference_value)
+end prototypes
+
+global function integer f_set_global_preference (string ps_preference_type, string ps_preference_id, string ps_preference_value);
+return datalist.update_preference(ps_preference_type, "Global", "Global", ps_preference_id, ps_preference_value)
+
+
+end function
+

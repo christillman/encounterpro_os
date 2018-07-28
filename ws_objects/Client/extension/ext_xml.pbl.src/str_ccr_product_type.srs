@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_ccr_product_type.srs
+global type str_ccr_product_type from structure
+	str_ccr_codeddescriptiontype		productname
+	str_ccr_codeddescriptiontype		brandname
+	str_ccr_measuretype		strength[]
+	str_ccr_measuretype		form[]
+	str_ccr_measuretype		concentration[]
+	str_ccr_size_type		size[]
+	str_ccr_actorreferencetype		manufacturer
+	str_ccr_idtype		ids[]
+	long		sequenceposition
+	str_ccr_codeddescriptiontype		modifier
+end type
+

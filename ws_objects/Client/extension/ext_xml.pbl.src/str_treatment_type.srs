@@ -1,0 +1,26 @@
+﻿$PBExportHeader$str_treatment_type.srs
+global type str_treatment_type from structure
+	long		encounterpro_treatment_id
+	string		treatmentid
+	str_id_instance		objectid[]
+	str_objecthandling_type		treatmenthandling
+	string		link_openencounter
+	string		treatmenttype
+	datetime		begindate
+	string		description
+	string		specimenid
+	string		treatmentlocation
+	string		treatmentstatus
+	string		link_closeencounter
+	datetime		enddate
+	str_actor_type		orderedby
+	str_actor_type		orderedfor
+	str_actor_type		completedby
+	string		link_assessment[]
+	str_observation_type		observation[]
+	str_note_type		treatmentnote[]
+	str_treatmentmedication_type		medication
+	str_message_type		message[]
+	str_constituenttreatment_type		constituenttreatments
+end type
+

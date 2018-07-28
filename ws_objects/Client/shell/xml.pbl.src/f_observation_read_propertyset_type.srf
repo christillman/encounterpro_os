@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_observation_read_propertyset_type.srf
+global type f_observation_read_propertyset_type from function_object
+end type
+
+forward prototypes
+global function str_propertyset_type f_observation_read_propertyset_type (u_component_observation po_observation, pbdom_element po_epiehandler_root)
+end prototypes
+
+global function str_propertyset_type f_observation_read_propertyset_type (u_component_observation po_observation, pbdom_element po_epiehandler_root);str_propertyset_type lstr_propertyset_type
+PBDOM_ELEMENT pbdom_element_array[]
+long i
+string ls_child
+string ls_value
+
+setnull(lstr_propertyset_type.cprid)
+setnull(lstr_propertyset_type.contextobject)
+setnull(lstr_propertyset_type.objectkey)
+setnull(lstr_propertyset_type.propertytype)
+setnull(lstr_propertyset_type.property)
+setnull(lstr_propertyset_type.value)
+
+po_epiehandler_root.GetChildElements(ref pbdom_element_array)
+for i = 1 to UpperBound(pbdom_element_array)
+	// Get the observation
+	ls_child = pbdom_element_array[i].GetName()
+	ls_value = pbdom_element_array[i].GetTextTrim()
+	CHOOSE CASE lower(ls_child)
+		CASE "cprid"
+			lstr_propertyset_type.cprid = ls_value
+		CASE "contextobject"
+			lstr_propertyset_type.contextobject = ls_value
+		CASE "objectkey"
+			if isnumber(ls_value) then
+				lstr_propertyset_type.objectkey = long(ls_value)
+			end if
+		CASE "propertytype"
+			lstr_propertyset_type.propertytype = ls_value
+		CASE "property"
+			lstr_propertyset_type.property = ls_value
+		CASE "value"
+			lstr_propertyset_type.value = ls_value
+	END CHOOSE
+next
+
+return lstr_propertyset_type
+
+
+
+
+
+end function
+

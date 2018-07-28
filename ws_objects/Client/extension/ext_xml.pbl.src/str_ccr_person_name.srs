@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_ccr_person_name.srs
+global type str_ccr_person_name from structure
+	str_person_type		birthname
+	str_person_type		additionalname[]
+	str_person_type		currentname
+	string		displayname
+end type
+

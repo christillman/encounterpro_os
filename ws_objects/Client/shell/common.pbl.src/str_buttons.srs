@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_buttons.srs
+global type str_buttons from structure
+	integer		button_count
+	str_popup_button		button[]
+	boolean		auto_singleton
+end type
+

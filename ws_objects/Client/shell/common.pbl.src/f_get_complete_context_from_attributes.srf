@@ -1,0 +1,89 @@
+﻿$PBExportHeader$f_get_complete_context_from_attributes.srf
+global type f_get_complete_context_from_attributes from function_object
+end type
+
+forward prototypes
+global function str_complete_context f_get_complete_context_from_attributes (str_attributes pstr_attributes)
+end prototypes
+
+global function str_complete_context f_get_complete_context_from_attributes (str_attributes pstr_attributes);str_complete_context lstr_context
+string ls_temp
+string ls_context_object
+string ls_object_key
+long ll_temp
+
+setnull(lstr_context.encounter_id)
+setnull(lstr_context.problem_id)
+setnull(lstr_context.treatment_id)
+setnull(lstr_context.observation_sequence)
+setnull(lstr_context.attachment_id)
+
+lstr_context.cpr_id = f_attribute_find_attribute(pstr_attributes, "cpr_id")
+if isnull(lstr_context.cpr_id) then
+	return lstr_context
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "encounter_id")
+if isnumber(ls_temp) then
+	ll_temp = long(ls_temp)
+	if ll_temp > 0 then
+		lstr_context.encounter_id = ll_temp
+	end if
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "problem_id")
+if isnumber(ls_temp) then
+	ll_temp = long(ls_temp)
+	if ll_temp > 0 then
+		lstr_context.problem_id = ll_temp
+	end if
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "treatment_id")
+if isnumber(ls_temp) then
+	ll_temp = long(ls_temp)
+	if ll_temp > 0 then
+		lstr_context.treatment_id = ll_temp
+	end if
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "observation_sequence")
+if isnumber(ls_temp) then
+	ll_temp = long(ls_temp)
+	if ll_temp > 0 then
+		lstr_context.observation_sequence = ll_temp
+	end if
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_attributes, "attachment_id")
+if isnumber(ls_temp) then
+	ll_temp = long(ls_temp)
+	if ll_temp > 0 then
+		lstr_context.attachment_id = ll_temp
+	end if
+end if
+
+// If there is a context_object/object_key combination, that trumps
+ls_context_object = f_attribute_find_attribute(pstr_attributes, "context_object")
+ls_object_key = f_attribute_find_attribute(pstr_attributes, "object_key")
+if len(ls_context_object) > 0 and isnumber(ls_object_key) then
+	CHOOSE CASE lower(ls_context_object)
+		CASE "encounter"
+			lstr_context.encounter_id = long(ls_object_key)
+		CASE "assessment"
+			lstr_context.problem_id = long(ls_object_key)
+		CASE "treatment"
+			lstr_context.treatment_id = long(ls_object_key)
+		CASE "observation"
+			lstr_context.observation_sequence = long(ls_object_key)
+		CASE "attachment"
+			lstr_context.attachment_id = long(ls_object_key)
+	END CHOOSE
+end if
+
+
+return lstr_context
+
+
+end function
+

@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_domain_item_nodesc_list.srd
+release 5;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no )
+header(height=1 color="536870912" )
+summary(height=1 color="536870912" )
+footer(height=1 color="536870912" )
+detail(height=101 color="553648127" )
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=domain_id dbname="c_Domain.domain_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=domain_sequence dbname="c_Domain.domain_sequence" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=domain_item dbname="c_Domain.domain_item" )
+ column=(type=char(80) update=yes updatewhereclause=yes name=domain_item_description dbname="c_Domain.domain_item_description" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=domain_item_bitmap dbname="c_Domain.domain_item_bitmap" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Domain~" ) COLUMN(NAME=~"c_Domain.domain_id~") COLUMN(NAME=~"c_Domain.domain_sequence~") COLUMN(NAME=~"c_Domain.domain_item~") COLUMN(NAME=~"c_Domain.domain_item_description~") COLUMN(NAME=~"c_Domain.domain_item_bitmap~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"c_Domain.domain_id~"   OP =~"=~"    EXP2 =~":domain_item~" ) ) ARG(NAME = ~"domain_item~" TYPE = string) " update="c_Domain" updatewhere=0 updatekeyinplace=no arguments=(("domain_item", string))  sort="domain_id A domain_sequence A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="6" color="0" x="19" y="12" height="77" width="801"  name=domain_item edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="79741120~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )

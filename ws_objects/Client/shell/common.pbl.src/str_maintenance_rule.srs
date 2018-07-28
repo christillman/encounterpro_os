@@ -1,0 +1,17 @@
+﻿$PBExportHeader$str_maintenance_rule.srs
+global type str_maintenance_rule from structure
+	long		maintenance_rule_id
+	string		assessment_flag
+	string		sex
+	string		race
+	string		description
+	long		age_range_id
+	long		interval
+	string		interval_unit
+	long		warning_days
+	string		status
+	datetime		last_updated
+	string		id
+	long		owner_id
+end type
+

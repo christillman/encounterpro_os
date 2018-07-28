@@ -1,0 +1,15 @@
+﻿$PBExportHeader$dw_room_list_by_type.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(12) update=yes updatewhereclause=yes key=yes name=room_id dbname="o_Rooms.room_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=room_name dbname="o_Rooms.room_name" )
+ column=(type=long update=yes updatewhereclause=yes name=room_sequence dbname="o_Rooms.room_sequence" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=long updatewhereclause=yes name=computer_id dbname="o_Rooms.computer_id" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"o_Rooms~" ) COLUMN(NAME=~"o_Rooms.room_id~") COLUMN(NAME=~"o_Rooms.room_name~") COLUMN(NAME=~"o_Rooms.room_sequence~") COMPUTE(NAME=~"selected_flag=0~") COLUMN(NAME=~"o_Rooms.computer_id~")WHERE(    EXP1 =~"o_Rooms.status~"   OP =~"=~"    EXP2 =~"'OK'~"    LOGIC =~"And~" ) WHERE(    EXP1 =~"o_Rooms.room_type~"   OP =~"=~"    EXP2 =~":room_type~" ) ) ARG(NAME = ~"room_type~" TYPE = string) " update="o_Rooms" updatewhere=1 updatekeyinplace=no arguments=(("room_type", string)) )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1001" format="[general]"  name=room_name edit.limit=24 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192), rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

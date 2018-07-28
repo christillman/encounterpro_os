@@ -1,0 +1,41 @@
+﻿$PBExportHeader$f_convert_image_to_bmp.srf
+global type f_convert_image_to_bmp from function_object
+end type
+
+forward prototypes
+global function integer f_convert_image_to_bmp (string ps_image_file, ref string ps_bmp_file)
+end prototypes
+
+global function integer f_convert_image_to_bmp (string ps_image_file, ref string ps_bmp_file);integer li_sts
+
+if isnull(ps_image_file) then
+	log.log(this, "f_convert_image_to_bmp()", "Null file name", 3)
+	return -1
+end if
+
+if not fileexists(ps_image_file) then
+	log.log(this, "f_convert_image_to_bmp()", "File not found (" + ps_image_file + ")", 3)
+	return -1
+end if
+
+if isnull(ps_bmp_file) or len(ps_bmp_file) = 0 then
+	ps_bmp_file = f_temp_file("bmp")
+end if
+
+TRY
+	li_sts = common_thread.eprolibnet4.ConvertImage(ps_image_file, ps_bmp_file)
+CATCH (throwable lt_error)
+	log.log(this, "f_convert_image_to_bmp()", "Error converting image file from ~"" + ps_image_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
+	return -1
+END TRY
+
+if li_sts <= 0 then
+	log.log(this, "f_convert_image_to_bmp()", "Error converting file (" + ps_image_file + ")", 3)
+	return -1
+end if
+
+
+return 1
+
+end function
+

@@ -1,0 +1,12 @@
+﻿$PBExportHeader$f_database_version.srf
+global type f_database_version from function_object
+end type
+
+forward prototypes
+global function string f_database_version ()
+end prototypes
+
+global function string f_database_version ();return string(major_release) + "." + database_version
+
+end function
+

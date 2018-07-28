@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_observation_read_epiehandler.srf
+global type f_observation_read_epiehandler from function_object
+end type
+
+forward prototypes
+global function str_epiehandler_type f_observation_read_epiehandler (u_component_observation po_observation, pbdom_element po_epiehandler_root)
+end prototypes
+
+global function str_epiehandler_type f_observation_read_epiehandler (u_component_observation po_observation, pbdom_element po_epiehandler_root);str_epiehandler_type lstr_epiehandler_type
+PBDOM_ELEMENT pbdom_element_array[]
+long i
+string ls_child
+string ls_value
+str_propertyset_type lstr_propertyset_type
+long ll_propertyset_count
+
+setnull(lstr_epiehandler_type.toaddresseeid)
+ll_propertyset_count = 0
+
+po_epiehandler_root.GetChildElements(ref pbdom_element_array)
+for i = 1 to UpperBound(pbdom_element_array)
+	// Get the observation
+	ls_child = pbdom_element_array[i].GetName()
+	ls_value = pbdom_element_array[i].GetTextTrim()
+	CHOOSE CASE lower(ls_child)
+		CASE "propertyset"
+			lstr_propertyset_type = f_observation_read_propertyset_type(po_observation, pbdom_element_array[i])
+			if len(lstr_propertyset_type.property) > 0 then
+				ll_propertyset_count += 1
+				lstr_epiehandler_type.propertyset[ll_propertyset_count] = lstr_propertyset_type
+			end if
+		CASE "toaddresseeid"
+			if isnumber(ls_value) then
+				lstr_epiehandler_type.toaddresseeid = long(ls_value)
+			end if
+	END CHOOSE
+next
+
+
+return lstr_epiehandler_type
+
+
+
+
+
+end function
+

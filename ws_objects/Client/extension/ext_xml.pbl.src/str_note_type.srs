@@ -1,0 +1,12 @@
+﻿$PBExportHeader$str_note_type.srs
+global type str_note_type from structure
+	str_context_type		context
+	string		notetype
+	string		notekey
+	string		notetext
+	str_attachment_type		NoteAttachment
+	datetime		notedate
+	str_actor_type		noteby
+	integer		noteseverity
+end type
+

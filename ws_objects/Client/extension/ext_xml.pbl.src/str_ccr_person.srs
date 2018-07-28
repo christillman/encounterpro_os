@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_ccr_person.srs
+global type str_ccr_person from structure
+	str_ccr_person_name		name
+	datetime		dateofbirth
+	string		gender
+end type
+

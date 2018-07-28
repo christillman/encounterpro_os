@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_attribute_delete_attribute.srf
+global type f_attribute_delete_attribute from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_delete_attribute (ref str_attributes pstr_attributes, string ps_attribute)
+end prototypes
+
+global subroutine f_attribute_delete_attribute (ref str_attributes pstr_attributes, string ps_attribute);long i
+long j
+
+// If there isn't an attribute name then don't do anything
+if isnull(ps_attribute) then return
+
+// See if the attribute already exists
+for i = pstr_attributes.attribute_count to 1 step -1
+	if pstr_attributes.attribute[i].attribute = ps_attribute then
+		// if we found the attribute then move all the other attributes down one
+		for j = i to pstr_attributes.attribute_count - 1
+			pstr_attributes.attribute[j] = pstr_attributes.attribute[j + 1]
+		next
+		pstr_attributes.attribute_count -= 1
+	end if
+next
+
+return
+
+end subroutine
+

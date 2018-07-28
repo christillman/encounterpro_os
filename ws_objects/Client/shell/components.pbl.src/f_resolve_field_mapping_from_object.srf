@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_resolve_field_mapping_from_object.srf
+global type f_resolve_field_mapping_from_object from function_object
+end type
+
+forward prototypes
+global function str_property_value f_resolve_field_mapping_from_object (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element pstr_document_element, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global function str_property_value f_resolve_field_mapping_from_object (str_document_element_set_collection pstr_collection, long pl_collection_index, str_document_element pstr_document_element, str_complete_context pstr_context, str_attributes pstr_attributes);str_property_value lstr_property_value
+long i
+
+// First loop through the mapped properties until we find one that returns a non-null value
+for i = 1 to pstr_document_element.mapped_property_count
+	// The mapped property is the left side
+	lstr_property_value = f_resolve_field_mapped_property_from_object(pstr_collection, &
+																							pl_collection_index, &
+																							pstr_document_element.mapped_property[i], &
+																							pstr_context, &
+																							pstr_attributes)
+
+	if len(lstr_property_value.display_value) > 0 then return lstr_property_value
+next
+
+// If we get here then none of the mapped properties resolved to a non-empty value
+lstr_property_value = f_empty_property_value()
+return lstr_property_value
+
+
+end function
+

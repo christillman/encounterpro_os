@@ -1,0 +1,283 @@
+﻿$PBExportHeader$f_observation_add_xml_document.srf
+global type f_observation_add_xml_document from function_object
+end type
+
+forward prototypes
+global function integer f_observation_add_xml_document (u_component_observation po_observation, u_xml_document pbdom_doc)
+end prototypes
+
+global function integer f_observation_add_xml_document (u_component_observation po_observation, u_xml_document pbdom_doc);PBDOM_ELEMENT pbdom_root
+PBDOM_ELEMENT pbdom_element_array[]
+PBDOM_ELEMENT pbdom_element_array2[]
+PBDOM_ATTRIBUTE pbdom_attribute_array[]
+integer li_sts
+string ls_root
+long i, j, k
+string ls_file
+blob lbl_xml_file
+boolean lb_success
+long ll_original_observation_count
+string ls_extension
+string ls_element_description
+string ls_text
+string ls_description
+blob lbl_attachment
+long ll_hex_length
+long ll_blob_length
+string ls_attachment_type
+boolean lb_xml_attachment
+boolean lb_xml_data
+string ls_observation
+string ls_result_value
+string ls_temp
+string ls_date
+string ls_time
+datetime ldt_result_date_time
+string ls_print_result_flag
+string ls_result_unit
+string ls_abnormal_flag
+string ls_abnormal_nature
+integer li_severity
+string ls_observed_by
+long ll_rc
+integer lia_result_sequence[]
+string ls_location
+string lsa_observation_id[]
+string ls_null
+string ls_result
+string ls_filename
+string ls_encoding
+string ls_child
+str_epiehandler_type lstr_epiehandler
+string ls_errortext
+
+str_c_xml_code_list lstr_observation_codes
+
+setnull(ls_null)
+
+pbdom_root = pbdom_doc.XML_Document.GetRootElement()
+
+ls_root = pbdom_root.GetName()
+ls_text = pbdom_root.GetText()
+setnull(ls_extension)
+ls_description = ls_root
+ls_encoding = "hex"
+setnull(ls_filename)
+
+// If this is an EpIEHandler document, then don't process it into the attachments lists. but instead
+// create a str_epiehandler_type structure from it
+if lower(ls_root) = "epiehandler" then
+	po_observation.epiehandler_common = f_observation_read_epiehandler(po_observation, pbdom_root)
+	return 1
+end if
+
+if pbdom_root.HasAttributes() then
+	// Scan the attributes for an extension and/or a description
+	
+	pbdom_root.GetAttributes(ref pbdom_attribute_array[])
+	
+	for k=1 to UpperBound(pbdom_attribute_array)
+		choose case lower(pbdom_attribute_array[k].GetName())
+			case "extension"
+				ls_extension = pbdom_attribute_array[k].GetText()
+			case "description"
+				ls_description = pbdom_attribute_array[k].GetText()
+			case "filename"
+				ls_filename = pbdom_attribute_array[k].GetText()
+			case "encoding"
+				ls_encoding = pbdom_attribute_array[k].GetText()
+		end choose
+	next
+
+	// See if this looks like an attachment.  If the root element has attributes, has a value, but no child elements,
+	// then it might be an attachment wrapped in XML
+	if not pbdom_root.HasChildElements() and len(ls_text) > 0 then
+		if not isnull(ls_extension) then
+			// This is an attachment so treat it as an attachment instead of as an XML document
+			if isnull(ls_description) then ls_description = ls_root
+
+			if isnull(ls_encoding) or len(ls_encoding) = 0 then
+				// The default encoding for this case is hex
+				ls_encoding = "hex"
+			end if
+			
+			lbl_attachment = f_string_to_blob(ls_text, ls_encoding)
+
+			if len(ls_text) > 0 and isnull(lbl_attachment) then
+				// There must have been an error converting to a blob
+				ls_errortext = "Error converting string (" +ls_encoding + ") to blob:  " + left(ls_text, 40)
+				if len(ls_text) > 40 then ls_errortext += "..."
+				log.log(this, "f_observation_add_xml_document()", ls_errortext, 4)
+				return -1
+			end if
+			
+			// If the text converted to binary then we really do have an attachment
+			if len(lbl_attachment) > 0 then
+				ls_attachment_type = f_attachment_type_from_object_type(ls_extension)
+				
+				// Add the observation structure
+				po_observation.observation_count += 1
+				setnull(po_observation.observations[po_observation.observation_count].observation_id)
+				po_observation.observations[po_observation.observation_count].result_count = 0
+				
+				// Add the attachment
+				po_observation.observations[po_observation.observation_count].attachment_list.attachment_count = 1
+				po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].filename = ls_filename
+				po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_type = ls_attachment_type
+				po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].extension = ls_extension
+				po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_comment_title = ls_description
+				po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment = lbl_attachment
+				return 1
+			end if
+		end if
+	end if
+end if
+
+// If we get here then we have an xml document that's not just an attachment wrapped in XML
+// The first question is whether to treat it as an attachment or as structured data or both
+// 
+
+po_observation.get_attribute("xml_attachment", lb_xml_attachment, true)
+po_observation.get_attribute("xml_data", lb_xml_data, false)
+
+// If this is a JMJDocument, the look up some stuff here
+if lower(ls_root) = "jmjdocument" then
+	// Get the root elements.  These are the observations.
+	pbdom_root.GetChildElements(ref pbdom_element_array)
+	for i = 1 to UpperBound(pbdom_element_array)
+		// Get the observation
+		ls_child = pbdom_element_array[i].GetName()
+		if lower(ls_child) = "epiehandler" then
+			lstr_epiehandler = f_observation_read_epiehandler(po_observation, pbdom_element_array[i])
+		end if
+	next
+	
+	// Always process jmjdocuments as attachments
+	lb_xml_attachment = true
+end if
+
+if lb_xml_attachment then
+	// Add the observation structure
+	po_observation.observation_count += 1
+	setnull(po_observation.observations[po_observation.observation_count].observation_id)
+	po_observation.observations[po_observation.observation_count].result_count = 0
+	
+	// Add the attachment
+	po_observation.observations[po_observation.observation_count].attachment_list.attachment_count = 1
+	setnull(po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].filename)
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_type = "XML"
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].extension = "xml"
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment_comment_title = ls_description
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].xml_document = pbdom_doc
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].attachment = blob(pbdom_doc.xml_string)
+	po_observation.observations[po_observation.observation_count].attachment_list.attachments[1].epiehandler = lstr_epiehandler
+end if
+
+if lb_xml_data then
+	// Get the root elements.  These are the observations.
+	pbdom_root.GetChildElements(ref pbdom_element_array)
+	for i = 1 to UpperBound(pbdom_element_array)
+		// Get the observation
+		ls_observation = pbdom_element_array[i].GetName()
+		
+		// Determine the observation_id
+		lstr_observation_codes = datalist.xml_get_epro_ids(po_observation.owner_id, "observation", ls_null, ls_observation)
+//		ls_observation_id = datalist.xml_get_epro_id_from_code(owner_id, "observation", ls_observation, ls_null, "observation_id", true)
+		if lstr_observation_codes.code_count <= 0 then continue
+		
+		// Create the observation structure
+		po_observation.observation_count += 1
+		po_observation.observations[po_observation.observation_count].observation_id = lstr_observation_codes.code[1].epro_id
+		po_observation.observations[po_observation.observation_count].result_count = 0
+		
+		
+		// Get the child elements.  These are the results.
+		pbdom_element_array[i].GetChildElements(ref pbdom_element_array2)
+		for j = 1 to UpperBound(pbdom_element_array2)
+			// Get the result
+			ls_result = pbdom_element_array2[j].GetName()
+		
+			// Determine the result_sequence for each observation_id
+			for k = 1 to lstr_observation_codes.code_count
+				lsa_observation_id[k] = lstr_observation_codes.code[k].epro_id
+				ls_temp = datalist.xml_lookup_epro_id(po_observation.owner_id, "result", lsa_observation_id[k], ls_result, "result_sequence")
+				if not isnumber(ls_temp) then setnull(ls_temp)
+				lia_result_sequence[k] = integer(ls_temp)
+			next
+			
+			// Get the result value
+			ls_result_value = pbdom_element_array2[j].GetText()
+		
+			// Initialize the attributes
+			ls_location = "NA"
+			setnull(ldt_result_date_time)
+			setnull(ls_result)
+			setnull(ls_result_unit)
+			setnull(ls_abnormal_flag)
+			setnull(ls_abnormal_nature)
+			
+			//  Get the document_id from the attribute of the root element
+			if pbdom_element_array2[j].HasAttributes() then
+				pbdom_element_array2[j].GetAttributes(ref pbdom_attribute_array[])
+				for k = 1 to UpperBound(pbdom_attribute_array)
+					CHOOSE CASE lower(pbdom_attribute_array[k].GetName())
+						case "datetime"
+							ls_temp = pbdom_attribute_array[k].GetText()
+							f_split_string(ls_temp, " ", ls_date, ls_time)
+							if isdate(ls_date) then
+								if istime(ls_time) then
+									ldt_result_date_time = datetime(date(ls_date), time(ls_time))
+								else
+									ldt_result_date_time = datetime(date(ls_date), time(""))
+								end if
+							end if
+						case "print_result_flag"
+							ls_print_result_flag = pbdom_attribute_array[k].GetText()
+						case "result_unit"
+							ls_result_unit = pbdom_attribute_array[k].GetText()
+						case "abnormal_flag"
+							ls_abnormal_flag = pbdom_attribute_array[k].GetText()
+						case "abnormal_nature"
+							ls_abnormal_nature = pbdom_attribute_array[k].GetText()
+						case "severity"
+							li_severity = integer(pbdom_attribute_array[k].GetText())
+						case "observed_by"
+							ls_observed_by = pbdom_attribute_array[k].GetText()
+						case "location"
+			//				ls_location = pbdom_attribute_array[k].GetText()
+			//				ls_location = lookup_owner_location(pl_owner_id, ls_temp)
+						case "extension"
+							ls_extension = pbdom_attribute_array[k].GetText()
+						case "description"
+							ls_element_description = pbdom_attribute_array[k].GetText()
+					END CHOOSE
+				next	
+			end if
+			
+			// Now populate the result structure
+			po_observation.observations[po_observation.observation_count].result_count += 1
+			ll_rc = po_observation.observations[po_observation.observation_count].result_count
+			
+			// Set the id values
+			po_observation.observations[po_observation.observation_count].result[ll_rc].id_count = lstr_observation_codes.code_count
+			po_observation.observations[po_observation.observation_count].result[ll_rc].observation_id = lsa_observation_id
+			po_observation.observations[po_observation.observation_count].result[ll_rc].result_sequence = lia_result_sequence
+			
+			// Set the other attributes
+			po_observation.observations[po_observation.observation_count].result[ll_rc].result_type = "PERFORM"
+			po_observation.observations[po_observation.observation_count].result[ll_rc].location = ls_location
+			po_observation.observations[po_observation.observation_count].result[ll_rc].result_date_time = ldt_result_date_time
+			po_observation.observations[po_observation.observation_count].result[ll_rc].result_value = ls_result_value
+			po_observation.observations[po_observation.observation_count].result[ll_rc].result_unit = ls_result_unit
+			po_observation.observations[po_observation.observation_count].result[ll_rc].abnormal_flag = ls_abnormal_flag
+			po_observation.observations[po_observation.observation_count].result[ll_rc].abnormal_nature = ls_abnormal_nature
+		next
+	next
+
+end if
+
+return 1
+
+
+end function
+

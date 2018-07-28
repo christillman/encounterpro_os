@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_qualifier_edit_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=120 color="553648127" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes name=qualifier_domain_id dbname="c_Qualifier.qualifier_domain_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=qualifier_sequence dbname="c_Qualifier.qualifier_sequence" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=qualifier dbname="c_Qualifier.qualifier" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="c_Qualifier.sort_sequence" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Qualifier~" ) COLUMN(NAME=~"c_Qualifier.qualifier_domain_id~") COLUMN(NAME=~"c_Qualifier.qualifier_sequence~") COLUMN(NAME=~"c_Qualifier.qualifier~") COLUMN(NAME=~"c_Qualifier.sort_sequence~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"c_Qualifier.qualifier_domain_id~"   OP =~"=~"    EXP2 =~":qualifier_domain_id~" ) ) ARG(NAME = ~"qualifier_domain_id~" TYPE = number) " update="c_Qualifier" updatewhere=0 updatekeyinplace=no arguments=(("qualifier_domain_id", number))  sort="sort_sequence A qualifier A " )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1001" format="[general]"  name=qualifier edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192), rgb(128,128,128))" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

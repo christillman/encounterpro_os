@@ -1,0 +1,8 @@
+﻿$PBExportHeader$s_colorlogfont.srs
+$PBExportComments$Structure for ColorLogFont
+global type s_colorlogfont from structure
+	uint		WHeight
+	s_logfont		lf
+	ulong		rgb
+end type
+

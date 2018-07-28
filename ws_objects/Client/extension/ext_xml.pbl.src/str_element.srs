@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_element.srs
+global type str_element from structure
+	pbdom_element		element
+	pbdom_element		child[]
+	long		child_count
+	str_code_type		id[]
+	long		id_count
+	boolean		valid
+end type
+

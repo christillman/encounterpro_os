@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_picked_drug.srs
+global type str_picked_drug from structure
+	string		drug_id
+	string		description
+	string		treatment_mode
+	string		dosage_form
+	long		administration_sequence
+	string		package_id
+	datetime		begin_date
+	real		administer_amount
+	string		administer_unit
+	decimal{0}		percentage
+end type
+

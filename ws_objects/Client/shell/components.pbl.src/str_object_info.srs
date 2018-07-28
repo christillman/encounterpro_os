@@ -1,0 +1,13 @@
+﻿$PBExportHeader$str_object_info.srs
+global type str_object_info from structure
+	string		id
+	string		object_class
+	string		object_type
+	string		description
+	string		object_type_prefix
+	long		owner_id
+	string		status
+	string		base_table
+	string		base_table_key
+end type
+

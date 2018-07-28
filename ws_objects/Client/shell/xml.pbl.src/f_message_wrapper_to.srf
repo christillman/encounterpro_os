@@ -1,0 +1,68 @@
+﻿$PBExportHeader$f_message_wrapper_to.srf
+global type f_message_wrapper_to from function_object
+end type
+
+forward prototypes
+global function pbdom_element f_message_wrapper_to (long pl_addressee, string ps_recipient_user_id)
+end prototypes
+
+global function pbdom_element f_message_wrapper_to (long pl_addressee, string ps_recipient_user_id);integer li_sts
+PBDOM_Element lo_null
+PBDOM_Element lo_actor
+PBDOM_Element lo_element
+string ls_owner
+string ls_owner_type
+string ls_id
+
+setnull(lo_null)
+
+if isnull(pl_addressee) then
+	log.log(this, "f_message_actor()", "Null addressee", 4)
+	return lo_null
+end if
+
+SELECT owner, owner_type
+INTO :ls_owner, :ls_owner_type
+FROM c_Owner
+WHERE owner_id = :pl_addressee;
+if not tf_check() then return lo_null
+if sqlca.sqlcode = 100 then
+	ls_owner = "Customer # " + string(pl_addressee)
+	ls_owner_type = "JMJCustomer"
+end if
+
+lo_actor = CREATE PBDOM_Element
+lo_actor.setname("To")
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("AddresseeType")
+lo_element.addcontent(ls_owner_type)
+lo_actor.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("AddresseeID")
+lo_element.addcontent(string(pl_addressee))
+lo_actor.addcontent(lo_element)
+
+lo_element = CREATE PBDOM_Element
+lo_element.setname("Description")
+lo_element.addcontent(ls_owner)
+lo_actor.addcontent(lo_element)
+
+if len(ps_recipient_user_id) > 0 then
+	ls_id = user_list.user_property( ps_recipient_user_id, "id")
+	if len(ls_id) > 0 then
+		lo_element = CREATE PBDOM_Element
+		lo_element.setname("SenderRecipientID")
+		lo_element.addcontent(ls_id)
+		lo_actor.addcontent(lo_element)
+	else
+		log.log(this, "f_message_wrapper_from()", "ID not found for intended recipient (" + ps_recipient_user_id + ")", 3)
+	end if
+end if
+
+Return lo_actor
+
+
+end function
+

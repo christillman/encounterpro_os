@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_get_params_with_list.srf
+global type f_get_params_with_list from function_object
+end type
+
+forward prototypes
+global function integer f_get_params_with_list (string ps_id, string ps_param_mode, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes)
+end prototypes
+
+global function integer f_get_params_with_list (string ps_id, string ps_param_mode, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes);///////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Return: Integer [ 0 - User pressed 'Cancel' , 1 - success , -1 - Failure ]
+//
+//	Description: Present a wizard to enable user to enter param values.
+//             
+//	Returns:		-1 = Error or User pressed cancel
+//					 0 = No params for this ID
+//					 1 = Success
+//
+// Created By:Sumathi Chinnasamy										Creation dt: 10/01/99
+//
+// Modified By:															Modified On:
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// The state_attributes are used to provide state information to the various screens that might
+// be used by the params wizard.  These attributes are not mixed with the param attributes (pstr_attributes)
+// which contain the actual current and updated attributes to be collected or modified by the param wizard.
+
+str_param_wizard_attributes lstr_wizard
+str_param_wizard_return lstr_return
+str_params lstr_params
+str_attributes lstr_attributes
+integer li_sts
+w_param_attributes_edit lw_param_wizzard
+
+// Pass in the param id and the attributes
+lstr_wizard.id = ps_id
+lstr_wizard.param_mode = ps_param_mode
+lstr_wizard.param_attributes = pstr_attributes
+lstr_wizard.state_attributes = pstr_state_attributes
+
+Openwithparm(lw_param_wizzard, lstr_wizard, "w_param_attributes_edit")
+lstr_return = Message.powerobjectparm
+
+// If an error occured or the user pressed cancel then return error
+If lstr_return.return_status <= 0 Then Return lstr_return.return_status
+
+// If we had params and the user didn't press cancel, then replace the passed in params with the params
+// edited by the param wizard.
+pstr_attributes = lstr_return.attributes
+
+return 1
+
+
+end function
+
