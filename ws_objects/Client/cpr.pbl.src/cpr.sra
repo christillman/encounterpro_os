@@ -252,6 +252,9 @@ TimerKind trc_Timerkind = Clock!
 
 // WAPI interface object
 u_windows_api windows_api
+powerobject po_null
+cpr gnv_app
+
 
 
 end variables
@@ -311,6 +314,8 @@ setnull(current_scribe)
 setnull(current_patient)
 setnull(current_service)
 setnull(servicename)
+setnull(po_null)
+gnv_app = this
 
 ls_parm = trim(upper(commandline))
 if ls_parm = "" or left(ls_parm, 1) = "/" then setnull(ls_parm)
