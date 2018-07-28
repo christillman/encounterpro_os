@@ -1,0 +1,37 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "ext_attachments.pbl" "";
+@end;
+@begin Objects 
+ "u_component_attachment_activex.sru" "ext_attachments.pbl";
+ "u_component_attachment_audio.sru" "ext_attachments.pbl";
+ "u_component_attachment_brentwood.sru" "ext_attachments.pbl";
+ "u_component_attachment_browser.sru" "ext_attachments.pbl";
+ "u_component_attachment_dotnet.sru" "ext_attachments.pbl";
+ "u_component_attachment_ecg_wlca.sru" "ext_attachments.pbl";
+ "u_component_attachment_generic.sru" "ext_attachments.pbl";
+ "u_component_attachment_image.sru" "ext_attachments.pbl";
+ "u_component_attachment_isf.sru" "ext_attachments.pbl";
+ "u_component_attachment_link.sru" "ext_attachments.pbl";
+ "u_component_attachment_psreport.sru" "ext_attachments.pbl";
+ "u_component_attachment_signature_cic.sru" "ext_attachments.pbl";
+ "u_component_attachment_signature_easyink.sru" "ext_attachments.pbl";
+ "u_component_attachment_signature_penop.sru" "ext_attachments.pbl";
+ "u_component_attachment_xml.sru" "ext_attachments.pbl";
+ "u_component_attachment_xml_ccr.sru" "ext_attachments.pbl";
+ "w_attachment_activex_display.srw" "ext_attachments.pbl";
+ "w_attachment_audio_display.srw" "ext_attachments.pbl";
+ "w_attachment_brentwood_display.srw" "ext_attachments.pbl";
+ "w_attachment_browser_display.srw" "ext_attachments.pbl";
+ "w_attachment_edit_attachment_text.srw" "ext_attachments.pbl";
+ "w_attachment_image_display.srw" "ext_attachments.pbl";
+ "w_attachment_psreport_display.srw" "ext_attachments.pbl";
+ "w_attachment_signature_cic_display.srw" "ext_attachments.pbl";
+ "w_attachment_signature_easyink_display.srw" "ext_attachments.pbl";
+ "w_attachment_signature_isf_display.srw" "ext_attachments.pbl";
+ "w_attachment_signature_penop_display.srw" "ext_attachments.pbl";
+ "w_attachment_wa_ecg_display.srw" "ext_attachments.pbl";
+ "w_render_cic_signature.srw" "ext_attachments.pbl";
+ "w_render_easyink_signature.srw" "ext_attachments.pbl";
+ "w_render_isf_signature.srw" "ext_attachments.pbl";
+@end;

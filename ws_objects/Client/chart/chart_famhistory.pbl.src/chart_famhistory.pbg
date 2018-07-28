@@ -1,0 +1,11 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "chart_famhistory.pbl" "";
+@end;
+@begin Objects 
+ "dw_domain_item_nodesc_list.srd" "chart_famhistory.pbl";
+ "dw_family_history.srd" "chart_famhistory.pbl";
+ "u_cpr_family_history.sru" "chart_famhistory.pbl";
+ "w_family_illness.srw" "chart_famhistory.pbl";
+ "w_relative.srw" "chart_famhistory.pbl";
+@end;

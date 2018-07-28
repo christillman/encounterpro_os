@@ -1,0 +1,8 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "chart_summary.pbl" "";
+@end;
+@begin Objects 
+ "dw_finding_list_comments.srd" "chart_summary.pbl";
+ "u_summary_page.sru" "chart_summary.pbl";
+@end;

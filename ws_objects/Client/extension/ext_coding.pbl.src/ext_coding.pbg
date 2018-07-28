@@ -1,0 +1,9 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "ext_coding.pbl" "";
+@end;
+@begin Objects 
+ "dw_sp_get_default_encounter_proc.srd" "ext_coding.pbl";
+ "u_component_coding_medicaid.sru" "ext_coding.pbl";
+ "u_component_coding_standard.sru" "ext_coding.pbl";
+@end;

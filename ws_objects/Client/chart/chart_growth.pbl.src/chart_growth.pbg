@@ -1,0 +1,23 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "chart_growth.pbl" "";
+@end;
+@begin Objects 
+ "d_cdc_bmiage.srd" "chart_growth.pbl";
+ "d_cdc_hcageinf.srd" "chart_growth.pbl";
+ "d_cdc_lenageinf.srd" "chart_growth.pbl";
+ "d_cdc_statage.srd" "chart_growth.pbl";
+ "d_cdc_wtage.srd" "chart_growth.pbl";
+ "d_cdc_wtageinf.srd" "chart_growth.pbl";
+ "d_cdc_wtleninf.srd" "chart_growth.pbl";
+ "d_cdc_wtstat.srd" "chart_growth.pbl";
+ "d_patient_growth_data.srd" "chart_growth.pbl";
+ "d_patient_growth_data_htwt.srd" "chart_growth.pbl";
+ "d_patient_growth_data_htwthc.srd" "chart_growth.pbl";
+ "dw_adult_growth_data.srd" "chart_growth.pbl";
+ "dw_growth_percentile_data.srd" "chart_growth.pbl";
+ "str_growth_chart_settings.srs" "chart_growth.pbl";
+ "u_cpr_page_growth_percentiles.sru" "chart_growth.pbl";
+ "u_gr_growth_chart.sru" "chart_growth.pbl";
+ "w_growth_charts.srw" "chart_growth.pbl";
+@end;

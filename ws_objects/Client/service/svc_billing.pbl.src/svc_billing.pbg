@@ -1,0 +1,7 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_billing.pbl" "";
+@end;
+@begin Objects 
+ "u_component_service_billing_edit.sru" "svc_billing.pbl";
+@end;

@@ -1,0 +1,8 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_procedure.pbl" "";
+@end;
+@begin Objects 
+ "u_component_service_procedure.sru" "svc_procedure.pbl";
+ "w_do_procedure.srw" "svc_procedure.pbl";
+@end;

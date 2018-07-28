@@ -1,0 +1,8 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "chart_browser.pbl" "";
+@end;
+@begin Objects 
+ "u_cpr_page_browser.sru" "chart_browser.pbl";
+ "u_cpr_page_browser_nav.sru" "chart_browser.pbl";
+@end;

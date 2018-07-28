@@ -1,0 +1,44 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "treatments.pbl" "";
+@end;
+@begin Objects 
+ "dw_admin_method_procedure.srd" "treatments.pbl";
+ "dw_display_instruction.srd" "treatments.pbl";
+ "dw_drug_package_data.srd" "treatments.pbl";
+ "dw_pick_drug_instruction.srd" "treatments.pbl";
+ "dw_pick_result_by_loc.srd" "treatments.pbl";
+ "dw_referral_assessments.srd" "treatments.pbl";
+ "dw_referral_radiology.srd" "treatments.pbl";
+ "dw_selected_drugs.srd" "treatments.pbl";
+ "dw_selected_materials.srd" "treatments.pbl";
+ "dw_selected_procedures.srd" "treatments.pbl";
+ "dw_treatment_list.srd" "treatments.pbl";
+ "tf_get_consultant.srf" "treatments.pbl";
+ "tf_get_default_admin_procedure.srf" "treatments.pbl";
+ "tf_get_default_dispense.srf" "treatments.pbl";
+ "tf_get_specialty.srf" "treatments.pbl";
+ "str_treatment_attributes.srs" "treatments.pbl";
+ "u_admin_method_procedure.sru" "treatments.pbl";
+ "u_component_treatment_activity.sru" "treatments.pbl";
+ "u_component_treatment_followup.sru" "treatments.pbl";
+ "u_component_treatment_immunization.sru" "treatments.pbl";
+ "u_component_treatment_material.sru" "treatments.pbl";
+ "u_component_treatment_medication.sru" "treatments.pbl";
+ "u_component_treatment_officemed.sru" "treatments.pbl";
+ "u_component_treatment_procedure.sru" "treatments.pbl";
+ "u_component_treatment_referral.sru" "treatments.pbl";
+ "u_component_treatment_test.sru" "treatments.pbl";
+ "u_dw_pick_test_results.sru" "treatments.pbl";
+ "u_followup_prn.sru" "treatments.pbl";
+ "u_hcpcs_procedure.sru" "treatments.pbl";
+ "u_treatment_goal.sru" "treatments.pbl";
+ "w_define_activity.srw" "treatments.pbl";
+ "w_define_followup.srw" "treatments.pbl";
+ "w_define_referral.srw" "treatments.pbl";
+ "w_define_referral_old.srw" "treatments.pbl";
+ "w_pick_patient_materials.srw" "treatments.pbl";
+ "w_trt_pick_drugs.srw" "treatments.pbl";
+ "w_trt_pick_observations.srw" "treatments.pbl";
+ "w_trt_pick_procedures.srw" "treatments.pbl";
+@end;

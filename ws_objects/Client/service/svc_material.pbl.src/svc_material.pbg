@@ -1,0 +1,8 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_material.pbl" "";
+@end;
+@begin Objects 
+ "u_component_service_material.sru" "svc_material.pbl";
+ "w_do_material.srw" "svc_material.pbl";
+@end;

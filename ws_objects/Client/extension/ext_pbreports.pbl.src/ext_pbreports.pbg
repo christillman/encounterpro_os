@@ -1,0 +1,46 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "ext_pbreports.pbl" "";
+@end;
+@begin Objects 
+ "assessment.srd" "ext_pbreports.pbl";
+ "assessment_history.srd" "ext_pbreports.pbl";
+ "dw_billing_sheet.srd" "ext_pbreports.pbl";
+ "dw_encounter_alert.srd" "ext_pbreports.pbl";
+ "dw_immunization_history.srd" "ext_pbreports.pbl";
+ "dw_prescription.srd" "ext_pbreports.pbl";
+ "dw_prescription_size_20.srd" "ext_pbreports.pbl";
+ "dw_prescription_size_6.srd" "ext_pbreports.pbl";
+ "dw_prescription2.srd" "ext_pbreports.pbl";
+ "dw_prescription2_size_20.srd" "ext_pbreports.pbl";
+ "dw_prescription2_size_6.srd" "ext_pbreports.pbl";
+ "dw_referral_prescription.srd" "ext_pbreports.pbl";
+ "dw_report_list.srd" "ext_pbreports.pbl";
+ "dw_report_list_null_type.srd" "ext_pbreports.pbl";
+ "dw_rpt_chart_alerts.srd" "ext_pbreports.pbl";
+ "dw_rpt_dated_list.srd" "ext_pbreports.pbl";
+ "dw_rpt_obj_list_results.srd" "ext_pbreports.pbl";
+ "dw_rpt_obs_cat_results_display.srd" "ext_pbreports.pbl";
+ "dw_rpt_treatment_results_display.srd" "ext_pbreports.pbl";
+ "dw_sp_get_child_treatments.srd" "ext_pbreports.pbl";
+ "dw_xml_encounter_select.srd" "ext_pbreports.pbl";
+ "dw_xml_object_select.srd" "ext_pbreports.pbl";
+ "encounter.srd" "ext_pbreports.pbl";
+ "encounter_allergies.srd" "ext_pbreports.pbl";
+ "encounter_currentmeds.srd" "ext_pbreports.pbl";
+ "encounter_footer.srd" "ext_pbreports.pbl";
+ "encounter_plan.srd" "ext_pbreports.pbl";
+ "u_component_report_all_encounters.sru" "ext_pbreports.pbl";
+ "u_component_report_asst_histories.sru" "ext_pbreports.pbl";
+ "u_component_report_billing_sheet.sru" "ext_pbreports.pbl";
+ "u_component_report_document_component.sru" "ext_pbreports.pbl";
+ "u_component_report_external_source.sru" "ext_pbreports.pbl";
+ "u_component_report_immunization.sru" "ext_pbreports.pbl";
+ "u_component_report_patient_observations.sru" "ext_pbreports.pbl";
+ "u_component_report_prescription.sru" "ext_pbreports.pbl";
+ "u_component_report_rtf.sru" "ext_pbreports.pbl";
+ "u_component_send_report.sru" "ext_pbreports.pbl";
+ "u_component_send_report_lcr.sru" "ext_pbreports.pbl";
+ "w_encounterpro_report_rtf.srw" "ext_pbreports.pbl";
+ "w_send_report_rtf.srw" "ext_pbreports.pbl";
+@end;

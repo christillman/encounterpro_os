@@ -1,0 +1,9 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_report.pbl" "";
+@end;
+@begin Objects 
+ "dw_report_config_item.srd" "svc_report.pbl";
+ "u_component_service_report.sru" "svc_report.pbl";
+ "w_report_configure_and_test.srw" "svc_report.pbl";
+@end;

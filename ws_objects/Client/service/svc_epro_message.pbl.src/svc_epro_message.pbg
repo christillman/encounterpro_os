@@ -1,0 +1,13 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_epro_message.pbl" "";
+@end;
+@begin Objects 
+ "dw_addressee_list.srd" "svc_epro_message.pbl";
+ "dw_message_distlist_recipients.srd" "svc_epro_message.pbl";
+ "dw_message_header.srd" "svc_epro_message.pbl";
+ "dw_message_print.srd" "svc_epro_message.pbl";
+ "w_epro_message.srw" "svc_epro_message.pbl";
+ "w_epro_review_message.srw" "svc_epro_message.pbl";
+ "w_svc_compose_message.srw" "svc_epro_message.pbl";
+@end;

@@ -1,0 +1,11 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "svc_immunization.pbl" "";
+@end;
+@begin Objects 
+ "dw_vaccine_approval_list.srd" "svc_immunization.pbl";
+ "u_component_service_immunization.sru" "svc_immunization.pbl";
+ "u_component_service_vaccine_signature.sru" "svc_immunization.pbl";
+ "w_do_immunization.srw" "svc_immunization.pbl";
+ "w_vaccine_signature.srw" "svc_immunization.pbl";
+@end;

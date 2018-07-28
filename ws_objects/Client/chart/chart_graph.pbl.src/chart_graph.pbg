@@ -1,0 +1,7 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "chart_graph.pbl" "";
+@end;
+@begin Objects 
+ "u_cpr_graph.sru" "chart_graph.pbl";
+@end;
