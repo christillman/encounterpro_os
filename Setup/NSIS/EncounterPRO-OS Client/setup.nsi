@@ -12,37 +12,38 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   6.2.6
+  !define VERSION   7.0.1.0
 
 ; Source Root
- !define SOURCE_ROOT "\\ICT1\ICTFileStore1\Open Source\Builds"
+ !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   6.2.6
-  !define Database_Mod_Level   201
-  !define PBRuntime_VERSION   12.1.6875
+  !define EproClient_VERSION   7.0.1.0
+  !define Database_Mod_Level   202
+  !define PBRuntime_VERSION   17.2.1769
   !define EncounterPRO_OS_Utilities_VERSION   1.0.0.6
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
-  !define SQL_Native_Client_Version 2008.12
+  ; PBSNC170.DLL is now included in the Runtime Packager
+  ; !define SQL_Native_Client_Version 2008.12
 
   !define DISP_NAME '${PRODUCT} ${VERSION}'
-  !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT} 6"
+  !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT} 7"
 
 
   ; EproLibNET installer define
   ;*** To change EproLibNET version, change the path below
-  !define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\${EncounterPRO_OS_Utilities_VERSION}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION}'
+  !define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\bin\release'
 
   ;*** If Setup version != Client files version, modify following line ***
-  !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}\Files'
+  !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
   !define SRC_EPRO_Resources  '${SOURCE_ROOT}\EncounterPRO-OS\Resources'
 
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
 
   ;*** To change PB Runtime version, modify following line ***
-  !define SRC_PBR   '${SOURCE_ROOT}\3rd Party Software\Sybase PB Runtime\${PBRuntime_VERSION}'
+  !define SRC_PBR   '${SOURCE_ROOT}\3rd Party Software\Appeon PB Runtime\${PBRuntime_VERSION}'
 
 ; ------------------------------------------
 ; Variables
@@ -138,7 +139,17 @@
         SetDetailsPrint textonly
         SetOutPath '$SYSDIR'
         SetDetailsPrint both
-        
+        IfFileExists '\\localhost\attachments\*.*' GoAhead
+        DetailPrint "The share folder \\localhost\attachments is required for the bulk import files "
+        DetailPrint "supporting this installation."
+        DetailPrint ""
+        DetailPrint "Create an empty folder anywhere on this computer. Right click on it and choose Share."
+        DetailPrint "Make the share name 'attachments', and be sure to share it with 'Everyone'. "
+        DetailPrint "The bulk import files will be copied to it during installation when you try again."
+        DetailPrint ""
+        SetDetailsView show
+        Abort "The share folder \\localhost\attachments was not found. Aborting now."
+        GoAhead:
         IfFileExists "$INSTDIR\EncounterPRO.OS.Client.exe" 0 new_installation
         StrCpy $ALREADY_INSTALLED 1
         new_installation:
@@ -146,45 +157,47 @@
         DetailPrint "Installing MS System Files..."
           SetDetailsPrint textonly
         
-        ; Microsoft Files needed for PowerBuilder
+        ; Microsoft Files needed for PowerBuilder: NB, 100 versions required for 64-bit
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
-            "${SOURCE_ROOT}\3rd Party Software\Microsoft Libraries\MSVC\7.1\msvcr71.dll" "$SYSDIR\msvcr71.dll" "$SYSDIR"
+            "${SOURCE_ROOT}\3rd Party Software\Microsoft\msvcr80.dll" "$SYSDIR\msvcr80.dll" "$SYSDIR"
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
-            "${SOURCE_ROOT}\3rd Party Software\Microsoft Libraries\MSVC\7.1\msvcp71.dll" "$SYSDIR\msvcp71.dll" "$SYSDIR"
+            "${SOURCE_ROOT}\3rd Party Software\Microsoft\msvcp80.dll" "$SYSDIR\msvcp80.dll" "$SYSDIR"
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
-            "${SOURCE_ROOT}\3rd Party Software\Microsoft Libraries\MSVC\7.1\atl71.dll" "$SYSDIR\atl71.dll" "$SYSDIR"
+            "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
         
+
         SetOutPath $INSTDIR
-        StrCmp $Bitness 32 sqlncli32 sqlncli64
+        ; PBSNC170.DLL is now included in the Runtime Packager
+        ; StrCmp $Bitness 32 sqlncli32 sqlncli64
         
-        sqlncli32:
-        SetDetailsPrint both
-        DetailPrint "Installing Microsoft SQL Native Client..."
-        SetDetailsPrint textonly
-        File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli.msi'
-        nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli.msi" /passive /norestart'
-        Delete "$INSTDIR\sqlncli.msi"
-        SetDetailsPrint both
-        goto sqlnclidone
+        ; sqlncli32:
+        ; SetDetailsPrint both
+        ; DetailPrint "Installing Microsoft SQL Native Client..."
+        ; SetDetailsPrint textonly
+        ; File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli.msi'
+        ; nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli.msi" /passive /norestart'
+        ; Delete "$INSTDIR\sqlncli.msi"
+        ; SetDetailsPrint both
+        ; goto sqlnclidone
         
-        sqlncli64:
-        DetailPrint "Installing Microsoft SQL Native Client (x64)..."
-        SetDetailsPrint textonly
-        File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli_x64.msi'
-        nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli_x64.msi" /passive /norestart'
-        Delete "$INSTDIR\sqlncli_x64.msi"
-        SetDetailsPrint both
-        goto sqlnclidone
+        ; sqlncli64:
+        ; DetailPrint "Installing Microsoft SQL Native Client (x64)..."
+        ; SetDetailsPrint textonly
+        ; File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli_x64.msi'
+        ; nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli_x64.msi" /passive /norestart'
+        ; Delete "$INSTDIR\sqlncli_x64.msi"
+        ; SetDetailsPrint both
+        ; goto sqlnclidone
         
-        sqlnclidone:
+        ;sqlnclidone:
           
       ; Install PB Runtime
       SetOutPath $INSTDIR
       DetailPrint "Installing Powerbuilder Runtime Files..."
       SetDetailsPrint textonly
-      File "${SRC_PBR}\PowerBuilderRuntime.msi"
-      nsExec::Exec 'msiexec /i "$INSTDIR\PowerBuilderRuntime.msi" /passive /norestart'
-      Delete '$INSTDIR\PowerBuilderRuntime.msi'
+      File "${SRC_PBR}\PBCLTRT170.msi"
+      nsExec::Exec 'msiexec /i "$INSTDIR\PBCLTRT170.msi" /passive /norestart'
+      Delete '$INSTDIR\PBCLTRT170.msi'
 
       SetDetailsPrint both
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
@@ -207,6 +220,7 @@
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
         File "${SRC_EPRO}\*.*"
         File "${SOURCE_ROOT}\Icons\epmanos.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
@@ -216,6 +230,7 @@
     SectionEnd
     
     Section '-Mod Level Script' SecML
+        Delete "$INSTDIR\*.mdlvl"
         SetOutPath '$INSTDIR'
         SetDetailsPrint both
       
@@ -223,7 +238,17 @@
         SetOverwrite on
         SetDetailsPrint textonly
         File "${SRC_Mod_Level}\*.mdlvl"
+    SectionEnd
+
+    Section '-Attachments' SecAT
+        IfFileExists '${SRC_Mod_Level}\Attachments\*.*' DoAttachments
+        Goto SkipAttachments
+        :DoAttachments
+        SetOutPath '\\localhost\attachments'
+        SetOverwrite on
+        File "${SRC_Mod_Level}\Attachments\*.*"
         SetDetailsPrint both
+        :SkipAttachments
     SectionEnd
     
     Section -AdditionalIcons
@@ -275,18 +300,18 @@
     
     Section "un.Dependencies"
       ; MSVC needed for PowerBuilder
-      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcr71.dll"
-      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcp71.dll"
-      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\atl71.dll"
+      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcr80.dll"
+      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcp80.dll"
+      !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\atl80.dll"
        
       Delete "$INSTDIR\*.txt"
       Delete "$INSTDIR\*.dll"
       Delete "$INSTDIR\*.pbx"
       Delete "$INSTDIR\*.ocx"
-      Delete "$INSTDIR\pbodb110.ini"
-      Delete "$INSTDIR\tp13_ic.ini"
-      Delete "$INSTDIR\LICENSE"
+      Delete "$INSTDIR\*.ini"
+      Delete "$INSTDIR\Open Source License.rtf"
       Delete "$INSTDIR\*.flt"  
+      Delete "$INSTDIR\*.mdlvl"  
     SectionEnd
 
 ; ------------------------------------------
@@ -294,7 +319,7 @@
 
     ; Language strings
     LangString PAGE_SERVDB_TITLE ${LANG_ENGLISH} "EncounterPRO-OS Settings"
-    LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter/select the names \
+    LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter or confirm the names \
         of your EncounterPRO-OS Server and Database."
 
     ; Assign language strings to sections
@@ -314,17 +339,17 @@ Function .onInit
   ${EndIf}
   ;MessageBox MB_OK "$WinVer"
   
-  Call isNet35Installed
+  Call isNet40Installed
   Pop $R0
   ${If} $R0 != 'Yes'
-      MessageBox MB_YESNO|MB_ICONEXCLAMATION "This program requires the .NET Framework 3.5 Service Pack 1.  Do you wish to download the required framework now?" IDYES OpenBrowser35 IDNO GiveUpNow35
+      MessageBox MB_YESNO|MB_ICONEXCLAMATION "This program requires the .NET Framework 4 Service Pack 1.  Do you wish to download the required framework now?" IDYES OpenBrowser40 IDNO GiveUpNow40
       
-      OpenBrowser35:
-      ${OpenURL} "http://www.microsoft.com/downloads/details.aspx?FamilyId=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en"
-      Abort "Please restart setup after installing the .NET Framework 3.5 Service Pack 1."
+      OpenBrowser40:
+      ${OpenURL} "https://www.microsoft.com/net/download/windows"
+      Abort "Please restart setup after installing the .NET Framework 4."
       
-      GiveUpNow35:
-      Abort "Please install the .NET Framework 3.5 Service Pack 1 before running setup again."
+      GiveUpNow40:
+      Abort "Please install the .NET Framework 4 before running setup again."
   ${EndIf}
 
     Call SetInstallDir
