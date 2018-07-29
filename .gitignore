@@ -1,0 +1,36 @@
+Database_Schema/sql/debug/master.dacpac
+Database_Schema/obj
+Database_Schema/EncounterPRO-OS Database.dbmdl
+Database_Schema/.vs/
+Components/Base Classes/EncounterPRO.OS.Component/.vs/
+Components/Document/JMJDocument/.vs/
+Components/RRF2TabDel/.vs/
+Utilities/EncounterPRO.OS.Utilities/UpgradeLog.htm
+Utilities/EncounterPRO.OS.Utilities/.vs/
+Utilities/EncounterPRO.OS.Utilities/Backup/
+Utilities/EncounterPRO.OS.Utilities/EncounterPRO.OS.Utilities/obj
+Utilities/EncounterPRO.OS.Utilities/EncounterPRO.OS.Utilities/Utilities.csproj.user
+Client/base/*.pbl
+Client/shell/*.pbl
+Client/chart/*.pbl
+Client/extension/*.pbl
+Client/server/*.pbl
+Client/service/*.pbl
+Client/base/*.pbd
+Client/shell/*.pbd
+Client/chart/*.pbd
+Client/extension/*.pbd
+Client/server/*.pbd
+Client/service/*.pbd
+Client/base/*.bak
+Client/shell/*.bak
+Client/chart/*.bak
+Client/extension/*.bak
+Client/server/*.bak
+Client/service/*.bak
+*.usr.opt
+Client/*.pbl
+Client/*.pbd
+Client/*.pbx
+Client/*.exe
+Client/*.bak
