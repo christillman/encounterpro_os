@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[c_Maintenance_Assessment] (
 		[assessment_id]               [varchar](24) NOT NULL,
 		[assessment_current_flag]     [char](1) NULL,
 		[primary_flag]                [char](1) NULL,
-		[icd_9_code]                  [varchar](12) NULL
+		[icd10_code]                  [varchar](12) NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Assessment]

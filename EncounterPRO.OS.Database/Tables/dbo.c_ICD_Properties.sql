@@ -64,7 +64,7 @@ SET QUOTED_IDENTIFIER ON
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[c_ICD_Properties] (
-		[icd_9_code]                   [varchar](12) NOT NULL,
+		[icd10_code]                   [varchar](12) NOT NULL,
 		[icd_property_sequence]        [int] IDENTITY(1, 1) NOT NULL,
 		[icd_property_type]            [varchar](24) NOT NULL,
 		[icd_property_heading]         [varchar](80) NULL,

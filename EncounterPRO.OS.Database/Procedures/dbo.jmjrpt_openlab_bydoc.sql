@@ -83,7 +83,7 @@ SELECT
 	,convert(varchar(10),i.begin_date,101) AS For_Date 	
 	,i.treatment_description
 	,pa.assessment
-	,ca.icd_9_code 
+	,ca.icd10_code 
 FROM	 p_Treatment_Item i WITH (NOLOCK)
 INNER JOIN P_patient p WITH (NOLOCK) ON 
 	p.cpr_id = i.cpr_id

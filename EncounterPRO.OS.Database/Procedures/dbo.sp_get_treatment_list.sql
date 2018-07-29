@@ -72,7 +72,7 @@ CREATE PROCEDURE sp_get_treatment_list (
 AS
 
 DECLARE @ls_assessment_id varchar(24),
-		@ls_icd_9_code varchar(12),
+		@ls_icd10_code varchar(12),
 		@ls_authority_id varchar(24)
 
 
@@ -170,8 +170,8 @@ SET treatment_key = CONVERT(varchar(40), treatment_description)
 WHERE treatment_key_field = 'treatment_description'
 AND treatment_key IS NULL
 
--- Get the icd_9_code
-SELECT @ls_icd_9_code = icd_9_code
+-- Get the icd10_code
+SELECT @ls_icd10_code = icd10_code
 FROM c_Assessment_Definition
 WHERE assessment_id = @ls_assessment_id
 
@@ -191,7 +191,7 @@ FROM @treatments t1
 				FROM @treatments t
 					INNER JOIN c_Authority_Formulary af
 					ON t.treatment_type = af.treatment_type
-				WHERE @ls_icd_9_code LIKE (af.icd_9_code + '%')
+				WHERE @ls_icd10_code LIKE (af.icd10_code + '%')
 				AND af.authority_id = @ls_authority_id
 				GROUP BY t.treatment_type,
 						af.treatment_key) as x

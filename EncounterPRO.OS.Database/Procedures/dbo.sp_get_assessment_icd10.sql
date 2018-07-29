@@ -51,32 +51,55 @@ SET NOCOUNT ON
 SET XACT_ABORT ON
 GO
 
--- Drop Table [dbo].[c_ICD_Code]
-Print 'Drop Table [dbo].[c_ICD_Code]'
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_ICD_Code]') AND [type]='U'))
-DROP TABLE [dbo].[c_ICD_Code]
+-- Drop Procedure [dbo].[sp_get_assessment_icd10]
+Print 'Drop Procedure [dbo].[sp_get_assessment_icd10]'
 GO
--- Create Table [dbo].[c_ICD_Code]
-Print 'Create Table [dbo].[c_ICD_Code]'
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_get_assessment_icd10]') AND [type]='P'))
+DROP PROCEDURE [dbo].[sp_get_assessment_icd10]
+GO
+
+-- Create Procedure [dbo].[sp_get_assessment_icd10]
+Print 'Create Procedure [dbo].[sp_get_assessment_icd10]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER ON
-SET ANSI_PADDING ON
+SET QUOTED_IDENTIFIER OFF
 GO
-CREATE TABLE [dbo].[c_ICD_Code] (
-		[icd10_code]                              [varchar](12) NOT NULL,
-		[description]                             [varchar](80) NOT NULL,
-		[long_description]                        [text] NULL,
-		[must_code_child_flag]                    [char](1) NULL,
-		[nonspecific_code_flag]                   [char](1) NULL,
-		[unspecified_code_flag]                   [char](1) NULL,
-		[manifestation_code_flag]                 [char](1) NULL,
-		[primary_diagnosis_only_flag]             [char](1) NULL,
-		[secondary_diagnosis_only_flag]           [char](1) NULL,
-		[medicare_secondary_payer_alert_flag]     [char](1) NULL,
-		[revision_flag]                           [char](1) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+CREATE PROCEDURE sp_get_assessment_icd10 (
+	@ps_cpr_id varchar(12),
+	@ps_assessment_id varchar(24)
+	--, @ps_insurance_id varchar(24) OUTPUT,
+	--@ps_icd10_code varchar(12) OUTPUT
+	)
+AS
+DECLARE @li_authority_sequence smallint
+	, @ls_insurance_id varchar(24)
+	, @ls_icd10_code varchar(12)
+	, @ls_asst_description varchar(80)
+	
+SELECT @ls_insurance_id = NULL,
+	@ls_icd10_code = NULL
+-- Assume that minimal sequence number is primary insurance carrier
+SELECT @li_authority_sequence = min(authority_sequence)
+FROM p_Patient_Authority WITH (NOLOCK)
+WHERE cpr_id = @ps_cpr_id
+IF @li_authority_sequence IS NOT NULL
+	SELECT @ls_insurance_id = i.authority_id,
+		@ls_icd10_code = i.icd10_code
+	FROM c_Assessment_Coding i, p_Patient_Authority pi WITH (NOLOCK)
+	WHERE pi.cpr_id = @ps_cpr_id
+	AND pi.authority_sequence = @li_authority_sequence
+	AND i.assessment_id = @ps_assessment_id
+	AND pi.authority_id = i.authority_id
+IF @ls_insurance_id IS NULL
+	SELECT @ls_icd10_code = icd10_code,@ls_asst_description=description
+	FROM c_Assessment_Definition
+	WHERE assessment_id = @ps_assessment_id
+
+SELECT @ls_insurance_id AS insurance_id, @ls_icd10_code AS icd10_code,@ls_asst_description as asst_description
+
 GO
-ALTER TABLE [dbo].[c_ICD_Code] SET (LOCK_ESCALATION = TABLE)
+GRANT EXECUTE
+	ON [dbo].[sp_get_assessment_icd10]
+	TO [cprsystem]
 GO
 

@@ -88,7 +88,7 @@ DECLARE @ls_bill_flag char(1),
 	@ls_default_bill_flag char(1),
 	@ls_assessment_id varchar(24),
 	@li_diagnosis_sequence smallint,
-	@ls_icd_9_code varchar(12),
+	@ls_icd10_code varchar(12),
 	@ll_encounter_charge_id int,
 	@ls_assessment_type varchar(24),
 	@ll_record_added int
@@ -112,7 +112,7 @@ IF @pl_problem_id IS NULL
 	SET @ls_assessment_id = @ps_assessment_id
 	SET @li_diagnosis_sequence = NULL
 	
-	SELECT @ls_icd_9_code = a.icd_9_code,
+	SELECT @ls_icd10_code = a.icd10_code,
 			@ls_default_bill_flag = t.default_bill_flag,
 			@ls_assessment_type = a.assessment_type
 	FROM c_Assessment_Definition a
@@ -150,7 +150,7 @@ IF @pl_problem_id IS NULL
 ELSE
 	BEGIN
 	-- If we were passed in a problem_id, then look it up and get some info about it
-	SELECT @ls_icd_9_code = a.icd_9_code,
+	SELECT @ls_icd10_code = a.icd10_code,
 			@li_diagnosis_sequence = p.diagnosis_sequence,
 			@ls_assessment_id = p.assessment_id,
 			@ls_default_bill_flag = t.default_bill_flag,
@@ -169,8 +169,8 @@ ELSE
 	END
 
 
--- If there is no icd_9_code, then don't bill the assessment
-IF @ls_icd_9_code IS NULL
+-- If there is no icd10_code, then don't bill the assessment
+IF @ls_icd10_code IS NULL
 	SELECT @ps_bill_flag = 'N'
 
 -- Find out if there's a record already, and if so, what is the current bill_flag

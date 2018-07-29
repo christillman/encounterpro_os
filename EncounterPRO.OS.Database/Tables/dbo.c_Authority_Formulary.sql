@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[c_Authority_Formulary] (
 		[authority_formulary_id]           [int] IDENTITY(1, 1) NOT NULL,
 		[authority_id]                     [varchar](24) NOT NULL,
 		[authority_formulary_sequence]     [int] NOT NULL,
-		[icd_9_code]                       [varchar](12) NULL,
+		[icd10_code]                       [varchar](12) NULL,
 		[treatment_type]                   [varchar](24) NOT NULL,
 		[treatment_key]                    [varchar](40) NOT NULL,
 		[formulary_code]                   [varchar](24) NOT NULL

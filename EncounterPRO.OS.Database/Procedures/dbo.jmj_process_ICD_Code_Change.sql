@@ -65,14 +65,14 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE jmj_process_ICD_Code_Change
-	@ps_icd_9_code varchar(12),
+	@ps_icd10_code varchar(12),
 	@ps_description varchar(80),
 	@ps_from_description varchar(80) = NULL,
 	@ps_assessment_type varchar(24) = NULL,
 	@ps_assessment_category_id varchar(24) = NULL,
 	@ps_long_description text = NULL,
 	@ps_operation varchar(24),
-	@ps_from_icd_9_code varchar(12) = NULL
+	@ps_from_icd10_code varchar(12) = NULL
 AS
 
 --
@@ -98,9 +98,9 @@ AS
 -- 1) Update all existing assessments by adding the suffix " (deleted)"
 --
 
-IF @ps_icd_9_code IS NULL
+IF @ps_icd10_code IS NULL
 	BEGIN
-	RAISERROR ('icd_9_code cannot be NULL',16,-1)
+	RAISERROR ('icd10_code cannot be NULL',16,-1)
 	RETURN -1
 	END
 
@@ -132,7 +132,7 @@ IF @ps_operation IN ('New', 'Revise')
 	BEGIN
 	IF @ps_assessment_type IS NULL
 		BEGIN
-		IF LEFT(@ps_icd_9_code, 2) = 'V2'
+		IF LEFT(@ps_icd10_code, 2) = 'V2'
 			SET @ls_assessment_type = 'WELL'
 		ELSE
 			SET @ls_assessment_type = 'SICK'
@@ -145,13 +145,13 @@ IF @ps_operation IN ('New', 'Revise')
 		BEGIN
 		UPDATE c_Assessment_Definition
 		SET description = @ps_description
-		WHERE icd_9_code = COALESCE(@ps_from_icd_9_code, @ps_icd_9_code)
+		WHERE icd10_code = COALESCE(@ps_from_icd10_code, @ps_icd10_code)
 		AND description = @ps_from_description
 		END
 		
 	EXECUTE sp_new_assessment
 		@ps_assessment_type = @ls_assessment_type,
-		@ps_icd_9_code = @ps_icd_9_code,
+		@ps_icd10_code = @ps_icd10_code,
 		@ps_assessment_category_id = @ps_assessment_category_id,
 		@ps_description = @ps_description,
 		@ps_long_description = @ps_long_description,
@@ -165,7 +165,7 @@ IF @ps_operation IN ('New', 'Revise')
 		
 		IF @ll_count = 0
 			BEGIN
-			IF @ps_from_icd_9_code IS NOT NULL
+			IF @ps_from_icd10_code IS NOT NULL
 				BEGIN
 				INSERT INTO @assessments (
 					assessment_id,
@@ -174,7 +174,7 @@ IF @ps_operation IN ('New', 'Revise')
 				FROM u_Assessment_Treat_Definition u
 					INNER JOIN c_Assessment_Definition a
 					ON u.assessment_id = a.assessment_id
-				WHERE a.icd_9_code = @ps_from_icd_9_code
+				WHERE a.icd10_code = @ps_from_icd10_code
 				GROUP BY u.assessment_id
 				END
 			
@@ -187,11 +187,11 @@ IF @ps_operation IN ('New', 'Revise')
 				FROM u_Assessment_Treat_Definition u
 					INNER JOIN c_Assessment_Definition a
 					ON u.assessment_id = a.assessment_id
-				WHERE a.icd_9_code = @ps_icd_9_code
+				WHERE a.icd10_code = @ps_icd10_code
 				GROUP BY u.assessment_id
 				END
 			
-			IF (SELECT COUNT(*) FROM @assessments) = 0 AND LEN(@ps_icd_9_code) = 6 -- 5 digits plus the decimal point
+			IF (SELECT COUNT(*) FROM @assessments) = 0 AND LEN(@ps_icd10_code) = 6 -- 5 digits plus the decimal point
 				BEGIN
 				INSERT INTO @assessments (
 					assessment_id,
@@ -200,7 +200,7 @@ IF @ps_operation IN ('New', 'Revise')
 				FROM u_Assessment_Treat_Definition u
 					INNER JOIN c_Assessment_Definition a
 					ON u.assessment_id = a.assessment_id
-				WHERE a.icd_9_code = LEFT(@ps_icd_9_code, 5)
+				WHERE a.icd10_code = LEFT(@ps_icd10_code, 5)
 				GROUP BY u.assessment_id
 				END
 				
@@ -232,10 +232,10 @@ IF @ps_operation IN ('New', 'Revise')
 
 IF @ps_operation IN ('CodeChange')
 	BEGIN
-	IF @ps_from_icd_9_code IS NOT NULL AND @ps_icd_9_code IS NOT NULL
+	IF @ps_from_icd10_code IS NOT NULL AND @ps_icd10_code IS NOT NULL
 		UPDATE c_Assessment_Definition
-		SET icd_9_code = @ps_icd_9_code
-		WHERE icd_9_code = @ps_from_icd_9_code
+		SET icd10_code = @ps_icd10_code
+		WHERE icd10_code = @ps_from_icd10_code
 		AND (description = @ps_description OR definition = @ps_description)
 	END
 
@@ -243,7 +243,7 @@ IF @ps_operation IN ('Delete')
 	BEGIN
 	UPDATE c_Assessment_Definition
 	SET description = LEFT(description, 80 - LEN(@ls_deleted_suffix)) + @ls_deleted_suffix
-	WHERE icd_9_code = @ps_icd_9_code
+	WHERE icd10_code = @ps_icd10_code
 	AND (description = @ps_description OR definition = @ps_description)
 	AND RIGHT(description, LEN(@ls_deleted_suffix)) <> @ls_deleted_suffix
 
@@ -253,7 +253,7 @@ IF @ps_operation IN ('Replaced')
 	BEGIN
 	UPDATE c_Assessment_Definition
 	SET description = LEFT(description, 80 - LEN(@ls_replaced_suffix)) + @ls_replaced_suffix
-	WHERE icd_9_code = @ps_icd_9_code
+	WHERE icd10_code = @ps_icd10_code
 	AND RIGHT(description, LEN(@ls_replaced_suffix)) <> @ls_replaced_suffix
 
 	END

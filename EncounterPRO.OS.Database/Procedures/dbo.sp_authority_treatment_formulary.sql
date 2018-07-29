@@ -80,11 +80,11 @@ WHERE cpr_id = @ps_cpr_id
 AND treatment_id = @pl_treatment_id
 
 DECLARE @assessments TABLE (
-	icd_9_code varchar(12) )
+	icd10_code varchar(12) )
 
 INSERT INTO @assessments (
-	icd_9_code )
-SELECT DISTINCT ad.icd_9_code
+	icd10_code )
+SELECT DISTINCT ad.icd10_code
 FROM p_Assessment a
 	INNER JOIN p_Assessment_Treatment t
 	ON a.cpr_id = t.cpr_id
@@ -100,7 +100,7 @@ SELECT DISTINCT
 	pa.authority_sequence,
 	af.authority_formulary_id,
 	af.authority_formulary_sequence,
-	af.icd_9_code,
+	af.icd10_code,
 	f.formulary_code, 
 	f.formulary_type, 
 	f.title, 
@@ -117,11 +117,11 @@ FROM p_Patient_Authority pa
 WHERE pa.cpr_id = @ps_cpr_id
 AND af.treatment_type = @ls_treatment_type
 AND af.treatment_key = @ls_treatment_key
-AND (af.icd_9_code IS NULL
+AND (af.icd10_code IS NULL
 	OR EXISTS(
-			SELECT aa.icd_9_code
+			SELECT aa.icd10_code
 			FROM @assessments aa
-			WHERE aa.icd_9_code LIKE (af.icd_9_code + '%') ) )
+			WHERE aa.icd10_code LIKE (af.icd10_code + '%') ) )
 
 GO
 GRANT EXECUTE

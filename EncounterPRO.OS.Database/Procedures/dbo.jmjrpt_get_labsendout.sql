@@ -81,8 +81,8 @@ Declare @encounterid Integer
 Select @cprid = @ps_cpr_id
 Select @encounterid = @pi_encounter_id
 
-CREATE TABLE #jmc_flow1 (treat_type varchar(24),treat_descrip varchar(80), assess varchar(80) NULL, icd9 varchar(12) NULL) ON [PRIMARY]
-Declare @icd9 varchar(12), @assessment varchar(80)
+CREATE TABLE #jmc_flow1 (treat_type varchar(24),treat_descrip varchar(80), assess varchar(80) NULL, icd10 varchar(12) NULL) ON [PRIMARY]
+Declare @icd10 varchar(12), @assessment varchar(80)
 Declare @assessment_id varchar(24)
 Declare @treatment_type varchar(24),@treatment_description varchar(80) 
 Declare @treatment_id Integer
@@ -131,9 +131,9 @@ If @mycount > 0
                     INNER JOIN p_assessment_treatment ON p_assessment.problem_id = p_assessment_treatment.problem_id AND (p_assessment.cpr_id = @cprid) AND (p_assessment_treatment.cpr_id = @cprid) AND (p_assessment_treatment.treatment_id = @treatment_id) 
                     ORDER BY p_assessment.begin_date desc, p_assessment.diagnosis_sequence)
   Select @assessment = (Select description from c_assessment_definition where assessment_id = @assessment_id)   
-  Select @icd9 = (Select icd_9_code from c_assessment_definition where assessment_id = @assessment_id)  
+  Select @icd10 = (Select icd10_code from c_assessment_definition where assessment_id = @assessment_id)  
   Insert into #jmc_flow1
-  VALUES(@treatment_type,@treatment_description,@assessment,@icd9) 
+  VALUES(@treatment_type,@treatment_description,@assessment,@icd10) 
   Select @mycount = @mycount - 1
  END
  CLOSE jmc_curse1
@@ -153,9 +153,9 @@ Else
                     OR p_assessment.assessment_status is NULL
 		    ORDER BY p_assessment.diagnosis_sequence)
   Select @assessment = (Select description from c_assessment_definition where assessment_id = @assessment_id)   
-  Select @icd9 = (Select icd_9_code from c_assessment_definition where assessment_id = @assessment_id)  
+  Select @icd10 = (Select icd10_code from c_assessment_definition where assessment_id = @assessment_id)  
   Insert into #jmc_flow1
-  VALUES(@treatment_type,@treatment_description,@assessment,@icd9)
+  VALUES(@treatment_type,@treatment_description,@assessment,@icd10)
   Select @mycount = @mycount - 1
  END
  CLOSE jmc_curse2 
@@ -195,9 +195,9 @@ If @mycount > 0
                     INNER JOIN p_assessment_treatment ON p_assessment.problem_id = p_assessment_treatment.problem_id AND (p_assessment.cpr_id = @cprid) AND (p_assessment_treatment.cpr_id = @cprid) AND (p_assessment_treatment.treatment_id = @treatment_id) 
                     ORDER BY p_assessment.begin_date desc, p_assessment.diagnosis_sequence)
   Select @assessment = (Select description from c_assessment_definition where assessment_id = @assessment_id)   
-  Select @icd9 = (Select icd_9_code from c_assessment_definition where assessment_id = @assessment_id)  
+  Select @icd10 = (Select icd10_code from c_assessment_definition where assessment_id = @assessment_id)  
   Insert into #jmc_flow1
-  VALUES(@treatment_type,@treatment_description,@assessment,@icd9) 
+  VALUES(@treatment_type,@treatment_description,@assessment,@icd10) 
   Select @mycount = @mycount - 1
  END
  CLOSE jmc_curse3
@@ -206,7 +206,7 @@ If @mycount > 0
 SELECT distinct treat_type AS 'Type'
       ,treat_descrip AS 'Treatment requested'
       ,assess AS 'Assessment'
-      ,icd9 AS 'ICD9'
+      ,icd10 AS 'icd10'
 FROM #jmc_flow1
 
 DEALLOCATE jmc_curse1

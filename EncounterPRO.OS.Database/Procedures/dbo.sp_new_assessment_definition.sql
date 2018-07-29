@@ -67,7 +67,7 @@ GO
 CREATE PROCEDURE sp_new_assessment_definition (
 	--@ps_assessment_id varchar(24) OUTPUT,
 	@ps_assessment_type varchar(24),
-	@ps_icd_9_code varchar(12),
+	@ps_icd10_code varchar(12),
 	@ps_assessment_category_id varchar(24),
 	@ps_description varchar(80),
 	@ps_location_domain varchar(12) = NULL,
@@ -84,7 +84,7 @@ DECLARE @ll_key_value integer
 
 EXECUTE sp_new_assessment
 	@ps_assessment_type = @ps_assessment_type,
-	@ps_icd_9_code = @ps_icd_9_code,
+	@ps_icd10_code = @ps_icd10_code,
 	@ps_assessment_category_id = @ps_assessment_category_id,
 	@ps_description = @ps_description,
 	@ps_location_domain = @ps_location_domain,

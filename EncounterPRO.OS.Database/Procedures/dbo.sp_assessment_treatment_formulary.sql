@@ -69,10 +69,10 @@ CREATE PROCEDURE sp_assessment_treatment_formulary (
 	@ps_assessment_id varchar(24) )
 AS
 
-DECLARE @ls_icd_9_code varchar(12),
+DECLARE @ls_icd10_code varchar(12),
 	@ls_authority_id varchar(24)
 
-SELECT @ls_icd_9_code = icd_9_code
+SELECT @ls_icd10_code = icd10_code
 FROM c_Assessment_Definition
 WHERE assessment_id = @ps_assessment_id
 
@@ -95,7 +95,7 @@ FROM c_Authority_Formulary af,
 	c_Formulary f
 WHERE af.formulary_code = f.formulary_code
 AND af.authority_id = @ls_authority_id
-AND @ls_icd_9_code LIKE (af.icd_9_code + '%')
+AND @ls_icd10_code LIKE (af.icd10_code + '%')
 
 GO
 GRANT EXECUTE

@@ -81,6 +81,7 @@ Declare @icd_9_code varchar(12)
 Select @begin_date= @ps_begin_date
 Select @end_date= @ps_end_date
 
+RAISERROR ('jmjrpt_comm_disease has not been converted to ICD10', 16, -1)
 Declare my_cursor Cursor Local FAST_FORWARD For
 Select  ca.icd_9_code,
 	ca.description,

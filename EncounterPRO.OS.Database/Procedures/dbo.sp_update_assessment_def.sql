@@ -66,7 +66,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE sp_update_assessment_def (
 	@ps_assessment_id varchar(24),
-	@ps_icd_9_code varchar(12),
+	@ps_icd10_code varchar(12),
 	@ps_assessment_category_id varchar(24),
 	@ps_description varchar(80),
 	@ps_location_domain varchar(12),
@@ -79,7 +79,7 @@ CREATE PROCEDURE sp_update_assessment_def (
 AS
 
 UPDATE c_Assessment_Definition
-SET	icd_9_code = @ps_icd_9_code,
+SET	icd10_code = @ps_icd10_code,
 	description = @ps_description,
 	assessment_category_id = @ps_assessment_category_id,
 	location_domain = @ps_location_domain,

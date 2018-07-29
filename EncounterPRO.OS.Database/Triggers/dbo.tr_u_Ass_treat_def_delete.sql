@@ -102,7 +102,7 @@ WHILE @@FETCH_STATUS = 0
 					FROM deleted 
 					WHERE definition_id = @ll_definition_id )
 
-	SELECT @ls_message = CAST(ISNULL(icd_9_code, '') + ' : ' + a.description + ' - ' + d.treatment_description AS varchar(255))
+	SELECT @ls_message = CAST(ISNULL(icd10_code, '') + ' : ' + a.description + ' - ' + d.treatment_description AS varchar(255))
 	FROM deleted d
 		INNER JOIN c_Assessment_Definition a
 		ON d.assessment_id = a.assessment_id

@@ -64,7 +64,7 @@ SET QUOTED_IDENTIFIER ON
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[c_ICD_Updates] (
-		[icd_9_code]                 [varchar](50) NOT NULL,
+		[icd10_code]                 [varchar](50) NOT NULL,
 		[icd_sequence]               [int] IDENTITY(600, 1) NOT NULL,
 		[operation]                  [varchar](50) NOT NULL,
 		[new_description]            [varchar](80) NULL,
@@ -83,7 +83,7 @@ ALTER TABLE [dbo].[c_ICD_Updates]
 	CONSTRAINT [PK_c_ICD_Updates_128]
 	PRIMARY KEY
 	CLUSTERED
-	([icd_9_code], [icd_sequence])
+	([icd10_code], [icd_sequence])
 	WITH FILLFACTOR=90
 	ON [PRIMARY]
 GO

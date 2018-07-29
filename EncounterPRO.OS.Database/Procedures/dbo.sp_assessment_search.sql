@@ -96,7 +96,7 @@ IF @ps_specialty_id IS NULL
 		a.assessment_category_id,
 		a.description,
 		a.auto_close,
-		a.icd_9_code,
+		a.icd10_code,
 		a.status,
 		a.auto_close_interval_amount,
 		a.auto_close_interval_unit,
@@ -109,14 +109,14 @@ IF @ps_specialty_id IS NULL
 	AND a.status like @ps_status
 	AND a.description like @ps_description
 	AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-	AND (a.icd_9_code like @ps_icd_code OR a.icd_9_code is null)
+	AND (a.icd10_code like @ps_icd_code OR a.icd10_code is null)
 ELSE
 	SELECT a.assessment_id,
 		a.assessment_type,
 		a.assessment_category_id,
 		a.description,
 		a.auto_close,
-		a.icd_9_code,
+		a.icd10_code,
 		a.status,
 		a.auto_close_interval_amount,
 		a.auto_close_interval_unit,
@@ -132,7 +132,7 @@ ELSE
 	AND a.status like @ps_status
 	AND a.description like @ps_description
 	AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-	AND (a.icd_9_code like @ps_icd_code OR a.icd_9_code is null)
+	AND (a.icd10_code like @ps_icd_code OR a.icd10_code is null)
 
 GO
 GRANT EXECUTE

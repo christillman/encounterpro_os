@@ -76,7 +76,7 @@ AS
 
 
 SELECT ac.problem_id as problemid,
-      COALESCE(ea.icd_9_code,a.icd_9_code) as icd9code
+      COALESCE(ea.icd10_code,a.icd10_code) as icd10code
 FROM p_Encounter_Assessment_Charge ac
     INNER JOIN p_Encounter_Assessment ea
   	ON ac.cpr_id = ea.cpr_id

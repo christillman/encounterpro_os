@@ -66,7 +66,7 @@ GO
 CREATE TABLE [dbo].[c_Assessment_Coding] (
 		[assessment_id]     [varchar](24) NOT NULL,
 		[authority_id]      [varchar](24) NOT NULL,
-		[icd_9_code]        [varchar](12) NULL
+		[icd10_code]        [varchar](12) NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Assessment_Coding]

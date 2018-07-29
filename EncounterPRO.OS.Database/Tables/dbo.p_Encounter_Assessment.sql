@@ -74,7 +74,7 @@ CREATE TABLE [dbo].[p_Encounter_Assessment] (
 		[created]                   [datetime] NULL,
 		[created_by]                [varchar](24) NULL,
 		[id]                        [uniqueidentifier] NOT NULL,
-		[icd_9_code]                [varchar](12) NULL,
+		[icd10_code]                [varchar](12) NULL,
 		[posted]                    [char](1) NOT NULL,
 		[exclusive_link]            [char](1) NOT NULL
 ) ON [PRIMARY]
