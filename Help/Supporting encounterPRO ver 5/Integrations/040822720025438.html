@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configuring the Lab Integration Workplan" />
+    <meta name="TITLE" content="How to: Configuring the Lab Integration Workplan" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for configuring the workplan needed for a lab integration." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10641 Preparation and configuration for a lab interface Integration Workplan" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configuring the Lab Integration Workplan</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Integrations</div>
+<hr />
+<h2>How to: Configuring the Lab Integration Workplan</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Configuring the workplan for the lab integration requires three main steps. First, set up the default workplan for the Lab treatment type. Next, default the Collect Specimen Menu. FInally, assigning who receives the ToDo to Review the Lab Results.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<STRONG><img src="images/content_note.gif" width="18" border="0"></STRONG><FONT color=#009900><I>NOTE: As of 4/9/2008, practice must be on min v4.34.7 w/EP Server 6.1.9 or v5.25 w/EP Server 7.0.10 for any kind of interface.</I></FONT> </p>
+ 
+  <p> 
+<STRONG>Set up the default workplan for the Lab treatment type</STRONG> <br /> 
+In EncounterPRO, set default treatment workplan (the script should add the workplan, the trainer must assign as the default). </p>
+ 
+  <p> 
+1) While logged into practice's Epro icon go to 'Configuration' and select 'Treatment Type' <br /> 
+2) Click 'Lab', select 'Edit treatment', and click on the default workplan. <br /> 
+3) Do a search under description for 'Integration', in 'specialty' choose the workplan for 'Lab, Ongoing Clinical Staff Collect or Send/Refer Out (Integration). <br /> 
+4) Click 'OK' and finished. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: If this workplan does not appear, the practice may be on the wrong config level. Notify Support.</I></FONT> </p>
+ 
+  <p> 
+<STRONG>Default the Collect Specimen Menu </STRONG> <br /> 
+If the practice wishes to have the 'Patient Referred To:' or 'Specimen Sent To:' boxes in 'Collect Specimen Menu' default to a particular lab, <A href="http://www.jmjtech.com/kb/Article.aspx?ArticleNumber=10640">see kb article #10640 Default the name of a lab company to appear automatically in the 'Collect or Refer Menu'</A>. </p>
+ 
+  <p> 
+<STRONG>Assigning who receives the ToDo to Review the Lab Results</STRONG> <br /> 
+Once a lab has posted to a patients chart a TODO item will be sent to the user or role assigned in the workplan. You need to assign a user or role the practice chooses, to the last step in the workplan you created above. Ask the practice who they prefer to receive 'review lab' TODO item when a lab is posted. A few common choices are as follows: </p>
+ 
+  <p> 
+1) Practice prefers the doctor who ordered the lab to receive the TODO then assign the role of primary provider. <br /> 
+2) Practice wishes the encounter owner to receive the TODO then select the role of encounter owner. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: This could change frequently if any other kind of encounter is added after the lab is ordered. ie telephone encounter. To avoid this you can assign the role of workplan owner which will send the TODO to who created initial encounter.</I></FONT> <br /> 
+3) A popular option, especially for a big practice, is to have you create a new role titled 'Lab Nurse' (or something similar). Remember to assign at least one appropriate user to the new role then that user can assign anyone else they choose. To create a role <A href="http://www.jmjtech.com/kb/Article.aspx?ArticleNumber=10119">see kb article #10119 'Adding Users'</A>. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Not exactly accurate for adding 'roles' but best kb article I could find and works very similar.</I></FONT> </p>
+ 
+  <p> 
+To assign the user or role follow the below steps: </p>
+ 
+  <p> 
+1) Click 'Configure' from the 'Office View'. <br /> 
+2) Select 'Workplans'. <br /> 
+3) Change the 'WorkplanType' to 'Treatment'. <br /> 
+4) Select the search option for 'Description' and type 'lab'.  <br /> 
+5) Select the 'Specialty' button to display all matching workplans.  <br /> 
+6) Select the workplan, 'Lab, ongoing clinical staff collect or send/refer out (Integration)'. <br /> 
+7) Select 'Display/edit' from the menu options. <br /> 
+8) Select 'Create local copy'. <br /> 
+9) Edit the workplan. <br /> 
+10) Select the 'Review lab step'. <br /> 
+11) Select 'Edit step'. <br /> 
+12) Select the bar for encounter owner. <br /> 
+13) Select the 'Ordered for' button. <br /> 
+14) Select  the user or role the client would prefer to receive the 'Review Lab' task. </p>
+ 
+  <p> 
+Article created on 5/23/2007 by adam.zangara </p>
+ 
+  <p> 
+Article last updated on 4/9/2008 by Adam.Zangara</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822720025438</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

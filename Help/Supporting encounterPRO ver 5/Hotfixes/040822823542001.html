@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Error: Importing Large Files" />
+    <meta name="TITLE" content="Error: Importing Large Files" />
+    <meta name="DESCRIPTION" content="This solution gives details for changing configuration parameters to accommodate importing files larger than 2 megabytes." />
+    <meta name="PROBLEM_TYPE" content="Error Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10073 File Import Configuration Options Files Error Large Files" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Error: Importing Large Files</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Hotfixes</div>
+<hr />
+<h2>Error: Importing Large Files</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Error Message:
+</td>
+<td class="sectionContent">
+u-component-observation-jmj-file - (get-attachments()) File too large  -- or --  u-component-observation-jmj-file - (get-attachments()) address is required in server mode
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+The JMJ File Import external source component has several configuration options which control its behavior.  If the configuration parameters are not appropriate to the situation, an error might occur.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+These configuration parameters can be set globally in 'c_External_Source_Attribute', or office-by-office and computer-by-computer n 'o_External_Source_Attribute'. create a schedule record with your preferred interval and assign to #JMJ user.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+These configuration parameters can be set globally in 'c_External_Source_Attribute', or office-by-office and computer-by-computer in 'o_External_Source_Attribute'. </p>
+ 
+  <p> 
+The available configuration options setable in 'c_External_Source_Attribute' or 'o_External_Source_Attribute' (where external_source = JMJ_FILE) are: </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>attribute</FONT></TD> <TD><FONT face=sans-serif size=2>usage</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>max_files</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the maximum number of files to import in a single pass. Defaults to 100.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>max_file_size</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the maximum size of a file to import in bytes. Default to 2,000,000.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>move_to_success</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the default directory for where to move the imported file if it is imported successfully. Defaults to Null which means don't move file.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>move_to_error</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the default directory for where to move the imported file if an error occurs during file import. Defaults to Null which means don't move file.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>delete_file</FONT></TD> <TD><FONT face=sans-serif size=2>Set to 'Yes' to delete the file after it is successfully imported. Defaults to 'No'.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>comment_title</FONT></TD> <TD><FONT face=sans-serif size=2>Sets a standard title for imported file. If not set, user may be prompted to supply a title.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>xml_results</FONT></TD> <TD><FONT face=sans-serif size=2>Set to 'Yes' to interpret XML file as data instead of as an attachment. This is only useful in the context of importing treatment results with a treatment context present. Defaults to 'No'.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>address</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the file path to import files from. If not set in CLIENT mode then EncounterPRO will return without an error. If set to 'pick', EncounterPRO will prompt user for files to import. Must be set in server mode or error will result. If wildcard characters are included in file specification, EncounterPRO will attempt to import all matching files.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>move_to_pending</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the default directory for where to move the file while it is being imported. Defaults to Null which means don't move file.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>attachment_file_filter</FONT></TD> <TD><FONT face=sans-serif size=2>Sets the file filter for the standard windows file-open dialog box. Defaults to 'All Files (*.*), *.*'</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>command_line</FONT></TD> <TD><FONT face=sans-serif size=2>Specifies command to run prior to importing any files. If set, EncounterPRO will run the specified command line and wait for the spawned process (if any) to terminate. This is useful to run an external program which may or may not leave a file when it terminates.</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+Following are the sample table entries for 'o_service_schedule' and 'o_service_schedule_attribute' <br /> 
+  <br /> 
+O_service_schedule: create a schedule record with your preferred interval and assign to #JMJ user. The following table entry monitor a folder (see the attribute table for path) every 10 minutes and imports the files and push them to Sample table entries: </p>
+ 
+  <p> 
+dbo_o_Service_Schedule <br /> 
+ <br /> 
+ </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>user_id</FONT></TD> <TD><FONT face=sans-serif size=2>service_sequence</FONT></TD> <TD><FONT face=sans-serif size=2>office_id</FONT></TD> <TD><FONT face=sans-serif size=2>service</FONT></TD> <TD><FONT face=sans-serif size=2>schedule_type</FONT></TD> <TD><FONT face=sans-serif size=2>schedule_interval</FONT></TD> <TD><FONT face=sans-serif size=2>last_service_date</FONT></TD> <TD><FONT face=sans-serif size=2>last_service_status</FONT></TD> <TD><FONT face=sans-serif size=2>created</FONT></TD> <TD><FONT face=sans-serif size=2>created_by</FONT></TD> <TD><FONT face=sans-serif size=2>status</FONT></TD> <TD><FONT face=sans-serif size=2>id</FONT></TD> <TD><FONT face=sans-serif size=2>last_successful_date</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2> </FONT></TD> <TD><FONT face=sans-serif size=2>EXTERNAL_SOURCE</FONT></TD> <TD><FONT face=sans-serif size=2>Interval</FONT></TD> <TD><FONT face=sans-serif size=2>50 Minutes</FONT></TD> <TD><FONT face=sans-serif size=2>4/12/2006 9:03:32 AM</FONT></TD> <TD><FONT face=sans-serif size=2>COMPLETED</FONT></TD> <TD><FONT face=sans-serif size=2>11/10/2005 4:07:24 PM</FONT></TD> <TD><FONT face=sans-serif size=2>OK</FONT></TD> <TD><FONT face=sans-serif size=2>#SYSTEM</FONT></TD> <TD><FONT face=sans-serif size=2>{C9BAB22E-C289-40B7-9123-D3A9F08A8BFE}</FONT></TD> <TD><FONT face=sans-serif size=2>4/12/2006 9:03:32 AM</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+dbo_o_Service_Schedule_Attribute </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>user_id</FONT></TD> <TD><FONT face=sans-serif size=2>service_sequence</FONT></TD> <TD><FONT face=sans-serif size=2>service_attribute_sequence</FONT></TD> <TD><FONT face=sans-serif size=2>attribute</FONT></TD> <TD><FONT face=sans-serif size=2>value</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2>15</FONT></TD> <TD><FONT face=sans-serif size=2>external_source</FONT></TD> <TD><FONT face=sans-serif size=2>JMJ_FILE</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2>16</FONT></TD> <TD><FONT face=sans-serif size=2>xml_action</FONT></TD> <TD><FONT face=sans-serif size=2>process or attach</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2>17</FONT></TD> <TD><FONT face=sans-serif size=2>address</FONT></TD> <TD><FONT face=sans-serif size=2>\\folder\*.txt</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2>21</FONT></TD> <TD><FONT face=sans-serif size=2>move_to_success</FONT></TD> <TD><FONT face=sans-serif size=2>\\folder\success</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>#JMJ</FONT></TD> <TD><FONT face=sans-serif size=2>7</FONT></TD> <TD><FONT face=sans-serif size=2>22</FONT></TD> <TD><FONT face=sans-serif size=2>move_to_error</FONT></TD> <TD><FONT face=sans-serif size=2>\\folder\error</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+Article created on 12/8/2004 by Mark.Copenhaver </p>
+ 
+  <p> 
+Article last updated on 4/20/2006 by sumathi.asok</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822823542001</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:45:41 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

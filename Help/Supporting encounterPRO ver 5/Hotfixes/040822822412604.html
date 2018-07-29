@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Change the attachments to display/edit/print behavior" />
+    <meta name="TITLE" content="How to: Change the attachments to display/edit/print behavior" />
+    <meta name="DESCRIPTION" content="This solution give information on changing the behavior of an attachment in encounterPRO." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10266 How to change the attachments to display edit print behavior" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Change the attachments to display/edit/print behavior</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Hotfixes</div>
+<hr />
+<h2>How to: Change the attachments to display/edit/print behavior</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Display a reduced size image of the attachment on an EncounterPRO screen. Display, Edit, and Print the attachment. Determine ATCH_GENERIC behavior.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+1) Display a reduced size image of the attachment on an 'EncounterPRO' screen. <br /> 
+  a) On some screens such as the 'Patient Demographics' screen or the 'Attachments To Be Posted' screen EncounterPRO will attempt to display a reduced size image of the attachment directly on an 'EncounterPRO' screen <br /> 
+  b) To decide how to do this, EncounterPRO will look at the 'display_control' column in the appropriate record of 'c_Attachment_Extension'. <br /> 
+  c) The possible values of 'display_control' and their meanings are as follows: </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>Display_control</FONT></TD> <TD><FONT face=sans-serif size=2>Meaning</FONT></TD> <TD><FONT face=sans-serif size=2>When to use</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>Picture</FONT></TD> <TD><FONT face=sans-serif size=2>EncounterPRO will attempt to display the attachment in a native image display control.</FONT></TD> <TD><FONT face=sans-serif size=2>This control should work for the following image formats: bmp, rle, wmf, gif, jpg, tif.  In the case of tif, EncounterPRO displays a bitmap translation instead of the actual attachment itself.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ActiveX</FONT></TD> <TD><FONT face=sans-serif size=2>EncounterPRO will attempt to display the attachment in a generic ActiveX control.</FONT></TD> <TD><FONT face=sans-serif size=2>This control is appropriate for file types which are not actually images but for which an ActiveX control exists to render the file into a document or onto a screen.</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>Browser</FONT></TD> <TD><FONT face=sans-serif size=2>EncounterPRO will attempt to display the attachment in a Microsoft Internet Explorer Browser control.</FONT></TD> <TD><FONT face=sans-serif size=2>This control is appropriate for file types which can be displayed in a web browser.</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+  d) If the 'display_control' column is left blank, then EncounterPRO will not attempt to render the attachment onto any EncounterPRO screen, but rather leave it up to the OS of that computer to decide. <br /> 
+2) Displaying, Editing, and Printing an attachment. <br /> 
+  a) For the other three operations, displaying, editing and printing an attachment, EncounterPRO will use the 'component_id' field to determine which specific attachment component class to use. </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>Component_id</FONT></TD> <TD><FONT face=sans-serif size=2>Use For</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_AUDIO</FONT></TD> <TD><FONT face=sans-serif size=2>Wave Files</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_BROWSER</FONT></TD> <TD><FONT face=sans-serif size=2>Browser viewable attachment</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_CIC_SIGNATURE</FONT></TD> <TD><FONT face=sans-serif size=2>CIC Signature Attachment</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_EASYINK_SIGNATURE</FONT></TD> <TD><FONT face=sans-serif size=2>EasyInk Signature Attachment</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_ECG_BRENTWOOD</FONT></TD> <TD><FONT face=sans-serif size=2>Brentwood ECG File</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_ECG_WLCA</FONT></TD> <TD><FONT face=sans-serif size=2>Welch Allyn ECG File</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_GENERIC</FONT></TD> <TD><FONT face=sans-serif size=2>Generic Windows File</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_PENOP_SIGNATURE</FONT></TD> <TD><FONT face=sans-serif size=2>Penop Signature Attachment</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_COM</FONT></TD> <TD><FONT face=sans-serif size=2>Image Attachments</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_XML</FONT></TD> <TD><FONT face=sans-serif size=2>XML Document</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_RRR_BRENTWOOD</FONT></TD> <TD><FONT face=sans-serif size=2>Brentwood RR Variability Report</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+  b) For most image file types, the 'component_id' should be 'ATCH_COM'. This attachment component uses a display/edit screen developed by JMJ. <br /> 
+  c) For most non-image file types, the 'component_id' should be 'ATCH_GENERIC'. This attachment component simply turns over the tasks of displaying, editing and printing files to the Windows operating system. <br /> 
+  d) All of the other attachment component classes are specific to a particular type of file. These are required for files where there is not a standard Windows application for handling the file, such as a 'Welch Allyn ECG' File, or for files where an EncounterPRO class offers some improvement over the standard Windows handler, such as Wave Files. <br /> 
+  e) There are two obsolete 'component_id' values which should be changed to 'ATCH_GENERIC'. They are 'ATCH_ACTIVEX' and 'ATCH_IMAGE'. <br /> 
+3) ATCH_GENERIC Behavior <br /> 
+  a) The 'ATCH_GENERIC' class uses the 'open_command', 'edit_command', and 'print_command' columns in 'c_Attachment_Extension' to determine how to handle the open, edit and print tasks. <br /> 
+  b) If the column is empty, then EncounterPRO will use the Windows Shell verb Open, Edit, or Print as appropriate to handle the task. <br /> 
+  c) If the column contains the value 'jmj_image', then EncounterPRO will use it's own internal 'Image Display' screen to handle the task. As of this writing, the jmj_image component only supports the Display task so it should only be used in the 'open_command' column. <br /> 
+  d) If the 'open_command', 'edit_command', or 'print_command' column contains any value other than blank or 'jmj_image' then the value will be interpreted as a Windows DOS command. <br /> 
+  e) Before submitting the command to Windows, EncounterPRO will scan the string for the characters %file% (including the percent signs) and substitute for them the full file path of the attachment to be opened (or edited or printed as appropriate). </p>
+ 
+  <p> 
+Affected Products: <br /> 
+Product <br /> 
+Version <br /> 
+EncounterPRO <br /> 
+All Versions </p>
+ 
+  <p> 
+Article created on 5/6/2005 by jmj\sumathi.asok </p>
+ 
+  <p> 
+Article last updated on 8/31/2005 by jmj\Mark.Copenhaver</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822822412604</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

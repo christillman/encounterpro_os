@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Cannot Get the e-RX Registration Button to Appear on the User Definition Screen" />
+    <meta name="TITLE" content="Problem: Cannot Get the e-RX Registration Button to Appear on the User Definition Screen" />
+    <meta name="DESCRIPTION" content="How to get the e-RX Registration button to appear." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Self-registration SureScripts Registration Button User Definition CMA Subscriptions" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Cannot Get the e-RX Registration Button to Appear on the User Definition Screen</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Integrations &gt; Subscriptions</div>
+<hr />
+<h2>Problem: Cannot Get the e-RX Registration Button to Appear on the User Definition Screen</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+<SPAN style="FONT-SIZE: 11pt; FONT-FAMILY: 'Calibri','sans-serif'; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: 'Times New Roman'; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">The CMA may have an old cancelled subscription for SureScripts&nbsp;for the customer.&nbsp; This will&nbsp;prevent the addition of a new subscription.&nbsp; </SPAN>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt"><FONT face=Consolas>Delete the old SureScripts subscription and go through the CMA subscription wizard again.&nbsp; The key thing to look for is that the subscription appears in the list and that the "Available" column says "Yes". <br /> 
+</FONT> </p>
+ 
+ 
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt"> <img src="images/090090312145839.jpg" alt="Screen: &quot;CMA Subscriptions&quot;" /> </p>
+ 
+ 
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt">&nbsp; </p>
+ 
+ 
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt"><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p><FONT face=Consolas><STRONG>Update the Database</STRONG></FONT></o:p> </p>
+ 
+ 
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt"><FONT face=Consolas>The subscription info travels to the customer database via the daily sync, which is normally part of sp_Maintenance_Frequent.&nbsp; You can either run sp_maintenance_frequent or jmjsys_daily_sync in a query window to download the subscription info.&nbsp;&nbsp;The button should then appear on the User Definition screen.</FONT><o:p><FONT face=Consolas>&nbsp;</FONT></o:p> </p>
+ 
+ 
+<P class=MsoPlainText style="MARGIN: 0in 0in 0pt">&nbsp; </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040907115005919</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 03/12/2009 03:00:58 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

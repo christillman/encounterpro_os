@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure a Composite Observation to Auto Advance When Entering Results" />
+    <meta name="TITLE" content="How to: Configure a Composite Observation to Auto Advance When Entering Results" />
+    <meta name="DESCRIPTION" content="Instructions for configuring a drilldown to auto advance." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Modify Change Edit Observation History Drilldown Configure" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure a Composite Observation to Auto Advance When Entering Results</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Observations</div>
+<hr />
+<h2>How to: Configure a Composite Observation to Auto Advance When Entering Results</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>When to Use This Technique  
+<LI class=bullets1>Before You Begin Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities </LI></UL></LI></UL> 
+ <p> 
+<FONT size=4>Purpose </FONT> </p>
+ 
+ 
+ <p> 
+Composite observations can be configured to auto advance to the next simple observation when the user enters a result. This is available only for composite observations formatted as drilldown screens. It can be very useful when the user is entering a large amount of data as it saves the user from needing to click the Next button. This technique can be used for PFSH, ROS, Physical Examination, or other composite, drilldown observation.  </p>
+ 
+ 
+ <p> 
+Modifying existing composite observations is best done 'on the fly' rather than through the configuration tab, since you can quickly check your work to make sure you have made the modifications as desired.  </p>
+ 
+ 
+ <p> 
+<FONT size=4>When to Use this Technique</FONT> </p>
+ 
+ 
+ <p> 
+The observation you want to configure must meet all of the following criteria:  </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Composite observation  
+<LI class=bullets1>Drilldown format  
+<LI class=bullets1>Each constituent observation must offer a mutually exclusive result set (the user can only select one option from the result set)  
+<LI class=bullets1>All constituent observations must be simple observations (the system cannot advance between composite observations) </LI></UL> 
+ <p> 
+<FONT size=4>Before You Begin </FONT> </p>
+ 
+ 
+ <p> 
+You should already be familiar with drilldown screens. See <A href='../../Using encounterPRO v5/Histories/040818916355654.html'>Drilldown Format</A> for details.  </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT size=4>Steps  <br /> 
+</FONT>Follow the steps below (this is best done using a practice or 'test' patient):  <br /> 
+<EM><FONT color=#3300ff>Set the results for each constituent observation to mutually exclusive: </FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Display the desired drill down screen.  
+<LI class=numbers1>Select the Other Options button. A menu of options appears.  
+<LI class=numbers1>Select the Configure button. The Composite Observation Definition screen appears.  
+<LI class=numbers1>Select the bar with the observation name for the first constituent observation. A menu of options appears.  
+<LI class=numbers1>Select the Edit Observation button, the Observation Definition screen appears.  
+<LI class=numbers1>Select the gray Results box. The Results Definition screen appears. The result set must be mutually exclusive; that means that the user will only be allowed to select one of the results for this observation.  <br /> 
+For example: Yes and No, Normal and Abnormal. If the results set allows the user to enter text or a numeric value that observation cannot be set to mutually exclusive and will not be able to auto advance.  
+<LI class=numbers1>Make changes to the results set as needed:  <br /> 
+ 
+<UL> 
+<LI class=bullets1>If you want to remove a result, select the applicable result on the list at the left and select the Delete button.  
+<LI class=bullets1>If you want to change the order in which the results display, select the result you want to reorder, select the Move button, then move the result up or down as needed.  
+<LI class=bullets1>If you wish to use a pre-set result set you must first delete all existing results. Then select the Add Result Set button and choose the desired result set from the list.  
+<LI class=bullets1>If you want to add a new result, select the New Result button.  <br /> 
+</LI></UL> 
+<LI class=numbers1>If you want to save this set of results for future use in another observation, select the Set Result Set button.  
+<OL type=a> 
+<LI class=numbers1>Choose Create a new result set.  
+<LI class=numbers1>Enter the name of this new set and select OK. The name of the new set is added to the bottom of the Result Set list.  
+<LI class=numbers1>Select OK to save the results.  <br /> 
+</LI></OL> 
+<LI class=numbers1>On the Observation Definition screen be sure to select Yes for the Results Mutually Exclusive option in the upper right of the screen.  
+<LI class=numbers1>Select OK to return to the list of constituent observations.  
+<LI class=numbers1>Repeat steps 3 - 8 to set all results sets to mutually exclusive and confirm that the results set is appropriate. The Composite Observations screen should be displayed. </LI></OL> 
+ <p> 
+<EM><FONT color=#3300ff>Setting the Auto Advance feature: </FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Composite Observation screen, select the bar for the first constituent observation. A menu of options appears.  
+<LI class=numbers1>Select Attributes. The Observation Attributes screen appears.  
+<LI class=numbers1>Select Move to Next for the On Results Entered: flag.  
+<LI class=numbers1>Select OK to save your changes and return to the Composite Observation Definition screen.  
+<LI class=numbers1>Repeat steps 1 through 4 for each constituent observation.  
+<LI class=numbers1>When finished, select OK to return to the original drilldown data entry screen.  
+<LI class=numbers1>Test your modifications by starting at the top of the drilldown screen and selecting the bar for the first observation. When you select a result, the screen should automatically update to display the next observation. </LI></OL> 
+ <p> 
+<SPAN style='COLOR: green; FONT-STYLE: italic'><img src="images/content_note.gif" width="18" border="0">NOTE: This change will not appear for other encounterPRO users until they have re-started the application. </SPAN> </p>
+ 
+ 
+ <p> 
+<FONT size=4>Want to Learn More?  <br /> 
+</FONT>Related Solutions  <br /> 
+<A href='../../Using encounterPRO v5/Histories/040818916355654.html'>Concept: Drilldown Format </A> <br /> 
+<A href='../On-the-Fly configuration/040819216015878.html'>How to: Modify an Existing Drilldown Observation </A> <br /> 
+<A href='../On-the-Fly configuration/040818216315725.html'>How to: Set Defaults for Drilldown Observations.  <br /> 
+</A> <br /> 
+Related Education Opportunities  <br /> 
+User Configuration Level 2  </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040828912424199</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/15/2008 02:06:13 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

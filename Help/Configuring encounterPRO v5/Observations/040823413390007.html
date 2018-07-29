@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure Result Ranges" />
+    <meta name="TITLE" content="How to: Configure Result Ranges" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for entering result ranges for lab and test observations." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Configure Lab Result Ranges Abnormal Normal Advanced" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure Result Ranges</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Observations</div>
+<hr />
+<h2>How to: Configure Result Ranges</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>When to Use Advanced Result Options  
+<LI class=bullets1>Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL> 
+ <p> 
+ <br /> 
+<FONT size=4>Purpose <br /> 
+</FONT>Super Users are able to configure lab and test result observations to display pre-determined normal result ranges in the result tables that display on reports and the treatment dashboards. This allows the provider to have the normal result range available when reviewing the patient's results. Additionally, the system can evaluate the numeric results entered and flag the result as Normal, Abnormal, Low, Very Low, High or Very High. These result ranges can be based on criteria such as gender and age range. </p>
+ 
+ 
+ <p> 
+<IMG src='scripts/uploadedimages/090080821134820.jpg' border=1> <br /> 
+<STRONG><FONT size=2>Example: Result display grid</FONT></STRONG> </p>
+ 
+ 
+ <p> 
+There are two options when setting a result range: </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Display the normal range as text only: Enter a normal result range that is <STRONG>for display purposes only</STRONG> and does not evaluate the individual results entered. This text appears in the result display grid in the Normal Range column. <br /> 
+ 
+<LI class=numbers1>Advanced result range options: Set up normal and/or abnormal result range rules that can be age and/or gender-specific and will flag the patient's result as abnormal if it falls outside the entered range. The system will dynamically display text in the Abn and Normal Range columns of the result display grid based on the rule used to evaluate the data entered.</LI></OL> 
+ <p> 
+<FONT size=4>When to Use the Advanced Result Options <br /> 
+</FONT>You will want to consider using the advanced result options when: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>There is no single reference range that applies to everyone because the tests performed may be affected by the age and sex of the patient.  
+<LI class=bullets1>You want encounterPRO to evaluate the results entered and set the Abnormal/Normal flag based on the individual result entered.</LI></UL> 
+<P class=bullets1><STRONG>Working with Multiple Rules</STRONG> </p>
+ 
+ 
+<P class=bullets1>When you use advanced result options you will be setting up rules that the system uses to evaluate the result data entered. It is important to note: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>The system will examine the rules in the order they are entered (sequence #). When the system finds a rule for which the patient in question meets all criteria, the system uses that rule to evaluate the data and will not continue to look at any subsequent rules. So if rule #1 has no sex or age criteria, then the system always use that rule (unless it find a patient missing an age or sex designation).  
+<LI class=bullets1>When setting up multiple rules, it is best to create a blank/blank (no sex, no age range) rule as the LAST rule. This way, if the rules do not happen to be 100% mutually exclusive, there is still a rule that the system can use to evaluate the data.</LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT face=Arial size=2><FONT size=4>Steps <br /> 
+</FONT> <br /> 
+<img src="images/content_note.gif" width="18" border="0"></FONT><FONT face=Arial><FONT size=2><FONT color=#009900><I>NOTE: It will be easiest if you perform this configuration in the context of a patient encounter using a 'test' patient. This will allow you to enter results and immediately see if the configuration was successful. <br /> 
+</I></FONT> <br /> 
+Follow these steps: <br /> 
+<EM><FONT color=#6600ff>To enter the normal or reference range:</FONT></EM></FONT></FONT> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT face=Arial size=2>From the Patient Chart, order the lab or test for which you want to enter a normal result range. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the blue description of the treatment to access the treatment dashboard. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the blue description of the treatment to access the data entry screen. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the Configure button at the bottom of the results entry screen (you may need to select Other Options first). The Observation Definition screen appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the gray box for Results. The Result Set Definition screen appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>If the result for which you want to enter a normal result range has already been created, select the bar for that individual result, then select Edit. The Result Definition screen appears. <br /> 
+ <br /> 
+If not, select New Result. The Result Definition screen appears. <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>The Result Type can be Normal or Abnormal.  <br /> 
+<EM><FONT color=#ff0000>CAUTION: Remember, you are setting only a text result to display the normal range on a result grid, the system will not use this to evaluate whether the data entered are normal or abnormal. If you need the system to evaluate the data entered, you will need to set the Advanced Result Options for this result.</FONT></EM> <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>If this is a numeric result, set Result has Value to Yes. Select the button for the type of value represented by this result. <br /> 
+ <br /> 
+If this result is textual, then set Result has Value to No. An example of a textual value would be a color or other qualifier, like clear or cloudy. <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the gray bar next to Normal Range. A text entry box appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the text that you want to appear in the Normal Range column for this specific result. Maximum length is 40 characters. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK. The text appears in the Normal Range field. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK to return to the Result Set Definition screen. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Repeat steps 6 through 12 to enter the normal result range for any other results for this observation. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>When finished, select OK. The Observation Definition screen reappears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK. The result data entry screen for the lab or test appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter sample data in the result fields for which you entered the normal range text, then select Finished. The treatment dashboard screen reappears. The result grid should display your normal range text in the Normal Range column.</FONT></LI></OL> 
+ <p> 
+<FONT face=Arial><FONT size=2>Follow these steps: <br /> 
+<EM><FONT color=#6600ff>To enter the Advanced Result Options:</FONT></EM></FONT></FONT> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT face=Arial size=2>From the Patient Chart, order the lab or test for which you want to enter advanced result options. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the blue description of the treatment to access the treatment dashboard. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the blue description of the treatment to access the data entry screen. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the Configure button a the bottom of the results entry screen (you may need to select Other Options first). The Observation Definition screen appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the gray box for Results. The Result Set Definition screen appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>If the result for which you want to enter the advanced result options has already been created, select the bar for that individual result, then select Edit. The Result Definition screen appears. <br /> 
+ <br /> 
+If not, select New Result. The Result Definition screen appears. <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>The Result Type should be Normal.&nbsp; If the data entered for the result is outside the result ranges entered for the advanced result options, the system will automatically change the Normal to Abnormal on the result display grid. <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select Yes for&nbsp;Result has Value. Select Number as the type of value represented by this result. (Only numeric results can be evaluated using advanced result options.) <br /> 
+ <br /> 
+</FONT><FONT face=Arial size=2><img src="images/content_tip.gif" width="18" border="0"></FONT><I><FONT face=Arial color=#0000ff size=2>TIP: You should enter a text result in the Normal Range field on this screen in the event that a patient does not meet any of the result range criteria entered on the Result Advanced&nbsp;Options screen. This is a precaution so that the provider will be alerted if certain information about the patient's age or gender is not available. <br /> 
+ <br /> 
+</FONT></I> 
+<OL type=a> 
+<LI class=numbers1><FONT face=Arial size=2>Select the gray bar next to Normal Range. A text entry box appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the text that you want to appear in the Normal Range column for this specific result. Maximum length is 40 characters. Suggestion: Patient data incomplete - no range available </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK. The text appears in the Normal Range field. <br /> 
+</FONT></LI></OL> 
+<LI class=numbers1><FONT face=Arial size=2>Select the Advanced Options button at the bottom of the screen. The Result Advanced Options screen appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select New Rule. A set of fields for you to enter the rule criteria appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select the sex that this rule will apply to or leave blank if sex is not part of the result range criteria. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select an Age Range from the drop-down list or leave blank if age is not part of the result range criteria. <br /> 
+ <br /> 
+If the age range you need does not appear on the drop-down list, select the New Age Range button. Select the Age From and Age to and select OK. The new age range should appear on the drop-down list for selection (you may have to select OK and then Advanced Options again to refresh the list). <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the Low and High values for the Normal Range. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the text you want to appear in the Normal Range column of the result display grid for patients who meet the gender and age criteria entered. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>If you want to set additional ranges for Low/Very Low and High/Very High enter those values. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the text you want to appear in the Abn column of the result display grid for patient's whose results fall in the Low/Very Low range in the Low Nature and Very Low Nature fields respectively&nbsp;(8 characters maximum). </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter the text you want to appear in the Abn column of the result display grid for patient's whose results fall in the High/Very High range in the High Nature and Very High Nature fields respectively&nbsp;(8 characters maximum). </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Repeat steps 10 through 18 to add another rule. <br /> 
+<img src="images/content_tip.gif" width="18" border="0"><I><FONT color=#0000ff>TIP: You should always add a last rule that has no sex or age criteria as a 'catch-all' rule for any patient who is missing the required age or sex criteria. The Normal Range can be 0 to 0 and the suggested text is 'Patient&nbsp;data incomplete&nbsp;- no range available.'</FONT></I> <br /> 
+</FONT> 
+<LI class=numbers1><FONT face=Arial size=2>When you have entered all the rules for this result, select OK. The Result Definition screen reappears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK to return to the Result Set Definition screen. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Repeat steps 6 through 14 to enter the normal result range or any other results for this observation. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>When finished, select OK. The Observation Definition screen reappears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Select OK. The result data entry screen for the lab or test appears. </FONT> 
+<LI class=numbers1><FONT face=Arial size=2>Enter sample data in the result fields for which you entered the normal range text, then select Finished. The treatment dashboard screen reappears. The result grid should display your normal range text in the Normal Range column.</FONT></LI></OL> 
+ <p> 
+<FONT size=2><FONT face=Arial><FONT size=4>Want to Learn More?</FONT> <br /> 
+<FONT size=3>Related Solutions</FONT> <br /> 
+</FONT><FONT face=Arial> <a href="../On-the-Fly%20configuration/040819216015878.html" target="_blank">Screen: How to: Modify an Existing Drilldown Observation</a> <br /> 
+ <a href="../On-the-Fly%20configuration/040818216315725.html" target="_blank">Screen: How to: Set Defaults for Drilldown Observations.</a></FONT></FONT> </p>
+ 
+<FONT face=sans-serif size=2> 
+ <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT>User Configuration Level 1&nbsp; <br /> 
+ </p>
+ 
+</FONT> 
+ <p> 
+<B></B>&nbsp; </p>
+ 
+<FONT face="Courier New"></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823413390007</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/15/2008 03:33:58 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Concept: e-Prescribing" />
+    <meta name="TITLE" content="Concept: e-Prescribing" />
+    <meta name="DESCRIPTION" content="This solution defines and explains the concept of e-Prescribing." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="e-Prescribing Electronic Prescribing RX Surescripts Concept Document Manager" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Concept: e-Prescribing</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Using encounterPRO v5 &gt; Treatments &gt; Prescription medications</div>
+<hr />
+<h2>Concept: e-Prescribing</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+In this solution<STRONG>...</STRONG> <br /> 
+ <UL>
+ 
+<LI class=bullets1>Description  <UL>
+ 
+<LI class=bullets1>What Kinds of Prescriptions Can Be Sent Electronically? 
+ 
+<LI class=bullets1>Who Can Use e-Prescribing? 
+ 
+<LI class=bullets1>Electronic Refill Requests</LI></UL>
+ 
+<LI class=bullets1>Examples 
+ 
+<LI class=bullets1>Want to Learn More?  <UL>
+ 
+<LI class=bullets1>Related Solutions 
+ 
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL>  <p> 
+<FONT size=4>Description</FONT> <br /> 
+ </p>
+ 
+  <p> 
+E-Prescribing is a provider's use of real-time, patient-specific information to:  </p>
+ 
+ <UL> <LI>Prescribe the most medically appropriate and cost effective prescription at the point of care, and transmit the prescription electronically to the patient's pharmacy of choice.  <LI>Pharmacies can also request refills by sending an electronic refill request to the practice for approval.</LI></UL>  <p> 
+Electronic prescriptions, also called e-Prescribing or e-RX, allows encounterPRO users to send prescriptions electronically from the encounterPRO EHR to a participating pharmacy. Currently encounterPRO is integrated with a company called SureScripts-RxHub ® (<A href='http://www.surescripts.com/'>www.SureScripts-RxHub.com</A>). EncounterPRO has certified with SureScripts-RxHub version 4.2. When a provider has registered with SureScripts-RxHub, he or she can send new prescriptions and refills via secure electronic transmission to any SureScripts-RxHub registered pharmacy.  </p>
+ 
+  <p> 
+<FONT color=#00cc00><img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: The practice must use the Document Manager function for prescriptions that will be sent electronically. See <U><A href='../../Reports/040823316223868.html'>Concept: Document Manager</A></U> for details.</I></FONT></FONT> </p>
+ 
+<EM><FONT color=#009900></FONT></EM>  <p> 
+What Kinds of Prescriptions Can Be Sent Electronically? </p>
+ 
+  <p> 
+New prescriptions and refills can be sent via the SureScripts-RxHub service to a participating pharmacy. However, controlled substances will still require a paper prescription. Controlled substances are currently <STRONG>not</STRONG> permitted to be filled electronically per DEA regulations.  </p>
+ 
+  <p> 
+Who Can Use e-Prescribing? </p>
+ 
+  <p> 
+The ordering provider must be a registered SureScripts-RxHub user. In encounterPRO, this means that the user who ordered the <EM>prescription document</EM> must be a SureScripts-RxHub user. EncounterPRO determines the effective ordered-by provider using the following logic: </p>
+ 
+  <p> 
+1) The last provider to order a refill will be the 'ordered by' provider.   <br /> 
+2) If no refills have been ordered then the last provider to sign for the prescription will be the 'ordered b'' provider. <br /> 
+3) If no one has signed for the prescription, then the provider who originally ordered the prescription will be the 'ordered by' provider. </p>
+ 
+  <p> 
+In cases where the clinical staff is RX-certified, they can register as a SureScripts-RxHub user and send prescriptions electronically. In cases where the clinical staff is accustomed to ordering the refill and calling that into the pharmacy, either the provider will need to order the refill and the clinical staffer can send the document using Document Manager or the clinical staffer can 'scribe' for the provider and order the refill on his/her behalf. See <A href='../../Workflow/040823222085907.html'>How to: Set Up and Use Scribing</A> for details. </p>
+ 
+  <p> 
+<FONT face=Arial><SPAN style='COLOR: red; FONT-STYLE: italic'>IMPORTANT:  When a user logs in to scribe for another user, he or she must agree to abide by the following: <br /> 
+<FONT color=#ff0000>'By logging into the EncounterPRO® Electronic Health Record as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into the EncounterPRO EHR as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information.'</FONT></SPAN> <br /> 
+</FONT> </p>
+ 
+  <p> 
+Providers and RX-certified users can register themselves from the User Definition screen. See <A href='040825219191353.html'>How to: Register for SureScripts-RxHub e-Prescribing</A> for details. </p>
+ 
+  <p> 
+Electronic Refill Requests </p>
+ 
+  <p> 
+With E-Refills, pharmacies can send refill authorization requests directly and securely to encounterPRO as an alternative to time consuming phone calls and faxes. The encounterPRO system will match those requests to the specific patient and treatment and send a Task to the ordering provider. The providers or authorized staff can then send approvals or denials with a few mouse clicks at their convenience. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=4>How Does e-Prescribing Work in encounterPRO? <br /> 
+</FONT>A typical workflow for e-prescribing using encounterPRO would be: </p>
+ 
+ <OL> <LI class=numbers1>The provider orders a prescription medication as part of the treatment plan.  <LI class=numbers1>The NewRX appears on the Document Manager screen.  <LI class=numbers1>A user selects Pharmacy as the recipient of the NewRX document and selects the patient's preferred pharmacy from a list of SureScripts enabled pharmacies.  <LI class=numbers1>The user select SureScripts as the route for the document and selects Send.  <LI class=numbers1>When SureScripts has sent the prescription electronically, a status message is sent back to encounterPRO and the document status for the NewRX is updated to Confirmed.</LI></OL>  <p> 
+<FONT color=#00cc00><img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: The user who is selecting the recipient and route does not have to be the ordering provider.</I></FONT></FONT> </p>
+ 
+<EM><FONT color=#009900></FONT></EM>  <p> 
+<FONT size=3>How Can Your Practice Get Started With e-Prescribing?</FONT> </p>
+ 
+  <p> 
+Contact EHR Product Support to request e-prescribing. Call 1-800-677-5653 or email <A href='mailto:support@encounterpro.com'>support@encounterpro.com</A> </p>
+ 
+  <p> 
+ <br /> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions <br /> 
+</FONT><U><A href='../../Reports/040823316223868.html'>Concept: Document Manager</A> <br /> 
+<A href='../../Reports/Document Manager/040823320254297.html'>Screen: Document Manager</A> <br /> 
+<A href='../../Reports/040823316295142.html'>How to: Use Document Manager</A> <br /> 
+<A href='../../Reports/Document Manager/040823320370682.html'>How to: Print or Send a Document Using Document Manager</A> <br /> 
+<A href='040825219191353.html'>How to: Register for SureScripts e-Prescribing</A> <br /> 
+<A href='../../Workflow/040823222085907.html'>How to: Set Up and Use Scribing</A></U> </p>
+ 
+  <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT><U>Clinical Staff <br /> 
+Provider <br /> 
+ <br /> 
+</U> </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823815174304</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:07:39 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

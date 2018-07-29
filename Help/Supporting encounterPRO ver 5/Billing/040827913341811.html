@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Automatically send patient to a billing review holding room" />
+    <meta name="TITLE" content="How to: Automatically send patient to a billing review holding room" />
+    <meta name="DESCRIPTION" content="Copy and edit an existing workplan." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10672 - Automatically send patient to billing review holding room Default Configuration Workplan" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Automatically send patient to a billing review holding room</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Billing</div>
+<hr />
+<h2>How to: Automatically send patient to a billing review holding room</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+The practice would like the patient to go straight to a billing review holding room after the provider finishes the examination. Create new room called 'Billing Review' under the 'Holding' tab. Find out if the practice would like Epro to behave this way for all encounter types, or just sick/well, etc. Go to 'Configuration' and click 'Workplans'. Change the workplan type to 'Encounter' at the top of the screen, find the workplan you just confirmed is attached to the EST Patient Office Visit. Select the workplan, click 'Copy' from the menu that appears and name the copy. Edit the new workplan. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+The practice would like the patient to go straight to a billing review holding room after the provider finishes the examination. </p>
+ 
+  <p> 
+Resolution <br /> 
+1) Start by creating a new room called 'Billing Review' under the 'Holding' tab (see KB article # 10208 Adding Rooms and Group Tabs to EncounterPRO. The room type should be $EXAMINATION. If the practice has more than one office, and they would like this step for all offices, create the room for each office). <br /> 
+2) Find out if the practice would like Epro to behave this way for all encounter types, or just sick/well, etc. <br /> 
+3) If you want to change the workplan for sick visits, go to 'Configuration' and click 'Encounter Types'. <br /> 
+4) Select 'EST Patient Office Visit', and select 'Edit' to see which workplan it is using. <br /> 
+5) Now go to 'Configuration' and click 'Workplans'. <br /> 
+6) Change the workplan type to 'Encounter' at the top of the screen, find the workplan you just confirmed is attached to the EST Patient Office Visit. <br /> 
+7) Select the workplan, click 'Copy' from the menu that appears and name the copy something specific (Bill Rev Standard EncC Office Visit EST PT) and memorable. <br /> 
+8) Edit the new workplan that you just created. <br /> 
+9) If the last step is supervisory review, delete that step. <br /> 
+10) Don't click 'Add Step', but rather 'Final Step'. <br /> 
+11) Click on the step, select edit, add a new service, Review Chart or Chart review.  Click the service and click Description and enter 'Billing Review'. <br /> 
+12) Click the service, select 'Ordered For'. <br /> 
+13) Ask the practice who will be completing the review. <br /> 
+14) If the service will be going to one role, such as Admin Billing Review, select 'Any Admin Billing' from the list of roles. <br /> 
+15) If the review will be going to the supervisor of a NP, CA, or other certified staff member, change the button at the top from Users to Special and select 'Encounter Supervisor' as the service owner. <br /> 
+16) Click 'OK'. <br /> 
+17) Only if you have selected Encounter Supervisor (you do not have to do this for roles such as Admin Billing), click on your service again and select 'Edit Criteria'. <br /> 
+18) Click on the button for 'Workplan Owner'. <br /> 
+19) Change the button at the top from Users to Roles. <br /> 
+20) Select Any NP, PA or Cert Staff. <br /> 
+21) Click 'OK'. Be sure that the NP's/PA's have supervisors assigned in their user profile. <br /> 
+22) Click on the service again and select 'Edit Flags'. <br /> 
+23) Change 'Perform Immediately' to 'Yes'. <br /> 
+24) Click 'OK'. <br /> 
+25) Click 'OK' again so that you are back on the screen where you are viewing all the steps for the workplan. <br /> 
+26) Click on your new step and select 'Room Assignment'. <br /> 
+27) Select 'Examination' on the left, then click on the button labeled 'Default Room Type'. <br /> 
+28) If the practice has more than one office, select the first office and a list of rooms will appear; among them will be the Billing Review room you created earlier. <br /> 
+29) Select that room. <br /> 
+30) If the practice would like this step to happen in both offices, click the top button where you previously selected the first office. <br /> 
+31) Select the second office and highlight your Billing Review room again. <br /> 
+32) Click 'OK'. You have now completed your workplan. <br /> 
+33) To test your workplan, create a test encounter type, assign your new workplan to the test encounter, and check a test patient in. <br /> 
+34) Now find the encounter type (EST Patient Office Visit in this case) that has the original workplan (the one you copied) assigned to it.  Remove the original workplan and assign your new workplan. <br /> 
+35) To ensure that all the previous step are correct, you cannot assign your new workplan to all encounter types. You will have to see which workplan each encounter type is using, make a copy of that workplan, add the step, then assign your new workplan to the encounter type. <br /> 
+36) You can do this by going to 'Configuration' and select 'Encounter Types'. <br /> 
+37) Find the encounter and click 'Edit'. <br /> 
+38) Select the current workplan and delete it. <br /> 
+39) Then select the 'Add Workplan' button at the bottom and attach your newly created workplan. <br /> 
+ <br /> 
+Article created on 3/4/2008 by Vivian.stjohn </p>
+ 
+  <p> 
+Article last updated on 3/5/2008 by Vivian.stjohn </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827913341811</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 05:32:29 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

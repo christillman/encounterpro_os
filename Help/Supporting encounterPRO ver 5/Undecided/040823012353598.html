@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Create a Reviewed button for Lab Dashboard" />
+    <meta name="TITLE" content="How to: Create a Reviewed button for Lab Dashboard" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for adding a Reviewed button to the top of the lab treatment dashboard." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10641 Preparation and configuration for a lab interface Reviewed Button Lab Dashboard Display Script" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Create a Reviewed button for Lab Dashboard</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Create a Reviewed button for Lab Dashboard</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+It is convenient to be able to document a progress note on the lab result treatment dashboard. With a Reviewed button, the reviewer can add a review note with one touch.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+To create a 'Reviewed' button on the lab dashboard, do the following: </p>
+ 
+  <p> 
+1) With 'Config Mode' turned on, right-click anywhere inside a lab dashboard. <br /> 
+2) Create a local copy if necessary then click 'Edit Display Script'. <br /> 
+3) Locate the 'Print' command for the 'Reviewed' link you want to enable. There are several available: <br /> 
+  a) 'Reviewed; WNL, Send to Staff' - adds a progress note that the lab results have been reviewed, the results are within normal limits, and sends a Task to the Staff. <br /> 
+  b) 'Reviewed; ABN, Send to Staff' - adds a progress note that the lab results have been reviewed, the results were abnormal, and sends a Task to the Staff. <br /> 
+  c) 'Reviewed' - adds a progress note that the lab results have been reviewed. No Task is generated. <br /> 
+4) Enable the 'Print' command for the 'Reviewed' button that you want to add to the dashboard. <br /> 
+5) Enable both 'Space' commands located above and below the 'Print' command you just enabled. <br /> 
+6) Click 'OK'. <br /> 
+7) Click 'Finish'. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: See also kb article #10607 ('Add a Print Button to Treatment Dashboard Screens'). <br /> 
+</I></FONT> </p>
+ 
+</FONT>  <p> 
+<FONT face=sans-serif size=2><img src="images/content_tip.gif" width="18" border="0"><I><FONT color=#0000ff>TIP: All steps mentioned in Lab Dashboard Issues section work for any dashboards but you must perform steps for each of the dashboards. ie X-Ray dashboard, lab dashboard etc.</FONT></I></FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>Article created on 5/23/2007 by adam.zangara</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>Article last updated on 4/9/2008 by Adam.Zangara</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823012353598</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:31:48 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

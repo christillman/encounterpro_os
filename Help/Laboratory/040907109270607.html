@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Troubleshooting Lab Integration: Practice Did Not Receive Lab Results for One or More Patients" />
+    <meta name="TITLE" content="Troubleshooting Lab Integration: Practice Did Not Receive Lab Results for One or More Patients" />
+    <meta name="DESCRIPTION" content="What to do when no lab results have been received" />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Lab Interface Integration No Results Missing Patient Results" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Troubleshooting Lab Integration: Practice Did Not Receive Lab Results for One or More Patients</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Integrations &gt; Laboratory</div>
+<hr />
+<h2>Troubleshooting Lab Integration: Practice Did Not Receive Lab Results for One or More Patients</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+Not Applicable
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+The practice has been receiving lab reports for some patients, but data is missing for one or more patients. <br /> 
+ <br />
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<OL> 
+<LI class=numbers1>Get the patient name, lab/test name and date from the practice. If practice has more than one lab interface ask them which lab company sent the result.  
+<LI class=numbers1>In CMA, go the Customer Information page for the practice.  
+<LI class=numbers1>Scroll down to the "Messages" section and click on "Advanced Search". <br /> 
+&nbsp;<IMG alt="CMA Search" src="onsitehypermedia/090090312140057.jpg" border=1>  
+<LI class=numbers1>Type in the patient"s last name.&nbsp; You don"t have to type in the patient"s first name but if you do --&nbsp;use this format: <STRONG>last name, first name</STRONG>.&nbsp; Click the "Search" button.&nbsp; The Message Status and Purpose fields can remain blank.&nbsp;&nbsp; <br /> 
+<IMG alt="CMA Search" src="onsitehypermedia/090090312140144.jpg" border=1>  
+<LI class=numbers1>Locate the patient or patients you need.&nbsp; Look in the "From" column for the name of the corresponding lab company who sent the result then click on the magnify glass to the far left to verify this is the result needing to be resent.&nbsp;  <br /> 
+<STRONG>NOTE</STRONG>: If you can"t find the particular patient you are looking for with advanced search or in the message section without using "Advanced Search" and/or by looking on the individual pages by date, then the practice will need to contact the lab company for them to resend that patients labs and after they do, the results should automatically transfer to the practice through CMA. <br /> 
+&nbsp;<IMG alt="CMA Messages" src="onsitehypermedia/090090312140519.jpg" border=1>  
+<LI class=numbers1>Now, look under the "Key" column then find "Description" and to the right under the "Info" column will be the name of the lab/test.&nbsp; Note:&nbsp; Sometimes you might have to click on the first "<FONT color=#3300ff>download"</FONT> and search in the actual HL7 message because there may be multiple results in the HL7. <br /> 
+&nbsp;<IMG alt="CMA Details" src="onsitehypermedia/090090312140604.jpg" border=1>  
+<LI class=numbers1>Click on your browsers "Back" button to return to the "Message" screen and click in the white box to the far right of the row of the message/result you are going to resend and then click on the <IMG alt="Resend Button" src="onsitehypermedia/090090312092244.jpg" border=1>&nbsp; (Symbol is of a blue circle with arrow pointing counter-clockwise located atop all the white boxes column) to resend the message.&nbsp;&nbsp; <br /> 
+<IMG alt="CMA Messages" src="onsitehypermedia/090090312140648.jpg" border=1>  
+<LI class=numbers1>An Internet Explorer message will pop up asking if you sure and if you are click "Ok", screen will refresh and message status should changed to "<FONT color=#ff0000>Received"</FONT> then eventually "<FONT color=#009900>Complete"</FONT> within two minutes.</LI></OL> 
+<P class=numbers1>Related Solutions </p>
+ 
+ 
+<P class=numbers1> <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823017061448.html" target="_blank">Screen: Troubleshooting Lab Integration: Import Service is Timing Out.</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823015552968.html" target="_blank">Screen: Troubleshooting Lab Integration: Incorrect sender displayed for Task</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823016455097.html" target="_blank">Screen: Troubleshooting Lab Integration: No Daily Referral Report.</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/Laboratory%20integration/040907109054213.html" target="_blank">Screen: Troubleshooting Lab Integration: Practice Did Not Receive Lab Results for X Days</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Hotfixes/040823016122777.html" target="_blank">Screen: Troubleshooting Lab Integration: Problems with Tasks</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823016244963.html" target="_blank">Screen: Troubleshooting Lab Integration: Problems with XML files.</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823016565243.html" target="_blank">Screen: Troubleshooting Lab Integration: Results from two different labs posting to same observation.</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Hotfixes/040823012111915.html" target="_blank">Screen: Troubleshooting Lab Integration: Results not appearing in encounterPRO</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823017431956.html" target="_blank">Screen: Troubleshooting Lab Integration: Results not auto posting</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823017320808.html" target="_blank">Screen: Troubleshooting Lab Integration: Results posting to wrong observation</a> <br /> 
+ <a href="../Supporting%20encounterPRO%20ver%205/Integrations/040823014013014.html" target="_blank">Screen: Troubleshooting Lab Integration: Reviewer name not appearing</a> <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+No lab reports for one or more patients even though results are being received for other patients<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040907109270607</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 03/12/2009 02:07:45 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

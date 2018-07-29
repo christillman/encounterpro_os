@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Modify an Existing Yes/No Observation On-the-Fly" />
+    <meta name="TITLE" content="How to: Modify an Existing Yes/No Observation On-the-Fly" />
+    <meta name="DESCRIPTION" content="Instructions for changing an existing Yes/No observation." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Configure Yes/No Modify Change History Observation" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Modify an Existing Yes/No Observation On-the-Fly</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; On-the-Fly configuration</div>
+<hr />
+<h2>How to: Modify an Existing Yes/No Observation On-the-Fly</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>Purpose 
+ 
+<LI class=bullets1>Before You Begin 
+ 
+<LI class=bullets1>Steps 
+ 
+<LI class=bullets1>Want to Learn More?  <UL>
+ 
+<LI class=bullets1>Related Solutions 
+ 
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL>  <p> 
+<FONT size=4>Purpose</FONT> <br /> 
+You can modify the child observations that make up a Yes/No history by removing, adding, or changing the constituent child observations. Remember that each row (question) on a Yes/No history is configured as a simple child observation. </p>
+ 
+  <p> 
+The Yes/No format is commonly used for Review of Systems (ROS) and for observations such as Child Development and Anticipatory Guidance. An example of a Yes/No format screen is shown below. </p>
+ 
+  <p> 
+ <img src="images/090081017143105.jpg" alt="Screen: 'Review of Systems Yes/No screen'" /> </p>
+ 
+  <p> 
+<FONT size=4>Before You Begin <br /> 
+</FONT>The child observations that are included in a Yes/No history can have a maximum of four  results: <br /> 
+ </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>Up to 4 performs (perform results are either selected or not selected) 
+ 
+<LI class=bullets1>1 perform & 3 comment (comment results allow the user to enter text) 
+ 
+<LI class=bullets1>2 perform & 2 comments (this is the traditional Yes/No plus a Comment or two)</LI></UL>  <p> 
+ <br /> 
+<FONT color=#ff0000><I>Important: The order in which you enter the results while configuring  does matter. The results will appear in the order they were entered <br /> 
+ </p>
+ 
+</I></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=4>Steps <br /> 
+</FONT>Follow the steps below: </p>
+ 
+ <OL> <LI class=numbers1>Display the Yes/No history that you want to modify. Select Other Items, then Configure. The Composite Observation Definition screen appears.  <LI class=numbers1>If you want to remove a child observation from the Yes/No history, select the constituent observation from the list and Remove Observation from the menu that appears.  <LI class=numbers1>If you want to change the order that the child observations display on the Yes/No history, select a child observation from the list and select the Move option from the menu. Use the arrow buttons to move that child observation up and down the list. Select OK when finished moving that observation.  <LI class=numbers1>If you want to change the description (text) or the results for a child observation:  <br /> 
+ <P class=numbers1>a.  Select the child observation from the list of constituents.  <br /> 
+b.  Select Edit Observation from the menu that appears. The Observation Definition screen appears.  <br /> 
+c.  Change the Description if needed.  <br /> 
+d.  Change the Perform or Comment results if needed. Remember that the order in which the results are added during configuration determines the order (left to right) they appear on the Yes/No screen. <br /> 
+e.  Select OK. The Composite Observation screen reappears.  </p>
+ 
+ <LI class=numbers1>If you want to add a new child observation, select Add Observation. The Select Observation screen appears. If the child observation exists in the database, you can select it from the list. If the child observation does not already exist, you can create it.  <br /> 
+ <P class=numbers1>a.  Select New Observation.  <br /> 
+b.  Select Simple. A list of observation types appears.  <br /> 
+c.  Select the appropriate observation type (for a history, you will usually select Subjective).  <br /> 
+d.  Enter the text that you want to appear on the Yes/No history screen in the Description field.  <br /> 
+e.  If you want to enter results that create a toggle button (Yes, No, Discussed, etc.) select Perform as the result type (this is the default).  <br /> 
+f.  Select the Results gray box.  <br /> 
+g.  Select New Result. The Results Definition screen appears.  <br /> 
+h.  Enter the Result name (example: Yes)  <br /> 
+i.  Select whether this result is normal or abnormal in the Result Type  <br /> 
+j.  Be sure that the Result has Value option is No (for a Yes or No type result that is a toggle)  <br /> 
+k.  Select OK.  <br /> 
+l.  Repeat steps g - k for the other perform results for this observation.  <br /> 
+m.  Select OK to return to the Observation Definition screen.  <br /> 
+n.  If you want to create comment results that allow the user to enter text for this observation, select the Perform bar and then select Comment from the list that appears.  <br /> 
+o.  Select the Results gray box. The Results Definition screen appears.  <br /> 
+p.  Select New Result.  <br /> 
+q.  Enter the text you want to appear on the button of the Yes/No screen in the Comment Title field.  <br /> 
+r.  Select OK.  <br /> 
+s.  Repeat steps p - r to add additional comment results. (You can only have a total of 4 results between the perform and comment results).  <br /> 
+t.  Select OK. The Observation Definition screen reappears.  <br /> 
+u.  Select OK. The Select Observation screen reappears.  <br /> 
+v.  Repeat steps a - u to add additional child observations. When finished, select OK to return to the Composite Observation screen. </p>
+ 
+ <LI class=numbers1>Select OK. The original Yes/No history screen reappears. You may need to select I'll Be Back and then select the service bar for that history so that the screen will refresh and display your changes.</LI></OL>  <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Other users will not see the changes made until they close and re-start encounterPRO. </p>
+ 
+</I></FONT>  <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions <br /> 
+</FONT><U> <a href="../../Using%20encounterPRO%20v5/Usability/Display%20conventions/040818916293334.html" target="_blank"> Concept: Yes/No Format</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Histories/040818915330863.html" target="_blank"> Concept: Observations</a></U> </p>
+ 
+  <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT>User Configuration Level 2 </FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040819709532685</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 05/26/2009 01:52:50 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

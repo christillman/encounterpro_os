@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Concept: encounterPRO Preferences" />
+    <meta name="TITLE" content="Concept: encounterPRO Preferences" />
+    <meta name="DESCRIPTION" content="This solution defines and gives examples of preferences used in encounterPRO to customize the system." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Concept Preferences Global Workflow User Favorite Configuration Attachment Prescription Security Billing Color General Message Task Maintenance Report Document Subscription Computer Treatment" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Concept: encounterPRO Preferences</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Preferences</div>
+<hr />
+<h2>Concept: encounterPRO Preferences</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT size=2>In this solution<STRONG>...</STRONG></FONT> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1><FONT size=2>Definition </FONT> 
+<UL> 
+<LI class=bullets1><FONT size=2>Preference Types </FONT> 
+<LI class=bullets1><FONT size=2>Preferences Levels </FONT> 
+<LI class=bullets1><FONT size=2>Preference Hierarchy </FONT></LI></UL> 
+<LI class=bullets1><FONT size=2>Examples </FONT> 
+<LI class=bullets1><FONT size=2>Related Solutions</FONT></LI></UL> 
+ <p> 
+<FONT size=4>Definition</FONT> </p>
+ 
+ 
+ <p> 
+Preferences allow the encounterPRO Administrator or Super User to effect&nbsp;certain changes to&nbsp;the system's behaviors without resorting to programming. In many ways, the preferences will allow the practice to tailor the encounterPRO system to their preferred method of documenting encounters. Certain preferences can be set at the user level, allowing each user in the practice to use their favorite screens and display options. </p>
+ 
+ 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp;Only the encounterPRO Administrator or Super User, under the direction of EHR Product Support should make any alterations or changes to these settings.&nbsp; The performance of the system can be dramatically changed by alteration of the preferences. </p>
+ 
+</I></FONT> 
+ <p> 
+Preference Types <br /> 
+There are five Preference Types: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Attachment Preferences  
+<LI class=bullets1>Billing Preferences  
+<LI class=bullets1>Color Preferences  
+<LI class=bullets1>Computer Configuration  
+<LI class=bullets1>EpIE Preferences  
+<LI class=bullets1>For Future Use  
+<LI class=bullets1>General Preferences  
+<LI class=bullets1>Maintenance Preferences  
+<LI class=bullets1>Msg/Task Preferences  
+<LI class=bullets1>Prescription Preferences  
+<LI class=bullets1>Reports/Documents Preferences  
+<LI class=bullets1>Security Preferences  
+<LI class=bullets1>Server Configuration  
+<LI class=bullets1>User Favorite Preferences  
+<LI class=bullets1>Version 2,4 Only Preferences  
+<LI class=bullets1>Workflow Configuration </LI></UL> 
+ <p> 
+Preference Levels <br /> 
+Each of the preference types can be applied to up to&nbsp;five different levels. The level controls the scope of the configuration change being made. The levels are: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1><STRONG>Global</STRONG> -- the preference applies to the entire network and will be the same on all office workstations at all locations.  
+<LI class=bullets1><STRONG>Office</STRONG>&nbsp;-- the preference applies to the entire office location and will be the same at all workstations at that location. The bar below the Level bar displays the office location for the current workstation. A different office location can be selected, if needed.  
+<LI class=bullets1><STRONG>Computer</STRONG> -- the preference applies to the current workstation (the computer the user is logged into) and will apply to all users logging on to that workstation. The bar below the Level bar changes to Computer and identifies the name of the computer at this workstation. A different workstation can be selected, if needed.  
+<LI class=bullets1><STRONG>Specialty</STRONG> -- the preference applies to users with the same specialty only. The bar below the Level bar will display the specialty of the current user. A different specialty can be selected, if needed.  
+<LI class=bullets1><STRONG>User</STRONG> -- preference applies to this user only. The bar below the Level bar will be labeled User and will default to the name of the user currently logged on. Another user can be selected, if the preference needs to be changed for someone other than the user logged in.</LI></UL> 
+ <p> 
+Preference Hierarchy </p>
+ 
+ 
+ <p> 
+The lower levels will override the preferences set a the higher levels. That is, the Global preference can be set one way and if the Computer preference is different, the system will use the Computer preference on that workstation. The hierarchy is represented on the Preferences screen as the levels go from Global on the left (highest) to User on the right (lowest). <br /> 
+ <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Not every preference can be set at every level. Italic writing means that preference is not available at the current level. </p>
+ 
+</I></FONT> 
+ <p> 
+Examples of Commonly Used Preferences <br /> 
+The follow lists are some of the more commonly changed preferences in the encounterPRO system. There are many more preferences available which do not appear in the lists below. Download this&nbsp;<A href="https://content.rightanswers.com/onlinekm50/scripts/uploadedfiles/090090115185203.xlsx" target=_blank>Spreadsheet of Preferences</A> to get a list of all the preferences by Preference Type with levels available and description. </p>
+ 
+ 
+ <p> 
+<STRONG>Attachment Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Allow Folder Delete - allow users to delete attachment folders  
+<LI class=bullets1>Attachment Default Folder (context) - the default folder in which to put new documents and attachments when the folder is not otherwise specified</LI></UL> 
+ <p> 
+<STRONG>Billing Preferences</STRONG> <br /> 
+ </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Default Encounter Type - set the default encounter type for encounters created via the PMS integration</LI></UL> 
+ <p> 
+<STRONG>Color Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>These preferences should not be changed by encounterPRO users</LI></UL> 
+ <p> 
+<STRONG>Computer Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Audio Priority Sound - enable the audible alert for high and urgent priority messages and tasks  
+<LI class=bullets1>Auto Logoff When Idle - determine the length of time a workstation can be idle before the system automatically logs the user out  
+<LI class=bullets1>Preferred Room - set a preferred treatment room in encounterPRO as the preferred room for a specific workstation  
+<LI class=bullets1>Window Resizable/Start Maximized - enable the window resizing options</LI></UL> 
+ <p> 
+<STRONG>EpIE Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>These preferences should not be changed by encounterPRO users</LI></UL> 
+ <p> 
+<STRONG>For Future Use</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>These preferences should not be changed by encounterPRO users</LI></UL> 
+ <p> 
+<STRONG>General Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Configuration Mode - turn on/off Config Mode  
+<LI class=bullets1>Default Search Mode&nbsp; - set the search mode to Begins with or Contains  
+<LI class=bullets1>Logon Screen Browser URL - set a website as the default for the encounterPRO logon screen display  
+<LI class=bullets1>Enable Scribing - turn on scribing at the practice </LI></UL> 
+ <p> 
+<STRONG>Maintenance&nbsp;Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Perform Daily Sync - perform the data sync operation during the daily maintenance routine  
+<LI class=bullets1>Purge Recent Picks - purge the freeform recent pick lists during the nightly maintenance routine  
+<LI class=bullets1>Purge Recent Picks Keep # - the number of recent picks to keep when the lists are purged.&nbsp; Default is 30.</LI></UL> 
+ <p> 
+<STRONG>Msg/Task Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Audio Priority Sound - enable/disable audio alert when office view contains high-priority service  
+<LI class=bullets1>Default Filter for My ToDo List -<STRONG> </STRONG>the default service to filter for on the My Todo Items screen</LI></UL> 
+<P class=bullets1><STRONG>Prescription Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>RX Frequency Display - show only the code (e.g. BID), or description, or both code and description  
+<LI class=bullets1>RX Signature Prompt - Text of the prompt for authorization and verification of prescription  
+<LI class=bullets1>Display RX Dispense Amount Textually - display dispense amounts both textually and numerically (e.g. fifty three (53))&nbsp; or display dispense amounts only numerically.</LI></UL> 
+<P class=bullets1><STRONG>Security Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Allow Multiple Logons - allow/restrict users to log on to more than one workstation simultaneously</LI></UL> 
+<P class=bullets1><STRONG>Subscription Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Preferences used for any external service the preference is subscribed to</LI></UL> 
+ <p> 
+<STRONG>User Favorite Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Favorite Chart Display Mode - determine how the default Patient Chart screen displays treatments and assessments  
+<LI class=bullets1>Favorite Observation (CC, HPI, ROS, Physical, etc.) - select the exact observation (screen) that will be used for that type of observation  
+<LI class=bullets1>Favorite Display Mode for Observation - determine the format of the favorite observations, drilldown or Yes/No</LI></UL> 
+ <p> 
+<STRONG>Workflow Preferences</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Favorite Role for Scheduling Referrals - role of the staff personnel who will be responsible for scheduling referrals  
+<LI class=bullets1>Supervisor Review - determine if supervisor review is mandatory</LI></UL> 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Some preferences will be apparent to the user making the change immediately, others require you to restart the encounterPRO EHR. Other users in the practice will generally need to restart the encounterPRO EHR. <br /> 
+ </p>
+ 
+</I></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT size=4>Related Solutions</FONT> <br /> 
+<U><A href='../../040823912484325.html'>Screen: encounterPRO Preferences</A> <br /> 
+<A href='040823314433033.html'>How to: Change a Preference</A> <br /> 
+<A href='040823320564997.html'>How to: Set the Attachment Folder Preference</A> <br /> 
+<A href='040823315284538.html'>How to: Set the Computer Secure Preference</A> <br /> 
+<A href='040823315540196.html'>How to: Set the Default Search String Preference</A> <br /> 
+<A href='040823409295205.html'>How to: Set the New Assessment Sort Preference</A> <br /> 
+<A href='../Prescription medications/040821216175743.html'>How to: Set the Preference for Signatures on Prescriptions</A> <br /> 
+<A href='040818311345294.html'>How to: Set Window Sizing Preferences</A></U> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823313372157</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 06:57:03 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

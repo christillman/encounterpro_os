@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Update a siblings phone number from its guardian record in Medical Manager" />
+    <meta name="TITLE" content="How to: Update a siblings phone number from its guardian record in Medical Manager" />
+    <meta name="DESCRIPTION" content="Refer to table, and set attribute value to FALSE." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10158 - How to update siblings phone number (Medical Manager) from its guardian record" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Update a siblings phone number from its guardian record in Medical Manager</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Update a siblings phone number from its guardian record in Medical Manager</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+This article explains how to automatically update the siblings phone number from it's guarantor records. To make siblings' demographics from the 'gurantor' update automatically in the future, refer to the table. To allow users to update the siblings phone number &amp; address manually through EncounterPRO, set the attribute's value to 'FALSE'. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+This article explains how to automatically (through interface) update the siblings phone number from it's guarantor records.  <br /> 
+Supported from EPROServer version 4.05.2 and up. </p>
+ 
+  <p> 
+Reason is disabled or missing attribute in c_Component_Attribute. </p>
+ 
+  <p> 
+Resolution <br /> 
+1) To make the siblings' demographics from the 'gurantor' (their guardian) update automatically in the future, set the following attribute in 'c_component_attribute' table. <br /> 
+c_Component_Attribute </p>
+ 
+  <p> 
+ <TABLE style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 border=0 alignment=""> <TBODY> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;component_id</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;attribute_sequence</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;attribute</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;value</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;MSG_HND_MEDMAN_CHECKIN</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;1000084</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;update_siblings_phone_from_guarantor</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;True</TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+2) To allow the users to update these siblings phone number &amp; address manually through EncounterPRO, set the above attribute value to 'FALSE'. <br /> 
+&nbsp; <br /> 
+To update the phone#,address to all the pre-existing siblings from a Gurantor, run the following query:  </p>
+ 
+  <p> 
+DECLARE @ls_billing_id varchar(20),@ls_phone_number varchar(32), @ls_address_line_1 varchar(40),@ls_address_line_2 varchar(40), @ls_city varchar(40), @ls_zip varchar(10), @ls_state varchar(2) </p>
+ 
+  <p> 
+DECLARE lc_patient_guarantor CURSOR FOR <br /> 
+SELECT billing_id,phone_number,address_line_1,address_line_2,city,state,zip <br /> 
+FROM p_Patient where billing_id like '%.0%' <br /> 
+OPEN lc_patient_guarantor <br /> 
+FETCH lc_patient_guarantor INTO <br /> 
+&nbsp;@ls_billing_id, <br /> 
+&nbsp;@ls_phone_number, <br /> 
+&nbsp;@ls_address_line_1, <br /> 
+&nbsp;@ls_address_line_2, <br /> 
+&nbsp;@ls_city, <br /> 
+&nbsp;@ls_state, <br /> 
+&nbsp;@ls_zip <br /> 
+WHILE (@@FETCH_STATUS = 0) <br /> 
+BEGIN </p>
+ 
+  <p> 
+&nbsp;Update p_patient <br /> 
+&nbsp;set phone_number = @ls_phone_number, <br /> 
+&nbsp;address_line_1 = @ls_address_line_1, <br /> 
+&nbsp;address_line_2 = @ls_address_line_2, <br /> 
+&nbsp;city = @ls_city, <br /> 
+&nbsp;state = @ls_state, <br /> 
+&nbsp;zip = @ls_zip <br /> 
+&nbsp;where billing_id like (substring(@ls_billing_id,1,PATINDEX('%.%', @ls_billing_id)))+'%' </p>
+ 
+  <p> 
+&nbsp;FETCH lc_patient_guarantor INTO <br /> 
+&nbsp;@ls_billing_id, <br /> 
+&nbsp;@ls_phone_number, <br /> 
+&nbsp;@ls_address_line_1, <br /> 
+&nbsp;@ls_address_line_2, <br /> 
+&nbsp;@ls_city, <br /> 
+&nbsp;@ls_state, <br /> 
+&nbsp;@ls_zip </p>
+ 
+  <p> 
+END <br /> 
+CLOSE lc_patient_guarantor <br /> 
+DEALLOCATE lc_patient_guarantor </p>
+ 
+  <p> 
+<STRONG>Affected Products <br /> 
+Product</STRONG>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;PM Integration <br /> 
+<STRONG>Version</STRONG>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; All Versions </p>
+ 
+  <p> 
+Article created on 2/4/2005 by Sumathi </p>
+ 
+  <p> 
+Article last updated on 11/10/2005 by jmj\david.strube </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Siblings phone number & address are not updated.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040828010480358</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

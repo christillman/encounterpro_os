@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Take Out Top Tab - Fixing Flow Tab Display" />
+    <meta name="TITLE" content="How to: Take Out Top Tab - Fixing Flow Tab Display" />
+    <meta name="DESCRIPTION" content="This solution gives instructions for removing top tabs on the Patient Chart (SOAP screen) and correcting the Flow tab display." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10422 Top Tab Patient Chart Flow Tabs" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Take Out Top Tab - Fixing Flow Tab Display</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Take Out Top Tab - Fixing Flow Tab Display</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Taking out a top tab (example: H&P on the SOAP screen) <br /> 
+ <OL> <LI class=numbers1>Go to c_chart_section_page.</LI> <LI class=numbers1>Filter for the desired tab in the description field .</LI> <LI class=numbers1>For all of the rows returned, add 4 zeroes to the end of the chart_id (so the record won't be read).</LI></OL>Fixing the Flow tab: <br /> 
+ <OL> <LI class=numbers1>Go to c_chart_section_page_attribute.</LI> <LI class=numbers1>In Value, filter for *general*general* .</LI> <LI class=numbers1>Will return rows with the value %General %General Favorite Quick View, PT Flow% .</LI> <LI class=numbers1>Delete the first %General so that it just has %General Favorite Quick View, PT Flow% .</LI> <LI class=numbers1>The value will now look for the preferred PT Flow script.</LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=3>Source</FONT> <br /> 
+Original KB article: Article #10422 - Taking out top tab - fixing flow tab display <br /> 
+Article created on 11/15/2005 by jmj\stephanie.saxon <br /> 
+</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820014522612</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 11/13/2008 01:08:26 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

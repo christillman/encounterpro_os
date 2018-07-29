@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure a Prescription Medication with Irregular Dosing" />
+    <meta name="TITLE" content="How to: Configure a Prescription Medication with Irregular Dosing" />
+    <meta name="DESCRIPTION" content="Configuring a medication that uses irregular dosing." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Configure Drug Medication Prescription Dosing Irregular Variable" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure a Prescription Medication with Irregular Dosing</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Prescription medications</div>
+<hr />
+<h2>How to: Configure a Prescription Medication with Irregular Dosing</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> <br /> 
+ </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>Before You Begin  
+<LI class=bullets1>Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL> 
+ <p> 
+<FONT size=4>Purpose</FONT> <br /> 
+There are certain medications that have an irregular dosing schedule that need to be configured differently than those with a steady dosing schedule. One such medication is Azithromycin 5 Day Dose Pack, where the patient takes 2 pills the first day then 1 pill for the next 4 days. Since encounterPRO administration rules do not allow for a variable dosing schedule, the drug package and administration rules are, in effect, disabled. The variable dosing schedule is handled by creating a default Special Instruction for the medication/package combination. </p>
+ 
+ 
+ <p> 
+<FONT size=4>Before You Begin <br /> 
+</FONT>Review the instructions for Adding a Prescription Medication Package before beginning. <br /> 
+You will need to perform several steps: </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Create the Take as Directed Package  
+<LI class=numbers1>Create the Administration Rule for the new package  
+<LI class=numbers1>Create the default Patient Instructions for the drug/package</LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> 
+ <p> 
+<FONT size=4>Steps <br /> 
+</FONT>Because you will be creating default Special Instructions, it is easiest to perform this procedure from a patient context, rather than from the Configuration list. Create an encounter for a Test patient, then follow the steps below: <br /> 
+<EM><FONT color=#6600ff>To create the Take as Directed Package: <br /> 
+</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Patient Chart screen, select the Any Treatment button.  
+<LI class=numbers1>Select Prescription Drug from the menu. The Select Prescription Drug screen appears.  
+<LI class=numbers1>Locate the medication you need to configure from the short list or use the Search options to locate it.  
+<LI class=numbers1>Select the small icon to the left of the medication name. A menu of options appears.  
+<LI class=numbers1>Select Edit Config. The Single Drug Definition screen appears.  
+<LI class=numbers1>Create a 'Take as Directed' Package. <br /> 
+ 
+<P class=numbers1>a.  Select Packages.   <br /> 
+b. Select Add Package. The Select Dosage Form list appears.  <br /> 
+c. Select a dosage form of 'Titrate/Special Dose.' Remember that the dosage form appears on the Assessment Treatment screen but does not display on the Patient Chart or print out on the prescription. Choose the Titrate/Special Dose dosage form is so that users will be able to distinguish it at order time from traditional drug packages.  <br /> 
+d. Select the New Package button.  <br /> 
+e. Select an Administer Method.  <br /> 
+f. Enter a dosage amount using the Each __ Contain __ of the drug.  remember this unit, since you will need to create an Administration Rule with the same unit. A typical configuration is Each 1 dose Contains 1 dose of drug.  <br /> 
+g. Edit the Package Description to reflect the dosage/package you are creating. This Package Description is what prints out on the prescription.  <br /> 
+h. Select OK, a second screen will appear with the title 'Package for (Drug name)'  <br /> 
+i. Select the 'Take As Directed' option near the bottom of the screen. Click on the button and change 'No' to 'Yes.' This will suppress all dosing information when the end user prescribes the drug package.  <br /> 
+j. Enter a Default Dispense Amount and select the Unit.  <br /> 
+k. Select the Dispense Choices box and enter at least one dispense choice.  <br /> 
+l.Select OK.  <br /> 
+ <br /> 
+The Single Drug Definition screen reappears with the new package listed. </p>
+ 
+</LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff>To Create the Administration Rule: <br /> 
+</FONT></EM>You will need to create an Administration Rule that is compatible with the drug package you created above. Use the same unit as you selected in step 6 above. </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Select the Administration tab. There must be at least one Administration Rule for any given drug package.  
+<LI class=numbers1>Select the appropriate rule (ASDIR, etc.). The Administration screen for the new drug appears.  
+<LI class=numbers1>Enter the remaining information needed for the administration rule: <br /> 
+ 
+<P class=bullets1>a. Enter the Amount. In this situation you could use 1 Dose Equals 1 Dose or something similar.  <br /> 
+b. Select the Unit. (The administration unit for the Administration Rule and Take As Directed package created above <STRONG>must</STRONG> be the same to be compatible.)  <br /> 
+c. Accept the generated description or edit the description to meet your needs  </p>
+ 
+ 
+<LI class=numbers1> 
+<P class=bullets1>Select OK. The Select Prescription Drug screen reappears. </p>
+ 
+</LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff>To Create the Special Instructions: <br /> 
+</FONT></EM>Default instructions may be created only on the Prescription Drug Ordering screen. </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Select the prescription medication for which you just created the new Take As Directed package.  
+<LI class=numbers1>Select the new Administration Rule and be sure to select the Titrate/Special Dose as the package.  
+<LI class=numbers1>Select OK to order the medication. The Drug Ordering screen appears.With the Take As Directed package, there is no dosing information. This will be handled by creating default instructions for this drug.  
+<LI class=numbers1>Select the Special Instructions gray box then select Patient Instructions. The Patient Instructions screen appears.  
+<LI class=numbers1>Enter the dosing instructions in the white text area then select OK. The text appears in the Special Instructions box.  
+<LI class=numbers1>Select the Special Instructions box again and select Set as Default.  
+<LI class=numbers1>Select the Set Default Patient Instruction option.  
+<LI class=numbers1>Select the Set Default for Drug/Package option.  
+<LI class=numbers1>Select Finished to order the medication.</LI></OL> 
+ <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions</FONT> <br /> 
+<U><A href='../../Using encounterPRO v5/Treatments/Prescription medications/040818913345147.html'>Concept: Prescription Medications</A> <br /> 
+<A href='040823912403347.html'>Screen: Configure Simple Prescription Medications</A> <br /> 
+<A href='040817713294497.html'>How to: Add a New Simple Prescription Medication</A> <br /> 
+<A href='040817615323753.html'>How to: Add a New Prescription Medication Package</A></U> </p>
+ 
+ 
+ <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT>User Configuration Level 1 <br /> 
+</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040819710145590</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/17/2008 02:38:33 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

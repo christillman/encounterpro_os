@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Use the EPiE Agent 1.0" />
+    <meta name="TITLE" content="How to: Use the EPiE Agent 1.0" />
+    <meta name="DESCRIPTION" content="Handoff Document for EpIE Agent 1.0" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="EpIE Agent Handoff Configuration" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Use the EPiE Agent 1.0</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Integrations &gt; EPiE</div>
+<hr />
+<h2>How to: Use the EPiE Agent 1.0</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>EpIEAgent allows EHR interface partners to upload data intended for import into the EncounterPRO database or download data sent from an EncounterPRO database for a mutual customer without working directly with the EpIEGateway SOAP service.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>It resides on the interface partner's network and communicates with the EpIEGateway SOAP service at EHR headquarters.<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>EpIEAgent is intended for use on the Microsoft Windows platform, but it is possible to run EpIEAgent in a Unix/Linux environment using the Mono framework.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>However, EHR will provide no support for running EpIEAgent on Mono.<o:p></o:p></FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>The latest version of EPIE Agent is found in EHR FTP site under "EP_Upgrades[Production or Beta]EPIE Agent". After EpIEAgent is installed, it must be configured.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This can be done either by running the "Configure Feeds" shortcut created in the EpIEAgent program group, or by running the EpIEAgent.exe executable with the -c argument from the command line.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>The configuration screen looks like this.</FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??></SPAN>&nbsp; </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> <img src="images/090081001220703.jpg" alt="Screen: &quot;EPiE Agent Configuration&quot;" /></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??></SPAN>&nbsp; </p>
+ 
+<SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial> 
+<OL> 
+<LI class=numbers1>The first thing to do is set the general configuration options. To do this, Select "General Options" from the File menu. <br /> 
+</LI> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"></FONT></SPAN><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> <img src="images/090081001220821.jpg" alt="Screen: &quot;EPiE Agent General Options&quot;" /> <br /> 
+ <br /> 
+</SPAN> </p>
+ 
+<SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial> 
+<LI class=numbers1>The three pieces of information on this screen are the Interface Partner's Owner ID, EpIE User ID, and EpIE Password. All three are provided by EHR. Without providing this information, no messages can be sent to or received from the EpIEGateway SOAP service.  <br /> 
+ <br /> 
+Each path by which messages travel to or from the interface partner is called a "feed" in EpIEAgent. There are currently two types of feeds supported: File and HL7 Socket. To create a new feed, click the "New" button on the main configuration screen.  <br /> 
+ <br /> 
+</FONT></SPAN><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p> <img src="images/090081001221010.jpg" alt="Screen: &quot;EpIE Agent Configuration 2&quot;" /></o:p></SPAN></LI></OL><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> <br /> 
+<FONT face=Arial>Here's a description of each of the options you see here:<o:p></o:p></FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>Enabled</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - Determines whether this feed operates when EpIEAgent runs.<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>Upload</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - Determines whether this feed will upload data from the interface partner to EpIEGateway<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>Download</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - Determines whether this feed will download data from the EpIEGateway to the interface partner<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>Description</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - This description is displayed in the dropdown menu of available feeds and is also included in any error message descriptions.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>AddresseeId</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - This is the Interface Service ID of the interface partner and this is found by <A href="#InterfaceServiceID">looking up in</A> CMA under the partner-&gt;interface service page.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>CustomerId</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - This is an identifier the customer to send data to or receive data from.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>For uploading, it can be an identifier defined by the interface partner or the Customer ID defined by JMJ.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>For downloading, the JMJ-defined Customer ID must be used.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>CustomerId is a JMJ AddresseeId</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - If the CustomerId used is the ID defined by JMJ, check this box so that EHR's integration engine knows that no customer identifier mapping is necessary.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>DocumentType</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The type of document consumed by or sent by the interface partner.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This value is found in CMA by <A href="#InterfaceServiceID">looking up</A> under the partner -&gt; Interface Service.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is required<o:p></o:p></SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: " AR-SA? mso-bidi-language: EN-US; mso-ansi-language: #00FF; mso-fareast-language: MS?; Unicode ?Arial mso-fareast-font-family: Arial?,?sans-serif?;>Class</SPAN></B><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: " AR-SA? mso-bidi-language: EN-US; mso-ansi-language: #00FF; mso-fareast-language: MS?; Unicode ?Arial mso-fareast-font-family: Arial?,?sans-serif?;> - This determines the type of feed to use.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>The options are <B style="mso-bidi-font-weight: normal">FileWorker</B> and <B style="mso-bidi-font-weight: normal">HL7SocketWorker</B>.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.</SPAN></FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: " AR-SA? mso-bidi-language: EN-US; mso-ansi-language: #00FF; mso-fareast-language: MS?; Unicode ?Arial mso-fareast-font-family: Arial?,?sans-serif?;><FONT face=Arial></FONT></SPAN>&nbsp; </p>
+ 
+<SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: " AR-SA? mso-bidi-language: EN-US; mso-ansi-language: #00FF; mso-fareast-language: MS?; Unicode ?Arial mso-fareast-font-family: Arial?,?sans-serif?;> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>Once a Class is selected, more options specific to that type of feed will appear.<o:p></o:p></FONT></SPAN></B> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN></B> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"> 
+<TABLE class=MsoNormalTable style="MARGIN: auto auto auto -0.25pt; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=0> 
+<TBODY> 
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-top-alt: solid black .5pt; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>All Feeds<o:p></o:p></FONT></SPAN></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-top-alt: solid black .5pt; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>File Feeds<o:p></o:p></FONT></SPAN></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>HL7 Socket Feeds<o:p></o:p></FONT></SPAN></B> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 1"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>CopySuccess</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - You may provide a folder path in this field in which successfully uploaded or downloaded messages will be written.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>The files will be named with a sortable date-time string and have a txt extension.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>Folder</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The folder in which to find messages for upload and/or to write messages that are downloaded.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>ListenAddress</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The IP Address or DNS name of the listening interface on which HL7 messages will be received before upload to the EpIEGateway SOAP service.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>If this is left blank, the feed will listen on all available interfaces.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 2"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>CopyError</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - You may provide a folder path in this field in which messages will be written that had an error in uploading or downloading.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Downloaded messages will only appear in this folder if there was an error after the message was successfully downloaded from the EpIEGateway SOAP service.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>The files will be named with a sortable date-time string and have a txt extension.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>ReadFilter</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The filename pattern to filter with when reading messages for upload (for example, *.txt or *.*).<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required for upload</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>ListenPort</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The TCP port on which the feed should listen for HL7 messages.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required for upload</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 3"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>OutputName</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The filename pattern to use when writing downloaded messages to files (for example, *.msg).<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>Asterisks will be replaced with GUIDs.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required for download</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>SendAddress</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The IP Address or DNS name of the interface to send to when downloading messages from the EpIEGateway SOAP service. This field is <B style="mso-bidi-font-weight: normal">required for download</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 4"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>SendPort</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - The TCP port to send to when downloading messages from the EpIEGateway SOAP service.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>This field is <B style="mso-bidi-font-weight: normal">required for download</B>.<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 5"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>HL7Header</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - A comma-delimited list of hex-encoded characters expected at the beginning of an HL7 Socket transmission.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>If this is left blank, the default is "0x0b".<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 6; mso-yfti-lastrow: yes"> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: #ece9d8; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 159.6pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p><FONT face=Arial>&nbsp;</FONT></o:p></SPAN></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #ece9d8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 160.1pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-left-alt: solid black .5pt; mso-border-bottom-alt: solid black .5pt; mso-border-right-alt: solid black .5pt" vAlign=top width=213> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LAYOUT-GRID-MODE: char"><FONT face=Arial><B style="mso-bidi-font-weight: normal"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??>HL7Trailer</SPAN></B><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> - A comma-delimited list of hex-encoded characters expected at the end of an HL7 Socket transmission.<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>If this is left blank, the default is "0x1c,0x0d".<o:p></o:p></SPAN></FONT> </p>
+ 
+</TD></TR></TBODY></TABLE> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><FONT face=Arial></FONT>&nbsp; </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial size=4>Getting Interface Service ID &amp; Document Type</FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><FONT face=Arial>The screen below shows how to look up the document type and service id in CMA.</FONT></SPAN> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??></SPAN>&nbsp; </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??> <img src="images/090081001221329.jpg" alt="Screen: &quot;EpIE Agent Configuration 2&quot;" /></SPAN> </p>
+ 
+</SPAN> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-SIZE: 12pt; FONT-FAMILY: " AR-SA? mso-bidi-language: EN-US; mso-ansi-language: #00FF; mso-fareast-language: MS?; Unicode ?Arial mso-fareast-font-family: Arial?,?sans-serif?;></SPAN></o:p></SPAN>&nbsp; </p>
+ 
+<o:p></o:p></SPAN></o:p></SPAN></SPAN> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN style="FONT-FAMILY: " Arial?,?sans-serif??><o:p></o:p></SPAN>&nbsp; </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827522180232</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 10:18:00 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

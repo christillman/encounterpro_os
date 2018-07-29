@@ -1,0 +1,80 @@
+body
+{
+    background: white;
+	font-family: Arial, Sans-Serif;
+	font-size: .85em;
+}
+
+hr 
+{
+	height: 2px;
+	width: 100%;
+	color: navy;
+	background-color: navy;
+}
+
+h2
+{
+	font-size: 1.2em;
+}
+
+a
+{
+	color: navy;
+}
+
+div.taxonomyLinks
+{
+
+}
+
+div.solutionLinks
+{
+	margin-top: 10px;
+}
+
+.solutionPath
+{
+	padding: 5px;
+}
+
+.subtext
+{
+	font-size: .9em;
+}
+
+td.sectionLabel
+{
+	vertical-align: top;
+	font-weight: bold;
+	padding-top: 15px;
+}
+
+td.sectionContent
+{
+	padding-top: 15px;
+	padding-left: 10px;
+}
+
+.notetext
+{
+    font-style: italic;
+    color: green;
+}
+
+.tiptext
+{
+    font-style: italic;
+    color: blue;
+}
+
+.cautiontext
+{
+    font-style: italic;
+    color: red;
+}
+
+.addbold
+{
+	font-weight: bold;
+}

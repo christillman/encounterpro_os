@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Require Supervisory Review" />
+    <meta name="TITLE" content="How to: Require Supervisory Review" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for configuring encounterPRO to require supervisory review of an encounter." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Supervisory Review Configuration Require Encounter Preferences" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Require Supervisory Review</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Other</div>
+<hr />
+<h2>How to: Require Supervisory Review</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+In this solution<STRONG>...</STRONG> <br /> 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>Before You Begin  
+<LI class=bullets1>Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL><FONT size=4>Purpose</FONT> <br /> 
+In certain cases you may have a user who's encounters must be reviewed by another provider. Residents and new providers who do not have their own billing number in the billing system will generally require you to set up the supervisory review process. <br /> 
+ <br /> 
+This is a two-part process: <br /> 
+ 
+<OL> 
+<LI class=numbers1>Select the user's supervisor on the User definition screen  
+<LI class=numbers1>Set the Workflow Preferences to require supervisory review</LI></OL> <br /> 
+<FONT size=4>Before You Begin <br /> 
+</FONT>Your workplan configuration will control what happens during the Supervisory Review. There are several options, the most common being:  <br /> 
+ 
+<UL> 
+<LI class=bullets1>Send patient to Checkout, send a ToDo to the supervisory provider to review the chart  
+<LI class=bullets1>Leave patient in exam room, create a service bar for the supervisory provider to review the chart before it can go to Checkout  
+<LI class=bullets1>Move the patient to a Pre-checkout room with a service bar for the supervisory provider to review the chart before it can go to Checkout</LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> 
+ <p> 
+<FONT size=4>Steps <br /> 
+</FONT>Follow the steps below: <br /> 
+<EM><FONT color=#6600ff>To Set the Supervisor for a User:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Configuration tab, select Users. The Select a User to Edit screen appears.  
+<LI class=numbers1>Select the user who needs to have a supervisor assigned. You may need to use the Search options to locate the desired user. The User Definition screen appears.  
+<LI class=numbers1>Select the gray bar for Supervisor. The Select User screen appears.  
+<LI class=numbers1>Select the user who will be supervising the current user. The User Definition screen reappears.  
+<LI class=numbers1>Select OK to return to the Select User to Edit screen.  
+<LI class=numbers1>Select OK to return to the Configuration list.</LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff>To Set the Supervisory Preference:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Configuration tab, select Preferences. The Preferences screen appears.  
+<LI class=numbers1>Select Workflow Preferences from the selections on the left.  
+<LI class=numbers1>Select User as the preference level (along the bottom of the screen). The user id of the current user appears.  
+<LI class=numbers1>If you want to set this preference for a different user, select the name for the Preference Key. The Select User screen appears.  
+<LI class=numbers1>Select the user who needs to be supervised. The Preferences screen reappears with the selected user as the Preference Key.  
+<LI class=numbers1>Select Supervisor Review. Type 'True' in the Supervisor Review field then select Finished.  
+<LI class=numbers1>Select OK to save your changes and return to the Configuration list.  
+<LI class=numbers1>Repeat steps 1 through&nbsp;6 for each user for which you want to activate supervisory review.</LI></OL> 
+ <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions</FONT> <br /> 
+<U><A href="../Preferences/040823313372157.html">Concept: encounterPRO Preferences</A> <br /> 
+<A href="../../Using encounterPRO v5/Security/encounterPRO Users/040817111243450.html" target="_blank">Screen: User Definition</A> <br /> 
+<A href="../../Using encounterPRO v5/Billing/040817111464288.html">Screen: Checkout Room</A></U> </p>
+ 
+ 
+ <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT><U>User Configuration Level 1</U> <br /> 
+&nbsp; </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040818218014053</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 01/15/2009 02:40:43 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Lab Results are showing 'Ready' status in EPIE but not uploading to customer." />
+    <meta name="TITLE" content="Lab Results are showing 'Ready' status in EPIE but not uploading to customer." />
+    <meta name="DESCRIPTION" content="The lab results download engine is not enabled or is having some issues." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10502 Why Results are showing 'Ready' status in EPIE but not uploading to customer" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Lab Results are showing 'Ready' status in EPIE but not uploading to customer.</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Hotfixes</div>
+<hr />
+<h2>Lab Results are showing 'Ready' status in EPIE but not uploading to customer.</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+The lab results download engine is not enabled or is having some issues.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Check to see the encounterpro services are running. Check the 'Event Viewer' to see any errors logged under 'EPROSCHEDULE' / 'EPROLIBNET'.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+1) Check to see the encounterpro services are running. <br /> 
+2) Check the 'Event Viewer' to see any errors logged under 'EPROSCHEDULE' / 'EPROLIBNET'. If yes then it could be one of the following: <br /> 
+  a) If there is EPROLIBNET error that shows the following error text: (Like Validation Failed) <br /> 
+    1] Then Rerun HOTFIX 99 SecureGateway and Go to 'EncounterPRO', select 'Configuration' and click 'Preferences'. <br /> 
+    2] Set the 'EPIE Username' and 'EPIE Password'. <br /> 
+    3] You don't need to rerun HOTFIX 99 but for very few cases I noticed something make the EPIE Username encrypted and noticed below errors. But if you get validation failed then try reentering the EPIE username / pwd and restart the EncounterPRO Service to see it works. </p>
+ 
+  <p> 
+&lt;EncounterPROContext cpr_id='''' PrimaryObjectKey='0' <br /> 
+PrimaryContextObject=''General''&gt;&lt;ContextObject ObjectKey=''General'' <br /> 
+ContextObject=''General''&gt;&lt;ContextProperty name=''customer_id' <br /> 
+ unit=''''&gt;2094&lt;/ContextProperty&gt;&lt;ContextProperty name=''database_version'' unit=''''&gt;05&lt;/ContextProperty&gt;&lt;ContextProperty name=''major_release'' <br /> 
+unit=''''&gt;4&lt;/ContextProperty&gt;&lt;ContextProperty name=''modification_level'' <br /> 
+unit=''''&gt;127&lt;/ContextProperty&gt;&lt;ContextProperty name=''provider'' unit=''''&gt;JMJ Service&lt;/ContextProperty&gt;&lt;/ContextObject&gt;&lt;/EncounterPROContext&gt; </p>
+ 
+  <p> 
+System.Web.Services.Protocols.SoapException: Server was unable to process request. ---&gt; Validation failed. </p>
+ 
+  <p> 
+  b) For some cases in very few customers it was throwing 'EPROLIBNET' with 'Error calling setcallbackwindow()'. This case it is recommended to reinstall EPROLIBNET to fix this kinds of issues. </p>
+ 
+  <p> 
+4.05.9.15 (6/13/2007) &lt;Server PB Code&gt; &gt;&gt;&gt; u_component_observation_jmj_com - (xx_initialize()) Error setting callback window (Error calling external object function setcallbackwindow at line 81 in function xx_initialize of object u_component_observation_jmj_com.) </p>
+ 
+  <p> 
+3) If encounterpro services are running and none of the above errors noticed then it might be the result engine is not setup or disabled. <br /> 
+4) Go to 'DB Maintenance', select 'Utility' tab and run utility 'Enable the lab results interface'.  <br /> 
+5) By default it's 2 minutes to download the results. After doing step b and after 2 minutes if you still notice the messages waiting in 'Ready' status then send it to 'Integration Specialist' for advise. </p>
+ 
+  <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTES: It is not EPIE issue. If you notice lot of messages waiting in 'Ready' status that means the encounterpro service at customer site is either not running or having issues to download the results. Resending the messages to this case is not a solution. Because the messages are successfully processed and ready for customer to download it. Just make sure the customer is in 5.1.8 (with 5.1.9 files) or any later versions. If they are but still having this issues then notify 'Development:'</I></FONT> </p>
+ 
+  <p> 
+Article created on 4/26/2006 by sumathi.asok </p>
+ 
+  <p> 
+Article last updated on 10/26/2007 by Sumathi.Asok</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+EPIE dashboard shows lot of messages in 'Ready' status.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822916384113</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:46 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

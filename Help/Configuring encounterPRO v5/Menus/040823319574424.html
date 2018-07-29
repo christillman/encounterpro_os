@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure a Report Button to Use Document Manager" />
+    <meta name="TITLE" content="How to: Configure a Report Button to Use Document Manager" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for how to configure a button for a report that will use Document Manager." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Document Manager Report Button Configure" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure a Report Button to Use Document Manager</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Menus</div>
+<hr />
+<h2>How to: Configure a Report Button to Use Document Manager</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>Before You Begin  
+<LI class=bullets1>Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL> 
+ <p> 
+<FONT size=4>Purpose</FONT> </p>
+ 
+ 
+ <p> 
+Whether or not a report is routed to the printer or sent to Document Manager is determined by how the report is ordered. The menu button used to order a report can be configured to use Document Manager.  
+ <p> 
+<FONT size=4>Before You Begin</FONT> </p>
+ 
+ 
+ <p> 
+There are a few configuration parameters that must be defined when setting up a report button that will use Document Manager. <br /> 
+<STRONG>Document Creation flag</STRONG> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1><STRONG>Report Only</STRONG>. (default) the report and display/print only. No document is persisted.  
+<LI class=bullets1><STRONG>Order Document</STRONG>. No document is displayed or printed right now, but a Document workplan item is created and associated with the current context. The actual creation/disposition of the document will happen later using the Document Management screen.</LI></UL> 
+<P class=bullets1><STRONG>Document Purpose <br /> 
+</STRONG>Every document processed by Document Management must have a purpose (within the context: encounter, treatment, patient). The purpose tells encounterPRO what type of document is being processed so that it can make the correct routing decision. For example, if the purpose of the document is NewRX that document can be 'sent' to the patient or to a Pharmacy.&#160; If&#160; Patient is selected then the document may be routed only to&#160;a printer.&#160; If instead a pharmacy was selected as the recipient, the document may be routed via fax or SureScripts-RxHub. <br /> 
+ <br /> 
+<STRONG>Send/Print Now <br /> 
+</STRONG>Documents using Document Manager can still be automatically routed to the printer, if desired. This is set by individual report, so if the practice wants all prescriptions to automatically print immediately, this flag is set to Yes. The default setting is No, which allows a user to determine the routing for an individual instance of a report. <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> 
+ <p> 
+<FONT size=4>Steps <br /> 
+</FONT>Follow these steps: </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Turn on Config Mode. (See <A href="../../Configuring encounterPRO v5/On-the-Fly configuration/040818216453846.html" target="_blank">How to: Turn on Configuration Mode</A>.)  
+<LI class=numbers1>Navigate to the screen displaying the menu&nbsp;you want to change. (For example, if you want to change the buttons available on the Current Medications screen, display the Current Medications screen.)&nbsp;Notice the small text next to the menu buttons, this is the system name of the menu.  
+<LI class=numbers1>Select the small text with the name of the menu to access the menu configuration screen. All menus have a JMJ Version that you cannot edit. If you want to change a menu, you must first create a local copy.  
+<LI class=numbers1>Select the Create Local Copy button.  <br /> 
+ <br /> 
+ 
+ <p> 
+<FONT color=#00cc00><img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: If you later decide that you want to revert to the JMJ Version, select the Local Copy and select Inactivate, then select the JMJ Version and select Activate. </I></FONT></FONT> </p>
+ 
+<EM><FONT color=#009900></FONT></EM> 
+<LI class=numbers1>If you already have a Local Copy, be sure that bar is highlighted (darkened), then select the Edit Menu button. The Menu Properties screen appears.  
+<LI class=numbers1>Select New. A selection box appears for you to choose the type of button function.  
+<LI class=numbers1>EncounterPRO reports are a service, select Service. A list of service types appears.  
+<LI class=numbers1>Select the report context for the report: <br /> 
+ 
+<UL> 
+<LI class=bullets1>General  
+<LI class=bullets1>Patient  
+<LI class=bullets1>Encounter  
+<LI class=bullets1>Treatment</LI></UL> <br /> 
+A list of services for the level chosen appears. <br /> 
+ 
+<LI class=numbers1>Select the EPRO Report service.  
+<LI class=numbers1>If there are further parameters to define for this service a screen appears to allow you to enter the desired parameters. Select Finish. The Menu Item Properties screen reappears.  
+<LI class=numbers1>Select Order Document, then Next.  
+<LI class=numbers1>Enter a destination, if desired. (Not required for Document Manager) Select Next.  
+<LI class=numbers1>Enter a printer id or leave the Printer parameter blank to use the default printer. Select Next.  
+<LI class=numbers1>Select the report, then select Next.  
+<LI class=numbers1>Select Next three times until the&nbsp;Print/Send Now parameter appears. If you want the document to automatically print to the selected or default printer, select Yes. If you want to be able to choose the recipient and route, leave the parameter as No.  
+<LI class=numbers1>Select Next three times until the Context Object parameter appears. Select the context of this report.  
+<LI class=numbers1>Select Next.  
+<LI class=numbers1>Select the Document Purpose from the list. This is required for any electronically submitted documents.  
+<LI class=numbers1>Select Next.  
+<LI class=numbers1>If you want to send the copies of this particular report to a folder other than the default set for this report context, select a Folder. Otherwise, select Finished. The Menu Item Properties screen reappears.  
+<LI class=numbers1>At this point, you may want to change the Button Title (this appears on the menu). When done making changes, select Finished. Your new button appears as the last button on the menu.  
+<LI class=numbers1>To reorder the buttons on the menu, select the button, then select the Move button. Use the arrow buttons to move the button into the desired position. When finished moving buttons, select OK, then Finished. The screen reappears with the new button.</LI></OL> 
+<P class=numbers1><FONT size=3><FONT size=3>Changing the Button Icons</FONT></FONT> </p>
+ 
+ 
+ <p> 
+With the Menu Properties displayed, select the button for which you want to change the icon (picture).  <br /> 
+ </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>Select the Edit button. The Menu Item Properties screen appears.  
+<LI class=numbers1>Type the filename for the new button icon in the Button field.  
+<LI class=numbers1>Select Finished. The Menu Properties screen reappears. A small thumbnail version of the new button icon appears.  
+<LI class=numbers1>Select OK, then Finished to return to the original screen. The new button icon is displayed. </LI></OL> 
+ <p> 
+ 
+ <p> 
+ <br /> 
+<FONT color=#0000ff><img src="images/content_tip.gif" width="18" border="0"><I>TIP: You need to know the exact system filename of the button icon. If there is another menu that uses the icon you want to use, display the Menu Properties of that menu, then select the bar for the button with the icon you desire and select Edit. The button filename is displayed in the Button field. </p>
+ 
+</I></FONT> 
+ <p> 
+ </p>
+ 
+<EM><FONT color=#0000ff></FONT></EM> 
+ <p> 
+ <br /> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions</FONT> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Reports/040823316223868.html" target="_blank"> Concept: Document Manager</a> <br /> 
+ <a href="../On-the-Fly%20configuration/040818216453846.html" target="_blank"> How to: Turn on Configuration Mode</a> </p>
+ 
+ 
+ <p> 
+<FONT size=3>Related Education Opportunities</FONT> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/AA-%20Undecided/040911011454916.html" target="_blank"> Pre-Implementation Configuration</a>&nbsp; </p>
+ 
+</FONT></I></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823319574424</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 04/24/2009 04:18:37 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

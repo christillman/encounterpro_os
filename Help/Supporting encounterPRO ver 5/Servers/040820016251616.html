@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Duplicate Services with encounterPRO Service" />
+    <meta name="TITLE" content="Problem: Duplicate Services with encounterPRO Service" />
+    <meta name="DESCRIPTION" content="This solution explains how to fix the orphan eproserver.exe instances. This fix should only be run on sites running encounterPRO server 5.1.4 or higher. (Within the eproserver 5 series)" />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10496 Duplicate Services eproserver Problem" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Duplicate Services with encounterPRO Service</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Servers</div>
+<hr />
+<h2>Problem: Duplicate Services with encounterPRO Service</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+Service threads are not terminated while shutting down encounterpro service. <br /> 
+ <br /> 
+This only applies to vs5 series of eproserver and was fixed in eproserver vs6.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<OL> <LI class=numbers1>Stop the EncounterPRO Service. Go to Task Manager and see whether any orphan 'eproserver.exe' are still running. (If not that is fine.) If there are orphans running they should be killed automatically by installing the following. </LI> <LI class=numbers1>Copy the EncounterPRO Server Program files (usu found on at D:\Program Files\JMJ\EncounterPRO Server); Paste and rename the folder OrgEncounterPRO Server. (we perform this step just in case we have to restore the original server files).</LI> <LI class=numbers1>Go to Ftpsite and copy the files under EP_Integrations\Version 4.0\EproService into the 'EncounterPRO server' Program Files folder (when prompted, replace all three files) </LI> <LI class=numbers1>Start the EncounterPRO Service. This should kill all the orphan threads before spawning any new instances. </LI> <LI class=numbers1>Make sure all the services are working fine:  <br /> 
+ <OL type=a> <LI class=numbers1>Launch Epro Agent Status (EncounterPROService Monitor)&nbsp;</LI> <LI class=numbers1>Verify services running equal amount of threads in task manager </LI> <LI class=numbers1>Stop and restart the services to make sure all threads successfully stop</LI></OL></LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=3>Affected Products <br /> 
+</FONT>Product: encounterPRO server 5.1.4 <br /> 
+PM Integration, All Versions <br /> 
+ <br /> 
+<FONT size=3>Source <br /> 
+</FONT>Original KB article: Article #10496 - How to fix the duplication of 'eproserver.exe' / duplicate services with EncounterPRO Service <br /> 
+Article created on 4/24/2006 by sumathi.asok <br /> 
+Article last updated on 6/13/2006 by Tamara.Cotton <br /> 
+&nbsp;</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820016251616</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:02 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

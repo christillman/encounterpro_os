@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Add Rooms and Group Tabs to the Office View" />
+    <meta name="TITLE" content="How to: Add Rooms and Group Tabs to the Office View" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for adding rooms and group tabs to an existing client database." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10208  Add Rooms Group Tab Office View" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Add Rooms and Group Tabs to the Office View</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Client</div>
+<hr />
+<h2>How to: Add Rooms and Group Tabs to the Office View</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<OL> <LI class=numbers1>Open up Microsoft Access.  <br /> 
+ <OL type=a> <LI class=numbers1>Open the database that you are wanting to add rooms too. </LI></OL> <LI class=numbers1>Open the o_rooms table. <br /> 
+ <OL type=a> <LI class=numbers1>Start a new row by putting a room_id in.(ex. EXAM1)  <LI class=numbers1>Type a room description in the Room_name field. Please note that whatever you type here will display in encounterPRO. Also, that there is a character limit and if you put in a long name it may cut part of it off.  <LI class=numbers1>The next field is room_sequence. This will sort the rooms in encounterPRO. Ex. If Room 1 has a room_sequence of 3 and Room 2 has 1 then Room 2 will show in EncounterPRO before Room 1.  <LI class=numbers1>The next field is the room_type. Please enter in either $EXAMINATION or $TELEPHONE. Most rooms will use $EXAMINATION and $TELEPHONE is used for telephones rooms.  <LI class=numbers1>Room _status should be set to OK. 6. computer_id should be left blank unless you are wanting to set a coumputer to open with a default room. If this is the case you have to go into the o_computers table and get the computer_id for the computer you want to set.  <LI class=numbers1>Office_id is usually set to 0001 unless you have multiple offices. If you have multiple offices you can get the office_id from the c_office table.  <LI class=numbers1>Status is set to OK. (You need to add the room in o_groups to make it visible, see step 4 below.)  <br /> 
+</LI></OL> <LI class=numbers1>Open the o_groups table (Only need to go in here if you are adding a new group)  <br /> 
+ <OL type=a> <LI class=numbers1>This table will add a new group. Groups are the tabs on the right side of the application.  <LI class=numbers1>Group_id. Create a new id different from the ones that are already showing.  <LI class=numbers1>Description. what you type in this field will display in encounterPRO. There is a limit on character size. If you create a long description it will increase the size of the tabs causing it to cover part of the screen. Make sure you keep the names as small as possible.  <LI class=numbers1>Sort_sequence.  <br /> 
+ <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: The tabs are sorted in numerical order. You may have to change some of these around.  <br /> 
+</I></FONT> <LI class=numbers1>Office_id is usually set to 0001 unless you have multiple offices. If you have multiple offices you can get the office_id from the c_office table.  <br /> 
+</LI></OL> <LI class=numbers1>Open the o_group_room table.  <br /> 
+ <OL type=a> <LI class=numbers1>You may have to look in the o_groups table and the o_rooms table for information to add to this table.  <LI class=numbers1>Group_id. This is the tab that you want to add this room too. This id can be obtained from the o_groups table.  <LI class=numbers1>Room_id. This is the room_id of the room you created earlier. You can obtain the room_id from the o_rooms table. <br /> 
+</LI></OL> <LI>Go into encounterPRO and verify that the rooms and tabs are displaying the way that you intended. <br /> 
+</LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=3>Source</FONT> <br /> 
+Original KB article: Article #10208 - Adding Rooms and Group Tabs to EncounterPRO <br /> 
+Article created on 3/8/2005 by Craig.Harris <br /> 
+Article last updated on 10/10/2007 by Stephanie.Saxon <br /> 
+&nbsp; </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820015384652</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:03 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

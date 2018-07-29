@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Monitor Performance" />
+    <meta name="TITLE" content="How to: Monitor Performance" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for monitoring performance in encounterPRO." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10443 Performance Monitoring" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Monitor Performance</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Hotfixes</div>
+<hr />
+<h2>How to: Monitor Performance</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+A practice reports delays between screens in EncounterPro or general encounterPRO slowness.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+Diagnosing Performance <br /> 
+1) What is slow? <br /> 
+  a) We need to isolate the specific times of slowness in seconds-ex. How long does it take to go from screen to screen? <br /> 
+  b) Please review this document  to see Average Seconds per Page - http:\\underconstruction-jennyycreate. <br /> 
+2) Forget about Epro, and focus on the system. <br /> 
+  a) Elimnate Epro, and  Eliminate other programs. -ex. Make sure there aren't print jobs stuck causing slowness or maybe their are too many users logged into the system. <br /> 
+3) Check Task Manager <br /> 
+  a) Look at CPU usage vs. Physical Capacity-  <br /> 
+  b) If the Cpu Usage  exceeds 70% consistently, then you have a processor bottelneck. <br /> 
+  c) This is for the RAM-Look at Virtual  Memory vs. Physical Memory- Virtual RAM should not exceed Physical RAM. <br /> 
+  d) Check the memory usage of the encounterpro services under the process tab- Total services should not exceed 1/2 a Gig. <br /> 
+  e) 1.7 Gig will be the typical memory usage of SQL. <br /> 
+- If SQL is under 1.7 Gigs, and RAM utilzation is exceeding physical RAM, then verify that SQL is set to Dynamic Memory <br /> 
+4) Running Performance Monitor <br /> 
+  a) Always save your performance monitor profile with your intitals in case you ever need to go back. <br /> 
+  b) After you start the performance monitor we are going to add counters for Memory, Processor, and Physical Disk. <br /> 
+  c) Memory: <br /> 
+    1] Pages per second should not exceed 200 pages per second. <br /> 
+    2] Memory Counters: <br /> 
+    3] Pages Reads/sec <br /> 
+    4] Pages Write/sec <br /> 
+  d) Processor- <br /> 
+    1] The processor que length should not go above 2 or 3 consistently. <br /> 
+    2] Processor Counters: <br /> 
+      a] %Idle Time <br /> 
+      b] %Privilged TIme <br /> 
+      c] %Processor time <br /> 
+  e) Physical Disk - <br /> 
+    1] Average disk que length shoud not consistently exceeding 1. <br /> 
+    2] Percent disk time should not go above 100. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Disk defrag would cause the %disk time to spike up, and bad indexes would cause the read/write to also spike up.</I></FONT> <br /> 
+    3] Physical Disk Counters: <br /> 
+      a] %Disk Time <br /> 
+      b] Avg. DskQueue Length <br /> 
+      c] Avg. Disk Read Queue Length <br /> 
+      d] Avg. Disk Write Queue Length <br /> 
+      e] Current Disk Queue Length <br /> 
+5) Terminal Sessions <br /> 
+50 user is the typical amount one would expect for  for a dedicated server. 35 users is the typical amount for a non dedicated server. Anything over these amounts may cause performance problems. <br /> 
+6) The formula: <br /> 
+This is the formula for server requirements for a optimal system. <br /> 
+OS: 256 MB <br /> 
+SQL: 1.7 Gigs <br /> 
+5 Services: 300 MB <br /> 
+Thin Clients: 70-80 MB each Max 20 users <br /> 
+Averge total RAM: 2 Gigs <br /> 
+If they have more than 40 Users, then 4 Gigs <br /> 
+Minimum- 20% Free Disk space all the time <br /> 
+3 times the size of sql database needed in Disk Space <br /> 
+7) Traces <br /> 
+When doing traces focus on durations and reads. Look at the time it takes to do specific tasks. Also look at how many records per minutes. <br /> 
+15 records per minute denotes a possible problem. Over 100 records per minute is a definite problem. <br /> 
+If you have High Durations and High Reads then you needto do a  rebuild. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Daily Reboot not a bad thing, suggested weekly reboot.</I></FONT> </p>
+ 
+  <p> 
+Article created on 1/17/2006 by jeffrey.handy </p>
+ 
+  <p> 
+Article last updated on 1/19/2006 by jeffrey.handy</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822520195758</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

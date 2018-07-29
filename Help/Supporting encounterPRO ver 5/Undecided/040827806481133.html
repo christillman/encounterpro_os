@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Shrink scanned attachments in encounterPRO" />
+    <meta name="TITLE" content="How to: Shrink scanned attachments in encounterPRO" />
+    <meta name="DESCRIPTION" content="Extract attachments, compress images and upload." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10265 - How to shrink EncounterPRO scanned document attachments" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Shrink scanned attachments in encounterPRO</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Shrink scanned attachments in encounterPRO</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Create a backup of the entire attachments data file and store it in a safe location indefinitely. The first order of business is extracting the attachments from the EncounterPRO database. The next step is to convert the images to 150x150 1bpp images with CCITT-4 Tiff compression. Use the EPAttachments tool&nbsp;and provide the server and database name, and for working folder, direct application to path where converted attachments are.&nbsp;When you ready to begin, click 'Upload'.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+Before You Proceed: </p>
+ 
+  <p> 
+<SPAN style="COLOR: red; FONT-STYLE: italic">CAUTION: Read this article in its entirety and then read it again before actually doing anything!</SPAN> <br /> 
+1)&nbsp;A batch image conversion program.&nbsp;JMJ uses a licensed version of 2TIFF, which works very reliably on nearly any type of image and is inexpensive.&nbsp;It appears to be somewhat slow for some images, but I have not found a more reliable batch image converter.&nbsp;It can be found <A href="http://www.2tiff.com/">here</A>.&nbsp;If you work for JMJ, our licensed copy is stored <A href="\\\\labserv2003\Common\Support\Tools">here</A>.&nbsp; <br /> 
+2)&nbsp;The EPAttachments tool which is used to extract attachments from the EncounterPRO database before conversion and to shove them back into the database after conversion has been completed, ultimately reducing the size of the attachments data file.&nbsp;The EPAttachments tool can be found on the <A href="ftp://www.jmjtech.com/">JMJ FTP site</A> under JMJSupport/EPAttachments.&nbsp; <br /> 
+3)&nbsp;Free disk space equal to 2.5 to 3 times the size of the attachments data file.&nbsp;So if your attachments data file consumes 25GB of disk space, you need about 63 to 75 GB of free space before you attempt to perform an attachments shrink.&nbsp;This space does not have to be on the server.&nbsp;It can be on another computer on the network.&nbsp; <br /> 
+4)&nbsp;Several hours, depending on the number of attachments and the speed of the computer you are working on, to perform the entire process.&nbsp;It is not unusual for the entire process to take more than three days.&nbsp;It can be done during business hours, but performance will be impacted, so this is not recommended. </p>
+ 
+  <p> 
+Resolution <br /> 
+PERFORM ALL STEPS ON THE CONSOLE SESSION.&nbsp; IF YOU ARE USING RDP, RUN mstsc.exe WITH THE /console COMMAND LINE ATTRIBUTE.&nbsp; THIS WILL ENSURE THAT THE PROCESSES CONTINUE EVEN IF YOUR RDP CLIENT IS DISCONNECTED. </p>
+ 
+  <p> 
+1) Create a backup of the entire attachments data file and store it in a safe location indefinitely. <br /> 
+2) The first order of business is extracting the attachments from the EncounterPRO database.&nbsp;The EPAttachments tool is used for this step. <br /> 
+&nbsp; a) To use it, supply the server and database names and a working folder with enough space to hold all of the attachments. <br /> 
+&nbsp; b) If you wish to extract only a subset of the attachments in the EncounterPRO database, you can modify the where clause used in the query driving the extraction by clicking the 'Edit Query' button. <br /> 
+&nbsp; c) Once you have supplied the needed information, click the 'Download' button and wait for the process to complete. <br /> 
+3) The next step is to convert the images to 150x150 1bpp images with CCITT-4 Tiff compression. <br /> 
+&nbsp; a) If you are using 2Tiff, you must execute the batch process from the command line like this: <br /> 
+''C:\Program Files\2Tiff\2TIFF.EXE'' s=''D:\Extracted Attachments\*.tif'' d=''D:\Shrunk Attachments'' -dpiver150 -dpihor150 -ct3 <br /> 
+&nbsp; b) Consult the 2TIFF help document if you want detailed information on what the various flags mean. <br /> 
+4) Assuming the conversion is complete, you should now have exactly the same number of *.tif files in your 'D:\Extracted Attachments' folder and your 'D:\Shrunk Attachments' folder. <br /> 
+&nbsp; a) Make sure that the files have decreased in size and that they are legible.&nbsp;Sometimes, particularly with very dark images, some files are no longer legible after a conversion. <br /> 
+&nbsp; b) To update the EncounterPRO database you'll use the EPAttachments tool again.&nbsp;  <br /> 
+&nbsp; c) Again, provide the server and database name, and for the working folder, direct the application to the path where the converted attachments are.&nbsp; <br /> 
+&nbsp; d) When you are ready to begin, click the 'Upload' button. <br /> 
+&nbsp; e) As each attachment is written to the database, the corresponding file is moved into a 'done' subdirectory in the working folder, so that you may run the process again if an error occurs without having to repeat the insertion of attachments that already updated successfully. Once that completes, proceed to <br /> 
+5) Make sure that the attachments data file is now mostly free space and that the updated images are viewable from within EncounterPRO.&nbsp;Once this has been verified, you may perform any cleanup work, including but not limited to: <br /> 
+&nbsp; a) Remove 'Extracted Attachments' and 'Shrunk Attachments' folders&nbsp; <br /> 
+&nbsp; b) Remove EPAttachments tool <br /> 
+&nbsp; c) Remove 2Tiff or the batch image converter you used for the operation&nbsp; <br /> 
+&nbsp; d) Shrink the attachments data file&nbsp; <br /> 
+&nbsp; e) Shrink the transaction log data file <br /> 
+ <br /> 
+Article created on 5/6/2005 by chris </p>
+ 
+  <p> 
+Article last updated on 11/13/2006 by chris </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827806481133</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

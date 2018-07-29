@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Run a trace in SQL 2000" />
+    <meta name="TITLE" content="How to: Run a trace in SQL 2000" />
+    <meta name="DESCRIPTION" content="This solution provides step-by-step information on running a trace for both VS 2.0 and VS 4.0 clients in SQL2000." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10132 How to run a trace in SQL 2000" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Run a trace in SQL 2000</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Db Mod Levels</div>
+<hr />
+<h2>How to: Run a trace in SQL 2000</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Open up 'SQL Profiler'. Select 'New Trace'. Make the required settings in the 'General' tab. Make changes in the 'Events' tab based on the trace to be performed, such as Standard trace, Freezing trace or Extended trace. Select the Data Columns.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+1) Open up 'SQL Profiler'. <br /> 
+2) Select 'New Trace'. <br /> 
+3) Select the 'General' tab: <br /> 
+  a) Enter in Trace Name. <br /> 
+  b) Save to File. <br /> 
+  c) Set Maximum size to 50 MB. <br /> 
+  d) If running a performance trace set duration to end of business day. <br /> 
+4) Select the 'Events' tab: <br /> 
+  a) If you want to perform a Standard trace: <br /> 
+    1] Remove all Selected Event Classes except for the following <br /> 
+    2] Stored Procedures - RPC:Completed  <br /> 
+    3] TSQL- SQL:BatchCompleted <br /> 
+  b) If you want to perform a Freezing trace: <br /> 
+    1] Used for capturing a client freeze issue. Same as a Standard Trace plus the following events <br /> 
+    2] Stored Procedures - RPC:Started  <br /> 
+    3] TSQL- SQL:BatchStarted <br /> 
+  c) If you want to perform an Extended Trace: <br /> 
+    1] We usually only run this trace when Mark.Copenhaver requests more details. <br /> 
+    2] Add all Stored Procedures, TSQL and Transactions. <br /> 
+5) Select the Data Columns: <br /> 
+  a) If the trace is for any performance related issue, then add 'End Time' to end of 'Selected data'. Otherwise just leave the default data columns. The default data columns should be: <br /> 
+    1] Event Class <br /> 
+    2] Text Data  <br /> 
+    3] Application Name  <br /> 
+    4] NTUserName  <br /> 
+    5] LoginName  <br /> 
+    6] CPU  <br /> 
+    7] Reads  <br /> 
+    8] Writes  <br /> 
+    9] Duration  <br /> 
+    10] ClientProcessID  <br /> 
+    11] SPID  <br /> 
+    12] StartTime  <br /> 
+6) Select the 'Filters' tab: <br /> 
+  a) For general performance issues, set a filter on the Duration: Equal to or Greater than = 1000. <br /> 
+  b) For reproducable issues, set a filter on the SPID: Equal To (This can be found on Server Status in VS 4.0 and Utilities Tab in VS 2.0). </p>
+ 
+  <p> 
+Affected Products <br /> 
+Product <br /> 
+Version <br /> 
+EncounterPRO <br /> 
+4.05.34 to 2.21.44 </p>
+ 
+  <p> 
+Article created on 1/18/2005 by J.Blalock </p>
+ 
+  <p> 
+Article last updated on 6/26/2008 by Tamara.Cotton</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822422375868</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

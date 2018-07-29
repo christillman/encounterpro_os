@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Concept: How encounterPRO Calculates E & M Coding." />
+    <meta name="TITLE" content="Concept: How encounterPRO Calculates E & M Coding." />
+    <meta name="DESCRIPTION" content="This solution explains in detail how encounterPRO calculates the E & M visit code for an encounter." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="RATip E & M Code Encounter Visit Level Calculates Concept" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Concept: How encounterPRO Calculates E & M Coding.</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Observations</div>
+<hr />
+<h2>Concept: How encounterPRO Calculates E & M Coding.</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+In this solution<STRONG>... <br /> 
+</STRONG> 
+<UL> 
+<LI class=bullets1>Description  
+<LI class=bullets1>History Coding  
+<LI class=bullets1>Physical Exam Coding  
+<LI class=bullets1>Medical Decision-making Coding  
+<LI class=bullets1>Verifying the E &amp; M Coding for an encounter  
+<LI class=bullets1>Defaults that Affect E &amp; M Coding  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL><FONT size=4>Description</FONT> <br /> 
+encounterPRO has several features the assist the provider and billing specialist with E &amp; M coding. <br /> 
+encounterPRO focuses on three key E&amp;M coding components:  <br /> 
+ 
+<UL> 
+<LI class=bullets1>History  
+<LI class=bullets1>Examination  
+<LI class=bullets1>Medical decision making</LI></UL> 
+ <p> 
+Each of these components is itself assigned a level of detail or complexity.&nbsp; In addition, each component has constituent elements that are likewise assigned levels of detail or complexity. <br /> 
+ <br /> 
+The level of complexity is determined by entries on various screens in encounterPRO and counted using a bullet system.&nbsp; The bullets work in a branch system; specifically, the lowest level selection in a series of drill down screens counts as a bullet.&nbsp; Each bullet is counted in accordance with coding regulations.  </p>
+ 
+<SPAN style="COLOR: red; FONT-STYLE: italic"> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><SPAN>IMPORTANT: <EM><SPAN style="FONT-STYLE: normal">The ecounterPRO EHR calculates a </SPAN><STRONG><SPAN style="FONT-WEIGHT: normal">suggested</SPAN></STRONG><SPAN style="FONT-STYLE: normal"> Evaluation and Management (E &amp; M) visit level based upon the information documented during the encounter. The software measures the documentation recorded and applies configurations and algorithms to yield a value, but the software cannot evaluate the </SPAN>necessity<SPAN style="FONT-STYLE: normal"> of the work. Ultimately,&nbsp;the provider, not the encounterPRO EHR, is responsible for determining the appropriate E&nbsp;&amp;&nbsp;M level for each encounter.&nbsp;</SPAN></EM></SPAN><?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><EM><SPAN style="COLOR: red; FONT-STYLE: normal"><o:p>&nbsp;</o:p></SPAN></EM> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt"><EM><SPAN style="COLOR: red; FONT-STYLE: normal">The encounterPRO EHR offers a suggested E &amp; M level based upon the observations recorded and the configurations entered into the database<B>.&nbsp; </B>The necessary configurations fall into categories that </SPAN><SPAN style="COLOR: red">only</SPAN></EM><EM><SPAN style="COLOR: red; FONT-STYLE: normal"> the provider or the practice may provide (including the configurations that set risk and complexity values for assessments, as well as risk levels for treatments and progress notes), and configurations that are already in the master database that is initially provided to a practice (including configurations that associate histories with 'elements,' and associate physical examination results with 'bullets').&nbsp; The reason that assessments and treatments are not pre-configured for the E &amp; M coding wizard is that, under federal regulations, determinations of risk and complexity require the application of medical knowledge and judgment.&nbsp; For the convenience of practices, the master database sets all assessment and treatment risk levels at 2 (on the scale of 1-4), and all complexity values at zero.&nbsp; If a practice fails to adjust these values appropriately, the E &amp; M coding wizard will produce wholly unreliable results.&nbsp; On the other hand, if all the configuration values are set appropriately, providers who fully understand the encounterPRO EHR coding wizard and their own configuration choices may, over time, gain confidence that the visit levels suggested by the encounterPRO EHR are quite frequently appropriate (provided that the work performed was medically necessary).&nbsp; However, the provider -- not the encounterPRO EHR -- must always choose (and be prepared to defend in an audit) the E &amp; M coding&nbsp;level that is most appropriate.</SPAN></EM><I><o:p></o:p></I> </p>
+ 
+ 
+ <p> 
+</SPAN>&nbsp; </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> 
+ <p> 
+<FONT size=4>History Coding <br /> 
+</FONT>E &amp; M coding for patient history coding considers the documentation of: <br /> 
+ </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Chief Complaint  
+<LI class=bullets1>History of Present Illness (HPI)  
+<LI class=bullets1>Review of Systems (ROS)  
+<LI class=bullets1>Past Medical, Family and Social History (PFSH)</LI></UL> 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp; A chief complaint and HPI are BOTH required in order to receive any history credit for the encounter.&nbsp;  <br /> 
+The chart below explains the history category coding requirements based on the number of bulleted qualifying entries. </p>
+ 
+</I></FONT> 
+ <p> 
+<FONT size=3>History of Coding Guidelines <br /> 
+</FONT> </p>
+ 
+ 
+ <p> 
+<FONT size=3> <img src="images/090080708110325.jpg" alt="Screen: Inline Image" /> </p>
+ 
+</FONT> 
+ <p> 
+<FONT size=3>Counting Bullets for the HPI <br /> 
+</FONT>In the case of HPI, the elements to be counted (1-3 for a brief HPI, 4+ for an extended HPI) are details about one or more presenting problems.&nbsp; These may include: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>For symptoms: location, quality, severity, duration, timing, context, modifying factors including medications, associated signs and symptoms, etc.  
+<LI class=bullets1>For follow up of a previously diagnosed problem: changes in condition since the last visit, compliance with the treatment plan etc.  
+<LI class=bullets1>For patients on multiple medications or whose primary reason for the visit is for medication management: review of compliance, effectiveness of medications, side-effects and complications from medications, verification of medication name, dosage and frequency.</LI></UL> 
+ <p> 
+<FONT size=3>Counting Bullets for the ROS <br /> 
+</FONT>For purposes of documenting a Review of Symptoms (ROS), the 1995 and 1997 documentation guidelines recognize constitutional symptoms (e.g., fever, weight loss) as a system, in addition to the thirteen named organ systems. </p>
+ 
+ 
+ <p> 
+<FONT size=4>Examination Coding <br /> 
+</FONT>encounterPRO counts the bullets of physical examinations in accordance with the 1997 documentation guidelines.&nbsp; Seven body areas and twelve organ systems are identified for examination purposes.&nbsp; Drill-down screens provide information for input in these areas and allow for bullets to be counted based on selections at the lowest level in the drill-down. <br /> 
+ <br /> 
+In addition, encounterPRO will count vital signs for purposes of achieving a constitutional system bullet.&nbsp; encounterPRO will count any of the vitals recorded, including those taken on the vitals screen, and will assume that if one measurement was taken, then at least three were taken and this bullet is satisfied. <br /> 
+ </p>
+ 
+ 
+ <p> 
+ <img src="images/090080708110408.jpg" alt="Screen: Inline Image" /> </p>
+ 
+ 
+ <p> 
+<FONT size=4>Medical Decision Making Coding <br /> 
+</FONT>The medical decision making coding is itself a product of three components, each of which must be assigned (at least implicitly) a level from one to four.&nbsp; The components are: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>The number of possible diagnoses and management options  
+<LI class=bullets1>The amount and/or complexity of data to be reviewed  
+<LI class=bullets1>The risk of complications and/or morbidity or mortality</LI></UL> 
+ <p> 
+ <br /> 
+The chart below shows the progression of the elements required for each level of medical decision making.&nbsp; To qualify for a given level of decision making, two of the three elements in the row must be either met or exceeded. <br /> 
+ </p>
+ 
+ 
+ <p> 
+ <img src="images/090080708110459.jpg" alt="Screen: Inline Image" /> </p>
+ 
+ 
+ <p> 
+ <br /> 
+<FONT size=4>Verifying the Encounter's E&amp;M Coding Level</FONT> <br /> 
+At the end of each encounter, the encounter owner can verify that the level chosen by the system is correct based on E&amp;M Coding laws and regulations.&nbsp; The verifying screen can be accessed from two places: on the patient's chart there is a small button labeled E &amp; M Coding Level with a number 1 through 5 on it; additionally on the Billing Review (Exit) screen there is a small button labeled Current Visit level with a number 1 through 5 on it. <br /> 
+ <br /> 
+Selecting either of these buttons takes the user to the Encounter Coding Levels screen.&nbsp; This screen indicates the level that was calculated and allows the user to get more details and make any necessary changes.&nbsp; This screen is shown below. <br /> 
+ <br /> 
+ <img src="images/090080623113523.jpg" alt="Screen: Inline Image" /> </p>
+ 
+ <br /> 
+The asterisks illustrate the level of coding determined by encounterPRO for each category: History, Examination, and Decision Making.&nbsp; encounterPRO also lists the amount of time each person in the practice spent with the patient's chart.&nbsp; This is important documentation in case it is necessary to "up code" because of counseling time, a factor that encounterPRO does not include in the level algorithm. <br /> 
+ <br /> 
+The calculated visit level is highlighted in dark gray.&nbsp; The user can override this decision by manually highlighting a number at the User Selected Visit Level and then selecting finish.&nbsp; Choose the Details button below any of the categories to display details on the level achieved.  <br /> 
+ <br /> 
+The Coding Levels screen appears for the category, such as the History Coding Levels screen. E&amp;M Coding rules for this category can be accessed from the Review Coding Rules button.  
+ <p> 
+ </p>
+ 
+ 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: Notice the Time in Chart text box. EncounterPRO will track the amount of time each user spends working on the patient chart. This is for information only, it is not used in calculating the E &amp; M visit level. If the provider reviews the amount of time spent with the patient and believes that this justifies a higher visit level, he or she can select the appropriate level using the buttons on the User Selected Visit Level.</I></FONT> <br /> 
+ <br /> 
+<FONT size=3>Reviewing the History Coding <br /> 
+</FONT>In version 5, a user can review how encounterPRO calculated the history coding level. Access the Encounter Coding Levels screen, then select Details below the History column. The History Coding Levels screen shows which level was achieved for each history type. Select any of the Level Achieved bars to view the Coding Rules screen. The first tab shows which rule was used for this encounter. The Encounter Data tab shows the exact observation and elements that were counted. </p>
+ 
+ 
+ <p> 
+(screen) </p>
+ 
+ 
+ <p> 
+<FONT size=3>Reviewing the Examination Coding <br /> 
+</FONT>In version 5, a user can review how encounterPRO calculated the examination coding level. Access the Encounter Coding Levels screen, then select Details below the Examination column. The Examination Coding Levels screen shows which level was achieved for each observation type. Select any of the Level Achieved bars to view the Coding Rules screen. The first tab shows which rule was used for this encounter. The Encounter Data tab shows the exact observations and elements that were counted. </p>
+ 
+ 
+ <p> 
+ <img src="images/090080916190745.jpg" alt="Screen: Inline Image" /> <br /> 
+ <br /> 
+<FONT size=3>Reviewing the Decision Making Coding <br /> 
+</FONT>In version 5, a user can review how encounterPRO calculated the decision making coding level. Access the Encounter Coding Levels screen, then select Details below the Decision Making column. The Decision Making Coding Levels screen shows which level was achieved for each decision making component. Select any of the Level Achieved bars to view the Coding Rules screen. The first tab shows which rule was used for this encounter. The Encounter Data tab shows the exact observations and elements that were counted. <br /> 
+(screen shots) <br /> 
+ <br /> 
+<FONT size=4>What are the Default Settings that Affect E &amp; M Coding? <br /> 
+</FONT>There are several areas in encounterPRO that have settings which impact E &amp; M coding: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Assessments can be assigned a risk level (Minimal, Low, High) and complexity points (0&nbsp;- 3000). Assessments are preconfigured with a risk level of two (Low) and complexity of N/A. The system automatically halves the complexity level for assessments closed during an encounter.&nbsp;  
+<LI class=bullets1>Procedures can be assigned a risk level (Minimal, Low, High) and complexity points (0&nbsp;- 3000). Procedures are preconfigured with a risk level of two (Low) and complexity of N/A.  
+<LI class=bullets1>Observations can have results which are coded as bullet points to count toward specific categories</FONT>.<FONT face=sans-serif size=2> Observations (histories and physicals) have the bullets assigned to count correctly in order to receive the correct level. The only reason to change these is if new observations and results are added. encounterPRO allows the user to easily change these preconfigured settings.</LI></UL> 
+ <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions</FONT> <br /> 
+<U><A href="../../Using encounterPRO v5/Billing/Encounter billing/040817018102213.html">Screen: Billing Review</A> <br /> 
+<A href="../../Using encounterPRO v5/Billing/Encounter billing/040817916573516.html">How to: Approve Encounter Billing</A> <br /> 
+<A href="../../Using encounterPRO v5/Billing/Encounter billing/040817614374421.html">How to: Modify the Encounter Billing</A></U> <br /> 
+ <br /> 
+ <br /> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT><U> <a href="../../Using%20encounterPRO%20v5/AA-%20Undecided/040911011303242.html" target="_blank"> Provider</a></U></FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040819010230991</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 04/24/2009 05:42:36 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

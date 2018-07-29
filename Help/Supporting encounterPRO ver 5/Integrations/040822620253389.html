@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Set up Spirometer integration" />
+    <meta name="TITLE" content="How to: Set up Spirometer integration" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instruction for how to set up spirometer integration." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10146 Setting up Spirometer integration" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Set up Spirometer integration</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Integrations</div>
+<hr />
+<h2>How to: Set up Spirometer integration</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+This article details how to set up spirometer integration.  See also How to: Configure a Spirometer interface.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+1) Make sure that any existing Midmark or IQMark software is removed from the computer, including but not limited to any Midmark dependencies installed with pre-4.05.34 versions of EncounterPRO.  <br /> 
+2) Install the Midmark 6.3 SDK.(\\Wwwserver\ftproot\EP_Upgrades\Production\Encounter_Production_CD\JMJ_Support\Programs\IQMarkSDK633) <br /> 
+3) You will find six (6) .RAR files. Extract any one of these and run the setup.exe file. <br /> 
+4) Install the latest EproLib4 and EproLibNET libraries. <br /> 
+5) Ensure the following exists in c_Component_Registry: <br /> 
+ <br /> 
+ </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>component_id</FONT></TD> <TD><FONT face=sans-serif size=2>component_type</FONT></TD> <TD><FONT face=sans-serif size=2>component</FONT></TD> <TD><FONT face=sans-serif size=2>description</FONT></TD> <TD><FONT face=sans-serif size=2>component_class</FONT></TD> <TD><FONT face=sans-serif size=2>id</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>ATCH_COM</FONT></TD> <TD><FONT face=sans-serif size=2>ATTACHMENT</FONT></TD> <TD><FONT face=sans-serif size=2>GENERIC</FONT></TD> <TD><FONT face=sans-serif size=2>COM Attachment Handler</FONT></TD> <TD><FONT face=sans-serif size=2>eprolib4.attachment</FONT></TD> <TD><FONT face=sans-serif size=2>{63F88597-27C1-4E59-BBB2-7B2C12487EE5}</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+6) Ensure the following exists in c_Attachment_Extension (fields not listed are unnecessary): </p>
+ 
+  <p> 
+ <TABLE borderColor=gray cellSpacing=0 cellPadding=5 border=1> <TBODY> <TR> <TD><FONT face=sans-serif size=2>extension</FONT></TD> <TD><FONT face=sans-serif size=2>description</FONT></TD> <TD><FONT face=sans-serif size=2>default_attachment_type</FONT></TD> <TD><FONT face=sans-serif size=2>default_storage_flag</FONT></TD> <TD><FONT face=sans-serif size=2>component_id</FONT></TD> <TD><FONT face=sans-serif size=2>display_control</FONT></TD></TR> <TR> <TD><FONT face=sans-serif size=2>car</FONT></TD> <TD><FONT face=sans-serif size=2>Brentwood Spirometer Report</FONT></TD> <TD><FONT face=sans-serif size=2>FILE</FONT></TD> <TD><FONT face=sans-serif size=2>D</FONT></TD> <TD><FONT face=sans-serif size=2>ATCH_COM</FONT></TD> <TD><FONT face=sans-serif size=2>ActiveX</FONT></TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+7) In EncounterPRO on computers that will be connected to spirometry devices, make sure that Spirometer is set up as a valid external source. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: See also support issues 13754, 17270, 17279 and 15432.</I></FONT> </p>
+ 
+  <p> 
+Article created on 1/26/2005 by David.Strube </p>
+ 
+  <p> 
+Article last updated on 4/28/2006 by ed.harris</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822620253389</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

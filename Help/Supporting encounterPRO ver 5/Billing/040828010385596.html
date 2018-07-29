@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Troubleshoot Shands Interface (Practice Management, LCR)" />
+    <meta name="TITLE" content="How to: Troubleshoot Shands Interface (Practice Management, LCR)" />
+    <meta name="DESCRIPTION" content="Restart the EproSocketSendLCR service." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10428 - Shands Interface (Practice Management, LCR) Batch Mode" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Troubleshoot Shands Interface (Practice Management, LCR)</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Billing</div>
+<hr />
+<h2>How to: Troubleshoot Shands Interface (Practice Management, LCR)</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+This article explains the different services installed and setup in Shands. Restart  the following services: EncounterPRO Service, EproSocket demo-checkin, EproSocket Send-Lcr. Open 'o_message_log' table to see records for message_type = 'REPORTHL7_LCR'. If you see messages with status of 'LCR_ACK', it's a problem either on the port or our end. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+This article explains the different services installed and setup in Shands. </p>
+ 
+  <p> 
+Once in a while, the socket interface goes idle and not import or export messages.  </p>
+ 
+  <p> 
+Workaround <br /> 
+It's a TCP/IP based communication. Sometimes the ports goes idle and requires a restart of the following services. [if the frequency is high, then it needs to be looked by Development] </p>
+ 
+  <p> 
+1) EncounterPRO Service <br /> 
+2) EproSocket demo-checkin (imports all the demopgraphics and check in) <br /> 
+3) EproSocket Send-Lcr (exports the clinical records ie reports) </p>
+ 
+  <p> 
+Resolution <br /> 
+LCR is Down: <br /> 
+port#30443 is down <br /> 
+If they call and notify that they are getting pages saying that the port is down, then usually that means either we are not exporting messages or they sometimes get a notification if there is no activity on the port# for a certain period of time. The best way to look whether everything is working is by looking in 'o_message_log' table to see the records for message_type = 'REPORTHL7_LCR'. If you notice any messages with a status of 'LCR_ACK', then that means it's a problem either on the port or our end. Usually, this is taken care if you restart the 'EproSocketSendLCR' service. If you do not see anything with 'LCR_ACK' or 'STREAMED' for the above message type, then it's a false alarm to them due to inactivity. </p>
+ 
+  <p> 
+BILLING <br /> 
+Billing is set in batch mode for them. Also, we export the bills only for the providers enabled in 'c_domain' table of domain_id='billing_provider'. So if they request to remove or add a physician for billing, just make changes in the above table. Here is the copy of the enabled providers list as per today. EncounterPRO Billing Interface exports only those providers bills as batch and starts at 6PM. To know more about batch billing, refer kb#10146. </p>
+ 
+  <p> 
+dbo_c_Domain </p>
+ 
+  <p> 
+ <TABLE style='BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff' cellSpacing=0 cellPadding=0 border=0 alignment=''> <TBODY> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> domain_id</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> domain_sequence</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> domain_item</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> domain_item_description</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> domain_item_bitmap</TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> BILLING_PROVIDER</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 1</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001KarenPerrin</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001KarenPerrin</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> BILLING_PROVIDER</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 2</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001Pollard,DenniPA</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001Pollard,DenniPA</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> BILLING_PROVIDER</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 3</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> DAVID_W_MOZINGO</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> DAVID_W_MOZINGO</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> BILLING_PROVIDER</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 4</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001Richards,Winston</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> 0001Richards,Winston</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> </TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+<STRONG>Affected Products</STRONG> <br /> 
+<STRONG>Product</STRONG>      PM Integration <br /> 
+<STRONG>Version</STRONG>       All Versions </p>
+ 
+  <p> 
+Article created on 11/30/2005 by jmj\sumathi </p>
+ 
+  <p> 
+Article last updated on 1/30/2006 by sumathi </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Demographics/check in not working, Life Time Clinical records (LCR) not working, charges not working<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040828010385596</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 05:31:07 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

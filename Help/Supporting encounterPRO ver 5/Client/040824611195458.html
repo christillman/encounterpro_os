@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Address2 Field Populated with City Name" />
+    <meta name="TITLE" content="Problem: Address2 Field Populated with City Name" />
+    <meta name="DESCRIPTION" content="This article will provide instructions for removing the city name from the Address2 field and placing it in the City name field." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Address City Mapping Column" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Address2 Field Populated with City Name</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Client</div>
+<hr />
+<h2>Problem: Address2 Field Populated with City Name</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+Typically this miss-mapping occurs as a result of a known problem found in EP Server version 5.x.x
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT size=4>Resolution</FONT> <br /> 
+Upgrade the practice to EP server version 6.x.x or higher. This will resolve the issue for all patient demographics from the time of the upgrade and going forward.  <br /> 
+ <br /> 
+However the fix is not retroactive and in order to affect the repair for existing records the following script(s) must be run to move the city name from the ?Address2? field to its proper location.</p></font> <br /> 
+<b><u>This first query will Check that the data in address line 2 is the city field: </b></u> <p> 
+<FONT face='Courier New'>select billing_id,address_line_1,address_line_2,city from p_patient where address_line_2 is not null <br /> 
+</FONT> </p>
+ 
+<b><u>This query will remove city from address line 2 and place it in the city field:</b></u> <br /> 
+ </p>
+ 
+ <p> 
+<FONT face='Courier New'>update p_patient <br /> 
+set address_line_2=null, city = address_line_2 <br /> 
+from p_patient where address_line_2 is not null</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040824611195458</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:02 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

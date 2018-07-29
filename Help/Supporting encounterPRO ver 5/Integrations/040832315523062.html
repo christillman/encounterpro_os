@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Triage Protocol: Patients Not Checking In" />
+    <meta name="TITLE" content="Triage Protocol: Patients Not Checking In" />
+    <meta name="DESCRIPTION" content="Troubleshooting patients not checking in" />
+    <meta name="PROBLEM_TYPE" content="Template Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Checkin Waiting Room PMS Integration Check In Troublehshooting" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Triage Protocol: Patients Not Checking In</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Integrations</div>
+<hr />
+<h2>Triage Protocol: Patients Not Checking In</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Triage Protocol:
+</td>
+<td class="sectionContent">
+Triage Protocol: Patients Not Checking In<br />
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Overview:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+ <p> 
+Patients are being checked in via the PMS but are not showing up in the EncounterPRO Waiting Room</FONT> </p>
+ 
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Resolution:
+</td>
+<td class="sectionContent">
+<H3 style="MARGIN: 10pt 0in 0pt 0.25in; mso-list: none"><FONT face=Cambria color=#c00000 size=3>Get Patient Examples</FONT></H3> 
+<P class=MsoListParagraphCxSpFirst style="MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo2"><SPAN style="FONT-FAMILY: Wingdings; mso-fareast-font-family: Wingdings; mso-bidi-font-family: Wingdings"><SPAN style="mso-list: Ignore">q<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><FONT face=Calibri>New patients are not checking in (get patient name and id number)</FONT> </p>
+ 
+ 
+<P class=MsoListParagraphCxSpMiddle style="MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo2"><SPAN style="FONT-FAMILY: Wingdings; mso-fareast-font-family: Wingdings; mso-bidi-font-family: Wingdings"><SPAN style="mso-list: Ignore">q<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><FONT face=Calibri>Existing patients are not checking in (get patient name and id number)</FONT> </p>
+ 
+ 
+<P class=MsoListParagraphCxSpLast style="MARGIN: 0in 0in 10pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo2"><SPAN style="FONT-FAMILY: Wingdings; mso-fareast-font-family: Wingdings; mso-bidi-font-family: Wingdings"><SPAN style="mso-list: Ignore">q<SPAN style="FONT: 7pt 'Times New Roman'">&nbsp; </SPAN></SPAN></SPAN><FONT face=Calibri>Neither new or existing patients are checking in (get patient name and id number)</FONT> </p>
+ 
+ 
+<H3 style="MARGIN: 10pt 0in 0pt 0.25in; mso-list: none"><FONT face=Cambria color=#c00000 size=3>Connect to Customer Site</FONT></H3> 
+<H5 style="MARGIN: 10pt 0in 0pt 0.25in"><FONT face=Cambria color=#4f81bd size=3>Agent connects to site using non-Admin login. </FONT></H5> 
+<TABLE class=MsoTableGrid style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; MARGIN: auto auto auto 23.4pt; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt" cellSpacing=0 cellPadding=0 border=1> 
+<TBODY> 
+<TR style="mso-yfti-irow: 0; mso-yfti-firstrow: yes"> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; BACKGROUND: #dbe5f1; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 3in; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-background-themecolor: accent1; mso-background-themetint: 51" vAlign=top width=288> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><FONT face=Calibri>If?<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /><o:p></o:p></FONT></B> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: black 1pt solid; PADDING-LEFT: 5.4pt; BACKGROUND: #dbe5f1; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 239.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-background-themecolor: accent1; mso-background-themetint: 51; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1" vAlign=top width=319> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><B style="mso-bidi-font-weight: normal"><FONT face=Calibri>Then?<o:p></o:p></FONT></B> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 1"> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 3in; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=288> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>New patients cannot be checked in</FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 239.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=319> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>Check that the patient ID assigned to the new patient does not already exist in the db. </FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>If patient ID exists, inform caller that the new patient ID must be unique. They need to change it in the PMS and try checking in again.</FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 2"> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 3in; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=288> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>Caller is using Version 2 and cannot check in existing patients</FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 239.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=319> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>Check for any open encounters for the patient. Version 2 will not allow you to start a new encounter if there is an open encounter for that same patient. </FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>If there is an open encounter, inform the caller that this was the problem and close the open encounter. Ask them to re-try checking in the patient.</FONT> </p>
+ 
+</TD></TR> 
+<TR style="mso-yfti-irow: 3; mso-yfti-lastrow: yes"> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: black 1pt solid; WIDTH: 3in; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1" vAlign=top width=288> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>If neither new or existing patients are checking in</FONT> </p>
+ 
+</TD> 
+<TD style="BORDER-RIGHT: black 1pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: #d4d0c8; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0in; BORDER-LEFT: #d4d0c8; WIDTH: 239.4pt; PADDING-TOP: 0in; BORDER-BOTTOM: black 1pt solid; BACKGROUND-COLOR: transparent; mso-border-alt: solid black .5pt; mso-border-themecolor: text1; mso-border-left-alt: solid black .5pt; mso-border-left-themecolor: text1; mso-border-top-alt: solid black .5pt; mso-border-top-themecolor: text1; mso-border-bottom-themecolor: text1; mso-border-right-themecolor: text1" vAlign=top width=319> 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>Stop and re-start EncounterPRO Services.</FONT> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN: 0in 0in 0pt; LINE-HEIGHT: normal"><FONT face=Calibri>Inform the caller that you have re-started the EncounterPRO Services. Ask if patients are checking in to the Waiting Room now?</FONT> </p>
+ 
+</TD></TR></TBODY></TABLE> 
+<H5 style="MARGIN: 10pt 0in 0pt 0.25in"><FONT face=Cambria color=#4f81bd size=3>If the patient(s) are still not properly checking into the Waiting Room, document all information, including the exact error message and all steps performed in the ticket and assigns to Level 2.</FONT></H5>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Comments:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Keywords:
+</td>
+<td class="sectionContent">
+Checkin Waiting Room PMS Integration Check In Troublehshooting<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040832315523062</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 11/18/2008 03:52:30 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

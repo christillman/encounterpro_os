@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Change the fields at the top of the SOAP screen" />
+    <meta name="TITLE" content="How to: Change the fields at the top of the SOAP screen" />
+    <meta name="DESCRIPTION" content="" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="attribute properties SOAP field property top" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Change the fields at the top of the SOAP screen</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO v5 &gt; Other</div>
+<hr />
+<h2>How to: Change the fields at the top of the SOAP screen</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+To link a property to a field at the top of the SOAP screen, go to the o_service_attribute table and follow the instructions below for each of three services:&#160; 'CHART,' 'EXAM,' and 'SUPERVISOR.'&#160;  </p>
+ 
+  <p> 
+First, you will need to know the user_id.&#160; This will typically be the specialty_id for the practice.&#160; If a specific user wanted to have properties added to the SOAP screen just for him or herself, this would be a personal customization that would not typically be considered to be technical support.&#160; The user_id is entered in the o_service_attribute table in the user_id field.&#160;  </p>
+ 
+  <p> 
+Second, enter&#160;an 'attribute' called 'property_title_x' where 'x' is an integer between 1 and 7.&#160; If&#160; x = 1, you will populate the field in the top left corner of the SOAP screen.&#160; If you choose, 2, you will populate the field just below that.&#160; And so on.&#160;  </p>
+ 
+  <p> 
+The 'value' for this attribute should be a short text description that will display at the top of the SOAP screen.&#160; For example, if you wish to have a field for Weight and Height, you might want to type in the text 'Wgt/Hgt.'&#160;  </p>
+ 
+  <p> 
+In the example above, you would have entered the following for a Peds practice&#160;in the o_service attribute table: </p>
+ 
+  <p> 
+ <TABLE cellSpacing=0 bgColor=#ffffff border=1><FONT face=Arial color=#000000> <CAPTION><B>o_Service_Attribute</B></CAPTION></FONT> <THEAD> <TR> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>service</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>attribute_sequence</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>user_id</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>attribute</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>value</FONT></TH></TR></THEAD> <TBODY> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>CHART</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>261</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_title_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Wgt/Hgt</FONT></TD></TR> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>EXAM</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>255</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_title_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Wgt/Hgt</FONT></TD></TR> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>SUPERVISOR</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>804</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_title_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Wgt/Hgt</FONT></TD></TR></TBODY> <TFOOT></TFOOT></TABLE> </p>
+ 
+  <p> 
+(Note that the attribute_sequence is automatically assigned and will be different in different databases.) </p>
+ 
+  <p> 
+The next step is to link the description (or title)&#160;you just added to the desired property in c_property.&#160; To do this, enter an attribute called 'property_x' where 'x' has the same value as was selected in the instruction above.&#160; For example,&#160;where x = 3, you will want to enter&#160;the attribute ' property_3' &#160;in o_service attribute.&#160;&#160; </p>
+ 
+  <p> 
+Next, find the function_name and the property_object of the desired property in c_property.&#160; In the example above, the function_name is 'PATIENT_WGTHGT' and the property_object is 'Patient.'&#160; The value that you enter into o_service attribute is the property_object followed by the property_name.&#160; In this example, the value would be 'Patient PATIENT_WGTHGT.'&#160;  </p>
+ 
+  <p> 
+In our example, you would want to add the following to o_service _attribute: <br /> 
+ </p>
+ 
+  <p> 
+ <TABLE cellSpacing=0 bgColor=#ffffff border=1><FONT face=Arial color=#000000> <CAPTION><B>o_Service_Attribute</B></CAPTION></FONT> <THEAD> <TR> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>service</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>attribute_sequence</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>user_id</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>attribute</FONT></TH> <TH borderColor=#000000 bgColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>value</FONT></TH></TR></THEAD> <TBODY> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>CHART</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>260</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Patient PATIENT_WGTHGT</FONT></TD></TR> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>EXAM</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>254</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Patient PATIENT_WGTHGT</FONT></TD></TR> <TR vAlign=top> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>SUPERVISOR</FONT></TD> <TD borderColor=#c0c0c0 align=right><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>803</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>$PEDS</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>property_3</FONT></TD> <TD borderColor=#c0c0c0><FONT style='FONT-SIZE: 10pt' face=Arial color=#000000>Patient PATIENT_WGTHGT</FONT></TD></TR></TBODY> <TFOOT></TFOOT></TABLE> </p>
+ 
+  <p> 
+&#160; </p>
+ 
+  <p> 
+(Note that the attribute_sequence is automatically assigned and will be different in different databases.) </p>
+ 
+  <p> 
+Refresh EncounterPRO to see the new fields. </p>
+ 
+  <p> 
+&#160; </p>
+ 
+  <p> 
+Be sure to clear any old values in o_service_attribute&#160;for the field that you want to configure.&#160; For example, you would not want to add a new property_title_3 of &#160;'Hgt/Wgt' for Peds where there is already a property_3 of 'HIPAA.'&#160; You would want to delete the record property_title_3 'HIPAA' or&#160;move it to another position at the top of the SOAP before adding the new property_title_3.&#160;  </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822111542777</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 04/21/2009 12:29:24 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

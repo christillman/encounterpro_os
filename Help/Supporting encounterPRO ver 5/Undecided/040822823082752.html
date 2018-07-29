@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Store attachments inside the database vs file structures" />
+    <meta name="TITLE" content="How to: Store attachments inside the database vs file structures" />
+    <meta name="DESCRIPTION" content="This solution gives instructions for storing attachments in the encounterPRO database." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10061 Storing attachments inside the database vs file structures" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Store attachments inside the database vs file structures</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Store attachments inside the database vs file structures</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+The EncounterPRO Electronic Medical Record Software allows files of any type to be attached to various places in a patient chart. When an attachment is created, two records are created in the EncounterPRO database to represent the file. First, a record is created in the 'p_Attachment' table to represent the file itself. Second, a record is created in one of several 'p_..._Progress' tables to represent which specific clinical object in the patient chart the file is attached to. To store the actual file itself, EncounterPRO offers two options: storage of the file in the database, or storage of the file in Windows Directories outside of the database. The default storage option for any new attachment can be set on a file-type by file-type basis so that, if desired, some file types can be stored in the database at the same time that other file types are stored in Windows Directories.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+1) Storing the file in the database. <br /> 
+  a) If the file is stored in the database, then a Binary Large Object (BLOB) is stored in the p_Attachment_Record itself. <br /> 
+  b) This is the simplest and most reliable method because there are no configuration issues, no security issues, and nothing breaks if the server or network architecture is modified. <br /> 
+  c) In addition, Microsoft SQL Server allows BLOBs to be stored automatically and transparently on a separate device so that their space requirements and backup strategy can be managed separately from the rest of the structured data in the database. <br /> 
+2) Storing the file in Windows Directories. <br /> 
+  a) EncounterPRO can also store the attachment files in a set of Windows Directories. <br /> 
+  b) To do this EncounterPRO lets the system manager set up one or more 'Attachment Locations'. <br /> 
+  c) Then each patient must be assigned to a specific attachment location (one of the locations can be designated as the default location for new patients). <br /> 
+  d) The system manager can then designate one or more file types to be stored in windows directories instead of in the database. <br /> 
+  e) Because of the increased complexity and dependence on network/security configuration, this storage strategy is only recommended if there is a specific need to have direct access to the attachment files from outside EncounterPRO, or if certain very large files (e.g. DICOM images or MPEG files) are incorporated into EncounterPRO. <br /> 
+3) Editing Attachments. <br /> 
+  a) Note that in some cases EncounterPRO allows attachments to be edited by EncounterPRO users. <br /> 
+  b) When this happens, the modified file is always stored as a BLOB in the 'p_Attachment_Progress table'. <br /> 
+  c) If the modified attachment is configured to be stored in windows directories instead of the database, then the original attachment file is stored in the 'p_Attachment' table and the modified file is written out to the appropriate windows directory so that external applications will always see the latest version of each attachment. </p>
+ 
+  <p> 
+Article created on 12/1/2004 by Mark.Copenhaver </p>
+ 
+  <p> 
+Article last updated on 12/1/2004 by Mark.Copenhaver</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822823082752</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

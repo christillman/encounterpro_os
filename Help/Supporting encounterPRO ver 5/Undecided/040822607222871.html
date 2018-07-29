@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Manage Prescription Report Printer and Paper" />
+    <meta name="TITLE" content="How to: Manage Prescription Report Printer and Paper" />
+    <meta name="DESCRIPTION" content="This solution describes the attributes which can be used to manage the printer and paper used for prescriptions." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10060 Prescription Report Paper Management" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Manage Prescription Report Printer and Paper</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO ver 5 &gt; Undecided</div>
+<hr />
+<h2>How to: Manage Prescription Report Printer and Paper</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+The prescription report has a number or attributes which can be used to manage the printer and paper used to print the prescriptions.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+Attribute:          dataobject <br /> 
+Definition:         A string designating which powerbuilder datawindow to use <br /> 
+Values:             dw_prescription                        Print area width = 3.75'',  Footer = 6.354'' <br /> 
+                        dw_prescription_size_6            Print area width = 5'',  Footer = 1.083'' <br /> 
+                        dw_prescription_size_20          Print area width = 3.5'',  Footer = 4.864'' <br /> 
+                        dw_prescription2                      2 signature line version <br /> 
+                        dw_prescription2_size_6          2 signature line version <br /> 
+                        dw_prescription2_size_20        2 signature line version <br /> 
+  <br /> 
+Attribute:          datawindow.print.paper.size <br /> 
+Definition:         An integer indicating the size of the paper used for the output: <br /> 
+Values:             0 - Default paper size for the printer <br /> 
+                        1 - Letter 8 1/2 x 11 in <br /> 
+                        2 - LetterSmall 8 1/2 x 11in <br /> 
+                        3 - Tabloid 17 x 11 inches <br /> 
+                        4 - Ledger 17 x 11 in <br /> 
+                        5 - Legal 8 1/2 x 14 in <br /> 
+                        6 - Statement 5 1/2 x 8 1/2 in <br /> 
+                        7 - Executive 7 1/4 x 10 1/2 in <br /> 
+                        8 - A3 297 x 420 mm <br /> 
+                        9 - A4 210 x 297 mm <br /> 
+                        10 - A4 Small 210 x 297 mm <br /> 
+                        11 - A5 148 x 210 mm <br /> 
+                        12 - B4 250 x 354 mm <br /> 
+                        13 - B5 182 x 257 mm <br /> 
+                        14 - Folio 8 1/2 x 13 in <br /> 
+                        15 - Quarto 215 x 275mm <br /> 
+                        16 - 10x14 in <br /> 
+                        17 - 11x17 in <br /> 
+                        18 - Note 8 1/2 x 11 in <br /> 
+                        19 - Envelope #9 3 7/8 x 8 7/8 <br /> 
+                        20 - Envelope #10 4 1/8 x 9 ½ <br /> 
+                        21 - Envelope #11 4 1/2 x 10 3/8 <br /> 
+                        22 - Envelope #12 4 x 11 1/276 <br /> 
+                        23 - Envelope #14 5 x 11 ½ <br /> 
+                        24 - C size sheet <br /> 
+                        25 - D size sheet <br /> 
+                        26 - E size sheet <br /> 
+                        27 - Envelope DL 110 x 220mm <br /> 
+                        28 - Envelope C5 162 x 229 mm <br /> 
+                        29 - Envelope C3 324 x 458 mm <br /> 
+                        30 - Envelope C4 229 x 324 mm <br /> 
+                        31 - Envelope C6 114 x 162 mm <br /> 
+                        32 - Envelope C65 114 x 229 mm <br /> 
+                        33 - Envelope B4 250 x 353 mm <br /> 
+                        34 - Envelope B5 176 x 250 mm <br /> 
+                        35 - Envelope B6 176 x 125 mm <br /> 
+                        36 - Envelope 110 x 230 mm <br /> 
+                        37 - Envelope Monarch 3.875 x 7.5 in <br /> 
+                        38 - 6 3/4 Envelope 3 5/8 x 6 1/2 in <br /> 
+                        39 - US Std Fanfold 14 7/8 x 11 in <br /> 
+                        40 - German Std Fanfold 8 1/2 x 12 in <br /> 
+                        41 - German Legal Fanfold 8 1/2 x 13 in </p>
+ 
+  <p> 
+ <br /> 
+Attribute:          datawindow.print.paper.source <br /> 
+Definition:         An integer indicating which printer tray to pull paper from <br /> 
+Values:             0 - Default <br /> 
+                        1 - Upper <br /> 
+                        2 - Lower <br /> 
+                        3 - Middle <br /> 
+                        4 - Manual <br /> 
+                        5 - Envelope <br /> 
+                        6 - Envelope manual <br /> 
+                        7 - Auto <br /> 
+                        8 - Tractor <br /> 
+                        9 - Smallfmt <br /> 
+                        10 - Largefmt <br /> 
+                        11 - Large capacity <br /> 
+                        14 - Cassette </p>
+ 
+  <p> 
+Attribute:          datawindow.footer.height <br /> 
+Definition:         An integer indicating how tall the footer section is in thousandth of an inch. The default footer height depends on the 'dataobject' attribute (see above). Increasing the footer height has the effect of raising the signature section on the page. Decreasing the footer height has the effect of lowering the signature section on the page. </p>
+ 
+  <p> 
+Affected Products <br /> 
+Product <br /> 
+Version <br /> 
+Reports <br /> 
+All Versions </p>
+ 
+  <p> 
+Article created on 12/1/2004 by Mark.Copenhaver </p>
+ 
+  <p> 
+Article last updated on 7/5/2005 by jmj\sumathi.asok</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822607222871</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:47 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

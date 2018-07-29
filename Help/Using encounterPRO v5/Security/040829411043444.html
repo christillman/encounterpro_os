@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Flag an Object as Confidential" />
+    <meta name="TITLE" content="How to: Flag an Object as Confidential" />
+    <meta name="DESCRIPTION" content="Instructions for flagging items as Confidential." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Flag Confidential Encounter Treatment Assessment Deny Access" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Flag an Object as Confidential</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Using encounterPRO v5 &gt; Security</div>
+<hr />
+<h2>How to: Flag an Object as Confidential</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT face=Arial>In this solution<STRONG>...</STRONG></FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><FONT face=Arial>Purpose </FONT>
+ 
+<LI class=bullets1><FONT face=Arial>Steps </FONT>
+ 
+<LI class=bullets1><FONT face=Arial>Want to Learn More? </FONT> <UL>
+ 
+<LI class=bullets1><FONT face=Arial>Related Solutions </FONT>
+ 
+<LI class=bullets1><FONT face=Arial>Related Education Opportunities</FONT></LI></UL></LI></UL>  <p> 
+<FONT size=4><FONT face=Arial>Purpose <br /> 
+</FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial size=2>In encounterPRO the providers have the ability to flag objects as confidential to limit who can view these items in the patient's chart and prevent them from appearing on reports. Objects that can be flagged as confidential include:</FONT> </p>
+ 
+ <P class=MsoListParagraphCxSpFirst style='MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1'><FONT face=Arial><FONT size=2><SPAN style='FONT-FAMILY: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Symbol'><SPAN style='mso-list: Ignore'>·<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>         </SPAN></SPAN></SPAN>A specific assessment, such as Pregnancy</FONT></FONT> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1'><FONT face=Arial><FONT size=2><SPAN style='FONT-FAMILY: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Symbol'><SPAN style='mso-list: Ignore'>·<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>         </SPAN></SPAN></SPAN>A specific treatment, such as a prescription or lab test</FONT></FONT> </p>
+ 
+ <P class=MsoListParagraphCxSpLast style='MARGIN: 0in 0in 10pt 0.5in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1'><FONT face=Arial><FONT size=2><SPAN style='FONT-FAMILY: Symbol; mso-fareast-font-family: Symbol; mso-bidi-font-family: Symbol'><SPAN style='mso-list: Ignore'>·<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>         </SPAN></SPAN></SPAN>An encounter</FONT></FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial size=2><SPAN style='COLOR: green; FONT-STYLE: italic'><img src="images/content_note.gif" width="18" border="0">NOTE: Flagging an assessment does NOT automatically flag any associated treatments as confidential. For reports that display Assessments with Treatments (ATAT), if the assessment is confidential the assessment will not appear and the associated treatments will not appear either. On reports that list treatments separate from their associated assessments (AATT), the treatments will appear unless they are also individually flagged as confidential.</SPAN></FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial size=2>If the user wants to make an item confidential, select the Make Private button to add a progress note that Denies access to that item. (These buttons must be configured by EHR Product Support or a Super User at the practice.)</FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial size=3><STRONG>Confidential Objects Can Be Viewed By: </STRONG></FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><FONT face=Arial size=2>All Super Users </FONT>
+ 
+<LI class=bullets1><FONT face=Arial size=2>The Primary provider for the patient </FONT>
+ 
+<LI class=bullets1><FONT face=Arial size=2>The Encounter owner for any encounter in which the object is open </FONT></LI></UL> <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial><FONT size=2><STRONG><FONT size=3>Printing Reports for Patients With Confidential Objects</FONT> <br /> 
+</STRONG><SPAN style='COLOR: red; FONT-STYLE: italic'>IMPORTANT: When printing, the user must use the SELECT READER option from the Print Menu.</SPAN> <br /> 
+  <br /> 
+Choose Select Reader, then select who this report is being printed for.  To be sure that no confidential information appears on the report, select a Special User, such as Patient or Unknown. Special Users follow the same rules as for viewing. Which means that none of the Special Users would be able to view confidential objects.</FONT></FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'></FONT><FONT face=Arial size=4>Before You Begin</FONT> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Arial size=2>Your practice may want to have some indicator that there are confidential items in the patient's record. You may want to always add a </FONT> <a href="../Charts/Chart%20alerts/040817614522716.html" target="_blank"> <FONT face=Arial size=2>Chart Alert</FONT</a><FONT face=Arial size=2> to print using Select Reader or some standard verbage so that reports are not unintentionally printed with confidential information.</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT size=4>Steps</FONT> <br /> 
+Follow these steps: <br /> 
+ <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Calibri><EM><FONT color=#3300ff>To make an assessment confidential:<?xml:namespace prefix = o ns = 'urn:schemas-microsoft-com:office:office' /><o:p></o:p></FONT></EM></FONT> </p>
+ 
+<FONT face=Calibri> <OL> <LI class=numbers1>From the Patient's Chart, select the description of the assessment to display the assessment dashboard.  <LI class=numbers1>Select the button for Make Private. A progress note is added that the item has been flagged as Confidential.</LI></OL> <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><SPAN style='COLOR: green; FONT-STYLE: italic'><img src="images/content_note.gif" width="18" border="0">NOTE: Flagging an assessment does NOT automatically flag any associated treatments as confidential. For reports that display Assessments with Treatments (ATAT), if the assessment is confidential the assessment will not appear and the associated treatments will not appear either. On reports that list treatments separate from their associated assessments (AATT), the treatments will appear unless they are also individually flagged as confidential. </p>
+ 
+</SPAN> <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Calibri><EM><FONT color=#3300ff>To make an entire encounter confidential:<o:p></o:p></FONT></EM></FONT> </p>
+ 
+<FONT face=Calibri> <OL> <LI class=numbers1>From the Patient Demographics screen, select the All Encounters tab. A list of open encounters appears.  <LI class=numbers1>If the encounter that you want to make private does not appear on this list, select All Encounters. A list of all encounters for the current patient appears.  <LI class=numbers1>Select the bar for the desired encounter. A menu of options appears.  <LI class=numbers1>Select the button for Make Private. A progress note is added that the item has been flagged as Confidential.</LI></OL> <P class=MsoNormal style='MARGIN: 0in 0in 10pt'><FONT face=Calibri><EM><FONT color=#3300ff>To make a treatment confidential:<o:p></o:p></FONT></EM></FONT> </p>
+ 
+<FONT face=Calibri> <OL> <LI class=numbers1>From the Patient's Chart, select the description of the treatment to display the treatment dashboard.  <LI class=numbers1>Select the button for Make Private. A progress note is added that the item has been flagged as Confidential.</LI></OL> <P class=numbers1><FONT size=4>Want to Learn More?</FONT> <br /> 
+Related Solutions <br /> 
+ </p>
+ 
+ <P class=numbers1>Related Educational Opportunities <br /> 
+ </p>
+ 
+</FONT></FONT></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040829411043444</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 02/22/2010 04:52:20 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>
