@@ -421,15 +421,15 @@ string ls_msg
 
 loglevel = profileint(ini_file, "<LogSystem>", "LogLevel", 2)
 if loglevel <= 0 then loglevel = 2
-if loglevel > 5 then loglevel = 5
+if loglevel > 5 then loglevel = 2
 
 dbloglevel = profileint(ini_file, "<LogSystem>", "DBLogLevel", 3)
 if dbloglevel <= 0 then dbloglevel = 3
-if dbloglevel > 5 then dbloglevel = 5
+if dbloglevel > 5 then dbloglevel = 3
 
-displayloglevel = profileint(ini_file, "<LogSystem>", "DisplayLogLevel", 5)
-if displayloglevel <= 0 then displayloglevel = 5
-if displayloglevel > 5 then displayloglevel = 5
+displayloglevel = profileint(ini_file, "<LogSystem>", "DisplayLogLevel", 4)
+if displayloglevel <= 0 then displayloglevel = 4
+if displayloglevel > 5 then displayloglevel = 4
 
 event_source = ps_event_source
 
@@ -833,7 +833,7 @@ public function integer profile_keys (string ps_file, string ps_section, ref str
 //////////////////////////////////////////////////////////////////////////////
 
 boolean	lb_sectionfound
-integer	li_file
+long	ll_file
 integer	li_rc
 integer	li_keys
 long		ll_pos
@@ -857,8 +857,8 @@ end if
 
 // Open file (check rc).
 ll_length = FileLength (ps_file)
-li_file = FileOpen (ps_file, LineMode!)
-if li_file = -1 then return -1
+ll_file = FileOpen (ps_file, LineMode!)
+if ll_file = -1 then return -1
 
 // reset the array coming in
 psa_keys = ls_keys
@@ -868,7 +868,7 @@ psa_keys = ls_keys
 do while li_rc >= 0 and not lb_sectionfound
 	
 	// Read one line from the inifile (check rc).
-	li_rc = FileRead (li_file, ls_line)
+	li_rc = FileRead (ll_file, ls_line)
 	if li_rc = -1 then
 		return -1
 	end if
@@ -907,7 +907,7 @@ if lb_sectionfound then
 	do while li_rc >= 0 and not lb_sectionfound
 		
 		// Read one line from the file (validate the rc).
-		li_rc = FileRead (li_file, ls_line)
+		li_rc = FileRead (ll_file, ls_line)
 		if li_rc = -1 then
 			return -1
 		end if
@@ -943,7 +943,7 @@ end if
 //////////////////////////////////////////////////////////////////////////////
 // Close file and return
 //////////////////////////////////////////////////////////////////////////////
-FileClose (li_file)
+FileClose (ll_file)
 return li_keys
 
 end function
@@ -1059,7 +1059,7 @@ return ll_copy_count
 
 end function
 
-public function long file_read2 (string ps_file, ref blob pblb_file, boolean pb_lock_file);integer li_FileNum
+public function long file_read2 (string ps_file, ref blob pblb_file, boolean pb_lock_file);long ll_fileNum
 FileLock le_filelock
 long ll_bytes
 
@@ -1074,19 +1074,19 @@ else
 	le_filelock = Shared!
 end if
 
-li_FileNum = FileOpen(ps_file, StreamMode!, Read!, le_filelock)
-if li_FileNum < 0 then
+ll_fileNum = FileOpen(ps_file, StreamMode!, Read!, le_filelock)
+if ll_fileNum < 0 then
 	log.log(this, "file_read()", "Error opening file (" + ps_file + ")", 4)
 	return -1
 end if
 
-ll_bytes = FileReadEx(li_FileNum, pblb_file)
+ll_bytes = FileReadEx(ll_fileNum, pblb_file)
 if ll_bytes = -1 then
 	log.log(this, "file_read()", "Error reading file (" + ps_file + ")", 4)
 	return -1
 end if
 
-FileClose(li_FileNum)
+FileClose(ll_fileNum)
 
 return ll_bytes
 
@@ -1229,8 +1229,8 @@ else
 	setnull(ls_os_version)
 end if
 
-if len(ps_message) > 255 then
-	ls_message = left(ps_message, 255)
+if len(ps_message) > 500 then
+	ls_message = left(ps_message, 500)
 else
 	ls_message = ps_message
 end if
@@ -1337,36 +1337,15 @@ string lsa_string[]
 long ll_rawdata
 str_popup popup
 string ls_who
+string ls_error_file
+long ll_dochandle
 str_event_log_entry lstr_log
 
-//#define EVENTLOG_SUCCESS                0X0000
-//#define EVENTLOG_ERROR_TYPE             0x0001
-//#define EVENTLOG_WARNING_TYPE           0x0002
-//#define EVENTLOG_INFORMATION_TYPE       0x0004
-//#define EVENTLOG_AUDIT_SUCCESS          0x0008
-//#define EVENTLOG_AUDIT_FAILURE          0x0010
 
 // Make Sure the severity is in our range
 if isnull(pi_severity) then pi_severity = 1
 if pi_severity < 1 then pi_severity = 1
 if pi_severity > 5 then pi_severity = 5
-
-// If the message needs to be logged to the database, do that first
-if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
-	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name)
-end if
-
-// Make sure the event log system is initialized
-if not initialized then return 0
-
-// Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
-else
-	ls_who = po_who.classname()
-end if
 
 // set event type
 if pi_severity <= 1 then
@@ -1402,38 +1381,60 @@ ll_data_size = 0
 // Set Strings
 lsa_string[1] = f_app_version() + " "
 
-li_string_count = 1
-if isvalid(po_who) and not isnull(po_who) then
-	lsa_string[1] += po_who.classname()
+// Determine the "who" text
+if not isvalid(po_who) then
+	ls_who = "UNKNOWN CALLER"
+elseif isnull(po_who) then
+	ls_who = "NULL CALLER"
 else
-	lsa_string[1] += "Unknown Caller"
+	ls_who = po_who.classname()
 end if
 
+li_string_count = 1
 if isnull(ps_script) then
 	ps_script = "Script Unknown"
 end if
-
-lsa_string[1] += " - (" + ps_script + ")"
 
 if isnull(ps_message) then
 	ps_message = "No Message"
 end if
 
-lsa_string[1] += " " + ps_message
+// If not initialized, write to a file in the current folder
+if not initialized then 
+	ls_error_file = GetCurrentDirectory( ) + "\EPro-Initialization-Errors.txt"
+	ll_dochandle = FileOpen(ls_error_file, LineMode!, Write!, Shared!, Append!)
+	if ll_dochandle = -1 then	
+		DebugBreak()
+		return -1
+	end if
+	FileWrite(ll_dochandle, "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity))
+	FileClose(ll_dochandle)
+	return 0
+end if
 
+if pi_severity >= 4 then
+	// Call to developer attention
+	DebugBreak()
+end if
+
+// If the message needs to be logged to the database, do that first
+if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
+	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name)
+	lb_reported = True
+end if
 
 // Report Event to the Windows Event Log
+
+//#define EVENTLOG_SUCCESS                0X0000
+//#define EVENTLOG_ERROR_TYPE             0x0001
+//#define EVENTLOG_WARNING_TYPE           0x0002
+//#define EVENTLOG_INFORMATION_TYPE       0x0004
+//#define EVENTLOG_AUDIT_SUCCESS          0x0008
+//#define EVENTLOG_AUDIT_FAILURE          0x0010
+
 if pi_severity >= loglevel then
 	common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
-//	lb_reported = ReportEvent(event_handle, &
-//									li_event_type, &
-//									li_category, &
-//									ll_event_id, &
-//									ll_user, &
-//									li_string_count, &
-//									ll_data_size, &
-//									lsa_string, &
-//									ll_rawdata)
+	lb_reported = True
 end if
 
 
@@ -1448,12 +1449,14 @@ lstr_log.date_time = datetime(today(), now())
 // If the severity is >= 4, then report it to the message bar at the bottom of the screen
 if pi_severity >= 4 then
 	f_cpr_set_error(lstr_log)
+	lb_reported = True
 end if	
 
 // If the display is enabled and the severity is >= the display level, then show the message to the user
 if display_enabled then
 	if pi_severity >= displayloglevel then
 		f_display_log_entry(lstr_log)
+		lb_reported = True
 	end if
 end if
 

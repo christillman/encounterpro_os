@@ -6,7 +6,8 @@ forward prototypes
 global function integer f_check_version ()
 end prototypes
 
-global function integer f_check_version ();str_popup popup
+global function integer f_check_version ();str_service_info lstr_service
+str_popup popup
 integer li_choice
 string ls_temp
 integer li_sts, i
@@ -26,10 +27,10 @@ string ls_common_files
 unsignedlong ll_ppidl
 boolean lb_sts
 
-
 li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
 																windows_api.shell32.CSIDL_COMMONFILES , &
 																ll_ppidl)
+																
 if li_sts = 0 then
 	ls_common_files = space(500)
 	lb_sts = windows_api.shell32.shgetpathfromidlist(ll_ppidl, ls_common_files)
@@ -45,7 +46,7 @@ if not fileexists(ls_compinfo) then
 	ls_compinfo = program_directory + "\EPCompInfo.ini"
 end if
 
-f_check_attachment_location(false)
+f_check_attachment_location()
 ls_epro_setup_dir = f_default_attachment_path() + "\Install\"
 ls_epro_setup_prog = "\Setup.exe /V~"INSTALLDIR=\~""
 ls_epro_setup_prog += program_directory + "\~""
@@ -56,7 +57,7 @@ ls_myversion = string(major_release) + "." + database_version
 ls_mybuild = ls_myversion + "." + build
 
 // First see if we're compatible with the database, because we can't run if we're not
-if ls_sqlversion <> my_sql_version then
+if real(ls_sqlversion) < real(my_sql_version) then
 	if cpr_mode = "CLIENT" then
 		ls_newversion = profilestring(ls_epro_setup_dir + "EncounterPRO\Setup.ini", "Startup", "ProductVersion", "")
 		ls_message = "This EncounterPRO application (" + ls_myversion + ")"
@@ -73,57 +74,46 @@ if ls_sqlversion <> my_sql_version then
 			ls_message += " and the correct EncounterPRO installation program does not appear to be available."
 			ls_message += "  Please contact your system administrator."
 			openwithparm(w_pop_message, ls_message)
-			halt close
+			close(w_logon)
 		end if
 	else
-		log.log(po_null, "f_initialize_objects()", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
+		log.log(po_null, "f_check_version()", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
 	end if
-	halt close
+	close(w_logon)
 end if	
 
 CHOOSE CASE cpr_mode
 	CASE "CLIENT"
 		// Make sure we have the necessary modification level
+		// log.log(po_null, "f_check_version()", "DB " + string(sqlca.modification_level) + ", App " + string(minimum_modification_level), 3)
 		if sqlca.modification_level < minimum_modification_level then
-			ls_message = "This version of EncounterPRO (" + f_app_version() + ")"
+			ls_message = "This version of EncounterPRO-OS (" + f_app_version() + ")"
 			ls_message += " requires the database to be at modification level " + string(minimum_modification_level)
 			ls_message += " or higher.  This database is only at modification level " + string(sqlca.modification_level)
-			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
-			openwithparm(w_pop_message, ls_message)
+			ls_message += "."
+			
+			if sqlca.is_dbo_user then
+				if sqlca.upgrade_material_id() > 0 then
+					ls_message += "~r~n~r~nThe upgrade material (EncounterPRO.OS Schema-" + string(sqlca.modification_level + 1)
+					ls_message += ".mdlvl file) has already been located, so you can use the Upgrade Now button to configure the database."
+				else
+					ls_message += "~r~n~r~nThe upgrade material (EncounterPRO.OS Schema-" + string(sqlca.modification_level + 1)
+					ls_message += ".mdlvl file) has not been located, so you will need to use the Load Schema File button before upgrading."
+				end if
+				log.log(po_null, "f_check_version()", ls_message, 2)
+				ls_message += " Do you wish to configure the database now?"
+				openwithparm(w_pop_yes_no, ls_message)
+				popup_return = message.powerobjectparm
+				if popup_return.item = "YES" then
+					open(w_svc_config_database)
+				end if
+			else
+				ls_message += ".  You must be an administrator to configure the database."
+				openwithparm(w_pop_message, ls_message)
+			end if
+			
 			halt close
 		end if
-		
-		luo_components = CREATE u_ds_data
-		luo_components.set_dataobject("dw_domain_item_item_list")
-		ll_count = luo_components.retrieve("SYSTEM", "COMPONENT")
-		for i = 1 to ll_count
-			ls_component = luo_components.object.domain_item_description[i]
-			if lower(ls_component) = "encounterpro" then
-				ls_myversion = ls_mybuild
-			else
-				ls_myversion = profilestring(ls_compinfo, ls_component, "ProductVersion", "")
-			end if
-			ls_newversion = profilestring(ls_epro_setup_dir + ls_component + "\Setup.ini", "Startup", "ProductVersion", "")
-	
-			li_sts = f_compare_install_version(ls_myversion, ls_newversion)
-			if li_sts > 0 then
-				ls_message = "The current version of " + ls_component + " is " + ls_myversion + "."
-				ls_message += "  A later version is available."
-				ls_message += "  Would you like to:"
-				popup.title = ls_message
-				popup.data_row_count = 2
-				popup.items[1] = "Install " + ls_component + " version " + ls_newversion
-				popup.items[2] = "Continue without installing new version"
-				openwithparm(w_pop_choices_2, popup)
-				li_choice = message.doubleparm
-				if li_choice = 1 then
-					li_sts = Run(ls_epro_setup_dir + ls_component + ls_epro_setup_prog, Normal!)
-					Yield()
-					halt close
-				end if
-			end if
-		next
-		DESTROY luo_components
 	CASE "SERVER"
 		if sqlca.modification_level < minimum_modification_level then
 			ls_message = "This version of EncounterPRO (" + f_app_version() + ")"

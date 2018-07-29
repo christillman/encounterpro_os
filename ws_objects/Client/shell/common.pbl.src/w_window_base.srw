@@ -65,15 +65,15 @@ FUNCTION integer GetWindowPlacement(unsignedlong hwnd, ref str_windowplacement w
 FUNCTION unsignedinteger GetLastError() LIBRARY "kernel32.DLL"
 
 Function long CreateCompatibleDC( uint hDC ) Library 'gdi32'
-Function long GetWindowDC( long lhWnd ) Library "user32"
-Function long ReleaseDC( long lhWnd, uint hDC ) Library "user32"
+Function long GetWindowDC( ulong lhWnd ) Library "user32"
+Function long ReleaseDC( ulong lhWnd, uint hDC ) Library "user32"
 Function long CreateCompatibleBitmap( uint hDC, integer iWidth, integer iHeight ) Library "gdi32"
 Function long SelectObject( uint hDC, uint hObj ) Library 'gdi32'
-Function boolean DeleteObject( long hDC ) Library 'gdi32'
-Function boolean DeleteDC( long hDC ) Library 'gdi32'
+Function boolean DeleteObject( ulong hDC ) Library 'gdi32'
+Function boolean DeleteDC( ulong hDC ) Library 'gdi32'
 Function boolean BitBlt( uint hDestDC, int ix, int iy, int iw, int ih, uint hSourceDC, int idx, int idy, long oper ) Library 'gdi32'
-Function boolean OpenClipboard( long lhWnd ) Library 'user32'
-Function long SetClipboardData( uint uiFormat, long hBmp ) Library 'user32'
+Function boolean OpenClipboard( ulong lhWnd ) Library 'user32'
+Function long SetClipboardData( uint uiFormat, ulong hBmp ) Library 'user32'
 Subroutine CloseClipboard() Library 'user32'
 Subroutine EmptyClipboard() Library 'user32'
 
@@ -90,9 +90,7 @@ string button_type = "PICTURE"
 
 str_menu menu
 
-str_buttons buttons
-
-integer button_pressed
+str_buttons buttons_base
 
 integer button_width
 integer button_height
@@ -142,7 +140,7 @@ public subroutine resize_and_move ()
 public subroutine center_popup ()
 end prototypes
 
-event button_pressed;integer li_menu_index
+event button_pressed(integer button_index);integer li_menu_index
 integer li_sts
 integer li_button_pressed
 
@@ -153,13 +151,13 @@ if button_index < 0 then
 elseif button_index = 0 then
 	if more_buttons then
 		// If the user clicked the "Other Options" button, then display the remaining choices in a popup
-		li_button_pressed = f_display_buttons(buttons, max_buttons, 0)
+		li_button_pressed = f_display_buttons(buttons_base, max_buttons, 0)
 	end if
 else
 	li_button_pressed = button_index
 end if
 	
-if li_button_pressed > 0 and li_button_pressed <= buttons.button_count then
+if li_button_pressed > 0 and li_button_pressed <= buttons_base.button_count then
 	li_sts = button_pressed(li_button_pressed)
 end if
 
@@ -174,7 +172,7 @@ unsignedinteger li_sts
 
 ll_handle = handle(this)
 
-li_return = getwindowplacement(ll_handle, lstr_wpl)
+li_return = GetWindowPlacement(ll_handle, lstr_wpl)
 if li_return = 0 then li_sts = getlasterror()
 
 //if windowstate = Maximized! then
@@ -211,13 +209,13 @@ string ls_auto_close_flag
 
 li_sts = 0
 
-CHOOSE CASE upper(buttons.button[pi_button_index].action)
+CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 	CASE "MENU"
 		// Check for a valid menu
 		if isnull(menu.menu_id) or menu.menu_id <= 0 then return 0
 		
 		// Get the menu index from the button argument
-		li_menu_index = integer(buttons.button[pi_button_index].argument)
+		li_menu_index = integer(buttons_base.button[pi_button_index].argument)
 		if isnull(li_menu_index) or li_menu_index <= 0 or li_menu_index > menu.menu_item_count then return 0
 
 		// Perform the menu item
@@ -281,12 +279,12 @@ If isnull(ps_title) or trim(ps_title) = "" Then return 0
 
 if not buttons_set then set_button_defaults()
 
-buttons.button_count += 1
-buttons.button[buttons.button_count].title = ps_title
-buttons.button[buttons.button_count].help = ps_help
-buttons.button[buttons.button_count].picture = ps_picture
-buttons.button[buttons.button_count].action = ps_action
-buttons.button[buttons.button_count].argument = ps_argument
+buttons_base.button_count += 1
+buttons_base.button[buttons_base.button_count].title = ps_title
+buttons_base.button[buttons_base.button_count].help = ps_help
+buttons_base.button[buttons_base.button_count].picture = ps_picture
+buttons_base.button[buttons_base.button_count].action = ps_action
+buttons_base.button[buttons_base.button_count].argument = ps_argument
 
 // If we're already at the maximum displayable buttons then change the last
 // button to be and "Other Options" button
@@ -310,7 +308,7 @@ else
 		li_sts = openuserobject(pbuttons[button_count], ((button_count - 1) * (button_width + spacing)) + spacing, button_top )
 		if li_sts = 1 then
 			if len(ps_picture) > 0 then pbuttons[button_count].picturename = ps_picture
-			pbuttons[button_count].button_index = buttons.button_count
+			pbuttons[button_count].button_index = buttons_base.button_count
 			pbuttons[button_count].button_help = ps_help
 			openuserobject(titles[button_count], ((button_count - 1) * (button_width + spacing)) + spacing, button_top + button_height + title_gap )
 			titles[button_count].text = ps_title
@@ -335,7 +333,7 @@ public function integer paint_menu (long pl_menu_id);long i
 integer li_sts
 
 menu = datalist.get_menu(pl_menu_id)
-buttons.button_count = 0
+buttons_base.button_count = 0
 
 for i = 1 to menu.menu_item_count
 	li_sts = add_button(menu.menu_item[i].button, &
@@ -356,10 +354,10 @@ return 1
 
 end function
 
-public subroutine enable_window ();long ll_whandle
+public subroutine enable_window ();ulong ll_whandle
 
 ll_whandle = handle(this)
-if not iswindowenabled(ll_whandle) then
+if not IsWindowEnabled(ll_whandle) then
 	EnableWindow(ll_whandle, true)
 end if
 
@@ -633,8 +631,13 @@ end if
 
 end event
 
-event key;if f_fkey_handler2(key, keyflags, this.classname()) then refresh()
-
+event key;if IsValid(this) and not IsNull(this) then
+	if f_fkey_handler2(key, keyflags, this.classname()) then refresh()
+	// Handle F6 here
+	if key = KeyF6! AND keyflags = 0 then
+		window_to_clipboard()
+	end if		
+end if
 end event
 
 event close;remove_buttons()

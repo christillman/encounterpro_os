@@ -294,7 +294,7 @@ eml = lstr_stamp.license
 component_manager.mod = eml
 
 if lstr_stamp.license <> "D" then
-	li_sts = f_check_attachment_location(false)
+	li_sts = f_check_attachment_location()
 	if li_sts < 0 then
 		openwithparm(w_pop_message, "An error occured while attempting to verify attachment location.  Please contact JMJ Technical Support.")
 		log.log(this, "post_open", "Error checking attachment location", 5)

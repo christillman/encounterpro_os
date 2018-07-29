@@ -3,102 +3,8 @@ global type f_fkey_handler2 from function_object
 end type
 
 forward prototypes
-global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags)
 global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags, string ps_context)
 end prototypes
-
-global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags);//keyflags:
-// 1 Shift key
-// 2 Ctrl key
-// 3 Shift and Ctrl keys
-//
-// Epro System Hotkeys
-// F1 = User Help
-//		Ctrl-F1 = Edit User Help
-// F2 = Configuration Help
-// 		Ctrl-F2 = Edit Configuration Help
-// F3 = Display Current Context
-// F4 = ????
-// F5 = Refresh Current Screen
-// 		Ctrl-F5 = Reset cache object
-// F6 = ???
-// F7 = ???
-// F8 = Display Documents for Current Encounter
-//
-// F9 - F12 User Definable
-//
-// Returns:  True if key was pressed that might need a screen refresh
-//
-//
-str_complete_context lstr_complete_context
-long ll_menu_id
-application la_app
-//application la_epro
-
-CHOOSE CASE key
-	CASE KeyF1!
-		if keyflags = 0 then
-			f_display_help(this.classname(), "USER", false)
-		elseif keyflags = 2 then
-			f_display_help(this.classname(), "USER", true)
-		end if
-	CASE KeyF2!
-		if keyflags = 0 then
-			f_display_help(this.classname(), "CONFIG", false)
-		elseif keyflags = 2 then
-			f_display_help(this.classname(), "CONFIG", true)
-		end if
-	CASE KeyF3!
-		if keyflags = 0 then
-			open(w_context_display)
-			return true
-		elseif keyflags = 2 then
-			open(w_data_address_builder_tree)
-		elseif keyflags = 3 then
-			HALT
-		end if
-	CASE KeyF4!
-		if user_list.is_user_privileged(current_user.user_id, "Configuration Mode") then
-			config_mode = NOT config_mode
-		else
-			openwithparm(w_pop_message, "You are not authorized to use EncounterPRO in configuration mode")
-		end if
-		return true
-	CASE KeyF5!
-		if keyflags = 0 then
-			return true
-		elseif keyflags = 2 then
-			f_reset_datalist()
-			openwithparm(w_pop_message, "The cache has been reset")
-		end if
-	CASE KeyF6!
-	CASE KeyF7!
-	CASE KeyF8!
-		lstr_complete_context = f_get_complete_context()
-		if isnull(lstr_complete_context.cpr_id) then
-			openwithparm(w_pop_message, "No Patient Context")
-		end if
-		if isnull(lstr_complete_context.encounter_id) then
-			openwithparm(w_pop_message, "No Encounter Context")
-		end if
-		service_list.do_service( lstr_complete_context.cpr_id, lstr_complete_context.encounter_id, common_thread.manage_documents_service)
-	CASE KeyF9!
-		ll_menu_id = f_get_context_menu("Hotkey", "F9")
-		if ll_menu_id > 0 then f_display_menu(ll_menu_id, true)
-	CASE KeyF10!
-		ll_menu_id = f_get_context_menu("Hotkey", "F10")
-		if ll_menu_id > 0 then f_display_menu(ll_menu_id, true)
-	CASE KeyF11!
-		ll_menu_id = f_get_context_menu("Hotkey", "F11")
-		if ll_menu_id > 0 then f_display_menu(ll_menu_id, true)
-	CASE KeyF12!
-		la_app = getapplication()
-		la_app.event trigger idle()
-END CHOOSE
-
-return false
-
-end function
 
 global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags, string ps_context);//keyflags:
 // 1 Shift key
@@ -137,7 +43,6 @@ end if
 lstr_menu_context.menu_context = "Hotkey" + " " + f_context_object_short(lstr_menu_context.context_object)
 lstr_menu_context.configure_if_null = true
 
-//application la_epro
 
 CHOOSE CASE key
 	CASE KeyF1!
@@ -183,6 +88,7 @@ CHOOSE CASE key
 			return true
 		end if
 	CASE KeyF6!
+		// In w_window_base, window_to_clipboard
 	CASE KeyF7!
 		lstr_service_info.context = f_get_complete_context()
 		lstr_service_info.service = common_thread.order_report_service

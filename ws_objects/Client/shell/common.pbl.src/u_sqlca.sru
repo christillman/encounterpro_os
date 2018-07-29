@@ -51,11 +51,13 @@ FUNCTION long	 config_delete_interface(long pl_interfaceServiceId) RPCFUNC ALIAS
 FUNCTION long	 config_download_library_object(string ps_config_object_id, long pl_version, string ps_created_by) RPCFUNC ALIAS FOR "dbo.config_download_library_object"
 FUNCTION long	 config_import_object(string px_objectdata) RPCFUNC ALIAS FOR "dbo.config_import_object"
 FUNCTION long	 config_install_object(string ps_config_object_id, long pl_version) RPCFUNC ALIAS FOR "dbo.config_install_object"
+FUNCTION long	 config_new_config_object(string ps_config_object_id, string ps_config_object_type, string ps_context_object, string ps_description, string ps_long_description, string ps_config_object_category, long pl_owner_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.config_new_config_object"
+FUNCTION long	 config_new_config_object_version(string ps_config_object_id, long pl_version, blob pbl_objectdata, long ps_created_from_version, string ps_created_by, string ps_status, datetime pdt_status_date_time, string ps_version_description, string ps_release_status, datetime pdt_release_status_date_time) RPCFUNC ALIAS FOR "dbo.config_new_config_object_version"
 FUNCTION long	 config_rename_object(string ps_config_object_id, string ps_new_description) RPCFUNC ALIAS FOR "dbo.config_rename_object"
 FUNCTION long	 config_sync_library() RPCFUNC ALIAS FOR "dbo.config_sync_library"
 
 FUNCTION long	 jmj_component_log(string ps_component_id , long pl_version, string ps_operation, datetime pdt_operation_date_time , long pl_computer_id , string ps_operation_as_user , string ps_completion_status , string ps_error_message , string ps_created_by  ) RPCFUNC ALIAS FOR "dbo.jmj_component_log"
-FUNCTION long      jmj_copy_assessment_treatment_list(string ps_From_assessment_id,string ps_From_user_id,string ps_To_assessment_id,string ps_To_user_id,string ps_Action) RPCFUNC ALIAS FOR "dbo.jmj_copy_assessment_treatment_list"
+FUNCTION long jmj_copy_assessment_treatment_list(string ps_From_assessment_id,string ps_From_user_id,string ps_To_assessment_id,string ps_To_user_id,string ps_Action) RPCFUNC ALIAS FOR "dbo.jmj_copy_assessment_treatment_list"
 FUNCTION long	 jmj_create_local_vaccine_schedule(ref string ps_config_object_id) RPCFUNC ALIAS FOR "dbo.jmj_create_local_vaccine_schedule"
 FUNCTION long	 jmj_document_order_workplan(string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_purpose, string ps_new_object, string ps_ordered_by, string ps_created_by, string ps_workplan_description) RPCFUNC ALIAS FOR "dbo.jmj_document_order_workplan"
 FUNCTION long	 jmj_document_set_recipient(long pl_patient_workplan_item_id, string ps_ordered_for, string ps_dispatch_method, string ps_address_attribute, string ps_address_value, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_document_set_recipient"
@@ -192,7 +194,6 @@ FUNCTION long jmj_order_document_from_material(string ps_cpr_id, long pl_encount
 
 FUNCTION long jmj_order_message_recipient(long pl_dispatched_patient_workplan_item_id, string ps_ordered_for, string ps_created_by, ref long pl_patient_workplan_item_id, string ps_dispatch_method) RPCFUNC ALIAS FOR "dbo.jmj_order_message_recipient"
 FUNCTION long jmj_owner_lookup(string ps_owner, string ps_description, string ps_owner_type, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_owner_lookup"
-FUNCTION long jmj_patient_search(string ps_billing_id, string ps_last_name, string ps_first_name, string ps_ssn, datetime pdt_date_of_birth, string ps_phone_number, string ps_employer, string ps_employeeid, string ps_patient_status, long pl_count_only) RPCFUNC ALIAS FOR "dbo.jmj_patient_search"
 FUNCTION long jmj_patient_search2(string ps_user_id, string ps_billing_id, string ps_last_name, string ps_first_name, string ps_ssn, datetime pdt_date_of_birth, string ps_phone_number, string ps_employer, string ps_employeeid, string ps_patient_status, long pl_count_only) RPCFUNC ALIAS FOR "dbo.jmj_patient_search2"
 FUNCTION long sp_Set_Attachment_Progress(string ps_cpr_id, long pl_attachment_id, long pl_patient_workplan_item_id, string ps_user_id, datetime pdt_progress_date_time, string ps_progress_type, string ps_progress, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_Set_Attachment_Progress"
 FUNCTION long jmj_reset_active_services() RPCFUNC ALIAS FOR "dbo.jmj_reset_active_services"
@@ -535,11 +536,7 @@ FUNCTION long sp_obstree_encounter(string ps_cpr_id, long pl_encounter_id, strin
 FUNCTION long sp_obstree_observation(string ps_cpr_id, long pl_observation_sequence) RPCFUNC ALIAS FOR "dbo.sp_obstree_observation"
 FUNCTION long sp_obstree_patient(string ps_cpr_id, string ps_observation_id) RPCFUNC ALIAS FOR "dbo.sp_obstree_patient"
 FUNCTION long sp_obstree_patient_dates(string ps_cpr_id, string ps_observation_id, datetime pdt_begin_date, datetime pdt_end_date) RPCFUNC ALIAS FOR "dbo.sp_obstree_patient_dates"
-FUNCTION long sp_obstree_patient_new(string ps_cpr_id, string ps_observation_id) RPCFUNC ALIAS FOR "dbo.sp_obstree_patient_new"
-FUNCTION long sp_obstree_patient_old(string ps_cpr_id, string ps_observation_id) RPCFUNC ALIAS FOR "dbo.sp_obstree_patient_old"
 FUNCTION long sp_obstree_treatment(string ps_cpr_id, long pl_treatment_id, string ps_root_observation_id, string ps_root_observation_tag, string ps_child_observation_id, string ps_child_observation_tag, string ps_exclude_observation_tag) RPCFUNC ALIAS FOR "dbo.sp_obstree_treatment"
-FUNCTION long sp_obstree_treatment_new(string ps_cpr_id, long pl_treatment_id, string ps_root_observation_id, string ps_root_observation_tag, string ps_child_observation_id, string ps_child_observation_tag, string ps_exclude_observation_tag) RPCFUNC ALIAS FOR "dbo.sp_obstree_treatment_new"
-FUNCTION long sp_obstree_treatment_old(string ps_cpr_id, long pl_treatment_id, string ps_root_observation_id, string ps_root_observation_tag, string ps_child_observation_id, string ps_child_observation_tag, string ps_exclude_observation_tag) RPCFUNC ALIAS FOR "dbo.sp_obstree_treatment_old"
 FUNCTION long sp_open_encounters(string ps_office_id) RPCFUNC ALIAS FOR "dbo.sp_open_encounters"
 FUNCTION long sp_open_encounters_in_room_type(string ps_office_id, string ps_room_type) RPCFUNC ALIAS FOR "dbo.sp_open_encounters_in_room_type"
 FUNCTION long sp_order_assessment(string ps_cpr_id, long pl_encounter_id, string ps_assessment_id, datetime pdt_begin_date, string ps_diagnosed_by, string ps_created_by, ref long pl_problem_id) RPCFUNC ALIAS FOR "dbo.sp_order_assessment"
@@ -670,6 +667,7 @@ FUNCTION long sp_unset_result(string ps_cpr_id, long pl_treatment_id, long pl_en
 FUNCTION long sp_unset_result_location(string ps_cpr_id, long pl_treatment_id, long pl_encounter_id, string ps_observation_id, integer pi_result_sequence, string ps_location) RPCFUNC ALIAS FOR "dbo.sp_unset_result_location"
 FUNCTION long sp_upd_charge_from_treatment(string ps_cpr_id, long pl_problem_id, integer pi_treatment_sequence, decimal psm_charge) RPCFUNC ALIAS FOR "dbo.sp_upd_charge_from_treatment"
 FUNCTION long sp_update_assessment_def(string ps_assessment_id, string ps_icd10_code, string ps_assessment_category_id, string ps_description, string ps_location_domain, string ps_auto_close, integer pi_auto_close_interval_amount, string ps_auto_close_interval_unit, long pl_risk_level, long pl_complexity, string ps_long_description) RPCFUNC ALIAS FOR "dbo.sp_update_assessment_def"
+
 FUNCTION long sp_update_charge(string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id, string ps_procedure_id, decimal pm_charge) RPCFUNC ALIAS FOR "dbo.sp_update_charge"
 FUNCTION long sp_update_drug(string ps_drug_id, string ps_drug_type, string ps_controlled_substance_flag, real pr_default_duration_amount, string ps_default_duration_unit, string ps_default_duration_prn, real pr_max_dose_per_day, string ps_max_dose_unit, string ps_drug_common_name) RPCFUNC ALIAS FOR "dbo.sp_update_drug"
 FUNCTION long sp_update_drug_package(string ps_drug_id, string ps_package_id, string ps_prescription_flag, real pr_default_dispense_amount, string ps_default_dispense_unit, string ps_take_as_directed, integer pi_sort_order) RPCFUNC ALIAS FOR "dbo.sp_update_drug_package"
@@ -711,7 +709,9 @@ datetime master_configuration_date
 long modification_level
 boolean beta_flag
 long sql_version // 8 = SQL2000, 9 = SQL2005, 10 = SQL2008
+string sql_server_productversion
 boolean connect_approle = true
+str_filepath default_filepath
 
 // SQL versions for database scripts
 long db_script_major_release
@@ -738,6 +738,7 @@ boolean sql_authentication = true
 string connected_using
 
 boolean is_masterdb
+boolean is_dbo_user
 boolean is_dbo
 boolean is_eprodb
 
@@ -753,8 +754,6 @@ string remote_server = "jmjtech"
 string remote_database = "epro_40_synch"
 
 long spid
-
-u_ds_data database_columns
 
 long temp_proc_number = 0
 
@@ -828,13 +827,16 @@ public function integer rebuild_table_triggers (string ps_tablename)
 public function integer run_hotfixes (boolean pb_new_only)
 public function integer reset_permissions ()
 public function integer execute_script (long pl_script_id, str_attributes pstr_substitute, boolean pb_abort_on_error)
-public function long table_column_list (string ps_tablename, ref string psa_column[])
 public function string fn_patient_object_progress_value_old (string ps_cpr_id, string ps_context_object, string ps_progress_type, long pl_object_key, string ps_progress_key)
 public function string sysapp (boolean pb_old)
 public function integer set_database (string ps_database)
 public function string temp_proc_name ()
 private subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
 private subroutine execute_sql_script (string ps_string, ref str_sql_script_status pstr_status)
+public function integer upgrade_database ()
+public function long load_schema_file (string ps_rootpath, long pl_modification_level)
+public function long upgrade_material_id ()
+public function string who_called (powerobject po_caller_object)
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -846,6 +848,10 @@ end subroutine
 public subroutine rollback_transaction ();u_sqlca luo_this
 
 luo_this = this
+
+if transaction_open = false then
+	return
+end if
 
 rollback using luo_this;
 
@@ -1264,6 +1270,8 @@ if not connected and windows_authentication then
 	end if
 end if
 
+if not connected then DebugBreak()
+
 // If we didn't connect with windows authentication, try sql_authentication if it's available
 if not connected and sql_authentication then
 	if isnull(logpass) then
@@ -1330,7 +1338,6 @@ return 1
 end function
 
 public subroutine commit_transaction ();u_sqlca luo_this
-string ls_who
 string ls_message
 integer li_transaction_level
 
@@ -1347,34 +1354,16 @@ else
 	autocommit = true
 end if
 
-if li_transaction_level > 0 then
-	if not isvalid(caller_object[li_transaction_level]) then
-		ls_who = "UNKNOWN CALLER"
-	elseif isnull(caller_object[li_transaction_level]) then
-		ls_who = "NULL CALLER"
-	else
-		ls_who = caller_object[li_transaction_level].classname()
-	end if
-	
-	mylog.log(this, "commit_transaction()", "level=" + string(li_transaction_level) + ", caller=" + ls_who + ", script=" + caller_text[li_transaction_level], 1)
+if li_transaction_level > 0 then	
+	mylog.log(this, "commit_transaction()", "level=" + string(li_transaction_level) + ", caller=" + who_called(caller_object[li_transaction_level]) + ", script=" + caller_text[li_transaction_level], 1)
 else
 	mylog.log(this, "commit_transaction()", "Commiting with transaction level < 1", 3)
-	ls_who = ""
 end if
 
 
 end subroutine
 
-public subroutine begin_transaction (powerobject po_caller_object, string ps_caller_text);string ls_who
-
-if not isvalid(po_caller_object) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_caller_object) then
-	ls_who = "NULL CALLER"
-else
-	ls_who = po_caller_object.classname()
-end if
-
+public subroutine begin_transaction (powerobject po_caller_object, string ps_caller_text);
 if autocommit = true then autocommit = false
 deadlock = false
 transaction_level += 1
@@ -1382,7 +1371,7 @@ transaction_open = true
 caller_object[transaction_level] = po_caller_object
 caller_text[transaction_level] = ps_caller_text
 
-mylog.log(this, "begin_transaction()", "level=" + string(transaction_level) + ", caller=" + ls_who + ", script=" + ps_caller_text, 1)
+mylog.log(this, "begin_transaction()", "level=" + string(transaction_level) + ", caller=" + who_called(po_caller_object) + ", script=" + ps_caller_text, 1)
 
 
 end subroutine
@@ -1443,7 +1432,7 @@ if sqlcode < 0 then
 		deadlock = false
 		// ... but still issue a warning
 		ls_message = "SQL WARNING = " + sqlerrtext
-		mylog.log(this, "check()", ls_message, 3)
+		log.log(this, "check()", ls_message, 3)
 		return true
 	elseif ll_sqldbcode = 10005 then
 		connected = false
@@ -1451,7 +1440,7 @@ if sqlcode < 0 then
 		DISCONNECT USING luo_this;
 		li_sts = dbreconnect()
 		if li_sts <= 0 then
-			mylog.log(this, "check()", "Unable to reconnect to database.  Exiting EncounterPRO.", 5)
+			log.log(this, "check()", "Unable to reconnect to database.  Exiting EncounterPRO.", 5)
 			return false
 		end if
 		deadlock = false
@@ -1465,16 +1454,9 @@ if sqlcode < 0 then
 		ls_message = "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 
 		for i = transaction_level to 1 step -1
-			if not isvalid(caller_object[i]) then
-				ls_message += "~nCaller = " + "UNKNOWN CALLER"
-			elseif isnull(caller_object[i]) then
-				ls_message += "~nCaller = " + "NULL CALLER"
-			else
-				ls_message += "~nCaller = " + caller_object[i].classname()
-			end if
+			ls_message += "~nCaller = " + who_called(caller_object[i])
 			ls_message += ", " + caller_text[i]
 		next
-
 
 		deadlock = false
 		CHOOSE CASE ll_sqldbcode
@@ -1484,7 +1466,7 @@ if sqlcode < 0 then
 				transaction_open = false
 				transaction_level = 0
 				autocommit = true
-				mylog.log(this, "check()", ls_message, 4)
+				log.log(this, "check()", ls_message, 4)
 			CASE 10038
 				// results pending
 				mylog.log(this, "check()", "SQL Server returned 'Results Pending'.  processing continues...", 1)
@@ -1493,7 +1475,7 @@ if sqlcode < 0 then
 				transaction_open = false
 				transaction_level = 0
 				autocommit = true
-				mylog.log(this, "check()", ls_message, 4)
+				log.log(this, "check()", ls_message, 4)
 		END CHOOSE
 
 		// Set the sqldbcode value back so the caller can check it
@@ -1501,7 +1483,7 @@ if sqlcode < 0 then
 		return false
 	else
 		ls_message = "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
-		mylog.log(this, "check()", ls_message, 4)
+		log.log(this, "check()", ls_message, 4)
 		
 		// Set the sqldbcode value back so the caller can check it
 		sqldbcode = ll_sqldbcode
@@ -1636,6 +1618,9 @@ long ll_modification_level
 integer li_beta_flag
 string ls_principal_type
 long ll_is_dbo
+long ll_pos
+long ll_file_id
+string ls_physical_name
 
 luo_this = this
 
@@ -1649,9 +1634,9 @@ if sqlcode < 0 then
 end if
 
 SELECT @@SPID as spid, 
-		CAST(CAST(serverproperty('productversion') AS varchar(1)) AS int) as sql_server_version,
+		serverproperty('productversion') as sql_server_version,
 		CURRENT_USER as current_sql_user
-INTO :spid, :sql_version, :ls_current_user
+INTO :spid, :sql_server_productversion, :ls_current_user
 FROM (SELECT objcount = count(*) FROM sysobjects) x
 USING luo_this;
 if sqlcode < 0 then
@@ -1659,44 +1644,20 @@ if sqlcode < 0 then
 	return -1
 end if
 
-//luo_data = CREATE u_ds_data
-//luo_data.set_dataobject("dw_sql_info", this)
-//ll_count = luo_data.retrieve()
-//if ll_count < 0 then
-//	log.log(this, "check_database()", "Error getting sql info (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
-//	return -1
-//end if
-//if ll_count = 0 then
-//	log.log(this, "check_database()", "No data returned getting sql info", 4)
-//	return -1
-//end if
-//spid = luo_data.object.spid[1]
-//ll_sql_version = luo_data.object.sql_server_version[1]
-//ls_current_user = luo_data.object.current_sql_user[1]
+ll_pos = pos(sql_server_productversion, ".")
+if ll_pos < 2 then
+	log.log(this, "check_database()", "Invalid SQL Server ProductVersion (" + sql_server_productversion + ")", 4)
+	return -1
+end if
+sql_version = long(left(sql_server_productversion, ll_pos - 1))
 
 if sql_version <= 8 then
-	// Make sure the cprsystem role exists
-	SELECT issqlrole, isapprole
-	INTO :ll_issqlrole, :ll_isapprole
-	FROM sysusers
-	WHERE name = :application_role
-	USING luo_this;
-	if sqlcode <> 0 then
-		is_approle_set = false
-	else
-		if ll_isapprole = 1 then
-			is_approle_set = true
-		else
-			is_approle_set = false
-		end if
+	ls_temp = "This database is running on an older version of SQL Server.  EncounterPRO-OS SQL Server 2005 or later."
+	if cpr_mode = "CLIENT" then
+		openwithparm(w_pop_message, ls_temp)
 	end if
-	
-	// SQL 2000 uses current_user = "dbo" to specify dbo access
-	if lower(ls_current_user) = "dbo" then
-		is_dbo = true
-	else
-		is_dbo = false
-	end if
+	log.log(this, "check_database()", ls_temp, 4)
+	return -1
 else
 	// SQL 2005 has a database role checker
 	SELECT is_member('db_owner') as is_dbo
@@ -1708,7 +1669,7 @@ else
 		return -1
 	end if
 	if ll_is_dbo = 1 then
-		is_dbo = true
+		is_dbo_user = true
 		
 		SELECT count(*)
 		INTO :ll_count
@@ -1727,10 +1688,39 @@ else
 			is_approle_set = false
 		end if
 	else
-		is_dbo = false
+		is_dbo_user = false
 		is_approle_set = true  // If not a dbo then assume approle is set
 	end if
 end if
+
+is_dbo = is_dbo_user // remember whether the user is 
+
+// See if this is the master database
+if lower(database) = "master" then
+	is_masterdb = true
+else
+	is_masterdb = false
+end if
+
+SELECT min(file_id)
+INTO :ll_file_id
+FROM sys.database_files
+WHERE type = 0
+USING luo_this;
+if sqlcode < 0 then
+	log.log(this, "check_database()", "Error getting min file_id (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+	return -1
+end if
+SELECT physical_name
+INTO :ls_physical_name
+FROM sys.database_files
+WHERE file_id = :ll_file_id
+USING luo_this;
+if sqlcode < 0 then
+	log.log(this, "check_database()", "Error getting physical name (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+	return -1
+end if
+default_filepath = f_parse_filepath2(ls_physical_name)
 
 SELECT max(name)
 INTO :ls_c_database_status
@@ -1814,13 +1804,6 @@ if luo_this.sqlcode = 0 then
 				remote_database = "epro_40_synch"
 		END CHOOSE
 		
-		// See if this is the master database
-		if lower(servername) = "techserv" and lower(database) = "epro_40_master" and ll_customer_id = 0 then
-			is_masterdb = true
-		else
-			is_masterdb = false
-		end if
-
 	end if
 	
 	// If we need to connect the applicationm role, then do that here
@@ -1920,10 +1903,11 @@ integer li_asc2
 lstr_scripts.script_count = 0
 if isnull(ps_script) then return lstr_scripts
 
-li_please_wait_index = f_please_wait_open()
+// Don't overlay overall progress
+// li_please_wait_index = f_please_wait_open()
 
 ll_total_length = len(ps_script)
-f_please_wait_progress_bar(li_please_wait_index, 0, ll_total_length)
+// f_please_wait_progress_bar(li_please_wait_index, 0, ll_total_length)
 
 ls_SQL = ""
 
@@ -1961,13 +1945,13 @@ DO WHILE ll_go_location < ll_total_length
 		lstr_scripts.script[lstr_scripts.script_count].script_type = "sql"
 		lstr_scripts.script[lstr_scripts.script_count].script = mid(ps_script, ll_sql_script_start, ll_go_location - ll_sql_script_start)
 		ll_sql_script_start = ll_go_location + 2
-		f_please_wait_progress_bar(li_please_wait_index, ll_go_location, ll_total_length)
+		// f_please_wait_progress_bar(li_please_wait_index, ll_go_location, ll_total_length)
 	end if
 	
 	ll_go_location += 2
 LOOP
 
-f_please_wait_close(li_please_wait_index)
+// f_please_wait_close(li_please_wait_index)
 
 return lstr_scripts
 
@@ -2041,30 +2025,11 @@ END CHOOSE
 
 end function
 
-public function boolean my_transaction (powerobject po_caller_object, string ps_caller_text);string ls_who1
-string ls_who2
-
+public function boolean my_transaction (powerobject po_caller_object, string ps_caller_text);
 if not transaction_open then return false
 
 if transaction_level > 0 then
-	
-	if not isvalid(po_caller_object) then
-		ls_who1 = "UNKNOWN CALLER"
-	elseif isnull(po_caller_object) then
-		ls_who1 = "NULL CALLER"
-	else
-		ls_who1 = po_caller_object.classname()
-	end if
-	
-	if not isvalid(caller_object[transaction_level]) then
-		ls_who2 = "UNKNOWN CALLER"
-	elseif isnull(caller_object[transaction_level]) then
-		ls_who2 = "NULL CALLER"
-	else
-		ls_who2 = po_caller_object.classname()
-	end if
-	
-	if ls_who1 = ls_who2 and ps_caller_text = caller_text[transaction_level] then return true
+	return who_called(po_caller_object) = who_called(caller_object[transaction_level]) and ps_caller_text = caller_text[transaction_level] 
 end if
 
 return false
@@ -2409,19 +2374,19 @@ CHOOSE CASE lower(database_mode)
 	CASE "testing"
 		SELECT current_version
 		INTO :ls_available_version
-		FROM jmjtech.epro_40_synch_testing.dbo.c_Database_System
+		FROM epro_40_synch_testing.dbo.c_Database_System
 		WHERE system_id = :ps_system_id
 		USING this;
 	CASE "beta"
 		SELECT current_version
 		INTO :ls_available_version
-		FROM jmjtech.epro_40_synch_beta.dbo.c_Database_System
+		FROM epro_40_synch_beta.dbo.c_Database_System
 		WHERE system_id = :ps_system_id
 		USING this;
 	CASE ELSE
 		SELECT current_version
 		INTO :ls_available_version
-		FROM jmjtech.epro_40_synch.dbo.c_Database_System
+		FROM epro_40_synch.dbo.c_Database_System
 		WHERE system_id = :ps_system_id
 		USING this;
 END CHOOSE
@@ -3036,17 +3001,20 @@ return ls_return
 end function
 
 public function string fn_pretty_phone (string ps_phone);
-//FUNCTION string fn_object_equivalence_group (string ps_object_id) RPCFUNC ALIAS FOR "fn_object_equivalence_group"
 string ls_return
 string ls_null
 
-setnull(ls_null)
+ls_return = ps_phone
+// Avoid automatic American phone formatting 
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
 
-SELECT dbo.fn_pretty_phone(:ps_phone)
-INTO :ls_return
-FROM c_1_record;
-if not check() then return ls_null
-
+	setnull(ls_null)
+	
+	SELECT dbo.fn_pretty_phone(:ps_phone)
+	INTO :ls_return
+	FROM c_1_record;
+	if not check() then return ls_null
+end if
 
 return ls_return
 
@@ -3217,7 +3185,7 @@ li_please_wait_index = f_please_wait_open()
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_bootstrap_scripts", this)
-ls_query = "select script_name, id from jmjtech.epro_40_synch"
+ls_query = "select script_name, id from epro_40_synch"
 CHOOSE CASE lower(database_mode)
 	CASE "testing"
 		ls_query += "_testing"
@@ -3255,19 +3223,19 @@ for i = 1 to ll_rows
 			CASE "testing"
 				SELECTBLOB db_script
 				INTO :lbl_script
-				FROM jmjtech.epro_40_synch_testing.dbo.c_Database_Script
+				FROM epro_40_synch_testing.dbo.c_Database_Script
 				WHERE CAST(id AS varchar(38)) = :ls_id
 				USING this;
 			CASE "beta"
 				SELECTBLOB db_script
 				INTO :lbl_script
-				FROM jmjtech.epro_40_synch_beta.dbo.c_Database_Script
+				FROM epro_40_synch_beta.dbo.c_Database_Script
 				WHERE CAST(id AS varchar(38)) = :ls_id
 				USING this;
 			CASE ELSE
 				SELECTBLOB db_script
 				INTO :lbl_script
-				FROM jmjtech.epro_40_synch.dbo.c_Database_Script
+				FROM epro_40_synch.dbo.c_Database_Script
 				WHERE CAST(id AS varchar(38)) = :ls_id
 				USING this;
 		END CHOOSE
@@ -3520,37 +3488,6 @@ return lstr_status.status
 
 end function
 
-public function long table_column_list (string ps_tablename, ref string psa_column[]);string ls_find
-long ll_row
-long ll_rowcount
-integer li_sts
-long ll_column_count
-
-if not isvalid(database_columns) or isnull(database_columns) then
-	database_columns = CREATE u_ds_data
-	database_columns.set_dataobject("dw_c_database_column")
-end if
-
-ll_rowcount = database_columns.rowcount()
-if ll_rowcount <= 0 then
-	ll_rowcount = database_columns.retrieve()
-	if ll_rowcount <= 0 then return -1
-end if
-
-ll_column_count = 0
-
-ls_find = "lower(tablename)='" + lower(ps_tablename) + "'"
-ll_row = database_columns.find(ls_find, 1, ll_rowcount)
-DO WHILE ll_row > 0 and ll_row <= ll_rowcount
-	ll_column_count++
-	psa_column[ll_column_count] = database_columns.object.columnname[ll_row]
-	
-	ll_row = database_columns.find(ls_find, ll_row + 1, ll_rowcount + 1)
-LOOP
-
-return ll_column_count
-end function
-
 public function string fn_patient_object_progress_value_old (string ps_cpr_id, string ps_context_object, string ps_progress_type, long pl_object_key, string ps_progress_key);
 //FUNCTION string fn_patient_object_progress_value (string ps_cpr_id, string ps_context_object, string ps_progress_type, long pl_object_key, string ps_progress_key) RPCFUNC ALIAS FOR "fn_patient_object_progress_value"
 string ls_return
@@ -3659,8 +3596,6 @@ ls_completion_status = "OK"
 
 ldt_now = datetime(today(), now())
 
-li_please_wait_index = f_please_wait_open()
-
 ////////////////////////////////////////////
 // Perform "always available" substitutions
 ////////////////////////////////////////////
@@ -3677,9 +3612,6 @@ ps_string = f_string_substitute(ps_string, "jmjtech.epro_40_synch.", remote_serv
 
 lstr_scripts = parse_script(ps_string)
 
-//if lb_mywindow then lw_wait.initialize(0, lstr_scripts.script_count)
-f_please_wait_progress_bar(li_please_wait_index, 0, lstr_scripts.script_count)
-
 for i = 1 to lstr_scripts.script_count
 	CHOOSE CASE lower(lstr_scripts.script[i].script_type)
 		CASE "sql"
@@ -3687,7 +3619,7 @@ for i = 1 to lstr_scripts.script_count
 				ls_error = lstr_scripts.script[i].script
 				ls_error = lstr_scripts.script[i].script
 			end if
-				
+			
 			EXECUTE IMMEDIATE :lstr_scripts.script[i].script USING this ;
 			if sqlcode < 0 then
 				// sqldbcode = 999 and sqlcode = -1 means that a "Print" statement was executed
@@ -3701,9 +3633,6 @@ for i = 1 to lstr_scripts.script_count
 					ls_err_mes += lstr_scripts.script[i].script + "~r~n" 
 					ls_err_mes += "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 					if pb_abort_on_error then
-//						log.log(this, "execute_script()", ls_err_mes, 4)
-//						openwithparm(w_pop_message, ls_err_mes)
-//						f_please_wait_close(li_please_wait_index)
 						exit
 					else
 						// Log a warning but continue
@@ -3716,10 +3645,7 @@ for i = 1 to lstr_scripts.script_count
 		CASE ELSE
 			log.log(this, "execute_script()", "Invalid script_type (" + lstr_scripts.script[i].script_type + ")", 3)
 	END CHOOSE
-	f_please_wait_progress_bar(li_please_wait_index, i, lstr_scripts.script_count)
 next
-
-f_please_wait_close(li_please_wait_index)
 
 if isnull(ll_error_index) then
 	pstr_status.status = 1
@@ -3739,6 +3665,280 @@ private subroutine execute_sql_script (string ps_string, ref str_sql_script_stat
 
 
 end subroutine
+
+public function integer upgrade_database ();long ll_modification_level
+long ll_material_id
+blob lbl_script
+string ls_xml
+integer li_sts
+pbdom_builder pbdombuilder_new
+pbdom_element lo_root
+pbdom_element pbdom_element_array[]
+pbdom_document lo_doc
+string ls_new_xml
+blob lbl_new_xml
+string ls_script
+integer li_please_wait_index
+integer li_script
+integer li_num_scripts
+string ls_element
+str_sql_script_status lstr_sql_script_status
+
+ll_modification_level = modification_level + 1
+
+ll_material_id = upgrade_material_id()
+if ll_material_id < 0 then
+	// Messages already logged
+	return -1
+end if
+
+SELECTBLOB object
+INTO :lbl_script
+FROM dbo.c_Patient_Material
+WHERE material_id = :ll_material_id;
+if not tf_check() then return -1
+
+if isnull(lbl_script) or len(lbl_script) <= 0 then
+	log.log(this, "upgrade_database()", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
+	return -1
+end if
+
+ls_xml = f_blob_to_string(lbl_script)
+
+
+// Now create the DOM version from the string version
+pbdombuilder_new = Create PBDOM_Builder
+
+// Make sure this looks like XML
+TRY
+	lo_doc = pbdombuilder_new.BuildFromString(ls_xml)
+	lo_root = lo_doc.getrootelement()
+	if lo_root.GetName() <> "EproDBSchema" then
+		log.log(this, "upgrade_database()", "XML schema incorrect", 4)
+		return -1
+	end if		
+CATCH (throwable lo_error)
+	log.log(this, "upgrade_database()", "Error reading XML schema data (" + lo_error.text + ")", 4)
+	return -1
+END TRY
+
+begin_transaction(this, "Upgrade Mod Level")
+
+UPDATE c_Database_Status
+SET modification_level = :ll_modification_level
+USING this;
+if not check() then
+	rollback_transaction()
+	return -1
+end if
+lo_root.GetChildElements(ref pbdom_element_array)
+li_num_scripts = UpperBound(pbdom_element_array)
+
+li_please_wait_index = f_please_wait_open()
+f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
+
+for li_script = 1 to li_num_scripts
+	ls_element = pbdom_element_array[li_script].getname()
+	ls_script = pbdom_element_array[li_script].gettext()
+	
+	log.log(this, "upgrade_database()", "Executing " + ls_element, 1)
+	execute_sql_script(ls_script, true, lstr_sql_script_status)
+	if lstr_sql_script_status.status < 0 then
+		check()
+		rollback_transaction()
+		f_please_wait_close(li_please_wait_index)
+		log.log(this, "upgrade_database()", "Failed executing " + ls_element, 5)
+		DESTROY pbdombuilder_new
+		return -1
+	end if
+	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
+next
+f_please_wait_close(li_please_wait_index)
+
+commit_transaction()
+DESTROY pbdombuilder_new
+
+modification_level = ll_modification_level
+
+return 1
+
+
+end function
+
+public function long load_schema_file (string ps_rootpath, long pl_modification_level);string ls_left
+string ls_right
+string ls_id
+string ls_url
+long ll_from_material_id
+string ls_parent_config_object_id
+long ll_count
+long ll_file_count
+long i
+long ll_subdir_index
+string lsa_files[]
+string lsa_paths[]
+str_filepath lstr_rootpath
+str_filepath lstr_filepath
+string ls_sql_files
+integer li_sts
+str_file_attributes lstr_file_attributes
+long ll_filebytes
+blob lbl_file
+string ls_file_script
+string ls_owner
+string ls_object
+string ls_objecttype
+long ll_category
+string ls_title
+long ll_material_id
+integer li_success_count
+string ls_user_id
+
+
+if lower(right(ps_rootpath, 6)) = ".mdlvl" then
+	ls_sql_files = ps_rootpath
+	lstr_rootpath = f_parse_filepath2(ps_rootpath)
+else
+	// assume no file is specified and add one so it will parse correctly
+	lstr_rootpath = f_parse_filepath2(ps_rootpath + "\dummy.sql")
+	ls_sql_files = lstr_rootpath.drive + lstr_rootpath.filepath + "\*-" + string(pl_modification_level) + ".mdlvl"
+end if
+
+ll_file_count = log.get_all_files(ls_sql_files, lsa_files)
+for i = 1 to ll_file_count
+	lsa_paths[i] = lstr_rootpath.drive + lstr_rootpath.filepath + "\" + lsa_files[i]
+next
+
+li_success_count = 0
+
+for i = 1 to ll_file_count
+	// Skip the shorthand directories
+	if lsa_files[i] = "." or lsa_files[i] = ".." then continue
+	
+	// Skip the file if we can't get its properties
+	li_sts = log.file_attributes(lsa_paths[i], lstr_file_attributes)
+	if li_sts <= 0 then continue
+	
+	// Skip the directories
+	if lstr_file_attributes.subdirectory then continue
+	
+	
+	lstr_filepath = f_parse_filepath2(lsa_paths[i])
+	
+	// Read the file
+	li_sts = log.file_read(lsa_paths[i], lbl_file)
+	if li_sts <= 0 then
+		log.log(this, "f_generate_object_rebuild_script()", "Error reading file (" + lsa_paths[i] + ")", 4)
+		return -1
+	end if
+	
+	ls_id = f_new_guid()
+	setnull(ls_url)
+	setnull(ll_from_material_id)
+	setnull(ll_category)
+	setnull(ls_parent_config_object_id)
+	
+	if isnull(current_scribe) then
+		ls_user_id = "SYSTEM"
+	else
+		ls_user_id = current_scribe.user_id
+	end if
+
+	ls_title = "EncounterPRO OS Schema - Mod Level " + string(pl_modification_level)
+	
+	INSERT INTO c_Patient_Material (
+		title ,
+		category ,
+		status ,
+		extension ,
+		created_by ,
+		id,
+		version,
+		url,
+		owner_id,
+		filename,
+		document_id
+		)
+	VALUES (
+		:ls_title,
+		:ll_category,
+		'ML',
+		:lstr_filepath.extension,
+		:ls_user_id,
+		:ls_id,
+		1,
+		:ls_url,
+		0,
+		:lstr_filepath.filename,
+		:ls_id
+		)
+	USING this;
+	if not check() then return -1
+
+	SELECT scope_identity()
+	INTO :ll_material_id
+	FROM c_1_record
+	USING this;
+	if not check() then return -1
+	
+	if isnull(ll_material_id) or ll_material_id <= 0 then
+		log.log(this,"clicked","Error creating new material",4)
+		return -1
+	end if
+		
+	Update c_patient_material
+	Set version = :pl_modification_level 
+	Where material_id = :ll_material_id
+	USING this;
+	if not check() then return -1
+
+	// Update the blob column
+	UpdateBlob c_patient_material
+	Set object = :lbl_file 
+	Where material_id = :ll_material_id
+	USING this;
+	if not check() then return -1
+
+	return ll_material_id
+next
+	
+return 0
+
+
+end function
+
+public function long upgrade_material_id ();long ll_modification_level
+long ll_material_id
+
+ll_modification_level = modification_level + 1
+// Load the schema for this mod level
+ll_material_id = load_schema_file(program_directory, ll_modification_level)
+if ll_material_id <= 0 then
+	ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level)
+end if
+if ll_material_id <= 0 then
+	ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level)
+end if
+if ll_material_id <= 0 then
+	log.log(this, "upgrade_mod_level()", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+	return -1
+end if
+
+return ll_material_id
+end function
+
+public function string who_called (powerobject po_caller_object);string ls_who
+
+if not isvalid(po_caller_object) then
+	ls_who = "UNKNOWN CALLER"
+elseif isnull(po_caller_object) then
+	ls_who = "NULL CALLER"
+else
+	ls_who = po_caller_object.classname()
+end if
+
+return ls_who
+end function
 
 event constructor;
 deadlock = false

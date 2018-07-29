@@ -4,7 +4,7 @@ end type
 
 forward prototypes
 global function integer f_fix_attachment_location (boolean pb_autorepair)
-global function integer f_check_attachment_location (boolean pb_autorepair)
+global function integer f_check_attachment_location ()
 end prototypes
 
 global function integer f_fix_attachment_location (boolean pb_autorepair);boolean lb_exists
@@ -52,12 +52,13 @@ return 0
 
 end function
 
-global function integer f_check_attachment_location (boolean pb_autorepair);boolean lb_exists
+global function integer f_check_attachment_location ();boolean lb_exists
 string ls_path
 long ll_attachment_location_id
 long ll_sort_sequence
 string ls_attachment_server
 string ls_attachment_share
+string ls_msg
 
 
 SELECT attachment_server, attachment_share
@@ -66,11 +67,24 @@ FROM dbo.fn_attachment_location(NULL);
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then return -1
 
-ls_path = f_default_attachment_path()
+if len(object_file_server) > 1 then
+	ls_path = "\\" + object_file_server
+else
+	ls_path = object_file_server + ":"
+end if
 
-lb_exists = log.of_directoryexists(ls_path)
+ls_path += "\" + object_file_path
+
+lb_exists = FileExists(ls_path)
 if lb_exists then return 1
+ls_msg = "Unable to verify attachment location <" + ls_path + ">."
 
+if FileExists("\\localhost\attachments") then
+	ls_msg += " Temporarily using your local attachments share. Please update your attachment location preference to '\\localhost\attachments'."
+else
+	ls_msg += " Please share a folder on your computer with the share name 'attachments'. You may not be able to use attachment functionality."
+end if
+openwithparm(w_pop_message, ls_msg)
 return 0
 
 end function

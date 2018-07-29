@@ -13,14 +13,11 @@ global variables
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
-long minimum_modification_level = 200
+long minimum_modification_level = 202
+date compile_date = date("29/7/2018")
+integer major_release = 7
+string database_version = "0" // this is really minor release
 string build = "1"
-date compile_date = date("8/15/2010")
-///////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////
-integer major_release = 6
-string database_version = "1"
 ////////////////////////////////////////////////////////////
 
 
@@ -29,6 +26,7 @@ string database_version = "1"
 string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
 
+cpr gnv_app
 boolean shutting_down = false
 
 string registry_key
@@ -252,10 +250,10 @@ TimerKind trc_Timerkind = Clock!
 
 // WAPI interface object
 u_windows_api windows_api
+
+// In functions, "this" often causes a null refrence exception in PB17. 
+// Replace with po_null.
 powerobject po_null
-cpr gnv_app
-
-
 
 end variables
 
@@ -267,21 +265,25 @@ global cpr cpr
 
 type prototypes
 // Cursor Functions
-SUBROUTINE GetCursorPos( ref str_point lppt ) LIBRARY "USER32.DLL" alias for "GetCursorPos;Ansi"
-FUNCTION long SetWindowPos(long hwnd, long hWndInsertAfter, long x, long y, long cx, long cy, long wFlags) LIBRARY "USER32.DLL"
-FUNCTION boolean GetWindowRect( long hwnd, ref str_rect rect) LIBRARY "USER32.DLL" alias for "GetWindowRect;Ansi"
+FUNCTION long SetWindowPos(ulong hwnd, ulong hWndInsertAfter, long x, long y, long cx, long cy, long wFlags) LIBRARY "USER32.DLL"
 Function ulong GetModuleFileNameA( ulong hInst, REF string lpszPath, ulong cchPath ) LIBRARY "kernel32.dll" alias for "GetModuleFileNameA;Ansi"
 
 // Window Functions
-Function boolean UpdateWindow(long hWnd)  library "USER32.DLL"
-Function boolean EnableWindow(long hWnd, boolean bEnable)  library "USER32.DLL"
-Function boolean IsWindowEnabled(long hWnd)  library "USER32.DLL"
-Function ulong SetCursor(ulong hCursor) library "user32.dll"
+Function boolean EnableWindow(ulong hWnd, boolean bEnable)  library "USER32.DLL"
+Function boolean IsWindowEnabled(ulong hWnd)  library "USER32.DLL"
 FUNCTION long GetForegroundWindow() library "user32.dll"
-FUNCTION long GetActiveWindow() library "user32.dll"
 
 
 end prototypes
+
+type variables
+
+// Don't get your hopes up; only a couple of locales are supported
+// so far, and only in a limited way!
+// en_us: as originally built
+// en_af: starting support for African countries
+string locale
+end variables
 
 event keydown;//f_fkey_handler(key, keyflags)
 
@@ -325,11 +327,20 @@ windows_api = CREATE u_windows_api
 
 // Create the log object
 log = CREATE u_event_log
+// log.log(this, "cpr.open", "Starting up", 1)
 
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
+
+// Logging system must be initialized after common thread,
+// to reference EncounterPro.OS.Utilities for event logging
+log.initialize("EncounterPro-OS")
+if li_sts <= 0 then
+	openwithparm(w_pop_message, "Unable to initialize logging system")
+	halt
+end if
 
 // Get our application path so we can set the INI file
 lul_hinst = Handle( GetApplication() )
@@ -352,12 +363,6 @@ if not fileexists(ini_file) then
 end if
 
 // Initialize the logging system
-li_sts = log.initialize("EncounterPRO")
-if li_sts <= 0 then
-	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
-end if
-
 open(w_image_objects)
 
 // If no command-line param is supplied, then check the registry

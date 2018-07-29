@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$u_richtextedit.sru
 forward
-global type u_richtextedit from u_richtextedit_base
+global type u_richtextedit from richtextedit
 end type
 type str_rtf_input_field from structure within u_richtextedit
 end type
@@ -11,7 +11,7 @@ type str_rtf_input_field from structure
 	string		field_data
 end type
 
-global type u_richtextedit from u_richtextedit_base
+global type u_richtextedit from richtextedit
 integer width = 901
 integer height = 540
 integer textsize = -10
@@ -44,6 +44,8 @@ private long last_backcolor
 private long field_backcolor
 private str_font_settings current_font_settings
 
+private string default_font_name = "Times New Roman"
+private integer default_font_size = 11
 end variables
 
 forward prototypes
@@ -149,7 +151,6 @@ public subroutine set_position (str_charposition pstr_charposition)
 public subroutine delete_cr ()
 public subroutine add_cr ()
 private subroutine add_chunk_old (string ps_text)
-public function integer of_setfontsize (integer ai_points)
 end prototypes
 
 public subroutine prev_level ();set_level(level - 1)
@@ -409,6 +410,9 @@ set_level(0)
 set_justify(left!)
 input_field_count = 0
 inputfieldsvisible = true
+// Note that, with the PB 2017 RTE, the background color won't be visible on the screen;
+// only when printed or saved to a PDF.
+// ( https://www.appeon.com/support/documents/appeon_online_help/pb2017/migrating_pb_apps/ch04s05.html )
 inputfieldbackcolor = color_light_blue
 
 displayonly = lb_displayonly
@@ -477,7 +481,7 @@ public subroutine set_justify (alignment pe_alignment);if font_settings_caching 
 	if pe_alignment = current_font_settings.alignment then return
 end if
 
-setalignment(pe_alignment)
+SetAlignment(pe_alignment)
 current_font_settings.alignment = pe_alignment
 
 return
@@ -716,18 +720,8 @@ end if
 
 end subroutine
 
-public subroutine set_font_settings (str_font_settings pstr_font_settings);set_font_size(pstr_font_settings.fontsize)
-set_bold(pstr_font_settings.bold)
-set_underline(pstr_font_settings.underline)
-set_italic(pstr_font_settings.italic)
-set_color(pstr_font_settings.forecolor)
-
-//set_text_back_color(pstr_font_settings.textbackcolor)
-
-set_justify(pstr_font_settings.alignment)
-
-//set_fontname(pstr_font_settings.fontname)
-
+public subroutine set_font_settings (str_font_settings pstr_font_settings);
+set_font_settings(pstr_font_settings,false)
 end subroutine
 
 public function integer add_image (string ps_filename, long pl_width_inches, long pl_height_inches, string ps_placement, boolean pb_text_flow_around, long pl_xpos, long pl_ypos);// ps_placement:	"Fixed" = Place the image at the X and Y coordinates specified
@@ -1055,14 +1049,14 @@ end function
 
 protected function str_font_settings get_empty_font_settings ();str_font_settings lstr_font_settings
 
-setnull(lstr_font_settings.fontsize)
+lstr_font_settings.fontsize = default_font_size
+lstr_font_settings.fontname = default_font_name
 setnull(lstr_font_settings.bold)
 setnull(lstr_font_settings.underline)
 setnull(lstr_font_settings.italic)
 setnull(lstr_font_settings.forecolor)
 setnull(lstr_font_settings.textbackcolor)
 setnull(lstr_font_settings.alignment)
-setnull(lstr_font_settings.fontname)
 
 return lstr_font_settings
 
@@ -1752,7 +1746,8 @@ current_font_settings = get_font_settings()
 //
 //
 if isvalid(datalist) and not isnull(datalist) then
-	field_backcolor = datalist.get_preference_int("COLOR", "RTF Field Backcolor", rgb(216,216,216))
+	field_backcolor = datalist.get_preference_int("COLOR", "RTF Field Backcolor", rgb(128,128,128))
+	inputfieldbackcolor = field_backcolor
 end if
 
 end subroutine
@@ -1938,7 +1933,7 @@ public subroutine scroll_up ();scrollpriorpage()
 end subroutine
 
 public subroutine set_background_color (long pl_color);
-backcolor = pl_color
+BackColor = pl_color
 
 
 end subroutine
@@ -2283,8 +2278,7 @@ public subroutine set_fontname (string ps_fontname);if font_settings_caching the
 	if lower(ps_fontname) = lower(current_font_settings.fontname) then return
 end if
 
-facename = ps_fontname
-of_setfont(ps_fontname)
+FaceName = ps_fontname
 current_font_settings.fontname = ps_fontname
 
 return
@@ -2379,8 +2373,7 @@ public subroutine set_font_size (integer pi_fontsize);if font_settings_caching t
 	if pi_fontsize = current_font_settings.fontsize then return
 end if
 
-textsize = pi_fontsize
-of_setfontsize(pi_fontsize)
+TextSize = pi_fontsize
 current_font_settings.fontsize = pi_fontsize
 
 return
@@ -2392,7 +2385,7 @@ public subroutine set_color (long pl_forecolor);if font_settings_caching then
 	if pl_forecolor = current_font_settings.forecolor then return
 end if
 
-settextcolor(pl_forecolor)
+SetTextColor(pl_forecolor)
 current_font_settings.forecolor = pl_forecolor
 
 return
@@ -2529,47 +2522,10 @@ LOOP WHILE ls_whats_left <> ""
 
 end subroutine
 
-public function integer of_setfontsize (integer ai_points);/***************************************************************
-* Arguments     : ai_points = new font size in point
-* Return Values :          
-* Description   : converts the passed point size to pixels and 
-                  set the selected text to the desired point size
-* Request No    : 
-***************************************************************/
-/***************************************************************
-* By			: mjw
-* Date		: 2007
-* Purpose	: changed to api call to new format
-* CR#			: 
-***************************************************************/
-
-integer	li_rc
-//integer	li_pixels
-
-IF ai_points <= 0 THEN Return 0
-
-//Set the new font
-//this.setredraw ( FALSE )
-//li_pixels = of_getfontsize( ai_points )
-of_getfont()
-//is_logfont.lfheight = li_pixels
-is_logfont.lfheight = -ai_points
-li_rc = ColorLogFont105(handle(this) ,setlogfontmsg,0,is_logfont) 
-
-//this.setredraw ( TRUE )
-
-//Make sure it took
-of_getfont()
-
-Return li_rc
-end function
-
 on u_richtextedit.create
-call super::create
 end on
 
 on u_richtextedit.destroy
-call super::destroy
 end on
 
 event constructor;initialize()

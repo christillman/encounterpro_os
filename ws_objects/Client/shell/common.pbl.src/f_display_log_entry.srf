@@ -15,6 +15,12 @@ ls_msg += "~nObject Class:       " + pstr_log.class
 ls_msg += "~nObject Script:      " + pstr_log.script
 ls_msg += "~nError Message:      " + pstr_log.message
 
+if pstr_log.severity >= 4 then
+	Clipboard(ls_msg)
+	ls_msg += "~n~nThis error has been recorded to the db log and windows event log. " 
+	ls_msg += "It has also been copied to your clipboard, ready to paste in an email for example." 
+	
+end if
 openwithparm(w_pop_message, ls_msg)
 
 
