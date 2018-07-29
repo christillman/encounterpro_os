@@ -210,7 +210,7 @@ public function str_menu get_menu (long pl_menu_id)
 public function long load_external_observations ()
 public function string external_observation (string ps_external_source, string ps_observation_id)
 public function string get_edit_list_id (string ps_top_20_user_id, string ps_top_20_code)
-public function string assessment_icd_9_code (string ps_assessment_id)
+public function string assessment_icd10_code (string ps_assessment_id)
 public function long load_observation_types ()
 public function string observation_type_default_composite_flag (string ps_observation_type)
 public function integer observation_type_sort_sequence (string ps_observation_type)
@@ -1966,18 +1966,18 @@ destroy lds_top_20_list
 Return ps_top_20_user_id
 end function
 
-public function string assessment_icd_9_code (string ps_assessment_id);string ls_icd_9_code
+public function string assessment_icd10_code (string ps_assessment_id);string ls_icd10_code
 long ll_row
 
 ll_row = find_assessment(ps_assessment_id)
 if ll_row <= 0 then
-	setnull(ls_icd_9_code)
+	setnull(ls_icd10_code)
 else
-	ls_icd_9_code = assessment_definition.object.icd_9_code[ll_row]
+	ls_icd10_code = assessment_definition.object.icd10_code[ll_row]
 end if
 
 
-return ls_icd_9_code
+return ls_icd10_code
 
 end function
 
@@ -4623,7 +4623,7 @@ else
 	lstr_assessment.description = assessment_definition.object.description[ll_row]
 	lstr_assessment.long_description = assessment_definition.object.long_description[ll_row]
 	lstr_assessment.location_domain = assessment_definition.object.location_domain[ll_row]
-	lstr_assessment.icd_9_code = assessment_definition.object.icd_9_code[ll_row]
+	lstr_assessment.icd10_code = assessment_definition.object.icd10_code[ll_row]
 	lstr_assessment.risk_level = assessment_definition.object.risk_level[ll_row]
 	lstr_assessment.complexity = assessment_definition.object.complexity[ll_row]
 	lstr_assessment.status = assessment_definition.object.status[ll_row]

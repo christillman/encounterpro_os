@@ -1,7 +1,7 @@
 ﻿$PBExportHeader$str_billing.srs
 global type str_billing from structure
 	string		assessment_description
-	string		icd_9_code
+	string		icd10_code
 	string		description
 	string		cpt_code
 	decimal {2}	charge

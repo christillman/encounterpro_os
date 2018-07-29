@@ -3,10 +3,10 @@ global type f_find_assessment_id from function_object
 end type
 
 forward prototypes
-global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd_9_code)
+global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd10_code)
 end prototypes
 
-global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd_9_code);str_popup popup
+global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd10_code);str_popup popup
 str_popup_return popup_return
 string ls_find
 long ll_row
@@ -42,7 +42,7 @@ if isnull(ps_assessment_type) then ps_assessment_type = "SICK"
 luo_sp_new_assessment_definition = CREATE u_ds_data
 luo_sp_new_assessment_definition.set_dataobject("dw_sp_new_assessment_definition")
 ll_count = luo_sp_new_assessment_definition.retrieve(ps_assessment_type, &
-																			ps_icd_9_code, &
+																			ps_icd10_code, &
 																			ls_assessment_category_id, &
 																			ps_assessment, &
 																			ls_location_domain, &

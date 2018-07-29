@@ -3573,8 +3573,8 @@ lstr_assessment.assessment = pstr_problem.description.text
 
 for i = 1 to upperbound(pstr_problem.description.code)
 	CHOOSE CASE lower(pstr_problem.description.code[i].codingsystem)
-		CASE "icd-9"
-			lstr_assessment.icd9_code = pstr_problem.description.code[i].value
+		CASE "icd-10"
+			lstr_assessment.icd10_code = pstr_problem.description.code[i].value
 	END CHOOSE
 next
 
@@ -3647,7 +3647,7 @@ interpret_objectcreate("Assessment", lstr_handling.objectcreate, lb_auto_create,
 
 // Make sure we have an assessment_id
 if isnull(lstr_assessment.assessment_id) then
-	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd9_code)
+	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd10_code)
 end if
 
 ll_problem_id = find_assessment(lstr_assessment, lb_auto_create, lb_prompt_user, lb_new_object)
@@ -3792,7 +3792,7 @@ interpret_objectcreate("Assessment", lstr_handling.objectcreate, lb_auto_create,
 
 // Make sure we have an assessment_id
 if isnull(lstr_assessment.assessment_id) then
-	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd9_code)
+	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd10_code)
 end if
 
 ll_problem_id = find_assessment(lstr_assessment, lb_auto_create, lb_prompt_user, lb_new_object)
@@ -3954,7 +3954,7 @@ next
 
 // If this is an allergy, then find the allergy.  Create it if we don't have one
 if upper(lstr_assessment.assessment_type) = "ALLERGY" and isnull(lstr_assessment.assessment_id) then
-	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd9_code)
+	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd10_code)
 	if isnull(lstr_assessment.assessment_id) then
 		log.log(this, "translate_ccr_alert_info()", "Unable to find or create assessment_id (" + lstr_assessment.assessment + ")", 4)
 		return lstr_assessment
@@ -3988,8 +3988,8 @@ end if
 //
 //for i = 1 to upperbound(pstr_alert.description.code)
 //	CHOOSE CASE lower(pstr_alert.description.code[i].codingsystem)
-//		CASE "icd-9"
-//			lstr_assessment.icd9_code = pstr_alert.description.code[i].value
+//		CASE "icd-10"
+//			lstr_assessment.icd10_code = pstr_alert.description.code[i].value
 //	END CHOOSE
 //next
 

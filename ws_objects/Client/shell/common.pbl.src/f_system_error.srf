@@ -15,7 +15,7 @@ ls_msg += "~nobject  :"+error.object
 ls_msg += "~nevent   :"+error.objectevent
 ls_msg += "~nline    :"+string(error.line)
 
-log.log(this, "SYSTEM ERROR", ls_msg, 4)
+log.log(po_null, "SYSTEM ERROR", ls_msg, 4)
 
 end subroutine
 

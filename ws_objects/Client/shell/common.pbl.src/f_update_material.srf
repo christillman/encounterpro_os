@@ -30,13 +30,13 @@ if len(pstr_material.material_object) > 0 then
 	setnull(pstr_material.url)
 else
 	if isnull(pstr_material.url) or trim(pstr_material.url) = "" then
-		log.log(this, "f_update_material()", "No material object or URL is present", 4)
+		log.log(po_null, "f_update_material()", "No material object or URL is present", 4)
 		return -1
 	end if
 	setnull(pstr_material.material_object)
 end if
 
-sqlca.begin_transaction( this, "Update Material")
+sqlca.begin_transaction( po_null, "Update Material")
 ll_new_material_id = sqlca.jmj_new_material(pstr_material.title, &
 															pstr_material.category,  &
 															pstr_material.status,  &
@@ -65,12 +65,12 @@ if ll_new_material_id > 0 then
 		pstr_material = lstr_patient_material
 		return 1
 	else
-		log.log(this, "f_update_material()", "An error occured retrieving new material record", 4)
+		log.log(po_null, "f_update_material()", "An error occured retrieving new material record", 4)
 		sqlca.rollback_transaction( )
 		return -1
 	end if
 else
-	log.log(this, "f_update_material()", "An error occured creating new material record", 4)
+	log.log(po_null, "f_update_material()", "An error occured creating new material record", 4)
 	sqlca.rollback_transaction( )
 	return -1
 end if

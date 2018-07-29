@@ -134,7 +134,7 @@ dw_billing.retrieve(current_patient.cpr_id, current_patient.open_encounter.encou
 //		if lstr_assessments[i].charge_count = 0 then
 //			ll_row = dw_billing.insertrow(0)
 //			dw_billing.setitem(ll_row, "assessment_description", lstr_assessments[i].description)
-//			dw_billing.setitem(ll_row, "icd_9_code", lstr_assessments[i].icd_9_code)
+//			dw_billing.setitem(ll_row, "icd10_code", lstr_assessments[i].icd10_code)
 //			dw_billing.setitem(ll_row, "description", "Diagnoses With No Billed Items")
 //			dw_billing.setitem(ll_row, "cpr_id", current_patient.cpr_id)
 //			dw_billing.setitem(ll_row, "problem_id", lstr_assessments[i].problem_id)
@@ -147,7 +147,7 @@ dw_billing.retrieve(current_patient.cpr_id, current_patient.open_encounter.encou
 //				if lstr_assessments[i].charge[j].charge_bill_flag <> "Y" then continue
 //				ll_row = dw_billing.insertrow(0)
 //				dw_billing.setitem(ll_row, "assessment_description", lstr_assessments[i].description)
-//				dw_billing.setitem(ll_row, "icd_9_code", lstr_assessments[i].icd_9_code)
+//				dw_billing.setitem(ll_row, "icd10_code", lstr_assessments[i].icd10_code)
 //				dw_billing.setitem(ll_row, "description", lstr_assessments[i].charge[j].description)
 //				dw_billing.setitem(ll_row, "cpt_code", lstr_assessments[i].charge[j].cpt_code)
 //				dw_billing.setitem(ll_row, "charge", lstr_assessments[i].charge[j].charge)

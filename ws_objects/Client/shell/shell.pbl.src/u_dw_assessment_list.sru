@@ -516,7 +516,7 @@ CHOOSE CASE ls_action
 		
 		// get the updated description and icd code
 		object.description[pl_row] = datalist.assessment_description(ls_assessment_id)
-		object.icd_9_code[pl_row] = datalist.assessment_icd_9_code(ls_assessment_id)
+		object.icd10_code[pl_row] = datalist.assessment_icd10_code(ls_assessment_id)
 	CASE "DELETE"
 		ls_temp = "Delete " + object.description[pl_row] + "?"
 		openwithparm(w_pop_ok, ls_temp)

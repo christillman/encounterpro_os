@@ -54,7 +54,7 @@ if lower(ls_root) = "jmjmultidocument" then
 
 		li_sts = f_observation_add_xml_document(po_observation, pbdom_new_doc)
 		if li_sts < 0 then
-			log.log(this, "read_xml_documents()", "Error adding xml document", 4)
+			log.log(po_null, "read_xml_documents()", "Error adding xml document", 4)
 			return -1
 		end if
 		
@@ -96,7 +96,7 @@ else
 	
 	li_sts = f_observation_add_xml_document(po_observation, pbdom_doc)
 	if li_sts < 0 then
-		log.log(this, "read_xml_documents()", "Error adding xml document", 4)
+		log.log(po_null, "read_xml_documents()", "Error adding xml document", 4)
 		return -1
 	end if
 	

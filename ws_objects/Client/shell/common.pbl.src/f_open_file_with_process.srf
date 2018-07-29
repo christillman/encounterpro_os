@@ -16,12 +16,12 @@ inet l_Inet
 long ll_sts
 
 if isnull(ps_file) then
-	log.log(this, "f_open_file()", "Null file", 4)
+	log.log(po_null, "f_open_file()", "Null file", 4)
 	return 0
 end if
 
 //if not fileexists(ps_file) then
-//	log.log(this, "f_open_file()", "attachment file not found (" + ps_file + ")", 4)
+//	log.log(po_null, "f_open_file()", "attachment file not found (" + ps_file + ")", 4)
 //	return 0
 //end if
 

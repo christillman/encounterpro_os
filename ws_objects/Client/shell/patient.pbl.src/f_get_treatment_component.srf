@@ -19,7 +19,7 @@ end if
 
 luo_treatment = component_manager.get_component(ls_component_id)
 if isnull(luo_treatment) then
-	log.log(this, "f_get_treatment_component()", "Error getting treatment component", 4)
+	log.log(po_null, "f_get_treatment_component()", "Error getting treatment component", 4)
 	return luo_treatment
 else
 	luo_treatment.treatment_type = ps_treatment_type				

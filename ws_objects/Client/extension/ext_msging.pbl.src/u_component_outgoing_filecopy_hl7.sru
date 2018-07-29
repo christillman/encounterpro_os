@@ -547,7 +547,7 @@ END IF
 
 // Parse through the string and populate array
 // which contains facily,attending doctor info AND 
-// first CPT & associated ICD9's.
+// first CPT & associated ICD10's.
 ps_message = left(ps_message,ll_len)		
 ls_temp = ps_message
 j = 1;k = 1
@@ -1322,7 +1322,7 @@ END IF
 
 // Parse through the string and populate array
 // which contains facily,attending doctor info AND 
-// first CPT & associated ICD9's.
+// first CPT & associated ICD10's.
 ps_message = left(ps_message,ll_len)		
 ls_temp = ps_message
 j = 1;k = 1
@@ -2134,7 +2134,7 @@ END IF
 
 // Parse through the string and populate array
 // which contains facily,attending doctor info AND 
-// first CPT & associated ICD9's.
+// first CPT & associated ICD10's.
 ps_message = left(ps_message,ll_len)		
 ls_temp = ps_message
 j = 1;k = 1

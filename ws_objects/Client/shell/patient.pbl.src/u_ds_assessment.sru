@@ -69,7 +69,7 @@ public function integer modify_assessment (long pl_problem_id, string ps_assessm
 public function str_property_value get_property (long pl_object_key, string ps_property, str_attributes pstr_attributes)
 public function integer set_progress (long pl_problem_id, string ps_progress_type, string ps_progress_key, string ps_progress, long pl_risk_level, datetime pdt_progress_date_time)
 private subroutine icd_part_count_calculate ()
-public function long icd_part_count (string ps_icd_9_code)
+public function long icd_part_count (string ps_icd10_code)
 public function integer add_assessment (ref str_assessment_description pstr_assessment)
 public function integer get_encounter_assessments (long pl_encounter_id, boolean pb_include_deleted, ref str_assessment_description pstra_assessments[])
 public subroutine set_assessment_changed (long pl_problem_id)
@@ -435,7 +435,7 @@ return assessment(puo_assessment, pl_problem_id, li_diagnosis_sequence)
 //puo_assessment.assessment_status = object.assessment_status[ll_row]
 //puo_assessment.end_date = object.end_date[ll_row]
 //puo_assessment.close_encounter_id = object.close_encounter_id[ll_row]
-//puo_assessment.icd9_code = object.icd_9_code[ll_row]
+//puo_assessment.icd10_code = object.icd10_code[ll_row]
 //
 //ll_problem_id = object.problem_id[ll_row]
 //parent_patient.attachments.assessment_attachment_list(puo_assessment.attachment_list, ll_problem_id)
@@ -631,7 +631,7 @@ pstr_assessment.begin_date = object.begin_date[ll_row]
 pstr_assessment.assessment_status = object.assessment_status[ll_row]
 pstr_assessment.end_date = object.end_date[ll_row]
 pstr_assessment.close_encounter_id = object.close_encounter_id[ll_row]
-pstr_assessment.icd9_code = object.icd_9_code[ll_row]
+pstr_assessment.icd10_code = object.icd10_code[ll_row]
 pstr_assessment.diagnosed_by = object.diagnosed_by[ll_row]
 pstr_assessment.created = object.created[ll_row]
 pstr_assessment.created_by = object.created_by[ll_row]
@@ -675,7 +675,7 @@ puo_assessment.created_by = object.created_by[ll_row]
 puo_assessment.assessment_status = object.assessment_status[ll_row]
 puo_assessment.end_date = object.end_date[ll_row]
 puo_assessment.close_encounter_id = object.close_encounter_id[ll_row]
-puo_assessment.icd9_code = object.icd_9_code[ll_row]
+puo_assessment.icd10_code = object.icd10_code[ll_row]
 
 puo_assessment.location = object.location[ll_row]
 puo_assessment.acuteness = object.acuteness[ll_row]
@@ -760,7 +760,7 @@ cache[pl_row].end_date = object.end_date[pl_row]
 cache[pl_row].open_encounter_id = object.open_encounter_id[pl_row]
 cache[pl_row].close_encounter_id = object.close_encounter_id[pl_row]
 cache[pl_row].assessment_status = object.assessment_status[pl_row]
-cache[pl_row].icd9_code = object.icd_9_code[pl_row]
+cache[pl_row].icd10_code = object.icd10_code[pl_row]
 cache[pl_row].location = object.location[pl_row]
 cache[pl_row].acuteness = object.acuteness[pl_row]
 cache[pl_row].sort_sequence = object.sort_sequence[pl_row]
@@ -874,7 +874,7 @@ else
 end if
 
 
-object.icd_9_code[ll_row] = datalist.assessment_icd_9_code(ps_assessment_id)
+object.icd10_code[ll_row] = datalist.assessment_icd10_code(ps_assessment_id)
 
 
 sort()
@@ -1085,7 +1085,7 @@ return set_progress(pl_problem_id, &
 end function
 
 private subroutine icd_part_count_calculate ();long ll_rows
-string ls_icd_9_code
+string ls_icd10_code
 string ls_icd_part
 string ls_temp
 long i, j
@@ -1097,8 +1097,8 @@ icd_part_count = 0
 for i = 1 to ll_rows
 	if upper(string(object.assessment_status[i])) = "CANCELLED" then continue
 	if upper(string(object.current_flag[i])) = "Y" then
-		ls_icd_9_code = object.icd_9_code[i]
-		f_split_string(ls_icd_9_code, ".", ls_icd_part, ls_temp)
+		ls_icd10_code = object.icd10_code[i]
+		f_split_string(ls_icd10_code, ".", ls_icd_part, ls_temp)
 		if len(ls_icd_part) > 0 then
 			lb_found = false
 			for j = 1 to icd_part_count
@@ -1119,15 +1119,15 @@ next
 
 end subroutine
 
-public function long icd_part_count (string ps_icd_9_code);long ll_rows
-string ls_icd_9_code
+public function long icd_part_count (string ps_icd10_code);long ll_rows
+string ls_icd10_code
 string ls_icd_part
 string ls_temp
 long i
 
 if icd_part_count <= 0 then icd_part_count_calculate()
 
-f_split_string(ps_icd_9_code, ".", ls_icd_part, ls_temp)
+f_split_string(ps_icd10_code, ".", ls_icd_part, ls_temp)
 
 for i = 1 to icd_part_count
 	if ls_icd_part = icd_part[i].icd_part then return icd_part[i].icd_part_count

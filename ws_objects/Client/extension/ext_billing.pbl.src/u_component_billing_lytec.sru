@@ -21,10 +21,10 @@ type str_lytec_out from structure
 	string		new_flag
 	string		courtesy_code
 	string		billing_note
-	string		icd_9_code1
-	string		icd_9_code2
-	string		icd_9_code3
-	string		icd_9_code4
+	string		icd10_code1
+	string		icd10_code2
+	string		icd10_code3
+	string		icd10_code4
 	string		cpt_code
 	string		modifier
 	string		other_modifiers
@@ -42,7 +42,7 @@ global u_component_billing_lytec u_component_billing_lytec
 
 type variables
 integer li_charge_count
-integer li_icd9_codes
+integer li_icd10_codes
 
 long sl_attending_doctor
 string is_encounter_id
@@ -53,7 +53,7 @@ string is_indirect_flag
 string is_new_flag
 string is_encounter_type
 string is_message_id
-string is_icd_9_code[]
+string is_icd10_code[]
 integer ii_assessment_seq[], ii_cpt_count
 string is_cpt_assembly[]
 string ss_charge_acct
@@ -70,7 +70,7 @@ protected function long xx_post_treatment (string ps_cpr_id, long pl_encounter_i
 public function integer xx_initialize ()
 protected function integer xx_xref_procedure (string ps_cpt_code)
 protected function long xx_post_assessment (string ps_cpr_id, long pl_encounter_id, long pl_problem_id, integer pi_assessment_sequence)
-protected function integer xx_xref_assessment (string ps_icd9_code)
+protected function integer xx_xref_assessment (string ps_icd10_code)
 protected function long xx_post_encounter (string ps_cpr_id, long pl_encounter_id)
 end prototypes
 
@@ -100,10 +100,10 @@ Notes:			cprdb = EncounterPRO database
 //08.	new_flag
 //09.	courtesy_code
 //10.	billing_note
-//11.	icd_9_code1
-//12.	icd_9_code2
-//13.	icd_9_code3
-//14.	icd_9_code4
+//11.	icd10_code1
+//12.	icd10_code2
+//13.	icd10_code3
+//14.	icd10_code4
 //15.	cpt_code
 //16.	modifier
 //17.	other_modifiers
@@ -304,16 +304,16 @@ decimal{2} 	ld_charge
 integer 		li_encounter_charge_id		
 integer 		li_enc_assmnt_chg_cnt		
 integer 		li_enc_assmnt_seq_limit	
-integer 		li_icd_9_ctr 
+integer 		li_icd10_ctr 
 integer 		lic_problem_id		
 string 		lsc_assessment_id
 
 long 			i
-string 		ls_temp_icd9
+string 		ls_temp_icd10
 integer 		li_temp_seq
 integer 		j, k, l, m, n
 
-boolean		lb_icd9_hit[]
+boolean		lb_icd10_hit[]
 
 
 // Declare procedure which determines cpt_code
@@ -349,14 +349,14 @@ end if
 
 lb_loop = true
 li_diagnum = 0
-i = upperbound(is_icd_9_code)
+i = upperbound(is_icd10_code)
 j = integer(i)
 
 for k = 1 to j
-	lb_icd9_hit[k] = false
+	lb_icd10_hit[k] = false
 next	
 
-//bubbleup sort for the assesment so that the icd9 codes are in sequence
+//bubbleup sort for the assesment so that the icd10 codes are in sequence
 if j > 1 then
 	n = j - 1
 	for m = 1 to n
@@ -364,11 +364,11 @@ if j > 1 then
 			l = k - 1
 			if ii_assessment_seq[k] < ii_assessment_seq[l] then
 				li_temp_seq = ii_assessment_seq[l]
-				ls_temp_icd9 = is_icd_9_code[l]
+				ls_temp_icd10 = is_icd10_code[l]
 				ii_assessment_seq[l] = ii_assessment_seq[k]
-				is_icd_9_code[l]  = is_icd_9_code[k]
+				is_icd10_code[l]  = is_icd10_code[k]
 				ii_assessment_seq[k] = li_temp_seq
-				is_icd_9_code[k] = ls_temp_icd9
+				is_icd10_code[k] = ls_temp_icd10
 			end if
 		next	
 	next
@@ -393,7 +393,7 @@ DO
 		if isnull(li_assessment_sequence) then continue
 		for k = 1 to j
 			if ii_assessment_seq[k] = li_assessment_sequence then
-				lb_icd9_hit[k] = true
+				lb_icd10_hit[k] = true
 			end if		
 		next	
 	else
@@ -480,8 +480,8 @@ integer li_count
 li_count = 0
 setnull(ls_cpt_assembly)
 for k = 1 to j
-	if lb_icd9_hit[k] = true then
-		if isnull(is_icd_9_code[k]) then
+	if lb_icd10_hit[k] = true then
+		if isnull(is_icd10_code[k]) then
 			if isnull(ls_cpt_assembly) then
 				ls_cpt_assembly = '"",'
 			else	
@@ -489,9 +489,9 @@ for k = 1 to j
 			end if	
 		else
 			if isnull(ls_cpt_assembly) then
-				ls_cpt_assembly = '"' + is_icd_9_code[k] + '"' + ','
+				ls_cpt_assembly = '"' + is_icd10_code[k] + '"' + ','
 			else
-				ls_cpt_assembly += '"' + is_icd_9_code[k] + '"' + ','
+				ls_cpt_assembly += '"' + is_icd10_code[k] + '"' + ','
 			end if	
 		end if	
 		li_count ++
@@ -567,10 +567,10 @@ long sl_attending_doctor[]..........Retrieve attending Doctor, a string value fr
 string ss_new_flag[]................p_Patient_Encounter.new_flag
 string ss_courtesy_code[]...........p_Patient_Encounter.courtesy_code
 string ss_billing_note[]............p_Patient_Encounter.billing.note
-string ss_icd_9_code1[].............c_Assessment_Definition
-string ss_icd_9_code2[].............c_Assessment_Definition
-string ss_icd_9_code3[].............c_Assessment_Definition
-string ss_icd_9_code4[].............c_Assessment_Definition
+string ss_icd10_code1[].............c_Assessment_Definition
+string ss_icd10_code2[].............c_Assessment_Definition
+string ss_icd10_code3[].............c_Assessment_Definition
+string ss_icd10_code4[].............c_Assessment_Definition
 string ss_cpt_code[]................c_Procedure.cpt_code		
 string ss_modifier[]................c_Procedure.modifier
 string ss_other_modifiers[].........c_Procedure.other_modifiers
@@ -660,17 +660,17 @@ integer li_sts
 
 string ls_assessment_id
 string ls_insurance_id
-string ls_icd_9_code
+string ls_icd10_code
 
 // declare local alias for stored procedure
 //CWW, BEGIN
-u_ds_data luo_sp_get_assessment_icd9
+u_ds_data luo_sp_get_assessment_icd10
 integer li_spdw_count
-// DECLARE lsp_get_assessment_icd9 PROCEDURE FOR dbo.sp_get_assessment_icd9  
+// DECLARE lsp_get_assessment_icd10 PROCEDURE FOR dbo.sp_get_assessment_icd10  
 //         @ps_cpr_id = :ps_cpr_id,   
 //			@ps_assessment_id = :ls_assessment_id,
 //			@ps_insurance_id = :ls_insurance_id OUT,
-//			@ps_icd_9_code = :ls_icd_9_code OUT
+//			@ps_icd10_code = :ls_icd10_code OUT
 // USING cprdb;
  //CWW, END
 
@@ -698,45 +698,45 @@ end if
 
 // Now get the codes for this assessment
 //CWW, BEGIN
-//EXECUTE lsp_get_assessment_icd9;
+//EXECUTE lsp_get_assessment_icd10;
 //if not cprdb.check() then 
-//	mylog.log(this, "xx_post_assessments()", "EXECUTE lsp_get_assessment_icd9 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "xx_post_assessments()", "EXECUTE lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //integer i
-//i = upperbound(is_icd_9_code)
+//i = upperbound(is_icd10_code)
 //
-//FETCH lsp_get_assessment_icd9 INTO :ls_insurance_id, :ls_icd_9_code;
+//FETCH lsp_get_assessment_icd10 INTO :ls_insurance_id, :ls_icd10_code;
 //if not cprdb.check() then 
-//	mylog.log(this, "xx_post_assessments()", "fetch lsp_get_assessment_icd9 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "xx_post_assessments()", "fetch lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //
-//if not isnull(ls_icd_9_code) then
+//if not isnull(ls_icd10_code) then
 //	i++
-//	is_icd_9_code[i] = ls_icd_9_code
+//	is_icd10_code[i] = ls_icd10_code
 //	ii_assessment_seq[i] = pi_assessment_sequence
 //end if	
 //
-//CLOSE lsp_get_assessment_icd9;
+//CLOSE lsp_get_assessment_icd10;
 //
-//mylog.log(this, "xx_post_assessments()", "The icd_9 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd_9_code + ")", 1)	
+//mylog.log(this, "xx_post_assessments()", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)	
 
 integer i
-i = upperbound(is_icd_9_code)
+i = upperbound(is_icd10_code)
 
-luo_sp_get_assessment_icd9 = CREATE u_ds_data
-luo_sp_get_assessment_icd9.set_dataobject("dw_sp_get_assessment_icd9", cprdb)
-li_spdw_count = luo_sp_get_assessment_icd9.retrieve(ps_cpr_id, ls_assessment_id)
+luo_sp_get_assessment_icd10 = CREATE u_ds_data
+luo_sp_get_assessment_icd10.set_dataobject("dw_sp_get_assessment_icd10", cprdb)
+li_spdw_count = luo_sp_get_assessment_icd10.retrieve(ps_cpr_id, ls_assessment_id)
 if li_spdw_count <= 0 then
 	setnull(ls_insurance_id)
-	setnull(ls_icd_9_code)
+	setnull(ls_icd10_code)
 else
-	ls_insurance_id = luo_sp_get_assessment_icd9.object.insurance_id[1]
-	ls_icd_9_code = luo_sp_get_assessment_icd9.object.icd_9_code[1]
-	if not isnull(ls_icd_9_code) then
+	ls_insurance_id = luo_sp_get_assessment_icd10.object.insurance_id[1]
+	ls_icd10_code = luo_sp_get_assessment_icd10.object.icd10_code[1]
+	if not isnull(ls_icd10_code) then
 		i++
-		is_icd_9_code[i] = ls_icd_9_code
+		is_icd10_code[i] = ls_icd10_code
 		ii_assessment_seq[i] = pi_assessment_sequence
 		// once the icd code is included then set the flag as posted
 		Update p_encounter_assessment
@@ -747,7 +747,7 @@ else
 		using cprdb;
 	end if	
 end if
-destroy luo_sp_get_assessment_icd9
+destroy luo_sp_get_assessment_icd10
 //CWW, END
 
 return 1
@@ -755,7 +755,7 @@ return 1
 
 end function
 
-protected function integer xx_xref_assessment (string ps_icd9_code);/*
+protected function integer xx_xref_assessment (string ps_icd10_code);/*
 Function Name:	xx_xref_assessment for u_component_billing_lytec
 Purpose:			Not Defined
 Expects:			Not Defined
@@ -815,8 +815,8 @@ DECLARE lsp_get_billable_provider PROCEDURE FOR sp_get_billable_provider
 	
 is_cpt_assembly = arrayempty
 ii_cpt_count = 0
-is_icd_9_code = arrayempty
-li_icd9_codes = 0
+is_icd10_code = arrayempty
+li_icd10_codes = 0
 li_charge_count = 1
 
 SELECT 	billing_id,

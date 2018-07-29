@@ -14,17 +14,17 @@ u_ds_attachments lds_attachments
 
 // Attachment data, extension, and progress_type are required
 if isnull(ps_progress_type) or len(ps_progress_type) <= 0 then
-	log.log(this, "f_new_attachment()", "No progress type", 4)
+	log.log(po_null, "f_new_attachment()", "No progress type", 4)
 	return -1
 end if
 
 if isnull(ps_extension) or len(ps_extension) <= 0 then
-	log.log(this, "f_new_attachment()", "No attachment extension", 4)
+	log.log(po_null, "f_new_attachment()", "No attachment extension", 4)
 	return -1
 end if
 
 if isnull(pb_attachment) or len(pb_attachment) <= 0 then
-	log.log(this, "f_new_attachment()", "No attachment data", 4)
+	log.log(po_null, "f_new_attachment()", "No attachment data", 4)
 	return -1
 end if
 
@@ -98,7 +98,7 @@ end if
 // Now create the attachment
 ll_attachment_id = lds_attachments.new_attachment(lstr_new_attachment, pb_attachment, ps_context_object, ps_progress_type, ps_progress_key)
 if ll_attachment_id <= 0 then
-	log.log(this, "results_posted", "Error creating attachment", 4)
+	log.log(po_null, "results_posted", "Error creating attachment", 4)
 	return -1
 end if
 			

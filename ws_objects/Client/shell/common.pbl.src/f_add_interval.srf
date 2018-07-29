@@ -40,7 +40,7 @@ CHOOSE CASE pi_unit
 			if ld_new_date > date("1/1/1900") then exit
 			li_day -= 1
 			if li_day <= 27 then
-				log.log(this, "f_add_interval()", "Error converting date (" + string(li_year) + ", " + string(li_month) + ", " + string(li_day) + ")", 3)
+				log.log(po_null, "f_add_interval()", "Error converting date (" + string(li_year) + ", " + string(li_month) + ", " + string(li_day) + ")", 3)
 				return pd_date
 			end if
 		LOOP

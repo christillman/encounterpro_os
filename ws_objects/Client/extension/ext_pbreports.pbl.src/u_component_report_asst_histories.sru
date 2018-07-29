@@ -28,7 +28,7 @@ public function integer xx_printreport ();//////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 String 	ls_provider, ls_description
-String   ls_dataobject, ls_icd_9_code
+String   ls_dataobject, ls_icd10_code
 String	ls_left,ls_right
 String	ls_assessment_id
 Integer	li_length
@@ -46,32 +46,32 @@ temp_ds = Create u_ds_data
 ls_assessment_id = get_attribute("assessment_id")
 
 	
-SELECT icd_9_code,
+SELECT icd10_code,
 		 description
-INTO :ls_icd_9_code,
+INTO :ls_icd10_code,
 		:ls_description
 FROM c_Assessment_Definition (NOLOCK)
 WHERE assessment_id = :ls_assessment_id
 and status = 'OK';
 If Not tf_check() Then Return -1
 
-If Not isnull(ls_icd_9_code) then
-	f_split_string(ls_icd_9_code, ".", ls_left, ls_right)
-	ls_icd_9_code = ls_left
+If Not isnull(ls_icd10_code) then
+	f_split_string(ls_icd10_code, ".", ls_left, ls_right)
+	ls_icd10_code = ls_left
 End If
 temp_ds.reset()
-If isnull(ls_icd_9_code) Then
+If isnull(ls_icd10_code) Then
 	temp_ds.set_dataobject("dw_assessments_assessment_id")
 	temp_ds.Retrieve(current_patient.cpr_id, ls_assessment_id)
 Else
-	temp_ds.set_dataobject("dw_assessments_icd9")
-	temp_ds.Retrieve(current_patient.cpr_id, ls_icd_9_code + "%")
+	temp_ds.set_dataobject("dw_assessments_icd10")
+	temp_ds.Retrieve(current_patient.cpr_id, ls_icd10_code + "%")
 End If
 	
 report_datastore.Modify("history_title.text='" + ls_description+" History" + "'")
 report_datastore.Modify("report_dt.Text='" + String(Today(), "m/d/yy hh:mm") + "'")
 report_datastore.Modify("patient_id.Text='Patient: " + current_patient.id_line1() + "'")
-report_datastore.Modify("icd_9_code.Text='Icd_9_Code: " + ls_icd_9_code+".xx" + "'")
+report_datastore.Modify("icd10_code.Text='icd10_code: " + ls_icd10_code+".xx" + "'")
 
 If temp_ds.rowcount() > 0 Then
 	load_plan()

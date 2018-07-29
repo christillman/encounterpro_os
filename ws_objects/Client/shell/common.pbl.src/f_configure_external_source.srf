@@ -27,7 +27,7 @@ If Not tf_check() Then Return -1
 
 // If any component defined for selected external_source then
 If Isnull(ls_component_id) Then
-	log.log(this, "clicked", "Null component_id (" + ps_external_source + ")", 4)
+	log.log(po_null, "clicked", "Null component_id (" + ps_external_source + ")", 4)
 	Return -1
 End If
 
@@ -42,7 +42,7 @@ else
 end if
 
 if li_count < 0 then
-	log.log(this, "configure_external_source()", "Error getting attributes", 4)
+	log.log(po_null, "configure_external_source()", "Error getting attributes", 4)
 	return -1
 end if
 
@@ -77,7 +77,7 @@ next
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(this, "configure_command()", "Error updating command attributes", 4)
+	log.log(po_null, "configure_command()", "Error updating command attributes", 4)
 	return -1
 end if
 

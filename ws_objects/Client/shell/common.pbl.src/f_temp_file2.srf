@@ -48,7 +48,7 @@ string ls_filename
 integer i
 
 if isnull(ps_extension) then
-	log.log(this, "f_temp_file2()", "Null file extension", 4)
+	log.log(po_null, "f_temp_file2()", "Null file extension", 4)
 	return ps_extension
 end if
 

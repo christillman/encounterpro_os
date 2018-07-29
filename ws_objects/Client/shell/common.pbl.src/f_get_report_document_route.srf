@@ -29,7 +29,7 @@ ll_count = luo_data.retrieve(ps_report_id, ps_ordered_by, ps_ordered_for, ps_pur
 if ll_count < 0 then
 	return ls_null
 elseif ll_count = 0 then
-	log.log(this, "order_document()", "No routes available for report (" + ls_report_description + ")", 4)
+	log.log(po_null, "order_document()", "No routes available for report (" + ls_report_description + ")", 4)
 	openwithparm(w_pop_message, "There are no routes available by which to send this document")
 	return ls_null
 elseif ll_count = 1 then

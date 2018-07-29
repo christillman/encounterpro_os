@@ -18,11 +18,11 @@ type variables
 //oleobject ole_factory
 string is_encounterdate, is_facilitycode
 string is_defaultfacility
-string is_icd_9_code[]
+string is_icd10_code[]
 integer ii_assessment_seq[]
 string procedurecodeidentifier
 string primary_provider_id
-string is_icd_9_desc[]
+string is_icd10_desc[]
 string is_attending_doctor
 string is_supervisor_doctor
 string is_supervising_doctor
@@ -43,7 +43,7 @@ protected function long xx_post_followup (string ps_cpr_id, long pl_encounter_id
 protected function long xx_post_referral (string ps_cpr_id, long pl_encounter_id, long pl_treatment_id)
 protected function long xx_post_memo (string ps_cpr_id, long pl_encounter_id, string ps_memo)
 public function integer xx_xref_procedure (string ps_procedure_id, string ps_cpt_code, string ps_modifier, string ps_billing_id)
-protected function integer xx_xref_assessment (string ps_icd9_code)
+protected function integer xx_xref_assessment (string ps_icd10_code)
 protected function long xx_post_treatment (string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id)
 protected function integer xx_initialize ()
 protected function long xx_post_encounter (string ps_cpr_id, long pl_encounter_id)
@@ -55,10 +55,10 @@ string ls_assessment_id
 string ls_asst_description
 string ls_insurance_id
 integer i
-string ls_icd_9_code
+string ls_icd10_code
 
 // declare local alias for stored procedure
-u_ds_data luo_sp_get_assessment_icd9
+u_ds_data luo_sp_get_assessment_icd10
 integer li_spdw_count
 
 SELECT assessment_id
@@ -76,21 +76,21 @@ If cprdb.sqlcode = 100 then
 	Return 0
 End if
 
-i = upperbound(is_icd_9_code)
-luo_sp_get_assessment_icd9 = CREATE u_ds_data
-luo_sp_get_assessment_icd9.set_dataobject("dw_sp_get_assessment_icd9", cprdb)
-li_spdw_count = luo_sp_get_assessment_icd9.retrieve(ps_cpr_id, ls_assessment_id)
+i = upperbound(is_icd10_code)
+luo_sp_get_assessment_icd10 = CREATE u_ds_data
+luo_sp_get_assessment_icd10.set_dataobject("dw_sp_get_assessment_icd10", cprdb)
+li_spdw_count = luo_sp_get_assessment_icd10.retrieve(ps_cpr_id, ls_assessment_id)
 If li_spdw_count <= 0 Then
 	setnull(ls_insurance_id)
-	setnull(ls_icd_9_code)
+	setnull(ls_icd10_code)
 Else
-	ls_insurance_id = luo_sp_get_assessment_icd9.object.insurance_id[1]
-	ls_icd_9_code = luo_sp_get_assessment_icd9.object.icd_9_code[1]
-	ls_asst_description = luo_sp_get_assessment_icd9.object.asst_description[1]
-	If Not isnull(ls_icd_9_code) Then
+	ls_insurance_id = luo_sp_get_assessment_icd10.object.insurance_id[1]
+	ls_icd10_code = luo_sp_get_assessment_icd10.object.icd10_code[1]
+	ls_asst_description = luo_sp_get_assessment_icd10.object.asst_description[1]
+	If Not isnull(ls_icd10_code) Then
 		i++
-		is_icd_9_code[i] = ls_icd_9_code
-		is_icd_9_desc[i] = ls_asst_description
+		is_icd10_code[i] = ls_icd10_code
+		is_icd10_desc[i] = ls_asst_description
 		ii_assessment_seq[i] = pi_assessment_sequence
 		// once the icd code is included then set the flag as posted
 		Update p_encounter_assessment
@@ -101,9 +101,9 @@ Else
 		using cprdb;
 	End If
 End If
-destroy luo_sp_get_assessment_icd9
+destroy luo_sp_get_assessment_icd10
 
-log.log(this, "xx_post_assessments()", "The icd_9 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd_9_code + ")", 1)
+log.log(this, "xx_post_assessments()", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)
 return 1
 end function
 
@@ -175,7 +175,7 @@ public function integer xx_xref_procedure (string ps_procedure_id, string ps_cpt
 //
 end function
 
-protected function integer xx_xref_assessment (string ps_icd9_code);return 1
+protected function integer xx_xref_assessment (string ps_icd10_code);return 1
 end function
 
 protected function long xx_post_treatment (string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id);// // declare local variables
@@ -189,7 +189,7 @@ decimal ldc_procedure_charge
 string ls_cpt_code
 string ls_TxnModifier1
 string ls_TxnModifier2
-string ls_icd_9
+string ls_icd10
 real lr_procedure_units
 string ls_insurance_id
 string ls_modifier
@@ -202,7 +202,7 @@ u_ds_data luo_sp_get_procedure_cpt
 integer li_spdw_count
 u_ds_data luo_data
 long ll_assessment_count
-string ls_icd_9_code
+string ls_icd10_code
 string ls_assessment_description
 
 // First get some info from the charge table
@@ -311,21 +311,21 @@ if ll_assessment_count < 0 then
 	return -1
 end if
 if ll_assessment_count = 0 then 
-	mylog.log(this, "xx_post_treatment()", "No associated ICD9 for CPT (" + ls_cpt_code + ", " + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+	mylog.log(this, "xx_post_treatment()", "No associated ICD10 for CPT (" + ls_cpt_code + ", " + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 	return -1
 End If
 
-ls_icd_9 = ""
+ls_icd10 = ""
 for i = 1 to ll_assessment_count
-	ls_icd_9_code = luo_data.object.icd_9_code[i]
+	ls_icd10_code = luo_data.object.icd10_code[i]
 	ls_assessment_description = luo_data.object.assessment_description[i]
-	if not isnull(ls_icd_9_code) and len(ls_assessment_description) > 0 then
-		ls_icd_9 += ls_icd_9_code + "~t"+ ls_assessment_description + ls_line_break
+	if not isnull(ls_icd10_code) and len(ls_assessment_description) > 0 then
+		ls_icd10 += ls_icd10_code + "~t"+ ls_assessment_description + ls_line_break
 	end if	
 next
 	
-ls_cpt_assembly += string(ll_assessment_count) + ls_line_break // matching icd9's for cpt
-ls_cpt_assembly += ls_icd_9
+ls_cpt_assembly += string(ll_assessment_count) + ls_line_break // matching icd10's for cpt
+ls_cpt_assembly += ls_icd10
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ string		ls_facilitycode
 
 is_cpt_assembly = ls_emptyarray[]
 ii_cpt_count = 0
-is_icd_9_code = ls_emptyarray[]
+is_icd10_code = ls_emptyarray[]
 //ii_diagnosis_count = 0
 
 mylog.log(this, "xx_post_encounter()", "Start(" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 1)
@@ -544,7 +544,7 @@ ls_encounter_id = string(pl_encounter_id)
 setnull(ls_nullcheck)
 
 If ii_cpt_count <= 0 then // Cancel the billing request
-	log.log(this, "xx_post_other()", "No billable CPT's & ICD9's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "xx_post_other()", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 End if
 if isnull(is_cpt_assembly[ii_cpt_count]) then
@@ -552,7 +552,7 @@ if isnull(is_cpt_assembly[ii_cpt_count]) then
 end if
 
 if ii_cpt_count <= 0 then // Cancel the billing request
-	log.log(this, "xx_post_other()", "No billable CPT's & ICD9's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "xx_post_other()", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 End if
 
@@ -924,7 +924,7 @@ IF li_sts < 0 THEN
 	RETURN -1
 END IF
 if li_record_count <= 0 then 
-	log.log(this, "xx_post_other()", "Posting Failed:No billable CPT's & ICD9's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "xx_post_other()", "Posting Failed:No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 end if
 

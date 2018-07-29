@@ -21,7 +21,7 @@ luo_attachment.attachment_date = datetime(today(), now())
 
 //li_sts = luo_attachment.load_objects()
 //if li_sts <= 0 then
-//	log.log(this, "f_image_holfing_attachment()", "Unable to load image holding attachment", 4)
+//	log.log(po_null, "f_image_holfing_attachment()", "Unable to load image holding attachment", 4)
 //	DESTROY luo_attachment
 //	setnull(luo_attachment)
 //	return luo_attachment

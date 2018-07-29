@@ -27,7 +27,7 @@ if pi_index <=0 then
 end if
 
 if pi_index > pstr_results.result_count then
-	log.log(this, "f_str_treatment_results()", "Invalid result index", 4)
+	log.log(po_null, "f_str_treatment_results()", "Invalid result index", 4)
 	return ls_null
 end if
 

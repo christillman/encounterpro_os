@@ -943,7 +943,7 @@ for i = 1 to problem_count
 	
 	lstr_assessment.assessment_type = datalist.assessment_assessment_type(lstr_assessment.assessment_id)
 
-	lstr_assessment.icd9_code = find_code(lstr_problem.code, "ICD9-CM")
+	lstr_assessment.icd10_code = find_code(lstr_problem.code, "ICD10-CM")
 
 	lstr_assessment.open_encounter_id = current_patient.open_encounter_id
 	
@@ -1023,7 +1023,7 @@ for i = 1 to alert_count
 	
 	lstr_assessment.assessment_type = datalist.assessment_assessment_type(lstr_assessment.assessment_id)
 
-	lstr_assessment.icd9_code = find_code(lstr_alert.code, "ICD9-CM")
+	lstr_assessment.icd10_code = find_code(lstr_alert.code, "ICD10-CM")
 
 	lstr_assessment.open_encounter_id = current_patient.open_encounter_id
 	

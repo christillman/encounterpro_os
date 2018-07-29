@@ -15,7 +15,7 @@ string ls_null
 u_ds_data luo_sp_new_assessment_definition
 long ll_count
 string ls_description
-string ls_icd_9_code
+string ls_icd10_code
 string ls_assessment_category_id
 string ls_location_domain
 string ls_auto_close
@@ -58,12 +58,12 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 2 then return ls_null
 
 ls_description = popup_return.items[1]
-ls_icd_9_code = popup_return.items[2]
+ls_icd10_code = popup_return.items[2]
 
 luo_sp_new_assessment_definition = CREATE u_ds_data
 luo_sp_new_assessment_definition.set_dataobject("dw_sp_new_assessment_definition")
 ll_count = luo_sp_new_assessment_definition.retrieve(ls_assessment_type, &
-																			ls_icd_9_code, &
+																			ls_icd10_code, &
 																			ls_assessment_category_id, &
 																			ls_description, &
 																			ls_location_domain, &

@@ -1,16 +1,16 @@
-﻿$PBExportHeader$u_st_icd9_part.sru
+﻿$PBExportHeader$u_st_icd10_part.sru
 forward
-global type u_st_icd9_part from statictext
+global type u_st_icd10_part from statictext
 end type
 end forward
 
 shared variables
 
 // Modify the data type the user object itself
-u_st_icd9_part last_button
+u_st_icd10_part last_button
 end variables
 
-global type u_st_icd9_part from statictext
+global type u_st_icd10_part from statictext
 int Width=531
 int Height=73
 boolean Border=true
@@ -25,12 +25,12 @@ string FaceName="Arial"
 FontFamily FontFamily=Swiss!
 FontPitch FontPitch=Variable!
 end type
-global u_st_icd9_part u_st_icd9_part
+global u_st_icd10_part u_st_icd10_part
 
 type variables
 boolean button_selected = false
 
-string icd_9_part
+string icd10_part
 end variables
 
 forward prototypes

@@ -1581,7 +1581,7 @@ string ls_null
 string ls_first_room_id
 long ll_null
 str_stamp lstr_stamp
-string ls_assessment_id, ls_description, ls_icd_9_code
+string ls_assessment_id, ls_description, ls_icd10_code
 integer li_sts, li_encounter_index
 
 setnull(ls_null)

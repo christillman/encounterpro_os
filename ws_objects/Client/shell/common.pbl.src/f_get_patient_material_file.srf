@@ -23,7 +23,7 @@ FROM c_Patient_Material
 WHERE material_id = :pl_material_id;
 if not tf_check() then return ls_null
 if sqlca.sqlcode = 100 then
-	log.log(this, "f_display_patient_material()", "material_id not found (" + string(pl_material_id) + ")", 4)
+	log.log(po_null, "f_display_patient_material()", "material_id not found (" + string(pl_material_id) + ")", 4)
 	return ls_null
 end if
 
@@ -33,14 +33,14 @@ FROM c_Patient_Material
 WHERE material_id = :pl_material_id;
 if not tf_check() then return ls_null
 if sqlca.sqlcode = 100 then
-	log.log(this, "f_display_patient_material()", "material_id not found (" + string(pl_material_id) + ")", 4)
+	log.log(po_null, "f_display_patient_material()", "material_id not found (" + string(pl_material_id) + ")", 4)
 	return ls_null
 end if
 
 ls_file = f_temp_file(ls_extension)
 li_sts = log.file_write(lbl_material, ls_file)
 if li_sts <= 0 then
-	log.log(this, "f_display_patient_material()", "Error writing material to file.", 4)
+	log.log(po_null, "f_display_patient_material()", "Error writing material to file.", 4)
 	return ls_null
 end if
 

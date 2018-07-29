@@ -39,7 +39,7 @@ string ls_original_send_from
 string ls_original_commcomponent
 
 if isnull(pl_interfaceserviceid) then
-	log.log(this, "new_interface_transport()", "NULL interface service id", 4)
+	log.log(po_null, "new_interface_transport()", "NULL interface service id", 4)
 	return -1
 end if
 
@@ -50,7 +50,7 @@ FROM c_component_interface
 WHERE interfaceserviceid = :pl_interfaceserviceid;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	log.log(po_null, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 	return -1
 end if
 
@@ -74,7 +74,7 @@ if isnull(pl_transportsequence) then
 	end if
 	popup.title = "New Transport Direction"
 	if popup.data_row_count = 0 then
-		log.log(this, "configure_interface_transport()", "Interface does not allow either sending or receiving (" + string(pl_interfaceserviceid) + ")", 4)
+		log.log(po_null, "configure_interface_transport()", "Interface does not allow either sending or receiving (" + string(pl_interfaceserviceid) + ")", 4)
 		return -1
 	end if
 	if popup.data_row_count = 1 then

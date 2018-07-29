@@ -3,18 +3,18 @@ global type tf_get_assessment from function_object
 end type
 
 forward prototypes
-global function integer tf_get_assessment (string ps_assessment_id, ref string ps_description, ref string ps_icd_9_code, ref string ps_auto_close)
+global function integer tf_get_assessment (string ps_assessment_id, ref string ps_description, ref string ps_icd10_code, ref string ps_auto_close)
 end prototypes
 
-global function integer tf_get_assessment (string ps_assessment_id, ref string ps_description, ref string ps_icd_9_code, ref string ps_auto_close);string ls_description
-string ls_icd_9_code
+global function integer tf_get_assessment (string ps_assessment_id, ref string ps_description, ref string ps_icd10_code, ref string ps_auto_close);string ls_description
+string ls_icd10_code
 string ls_auto_close
 
   SELECT description,
-			icd_9_code,
+			icd10_code,
 			auto_close
     INTO :ls_description,
-			:ls_icd_9_code,
+			:ls_icd10_code,
 			:ls_auto_close
     FROM c_Assessment_Definition (NOLOCK)
    WHERE assessment_id = :ps_assessment_id;
@@ -22,7 +22,7 @@ string ls_auto_close
 if not tf_check() then return -1
 
 ps_description = ls_description
-ps_icd_9_code = ls_icd_9_code
+ps_icd10_code = ls_icd10_code
 ps_auto_close = ls_auto_close
 
 return 1

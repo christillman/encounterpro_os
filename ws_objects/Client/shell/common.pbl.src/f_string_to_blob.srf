@@ -28,7 +28,7 @@ CHOOSE CASE upper(ps_encoding)
 		TRY
 			lbl_blob = common_thread.eprolibnet4.ConvertBase64ToBinary(ps_string)
 		CATCH (throwable lt_error)
-			log.log(this, "f_string_to_blob()", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
+			log.log(po_null, "f_string_to_blob()", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
 			return lbl_blob
 		END TRY
 	CASE "BINHEX", "HEX"
@@ -36,7 +36,7 @@ CHOOSE CASE upper(ps_encoding)
 		TRY
 			lbl_blob = common_thread.eprolibnet4.converthextobinary(ps_string)
 		CATCH (throwable lt_error2)
-			log.log(this, "f_string_to_blob()", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
+			log.log(po_null, "f_string_to_blob()", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
 			return lbl_blob
 		END TRY
 	CASE ELSE

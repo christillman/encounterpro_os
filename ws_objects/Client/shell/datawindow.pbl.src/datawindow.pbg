@@ -12,7 +12,7 @@
  "dw_allergy_drug_list.srd" "datawindow.pbl";
  "dw_allergyseverity.srd" "datawindow.pbl";
  "dw_alternate_cpt_codes.srd" "datawindow.pbl";
- "dw_alternate_icd9_codes.srd" "datawindow.pbl";
+ "dw_alternate_icd10_codes.srd" "datawindow.pbl";
  "dw_assessment_category_list.srd" "datawindow.pbl";
  "dw_assessment_data.srd" "datawindow.pbl";
  "dw_assessment_followup_treatments.srd" "datawindow.pbl";
@@ -33,7 +33,7 @@
  "dw_assessments_and_treatments.srd" "datawindow.pbl";
  "dw_assessments_assessment_id.srd" "datawindow.pbl";
  "dw_assessments_by_age_range_list_id.srd" "datawindow.pbl";
- "dw_assessments_icd9.srd" "datawindow.pbl";
+ "dw_assessments_icd10.srd" "datawindow.pbl";
  "dw_attachment_data.srd" "datawindow.pbl";
  "dw_attachment_list.srd" "datawindow.pbl";
  "dw_attachment_object_data.srd" "datawindow.pbl";
@@ -504,7 +504,7 @@
  "dw_sp_find_observation.srd" "datawindow.pbl";
  "dw_sp_fn_object_progress_types.srd" "datawindow.pbl";
  "dw_sp_folder_selection.srd" "datawindow.pbl";
- "dw_sp_get_assessment_icd9.srd" "datawindow.pbl";
+ "dw_sp_get_assessment_icd10.srd" "datawindow.pbl";
  "dw_sp_get_child_observations.srd" "datawindow.pbl";
  "dw_sp_get_component_attributes.srd" "datawindow.pbl";
  "dw_sp_get_encounter_list.srd" "datawindow.pbl";

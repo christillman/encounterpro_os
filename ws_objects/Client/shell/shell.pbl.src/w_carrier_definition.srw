@@ -20,7 +20,7 @@ type st_coding_component from statictext within w_carrier_definition
 end type
 type st_coding_title from statictext within w_carrier_definition
 end type
-type st_alt_icd9 from statictext within w_carrier_definition
+type st_alt_icd10 from statictext within w_carrier_definition
 end type
 type st_alternate_title from statictext within w_carrier_definition
 end type
@@ -64,7 +64,7 @@ st_authority_type st_authority_type
 st_title_assessment_type st_title_assessment_type
 st_coding_component st_coding_component
 st_coding_title st_coding_title
-st_alt_icd9 st_alt_icd9
+st_alt_icd10 st_alt_icd10
 st_alternate_title st_alternate_title
 st_alt_cpt st_alt_cpt
 dw_alternate_icd_codes dw_alternate_icd_codes
@@ -165,7 +165,7 @@ window lw_pop_buttons
 if true then
 	popup.button_count = popup.button_count + 1
 	popup.button_icons[popup.button_count] = "button17.bmp"
-	popup.button_helps[popup.button_count] = "Edit Alternate ICD-9 Code"
+	popup.button_helps[popup.button_count] = "Edit Alternate ICD10 Code"
 	popup.button_titles[popup.button_count] = "Edit"
 	buttons[popup.button_count] = "EDIT"
 end if
@@ -173,7 +173,7 @@ end if
 if true then
 	popup.button_count = popup.button_count + 1
 	popup.button_icons[popup.button_count] = "button13.bmp"
-	popup.button_helps[popup.button_count] = "Delete Alternate ICD-9 Code"
+	popup.button_helps[popup.button_count] = "Delete Alternate ICD10 Code"
 	popup.button_titles[popup.button_count] = "Delete"
 	buttons[popup.button_count] = "DELETE"
 end if
@@ -222,8 +222,8 @@ end function
 
 public function integer new_assessment ();string ls_assessment_id
 string ls_description
-string ls_icd_9_code
-string ls_standard_icd_9_code
+string ls_icd10_code
+string ls_standard_icd10_code
 str_popup_return popup_return
 long ll_row
 str_popup popup
@@ -236,20 +236,20 @@ ls_assessment_id = message.stringparm
 if isnull(ls_assessment_id) or trim(ls_assessment_id) = "" then return 0
 
 ls_description = datalist.assessment_description(ls_assessment_id)
-ls_standard_icd_9_code = datalist.assessment_icd_9_code(ls_assessment_id)
+ls_standard_icd10_code = datalist.assessment_icd10_code(ls_assessment_id)
 
 popup.title = "Please enter alternate ICD code"
 openwithparm(w_pop_prompt_string, popup)
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return 0
 
-ls_icd_9_code = popup_return.items[1]
+ls_icd10_code = popup_return.items[1]
 
 ll_row = dw_alternate_icd_codes.insertrow(0)
 dw_alternate_icd_codes.object.authority_id[ll_row] = authority_id
 dw_alternate_icd_codes.object.assessment_id[ll_row] = ls_assessment_id
-dw_alternate_icd_codes.object.icd_9_code[ll_row] = ls_icd_9_code
-dw_alternate_icd_codes.object.standard_icd_9_code[ll_row] = ls_standard_icd_9_code
+dw_alternate_icd_codes.object.icd10_code[ll_row] = ls_icd10_code
+dw_alternate_icd_codes.object.standard_icd10_code[ll_row] = ls_standard_icd10_code
 dw_alternate_icd_codes.object.description[ll_row] = ls_description
 
 dw_alternate_icd_codes.update()
@@ -305,7 +305,7 @@ If popup.data_row_count = 2 Then
 	dw_alternate_cpt_codes.visible = false
 	cb_page.visible = false
 	st_alt_cpt.visible = false
-	st_alt_icd9.visible = false
+	st_alt_icd10.visible = false
 	cb_new_alternate_code.visible = false
 	st_alternate_desc_title.visible = false
 	st_alternate_std_title.visible = false
@@ -340,7 +340,7 @@ ElseIf popup.data_row_count = 1 Then
 	end if
 	dw_alternate_icd_codes.retrieve(authority_id)
 	dw_alternate_cpt_codes.retrieve(authority_id)
-	st_alt_icd9.event POST clicked()
+	st_alt_icd10.event POST clicked()
 else
 	log.log(this, "open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
@@ -385,7 +385,7 @@ this.st_authority_type=create st_authority_type
 this.st_title_assessment_type=create st_title_assessment_type
 this.st_coding_component=create st_coding_component
 this.st_coding_title=create st_coding_title
-this.st_alt_icd9=create st_alt_icd9
+this.st_alt_icd10=create st_alt_icd10
 this.st_alternate_title=create st_alternate_title
 this.st_alt_cpt=create st_alt_cpt
 this.dw_alternate_icd_codes=create dw_alternate_icd_codes
@@ -408,7 +408,7 @@ this.Control[iCurrent+6]=this.st_authority_type
 this.Control[iCurrent+7]=this.st_title_assessment_type
 this.Control[iCurrent+8]=this.st_coding_component
 this.Control[iCurrent+9]=this.st_coding_title
-this.Control[iCurrent+10]=this.st_alt_icd9
+this.Control[iCurrent+10]=this.st_alt_icd10
 this.Control[iCurrent+11]=this.st_alternate_title
 this.Control[iCurrent+12]=this.st_alt_cpt
 this.Control[iCurrent+13]=this.dw_alternate_icd_codes
@@ -434,7 +434,7 @@ destroy(this.st_authority_type)
 destroy(this.st_title_assessment_type)
 destroy(this.st_coding_component)
 destroy(this.st_coding_title)
-destroy(this.st_alt_icd9)
+destroy(this.st_alt_icd10)
 destroy(this.st_alternate_title)
 destroy(this.st_alt_cpt)
 destroy(this.dw_alternate_icd_codes)
@@ -747,7 +747,7 @@ alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type st_alt_icd9 from statictext within w_carrier_definition
+type st_alt_icd10 from statictext within w_carrier_definition
 integer x = 137
 integer y = 1056
 integer width = 325
@@ -761,7 +761,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 67108864
-string text = "ICD-9"
+string text = "ICD10"
 alignment alignment = center!
 boolean border = true
 borderstyle borderstyle = styleraised!
@@ -833,7 +833,7 @@ end type
 event clicked;integer li_count
 
 dw_alternate_icd_codes.visible = false
-st_alt_icd9.backcolor = color_object
+st_alt_icd10.backcolor = color_object
 backcolor = color_object_selected
 
 alt_code_mode = "CPT"
@@ -860,7 +860,7 @@ integer width = 1774
 integer height = 968
 integer taborder = 20
 boolean bringtotop = true
-string dataobject = "dw_alternate_icd9_codes"
+string dataobject = "dw_alternate_icd10_codes"
 boolean border = false
 end type
 

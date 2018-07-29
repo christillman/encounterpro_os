@@ -74,7 +74,7 @@ lstr_property = datalist.find_property(ps_context_object, ps_property)
 
 // If this isn't a general property then we must have a current patient
 if lower(ps_context_object) <> "general" and isnull(ps_cpr_id) then
-	log.log(this, "f_get_property(" + ps_context_object + ", " + ps_property + ")", "No patient context", 4)
+	log.log(po_null, "f_get_property(" + ps_context_object + ", " + ps_property + ")", "No patient context", 4)
 	return lstr_property_value
 end if
 
@@ -105,7 +105,7 @@ CHOOSE CASE lower(lstr_property.property_type)
 	CASE ELSE
 		ls_component_id = datalist.property_type_component_id(lstr_property.property_type)
 		if isnull(ls_component_id) then
-			log.log(this, "f_get_property()", "component_id not found (" + ps_context_object + ", " + ps_property + ")", 4)
+			log.log(po_null, "f_get_property()", "component_id not found (" + ps_context_object + ", " + ps_property + ")", 4)
 			return lstr_property_value
 		end if
 		

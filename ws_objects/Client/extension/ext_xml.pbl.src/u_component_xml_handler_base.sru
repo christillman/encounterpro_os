@@ -2446,7 +2446,7 @@ setnull(lstr_assessment_type.assessmenttype)
 setnull(lstr_assessment_type.description)
 setnull(lstr_assessment_type.location)
 setnull(lstr_assessment_type.acuteness)
-setnull(lstr_assessment_type.ICD9)
+setnull(lstr_assessment_type.ICD10)
 setnull(lstr_assessment_type.begindate)
 setnull(lstr_assessment_type.assessmentstatus)
 setnull(lstr_assessment_type.link_closeencounter)
@@ -2511,8 +2511,8 @@ for i = 1 to pstr_element.child_count
 			lstr_assessment_type.location = pstr_element.child[i].gettexttrim()
 		CASE "acuteness"
 			lstr_assessment_type.acuteness = pstr_element.child[i].gettexttrim()
-		CASE "icd9"
-			lstr_assessment_type.icd9 = pstr_element.child[i].gettexttrim()
+		CASE "icd10"
+			lstr_assessment_type.icd10 = pstr_element.child[i].gettexttrim()
 		CASE "begindate"
 			ls_date = pstr_element.child[i].gettexttrim()
 			lstr_assessment_type.begindate = f_xml_datetime(ls_date)
@@ -3709,7 +3709,7 @@ lstr_assessment.close_encounter_id = get_object_key_from_id(pstr_patient_info, "
 lstr_assessment.assessment = pstr_assessment_info.description
 lstr_assessment.location = pstr_assessment_info.location
 lstr_assessment.acuteness = pstr_assessment_info.acuteness
-lstr_assessment.icd9_code = pstr_assessment_info.icd9
+lstr_assessment.icd10_code = pstr_assessment_info.icd10
 lstr_assessment.begin_date = pstr_assessment_info.begindate
 lstr_assessment.diagnosed_by = pstr_assessment_info.diagnosedby.user_id
 lstr_assessment.assessment_status = pstr_assessment_info.assessmentstatus
@@ -3744,7 +3744,7 @@ if not lb_found then
 	
 	if isnull(ls_assessment_id) then
 		// We still haven't found an assessment_id, so make one
-		sqlca.sp_new_assessment(lstr_assessment.assessment_type, lstr_assessment.icd9_code, ls_null, lstr_assessment.assessment, ls_null, "N", li_null, ls_null, ll_null, ll_null, ls_null, owner_id, "NA", ls_assessment_id, "Y")
+		sqlca.sp_new_assessment(lstr_assessment.assessment_type, lstr_assessment.icd10_code, ls_null, lstr_assessment.assessment, ls_null, "N", li_null, ls_null, ll_null, ll_null, ls_null, owner_id, "NA", ls_assessment_id, "Y")
 		if not tf_check() then
 			setnull(ls_assessment_id)
 		elseif len(pstr_assessment_info.assessmentdefinitionid) > 0 then

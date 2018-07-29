@@ -10,7 +10,7 @@ table(column=(type=char(24) updatewhereclause=no name=assessment_id dbname="asse
  column=(type=char(1) updatewhereclause=no name=common_flag dbname="common_flag" )
  column=(type=char(24) updatewhereclause=no name=assessment_category_id dbname="assessment_category_id" )
  column=(type=char(1) updatewhereclause=no name=auto_close dbname="auto_close" )
- column=(type=char(12) updatewhereclause=no name=icd_9_code dbname="icd_9_code" )
+ column=(type=char(12) updatewhereclause=no name=icd10_code dbname="icd10_code" )
  column=(type=number updatewhereclause=no name=selected_flag dbname="selected_flag" initial="0" )
  procedure="1 execute dbo.sp_get_assessment_top_20;1 @ps_user_id = :ps_user_id, @ps_assessment_type = :ps_assessment_type, @ps_top_20_code = :ps_top_20_code" arguments=(("ps_user_id", string),("ps_assessment_type", string),("ps_top_20_code", string)) )
 compute(band=detail alignment="0" expression="bitmap(~"icon018.bmp~")"border="6" color="0" x="18" y="12" height="76" width="91" format="[general]"  name=icon  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )

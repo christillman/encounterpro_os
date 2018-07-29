@@ -45,7 +45,7 @@ end prototypes
 public function integer load_assessment ();string ls_assessment_category_id
 string ls_category_description
 string ls_description
-string ls_icd_9_code
+string ls_icd10_code
 string ls_assessment_type
 string ls_location_domain
 long ll_auto_close_interval_amount
@@ -89,7 +89,7 @@ tab_assessment.tabpage_health_maintenance.allow_editing = allow_editing
 
   SELECT assessment_type,
   			description,
-			icd_9_code,
+			icd10_code,
 			auto_close,
 			location_domain,
 			assessment_category_id,
@@ -106,7 +106,7 @@ tab_assessment.tabpage_health_maintenance.allow_editing = allow_editing
 			owner_id
     INTO :ls_assessment_type,
 	 		:ls_description,
-			:ls_icd_9_code,
+			:ls_icd10_code,
 			:ls_auto_close,
 			:ls_location_domain,
 			:ls_assessment_category_id,
@@ -129,15 +129,15 @@ if sqlca.sqlcode = 100 then return 0
 
 // Set the title
 st_title.text = ls_description
-if len(ls_icd_9_code) > 0 and pos(ls_description, ls_icd_9_code) = 0 then
-	st_title.text += " <" + ls_icd_9_code + ">"
+if len(ls_icd10_code) > 0 and pos(ls_description, ls_icd10_code) = 0 then
+	st_title.text += " <" + ls_icd10_code + ">"
 end if
 
 // 7 fields on tabpage_info
 tab_assessment.tabpage_info.assessment_type = ls_assessment_type
 tab_assessment.tabpage_info.assessment_category_id = ls_assessment_category_id
 tab_assessment.tabpage_info.description = ls_description
-tab_assessment.tabpage_info.icd_9_code = ls_icd_9_code
+tab_assessment.tabpage_info.icd10_code = ls_icd10_code
 tab_assessment.tabpage_info.em_risk_level = ll_em_risk_level
 tab_assessment.tabpage_info.complexity = ll_complexity
 tab_assessment.tabpage_info.location_domain = ls_location_domain
@@ -176,7 +176,7 @@ public function integer save_assessment ();integer li_sts
 UPDATE c_Assessment_Definition
 SET description = :tab_assessment.tabpage_info.description,
 	assessment_category_id = :tab_assessment.tabpage_info.assessment_category_id,
-	icd_9_code = :tab_assessment.tabpage_info.icd_9_code,
+	icd10_code = :tab_assessment.tabpage_info.icd10_code,
 	risk_level = :tab_assessment.tabpage_info.em_risk_level,
 	complexity = :tab_assessment.tabpage_info.complexity,
 	location_domain = :tab_assessment.tabpage_info.location_domain,

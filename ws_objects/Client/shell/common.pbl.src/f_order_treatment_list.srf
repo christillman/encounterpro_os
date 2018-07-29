@@ -37,7 +37,7 @@ If li_sts <= 0 Then return li_sts
 
 luo_treatment = f_get_treatment_component(ls_treatment_type)
 If Isnull(luo_treatment) Then
-	log.log(this, "order_treatment()", "Unable to get treatment component (" + ls_treatment_type + ")", 4)
+	log.log(po_null, "order_treatment()", "Unable to get treatment component (" + ls_treatment_type + ")", 4)
 	return -1
 end if
 

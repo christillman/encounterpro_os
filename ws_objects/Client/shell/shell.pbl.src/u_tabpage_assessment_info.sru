@@ -46,7 +46,7 @@ type st_assessment_category from statictext within u_tabpage_assessment_info
 end type
 type st_2 from statictext within u_tabpage_assessment_info
 end type
-type sle_icd9 from singlelineedit within u_tabpage_assessment_info
+type sle_icd10 from singlelineedit within u_tabpage_assessment_info
 end type
 type st_1 from statictext within u_tabpage_assessment_info
 end type
@@ -79,7 +79,7 @@ st_assessment_type st_assessment_type
 st_3 st_3
 st_assessment_category st_assessment_category
 st_2 st_2
-sle_icd9 sle_icd9
+sle_icd10 sle_icd10
 st_1 st_1
 sle_description sle_description
 end type
@@ -92,7 +92,7 @@ string assessment_id
 
 // Fields managed on this tab
 string description
-string icd_9_code
+string icd10_code
 string assessment_category_id
 string location_domain
 long em_risk_level
@@ -130,7 +130,7 @@ if sqlca.sqlcode = 100 then
 	st_assessment_category.text = ""
 end if
 
-sle_icd9.text = icd_9_code
+sle_icd10.text = icd10_code
 
 f_set_risk_level(em_risk_level,ls_desc,ls_icon)
 st_risk_level.text = ls_desc
@@ -207,7 +207,7 @@ this.st_assessment_type=create st_assessment_type
 this.st_3=create st_3
 this.st_assessment_category=create st_assessment_category
 this.st_2=create st_2
-this.sle_icd9=create sle_icd9
+this.sle_icd10=create sle_icd10
 this.st_1=create st_1
 this.sle_description=create sle_description
 iCurrent=UpperBound(this.Control)
@@ -233,7 +233,7 @@ this.Control[iCurrent+19]=this.st_assessment_type
 this.Control[iCurrent+20]=this.st_3
 this.Control[iCurrent+21]=this.st_assessment_category
 this.Control[iCurrent+22]=this.st_2
-this.Control[iCurrent+23]=this.sle_icd9
+this.Control[iCurrent+23]=this.sle_icd10
 this.Control[iCurrent+24]=this.st_1
 this.Control[iCurrent+25]=this.sle_description
 end on
@@ -262,7 +262,7 @@ destroy(this.st_assessment_type)
 destroy(this.st_3)
 destroy(this.st_assessment_category)
 destroy(this.st_2)
-destroy(this.sle_icd9)
+destroy(this.sle_icd10)
 destroy(this.st_1)
 destroy(this.sle_description)
 end on
@@ -864,12 +864,12 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "ICD-9 Code:"
+string text = "ICD10 Code:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type sle_icd9 from singlelineedit within u_tabpage_assessment_info
+type sle_icd10 from singlelineedit within u_tabpage_assessment_info
 integer x = 686
 integer y = 520
 integer width = 334
@@ -886,7 +886,7 @@ boolean autohscroll = false
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;icd_9_code = text
+event modified;icd10_code = text
 
 end event
 

@@ -717,8 +717,8 @@ else
 	ll_back_color = 0
 end if
 
-if upper(left(pstr_assessment.icd9_code, 1)) <> "V" then
-	ll_icd_part_count = current_patient.assessments.icd_part_count(pstr_assessment.icd9_code)
+if upper(left(pstr_assessment.icd10_code, 1)) <> "V" then
+	ll_icd_part_count = current_patient.assessments.icd_part_count(pstr_assessment.icd10_code)
 	if ll_icd_part_count > 1 then
 		ls_description += " (" + string(ll_icd_part_count) + "x)"
 	end if

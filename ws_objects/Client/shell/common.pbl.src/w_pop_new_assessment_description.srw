@@ -12,7 +12,7 @@ type cb_cancel from commandbutton within w_pop_new_assessment_description
 end type
 type st_3 from statictext within w_pop_new_assessment_description
 end type
-type sle_icd_9_code from singlelineedit within w_pop_new_assessment_description
+type sle_icd10_code from singlelineedit within w_pop_new_assessment_description
 end type
 type mle_description from multilineedit within w_pop_new_assessment_description
 end type
@@ -35,7 +35,7 @@ st_2 st_2
 cb_ok cb_ok
 cb_cancel cb_cancel
 st_3 st_3
-sle_icd_9_code sle_icd_9_code
+sle_icd10_code sle_icd10_code
 mle_description mle_description
 end type
 global w_pop_new_assessment_description w_pop_new_assessment_description
@@ -48,7 +48,7 @@ this.st_2=create st_2
 this.cb_ok=create cb_ok
 this.cb_cancel=create cb_cancel
 this.st_3=create st_3
-this.sle_icd_9_code=create sle_icd_9_code
+this.sle_icd10_code=create sle_icd10_code
 this.mle_description=create mle_description
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_1
@@ -56,7 +56,7 @@ this.Control[iCurrent+2]=this.st_2
 this.Control[iCurrent+3]=this.cb_ok
 this.Control[iCurrent+4]=this.cb_cancel
 this.Control[iCurrent+5]=this.st_3
-this.Control[iCurrent+6]=this.sle_icd_9_code
+this.Control[iCurrent+6]=this.sle_icd10_code
 this.Control[iCurrent+7]=this.mle_description
 end on
 
@@ -67,7 +67,7 @@ destroy(this.st_2)
 destroy(this.cb_ok)
 destroy(this.cb_cancel)
 destroy(this.st_3)
-destroy(this.sle_icd_9_code)
+destroy(this.sle_icd10_code)
 destroy(this.mle_description)
 end on
 
@@ -138,8 +138,8 @@ end if
 popup_return.item_count = 2
 popup_return.items[1] = trim(mle_description.text)
 
-if len(trim(sle_icd_9_code.text)) > 0 then
-	popup_return.items[2] = trim(sle_icd_9_code.text)
+if len(trim(sle_icd10_code.text)) > 0 then
+	popup_return.items[2] = trim(sle_icd10_code.text)
 else
 	setnull(popup_return.items[2])
 end if
@@ -185,12 +185,12 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "ICD 9 Code:"
+string text = "ICD10 Code:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type sle_icd_9_code from singlelineedit within w_pop_new_assessment_description
+type sle_icd10_code from singlelineedit within w_pop_new_assessment_description
 integer x = 549
 integer y = 560
 integer width = 663

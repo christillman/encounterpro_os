@@ -10,7 +10,7 @@ table(column=(type=char(24) updatewhereclause=no name=authority_type dbname="aut
  column=(type=number updatewhereclause=no name=authority_sequence dbname="authority_sequence" )
  column=(type=long updatewhereclause=no name=authority_formulary_id dbname="authority_formulary_id" )
  column=(type=long updatewhereclause=no name=authority_formulary_sequence dbname="authority_formulary_sequence" )
- column=(type=char(12) updatewhereclause=no name=icd_9_code dbname="icd_9_code" )
+ column=(type=char(12) updatewhereclause=no name=icd10_code dbname="icd10_code" )
  column=(type=char(24) updatewhereclause=no name=formulary_code dbname="formulary_code" )
  column=(type=char(24) updatewhereclause=no name=formulary_type dbname="formulary_type" )
  column=(type=char(20) updatewhereclause=no name=title dbname="title" )

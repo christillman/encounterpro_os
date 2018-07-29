@@ -39,12 +39,12 @@ end if
 end subroutine
 
 public subroutine pretty_text ();integer li_sts
-string ls_description, ls_auto_close, ls_icd_9_code
+string ls_description, ls_auto_close, ls_icd10_code
 decimal lcd_charge
 
 if not isnull(assessment_id) then
 	if isnull(description) Or Len(description) = 0 then
-		li_sts = tf_get_assessment(assessment_id, ls_description, ls_icd_9_code, ls_auto_close)
+		li_sts = tf_get_assessment(assessment_id, ls_description, ls_icd10_code, ls_auto_close)
 		if li_sts > 0 then
 			text = ls_description
 		else

@@ -43,7 +43,7 @@ global u_str_assessment u_str_assessment
 type variables
 string assessment_status, assessment_type
 string created_by, diagnosed_by
-string assessment_id, assessment,icd9_code
+string assessment_id, assessment,icd10_code
 
 long close_encounter_id, open_encounter_id
 long problem_id

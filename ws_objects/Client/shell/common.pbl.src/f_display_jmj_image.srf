@@ -15,7 +15,7 @@ luo_ImageViewer = CREATE oleobject
 li_sts = luo_ImageViewer.connecttonewobject("EPImageViewer.Image")
 if li_sts < 0 then
 	DESTROY luo_ImageViewer
-	log.log(this, "display_image()", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
+	log.log(po_null, "display_image()", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
 	return -1
 end if
 

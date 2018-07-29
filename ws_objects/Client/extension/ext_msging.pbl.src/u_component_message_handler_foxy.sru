@@ -50,17 +50,17 @@ if (isnull(ll_array_count) or ll_array_count = -1) then
 else 
 	li_sts = ll_array_count
 END IF	
-string ls_icd_9
+string ls_icd10
 boolean lb_ok
 integer li_count
-ls_icd_9 = is_array[1]
+ls_icd10 = is_array[1]
 if is_array[1] = "" then return 1
 if is_array[2] = "" then return 1
 
-SELECT count(c_Assessment_Definition.icd_9_code )  
+SELECT count(c_Assessment_Definition.icd10_code )  
     INTO :li_count 
     FROM c_Assessment_Definition  
-   WHERE c_Assessment_Definition.icd_9_code = :ls_icd_9 using cprdb ;
+   WHERE c_Assessment_Definition.icd10_code = :ls_icd10 using cprdb ;
 	
 if not cprdb.check() then return -1	
 
@@ -68,7 +68,7 @@ If li_count > 1 then return 1
 if li_count = 1 then
 	  UPDATE c_Assessment_Definition  
      SET description = :is_array[2]
-   WHERE c_Assessment_Definition.icd_9_code = :ls_icd_9  using cprdb ;
+   WHERE c_Assessment_Definition.icd10_code = :ls_icd10  using cprdb ;
 	if not cprdb.check() then 
 		return -1	
 	else
@@ -86,7 +86,7 @@ if not cprdb.check() then return -1
 If li_count > 1 then return 1
 if li_count = 1 then
 	  UPDATE c_Assessment_Definition  
-     SET icd_9_code = :ls_icd_9 
+     SET icd10_code = :ls_icd10 
    WHERE c_Assessment_Definition.description = :is_array[2] using cprdb ;
 	if not cprdb.check() then 
 		return -1	
@@ -114,7 +114,7 @@ Next
            description,   
            common_flag,   
            auto_close,   
-           icd_9_code,   
+           icd10_code,   
            billing_code,   
            billing_id,   
            status )  
@@ -124,7 +124,7 @@ Next
            :is_array[2],   
            null,
 			  null,
-           :ls_icd_9,   
+           :ls_icd10,   
            null,   
            null,   
            null )  ;

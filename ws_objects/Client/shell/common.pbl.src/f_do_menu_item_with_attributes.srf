@@ -45,7 +45,7 @@ if isnull(pl_menu_id) or isnull(pl_menu_item_id) then return 0
 
 lstr_menu_item = datalist.get_menu_item(pl_menu_id, pl_menu_item_id)
 if isnull(lstr_menu_item.menu_item_type) then
-	log.log(this, "f_do_menu_item()", "Menu Item not found (" + string(pl_menu_id) + ", " + string(pl_menu_item_id) + ")", 4)
+	log.log(po_null, "f_do_menu_item()", "Menu Item not found (" + string(pl_menu_id) + ", " + string(pl_menu_item_id) + ")", 4)
 	return -1
 end if
 
@@ -150,7 +150,7 @@ CHOOSE CASE lstr_menu_item.menu_item_type
 		lb_past_treatment = f_string_to_boolean(f_attribute_find_attribute(pstr_attributes, "past_treatment"))
 		luo_define_treatment = f_get_treatment_component(lstr_menu_item.menu_item)
 		If Isnull(luo_define_treatment) Then
-			log.log(this, "f_do_menu_item()", "Unable to get treatment component (" + lstr_menu_item.menu_item + ")", 4)
+			log.log(po_null, "f_do_menu_item()", "Unable to get treatment component (" + lstr_menu_item.menu_item + ")", 4)
 			li_return_status = -1
 		else
 			luo_define_treatment.define_treatment()
@@ -186,7 +186,7 @@ CHOOSE CASE lstr_menu_item.menu_item_type
 		setnull(ll_object_key)
 		li_return_status = f_display_menu_with_attributes(ll_menu_id, true, pstr_attributes)
 	CASE ELSE
-		log.log(this, "button_pressed", "Unknown button_action (" + lstr_menu_item.menu_item_type + ")", 3)
+		log.log(po_null, "button_pressed", "Unknown button_action (" + lstr_menu_item.menu_item_type + ")", 3)
 		li_return_status = -1
 END CHOOSE
 

@@ -28,7 +28,7 @@ CHOOSE CASE lower(ls_encoding)
 		TRY
 			ls_encoded_file = common_thread.eprolibnet4.convertbinarytobase64(pstr_attachment.attachment)
 		CATCH (throwable lt_error)
-			log.log(this, "f_get_xml_from_attachment_structure()", "Error calling binary to base64 conversion (" + lt_error.text + ")", 4)
+			log.log(po_null, "f_get_xml_from_attachment_structure()", "Error calling binary to base64 conversion (" + lt_error.text + ")", 4)
 			return ls_null
 		END TRY
 	CASE ELSE
@@ -36,7 +36,7 @@ CHOOSE CASE lower(ls_encoding)
 		TRY
 			ls_encoded_file = common_thread.eprolibnet4.convertbinarytohex(pstr_attachment.attachment)
 		CATCH (throwable lt_error2)
-			log.log(this, "f_get_xml_from_attachment_structure()", "Error calling binary to hex conversion (" + lt_error2.text + ")", 4)
+			log.log(po_null, "f_get_xml_from_attachment_structure()", "Error calling binary to hex conversion (" + lt_error2.text + ")", 4)
 			return ls_null
 		END TRY
 END CHOOSE
@@ -68,7 +68,7 @@ TRY
 
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(this, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 

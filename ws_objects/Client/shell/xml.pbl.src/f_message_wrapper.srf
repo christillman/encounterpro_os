@@ -17,12 +17,12 @@ PBDOM_Document lo_null
 setnull(lo_null)
 
 if isnull(ps_document_type) then
-	log.log(this, "f_message_wrapper()", "Null document type", 4)
+	log.log(po_null, "f_message_wrapper()", "Null document type", 4)
 	return lo_null
 end if
 
 if isnull(pl_addressee) then
-	log.log(this, "f_message_wrapper()", "Null addressee", 4)
+	log.log(po_null, "f_message_wrapper()", "Null addressee", 4)
 	return lo_null
 end if
 
@@ -59,7 +59,7 @@ TRY
 	
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(this, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return lo_null
 END TRY
 

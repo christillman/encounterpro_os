@@ -9,12 +9,12 @@ end prototypes
 global function integer f_convert_tiff_to_bmp (string ps_tiff_file, ref string ps_bmp_file);integer li_sts
 
 if isnull(ps_tiff_file) then
-	log.log(this, "f_convert_tiff_to_bmp()", "Null file name", 3)
+	log.log(po_null, "f_convert_tiff_to_bmp()", "Null file name", 3)
 	return -1
 end if
 
 if not fileexists(ps_tiff_file) then
-	log.log(this, "f_convert_tiff_to_bmp()", "File not found (" + ps_tiff_file + ")", 3)
+	log.log(po_null, "f_convert_tiff_to_bmp()", "File not found (" + ps_tiff_file + ")", 3)
 	return -1
 end if
 
@@ -25,12 +25,12 @@ end if
 TRY
 	li_sts = common_thread.eprolibnet4.ConvertImage(ps_tiff_file, ps_bmp_file)
 CATCH (throwable lt_error)
-	log.log(this, "f_convert_tiff_to_bmp()", "Error converting image file from ~"" + ps_tiff_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
+	log.log(po_null, "f_convert_tiff_to_bmp()", "Error converting image file from ~"" + ps_tiff_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
 	return -1
 END TRY
 
 if li_sts <= 0 then
-	log.log(this, "f_convert_tiff_to_bmp()", "Error converting file (" + ps_tiff_file + ")", 3)
+	log.log(po_null, "f_convert_tiff_to_bmp()", "Error converting file (" + ps_tiff_file + ")", 3)
 	return -1
 end if
 

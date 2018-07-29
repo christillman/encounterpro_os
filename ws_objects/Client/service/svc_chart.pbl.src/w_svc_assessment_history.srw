@@ -6,11 +6,11 @@ type dw_assessment_history from datawindow within w_svc_assessment_history
 end type
 type st_title from statictext within w_svc_assessment_history
 end type
-type st_major from u_st_icd9_part within w_svc_assessment_history
+type st_major from u_st_icd10_part within w_svc_assessment_history
 end type
-type st_icd9 from statictext within w_svc_assessment_history
+type st_icd10 from statictext within w_svc_assessment_history
 end type
-type st_minor_1 from u_st_icd9_part within w_svc_assessment_history
+type st_minor_1 from u_st_icd10_part within w_svc_assessment_history
 end type
 type cb_finished from commandbutton within w_svc_assessment_history
 end type
@@ -26,7 +26,7 @@ windowtype windowtype = response!
 dw_assessment_history dw_assessment_history
 st_title st_title
 st_major st_major
-st_icd9 st_icd9
+st_icd10 st_icd10
 st_minor_1 st_minor_1
 cb_finished cb_finished
 end type
@@ -36,7 +36,7 @@ type variables
 u_component_service   service
 u_str_assessment		assessment
 
-string current_icd_9_part
+string current_icd10_part
 string assessment_id
 end variables
 
@@ -64,12 +64,12 @@ boolean lb_treatment
 setnull(ll_null)
 setnull(lstr_encounter.encounter_id)
 
-if isnull(current_icd_9_part) then
+if isnull(current_icd10_part) then
 	temp_datastore.set_dataobject("dw_assessments_assessment_id")
 	temp_datastore.retrieve(current_patient.cpr_id, assessment_id)
 else
-	temp_datastore.set_dataobject("dw_assessments_icd9")
-	temp_datastore.retrieve(current_patient.cpr_id, current_icd_9_part + "%")
+	temp_datastore.set_dataobject("dw_assessments_icd10")
+	temp_datastore.retrieve(current_patient.cpr_id, current_icd10_part + "%")
 end if
 
 ll_count = temp_datastore.rowcount()
@@ -120,7 +120,7 @@ return 1
 end function
 
 event open;call super::open;str_popup popup
-string ls_icd_9_code
+string ls_icd10_code
 string ls_left, ls_right
 string ls_description
 
@@ -152,9 +152,9 @@ if isnull(assessment_id) then
 	return
 end if
 
-SELECT icd_9_code,
+SELECT icd10_code,
 		 description
-INTO :ls_icd_9_code,
+INTO :ls_icd10_code,
 		:ls_description
 FROM c_assessment_definition (NOLOCK)
 WHERE assessment_id = :assessment_id;
@@ -162,23 +162,23 @@ if not tf_check() then close(this)
 
 st_title.text = ls_description + " History"
 
-if isnull(ls_icd_9_code) then
+if isnull(ls_icd10_code) then
 	st_major.visible = false
 	st_minor_1.visible = false
-	st_icd9.visible = false
-	setnull(current_icd_9_part)
+	st_icd10.visible = false
+	setnull(current_icd10_part)
 	refresh()
 else
-	f_split_string(ls_icd_9_code, ".", ls_left, ls_right)
+	f_split_string(ls_icd10_code, ".", ls_left, ls_right)
 
 	st_major.text = ls_left + "." + "xx"
-	st_major.icd_9_part = ls_left
+	st_major.icd10_part = ls_left
 	
 	if ls_right = "" then
 		st_minor_1.visible = false
 	else
 		st_minor_1.text = ls_left + "." + left(ls_right, 1) + "x"
-		st_minor_1.icd_9_part = ls_left + "." + left(ls_right, 1)
+		st_minor_1.icd10_part = ls_left + "." + left(ls_right, 1)
 	end if
 	st_major.postevent("clicked")
 end if
@@ -192,14 +192,14 @@ call super::create
 this.dw_assessment_history=create dw_assessment_history
 this.st_title=create st_title
 this.st_major=create st_major
-this.st_icd9=create st_icd9
+this.st_icd10=create st_icd10
 this.st_minor_1=create st_minor_1
 this.cb_finished=create cb_finished
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.dw_assessment_history
 this.Control[iCurrent+2]=this.st_title
 this.Control[iCurrent+3]=this.st_major
-this.Control[iCurrent+4]=this.st_icd9
+this.Control[iCurrent+4]=this.st_icd10
 this.Control[iCurrent+5]=this.st_minor_1
 this.Control[iCurrent+6]=this.cb_finished
 end on
@@ -209,7 +209,7 @@ call super::destroy
 destroy(this.dw_assessment_history)
 destroy(this.st_title)
 destroy(this.st_major)
-destroy(this.st_icd9)
+destroy(this.st_icd10)
 destroy(this.st_minor_1)
 destroy(this.cb_finished)
 end on
@@ -249,7 +249,7 @@ alignment alignment = center!
 boolean focusrectangle = false
 end type
 
-type st_major from u_st_icd9_part within w_svc_assessment_history
+type st_major from u_st_icd10_part within w_svc_assessment_history
 integer x = 2569
 integer y = 316
 integer width = 261
@@ -257,12 +257,12 @@ integer height = 92
 string text = ""
 end type
 
-on clicked;call u_st_icd9_part::clicked;current_icd_9_part = icd_9_part
+on clicked;call u_st_icd10_part::clicked;current_icd10_part = icd10_part
 refresh()
 
 end on
 
-type st_icd9 from statictext within w_svc_assessment_history
+type st_icd10 from statictext within w_svc_assessment_history
 integer x = 2583
 integer y = 152
 integer width = 224
@@ -274,12 +274,12 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "ICD-9 Part"
+string text = "ICD10 Part"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
 
-type st_minor_1 from u_st_icd9_part within w_svc_assessment_history
+type st_minor_1 from u_st_icd10_part within w_svc_assessment_history
 integer x = 2569
 integer y = 460
 integer width = 261
@@ -287,7 +287,7 @@ integer height = 92
 string text = ""
 end type
 
-on clicked;call u_st_icd9_part::clicked;current_icd_9_part = icd_9_part
+on clicked;call u_st_icd10_part::clicked;current_icd10_part = icd10_part
 refresh()
 
 end on

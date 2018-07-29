@@ -18,7 +18,7 @@ setnull(ll_null)
 setnull(ls_null)
 
 if isnull(pstr_patient.cpr_id) or pstr_patient.cpr_id = "" then
-	log.log(this, "update_patient_from_str()", "No cpr_id", 4)
+	log.log(po_null, "update_patient_from_str()", "No cpr_id", 4)
 	return -1
 end if
 

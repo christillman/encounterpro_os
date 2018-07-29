@@ -50,9 +50,9 @@ protected function long x_post_other (string ps_cpr_id, long pl_encounter_id)
 protected function long x_post_treatments (string ps_cpr_id, long pl_encounter_id)
 protected function long xx_post_encounter (string ps_cpr_id, long pl_encounter_id)
 protected function long xx_post_other (string ps_cpr_id, long pl_encounter_id)
-protected function integer xx_xref_assessment (string ps_icd9_code)
+protected function integer xx_xref_assessment (string ps_icd10_code)
 protected function integer xx_xref_procedure (string ps_cpt_code)
-protected function string get_icd9 (string ps_cpr_id, string ps_assessment_id)
+protected function string get_icd10 (string ps_cpr_id, string ps_assessment_id)
 protected function string get_cpt (string ps_cpr_id, string ps_procedure_id)
 protected function long xx_post_treatment (string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id)
 protected function long xx_post_assessment (string ps_cpr_id, long pl_encounter_id, long pl_problem_id, integer pi_assessment_sequence)
@@ -195,7 +195,7 @@ boolean lb_loop
 integer li_sts
 integer li_assessment_sequence
 string ls_description
-string ls_icd_9_code
+string ls_icd10_code
 string ls_temp
 string ls_billing_note
 long ll_assessment_billing_id
@@ -214,7 +214,7 @@ for i = 1 to ll_assessment_count
 	li_assessment_sequence = luo_data.object.assessment_sequence[i]
 	ls_description = luo_data.object.description[i]
 	ll_assessment_billing_id = luo_data.object.assessment_billing_id[i]
-	ls_icd_9_code = luo_data.object.icd_9_code[i]
+	ls_icd10_code = luo_data.object.icd10_code[i]
 
 	// Skip if it's not billed
 	if ls_bill_flag <> "Y" then continue // assessment not billable 
@@ -225,20 +225,20 @@ for i = 1 to ll_assessment_count
 		continue
 	end if
 
-	// Determine the icd_9_code
-	if isnull(ls_icd_9_code) then
-		ls_icd_9_code = get_icd9(ps_cpr_id, ls_assessment_id)
-		if isnull(ls_icd_9_code) then
-			mylog.log(this, "x_post_assessments()", "No icd9 for assessment (" + ls_assessment_id + ")", 3)
+	// Determine the icd10_code
+	if isnull(ls_icd10_code) then
+		ls_icd10_code = get_icd10(ps_cpr_id, ls_assessment_id)
+		if isnull(ls_icd10_code) then
+			mylog.log(this, "x_post_assessments()", "No icd10 for assessment (" + ls_assessment_id + ")", 3)
 			luo_data.object.bill_flag[i] = "N"
 			continue
 		end if
-		luo_data.object.icd_9_code[i] = ls_icd_9_code
+		luo_data.object.icd10_code[i] = ls_icd10_code
 	end if
 	
-	li_sts = xx_xref_assessment(ls_icd_9_code)
+	li_sts = xx_xref_assessment(ls_icd10_code)
 	if li_sts <= 0 then
-		ls_temp = "No billing record found for icd code <" + ls_icd_9_code + ">"
+		ls_temp = "No billing record found for icd code <" + ls_icd10_code + ">"
 
 		ls_description = datalist.assessment_description(ls_assessment_id)
 		if not isnull(ls_description) then
@@ -264,7 +264,7 @@ for i = 1 to ll_assessment_count
 	li_assessment_sequence = luo_data.object.assessment_sequence[i]
 	ls_description = luo_data.object.description[i]
 	ll_assessment_billing_id = luo_data.object.assessment_billing_id[i]
-	ls_icd_9_code = luo_data.object.icd_9_code[i]
+	ls_icd10_code = luo_data.object.icd10_code[i]
 	if li_assessment_sequence <> i or isnull(li_assessment_sequence) then
 		luo_data.object.assessment_sequence[i] = i
 	end if
@@ -501,7 +501,7 @@ end if
 
 end function
 
-protected function integer xx_xref_assessment (string ps_icd9_code);// Date Begun: ??/??/??
+protected function integer xx_xref_assessment (string ps_icd10_code);// Date Begun: ??/??/??
 // Programmer: Mark Copenhaver (MC)
 //				   Charles Appel (CA)
 // Purpose: 
@@ -511,7 +511,7 @@ protected function integer xx_xref_assessment (string ps_icd9_code);// Date Begu
 // History: 07/02/98 - CA - Comments added
 
 if ole_class then
-	return ole.xref_assessment(ps_icd9_code)
+	return ole.xref_assessment(ps_icd10_code)
 else
 	return 100
 end if
@@ -535,18 +535,18 @@ end if
 
 end function
 
-protected function string get_icd9 (string ps_cpr_id, string ps_assessment_id);string ls_insurance_id
-string ls_icd_9_code
+protected function string get_icd10 (string ps_cpr_id, string ps_assessment_id);string ls_insurance_id
+string ls_icd10_code
 string ls_null
 
 //CWW, BEGIN
-u_ds_data luo_sp_get_assessment_icd9
+u_ds_data luo_sp_get_assessment_icd10
 integer li_spdw_count
-// DECLARE lsp_get_assessment_icd9 PROCEDURE FOR dbo.sp_get_assessment_icd9  
+// DECLARE lsp_get_assessment_icd10 PROCEDURE FOR dbo.sp_get_assessment_icd10  
 //         @ps_cpr_id = :ps_cpr_id,   
 //			@ps_assessment_id = :ps_assessment_id,
 //			@ps_insurance_id = :ls_insurance_id OUT,
-//			@ps_icd_9_code = :ls_icd_9_code OUT
+//			@ps_icd10_code = :ls_icd10_code OUT
 // USING cprdb;
 //CWW, END
 
@@ -554,26 +554,26 @@ setnull(ls_null)
 
 // Now get the codes for this assessment
 //CWW, BEGIN
-//EXECUTE lsp_get_assessment_icd9;
+//EXECUTE lsp_get_assessment_icd10;
 //if not cprdb.check() then return ls_null
-//FETCH lsp_get_assessment_icd9 INTO :ls_insurance_id, :ls_icd_9_code;
+//FETCH lsp_get_assessment_icd10 INTO :ls_insurance_id, :ls_icd10_code;
 //if not cprdb.check() then return ls_null
-//CLOSE lsp_get_assessment_icd9;
+//CLOSE lsp_get_assessment_icd10;
 
-luo_sp_get_assessment_icd9 = CREATE u_ds_data
-luo_sp_get_assessment_icd9.set_dataobject("dw_sp_get_assessment_icd9", cprdb)
-li_spdw_count = luo_sp_get_assessment_icd9.retrieve(ps_cpr_id, ps_assessment_id)
+luo_sp_get_assessment_icd10 = CREATE u_ds_data
+luo_sp_get_assessment_icd10.set_dataobject("dw_sp_get_assessment_icd10", cprdb)
+li_spdw_count = luo_sp_get_assessment_icd10.retrieve(ps_cpr_id, ps_assessment_id)
 if li_spdw_count <= 0 then
 	setnull(ls_insurance_id)
-	setnull(ls_icd_9_code)
+	setnull(ls_icd10_code)
 else
-	ls_insurance_id = luo_sp_get_assessment_icd9.object.insurance_id[1]
-	ls_icd_9_code = luo_sp_get_assessment_icd9.object.icd_9_code[1]
+	ls_insurance_id = luo_sp_get_assessment_icd10.object.insurance_id[1]
+	ls_icd10_code = luo_sp_get_assessment_icd10.object.icd10_code[1]
 end if
-destroy luo_sp_get_assessment_icd9
+destroy luo_sp_get_assessment_icd10
 //CWW, END
 
-return ls_icd_9_code
+return ls_icd10_code
 
 end function
 

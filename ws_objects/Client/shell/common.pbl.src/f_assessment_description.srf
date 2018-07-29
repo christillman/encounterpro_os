@@ -27,9 +27,9 @@ end if
 
 ls_description += " " + pstr_assessment.assessment
 
-// include icd9 code with assessment_description
-if not isnull(pstr_assessment.icd9_code) then
-	ls_description += " < " + pstr_assessment.icd9_code + " >"
+// include icd10 code with assessment_description
+if not isnull(pstr_assessment.icd10_code) then
+	ls_description += " < " + pstr_assessment.icd10_code + " >"
 end if
 
 if not isnull(pstr_assessment.assessment_status) then

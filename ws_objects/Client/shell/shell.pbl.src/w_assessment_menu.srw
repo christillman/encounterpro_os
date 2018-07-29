@@ -42,7 +42,7 @@ end function
 event open;call super::open;str_popup popup
 string ls_long_description
 string ls_description
-string ls_icd_9_code
+string ls_icd10_code
 string ls_null
 
 setnull(ls_null)
@@ -139,10 +139,10 @@ end if
 
 SELECT description,
 	long_description,
-	icd_9_code
+	icd10_code
 INTO :ls_description,
 	:ls_long_description,
-	:ls_icd_9_code
+	:ls_icd10_code
 FROM c_Assessment_Definition
 WHERE assessment_id = :assessment_id;
 if not tf_check() then
@@ -157,7 +157,7 @@ if sqlca.sqlcode = 100 then
 end if
 
 title = ls_description
-if not isnull(ls_icd_9_code) then title += " (" + ls_icd_9_code + ")"
+if not isnull(ls_icd10_code) then title += " (" + ls_icd10_code + ")"
 
 if isnull(ls_long_description) or trim(ls_long_description) = "" then
 	ls_long_description = ls_description

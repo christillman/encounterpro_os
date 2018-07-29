@@ -31,12 +31,12 @@ WHERE display_script_id = :pstr_display_script.display_script_id;
 if not tf_check() then return -1
 
 if ll_owner_id <> sqlca.customer_id then
-	log.log(this, "f_save_display_script()", "Only locally owned display scripts may be saved", 4)
+	log.log(po_null, "f_save_display_script()", "Only locally owned display scripts may be saved", 4)
 	return -1
 end if
 
-tf_begin_transaction(this, "Save Display Script")
-//sqlca.begin_transaction(this, "Save Display Script")
+tf_begin_transaction(po_null, "Save Display Script")
+//sqlca.begin_transaction(po_null, "Save Display Script")
 
 // First, delete the existing commands and attributes
 DELETE
@@ -71,7 +71,7 @@ for i = 1 to pstr_display_script.display_command_count
 	
 	if not tf_check() then return -1
 	if isnull(ll_display_command_id) then
-		log.log(this, "f_save_display_script()", "Could not create new display command", 4)
+		log.log(po_null, "f_save_display_script()", "Could not create new display command", 4)
 		sqlca.rollback_transaction()
 		return -1
 	end if
@@ -85,7 +85,7 @@ for i = 1 to pstr_display_script.display_command_count
 	AND display_command_id = :ll_display_command_id;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "f_save_display_script()", "Could not find new display command", 4)
+		log.log(po_null, "f_save_display_script()", "Could not find new display command", 4)
 		sqlca.rollback_transaction()
 		return -1
 	end if

@@ -76,7 +76,7 @@ if ls_sqlversion <> my_sql_version then
 			halt close
 		end if
 	else
-		log.log(this, "f_initialize_objects()", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
+		log.log(po_null, "f_initialize_objects()", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
 	end if
 	halt close
 end if	
@@ -130,7 +130,7 @@ CHOOSE CASE cpr_mode
 			ls_message += " requires the database to be at modification level " + string(minimum_modification_level)
 			ls_message += " or higher.  This database is only at modification level " + string(sqlca.modification_level)
 			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
-			log.log(this, "f_check_version()", ls_message, 5)
+			log.log(po_null, "f_check_version()", ls_message, 5)
 			halt close
 		end if
 	CASE ELSE

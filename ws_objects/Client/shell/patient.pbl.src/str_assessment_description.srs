@@ -10,7 +10,7 @@ global type str_assessment_description from structure
 	long		open_encounter_id
 	long		close_encounter_id
 	string		assessment_status
-	string		icd9_code
+	string		icd10_code
 	string		diagnosed_by
 	datetime		created
 	string		created_by

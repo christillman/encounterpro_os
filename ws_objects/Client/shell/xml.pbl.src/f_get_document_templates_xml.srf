@@ -133,7 +133,7 @@ TRY
 	
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(this, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -175,7 +175,7 @@ TRY
 	
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(this, "f_get_document_templates_xml()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_get_document_templates_xml()", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 

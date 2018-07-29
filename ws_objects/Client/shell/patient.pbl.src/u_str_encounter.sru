@@ -266,17 +266,17 @@ public function integer get_billing (ref str_encounter_assessment pstra_assessme
 integer i
 integer li_sts
 string ls_insurance_id
-string ls_icd_9_code
+string ls_icd10_code
 
 
 //CWW, BEGIN
-u_ds_data luo_sp_get_assessment_icd9
+u_ds_data luo_sp_get_assessment_icd10
 integer li_spdw_count
-// DECLARE lsp_get_assessment_icd9 PROCEDURE FOR dbo.sp_get_assessment_icd9  
+// DECLARE lsp_get_assessment_icd10 PROCEDURE FOR dbo.sp_get_assessment_icd10  
 //         @ps_cpr_id = :current_patient.cpr_id,   
 //			@ps_assessment_id = :pstra_assessment[i].assessment_id,
 //			@ps_insurance_id = :ls_insurance_id OUT,
-//			@ps_icd_9_code = :ls_icd_9_code OUT;
+//			@ps_icd10_code = :ls_icd10_code OUT;
 //CWW, END
 
 li_sts = get_assessments(pstra_assessment, pi_assessment_count)
@@ -284,28 +284,28 @@ if li_sts <= 0 then return li_sts
 
 for i = 1 to pi_assessment_count
 	//CWW, BEGIN
-//	EXECUTE lsp_get_assessment_icd9;
+//	EXECUTE lsp_get_assessment_icd10;
 //	if not tf_check() then return -1
-//	FETCH lsp_get_assessment_icd9 INTO :ls_insurance_id, :ls_icd_9_code;
+//	FETCH lsp_get_assessment_icd10 INTO :ls_insurance_id, :ls_icd10_code;
 //	if not tf_check() then return -1
-//	CLOSE lsp_get_assessment_icd9;
+//	CLOSE lsp_get_assessment_icd10;
 	
-luo_sp_get_assessment_icd9 = CREATE u_ds_data
-luo_sp_get_assessment_icd9.set_dataobject("dw_sp_get_assessment_icd9")
-li_spdw_count = luo_sp_get_assessment_icd9.retrieve(current_patient.cpr_id, pstra_assessment[i].assessment_id)
+luo_sp_get_assessment_icd10 = CREATE u_ds_data
+luo_sp_get_assessment_icd10.set_dataobject("dw_sp_get_assessment_icd10")
+li_spdw_count = luo_sp_get_assessment_icd10.retrieve(current_patient.cpr_id, pstra_assessment[i].assessment_id)
 if li_spdw_count <= 0 then
 	setnull(ls_insurance_id)
-	setnull(ls_icd_9_code)
+	setnull(ls_icd10_code)
 else
-	ls_insurance_id = luo_sp_get_assessment_icd9.object.insurance_id[1]
-	ls_icd_9_code = luo_sp_get_assessment_icd9.object.icd_9_code[1]
+	ls_insurance_id = luo_sp_get_assessment_icd10.object.insurance_id[1]
+	ls_icd10_code = luo_sp_get_assessment_icd10.object.icd10_code[1]
 end if
-destroy luo_sp_get_assessment_icd9
+destroy luo_sp_get_assessment_icd10
 //CWW, END	
 	
 	
 	pstra_assessment[i].insurance_id = ls_insurance_id
-	pstra_assessment[i].icd_9_code = ls_icd_9_code
+	pstra_assessment[i].icd10_code = ls_icd10_code
 	
 	get_billing_treatments(pstra_assessment[i].problem_id, pstra_assessment[i].charge, pstra_assessment[i].charge_count)
 next

@@ -78,7 +78,7 @@
  "u_pick_group_detail.sru" "chart.pbl";
  "u_rich_text_edit.sru" "chart.pbl";
  "u_soap_display.sru" "chart.pbl";
- "u_st_icd9_part.sru" "chart.pbl";
+ "u_st_icd10_part.sru" "chart.pbl";
  "u_st_observation_status.sru" "chart.pbl";
  "u_st_radio_new_patient.sru" "chart.pbl";
  "u_st_treatment_line.sru" "chart.pbl";

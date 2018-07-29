@@ -42,7 +42,7 @@ long ll_current_version_count
 setnull(ls_null)
 
 if isnull(ps_component_id) then
-	log.log(this, "f_new_component_version()", "Null component_id", 4)
+	log.log(po_null, "f_new_component_version()", "Null component_id", 4)
 	return ls_null
 end if
 
@@ -52,7 +52,7 @@ FROM c_Component_Definition
 WHERE component_id = :ps_component_id;
 if not tf_check() then return ls_null
 if sqlca.sqlnrows = 0 then
-	log.log(this, "f_new_component_version()", "component_id not found (" + ps_component_id + ")", 4)
+	log.log(po_null, "f_new_component_version()", "component_id not found (" + ps_component_id + ")", 4)
 	return ls_null
 end if
 
@@ -174,7 +174,7 @@ FROM c_Component_Version
 WHERE component_id = :ps_component_id;
 if not tf_check() then return ls_null
 
-tf_begin_transaction(this, "Adding component version record")
+tf_begin_transaction(po_null, "Adding component version record")
 
 INSERT INTO dbo.c_Component_Version
 	(component_id

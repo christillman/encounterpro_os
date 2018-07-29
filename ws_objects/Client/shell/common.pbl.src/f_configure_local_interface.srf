@@ -49,7 +49,7 @@ else
 	WHERE interfaceserviceid = :pl_interfaceserviceid;
 	if not tf_check() then return -1
 	if sqlca.sqlnrows = 0 then
-		log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+		log.log(po_null, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 		return -1
 	end if
 	

@@ -81,7 +81,7 @@ for i = 1 to common_thread.contraindication_count
 
 	luo_xml_document = lstr_attachment.xml_document
 	if isnull(luo_xml_document) or not isvalid(luo_xml_document) then
-		log.log(this, "f_get_contraindications()", "Document returned was not an XML document", 4)
+		log.log(po_null, "f_get_contraindications()", "Document returned was not an XML document", 4)
 		return lstr_contraindications
 	end if
 	
@@ -104,7 +104,7 @@ for i = 1 to common_thread.contraindication_count
 		next
 	else
 		openwithparm(w_pop_message, "Unable to check all of the contraindication rules")
-		log.log(this, "f_get_contraindications()", "Document returned a payload of the wrong type (" + ls_payload_type + ")", 4)
+		log.log(po_null, "f_get_contraindications()", "Document returned a payload of the wrong type (" + ls_payload_type + ")", 4)
 	end if
 next
 

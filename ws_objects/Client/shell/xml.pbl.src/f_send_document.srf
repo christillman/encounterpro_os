@@ -23,24 +23,24 @@ any la_rtn
 
 // validate the parameters
 if isnull(ps_document_type) then
-	log.log(this, "f_send_document_blob()", "Null document type", 4)
+	log.log(po_null, "f_send_document_blob()", "Null document type", 4)
 	return -1
 end if
 
 if isnull(pl_addressee) then
-	log.log(this, "f_send_document_blob()", "Null addressee", 4)
+	log.log(po_null, "f_send_document_blob()", "Null addressee", 4)
 	return -1
 end if
 
 if isnull(ps_document) or len(ps_document) = 0 then
-	log.log(this, "f_send_document_blob()", "Null document", 4)
+	log.log(po_null, "f_send_document_blob()", "Null document", 4)
 	return -1
 end if
 
 // Get a wrapper xml document
 lo_xml_document = f_message_wrapper(ps_document_type, pl_addressee, ps_sendermessageid, ps_sender_user_id, ps_recipient_user_id)
 if isnull(lo_xml_document) then
-	log.log(this, "f_send_document_blob()", "Error creating message wrapper", 4)
+	log.log(po_null, "f_send_document_blob()", "Error creating message wrapper", 4)
 	return -1
 end if
 
@@ -60,22 +60,22 @@ ls_xml_string = f_xml_document_string(lo_xml_document)
 
 li_sts = common_thread.sendtoepie(ls_xml_string, pb_test_message, ls_xml_return_string)
 if li_sts < 0 then
-	log.log(this, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned error (" + string(li_sts) + ")", 4)
+	log.log(po_null, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned error (" + string(li_sts) + ")", 4)
 	return -1
 elseif li_sts = 0 then
-	log.log(this, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned an empty string", 4)
+	log.log(po_null, "f_send_document()", "Error sending document.  Call to common_thread.sendtoepie() returned an empty string", 4)
 	return -1
 end if
 
 if len(ls_xml_return_string) > 0 then
 	li_sts = f_get_xml_document(ls_xml_return_string, lo_return)
 	if li_sts <= 0 then
-		log.log(this, "f_send_document()", "Error sending document:  Return Status not recognized as XML document", 4)
+		log.log(po_null, "f_send_document()", "Error sending document:  Return Status not recognized as XML document", 4)
 		ll_sts = -1
 	end if
 	ls_status = lo_return.get_value("Status")
 	if isnull(ls_status) then
-		log.log(this, "f_send_document()", "Error sending document:  Return document does not contain Status tag", 4)
+		log.log(po_null, "f_send_document()", "Error sending document:  Return document does not contain Status tag", 4)
 		ll_sts = -1
 	end if
 	if lower(ls_status) = "success" then
@@ -83,11 +83,11 @@ if len(ls_xml_return_string) > 0 then
 	else
 		ls_statustext = lo_return.get_value("StatusText")
 		if isnull(ls_statustext) then ls_statustext = "Null"
-		log.log(this, "f_send_document()", "Error sending document:  Status returned = " + ls_status + ", Message = " + ls_statustext, 4)
+		log.log(po_null, "f_send_document()", "Error sending document:  Status returned = " + ls_status + ", Message = " + ls_statustext, 4)
 		ll_sts = -1
 	end if
 else
-	log.log(this, "f_send_document()", "Error sending document:  No Return Status", 4)
+	log.log(po_null, "f_send_document()", "Error sending document:  No Return Status", 4)
 	ll_sts = -1
 end if
 

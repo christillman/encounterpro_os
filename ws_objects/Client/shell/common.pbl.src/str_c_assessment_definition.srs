@@ -6,7 +6,7 @@ global type str_c_assessment_definition from structure
 	string		description
 	string		long_description
 	string		location_domain
-	string		icd_9_code
+	string		icd10_code
 	long		risk_level
 	long		complexity
 	string		status

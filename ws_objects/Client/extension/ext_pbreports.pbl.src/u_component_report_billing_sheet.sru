@@ -92,7 +92,7 @@ Else
 		If lstr_assessments[i].charge_count = 0 Then
 			ll_row = report_datastore.insertrow(0)
 			report_datastore.setitem(ll_row, "assessment_description", lstr_assessments[i].description)
-			report_datastore.setitem(ll_row, "icd_9_code", lstr_assessments[i].icd_9_code)
+			report_datastore.setitem(ll_row, "icd10_code", lstr_assessments[i].icd10_code)
 			report_datastore.setitem(ll_row, "description", "No Billed Items")
 			report_datastore.setitem(ll_row, "problem_id", lstr_assessments[i].problem_id)
 		Else
@@ -115,7 +115,7 @@ Else
 				
 				ll_row = report_datastore.insertrow(0)
 				report_datastore.setitem(ll_row, "assessment_description", lstr_assessments[i].description)
-				report_datastore.setitem(ll_row, "icd_9_code", lstr_assessments[i].icd_9_code)
+				report_datastore.setitem(ll_row, "icd10_code", lstr_assessments[i].icd10_code)
 				report_datastore.setitem(ll_row, "description", lstr_assessments[i].charge[j].description)
 				report_datastore.setitem(ll_row, "cpt_code", ls_cpt_code)
 				report_datastore.setitem(ll_row, "charge", lstr_assessments[i].charge[j].charge)
