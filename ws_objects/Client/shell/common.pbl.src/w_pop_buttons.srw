@@ -59,6 +59,7 @@ integer max_rows = 4
 integer row_x_increment = 400
 
 integer button_object_count
+integer button_pressed
 
 string menu_key
 string menu_type

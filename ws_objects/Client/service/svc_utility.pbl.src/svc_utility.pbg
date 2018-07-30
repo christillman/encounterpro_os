@@ -20,7 +20,6 @@
  "w_outstanding_tests.srw" "svc_utility.pbl";
  "w_reinstall.srw" "svc_utility.pbl";
  "w_scan_main.srw" "svc_utility.pbl";
- "w_scan_main_old.srw" "svc_utility.pbl";
  "w_server_status.srw" "svc_utility.pbl";
  "w_svc_audit.srw" "svc_utility.pbl";
  "w_svc_change_office.srw" "svc_utility.pbl";

@@ -9,7 +9,7 @@ integer width = 1883
 string dataobject = "dw_sp_observation_search"
 boolean border = false
 event observations_loaded ( string ps_description )
-event observation_selected ( string observation_id,  string observation_description )
+event observation_selected ( string ps_observation_id,  string ps_observation_description )
 end type
 global u_dw_observation_list u_dw_observation_list
 

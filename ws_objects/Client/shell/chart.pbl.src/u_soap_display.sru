@@ -263,9 +263,7 @@ u_ds_data luo_data
 long ll_count
 long ll_rows
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 display_mode = ps_display_mode
 new_data = pb_new_data

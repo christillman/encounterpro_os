@@ -6929,10 +6929,7 @@ else
 		
 		add_text(ls_df)
 	end if
-	
-	// Turn off the mouse pointer
-	setnull(ll_hCursor)
-	ll_hCursor = SetCursor(ll_hCursor)
+	SetPointer(HourGlass!)
 	
 	if not lb_nested then
 		f_progress_initialize(1, lstr_display_script.display_command_count)
@@ -6957,7 +6954,8 @@ for i = ll_first_command_index to lstr_display_script.display_command_count
 			reentry_state.treatment = pstr_treatment
 			reentry_state.font_settings = lstr_font_settings
 			is_on_break = true
-			ll_hCursor = SetCursor(ll_hCursor)
+			
+			SetPointer(Arrow!)
 			//if auto_redraw_off then set_redraw(true)
 			this.setredraw(true)
 			return ls_rtf
@@ -7010,9 +7008,7 @@ if not lb_nested then
 		end if
 	end if
 
-	// Turn on the mouse pointer
-	ll_hCursor = SetCursor(ll_hCursor)
-	//if auto_redraw_off then set_redraw(true)
+	SetPointer(Arrow!)
 end if
 
 // Now reset the fontstate so any changes made within the executed display format

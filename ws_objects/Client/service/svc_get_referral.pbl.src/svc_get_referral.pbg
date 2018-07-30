@@ -5,5 +5,4 @@
 @begin Objects 
  "u_component_service_review_referral.sru" "svc_get_referral.pbl";
  "w_referral.srw" "svc_get_referral.pbl";
- "w_referral_old.srw" "svc_get_referral.pbl";
 @end;

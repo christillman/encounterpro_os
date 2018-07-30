@@ -93,7 +93,6 @@
  "u_treatment_results.sru" "svc_chart.pbl";
  "w_billing_edit.srw" "svc_chart.pbl";
  "w_do_treatment.srw" "svc_chart.pbl";
- "w_do_treatment_old.srw" "svc_chart.pbl";
  "w_em_component_rules.srw" "svc_chart.pbl";
  "w_em_type_rules.srw" "svc_chart.pbl";
  "w_em_visit_level_rules.srw" "svc_chart.pbl";

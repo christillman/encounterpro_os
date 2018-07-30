@@ -77,7 +77,6 @@
  "f_attribute_str_to_ds_with_removal.srf" "common.pbl";
  "f_attribute_value_substitute.srf" "common.pbl";
  "f_attribute_value_substitute_context.srf" "common.pbl";
- "f_attribute_value_substitute_context_old.srf" "common.pbl";
  "f_attribute_value_substitute_multiple.srf" "common.pbl";
  "f_attribute_value_substitute_string.srf" "common.pbl";
  "f_attributes_to_complete_context.srf" "common.pbl";
@@ -113,8 +112,6 @@
  "f_config_object_cancel_checkout.srf" "common.pbl";
  "f_config_object_check_version.srf" "common.pbl";
  "f_config_object_generate_xml.srf" "common.pbl";
- "f_config_object_import_objectdata_old.srf" "common.pbl";
- "f_config_object_import_old.srf" "common.pbl";
  "f_config_object_import_xml.srf" "common.pbl";
  "f_config_object_install.srf" "common.pbl";
  "f_config_object_install_comobjmgr.srf" "common.pbl";
@@ -234,7 +231,6 @@
  "f_get_object_info.srf" "common.pbl";
  "f_get_observation_sources.srf" "common.pbl";
  "f_get_param.srf" "common.pbl";
- "f_get_param_list_old.srf" "common.pbl";
  "f_get_params.srf" "common.pbl";
  "f_get_params_with_list.srf" "common.pbl";
  "f_get_params_with_state.srf" "common.pbl";

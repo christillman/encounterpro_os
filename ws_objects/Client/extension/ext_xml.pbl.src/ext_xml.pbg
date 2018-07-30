@@ -98,7 +98,6 @@
  "str_unit_type.srs" "ext_xml.pbl";
  "u_component_xml_handler_base.sru" "ext_xml.pbl";
  "u_component_xml_handler_ccr.sru" "ext_xml.pbl";
- "u_component_xml_handler_ccr_old.sru" "ext_xml.pbl";
  "u_component_xml_handler_contraindication.sru" "ext_xml.pbl";
  "u_component_xml_handler_documentelementlist.sru" "ext_xml.pbl";
  "u_component_xml_handler_documenttemplatelist.sru" "ext_xml.pbl";

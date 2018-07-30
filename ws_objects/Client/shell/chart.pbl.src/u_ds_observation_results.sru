@@ -1050,9 +1050,7 @@ ulong ll_hCursor
 
 format_results = true
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 ll_count = rowcount()
 li_sts = 0
@@ -1119,9 +1117,7 @@ boolean lb_found
 
 format_results = false
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 ll_result_count = 0
 
@@ -1255,9 +1251,7 @@ ulong ll_hCursor
 
 format_results = true
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 puo_rtf.set_level(0)
 puo_rtf.wrap_on()
@@ -1279,9 +1273,7 @@ ulong ll_hCursor
 
 format_results = false
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 ll_count = rowcount()
 li_sts = 0
@@ -2621,9 +2613,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_count
 	ll_row = find(ls_find, ll_row + 1, ll_count + 1)
 LOOP
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 // Reset the level
 puo_rtf.set_level(0)
@@ -2773,9 +2763,7 @@ string ls_record_type
 
 format_results = false
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 ll_count = rowcount()
 li_sts = 0

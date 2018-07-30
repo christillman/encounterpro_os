@@ -73,6 +73,7 @@ boolean maptocollection
 string collectiondefinition
 
 str_document_element_set_collection collection
+integer button_pressed
 
 
 end variables

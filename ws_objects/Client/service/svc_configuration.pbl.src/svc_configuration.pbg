@@ -115,7 +115,6 @@
  "w_config_specialties_consultants.srw" "svc_configuration.pbl";
  "w_config_users.srw" "svc_configuration.pbl";
  "w_config_vaccines_diseases.srw" "svc_configuration.pbl";
- "w_config_vaccines_diseases_old.srw" "svc_configuration.pbl";
  "w_config_workplans.srw" "svc_configuration.pbl";
  "w_drug_attributes.srw" "svc_configuration.pbl";
  "w_edit_consultant.srw" "svc_configuration.pbl";

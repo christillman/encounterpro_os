@@ -324,11 +324,8 @@ end function
 public function integer display_results ();integer li_sts
 long i
 string ls_result_type
-ulong ll_hCursor
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(Hourglass!)
 
 for i = 1 to dw_physical.rowcount()
 	ls_result_type = upper(dw_physical.object.result_type[i])
@@ -341,8 +338,7 @@ for i = 1 to dw_physical.rowcount()
 	end if
 next
 
-// Turn on the mouse pointer
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(Arrow!)
 
 return 1
 
@@ -778,11 +774,8 @@ string ls_result_type
 string ls_connected
 str_attributes lstr_attributes
 str_property lstr_property
-ulong ll_hCursor
 
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(Hourglass!)
 
 if question_number < 1 then
 	log.log(this, "display_observation()", "Invalid Question Number", 4)

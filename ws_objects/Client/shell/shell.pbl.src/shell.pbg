@@ -474,7 +474,6 @@
  "w_treatment_type_service_edit.srw" "shell.pbl";
  "w_treatment_type_workplan_edit.srw" "shell.pbl";
  "w_user_definition.srw" "shell.pbl";
- "w_user_definition_old.srw" "shell.pbl";
  "w_user_name_edit.srw" "shell.pbl";
  "w_user_privilege.srw" "shell.pbl";
  "w_user_role_definition.srw" "shell.pbl";

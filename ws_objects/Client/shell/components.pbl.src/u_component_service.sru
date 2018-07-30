@@ -59,10 +59,7 @@ USING cprdb;
 
 setnull(ldt_progress_date_time)
 
-
-// Turn off the mouse pointer
-setnull(ll_hCursor)
-ll_hCursor = SetCursor(ll_hCursor)
+SetPointer(HourGlass!)
 
 // Initialize the my_patient and my_treatment booleans
 my_patient = false

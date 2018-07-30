@@ -17,7 +17,6 @@
  "u_component_observation_com_document.sru" "ext_observation.pbl";
  "u_component_observation_dotnet.sru" "ext_observation.pbl";
  "u_component_observation_easyink_sig.sru" "ext_observation.pbl";
- "u_component_observation_easyink_sig_old.sru" "ext_observation.pbl";
  "u_component_observation_jmj_attachments.sru" "ext_observation.pbl";
  "u_component_observation_jmj_camera.sru" "ext_observation.pbl";
  "u_component_observation_jmj_com.sru" "ext_observation.pbl";

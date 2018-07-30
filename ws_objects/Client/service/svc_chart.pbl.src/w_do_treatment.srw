@@ -167,13 +167,13 @@ DECLARE lsp_get_treatment_service_attributes PROCEDURE FOR dbo.sp_get_treatment_
 
 lstr_attributes = state_attributes
 
-CHOOSE CASE upper(buttons.button[pi_button_index].action)
+CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 	CASE "WPITEM"
-		ll_patient_workplan_item_id = long(buttons.button[pi_button_index].argument)
+		ll_patient_workplan_item_id = long(buttons_base.button[pi_button_index].argument)
 		li_sts = service_list.do_service(ll_patient_workplan_item_id, treatment)
 
 	CASE "SERVICE"
-		ll_service_sequence = long(buttons.button[pi_button_index].argument)
+		ll_service_sequence = long(buttons_base.button[pi_button_index].argument)
 
 		SELECT service, observation_tag
 		INTO :ls_service, :ls_observation_tag
@@ -234,7 +234,7 @@ next
 
 // Reset counters
 button_count = 0
-buttons.button_count = 0
+buttons_base.button_count = 0
 
 // Reset labels
 st_perform_service.visible = false

@@ -874,7 +874,7 @@ set_page(1, pb_up, pb_down, st_page)
 
 end event
 
-event observation_selected(string observation_id, string observation_description);call super::observation_selected;select_observation(observation_id, observation_description)
+event observation_selected;call super::observation_selected;select_observation(ps_observation_id, ps_observation_description)
 
 end event
 

@@ -68,6 +68,7 @@ string code_dataobject = "dw_xml_code_mapping_edit"
 string epro_id_dataobject = "dw_xml_epro_id_mapping_edit"
 
 string edit_which // "code" or "epro_id" identifies which will get modified on edit
+integer button_pressed
 
 end variables
 

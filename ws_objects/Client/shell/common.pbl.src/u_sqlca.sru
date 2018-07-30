@@ -755,6 +755,8 @@ string remote_database = "epro_40_synch"
 
 long spid
 
+u_ds_data database_columns
+
 long temp_proc_number = 0
 
 end variables
@@ -827,6 +829,7 @@ public function integer rebuild_table_triggers (string ps_tablename)
 public function integer run_hotfixes (boolean pb_new_only)
 public function integer reset_permissions ()
 public function integer execute_script (long pl_script_id, str_attributes pstr_substitute, boolean pb_abort_on_error)
+public function long table_column_list (string ps_tablename, ref string psa_column[])
 public function string fn_patient_object_progress_value_old (string ps_cpr_id, string ps_context_object, string ps_progress_type, long pl_object_key, string ps_progress_key)
 public function string sysapp (boolean pb_old)
 public function integer set_database (string ps_database)
@@ -3486,6 +3489,37 @@ return lstr_status.status
 
 
 
+end function
+
+public function long table_column_list (string ps_tablename, ref string psa_column[]);string ls_find
+long ll_row
+long ll_rowcount
+integer li_sts
+long ll_column_count
+
+if not isvalid(database_columns) or isnull(database_columns) then
+	database_columns = CREATE u_ds_data
+	database_columns.set_dataobject("dw_c_database_column")
+end if
+
+ll_rowcount = database_columns.rowcount()
+if ll_rowcount <= 0 then
+	ll_rowcount = database_columns.retrieve()
+	if ll_rowcount <= 0 then return -1
+end if
+
+ll_column_count = 0
+
+ls_find = "lower(tablename)='" + lower(ps_tablename) + "'"
+ll_row = database_columns.find(ls_find, 1, ll_rowcount)
+DO WHILE ll_row > 0 and ll_row <= ll_rowcount
+	ll_column_count++
+	psa_column[ll_column_count] = database_columns.object.columnname[ll_row]
+	
+	ll_row = database_columns.find(ls_find, ll_row + 1, ll_rowcount + 1)
+LOOP
+
+return ll_column_count
 end function
 
 public function string fn_patient_object_progress_value_old (string ps_cpr_id, string ps_context_object, string ps_progress_type, long pl_object_key, string ps_progress_key);
