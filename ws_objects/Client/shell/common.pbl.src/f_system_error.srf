@@ -16,6 +16,6 @@ ls_msg += "~nevent   :"+error.objectevent
 ls_msg += "~nline    :"+string(error.line)
 
 log.log(po_null, "SYSTEM ERROR", ls_msg, 4)
-
+DebugBreak()
 end subroutine
 

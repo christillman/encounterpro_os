@@ -11,7 +11,6 @@ end forward
 global type w_assessment_menu from w_window_base
 integer y = 400
 integer height = 1048
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -34,7 +33,7 @@ forward prototypes
 public function integer button_pressed (integer pi_button_index)
 end prototypes
 
-public function integer button_pressed (integer pi_button_index);closewithreturn(this, buttons.button[pi_button_index].action)
+public function integer button_pressed (integer pi_button_index);closewithreturn(this, buttons_base.button[pi_button_index].action)
 return 1
 
 end function
@@ -114,7 +113,8 @@ if current_search <> "TOP20" and isnull(specialty_id) then
 					"")
 end if
 
-if allow_editing then
+if allow_editing &
+		and user_list.is_user_service(current_user.user_id, "Edit Assessment") then
 	add_button("button17.bmp", &
 					"Edit Assessment", &
 					"Edit Assessment", &
@@ -143,7 +143,7 @@ SELECT description,
 INTO :ls_description,
 	:ls_long_description,
 	:ls_icd10_code
-FROM c_Assessment_Definition
+FROM c_Assessment
 WHERE assessment_id = :assessment_id;
 if not tf_check() then
 	log.log(this, "open", "Error selecting assessment", 4)

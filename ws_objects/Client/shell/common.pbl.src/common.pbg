@@ -594,6 +594,7 @@
  "n_versioninfo.sru" "common.pbl";
  "soapconnection.sru" "common.pbl";
  "soapexception.sru" "common.pbl";
+ "soappbcookie.sru" "common.pbl";
  "u_adodb_connection.sru" "common.pbl";
  "u_attachment_file_holder.sru" "common.pbl";
  "u_button_title.sru" "common.pbl";
@@ -637,7 +638,6 @@
  "u_picture_button.sru" "common.pbl";
  "u_picture_display.sru" "common.pbl";
  "u_richtextedit.sru" "common.pbl";
- "u_richtextedit_base.sru" "common.pbl";
  "u_richtextedit_richtextctrl.sru" "common.pbl";
  "u_richtextedit_tx.sru" "common.pbl";
  "u_sle_real_number.sru" "common.pbl";
