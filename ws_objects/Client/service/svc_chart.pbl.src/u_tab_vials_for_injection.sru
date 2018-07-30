@@ -15,10 +15,8 @@ end type
 global u_tab_vials_for_injection u_tab_vials_for_injection
 
 type variables
-u_component_service		service
 
 end variables
-
 forward prototypes
 public function integer initialize ()
 end prototypes

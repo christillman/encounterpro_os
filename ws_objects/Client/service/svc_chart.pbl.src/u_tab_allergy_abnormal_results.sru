@@ -23,18 +23,14 @@ end type
 global u_tab_allergy_abnormal_results u_tab_allergy_abnormal_results
 
 type variables
-u_component_service service
 
 end variables
-
 on u_tab_allergy_abnormal_results.create
 this.tabpage_tests=create tabpage_tests
 this.tabpage_history=create tabpage_history
-int iCurrent
 call super::create
-iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.tabpage_tests
-this.Control[iCurrent+2]=this.tabpage_history
+this.Control[]={this.tabpage_tests,&
+this.tabpage_history}
 end on
 
 on u_tab_allergy_abnormal_results.destroy

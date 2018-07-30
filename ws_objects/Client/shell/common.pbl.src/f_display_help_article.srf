@@ -20,7 +20,7 @@ else
 	lstr_article.which_help = "CONFIG"
 end if
 
-if len(ps_help_context) > 0 then
+if len(ps_help_context) > 0 And IsValid(datalist) then
 	lstr_article.article = datalist.xml_lookup_epro_id(0, "EproHelpContext", ps_help_context, ps_help_context, lstr_article.epro_domain)
 end if
 
@@ -31,7 +31,7 @@ if sqlca.customer_id < 1000 then
 	if lower(computername) = "testingv5" or lower(computername) = "dev-mc" then
 		SELECT count(*)
 		INTO :ll_count
-		FROM jmjtech.eproupdates.dbo.c_Domain
+		FROM eproupdates.dbo.c_Domain
 		WHERE domain_id = 'Help Edit User'
 		AND domain_item = :windows_logon_id;
 		if tf_check() and ll_count > 0 then

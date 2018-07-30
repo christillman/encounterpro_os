@@ -54,10 +54,6 @@ f_split_string(ls_open_command, " ", ls_special1, ls_special2)
 CHOOSE CASE lower(ls_special1)
 	CASE "shell"
 		li_sts = windows_api.shell32.open_file_ex(ps_file, ls_special2, pb_wait_for_completion, pul_process_id)
-	CASE "jmj_image"
-		li_sts = f_display_jmj_image(ps_file)
-		// f_display_jmj_image is an in-process modal window, so there won't be a process_id
-		pul_process_id = 0
 	CASE "browser"
 		// Open html file with HyperlinkToURL
 		// So, a new browser is launched

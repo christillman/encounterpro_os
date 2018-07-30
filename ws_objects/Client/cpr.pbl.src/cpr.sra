@@ -256,6 +256,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -263,15 +264,11 @@ end type
 global cpr cpr
 
 type prototypes
-// Cursor Functions
-FUNCTION long SetWindowPos(ulong hwnd, ulong hWndInsertAfter, long x, long y, long cx, long cy, long wFlags) LIBRARY "USER32.DLL"
 Function ulong GetModuleFileNameA( ulong hInst, REF string lpszPath, ulong cchPath ) LIBRARY "kernel32.dll" alias for "GetModuleFileNameA;Ansi"
 
 // Window Functions
 Function boolean EnableWindow(ulong hWnd, boolean bEnable)  library "USER32.DLL"
 Function boolean IsWindowEnabled(ulong hWnd)  library "USER32.DLL"
-FUNCTION long GetForegroundWindow() library "user32.dll"
-
 
 end prototypes
 

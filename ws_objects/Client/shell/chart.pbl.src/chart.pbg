@@ -32,13 +32,7 @@
  "f_configure_chart_page_definition.srf" "chart.pbl";
  "f_current_visit_level.srf" "chart.pbl";
  "f_get_encounter_property.srf" "chart.pbl";
- "f_hide_window.srf" "chart.pbl";
  "f_pick_treatment_from_list.srf" "chart.pbl";
- "f_set_window_to_top.srf" "chart.pbl";
- "f_show_and_position_window.srf" "chart.pbl";
- "f_show_and_size_window.srf" "chart.pbl";
- "f_show_window.srf" "chart.pbl";
- "f_size_and_position_window.srf" "chart.pbl";
  "str_assessment_id_list.srs" "chart.pbl";
  "str_billable_tests.srs" "chart.pbl";
  "str_billing.srs" "chart.pbl";

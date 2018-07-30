@@ -1277,7 +1277,7 @@ else
 		if not isnull(last_service.service_window) and isvalid(last_service.service_window) then
 			if last_service.service_window.visible then
 				ll_whandle = handle(last_service.service_window)
-				if iswindowenabled(ll_whandle) then last_service.service_window_enabled = true
+				if IsWindowEnabled(ll_whandle) then last_service.service_window_enabled = true
 			end if
 		end if
 	end if

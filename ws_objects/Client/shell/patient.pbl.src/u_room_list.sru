@@ -300,8 +300,8 @@ room[room_count].room_name = ps_room_name
 room[room_count].room_sequence = pi_room_sequence
 room[room_count].room_type = ps_room_type
 room[room_count].room_status = ps_room_status
-room[room_count].computer_id = pl_computer_id
-room[room_count].default_encounter_type = ps_default_encounter_type
+room[room_count].room_computer_id = pl_computer_id
+room[room_count].room_default_encounter_type = ps_default_encounter_type
 room[room_count].status = ps_status
 
 ls_sort = sqlca.fn_get_specific_preference('SYSTEM', 'Room', ps_room_id, 'sort')

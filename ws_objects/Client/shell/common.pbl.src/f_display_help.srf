@@ -25,7 +25,9 @@ str_help_article lstr_article
 
 lstr_article = f_display_help_article(ps_help_context, ps_which_help)
 
+IF NOT IsValid(datalist) THEN return
 ls_help_home_url = datalist.get_preference("SYSTEM", "Help Home URL", "http://solutioncenter.encounterpro.net:8080/selfservice/portal?page=default.psml")
+
 
 lb_new_map = false
 if pb_edit or isnull(lstr_article.article) then
@@ -110,7 +112,7 @@ if pb_edit or isnull(lstr_article.article) then
 		datalist.xml_add_mapping(lstr_xml_code)
 		
 		// Copy the code to the EproUpdates c_XML_Code table
-		INSERT INTO jmjtech.eproupdates.dbo.c_XML_Code (
+		INSERT INTO eproupdates.dbo.c_XML_Code (
 				  owner_id
 				  ,code_domain
 				  ,code_version

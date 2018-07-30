@@ -100,7 +100,7 @@ room_type = uo_room.room_type
 
 room_menu_id = f_get_context_menu2("Room Checkin", room_id, room_type)
 
-if isnull(this_room.default_encounter_type) and isnull(room_menu_id) then
+if isnull(this_room.room_default_encounter_type) and isnull(room_menu_id) then
 	cb_checkin.visible = false
 else
 	cb_checkin.visible = true
@@ -302,11 +302,11 @@ if isnull(current_user) then return 1
 
 lstr_attributes.attribute_count = 0
 
-if not isnull(this_room.default_encounter_type) then
-	f_attribute_add_attribute(lstr_attributes, "encounter_type", this_room.default_encounter_type)
+if not isnull(this_room.room_default_encounter_type) then
+	f_attribute_add_attribute(lstr_attributes, "encounter_type", this_room.room_default_encounter_type)
 end if
 
-luo_user = user_list.find_user(datalist.encounter_type_default_role(this_room.default_encounter_type))
+luo_user = user_list.find_user(datalist.encounter_type_default_role(this_room.room_default_encounter_type))
 if not isnull(luo_user) then
 	f_attribute_add_attribute(lstr_attributes, "attending_doctor", luo_user.user_id)
 end if	

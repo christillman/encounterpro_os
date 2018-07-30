@@ -166,7 +166,6 @@
  "f_display_context_menu2.srf" "common.pbl";
  "f_display_help.srf" "common.pbl";
  "f_display_help_article.srf" "common.pbl";
- "f_display_jmj_image.srf" "common.pbl";
  "f_display_log_entry.srf" "common.pbl";
  "f_display_menu.srf" "common.pbl";
  "f_display_menu_remainder.srf" "common.pbl";

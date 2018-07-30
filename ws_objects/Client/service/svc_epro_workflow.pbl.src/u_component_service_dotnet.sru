@@ -9,10 +9,8 @@ end type
 global u_component_service_dotnet u_component_service_dotnet
 
 type variables
-oleobject com_wrapper
 
 end variables
-
 forward prototypes
 protected function integer xx_initialize ()
 protected function integer xx_shutdown ()

@@ -24,7 +24,6 @@ end forward
 
 global type w_edit_consultant from w_window_base
 string title = "Consultant Information"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -165,7 +164,7 @@ end if
 
 tab_consultant.initialize(consultant_id)
 
-Setfocus(sle_description)
+sle_description.setfocus()
 
 end event
 
@@ -211,13 +210,13 @@ ls_description = trim(sle_description.text)
 
 If isnull(ls_description) Or len(ls_description) = 0 Then
 	Openwithparm(w_pop_message,"Enter a valid Consultant name")
-	setfocus(sle_description)
+	sle_description.setfocus()
 	Return
 End If
 
 If isnull(tab_consultant.tabpage_general.sle_phone.text) Or len(tab_consultant.tabpage_general.sle_phone.text) = 0 Then
 	Openwithparm(w_pop_message,"Enter a valid phone number")
-	setfocus(tab_consultant.tabpage_general.sle_phone)
+	tab_consultant.tabpage_general.sle_phone.setfocus()
 	Return
 End If
 

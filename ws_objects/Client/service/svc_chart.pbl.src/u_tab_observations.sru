@@ -11,10 +11,8 @@ end type
 global u_tab_observations u_tab_observations
 
 type variables
-u_component_service service
 
 end variables
-
 forward prototypes
 public function integer initialize ()
 end prototypes

@@ -28,7 +28,6 @@ integer width = 2962
 integer height = 1864
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -42,10 +41,8 @@ end type
 global w_pop_display_sql_results w_pop_display_sql_results
 
 type prototypes
-SUBROUTINE GetCursorPos( ref str_point lppt ) LIBRARY "USER32.DLL" alias for "GetCursorPos;Ansi"
 
 end prototypes
-
 type variables
 str_sql_context sql_context
 end variables

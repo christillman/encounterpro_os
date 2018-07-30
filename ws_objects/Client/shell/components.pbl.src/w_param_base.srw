@@ -11,7 +11,6 @@ integer width = 2816
 integer height = 1492
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -23,12 +22,9 @@ type variables
 str_params params
 str_attributes attributes
 
-str_attributes state_attributes
-
 boolean allow_preference = false
 
 end variables
-
 forward prototypes
 public subroutine set_buttons ()
 end prototypes

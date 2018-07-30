@@ -16,8 +16,6 @@ global u_room_status u_room_status
 type variables
 string room_id
 string room_type
-integer lastrow
-integer lastcolumn
 
 long patient_count
 

@@ -31,10 +31,8 @@ end type
 global w_attachment_psreport_display w_attachment_psreport_display
 
 type prototypes
-SUBROUTINE GetCursorPos( ref str_point lppt ) LIBRARY "USER32.DLL" alias for "GetCursorPos;Ansi"
 
 end prototypes
-
 type variables
 u_component_attachment attachment
 string display_file

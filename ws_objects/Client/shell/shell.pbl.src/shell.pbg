@@ -271,7 +271,6 @@
  "u_reports_tab.sru" "shell.pbl";
  "u_room_status.sru" "shell.pbl";
  "u_room_status_tab.sru" "shell.pbl";
- "u_room_status_tab_xxx.sru" "shell.pbl";
  "u_st_primary_provider.sru" "shell.pbl";
  "u_st_radio_abnormal.sru" "shell.pbl";
  "u_st_radio_autoclose_yesno.sru" "shell.pbl";

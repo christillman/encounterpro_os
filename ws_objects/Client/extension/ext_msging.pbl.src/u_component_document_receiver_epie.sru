@@ -148,10 +148,10 @@ Return message_count
 end function
 
 public function integer read_jmjmessage (pbdom_element puo_jmjmessage);u_xml_document lo_payload_document
-PBDOM_ELEMENT pbdom_root
-PBDOM_ELEMENT pbdom_element
-PBDOM_ELEMENT pbdom_element_array[]
-PBDOM_ATTRIBUTE pbdom_attribute_array[]
+pbdom_element pbdom_root
+pbdom_element le_element
+pbdom_element pbdom_element_array[]
+pbdom_attribute pbdom_attribute_array[]
 integer li_sts
 long i
 long ll_owner_id
@@ -185,9 +185,9 @@ for i = 1 to UpperBound(pbdom_element_array)
 	if len(ls_temp) > 0 then
 		CHOOSE CASE lower(ls_element)
 			CASE "from"
-				pbdom_element =  pbdom_element_array[i].GetChildElement("AddresseeID")
-				if not isnull(pbdom_element) then
-					ls_temp2 = pbdom_element.gettext()
+				le_element =  pbdom_element_array[i].GetChildElement("AddresseeID")
+				if not isnull(le_element) then
+					ls_temp2 = le_element.gettext()
 					if isnumber(ls_temp2) then
 						ll_from_interfaceserviceid = long(ls_temp2)
 					end if

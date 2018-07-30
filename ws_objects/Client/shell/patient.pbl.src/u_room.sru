@@ -14,11 +14,10 @@ string room_name
 integer room_sequence
 string room_type
 string room_status
-long computer_id
-string default_encounter_type
 string status
 string sort
-
+long room_computer_id
+string room_default_encounter_type
 end variables
 
 forward prototypes

@@ -26,7 +26,6 @@
  "w_svc_change_scribe_context.srw" "svc_utility.pbl";
  "w_svc_config_database.srw" "svc_utility.pbl";
  "w_svc_edit_supervisor.srw" "svc_utility.pbl";
- "w_svc_generic.srw" "svc_utility.pbl";
  "w_svc_merge_patient.srw" "svc_utility.pbl";
  "w_svc_multi_chart_export.srw" "svc_utility.pbl";
  "w_svc_referrals_by_day.srw" "svc_utility.pbl";

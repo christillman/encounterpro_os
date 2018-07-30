@@ -305,7 +305,7 @@ if cpr_mode = "CLIENT" then
 	if not isnull(current_service) and isvalid(current_service) then
 		if not isnull(current_service.service_window) and isvalid(current_service.service_window) then
 			ll_whandle = handle(current_service.service_window)
-			if iswindowenabled(ll_whandle) then lb_current_service_window_enabled = true
+			if IsWindowEnabled(ll_whandle) then lb_current_service_window_enabled = true
 		end if
 	end if
 	
@@ -351,7 +351,7 @@ END TRY
 
 // If the current service had the enabled window before, make sure it still does
 if lb_current_service_window_enabled then
-	if not iswindowenabled(ll_whandle) then
+	if not IsWindowEnabled(ll_whandle) then
 		EnableWindow(ll_whandle, true)
 	end if
 end if

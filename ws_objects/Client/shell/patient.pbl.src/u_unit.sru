@@ -8,6 +8,11 @@ global type u_unit from nonvisualobject
 end type
 global u_unit u_unit
 
+type prototypes
+FUNCTION long GetForegroundWindow() library "user32.dll"
+
+end prototypes
+
 type variables
 string unit_id
 string description
@@ -526,11 +531,11 @@ u_unit luo_unit
 str_amount_unit lstr_amount_unit
 w_window_base lw_window
 long ll_whandle
-boolean lb_iswindowenabled
+boolean lb_IsWindowEnabled
 string ls_value
 
 ll_whandle = getforegroundwindow()
-lb_iswindowenabled = iswindowenabled(ll_whandle)
+lb_IsWindowEnabled = IsWindowEnabled(ll_whandle)
 
 lstr_amount_unit.amount = ps_value
 lstr_amount_unit.unit = unit_id
@@ -612,7 +617,7 @@ else
 	lstr_amount_unit.unit = luo_unit.unit_id
 end if
 
-if lb_iswindowenabled then enablewindow(ll_whandle, true)
+if lb_IsWindowEnabled then EnableWindow(ll_whandle, true)
 
 return lstr_amount_unit
 

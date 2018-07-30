@@ -274,16 +274,6 @@ CHOOSE CASE lower(ls_display_how)
 			log.log(this, "xx_display()", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
 			return -1
 		end if
-	CASE "epro image"
-		// f_display_jmj_image is an in-process modal window, so there won't be a process_id
-		lul_process_id = 0
-		
-		ls_file = get_attachment()
-		li_sts = f_display_jmj_image(ls_file)
-		if li_sts < 0 then
-			log.log(this, "xx_display()", "Error displaying attachment with Epro Image", 4)
-			return -1
-		end if
 	CASE "specify program"
 		ls_executable = get_attribute("display_executable")
 		ls_arguments = get_attribute("display_arguments")
@@ -471,15 +461,6 @@ CHOOSE CASE lower(ls_edit_how)
 		li_sts = windows_api.shell32.open_file_ex(ls_file, ls_verb, lb_wait_for_completion, lul_process_id)
 		if li_sts < 0 then
 			log.log(this, "xx_edit()", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
-			return -1
-		end if
-	CASE "epro image"
-		// f_display_jmj_image is an in-process modal window, so there won't be a process_id
-		lul_process_id = 0
-		
-		li_sts = f_display_jmj_image(ls_file)
-		if li_sts < 0 then
-			log.log(this, "xx_edit()", "Error editing attachment with Epro Image", 4)
 			return -1
 		end if
 	CASE "specify program"

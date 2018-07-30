@@ -30,7 +30,6 @@ end type
 global u_tab_history_parents u_tab_history_parents
 
 type variables
-u_component_service service
 string default_edit_service
 string default_comment_service
 string edit_service
@@ -41,7 +40,6 @@ string abnormal_flag = "N"
 u_dw_pick_list pretty_results_display
 
 end variables
-
 forward prototypes
 public subroutine history_clicked ()
 public function boolean get_treatment (string ps_observation_id, ref u_component_treatment puo_treatment)
@@ -231,12 +229,10 @@ on u_tab_history_parents.create
 this.tabpage_by_treatment=create tabpage_by_treatment
 this.tabpage_encounter=create tabpage_encounter
 this.tabpage_patient=create tabpage_patient
-int iCurrent
 call super::create
-iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.tabpage_by_treatment
-this.Control[iCurrent+2]=this.tabpage_encounter
-this.Control[iCurrent+3]=this.tabpage_patient
+this.Control[]={this.tabpage_by_treatment,&
+this.tabpage_encounter,&
+this.tabpage_patient}
 end on
 
 on u_tab_history_parents.destroy

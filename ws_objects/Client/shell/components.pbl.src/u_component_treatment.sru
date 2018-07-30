@@ -56,7 +56,6 @@ String observation_id
 String dosage_form
 String treatment_mode
 string specimen_id
-string ID
 string ordered_by_supervisor
 datetime appointment_date_time
 string ordered_for
@@ -102,7 +101,6 @@ string comment_service = "OBSERVATION_COMMENT"
 string attachment_service = "EXTERNAL_SOURCE"
 
 end variables
-
 forward prototypes
 public function string description ()
 public subroutine get_descriptions ()
