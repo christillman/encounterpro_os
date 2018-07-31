@@ -143,7 +143,7 @@ SELECT description,
 INTO :ls_description,
 	:ls_long_description,
 	:ls_icd10_code
-FROM c_Assessment
+FROM c_Assessment_Definition
 WHERE assessment_id = :assessment_id;
 if not tf_check() then
 	log.log(this, "open", "Error selecting assessment", 4)

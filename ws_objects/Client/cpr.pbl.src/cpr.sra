@@ -13,7 +13,7 @@ global variables
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
-long minimum_modification_level = 202
+long minimum_modification_level = 201
 date compile_date = date("29/7/2018")
 integer major_release = 7
 string database_version = "0" // this is really minor release

@@ -74,6 +74,8 @@ ll_count = luo_sp_new_assessment_definition.retrieve(ls_assessment_type, &
 																			ll_complexity, &
 																			ls_long_description)
 if ll_count <= 0 then
+	if sqlca.check() then
+	end if
 	return ls_null
 else
 	ls_assessment_id = luo_sp_new_assessment_definition.object.assessment_id[1]

@@ -7,6 +7,13 @@ global subroutine f_set_screen ()
 end prototypes
 
 global subroutine f_set_screen ();
+if IsNull(main_window) then
+	return
+end if
+if NOT IsValid(main_window) then
+	return
+end if
+
 if main_window.windowstate = Minimized! then return
 
 if not isnull(current_scribe) then current_scribe.check_logon()

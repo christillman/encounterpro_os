@@ -3945,17 +3945,28 @@ public function long upgrade_material_id ();long ll_modification_level
 long ll_material_id
 
 ll_modification_level = modification_level + 1
-// Load the schema for this mod level
-ll_material_id = load_schema_file(program_directory, ll_modification_level)
-if ll_material_id <= 0 then
-	ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level)
-end if
-if ll_material_id <= 0 then
-	ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level)
-end if
-if ll_material_id <= 0 then
-	log.log(this, "upgrade_mod_level()", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
-	return -1
+
+SELECT MAX(material_id)
+INTO :ll_material_id
+FROM dbo.c_Patient_material
+WHERE status = 'ML'
+AND version = :ll_modification_level;
+if not tf_check() then return -1
+
+// If no material was found try loading the schema for this mod level
+if ll_material_id = 0 or isnull(ll_material_id) then
+	//log.log(this, "upgrade_mod_level()", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
+	ll_material_id = load_schema_file(program_directory, ll_modification_level)
+	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level)
+	end if
+	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level)
+	end if
+	if ll_material_id <= 0 then
+		log.log(this, "upgrade_mod_level()", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+		return -1
+	end if
 end if
 
 return ll_material_id

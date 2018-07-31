@@ -303,12 +303,12 @@ destroy(this.st_mod_ok)
 destroy(this.st_5)
 end on
 
-event close;//if isvalid(w_image_objects) then close(w_image_objects)
-//If not isnull(current_user) Then
-//	current_user.logoff()
-//End If
-HALT CLOSE
+event close;
+if isvalid(w_image_objects) then close(w_image_objects)
 
+If not isnull(current_user) Then
+	current_user.logoff()
+End If
 
 end event
 

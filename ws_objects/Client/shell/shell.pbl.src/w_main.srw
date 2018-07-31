@@ -199,7 +199,9 @@ f_cpr_set_msg("Initializing - Please Wait...")
 
 li_sts = f_initialize_common("EncounterPRO")
 if li_sts < 0 then
-	log.log(this, "post_open", "Error initializing EncounterPRO", 5)
+	if NOT IsNull(log) AND IsValid(log) then
+		log.log(this, "post_open", "Error initializing EncounterPRO", 5)
+	end if
 	close(this)
 	return
 end if
@@ -211,7 +213,9 @@ f_cpr_set_msg("Database Connected")
 
 li_sts = f_initialize_objects()
 if li_sts < 0 then
-	log.log(this, "post_open", "Error initializing objects", 5)
+	if NOT IsNull(log) AND IsValid(log) then
+		log.log(this, "post_open", "Error initializing objects", 5)
+	end if
 	close(this)
 	return
 end if

@@ -36,8 +36,10 @@ end if
 // Load the initial preference values
 f_get_preferences()
 
-// Check the versions.  If this function returns then we're OK to continue
-f_check_version()
+// Check the versions
+if f_check_version() < 0 then
+	return -1
+end if
 
 // Instantiate Global Objects
 log.log(po_null, "f_initialize_objects()", "Instantiate and Initialize Global Objects", 1)

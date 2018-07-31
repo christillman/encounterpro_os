@@ -1334,6 +1334,7 @@ long ll_event_id
 integer li_string_count
 long ll_data_size
 string lsa_string[]
+string ls_message
 long ll_rawdata
 str_popup popup
 string ls_who
@@ -1399,22 +1400,20 @@ if isnull(ps_message) then
 	ps_message = "No Message"
 end if
 
+ls_message = "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity)
+
 // If not initialized, write to a file in the current folder
 if not initialized then 
 	ls_error_file = GetCurrentDirectory( ) + "\EPro-Initialization-Errors.txt"
 	ll_dochandle = FileOpen(ls_error_file, LineMode!, Write!, Shared!, Append!)
 	if ll_dochandle = -1 then	
+		Clipboard(ls_message)
 		DebugBreak()
 		return -1
 	end if
-	FileWrite(ll_dochandle, "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity))
+	FileWrite(ll_dochandle, ls_message)
 	FileClose(ll_dochandle)
 	return 0
-end if
-
-if pi_severity >= 4 then
-	// Call to developer attention
-	DebugBreak()
 end if
 
 // If the message needs to be logged to the database, do that first
@@ -1461,6 +1460,12 @@ if display_enabled then
 end if
 
 if not lb_reported then return -1
+
+if pi_severity >= 4 then
+	// Call to developer attention
+	Clipboard(ls_message)
+	DebugBreak()
+end if
 
 return 1
 

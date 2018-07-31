@@ -113,6 +113,7 @@ CHOOSE CASE cpr_mode
 			end if
 			
 			gnv_app.event close()
+			return -1
 		end if
 	CASE "SERVER"
 		if sqlca.modification_level < minimum_modification_level then
@@ -122,6 +123,7 @@ CHOOSE CASE cpr_mode
 			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
 			log.log(po_null, "f_check_version()", ls_message, 5)
 			gnv_app.event close()
+			return -1
 		end if
 	CASE ELSE
 END CHOOSE
