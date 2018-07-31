@@ -131,6 +131,7 @@
  "w_server_setup.srw" "svc_configuration.pbl";
  "w_svc_config_assessments.srw" "svc_configuration.pbl";
  "w_svc_config_chart_layouts.srw" "svc_configuration.pbl";
+ "w_svc_config_database.srw" "svc_configuration.pbl";
  "w_svc_config_doc_purpose.srw" "svc_configuration.pbl";
  "w_svc_config_drugs.srw" "svc_configuration.pbl";
  "w_svc_config_menus.srw" "svc_configuration.pbl";
