@@ -256,7 +256,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -379,16 +378,16 @@ CHOOSE CASE ls_parm
 		end if
 	CASE "SERVER", "NTSERVER"
 		messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
-		halt CLOSE
+		event close()
 	CASE "DBMAINT"
 		messagebox("CPR Open", "DB Maintenance Mode is no longer supported from EncounterPRO.exe.  Please use EproDBMaint.exe.")
-		halt CLOSE
+		event close()
 	CASE "ASK"
 		open(w_pop_which_database)
 		common_thread.default_database = message.stringparm
 		// If the user didn't pick a database then exit
 		if common_thread.default_database = "" then
-			halt CLOSE
+			event close()
 		end if
 	CASE ELSE
 		// Assume the parameter is a database

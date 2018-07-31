@@ -56,7 +56,7 @@ if sqlca.sqlcode = 100 then
 else
 	if ls_status <> "OK" then
 		log.log(po_null, "f_set_computer()", "Computer is disabled", 5)
-		HALT CLOSE
+		gnv_app.event close()
 	end if
 	lb_computer_not_found = false
 end if
@@ -108,7 +108,7 @@ if lb_computer_not_found then
 		CLOSE lsp_register_computer;
 	else
 		log.log(po_null, "f_set_computer()", "Computer is not registered and new computeres are not allowed", 5)
-		HALT CLOSE
+		gnv_app.event close()
 	end if
 end if
 

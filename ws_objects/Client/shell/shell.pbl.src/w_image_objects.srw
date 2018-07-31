@@ -87,10 +87,6 @@ postevent("post_open")
 
 end event
 
-event close;HALT CLOSE
-
-end event
-
 type ole_msscript from u_msscript within w_image_objects
 integer x = 128
 integer y = 60
@@ -105,8 +101,6 @@ type ole_rtf from u_rich_text_edit within w_image_objects
 integer width = 4585
 integer height = 2856
 integer taborder = 30
-string binarykey = "w_image_objects.win"
-integer binaryindex = 1
 end type
 
 

@@ -21,7 +21,6 @@ integer width = 2935
 integer height = 1840
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -81,12 +80,10 @@ event timer;integer li_sts
 
 w_main.uo_help_bar.uf_set_clock()
 
-// See if the database is still OK
 // See if the database is OK
 li_sts = f_check_system_status()
 if li_sts <= 0 then
-	halt close
-	return
+	gnv_app.event close()
 end if
 
 

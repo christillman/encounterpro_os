@@ -1859,7 +1859,7 @@ if luo_this.sqlcode = 0 then
 			ls_temp = "This database has an invalid customer id.  Please contact JMJ Customer Support to get a valid customer id."
 			openwithparm(w_pop_message, ls_temp)
 			log.log(this, "check_database()", "Invalid Customer ID", 5)
-			HALT CLOSE
+			gnv_app.event close()
 		else
 			// If the customer_id is invalid and this is not a production database then
 			// set the customer_id to 999
@@ -2569,13 +2569,13 @@ end if
 li_sts = check_database()
 if li_sts <= 0 then
 	log.log(this, "set_beta_status()", "check_database_failed.  EncounterPRO must close.", 5)
-	HALT close
+	return -1
 end if
 
 li_sts = bootstrap_database_scripts()
 if li_sts <= 0 then
 	log.log(this, "set_beta_status()", "Check Now failed.  EncounterPRO must close.", 5)
-	HALT close
+	return -1
 end if
 
 return 1

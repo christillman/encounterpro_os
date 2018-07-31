@@ -47,7 +47,6 @@ integer width = 2944
 integer height = 1848
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -283,8 +282,6 @@ end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_svc_config_service
 boolean visible = true
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_svc_config_service
@@ -458,6 +455,7 @@ boolean focusrectangle = false
 end type
 
 event clicked;long ll_row
+integer li_sts
 
 ll_row = dw_services.get_selected_row()
 if ll_row <= 0 then return
@@ -470,7 +468,10 @@ else
 	text = "Allow"
 end if
 
-dw_services.update()
+li_sts = dw_services.update()
+if li_sts < 0 then 
+	log.log(this, "st_secure_flag", "Update unsuccessful for " + dw_services.object.service[ll_row], 4)
+end if
 
 end event
 

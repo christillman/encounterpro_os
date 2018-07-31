@@ -128,9 +128,14 @@ private str_c_display_script_command breakpoint
 private boolean is_on_break
 private str_reentry_state reentry_state
 
+// To locate the rte control, to replace text etc.
+// ulong        hWin  
+// hWin = Handle ( this )  
+// hWin = FindWindowEx ( hWin, 0, "Ter24Class", 0 )  
+// (see https://www.brucearmstrong.org/2017/08/spell-checking-in-new-powerbuilder-2017.html )
+ 
 
 end variables
-
 forward prototypes
 public function string workplan_item_attribute (u_ds_data puo_workplan_items, string ps_which_item, string ps_attribute)
 public function string treatment_workplan_attribute (long pl_treatment_id, string ps_attribute)

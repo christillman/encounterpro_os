@@ -112,7 +112,7 @@ CHOOSE CASE cpr_mode
 				openwithparm(w_pop_message, ls_message)
 			end if
 			
-			halt close
+			gnv_app.event close()
 		end if
 	CASE "SERVER"
 		if sqlca.modification_level < minimum_modification_level then
@@ -121,7 +121,7 @@ CHOOSE CASE cpr_mode
 			ls_message += " or higher.  This database is only at modification level " + string(sqlca.modification_level)
 			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
 			log.log(po_null, "f_check_version()", ls_message, 5)
-			halt close
+			gnv_app.event close()
 		end if
 	CASE ELSE
 END CHOOSE

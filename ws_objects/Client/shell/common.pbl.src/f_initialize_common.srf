@@ -129,7 +129,7 @@ CHOOSE CASE lower(ls_security)
 		if cpr_mode = "CLIENT" then
 			openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 		end if
-		halt close
+		gnv_app.event close()
 END CHOOSE
 li_sts = user_list.initialize()
 if li_sts <= 0 then
@@ -138,7 +138,7 @@ if li_sts <= 0 then
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if
-	halt close
+	gnv_app.event close()
 end if
 
 ld_temp = round((3 / 2), 1)
@@ -158,7 +158,7 @@ elseif decimal_character <> ls_decimal_character then
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if
-	halt close
+	gnv_app.event close()
 end if
 
 return 1

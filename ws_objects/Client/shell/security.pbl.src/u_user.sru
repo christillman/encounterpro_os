@@ -396,7 +396,6 @@ if li_sts <= 0 then
 	// If we're not working on a service, then shut down
 	if isnull(current_service) then
 		logoff()
-		halt close
 	end if
 	return -1
 end if

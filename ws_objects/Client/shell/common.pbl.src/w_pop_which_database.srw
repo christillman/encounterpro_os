@@ -41,7 +41,7 @@ end forward
 global type w_pop_which_database from window
 integer x = 174
 integer y = 160
-integer width = 2501
+integer width = 2962
 integer height = 1472
 windowtype windowtype = response!
 long backcolor = 33538240
@@ -243,7 +243,7 @@ get_databases()
 end event
 
 type cb_1 from commandbutton within w_pop_which_database
-integer x = 1312
+integer x = 1646
 integer y = 1116
 integer width = 329
 integer height = 108
@@ -277,7 +277,7 @@ closewithreturn(parent, ls_dbkey)
 end event
 
 type pb_1 from u_pb_help_button within w_pop_which_database
-integer x = 1691
+integer x = 2025
 integer y = 1304
 integer width = 247
 integer height = 120
@@ -325,7 +325,7 @@ end type
 type st_office_id from statictext within w_pop_which_database
 integer x = 1673
 integer y = 444
-integer width = 759
+integer width = 1166
 integer height = 76
 boolean bringtotop = true
 integer textsize = -10
@@ -342,7 +342,7 @@ boolean focusrectangle = false
 end type
 
 type cb_delete from commandbutton within w_pop_which_database
-integer x = 1819
+integer x = 2057
 integer y = 996
 integer width = 402
 integer height = 108
@@ -379,7 +379,7 @@ get_databases()
 end event
 
 type cb_edit from commandbutton within w_pop_which_database
-integer x = 1819
+integer x = 2057
 integer y = 856
 integer width = 402
 integer height = 108
@@ -416,7 +416,7 @@ update_db(selected_database, popup_return.items[1], popup_return.items[2], popup
 end event
 
 type cb_new from commandbutton within w_pop_which_database
-integer x = 1819
+integer x = 2057
 integer y = 716
 integer width = 402
 integer height = 108
@@ -459,7 +459,7 @@ end event
 type st_db from statictext within w_pop_which_database
 integer x = 1673
 integer y = 316
-integer width = 759
+integer width = 1166
 integer height = 76
 boolean bringtotop = true
 integer textsize = -10
@@ -478,7 +478,7 @@ end type
 type st_server from statictext within w_pop_which_database
 integer x = 1673
 integer y = 188
-integer width = 759
+integer width = 1166
 integer height = 76
 boolean bringtotop = true
 integer textsize = -10
@@ -552,7 +552,7 @@ end event
 
 type cb_cancel from commandbutton within w_pop_which_database
 event clicked pbm_bnclicked
-integer x = 1367
+integer x = 1701
 integer y = 1296
 integer width = 251
 integer height = 124
@@ -572,7 +572,7 @@ event clicked;closewithreturn(parent, "")
 end event
 
 type cb_ok from commandbutton within w_pop_which_database
-integer x = 2002
+integer x = 2336
 integer y = 1296
 integer width = 430
 integer height = 124
@@ -613,7 +613,7 @@ end type
 type st_dbms from statictext within w_pop_which_database
 integer x = 1673
 integer y = 572
-integer width = 759
+integer width = 1166
 integer height = 76
 integer textsize = -10
 integer weight = 400

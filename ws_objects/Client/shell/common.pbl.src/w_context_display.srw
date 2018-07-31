@@ -103,7 +103,6 @@ end forward
 global type w_context_display from w_window_base
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -472,8 +471,6 @@ end on
 type pb_epro_help from w_window_base`pb_epro_help within w_context_display
 integer x = 2857
 integer y = 124
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_context_display
@@ -520,7 +517,7 @@ string facename = "Arial"
 string text = "Exit EncounterPRO"
 end type
 
-event clicked;halt close
+event clicked;gnv_app.event close()
 end event
 
 type dw_display from u_dw_pick_list within w_context_display

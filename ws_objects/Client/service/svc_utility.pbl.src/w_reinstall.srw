@@ -23,7 +23,7 @@ If popup_return.item = "YES" then
 	ls_Setup = f_default_attachment_path() + "\Install\EncounterPRO\SETUP.EXE"
 	run(ls_setup,Normal!)
 	yield()
-	halt close
+	gnv_app.event close()
 End if
 
 close(this)
