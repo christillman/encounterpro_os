@@ -1,0 +1,23 @@
+﻿Save Format v3.0(19990112)
+@begin Libraries
+ "upgradescript.pbl" "";
+@end;
+@begin Objects 
+ "upgradescript.sra" "upgradescript.pbl";
+ "f_check_bit.srf" "upgradescript.pbl";
+ "f_string_substitute.srf" "upgradescript.pbl";
+ "pbdom_attribute.sru" "upgradescript.pbl";
+ "pbdom_builder.sru" "upgradescript.pbl";
+ "pbdom_cdata.sru" "upgradescript.pbl";
+ "pbdom_characterdata.sru" "upgradescript.pbl";
+ "pbdom_comment.sru" "upgradescript.pbl";
+ "pbdom_doctype.sru" "upgradescript.pbl";
+ "pbdom_document.sru" "upgradescript.pbl";
+ "pbdom_element.sru" "upgradescript.pbl";
+ "pbdom_entityreference.sru" "upgradescript.pbl";
+ "pbdom_exception.sru" "upgradescript.pbl";
+ "pbdom_object.sru" "upgradescript.pbl";
+ "pbdom_processinginstruction.sru" "upgradescript.pbl";
+ "pbdom_text.sru" "upgradescript.pbl";
+ "script_producer.sru" "upgradescript.pbl";
+@end;

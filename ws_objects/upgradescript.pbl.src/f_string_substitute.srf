@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_string_substitute.srf
+global type f_string_substitute from function_object
+end type
+
+forward prototypes
+global function string f_string_substitute (string ps_string, string ps_token, string ps_value)
+end prototypes
+
+global function string f_string_substitute (string ps_string, string ps_token, string ps_value);long ll_pos
+long ll_token_len
+long ll_value_len
+string ls_string
+string ls_string_lower
+
+if isnull(ps_token) or isnull(ps_string) then return ps_string
+
+if isnull(ps_value) then ps_value = ""
+
+ps_token = lower(ps_token)
+
+ls_string = ps_string
+ls_string_lower = lower(ls_string)
+ll_token_len = len(ps_token)
+ll_value_len = len(ps_value)
+
+// Compare against the lowercase version of ls_string so we are case-insensitive
+ll_pos = pos(ls_string_lower, ps_token)
+DO WHILE ll_pos > 0
+	ls_string = replace(ls_string, ll_pos, ll_token_len, ps_value)
+	ls_string_lower = lower(ls_string)
+	
+	ll_pos = pos(ls_string_lower, ps_token, ll_pos + ll_value_len)
+LOOP
+
+return ls_string
+
+end function
+
