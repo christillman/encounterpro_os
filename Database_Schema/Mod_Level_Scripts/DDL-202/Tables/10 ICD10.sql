@@ -44,7 +44,11 @@ IF NOT EXISTS (SELECT 1 FROM sys.columns c join sys.tables t on t.object_id = c.
 	 BEGIN ALTER TABLE c_Authority_Formulary add icd10_code varchar(10) END
 IF NOT EXISTS (SELECT 1 FROM sys.columns c join sys.tables t on t.object_id = c.object_id 
 	WHERE t.name = 'c_Assessment_Definition' and c.name = 'icd10_code')
-	 BEGIN ALTER TABLE c_Assessment_Definition add icd10_code varchar(10) END
+	 BEGIN 	
+		ALTER TABLE c_Assessment_Definition add icd10_code varchar(10) 
+		ALTER TABLE [c_Assessment_Definition] DROP CONSTRAINT [DF__c_Assessment_def_acuteness]
+		ALTER TABLE c_Assessment_Definition alter column acuteness varchar(24) 
+	 END
 IF NOT EXISTS (SELECT 1 FROM sys.columns c join sys.tables t on t.object_id = c.object_id 
 	WHERE t.name = 'p_Encounter_Assessment' and c.name = 'icd10_code')
 	 BEGIN ALTER TABLE p_Encounter_Assessment add icd10_code varchar(10) END
