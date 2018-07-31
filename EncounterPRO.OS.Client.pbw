@@ -5,6 +5,7 @@ Save Format v3.0(19990112)
  0 "Client\\cpr.pbt";
  1 "Client\\server.pbt";
  2 "Client\\dbmaint.pbt";
+ 3 "upgradescript.pbt";
 @end;
 DefaultTarget "Client\\cpr.pbt";
 DefaultRemoteTarget "Client\\cpr.pbt";
