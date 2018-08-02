@@ -128,7 +128,3 @@ on u_component_report_all_encounters.destroy
 call super::destroy
 end on
 
-event cancelled;call super::cancelled;user_cancelled = true
-
-end event
-

@@ -69,7 +69,7 @@ integer taborder = 10
 boolean border = false
 end type
 
-event fieldclicked;parent.postevent("refresh")
+event field_clicked;parent.postevent("refresh")
 
 end event
 

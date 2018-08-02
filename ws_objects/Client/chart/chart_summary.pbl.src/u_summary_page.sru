@@ -1492,7 +1492,7 @@ integer taborder = 110
 borderstyle borderstyle = styleraised!
 end type
 
-event click;call super::click;str_attributes lstr_attributes
+event field_clicked;call super::field_clicked;str_attributes lstr_attributes
 
 lstr_attributes.attribute_count = 4
 lstr_attributes.attribute[1].attribute = "report_id"
