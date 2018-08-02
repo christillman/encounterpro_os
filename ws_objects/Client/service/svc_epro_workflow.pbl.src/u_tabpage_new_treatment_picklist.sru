@@ -562,7 +562,7 @@ ll_count = dw_treatments.rowcount()
 ls_find = "parent_definition_id=" + string(ll_definition_id)
 ll_row = dw_treatments.find(ls_find, ll_count, 1)
 if ll_row > 0 then
-	max_group_sort_sequence = dw_treatments.object.treatment_sort_sequence[pl_group_row]
+	max_group_sort_sequence = dw_treatments.object.treatment_sort_sequence[ll_row]
 else
 	max_group_sort_sequence = 1
 end if
@@ -1472,8 +1472,8 @@ end event
 type pb_help from u_pb_help_button within u_tabpage_new_treatment_picklist
 integer x = 2592
 integer y = 12
-integer width = 247
-integer height = 120
+integer width = 256
+integer height = 128
 integer taborder = 20
 end type
 
