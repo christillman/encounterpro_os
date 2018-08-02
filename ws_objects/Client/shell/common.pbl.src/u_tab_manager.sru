@@ -16,7 +16,6 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 79741120
 boolean raggedright = true
-boolean createondemand = true
 integer selectedtab = 1
 end type
 global u_tab_manager u_tab_manager
