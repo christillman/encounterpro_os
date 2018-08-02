@@ -105,7 +105,7 @@ if ll_display_row > 0 then
 		object.minutes[ll_display_row] = ll_minutes
 	
 		// If this child has children, then recursively call ourselves to display them
-		if ll_child_patient_workplan_id > 0 then
+		if NOT IsNULL(ll_child_patient_workplan_id) AND ll_child_patient_workplan_id > 0 then
 			li_sts = display_workplan_level(ll_row)
 		end if
 		return 1
@@ -137,7 +137,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_count
 	object.minutes[ll_new_row] = ll_minutes
 	
 	// If this record has children, then recursively call ourselves to display them
-	if ll_child_patient_workplan_id > 0 then
+	if NOT IsNULL(ll_child_patient_workplan_id) AND ll_child_patient_workplan_id > 0 then
 		li_sts = display_workplan_level(ll_row)
 	end if
 		
@@ -162,8 +162,8 @@ ll_count = workplan.retrieve(patient_workplan_id)
 
 setredraw(false)
 reset()
-
-object.compute_status.x = width - 820
+li_sts = this.InsertRow(0)
+this.object.compute_status.x = width - 820
 
 if ll_count > 0 then
 	ll_level = workplan.object.level[1]
