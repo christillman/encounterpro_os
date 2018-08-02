@@ -19,7 +19,6 @@ integer width = 2313
 integer height = 656
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -115,9 +114,11 @@ end on
 
 event timer;// If the timer goes off then close this message window
 
-close(this)
-return
+// close(this)
 
+// If the timer goes off, then beep
+
+BEEP(1)
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_pop_message
