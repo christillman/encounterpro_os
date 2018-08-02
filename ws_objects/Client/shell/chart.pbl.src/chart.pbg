@@ -16,7 +16,6 @@
  "dw_obstree_results_tree.srd" "chart.pbl";
  "dw_p_chart_alert.srd" "chart.pbl";
  "dw_patient_object_workplan.srd" "chart.pbl";
- "dw_patient_object_workplan2.srd" "chart.pbl";
  "dw_pretty_results_tree.srd" "chart.pbl";
  "dw_pretty_results_tree_2.srd" "chart.pbl";
  "dw_progress_top_20_display.srd" "chart.pbl";
