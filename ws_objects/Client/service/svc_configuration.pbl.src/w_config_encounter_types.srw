@@ -499,7 +499,7 @@ DO
 LOOP WHILE i < 100
 
 if i >= 100 then
-	log.log(this, "clicked", "Unable to generate new encounter_type key (" + ls_description + ")", 4)
+	log.log(this, "w_config_encounter_types.cb_new_encounter_type.clicked.0041", "Unable to generate new encounter_type key (" + ls_description + ")", 4)
 	return
 end if
 

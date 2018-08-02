@@ -134,7 +134,7 @@ TRY
 	
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(po_null, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_xml_add_document_templates.f_get_document_templates_xml.0127", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -226,7 +226,7 @@ TRY
 	
 	lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(po_null, "f_message_wrapper()", "Error creating wrapper (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_xml_add_document_templates.f_get_document_templates_xml.0127", "Error creating wrapper (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -311,7 +311,7 @@ TRY
 		end if
 	next
 CATCH (throwable lo_error)
-	log.log(po_null, "f_xml_add_document_template()", "Error adding templates (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_xml_add_document_templates.0074", "Error adding templates (" + lo_error.text + ")", 4)
 	return
 END TRY
 

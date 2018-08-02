@@ -29,7 +29,7 @@ rtf.set_margins(ll_left, ll_right)
 
 ls_observation_id = get_attribute("observation_id")
 if isnull(ls_observation_id) then
-	mylog.log(this, "xx_printreport()", "no observation_id", 4)
+	mylog.log(this, "u_component_report_patient_observations.xx_printreport.0014", "no observation_id", 4)
 	return -1
 end if
 

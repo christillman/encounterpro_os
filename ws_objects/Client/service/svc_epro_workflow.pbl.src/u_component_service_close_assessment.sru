@@ -26,7 +26,7 @@ string ls_severity
 
 ldt_close_date = datetime(today(), now())
 if isnull(problem_id) then
-	log.log(this, "open", "Null problem_id", 4)
+	log.log(this, "u_component_service_close_assessment.xx_do_service.0015", "Null problem_id", 4)
 	return 1
 end if
 
@@ -41,7 +41,7 @@ setnull(ls_bill_flag)
 
 li_sts = current_patient.assessments.assessment(lstr_assessment, problem_id)
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting assessment object (" + string(problem_id) + ")", 4)
+	log.log(this, "u_component_service_close_assessment.xx_do_service.0015", "Error getting assessment object (" + string(problem_id) + ")", 4)
 	return 1
 end if
 
@@ -89,7 +89,7 @@ if upper(ls_assessment_status) = "CANCELLED" then
 		popup_return = message.powerobjectparm
 		if popup_return.item <> "YES" then return 1
 	else
-		log.log(this, "xx_do_service()", "The server mode may not cancel an assessment", 4)
+		log.log(this, "u_component_service_close_assessment.xx_do_service.0078", "The server mode may not cancel an assessment", 4)
 		return 1
 	end if
 end if

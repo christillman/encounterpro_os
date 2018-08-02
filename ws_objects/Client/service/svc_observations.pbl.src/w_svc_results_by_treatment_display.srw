@@ -517,7 +517,7 @@ if li_sts = 0 then
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts < 0 then
-	log.log(this, "open", "Error loading treatments", 4)
+	log.log(this, "w_svc_results_by_treatment_display.open.0085", "Error loading treatments", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

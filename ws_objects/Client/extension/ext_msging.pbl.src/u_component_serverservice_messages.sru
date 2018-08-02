@@ -45,18 +45,18 @@ WHERE message_type = :ps_message_type
 USING cprdb;
 if not cprdb.check() then return luo_handler
 if cprdb.sqlcode = 100 then
-	log.log(this, "send_file()", "Message Definition record not found (" + ps_message_type + ")", 4)
+	log.log(this, "u_component_serverservice_messages.get_handler.0018", "Message Definition record not found (" + ps_message_type + ")", 4)
 	return luo_handler
 end if
 
 if isnull(ls_handler_component_id) then
-	log.log(this, "send_file()", "Null message handler component for message type (" + ps_message_type + ")", 4)
+	log.log(this, "u_component_serverservice_messages.get_handler.0018", "Null message handler component for message type (" + ps_message_type + ")", 4)
 	return luo_handler
 end if
 
 luo_handler = my_component_manager.get_component(ls_handler_component_id)
 if isnull(luo_handler) then
-	log.log(this, "send_file()", "Error getting message handler component (" + ls_handler_component_id + ")", 4)
+	log.log(this, "u_component_serverservice_messages.get_handler.0018", "Error getting message handler component (" + ls_handler_component_id + ")", 4)
 	return luo_handler
 end if
 /*
@@ -99,17 +99,17 @@ if ll_count > 0 then
 	ls_message_type = luo_data.object.message_type[1]
 	ll_subscription_id = luo_data.object.subscription_id[1]
 
-	mylog.log(this, "timer_ding()", "Retrying message #" + string(ll_message_id), 1)
+	mylog.log(this, "u_component_serverservice_messages.timer_ding.0032", "Retrying message #" + string(ll_message_id), 1)
 
 	luo_message_handler = get_handler(ls_message_type)
 	if isnull(luo_message_handler) then
-		log.log(this, "timer_ding()", "Error getting message handler component (" + ls_message_type + ")", 4)
+		log.log(this, "u_component_serverservice_messages.timer_ding.0036", "Error getting message handler component (" + ls_message_type + ")", 4)
 		return -1
 	end if
 	
 	li_sts = luo_message_handler.handle_message(ll_message_id)
 	if li_sts <= 0 then
-		log.log(this, "timer_ding()", "Error handling message (" + string(ll_message_id) + ")", 4)
+		log.log(this, "u_component_serverservice_messages.timer_ding.0036", "Error handling message (" + string(ll_message_id) + ")", 4)
 		return -1
 	end if
 	

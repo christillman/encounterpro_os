@@ -50,12 +50,12 @@ if not tf_check() then return -1
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	mylog.log(this, "xx_do_service()", "Null component_id (" + ls_report_id + ")", 4)
+	mylog.log(this, "u_component_service_send_report.xx_do_service.0035", "Null component_id (" + ls_report_id + ")", 4)
 	Return -1
 Else
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		mylog.log(This, "print()", "Error getting report component (" + &
+		mylog.log(This, "u_component_service_send_report.xx_do_service.0040", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return -1
 	End If

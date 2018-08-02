@@ -199,7 +199,7 @@ CHOOSE CASE alert_mode
 		end if
 		cb_new_alert.visible = false
 	CASE ELSE
-		log.log(this, "open", "Invalid alert mode (" + alert_mode + ")", 4)
+		log.log(this, "w_chart_alert.open.0045", "Invalid alert mode (" + alert_mode + ")", 4)
 		close(this)
 		return
 END CHOOSE

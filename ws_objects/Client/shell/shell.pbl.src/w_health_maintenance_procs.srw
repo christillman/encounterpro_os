@@ -160,7 +160,7 @@ WHERE p.procedure_id = :lstr_procedures.procedures[1].procedure_id
 AND p.procedure_type = t.procedure_type;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "add_proc()", "procedure_type not found for procedure (" + lstr_procedures.procedures[1].procedure_id + ")", 4)
+	log.log(this, "w_health_maintenance_procs.add_proc.0033", "procedure_type not found for procedure (" + lstr_procedures.procedures[1].procedure_id + ")", 4)
 	return -1
 end if
 
@@ -195,7 +195,7 @@ integer li_sts
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 2 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_health_maintenance_procs.open.0007", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

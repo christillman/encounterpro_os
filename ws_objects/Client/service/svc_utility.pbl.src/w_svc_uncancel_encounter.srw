@@ -66,7 +66,7 @@ string ls_find
 service = message.powerobjectparm
 
 if isnull(current_patient) then
-	log.log(this, "open", "No patient context", 4)
+	log.log(this, "w_svc_uncancel_encounter.open.0011", "No patient context", 4)
 	return -1
 end if
 

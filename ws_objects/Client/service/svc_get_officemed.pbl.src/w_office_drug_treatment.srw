@@ -486,7 +486,7 @@ end if
 
 li_charge_count = treat_officemed.get_charges("DRUGHCPCS", lstra_charges)
 if li_charge_count < 0 then
-	log.log(this, "load_officemed()", "Error getting hcpcs charges", 4)
+	log.log(this, "w_office_drug_treatment.load_officemed.0037", "Error getting hcpcs charges", 4)
 	uo_hcpcs_procedure.set_value(ls_null)
 	setnull(hcpcs_charge.encounter_charge_id)
 elseif li_charge_count = 0 then
@@ -494,7 +494,7 @@ elseif li_charge_count = 0 then
 	setnull(hcpcs_charge.encounter_charge_id)
 else
 	if li_charge_count > 0 then
-		log.log(this, "load_officemed()", "Multiple hcpcs charges", 3)
+		log.log(this, "w_office_drug_treatment.load_officemed.0037", "Multiple hcpcs charges", 3)
 	end if
 	hcpcs_charge = lstra_charges[1]
 	uo_hcpcs_procedure.set_value(hcpcs_charge.procedure_id, hcpcs_charge.description)
@@ -502,7 +502,7 @@ end if
 
 li_charge_count = treat_officemed.get_charges("DRUGADMIN", lstra_charges)
 if li_charge_count < 0 then
-	log.log(this, "load_officemed()", "Error getting admin charges", 4)
+	log.log(this, "w_office_drug_treatment.load_officemed.0037", "Error getting admin charges", 4)
 	uo_procedure.set_value(ls_null)
 	setnull(admin_charge.encounter_charge_id)
 elseif li_charge_count = 0 then
@@ -510,7 +510,7 @@ elseif li_charge_count = 0 then
 	setnull(admin_charge.encounter_charge_id)
 else
 	if li_charge_count > 0 then
-		log.log(this, "load_officemed()", "Multiple admin charges", 3)
+		log.log(this, "w_office_drug_treatment.load_officemed.0037", "Multiple admin charges", 3)
 	end if
 	admin_charge = lstra_charges[1]
 	uo_procedure.set_value(admin_charge.procedure_id, admin_charge.description)
@@ -593,7 +593,7 @@ if li_count = 0 then li_count = f_get_drug_administer_unit(ls_constituent_drug_i
 if li_count < 0 then return -1
 
 if li_count = 0 then
-	log.log(this, "select_item()", "Unable to get drug administrations (" + ls_constituent_drug_id + ")", 4)
+	log.log(this, "w_office_drug_treatment.add_cocktail.0048", "Unable to get drug administrations (" + ls_constituent_drug_id + ")", 4)
 	openwithparm(w_pop_message, "No administration rules for this drug")
 	return 0
 elseif li_count = 1 then
@@ -617,7 +617,7 @@ setnull(ls_generic_code)
 
 luo_unit = unit_list.find_unit(ls_administer_unit)
 if isnull(luo_unit) then
-	log.log(this, "select_drug()", "Invalid admin unit (" + ls_administer_unit + ")", 4)
+	log.log(this, "w_office_drug_treatment.add_cocktail.0072", "Invalid admin unit (" + ls_administer_unit + ")", 4)
 	return 0
 end if
 

@@ -240,7 +240,7 @@ ll_open_encounter_id = dw_therapies.object.open_encounter_id[pl_row]
 if isnull(ll_open_encounter_id) then
 	ll_open_encounter_id = current_patient.open_encounter_id
 	If Isnull(ll_open_encounter_id) Then
-		log.log(This, "new_treatment_item()", "No open encounter", 4)
+		log.log(This, "w_pick_new_treatment.new_treatment_item.0048", "No open encounter", 4)
 		Return
 	End if
 end if
@@ -942,14 +942,14 @@ service = message.powerobjectparm
 title = current_patient.id_line()
 
 if isnull(service.problem_id) then
-	log.log(this, "open", "Null problem_id", 4)
+	log.log(this, "w_pick_new_treatment.open.0027", "Null problem_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = current_patient.assessments.assessment(assessment, service.problem_id)
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
+	log.log(this, "w_pick_new_treatment.open.0027", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

@@ -55,7 +55,7 @@ if not isnull(pstr_patient.billing_id) then
 	if not tf_check() then return -1
 	
 	if ll_count > 0 then
-		log.log(po_null, "f_new_patient()", "Billing ID Already Assigned to another patient (" + pstr_patient.billing_id + ")", 4)
+		log.log(po_null, "f_new_patient.0050", "Billing ID Already Assigned to another patient (" + pstr_patient.billing_id + ")", 4)
 		return -1
 	end if
 end if
@@ -69,7 +69,7 @@ if not isnull(pstr_patient.patient_id) then
 	if not tf_check() then return -1
 	
 	if ll_count > 0 then
-		log.log(po_null, "f_new_patient()", "Patient ID Already Assigned to another patient (" + string(pstr_patient.patient_id) + ")", 4)
+		log.log(po_null, "f_new_patient.0050", "Patient ID Already Assigned to another patient (" + string(pstr_patient.patient_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -92,7 +92,7 @@ end if
 if not isnull(pstr_patient.billing_id) then
 	li_sts = datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "billing_id", pstr_patient.billing_id)
 	if ll_count > 0 then
-		log.log(po_null, "f_new_patient()", "Error setting the billing_id (" + pstr_patient.billing_id + ")", 4)
+		log.log(po_null, "f_new_patient.0050", "Error setting the billing_id (" + pstr_patient.billing_id + ")", 4)
 		return -1
 	end if
 end if
@@ -101,7 +101,7 @@ end if
 if not isnull(pstr_patient.patient_id) then
 	li_sts = datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "patient_id", string(pstr_patient.patient_id))
 	if ll_count > 0 then
-		log.log(po_null, "f_new_patient()", "Error setting the patient_id (" + string(pstr_patient.patient_id) + ")", 4)
+		log.log(po_null, "f_new_patient.0050", "Error setting the patient_id (" + string(pstr_patient.patient_id) + ")", 4)
 		return -1
 	end if
 end if

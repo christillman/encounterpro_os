@@ -80,7 +80,7 @@ u_tabpage_drug_base luo_tab
 service = current_service
 
 if isnull(ps_drug_id) or trim(ps_drug_id) = "" then
-	log.log(this, "initialize()", "No Drug_id", 4)
+	log.log(this, "u_tab_drug_config.initialize_drug_tabs.0008", "No Drug_id", 4)
 	return -1
 end if
 
@@ -88,7 +88,7 @@ end if
 drugdb.clear_cache()
 li_sts = drugdb.get_drug_definition(ps_drug_id, drug)
 if li_sts <= 0 then
-	log.log(this, "initialize()", "Error getting drug definition (" + ps_drug_id + ")", 4)
+	log.log(this, "u_tab_drug_config.initialize_drug_tabs.0008", "Error getting drug definition (" + ps_drug_id + ")", 4)
 	return -1
 end if
 

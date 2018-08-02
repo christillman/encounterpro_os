@@ -92,7 +92,7 @@ if pbdom_root.HasAttributes() then
 			TRY
 				lbl_attachment = common_thread.eprolibnet4.converthextobinary(ls_text)
 			CATCH (throwable lt_error)
-				log.log(po_null, "process_xml_element()", "Error calling hex to binary conversion (" + lt_error.text + ")", 4)
+				log.log(po_null, "f_get_attachment_structure_from_xml.f_get_document_from_xml.0086", "Error calling hex to binary conversion (" + lt_error.text + ")", 4)
 				return lstr_document_error
 			END TRY
 			
@@ -102,7 +102,7 @@ if pbdom_root.HasAttributes() then
 				ll_blob_length = len(lbl_attachment)
 				
 				if ll_hex_length <> (ll_blob_length * 2) then
-					log.log(po_null, "process_xml_element()", "Error converting hex to binary", 4)
+					log.log(po_null, "f_get_attachment_structure_from_xml.f_get_document_from_xml.0086", "Error converting hex to binary", 4)
 					return lstr_document_error
 				end if
 				
@@ -233,7 +233,7 @@ if pbdom_root.HasAttributes() then
 					TRY
 						lbl_attachment = common_thread.eprolibnet4.convertbase64tobinary(ls_text)
 					CATCH (throwable lt_error)
-						log.log(po_null, "f_get_attachment_structure_from_xml()", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
+						log.log(po_null, "f_get_attachment_structure_from_xml.0101", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
 						return -1
 					END TRY
 				CASE ELSE
@@ -241,7 +241,7 @@ if pbdom_root.HasAttributes() then
 					TRY
 						lbl_attachment = common_thread.eprolibnet4.converthextobinary(ls_text)
 					CATCH (throwable lt_error2)
-						log.log(po_null, "f_get_attachment_structure_from_xml()", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
+						log.log(po_null, "f_get_attachment_structure_from_xml.0101", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
 						return -1
 					END TRY
 			END CHOOSE
@@ -252,7 +252,7 @@ if pbdom_root.HasAttributes() then
 				ll_blob_length = len(lbl_attachment)
 				
 				if ll_hex_length <> (ll_blob_length * 2) then
-					log.log(po_null, "f_get_attachment_structure_from_xml()", "Error converting hex to binary", 4)
+					log.log(po_null, "f_get_attachment_structure_from_xml.0101", "Error converting hex to binary", 4)
 					return -1
 				end if
 				

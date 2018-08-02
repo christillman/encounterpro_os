@@ -63,7 +63,7 @@ if popup.argument_count >= 3 then
 	list_user_id = popup.argument[2]
 	care_plan_id = long(popup.argument[3])
 else
-	log.log(this, "open", "Invalid arguments", 4)
+	log.log(this, "w_treatment_list_change_sort_order.open.0015", "Invalid arguments", 4)
 	close(this)
 	return
 end if
@@ -93,7 +93,7 @@ dw_treatments.setfilter(ls_filter)
 
 ll_count = dw_treatments.retrieve(current_patient.cpr_id, assessment_id, list_user_id, care_plan_id)
 if ll_count < 0 then
-	log.log(this, "open", "Error getting treatment list", 4)
+	log.log(this, "w_treatment_list_change_sort_order.open.0015", "Error getting treatment list", 4)
 	close(this)
 	return
 end if

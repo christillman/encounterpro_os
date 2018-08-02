@@ -159,7 +159,7 @@ else
 	FROM c_Drug_Maker
 	WHERE maker_id = :maker_id;
 	if not tf_check() then
-		log.log(this, "post_open", "Error getting maker information", 4)
+		log.log(this, "w_do_medication.open.0081", "Error getting maker information", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -191,7 +191,7 @@ else
 	WHERE location_domain = :location_domain
 	AND location = :location;
 	if not tf_check() then
-		log.log(this, "post_open", "Error getting location information", 4)
+		log.log(this, "w_do_medication.open.0081", "Error getting location information", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -440,7 +440,7 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.items[1] <> location_domain then
 			location_domain = popup_return.items[1]
 			li_sts = datalist.update_preference("MEDICATION", "Global", "Global", "LD_" + preference_suffix, location_domain)
-			if li_sts <= 0 then log.log(this, "clicked", "Error updating location domain preference", 3)
+			if li_sts <= 0 then log.log(this, "w_do_medication.cb_edit_location_domain.clicked.0060", "Error updating location domain preference", 3)
 			st_location.postevent("clicked")
 		end if
 	CASE "CANCEL"

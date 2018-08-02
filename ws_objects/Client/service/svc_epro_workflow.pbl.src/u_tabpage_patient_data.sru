@@ -149,7 +149,7 @@ if not isnull(ls_temp) then ssn_mask = ls_temp
 em_ssn.setmask(stringmask!, ssn_mask)
 
 if isnull(current_patient) then
-	log.log(this, "initialize()", "No current patient", 4)
+	log.log(this, "u_tabpage_patient_data.initialize.0014", "No current patient", 4)
 	return -1
 else
 	st_cpr_id.text = current_patient.cpr_id

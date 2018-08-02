@@ -275,7 +275,7 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_standard_exams.open.0011", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -286,7 +286,7 @@ disabled_flag = popup.items[3]
 
 ls_description = datalist.observation_description(root_observation_id)
 if isnull(ls_description) then
-	log.log(this, "open", "Invalid Root Observation Id (" + root_observation_id + ")", 4)
+	log.log(this, "w_standard_exams.open.0011", "Invalid Root Observation Id (" + root_observation_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -295,7 +295,7 @@ st_title.text = "Standard Exams for " + ls_description
 
 ls_description = datalist.treatment_type_description(treatment_type)
 if isnull(ls_description) then
-	log.log(this, "open", "Invalid Treatment Type (" + treatment_type + ")", 4)
+	log.log(this, "w_standard_exams.open.0011", "Invalid Treatment Type (" + treatment_type + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

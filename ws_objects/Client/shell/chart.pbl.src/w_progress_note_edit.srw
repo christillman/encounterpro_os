@@ -311,7 +311,7 @@ Elseif popup.data_row_count = 3 Then
 	top_20_generic_code = popup.items[2]
 	original_progress = popup.items[3]
 Else
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_progress_note_edit.open.0026", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -345,7 +345,7 @@ top_20_user_id = current_user.user_id
 top_20_code = top_20_specific_code
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading pick list", 4)
+	log.log(this, "w_progress_note_edit.open.0026", "Error loading pick list", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -355,7 +355,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.common_list_id()
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_progress_note_edit.open.0026", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -367,7 +367,7 @@ if li_sts = 0 then
 	top_20_code = top_20_generic_code
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_progress_note_edit.open.0026", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -378,7 +378,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.common_list_id()
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_progress_note_edit.open.0026", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

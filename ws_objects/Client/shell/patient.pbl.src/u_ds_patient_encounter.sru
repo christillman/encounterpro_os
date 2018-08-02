@@ -287,7 +287,7 @@ if li_sts <= 0 then return -1
 
 puo_encounter.encounter_id = object.encounter_id[ll_row]
 If isnull(puo_encounter.encounter_id) Then
-	log.log(this, "new_encounter()", "encounter_id not generated", 4)
+	log.log(this, "u_ds_patient_encounter.new_encounter.0047", "encounter_id not generated", 4)
 	Return -1
 End if
 
@@ -302,7 +302,7 @@ AND encounter_type = :puo_encounter.encounter_type
 AND encounter_date = :puo_encounter.encounter_date;
 if not tf_check() then return -1
 if li_count <> 1 then
-	log.log(this, "new_encounter()", "Incorrect encounter_id", 3)
+	log.log(this, "u_ds_patient_encounter.new_encounter.0047", "Incorrect encounter_id", 3)
 	// If we got the wrong encounter_id, then execute a query to find the correct encounter_id
 	SELECT max(encounter_id)
 	INTO :puo_encounter.encounter_id
@@ -312,12 +312,12 @@ if li_count <> 1 then
 	AND encounter_date = :puo_encounter.encounter_date;
 	if not tf_check() then return -1
 	if isnull(puo_encounter.encounter_id) then
-		log.log(this, "new_encounter()", "Unable to determine correct encounter_id", 4)
+		log.log(this, "u_ds_patient_encounter.new_encounter.0047", "Unable to determine correct encounter_id", 4)
 		return -1
 	end if
 	object.encounter_id[ll_row] = puo_encounter.encounter_id
 	setitemstatus(ll_row, 0, Primary!, NotModified!)
-	log.log(this, "new_encounter()", "Correct encounter_id found", 2)
+	log.log(this, "u_ds_patient_encounter.new_encounter.0047", "Correct encounter_id found", 2)
 end if
 
 // Add the "Created" progress record
@@ -331,24 +331,24 @@ integer li_sts
 string ls_encounter_type
 
 if not isvalid(puo_encounter) or isnull(puo_encounter) then
-	log.log(this, "refresh_encounter()", "Invalid Encounter Object", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter.0006", "Invalid Encounter Object", 4)
 	return -1
 end if
 
 if isnull(puo_encounter.encounter_id) then
-	log.log(this, "refresh_encounter()", "Null Encounter Id", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter.0006", "Null Encounter Id", 4)
 	return -1
 end if
 
 ll_row = find_encounter(puo_encounter.encounter_id)
 if isnull(ll_row) then
-	log.log(this, "refresh_encounter()", "Encounter not found (" + string(puo_encounter.encounter_id) + ")", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter.0006", "Encounter not found (" + string(puo_encounter.encounter_id) + ")", 4)
 	return -1
 end if
 
 li_sts = reselectrow(ll_row)
 if li_sts < 0 then
-	log.log(this, "refresh_encounter()", "Error reselecting row (" + string(puo_encounter.encounter_id) + ")", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter.0006", "Error reselecting row (" + string(puo_encounter.encounter_id) + ")", 4)
 	return -1
 end if
 	
@@ -447,19 +447,19 @@ str_popup	popup
 str_popup_return popup_return
 
 if isnull(parent_patient.open_encounter) then
-	log.log(this, "set_encounter_progress()", "No open encounter", 4)
+	log.log(this, "u_ds_patient_encounter.set_encounter_progress.0017", "No open encounter", 4)
 	return -1
 end if
 
 if isnull(pl_encounter_id) or pl_encounter_id <= 0 then
-	log.log(this, "set_encounter_progress()", "Invalid encounter_id", 4)
+	log.log(this, "u_ds_patient_encounter.set_encounter_progress.0017", "Invalid encounter_id", 4)
 	return -1
 end if
 
 ls_find = "encounter_id=" + string(pl_encounter_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "set_encounter_progress()", "encounter not found", 4)
+	log.log(this, "u_ds_patient_encounter.set_encounter_progress.0017", "encounter not found", 4)
 	return -1
 end if
 

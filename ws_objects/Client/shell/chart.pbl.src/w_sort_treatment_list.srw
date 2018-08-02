@@ -58,7 +58,7 @@ st_title.text = assessment_description
 
 li_sts = treatments.sharedata(dw_therapies)
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting treatment data", 4)
+	log.log(this, "w_sort_treatment_list.open.0014", "Error getting treatment data", 4)
 	close(this)
 	return
 end if

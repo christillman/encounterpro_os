@@ -38,7 +38,7 @@ if isnull(message_type) then message_type = "ENCOUNTERPRO_CHECKOUT"
 
 get_attribute("receiving_app_path", recv_app_path)
 if isnull(recv_app_path) or recv_app_path = '' then
-	mylog.log(this, "xx_initialize", "recev app path is not specified", 4)
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_initialize.0006", "recev app path is not specified", 4)
 	return -1
 end if	
 
@@ -112,7 +112,7 @@ for i = 1 to ll_count
 	// Skip any item which was started too recently, except for the "Wait" service, which should always be attempted
 	ldt_begin_date = luo_data.object.begin_date[i]
 	if ldt_begin_date > ldt_not_started_since then 
-		log.log(this,"do_todo_services()","Started recently!! so skipping workplan item id ("+string(ll_patient_workplan_item_id)+")",1)
+		log.log(this,"u_component_service_batch_billing_hl7.xx_do_service.0041","Started recently!! so skipping workplan item id ("+string(ll_patient_workplan_item_id)+")",1)
 		continue
 	end if
 	
@@ -174,10 +174,10 @@ FOR i = 1 to ll_count
 	IF not tf_check() then
 	end if
 	ls_message = f_blob_to_string(lblb_message)
-	mylog.log(this, "xx_do_service", "billing message string1: "+ls_message, 1)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "billing message string1: "+ls_message, 1)	
 	ll_pos = POS(ls_message,ls_line_break)
 	if isnull(ll_pos) or ll_pos = 0 then
-		mylog.log(this, "xx_do_service", "message type not found ", 4)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "message type not found ", 4)	
 		return -1
 	end if
 
@@ -185,27 +185,27 @@ FOR i = 1 to ll_count
 	ls_message = Mid(ls_message,ll_pos + 1)
 	ll_pos = POS(ls_message,ls_line_break)
 	if isnull(ll_pos) or ll_pos = 0 then
-		mylog.log(this, "xx_do_service", "message count not found ", 4)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "message count not found ", 4)	
 		return -1
 	end if
 
 	ls_msg_count = Mid(ls_message,1,ll_pos - 1)
 	if not isnumber(ls_msg_count) then
-		mylog.log(this, "xx_do_service", "message count not numeric", 3)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "message count not numeric", 3)	
 		return -1
 	end if
 	il_msg_count = integer(ls_msg_count)
 	if il_msg_count < 1 then return -1
 
 	ls_message = Mid(ls_message,ll_pos + 1)
-	mylog.log(this, "xx_do_service", "billing message string2: "+ls_message, 1)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "billing message string2: "+ls_message, 1)	
 	if (ls_msg_type = "HL7DFTP03") Then
-		mylog.log(this, "xx_do_service", "message count "+string(ll_msg_count), 1)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "message count "+string(ll_msg_count), 1)	
 		// ugly fix..somehow extra linebreak is included for few cases
 		if left(ls_message,1) = "~013"  then	ls_message = Mid(ls_message,ll_pos + 1)
-		mylog.log(this, "xx_do_service", "billing message string3: "+ls_message , 1)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "billing message string3: "+ls_message , 1)	
 	else
-		mylog.log(this, "xx_do_service", "message type not known " + ls_msg_type, 4)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "message type not known " + ls_msg_type, 4)	
 		return -1
 	end if
 	ls_hl7 = get_shands_hl7(ll_message_id,ls_message)
@@ -215,7 +215,7 @@ FOR i = 1 to ll_count
 	end if
 NEXT
 if isnull(ls_batch) or len(ls_batch) = 0 then 
-	mylog.log(this, "xx_do_service", "Billing Failed:batch is null or empty", 4)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "Billing Failed:batch is null or empty", 4)	
 	return -1 // error 
 end if
 
@@ -255,7 +255,7 @@ ls_batch_message += ls_batch_header+ls_segment_break+ls_batch+ls_batch_trailer
 if not isnull(eom) then ls_batch_message += eom
 
 if isnull(ls_batch_message) or len(ls_batch_message) = 0 then 
-	mylog.log(this, "xx_do_service", "Billing Failed:batch message is null or empty", 4)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0103", "Billing Failed:batch message is null or empty", 4)	
 	return -1 // error 
 end if
 
@@ -268,12 +268,12 @@ if right(recv_app_path, 1) <> "\" then ls_path += "\"
 ls_filename = ls_path + "SU" + string(today(),"mmddyy") + ".HL7"
 
 if fileexists(ls_filename) then
-	mylog.log(this, "lcr_report()", "Error getting next file number", 4)
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error getting next file number", 4)
 	return -1
 end if
 
 if mylog.file_write(lblb_bill,ls_filename) < 0 then
-	mylog.log(this, "lcr_report()", "Error writing the report into a file", 4)
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error writing the report into a file", 4)
 end if
 
 // Write another text file as below
@@ -282,12 +282,12 @@ ls_text +="Total Transactions included in the file: "+string(il_procedure_count)
 
 ls_filename = ls_path + "SU" + string(today(),"mmddyy") + ".TXT"
 if fileexists(ls_filename) then
-	mylog.log(this, "lcr_report()", "Error getting next file number", 4)
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error getting next file number", 4)
 	return -1
 end if
 lblb_text = f_string_to_blob(ls_text, TextEncoding)
 if mylog.file_write(lblb_text,ls_filename) < 0 then
-	mylog.log(this, "lcr_report()", "Error writing the report into a file", 4)
+	mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error writing the report into a file", 4)
 end if
 
 // save a copy of the message
@@ -298,21 +298,21 @@ if not isnull(hold_outgoing) then
 	ls_filename = ls_path + "SU" + string(today(),"mmddyy") + ".TXT"
 
 	if fileexists(ls_filename) then
-		mylog.log(this, "lcr_report()", "Error getting next file number", 4)
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error getting next file number", 4)
 		return -1
 	end if
 
 	if mylog.file_write(lblb_bill,ls_filename) < 0 then
-		mylog.log(this, "lcr_report()", "Error writing the report into a file", 4)
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error writing the report into a file", 4)
 	end if
 
 	ls_filename = ls_path + "SU" + string(today(),"mmddyy") + ".TXT"
 	if fileexists(ls_filename) then
-		mylog.log(this, "lcr_report()", "Error getting next file number", 4)
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error getting next file number", 4)
 		return -1
 	end if
 	if mylog.file_write(lblb_text,ls_filename) < 0 then
-		mylog.log(this, "lcr_report()", "Error writing the report into a file", 4)
+		mylog.log(this, "u_component_service_batch_billing_hl7.xx_do_service.0197", "Error writing the report into a file", 4)
 	end if
 
 end if
@@ -401,7 +401,7 @@ IF ll_tab_pos > 0 THEN
 	ll_len = ll_tab_pos - 1
 END IF
 IF ll_len = 0  OR ps_message = "" THEN
-	mylog.log(this, "chrg()","MessageId: "+string(pl_message_id)+":No charge message",3)
+	mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0079","MessageId: "+string(pl_message_id)+":No charge message",3)
 	ls_error = "NO CHARGE"
 	GOTO Error
 END IF
@@ -427,7 +427,7 @@ NEXT
 
 ll_len = upperbound(ls_fields)
 If ll_len < 27 then
-	mylog.log(this, "get_shands_hl7()", "MessageId: "+string(pl_message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "MessageId: "+string(pl_message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
 	ls_error = "BAD LEN"
 	GOTO Error
 End If
@@ -480,13 +480,13 @@ for i = 1 to li_diagnosis_count
 next	
 
 IF isnull(procedurecodeidentifier) or procedurecodeidentifier = "" then 
-	mylog.log(this, "get_shands_hl7()", "MessageId: "+string(pl_message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "MessageId: "+string(pl_message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
 	ls_error = "NO PROCEDURE"
 	GOTO Error
 END IF
 
 IF Isnull(ls_facility) OR ls_facility = "" then 
-	mylog.log(this, "get_shands_hl7()", "No facility, assuming default " + ps_message, 3)
+	mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "No facility, assuming default " + ps_message, 3)
 	SELECT value into :ls_facility
 	FROM c_component_attribute
 	WHERE component_id = 'ENCOUNTERPRO_BILL'
@@ -494,7 +494,7 @@ IF Isnull(ls_facility) OR ls_facility = "" then
 	USING cprdb;
 	if not cprdb.check() then return ls_null
 	if isnull(ls_facility) or ls_facility = "" then 
-		mylog.log(this, "get_shands_hl7()", "MessageId: "+string(pl_message_id)+":NO Default facility,Billing message( " + ls_temp + "), Posting failed", 4)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "MessageId: "+string(pl_message_id)+":NO Default facility,Billing message( " + ls_temp + "), Posting failed", 4)	
 		ls_error = "NO FACILITY"
 		GOTO Error
 	end if	
@@ -540,7 +540,7 @@ SELECT 	supervisor_user_id,
 	WHERE billing_id = :ls_provider
 	USING cprdb;
 	if not cprdb.check() OR cprdb.sqlcode = 100 then
-		mylog.log(this, "get_shands_hl7()", "MessageId: "+string(pl_message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
+		mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "MessageId: "+string(pl_message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
 		ls_error = "NO PROVIDER"
 		GOTO Error
 	end if
@@ -600,14 +600,14 @@ ls_msh += ls_msg_control_id+"|" //message control id
 ls_msh += processing_id+"|" //"P" Production or "T" Testing
 ls_msh += version_no+"|"
 
-mylog.log(this, "get_shands_hl7()", "message header "+ls_msh, 1)	
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "message header "+ls_msh, 1)	
 
 /**********
 * EventType Segment
 ***********/
 ls_evn = "EVN|P03|"+string(today(),"yyyymmdd")+"|"
 
-mylog.log(this, "get_shands_hl7()", "event header "+ls_evn, 1)	
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "event header "+ls_evn, 1)	
 /**********
 * Patient Identification Segment (PID)
 ***********/
@@ -646,7 +646,7 @@ if not isnull(ls_middle) then
 end if
 ls_pid += "|"
 
-mylog.log(this, "get_shands_hl7()", "patient identification header "+ls_pid, 1)	
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "patient identification header "+ls_pid, 1)	
 
 /**********
 * Patient Visit Segment (PV1)
@@ -661,7 +661,7 @@ ls_pv1 += "|" // prior location
 //attending doctor
 ls_pv1 += "|"
 ls_pv1 += "|||||||||||"
-mylog.log(this, "get_shands_hl7()", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
 If not isnull(ls_visitnumber_id) Then
 	ls_pv1 += ls_visitnumber_id + "|"
 else
@@ -672,7 +672,7 @@ ls_pv1 += "||||||||||||||||||||||||"
 ls_pv1 += string(ldt_encounter_datetime,"yyyymmdd")+"|"
 
 //discharge date time
-mylog.log(this, "get_shands_hl7()", "patient visit " + ls_pv1, 1)
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "patient visit " + ls_pv1, 1)
 
 /**********
 * Financial Transaction Segment (FT1)
@@ -702,7 +702,7 @@ IF li_diagnosis_count > 0 THEN
 	Next
 	ls_ft += "|"
 Else
-	mylog.log(this, "get_shands_hl7()", "no diagnosis attached to cpt "+procedurecodeidentifier + ls_pv1, 3)
+	mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "no diagnosis attached to cpt "+procedurecodeidentifier + ls_pv1, 3)
 	ls_ft += "|"
 End If	
 
@@ -749,7 +749,7 @@ ls_zft += "|"
 ls_zft += ls_segment_break
 
 ls_ft += ls_zft
-mylog.log(this, "get_shands_hl7()", "FT1/ZFT(1) " + ls_ft, 1)
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "FT1/ZFT(1) " + ls_ft, 1)
 
 IF il_msg_count > 1 THEN
 	FOR i = 1 TO 11
@@ -819,7 +819,7 @@ IF il_msg_count > 1 THEN
 			Next
 			ls_ft += "|"
 		Else
-			mylog.log(this, "get_shands_hl7()", "no diagnosis attached to cpt "+procedurecodeidentifier + ls_pv1, 3)
+			mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "no diagnosis attached to cpt "+procedurecodeidentifier + ls_pv1, 3)
 			ls_ft += "|"
 		End If	
 
@@ -865,14 +865,14 @@ IF il_msg_count > 1 THEN
 		ls_zft += ls_segment_break
 		
 		ls_ft += ls_zft
-		mylog.log(this, "get_shands_hl7()", "FT1/ZFT("+ls_count+") " + ls_ft, 1)
+		mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "FT1/ZFT("+ls_count+") " + ls_ft, 1)
 		ls_cpt_assemblies = Mid(ls_cpt_assemblies,ll_tabnext_pos + 1)
 	NEXT
 END IF
 
 // now put together all
 ls_hl7 = ls_msh+ls_segment_break+ls_evn+ls_segment_break+ls_pid+ls_segment_break+ls_pv1+ls_segment_break+ls_ft
-mylog.log(this, "get_shands_hl7()", "Charge message ("+string(pl_message_id)+") " + ls_hl7, 1)
+mylog.log(this, "u_component_service_batch_billing_hl7.get_shands_hl7.0105", "Charge message ("+string(pl_message_id)+") " + ls_hl7, 1)
 
 UPDATE o_Message_Log
 SET status = 'ACK_WAIT',

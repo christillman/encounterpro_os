@@ -73,14 +73,14 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count = 0 then
-	log.log(this, "open", "No User ID", 4)
+	log.log(this, "w_user_definition.open.0011", "No User ID", 4)
 	closewithreturn(this, popup_return)
 	return
 else
 	user_list.clear_cache()
 	user = user_list.find_user(popup.items[1])
 	if isnull(user) then
-		log.log(this, "load_user()", "User not found (" + popup.items[1] + ")", 4)
+		log.log(this, "w_user_definition.open.0018", "User not found (" + popup.items[1] + ")", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -89,14 +89,14 @@ else
 	
 	li_sts = user.get_addresses( )
 	if li_sts < 0 then
-		log.log(this, "open", "Error getting user addresses (" + user.user_id + ")", 4)
+		log.log(this, "w_user_definition.open.0011", "Error getting user addresses (" + user.user_id + ")", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
 	
 	li_sts = user.get_communications( )
 	if li_sts < 0 then
-		log.log(this, "open", "Error getting user communications (" + user.user_id + ")", 4)
+		log.log(this, "w_user_definition.open.0011", "Error getting user communications (" + user.user_id + ")", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -108,7 +108,7 @@ end if
 
 li_first_tab = tab_user.initialize(user)
 if li_first_tab <= 0 then
-	log.log(this, "open", "Error initializing user (" + user.user_id + ")", 4)
+	log.log(this, "w_user_definition.open.0011", "Error initializing user (" + user.user_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

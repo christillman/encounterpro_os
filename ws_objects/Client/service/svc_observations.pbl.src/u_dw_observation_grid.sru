@@ -134,7 +134,7 @@ setnull(ls_abnormal_nature)
 // Get the observation_sequence
 ll_observation_sequence = observation_sequence(pl_row, pi_column)
 if ll_observation_sequence < 0 then
-	log.log(this, "update_row()", "Error adding observation", 4)
+	log.log(this, "u_dw_observation_grid.update_row.0014", "Error adding observation", 4)
 	return -1
 end if
 
@@ -192,7 +192,7 @@ ll_rows = rowcount()
 //			ls_result_amount_flag = object.result_amount_flag[ll_row]
 //			ll_observation_sequence = observation_sequence(ll_row)
 //			if ll_observation_sequence < 0 then
-//				log.log(this, "update_row()", "Error adding observation", 4)
+//				log.log(this, "u_dw_observation_grid.update_row.0014", "Error adding observation", 4)
 //				return -1
 //			end if
 //	
@@ -273,7 +273,7 @@ if isnull(ll_observation_sequence) then
 										ls_stage_description, &
 										true)
 	if ll_observation_sequence < 0 then
-		log.log(this, "update_row()", "Error adding observation", 4)
+		log.log(this, "u_dw_observation_grid.update_row.0014", "Error adding observation", 4)
 		return -1
 	end if
 	setitem(pl_row, "observation_sequence_" + string(pi_column), ll_observation_sequence)
@@ -434,7 +434,7 @@ str_c_observation_result lstr_result
 long ll_stage_description_count
 
 if isnull(puo_service.treatment) then
-	log.log(this, "initialize()", "Null treatment object", 4)
+	log.log(this, "u_dw_observation_grid.initialize.0015", "Null treatment object", 4)
 	return -1
 end if
 
@@ -443,13 +443,13 @@ treatment = service.treatment
 
 root_observation_id = service.root_observation_id()
 if isnull(root_observation_id) then
-	log.log(this, "initialize()", "No Root Observation_id", 4)
+	log.log(this, "u_dw_observation_grid.initialize.0015", "No Root Observation_id", 4)
 	return -1
 end if
 
 root_observation_sequence = service.get_root_observation()
 if isnull(root_observation_sequence) then
-	log.log(this, "initialize()", "Error getting root observation", 4)
+	log.log(this, "u_dw_observation_grid.initialize.0015", "Error getting root observation", 4)
 	return -1
 end if
 
@@ -461,13 +461,13 @@ next
 
 ls_composite_flag = datalist.observation_composite_flag(root_observation_id)
 if isnull(ls_composite_flag) or ls_composite_flag <> "Y" then
-	log.log(this, "initialize()", "Parent observation not composite (" + root_observation_id + ")", 4)
+	log.log(this, "u_dw_observation_grid.initialize.0015", "Parent observation not composite (" + root_observation_id + ")", 4)
 	return -1
 end if
 
 lstr_tree = datalist.observation_tree(root_observation_id)
 if lstr_tree.branch_count <= 0 then
-	log.log(this, "initialize()", "No children found (" + root_observation_id + ")", 4)
+	log.log(this, "u_dw_observation_grid.initialize.0015", "No children found (" + root_observation_id + ")", 4)
 	return -1
 end if
 
@@ -593,7 +593,7 @@ if isnull(ll_parent_observation_sequence) then
 										ls_stage_description, &
 										true)
 	if ll_parent_observation_sequence < 0 then
-		log.log(this, "update_row()", "Error adding observation", 4)
+		log.log(this, "u_dw_observation_grid.update_row.0014", "Error adding observation", 4)
 		return -1
 	end if
 	object.parent_observation_sequence[pl_row] = ll_parent_observation_sequence

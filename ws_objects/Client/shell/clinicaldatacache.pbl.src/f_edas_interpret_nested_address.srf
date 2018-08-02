@@ -98,7 +98,7 @@ lstr_object_def = datalist.epro_object_definition(ps_from_object)
 // Parse the address
 lstr_property_address = f_edas_parse_address(ps_from_object, ps_edas_address)
 if lstr_property_address.return_status <= 0 then
-	log.log(po_null, "f_edas_interpret_address()", "EDAS Error: " + lstr_property_address.error_message, 3)
+	log.log(po_null, "f_edas_interpret_nested_address.0093", "EDAS Error: " + lstr_property_address.error_message, 3)
 	return lstr_property_value
 end if
 

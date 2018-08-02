@@ -175,7 +175,7 @@ service.get_attribute("charge_required", lb_charge_required)
 dw_codes.multiselect = lb_allow_multiple
 
 if isnull(ls_root_procedure_id) and isnull(ls_procedure_list) and isnull(ls_sql_query) then
-	log.log(this, "open", "This service requires either a root_procedure_id, sql_query or procedure_list param", 4)
+	log.log(this, "w_svc_billing_code_pick.open.0032", "This service requires either a root_procedure_id, sql_query or procedure_list param", 4)
 	closewithreturn(this, popup_return)
 	DESTROY luo_data
 	return
@@ -186,7 +186,7 @@ if len(ls_procedure_list) > 0 then
 elseif len(ls_sql_query) > 0 then
 	ll_procedure_count = luo_data.load_query(ls_sql_query)
 	if ll_procedure_count < 0 then
-		log.log(this, "open", "Error running SQL", 4)
+		log.log(this, "w_svc_billing_code_pick.open.0032", "Error running SQL", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -198,7 +198,7 @@ else
 	luo_data.set_dataobject("dw_procedure_extra_charges")
 	ll_procedure_count = luo_data.retrieve(ls_root_procedure_id)
 	if ll_procedure_count < 0 then
-		log.log(this, "open", "Error loading extra charges", 4)
+		log.log(this, "w_svc_billing_code_pick.open.0032", "Error loading extra charges", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -219,7 +219,7 @@ DESTROY luo_data
 
 
 if ll_procedure_count = 0 then
-	log.log(this, "open", "No procedures found", 3)
+	log.log(this, "w_svc_billing_code_pick.open.0032", "No procedures found", 3)
 	popup_return.items[1] = "CANCEL"
 	closewithreturn(this, popup_return)
 	return

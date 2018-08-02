@@ -95,7 +95,7 @@ FROM x_encounterpro_Arrived
 WHERE x_encounterpro_Arrived.message_id = :is_message_id using cprdb ;
 IF NOT cprdb.check() THEN RETURN -1
 If ll_count > 0 then 
-	mylog.log(this, "arrived()", "message referencing this Message ID (" + string(is_message_id) + ") already arrived", 3)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", "message referencing this Message ID (" + string(is_message_id) + ") already arrived", 3)
 	return 1
 End if	
 
@@ -110,11 +110,11 @@ if ll_count > 0 then
 	if ll_count > 0 then
 		ls_internal_id = omsg.PatientIdentificationGroup.Item[0].PatientIdentification.InternalPatientID.Item[0].ID.valuestring
 	else
-		mylog.log(this, "arrived_nterprise()", "id not provided, Message ID (" + string(is_message_id) + ")", 4)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0099", "id not provided, Message ID (" + string(is_message_id) + ")", 4)
 		return -1
 	end if	
 else
-	mylog.log(this, "arrived()", "PID Segment not provided, Message ID (" + string(is_message_id) + ")", 4)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", "PID Segment not provided, Message ID (" + string(is_message_id) + ")", 4)
 	return -1
 end if	
 	
@@ -122,7 +122,7 @@ if isnull(is_billing_id) then
 	if isnull(ls_external_id) or ls_external_id = "" then
 		if isnull(ls_internal_id) or ls_internal_id = "" then
 			if isnull(ls_alternate_PID) or ls_alternate_PID = "" then
-				mylog.log(this, "arrived()", "Patient External ID not provided, Message ID (" + string(is_message_id) + ")", 4)
+				mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", "Patient External ID not provided, Message ID (" + string(is_message_id) + ")", 4)
 				return -1
 			else
 				ls_billing_id = ls_alternate_PID
@@ -142,7 +142,7 @@ if is_msgtype = "SIU" then
 //	Populate the appointment type which need to be written to x_encounter_Arrived
 		ls_arrived = omsg.scheduleactivityinformation.FillerStatusCode.Identifier.valuestring
 		if upper(ls_arrived) <> 'ARRIVED' then 
-			mylog.log(this, "arrived_nterprise()", "SIU not arrived (" + ls_arrived  + ")", 2)
+			mylog.log(this, "u_hl7_arrived_nterprise.arrived.0099", "SIU not arrived (" + ls_arrived  + ")", 2)
 			return 1
 		end if	
 		ls_arrival_text =  omsg.scheduleactivityinformation.FillerStatusCode.Text.valuestring
@@ -214,7 +214,7 @@ if len(ls_office) = 0 or isnull(ls_office) then lb_myfacility = false else lb_my
 
 if not lb_myfacility then 
 	ls_message = "Facility Code (" + ls_facility_namespaceid + ") " + "not mapped"
-	mylog.log(this, "arrived_mpm()", ls_message , 4)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", ls_message , 4)
 	GOTO error
 end if	
 
@@ -229,7 +229,7 @@ if not isnull(ls_scheduledatetime) then
 	ld_scheduledate = Date(Left(ls_scheduledate,10))
 	if ld_scheduledate <> ld_thisdate then
 		ls_message = "Check in date ( "+ls_scheduledate+") is invalid"
-		mylog.log(this, "arrived()", ls_message , 4)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", ls_message , 4)
 		GOTO error
 	end if
 end if
@@ -259,7 +259,7 @@ if not isnull(ls_attending_doctor_id) and len(ls_attending_doctor_id) > 0 Then
 	Using Sqlca;
 	If sqlca.sqlcode = 100 then // no match
 		ls_provider_message = "Attending doctor code ( " + ls_attending_doctor_lastname+","+ls_attending_doctor_firstname+" = "+ls_attending_doctor_id+") not mapped"
-		mylog.log(this, "arrived_mpm()", ls_provider_message , 3)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", ls_provider_message , 3)
 		Setnull(ls_attending_doctor)
 	End if
 end if
@@ -271,8 +271,8 @@ setnull(ls_encounter_type)
 setnull(ls_new_flag)
 ls_appointment_reason = ls_appointment_type
 If not isnull(ls_resourceid) AND trim(ls_resourceid) <> "" then
-	mylog.log(this, "arrived_mpm()", "Resource Id (" + ls_resourcetext +")" , 2)
-	mylog.log(this, "arrived_mpm()", "Appointment Type (" + ls_appointment_type +")" , 2)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", "Resource Id (" + ls_resourcetext +")" , 2)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", "Appointment Type (" + ls_appointment_type +")" , 2)
 // min of Sort Sequence
 	SELECT min(sort_sequence)
 	INTO :li_sort_sequence
@@ -303,13 +303,13 @@ If not isnull(ls_resourceid) AND trim(ls_resourceid) <> "" then
 		USING cprdb;
 		If not cprdb.check() then Return -1
 		If cprdb.sqlcode = 100 Then
-			mylog.log(this, "arrived_mpm()", "Resource not mapped (" + ls_resourcetext + ")", 3)
+			mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", "Resource not mapped (" + ls_resourcetext + ")", 3)
 		Else
 			lb_resource = true
 		End if
 	End If
 	if not lb_resource then
-		mylog.log(this, "arrived_mpm()", "Resource not mapped (" + ls_resourcetext + ")", 3)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", "Resource not mapped (" + ls_resourcetext + ")", 3)
 	end if
 Elseif isnull(ls_attending_doctor) Then // may be in resource table and AIG may not be filled in all the time with ntierprise
 	SELECT distinct user_id
@@ -319,7 +319,7 @@ Elseif isnull(ls_attending_doctor) Then // may be in resource table and AIG may 
 	Using Sqlca;
 	If sqlca.sqlcode = 100 then // no match
 		ls_temp = "Message Id ("+is_message_id+" ) attending doctor( " + ls_attending_doctor_lastname+","+ls_attending_doctor_firstname+" - id is "+ls_attending_doctor_id+") not mapped in resource either"
-		mylog.log(this, "arrived_mpm()", ls_temp , 3)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", ls_temp , 3)
 		Setnull(ls_attending_doctor)
 	End if
 End If
@@ -327,7 +327,7 @@ End If
 If isnull(ls_encounter_type) and isnull(ls_new_flag) Then // Not a resource Visit
 	if isnull(ls_appointment_type) or ls_appointment_type = "" then
 		ls_appointment_message = "appointment type code & text is empty"
-		mylog.log(this, "arrived()",ls_appointment_message, 3)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084",ls_appointment_message, 3)
 	else	
 		SELECT encounter_type,
 			 new_flag
@@ -340,11 +340,11 @@ If isnull(ls_encounter_type) and isnull(ls_new_flag) Then // Not a resource Visi
 		If Not cprdb.check() Then Return -1
 		If cprdb.sqlcode = 100 then
 			ls_appointment_message = "Appointment Type or text("+ls_appointment_type+") not mapped"
-			mylog.log(this, "arrived()",ls_appointment_message, 3)
+			mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084",ls_appointment_message, 3)
 			Setnull(ls_encounter_type)
 			Setnull(ls_new_flag)
 		Else
-			mylog.log(this, "arrived_mpm()", "appointment type ("+ls_appointment_type+")",2)
+			mylog.log(this, "u_hl7_arrived_nterprise.arrived.0203", "appointment type ("+ls_appointment_type+")",2)
 		End If
 	end if
 End If
@@ -385,7 +385,7 @@ IF isnull(is_cpr_id) THEN
 	IF NOT cprdb.check() THEN RETURN -1
 	IF cprdb.sqlcode = 100 THEN
 		ls_message = "Patient account is disabled or not found (" + ls_billing_id + ", " + is_message_id + ")"
-		mylog.log(this, "arrived()", ls_message, 4)
+		mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", ls_message, 4)
 		GOTO error
 	end if
 ELSE
@@ -399,7 +399,7 @@ ELSE
 	IF NOT cprdb.check() THEN RETURN -1
 	IF cprdb.sqlcode = 100 THEN
 			ls_message = "Patient account is disabled or not found (" + ls_cprid + ", " + is_message_id + ")"
-			mylog.log(this, "arrived()",ls_message, 4)
+			mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084",ls_message, 4)
 			GOTO error
 	END IF
 END IF
@@ -469,7 +469,7 @@ INSERT INTO	x_encounterpro_Arrived (
 	
 IF NOT cprdb.check() THEN 
 	ls_message = "Unable write a record to x_encounterpro_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + is_message_id + ")"
-	mylog.log(this, "arrived()", ls_message, 4)
+	mylog.log(this, "u_hl7_arrived_nterprise.arrived.0084", ls_message, 4)
 	GOTO error
 END IF
 is_last_message_id = is_message_id

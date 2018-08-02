@@ -291,14 +291,14 @@ end if
 // insert or update the menu item record
 EXECUTE lsp_set_menu;
 if not tf_check() then
-	log.log(this,"clicked()","unable to execute sp_set_menu storedprocedure",3)
+	log.log(this,"w_new_menu.pb_ok.clicked.0023","unable to execute sp_set_menu storedprocedure",3)
 	pb_cancel.event clicked()
 	return
 end if
 
 FETCH lsp_set_menu INTO :ll_menu_id;
 if not tf_check() then
-	log.log(this,"clicked()","unable to get output from sp_set_menu storedprocedure",3)
+	log.log(this,"w_new_menu.pb_ok.clicked.0023","unable to get output from sp_set_menu storedprocedure",3)
 	pb_cancel.event clicked()
 	return
 end if

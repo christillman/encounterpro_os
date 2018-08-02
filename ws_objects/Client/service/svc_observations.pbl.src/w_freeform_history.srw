@@ -378,7 +378,7 @@ service = message.powerobjectparm
 title = current_patient.id_line()
 
 if isnull(service.treatment) then
-	log.log(this, "open", "No associated treatment", 4)
+	log.log(this, "w_freeform_history.open.0025", "No associated treatment", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -395,7 +395,7 @@ st_comment_title.text = comment_title
 
 // If we still don't have an observation_sequence, it's an error
 if isnull(observation_sequence) then
-	log.log(this, "open", "No root observation sequence", 4)
+	log.log(this, "w_freeform_history.open.0025", "No root observation sequence", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -410,7 +410,7 @@ top_20_code = top_20_specific_code
 st_specific_list.backcolor = color_object_selected
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading pick list", 4)
+	log.log(this, "w_freeform_history.open.0025", "Error loading pick list", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)
@@ -424,7 +424,7 @@ if li_sts = 0 then
 	
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_freeform_history.open.0025", "Error loading pick list", 4)
 		popup_return.item_count = 1
 		popup_return.items[1] = "ERROR"
 		closewithreturn(this, popup_return)
@@ -833,7 +833,7 @@ integer li_sts
 
 li_sts = save_comment()
 if li_sts < 0 then
-	log.log(this, "clicked", "Error saving comment", 4)
+	log.log(this, "w_freeform_history.cb_done.clicked.0006", "Error saving comment", 4)
 	return
 end if
 
@@ -865,7 +865,7 @@ integer li_sts
 
 li_sts = save_comment()
 if li_sts < 0 then
-	log.log(this, "clicked", "Error saving comment", 4)
+	log.log(this, "w_freeform_history.cb_done.clicked.0006", "Error saving comment", 4)
 	return
 end if
 

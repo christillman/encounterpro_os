@@ -141,14 +141,14 @@ integer li_sts
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_family_illness.open.0007", "Invalid parameters", 4)
 	close(this)
 	return
 end if
 	
 ll_family_history_sequence = long(popup.items[1])
 if isnull(ll_family_history_sequence) or ll_family_history_sequence <= 0 then
-	log.log(this, "open", "invalid family_history_sequence", 4)
+	log.log(this, "w_family_illness.open.0007", "invalid family_history_sequence", 4)
 	close(this)
 	return
 end if

@@ -183,7 +183,7 @@ FROM dbo.fn_scheduled_services()
 WHERE service_sequence = :service_sequence;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "refresh()", "Scheduled Service Not Found (" + string(service_sequence) + ")", 4)
+	log.log(this, "w_scheduled_service_edit.refresh.0046", "Scheduled Service Not Found (" + string(service_sequence) + ")", 4)
 	return -1
 end if
 
@@ -400,7 +400,7 @@ ls_context_object = "General"
 ls_param_mode = "Order"
 
 if isnull(ls_service) then
-	log.log(this, "f_configure_service()", "Null Service", 4)
+	log.log(this, "w_scheduled_service_edit.configure_service.0033", "Null Service", 4)
 	return -1
 end if
 
@@ -410,7 +410,7 @@ FROM o_Service
 WHERE service = :ls_service;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "f_configure_service()", "Service not found (" + ls_service + ")", 4)
+	log.log(this, "w_scheduled_service_edit.configure_service.0033", "Service not found (" + ls_service + ")", 4)
 	return -1
 end if
 
@@ -425,7 +425,7 @@ luo_data.set_dataobject("dw_service_schedule_attributes")
 li_count = luo_data.retrieve(service_sequence)
 
 if li_count < 0 then
-	log.log(this, "configure_report()", "Error getting attributes", 4)
+	log.log(this, "w_scheduled_service_edit.configure_service.0058", "Error getting attributes", 4)
 	return -1
 end if
 
@@ -582,13 +582,13 @@ event open;call super::open;
 
 service_sequence = message.doubleparm
 if isnull(service_sequence) or service_sequence <= 0 then
-	log.log(this, "open", "Invalid service_sequence", 4)
+	log.log(this, "w_scheduled_service_edit.open.0005", "Invalid service_sequence", 4)
 	close(this)
 	return
 end if
 
 if refresh() < 0 then
-	log.log(this, "open", "Error refreshing screen", 4)
+	log.log(this, "w_scheduled_service_edit.open.0005", "Error refreshing screen", 4)
 	close(this)
 	return
 end if

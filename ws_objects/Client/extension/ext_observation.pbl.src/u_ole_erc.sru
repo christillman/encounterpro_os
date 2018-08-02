@@ -26,7 +26,7 @@ end type
 global u_ole_erc u_ole_erc
 
 event externalexception;
-log.log(this, "externalexception", "ERROR (" + string(resultcode) + ") - " + description, 4)
+log.log(this, "u_ole_erc.externalexception.0002", "ERROR (" + string(resultcode) + ") - " + description, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1
@@ -43,7 +43,7 @@ ls_string = ls_string + "Script        : " + errorscript + "~r~n"
 ls_string = ls_string + "Line Number   : " + string(errorline) + "~r~n"
 ls_string = ls_string + "Window Menu   : " + errorwindowmenu + "~r~n"
 
-log.log(this, "error", ls_string, 4)
+log.log(this, "u_ole_erc.error.0011", ls_string, 4)
 
 
 end event

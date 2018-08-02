@@ -157,7 +157,7 @@ integer li_sts
 
 li_sts = f_get_config_object_info(config_object_id, config_object_info)
 if li_sts <= 0 then
-	log.log(this, "post_open", "Error getting config object info (" + config_object_id + ")", 4)
+	log.log(this, "w_config_reports.refresh.0008", "Error getting config object info (" + config_object_id + ")", 4)
 	return -1
 end if
 
@@ -167,7 +167,7 @@ st_owner.text = config_object_info.owner_description
 st_title.text = wordcap(config_object_info.config_object_type) + " Configuration"
 
 if isnull(config_object_id) or trim(config_object_id) = "" then
-	log.log(this, "refresh()", "Invalid config_object_id", 4)
+	log.log(this, "w_config_reports.refresh.0018", "Invalid config_object_id", 4)
 	return -1
 end if
 
@@ -175,11 +175,11 @@ end if
 //luo_data.set_dataobject("dw_report_data")
 //ll_sts = luo_data.retrieve(config_object_id)
 //if ll_sts < 0 then
-//	log.log(this, "refresh()", "Error retrieving report data (" + config_object_id + ")", 4)
+//	log.log(this, "w_config_reports.refresh.0018", "Error retrieving report data (" + config_object_id + ")", 4)
 //	return -1
 //end if
 //if ll_sts = 0 then
-//	log.log(this, "refresh()", "report not found (" + config_object_id + ")", 4)
+//	log.log(this, "w_config_reports.refresh.0018", "report not found (" + config_object_id + ")", 4)
 //	return -1
 //end if
 

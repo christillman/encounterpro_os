@@ -68,7 +68,7 @@ if f_is_context_object(ls_context_object) then
 	dw_context_object.settransobject(sqlca)
 	ll_count = dw_context_object.retrieve(ls_context_object)
 	if ll_count <= 0 then
-		log.log(this, "open", "Error getting compatible context objects", 4)
+		log.log(this, "w_pick_report_old.open.0027", "Error getting compatible context objects", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -80,7 +80,7 @@ else
 	dw_context_object.settransobject(sqlca)
 	ll_count = dw_context_object.retrieve("CONTEXT_OBJECT")
 	if ll_count <= 0 then
-		log.log(this, "open", "Error getting context objects", 4)
+		log.log(this, "w_pick_report_old.open.0027", "Error getting context objects", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

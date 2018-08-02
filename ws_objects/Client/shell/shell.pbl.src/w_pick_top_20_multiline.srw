@@ -250,7 +250,7 @@ if popup.data_row_count = 2 Then
 	top_20_code = popup.items[1]
 	original_note = popup.items[2]
 Else
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_pick_top_20_multiline.open.0018", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -281,7 +281,7 @@ end if
 top_20_user_id = current_user.user_id
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading pick list", 4)
+	log.log(this, "w_pick_top_20_multiline.open.0018", "Error loading pick list", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -291,7 +291,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.common_list_id()
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_pick_top_20_multiline.open.0018", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

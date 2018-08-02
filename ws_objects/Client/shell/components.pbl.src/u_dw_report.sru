@@ -22,7 +22,7 @@ event error;string ls_temp
 
 ls_temp = "Error (" + string(errornumber) + "): " + errortext
 
-mylog.log(this, "error", ls_temp, 4)
+mylog.log(this, "u_dw_report.error.0005", ls_temp, 4)
 
 
 end event

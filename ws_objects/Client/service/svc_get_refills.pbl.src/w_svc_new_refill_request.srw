@@ -279,7 +279,7 @@ if ll_treatment_id > 0 then
 			ll_followup_patient_workplan_id)
 	If Not tf_check() then Return -1
 else
-	log.log(this, "order_refill_request()", "Error creating refill request treatment", 4)
+	log.log(this, "w_svc_new_refill_request.order_refill_request.0067", "Error creating refill request treatment", 4)
 	return -1
 end if
 
@@ -387,7 +387,7 @@ service = message.powerobjectparm
 
 
 if isnull(service.treatment) then
-	log.log(this, "open", "Null treatment object", 4)
+	log.log(this, "w_svc_new_refill_request.open.0014", "Null treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

@@ -175,13 +175,13 @@ if li_sts <= 0 then return li_sts
 
 dose_unit = unit_list.find_unit(ls_dose_unit)
 if isnull(dose_unit) then
-	log.log(this, "get_package_date()", "Invalid Dose Unit (" + ls_dose_unit + ")", 4)
+	log.log(this, "w_package_edit.get_package_data.0025", "Invalid Dose Unit (" + ls_dose_unit + ")", 4)
 	return 0
 end if
 
 administer_unit = unit_list.find_unit(ls_administer_unit)
 if isnull(administer_unit) then
-	log.log(this, "get_package_date()", "Invalid Dose Unit (" + ls_administer_unit + ")", 4)
+	log.log(this, "w_package_edit.get_package_data.0025", "Invalid Dose Unit (" + ls_administer_unit + ")", 4)
 	return 0
 end if
 
@@ -553,7 +553,7 @@ if isnull(package_id) then
 	lstr_package.dose_amount = lr_dose_amount
 	li_sts = drugdb.new_package(lstr_package)
 	if li_sts <= 0 then
-		log.log(this, "clicked", "Error saving new package", 4)
+		log.log(this, "w_package_edit.pb_done.clicked.0048", "Error saving new package", 4)
 		return
 	end if
 	package_id = lstr_package.package_id

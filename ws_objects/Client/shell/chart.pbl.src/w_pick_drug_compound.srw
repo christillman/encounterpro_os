@@ -114,7 +114,7 @@ ls_specific_code = top_20_code + "|" + ps_drug_id
 
 luo_unit = unit_list.find_unit("%")
 if isnull(luo_unit) then
-	log.log(this, "select_drug()", "Unit not found (%)", 4)
+	log.log(this, "w_pick_drug_compound.select_drug.0027", "Unit not found (%)", 4)
 	return
 end if
 
@@ -161,7 +161,7 @@ Elseif popup.data_row_count = 2 Then
 	top_20_code = popup.items[1]
 	allow_null_amount = f_string_to_boolean(popup.items[2])
 Else
-	log.log(this,"open","Invalid parameters",4)
+	log.log(this,"w_pick_drug_compound.open.0021","Invalid parameters",4)
 	pb_cancel.event clicked()
 	Return
 End If

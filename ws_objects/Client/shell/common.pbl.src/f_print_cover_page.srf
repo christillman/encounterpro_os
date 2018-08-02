@@ -33,7 +33,7 @@ FROM c_Document_Route
 WHERE document_route = :ls_document_route;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(po_null, "f_print_cover_page()", "No current patient", 4)
+	log.log(po_null, "f_print_cover_page.0028", "No current patient", 4)
 	return -1
 end if
 

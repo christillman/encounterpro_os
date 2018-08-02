@@ -311,7 +311,7 @@ end if
 
 get_attribute("hold_incoming_app", hold_incoming)
 If len(hold_incoming) = 0 Then 
-	log.log(this,"xx_initialize()","WARNING: Saving incoming message not enabled; To enable set Attribute = 'hold_incoming_app', Value='EPROHOLDIN' FOR Component = 'trn_in_filecopy_hl7'.",3)
+	log.log(this,"u_component_incoming_filecopy_hl7.xx_initialize.0029","WARNING: Saving incoming message not enabled; To enable set Attribute = 'hold_incoming_app', Value='EPROHOLDIN' FOR Component = 'trn_in_filecopy_hl7'.",3)
 	Setnull(hold_incoming)
 End If
 
@@ -329,7 +329,7 @@ get_attribute("dcom_app_port", ls_dcom_app_port)
 if isnumber(ls_dcom_app_port) then
 	dcom_app_port = long(ls_dcom_app_port)
 	if isnull(ack_appl) then
-		mylog.log(this, "xx_initialize", "no object destination.", 4)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0047", "no object destination.", 4)
 		return -1
 	end if
 else
@@ -337,16 +337,16 @@ else
 end if	
 
 setnull(dcom_app)
-log.log(this, "send_file()", "getting app", 2)
+log.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0055", "getting app", 2)
 get_attribute("dcom_app", dcom_app)
 if isnull(dcom_app) or dcom_app = '' then
-	mylog.log(this, "xx_initialize", "no object source.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0047", "no object source.", 4)
 	return -1
 end if
 
 get_attribute("dcom_app_ack",dcom_ack_app)
 if isnull(dcom_ack_app) or dcom_ack_app = '' then
-	mylog.log(this, "xx_initialize", "no object source acknowledgement.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0047", "no object source acknowledgement.", 4)
 	return -1
 end if
 
@@ -367,7 +367,7 @@ if isnull(billing_id_domain) then billing_id_domain = "JMJBILLINGID"
 get_attribute("billing_id_prefix",billing_id_prefix)
 if isnull(billing_id_prefix) then
 	if billing_id_domain <> "JMJBILLINGID" then
-		log.log(this,"xx_initialize","Billing ID Prefix is required for multi billing system domains",4)
+		log.log(this,"u_component_incoming_filecopy_hl7.xx_initialize.0085","Billing ID Prefix is required for multi billing system domains",4)
 		return -1
 	end if
 end if
@@ -375,10 +375,10 @@ end if
 // Connect to AHC Interface
 li_rtn = ahc_connect()
 if li_rtn <= 0 Then 
-	mylog.log(this, "xx_initialize", "Unable to connect to AHC Interface.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0047", "Unable to connect to AHC Interface.", 4)
 	return -1
 end if
-log.log(this, "start_receiving()", "dcom_app (" + dcom_app + ")", 2)
+log.log(this, "u_component_incoming_filecopy_hl7.xx_initialize.0096", "dcom_app (" + dcom_app + ")", 2)
 
 Return 1
 
@@ -395,7 +395,7 @@ oleobject 	coll  //HCMessageEnvelopeCollection
 // check for messages
 ll_pending = omsgMan.NumMessagesPending()
 If ll_pending > 0 Then
-	mylog.log(this, "timer_ding()", "message received (" + string(ll_pending) + ")", 2)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "message received (" + string(ll_pending) + ")", 2)
 	For i = 1 to ll_pending
 	   coll = omsgMan.PollForMessage(1, count)
 		count = Coll.Count
@@ -416,10 +416,10 @@ If ll_pending > 0 Then
 		destroy(Coll)
 		setnull(coll)
 	Next
-	mylog.log(this, "timer_ding()", "messages processed (" + string(ll_pending) + ")", 2)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "messages processed (" + string(ll_pending) + ")", 2)
 	Return 2
 Else
-	mylog.log(this, "timer_ding()", "No incoming messages to process ..", 1)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "No incoming messages to process ..", 1)
 End If
 
 Return 1
@@ -429,26 +429,26 @@ public function integer ahc_connect ();INTEGER li_sts
 Boolean lb_listen
 
 lb_listen = FALSE
-mylog.log(this, "ahc_connect()", "ahc_connect() - Begin", 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "ahc_connect() - Begin", 1)
 
-mylog.log(this, "ahc_connect()", "connecting to AHCMessager.", 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "connecting to AHCMessager.", 1)
 oAHC = CREATE oleobject
 li_sts = oAHC.connecttonewobject("AHC.Messenger")
 if li_sts <> 0 then
-	mylog.log(this, "ahc_connect", "ERROR: connection to AHC Messenger object failed.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0011", "ERROR: connection to AHC Messenger object failed.", 4)
 	oahc.disconnectobject()
 	DESTROY oAHC
 	setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to AHCMessager success", 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "connection to AHCMessager success", 1)
 
 // Connect to AHC Messanger and returns AHC Message Manager
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object.", 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "connection to IHCMessageManager object.", 1)
 
 omsgman = oAHC.Connect(dcom_app)
 If isnull(omsgman) Then
-	mylog.log(this, "ahc_connect()", "ERROR: connection to IHCMessageManager object failed.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "ERROR: connection to IHCMessageManager object failed.", 4)
 	oAHC.Disconnect()
 	oahc.disconnectobject()
 	DESTROY oAHC
@@ -458,7 +458,7 @@ If isnull(omsgman) Then
 	Setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object successful.", 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.ahc_connect.0005", "connection to IHCMessageManager object successful.", 1)
 
 return 1
 end function
@@ -474,7 +474,7 @@ If not isnull(hold_incoming) Then // copy to a hold folder for jmj reference
 		oMsgman.Sendmessage(lenv,hold_incoming)
 		oMsgman.donewithmessage(lenv)
 	catch (throwable lo_error)
-		mylog.log(this,"message_parser()",lo_error.text,3)
+		mylog.log(this,"u_component_incoming_filecopy_hl7.message_parser.0012",lo_error.text,3)
 	finally
 		destroy lenv
 		setnull(lenv)
@@ -482,7 +482,7 @@ If not isnull(hold_incoming) Then // copy to a hold folder for jmj reference
 End If
 oMsg = oEnv.Content
 If isnull(oMsg) then
-	mylog.log(this, "message_parser()", "message object is null)", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0020", "message object is null)", 4)
 	Return -1
 End If
 
@@ -501,7 +501,7 @@ end if
 is_FromApp = oEnv.Header.SendingApplicationID
 is_ToApp = oEnv.Header.ReceivingApplicationID
 
-mylog.log(this, "message_parser()", "message object " + ls_msgtypeobj + " From " + is_FromApp, 2)	
+mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0020", "message object " + ls_msgtypeobj + " From " + is_FromApp, 2)	
 setnull(is_cpr_id)
 setnull(is_billing_id)
 
@@ -523,14 +523,14 @@ Choose Case ls_msgtype
 				if li_sts = 1 then li_sts = insurance(omsg)
 			Case "A38" //	A38 - Appointment Canceled
 			Case Else
-				mylog.log(this, "message_parser()", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
+				mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0020", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
 		End Choose
 	Case "ORU"
 		Choose Case ls_msgevent
 			Case 	"O02"	
 				li_sts = labresults()
 			Case Else
-				mylog.log(this, "xx_handle_message()", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
+				mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0068", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
 		End Choose
 	Case "SIU" 
 		Choose Case ls_msgevent
@@ -541,13 +541,13 @@ Choose Case ls_msgtype
 				li_sts = patient_siu(omsg)
 				if li_sts = 1 Then li_sts = arrived(omsg)
 			Case Else
-				mylog.log(this, "message_parser()", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
+				mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0020", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
 				li_sts = 1
 		End Choose
 	Case "ACK"
 		li_sts = get_billing_acks(omsg)
 	Case Else
-		mylog.log(this, "message_parser()", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
+		mylog.log(this, "u_component_incoming_filecopy_hl7.message_parser.0020", "Cannot handle type message " + ls_msgtypeobj + "Message ID (" + is_message_id + ")", 4)	
 End Choose
 
 If Not ls_msgtype = 'ACK' then
@@ -715,7 +715,7 @@ IF bs_system = 'IDX' or bs_system = 'MEDIC' or bs_system='PRACTICEPOINT' then //
 			FileClose(li_FileNum)
 	else
 		if isnull(dcom_app_port) then
-			mylog.log(this, "ack()", "error no port specified for ack(trn_in_filecopy_hl7 attribute =dcom_app_port) ", 3)	
+			mylog.log(this, "u_component_incoming_filecopy_hl7.send_acks.0117", "error no port specified for ack(trn_in_filecopy_hl7 attribute =dcom_app_port) ", 3)	
 			return 1
 		end if	
 		oleobject jsocket
@@ -725,14 +725,14 @@ IF bs_system = 'IDX' or bs_system = 'MEDIC' or bs_system='PRACTICEPOINT' then //
 		if li_sts <> 0 then
 			DESTROY jsocket
 			setnull(jsocket)
-			mylog.log(this, "ack()", "ERROR: connection to jsocket object failed.", 4)
+			mylog.log(this, "u_component_incoming_filecopy_hl7.send_acks.0117", "ERROR: connection to jsocket object failed.", 4)
 			return -1
 		end if
 		socket_return = jsocket.SendString(ack_appl,dcom_app_port,ack_message)
 		if socket_return = 'Success' then
-			mylog.log(this,"ack()","message sent to jsocket " + ack_appl,1)
+			mylog.log(this,"u_component_incoming_filecopy_hl7.send_acks.0132","message sent to jsocket " + ack_appl,1)
 		else
-			mylog.log(this,"ack()","error with send to jsocket " + socket_return,4)
+			mylog.log(this,"u_component_incoming_filecopy_hl7.send_acks.0132","error with send to jsocket " + socket_return,4)
 			li_sts = -1
 		end if
 		DESTROY jsocket
@@ -742,7 +742,7 @@ IF bs_system = 'IDX' or bs_system = 'MEDIC' or bs_system='PRACTICEPOINT' then //
 End if	
 // using AHC to send acks
 If isnull(dcom_ack_app) or dcom_ack_app = 'N' then
-	mylog.log(this,"ack","No acknowledgement destination (attribute = dcom_ack_app)",3)
+	mylog.log(this,"u_component_incoming_filecopy_hl7.send_acks.0144","No acknowledgement destination (attribute = dcom_ack_app)",3)
 	Return 1
 End If
 // Check whether it's accpet acknowledge or reject
@@ -761,7 +761,7 @@ end if
 oMsgtype = create oleobject
 li_sts = oMsgtype.connecttonewobject("AHC.MessageType")
 if li_sts <> 0 then
-	mylog.log(this, "ack()", "ERROR: connection to AHC messagetype object failed.", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.send_acks.0117", "ERROR: connection to AHC messagetype object failed.", 4)
 	DESTROY oMsgtype
 	setnull(oMsgtype)
 	return -1
@@ -827,10 +827,10 @@ HL7MsgACK.MessageAcknowledgment.AcknowledgmentCode.Value = ack_code
 HL7MsgACK.MessageAcknowledgment.ControlID.Value = ls_ack_controlid
 
 // send message to destination using AHC
-mylog.log(this, "ack()", "sendmessage to " + is_FromApp + " from " + dcom_ack_app, 1)	
+mylog.log(this, "u_component_incoming_filecopy_hl7.send_acks.0117", "sendmessage to " + is_FromApp + " from " + dcom_ack_app, 1)	
 ls_uuid = omsgman.SendMessage(ackmsg,dcom_ack_app)
 if IsNull(ls_uuid) then
-	mylog.log(this,"send_ack()","error with send to AHCMessenger object",4)
+	mylog.log(this,"u_component_incoming_filecopy_hl7.send_acks.0232","error with send to AHCMessenger object",4)
 end if
 
 omsgman.DoneWithMessage(AckMsg)
@@ -845,9 +845,9 @@ Return 1
 end function
 
 protected function integer xx_shutdown ();if not isnull(oAHC) Then
-	mylog.log(this,"xx_shutdown","disconnecting from AHC Interface",1)
+	mylog.log(this,"u_component_incoming_filecopy_hl7.xx_shutdown.0002","disconnecting from AHC Interface",1)
 	oAHC.Disconnect()
-	mylog.log(this,"xx_shutdown","disconnected from AHC Interface",1)
+	mylog.log(this,"u_component_incoming_filecopy_hl7.xx_shutdown.0002","disconnected from AHC Interface",1)
 End If
 Destroy oAHC
 Destroy omsgMan
@@ -885,7 +885,7 @@ FROM o_Message_Log
 WHERE id like :ls_ack_message_id
 Using cprdb;
 If cprdb.sqlcode = 100 Then
-	mylog.log(this, "timer_ding()", "No records found for message ID (" + ls_ack_message_id + ")", 2)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "No records found for message ID (" + ls_ack_message_id + ")", 2)
 	Return 1
 End If
 					
@@ -897,7 +897,7 @@ If ls_ack_type = "AA" or ls_ack_type = "AL" or ls_ack_type = 'CA' then // bill A
 	Using cprdb;
 	If NOT cprdb.check() THEN RETURN -1		
 
-	mylog.log(this, "timer_ding()", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
 Elseif ls_ack_type = "AE" then
 	Update o_message_log
 	Set status = 'ACK_REJECT',
@@ -907,7 +907,7 @@ Elseif ls_ack_type = "AE" then
 	Using cprdb;
 	If Not cprdb.check() THEN Return -1		
 	
-	mylog.log(this, "timer_ding()", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
 Else
 	Update o_message_log
 	Set status = 'ACK_NACK'
@@ -917,7 +917,7 @@ Else
 	using cprdb;
 	if not cprdb.check() then return -1		
 
-	mylog.log(this, "timer_ding()", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
+	mylog.log(this, "u_component_incoming_filecopy_hl7.timer_ding.0012", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
 End if	
 Destroy ack
 Setnull(ack)
@@ -1015,7 +1015,7 @@ if ll_count > 0 then
 	ls_last_name 	= omsg.PatientIdentification.PatientName.Item(0).FamilyName.valuestring
 	ls_middle_name	= omsg.PatientIdentification.PatientName.Item(0).MiddleName.valuestring
 else
-	log.log(this, "patient_adt()", "Message id "+is_message_id+ " did not have valid PID-PatientName, message rejected ", 4)
+	log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "Message id "+is_message_id+ " did not have valid PID-PatientName, message rejected ", 4)
 	return -1
 end if
 if not isnull(ls_last_name) and len(ls_last_name) > 0 then
@@ -1029,14 +1029,14 @@ if not isnull(ls_first_name) and len(ls_first_name) > 0 then
 	end if
 end if
 if isnull(ls_patient_name) or len(ls_patient_name) = 0 Then
-	log.log(this, "patient_adt()", "Message id "+is_message_id+ " did not have valid PID-PatientName, message rejected ", 4)
+	log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "Message id "+is_message_id+ " did not have valid PID-PatientName, message rejected ", 4)
 	return -1
 end if
 // Gettting Billing Id
 if isnull(ls_external_id) or ls_external_id = "" then
 	if isnull(ls_internal_id) or ls_internal_id = "" then
 		if isnull(ls_alternate_PID) or ls_alternate_PID = "" then
-			mylog.log(this, "patient_adt()", "External Patient Id(Billing Id) not provided for ( "+ls_last_name+","+ls_first_name+ " Message (" + string(is_message_id) + ") rejected", 4)
+			mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "External Patient Id(Billing Id) not provided for ( "+ls_last_name+","+ls_first_name+ " Message (" + string(is_message_id) + ") rejected", 4)
 			return -1
 		else
 			ls_billing_id = ls_alternate_PID
@@ -1051,7 +1051,7 @@ IF upper(bs_system) = 'HORIZON' then ls_billing_id = ls_external_id
 		
 if isnull(ls_billing_id) then
 	setnull(ls_cpr_id)
-	mylog.log(this, "patient_adt()", "External Patient Id(Billing Id) not provided for ( "+ls_last_name+","+ls_first_name+ " Message (" + string(is_message_id) + ") rejected", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "External Patient Id(Billing Id) not provided for ( "+ls_last_name+","+ls_first_name+ " Message (" + string(is_message_id) + ") rejected", 4)
 	return -1
 end if
 // Patient Address Details
@@ -1090,7 +1090,7 @@ end if
 
 if (ls_birthdate = "0" or isnull(ls_birthdate) or ls_birthdate = "") then
 	ls_error = ls_birthdate
-	log.log(this, "patient_adt()", "Patient "+ls_patient_name+" didnt have valid birthdate (" + ls_error  + ")", 3)
+	log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "Patient "+ls_patient_name+" didnt have valid birthdate (" + ls_error  + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -1100,7 +1100,7 @@ else
 		ldt_date_of_birth = datetime(ld_birthdate)
 	else
 		ls_error = ls_birthdate
-		log.log(this, "patient_adt()", "Patient "+ls_patient_name+" didnt have valid birthdate (" + ls_error  + ")", 3)
+		log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "Patient "+ls_patient_name+" didnt have valid birthdate (" + ls_error  + ")", 3)
 		setnull(ld_birthdate)
 	end if
 end if
@@ -1149,12 +1149,12 @@ ll_count = omsg.Guarantor.Count
 if ll_count > 0 then
 	ll_count = omsg.Guarantor[0].guarantornumber.count
 	if ll_count > 0 then
-		mylog.log(this, "arrived()", "Guarantor number is not provided and so ignore this..", 1)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0225", "Guarantor number is not provided and so ignore this..", 1)
 	else
 	//	ls_gnumber = omsg.guarantor[0].guarantornumber[0].id.valuestring
 		ll_count = omsg.Guarantor[0].guarantorname.count
 		if ll_count = 0 then
-			mylog.log(this, "arrived()", "Guarantor name is not provided and so ignore this..", 1)
+			mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0225", "Guarantor name is not provided and so ignore this..", 1)
 		else
 			ls_glname = omsg.guarantor[0].guarantorname[0].familyname.valuestring
 			ls_gfname = omsg.guarantor[0].guarantorname[0].givenname.valuestring
@@ -1198,7 +1198,7 @@ if not isnull(ls_principal_provider) and len(ls_principal_provider) > 0 then
 	if not cprdb.check() then return -1
 	if isnull(ls_primary_provider_id) then 
 		ls_temp = "Primary Provider ( "+ls_principal_provider_lastname+","+ls_principal_provider_firstname+"="+ls_principal_provider+" ) is not mapped in epro"
-		log.log(this, "patient()",ls_temp, 3)
+		log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0274",ls_temp, 3)
 	end if		
 elseif not isnull(ls_pcp) and len(ls_pcp) > 0 then
 
@@ -1215,7 +1215,7 @@ elseif not isnull(ls_pcp) and len(ls_pcp) > 0 then
 	if not cprdb.check() then return -1
 	if isnull(ls_primary_provider_id) then 
 		ls_temp = "Primary Care Provider ( "+ls_pcp_lastname+","+ls_pcp_firstname+"="+ls_pcp+" ) is not mapped in epro"
-		log.log(this, "patient()",ls_temp, 3)
+		log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0274",ls_temp, 3)
 	end if		
 	
 end if
@@ -1271,7 +1271,7 @@ if not isnull(ls_cpr_id) then
 	end if
 end if
 
-mylog.log(this, "patient_adt()", "patient info=" + ls_billing_id + " " + ls_last_name + "," + ls_first_name, 1)
+mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091", "patient info=" + ls_billing_id + " " + ls_last_name + "," + ls_first_name, 1)
 ls_sex = upper(left(ls_sex,1))
 ls_marital_status = upper(left(ls_marital_status,1))
 ls_race = left(ls_race,24)
@@ -1323,7 +1323,7 @@ IF isnull(ls_cpr_id) THEN
 									li_priority, &
 									ls_ssn)
 	if li_sts <= 0 then 
-		mylog.log(this, "patient_adt()","create failed",4)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091","create failed",4)
 		li_rtn = -4
 		Return li_rtn
 	end if
@@ -1428,7 +1428,7 @@ and patient_status = 'ACTIVE'
 USING cprdb;
 
 If not cprdb.check() then 
-	mylog.log(this, "patient_adt()","update failed " + string(cprdb.sqlcode) + " " + cprdb.sqlerrtext,4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091","update failed " + string(cprdb.sqlcode) + " " + cprdb.sqlerrtext,4)
 	return -1
 End If
 
@@ -1579,11 +1579,11 @@ if ll_count > 0 then
 	if ll_count > 0 then
 		ls_internal_id = omsg.PatientIdentificationGroup.Item[0].PatientIdentification.InternalPatientID.Item[0].ID.valuestring
 	else
-		mylog.log(this, "patient_siu()", "patient internal id not provided, Message ID (" + string(is_message_id) + ")", 3)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075", "patient internal id not provided, Message ID (" + string(is_message_id) + ")", 3)
 		li_rtn = -1
 	end if	
 else
-	mylog.log(this, "patient_siu()", "PatientIdentification Segment not filled in.. Can't process this message id (" + string(is_message_id) + ")", 4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075", "PatientIdentification Segment not filled in.. Can't process this message id (" + string(is_message_id) + ")", 4)
 	return -1
 end if	
 
@@ -1591,7 +1591,7 @@ end if
 if isnull(ls_external_id) or ls_external_id = "" then
 	if isnull(ls_internal_id) or ls_internal_id = "" then
 		if isnull(ls_alternate_PID) or ls_alternate_PID = "" then
-			mylog.log(this, "patient_siu()", "id not provided, Message ID (" + string(is_message_id) + ")", 4)
+			mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075", "id not provided, Message ID (" + string(is_message_id) + ")", 4)
 			setnull(ls_billing_id)
 		else
 			ls_billing_id = ls_alternate_PID
@@ -1604,7 +1604,7 @@ else
 end if
 if isnull(ls_billing_id) then
 	setnull(ls_cpr_id)
-	mylog.log(this, "patient_siu()","null billing_id",4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075","null billing_id",4)
 	return -1
 end if
 
@@ -1616,7 +1616,7 @@ if ll_count > 0 then
 	ls_last_name 	= omsg.PatientIdentificationGroup.Item[0].PatientIdentification.PatientName.Item(0).FamilyName.valuestring
 	ls_middle_name	= omsg.PatientIdentificationGroup.Item[0].PatientIdentification.PatientName.Item(0).MiddleName.valuestring
 else
-	log.log(this, "patient_siu()", "No PID PatientName " + string(ll_count), 3)
+	log.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0112", "No PID PatientName " + string(ll_count), 3)
 	Return -1
 end if
 
@@ -1643,7 +1643,7 @@ end if
 
 if (ls_birthdate = "0" or isnull(ls_birthdate) or ls_birthdate = "") then
 	ls_error = ls_birthdate
-	log.log(this, "patient_siu()", "birthdate error=" + ls_error  + ")", 3)
+	log.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0112", "birthdate error=" + ls_error  + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -1653,7 +1653,7 @@ else
 		ldt_date_of_birth = datetime(ld_birthdate)
 	else
 		ls_error = ls_birthdate
-		mylog.log(this, "patient_siu()", "birthdate error=" + ls_error + ")", 3)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075", "birthdate error=" + ls_error + ")", 3)
 		setnull(ld_birthdate)
 	end if
 end if
@@ -1713,7 +1713,7 @@ if not isnull(ls_attending_doctor) and len(ls_attending_doctor) > 0 then
 	if not cprdb.check() then return -1
 	if isnull(ls_primary_provider_id) or len(ls_primary_provider_id) = 0 then 
 		ls_temp = "Attending doctor code ( "+ls_attending_doctor_lastname+","+ls_attending_doctor_firstname+"="+ls_attending_doctor+" ) is not mapped in epro"
-		log.log(this, "patient()",ls_temp, 3)
+		log.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0274",ls_temp, 3)
 	end if
 	
 end if
@@ -1737,7 +1737,7 @@ if not isnull(ls_cpr_id) then
 end if
 
 
-mylog.log(this, "patient_siu()", "patient info=" + ls_billing_id + " " + ls_last_name + "," + ls_first_name, 2)
+mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075", "patient info=" + ls_billing_id + " " + ls_last_name + "," + ls_first_name, 2)
 
 ls_sex = upper(left(ls_sex,1))
 ls_marital_status = upper(left(ls_marital_status,1))
@@ -1789,7 +1789,7 @@ if isnull(ls_cpr_id) then
 									li_priority, &
 									ls_ssn)
 	if li_sts <= 0 then 
-		mylog.log(this, "patient_siu()","create failed",4)
+		mylog.log(this, "u_component_incoming_filecopy_hl7.patient_siu.0075","create failed",4)
 		li_rtn = -4
 	else
 		lb_new_patient = true
@@ -1905,7 +1905,7 @@ WHERE cpr_id = :ls_cpr_id
 and patient_status = 'ACTIVE'
 USING cprdb;
 If not cprdb.check() then 
-	mylog.log(this, "patient_adt()","update failed " + string(cprdb.sqlcode) + " " + cprdb.sqlerrtext,4)
+	mylog.log(this, "u_component_incoming_filecopy_hl7.patient_adt.0091","update failed " + string(cprdb.sqlcode) + " " + cprdb.sqlerrtext,4)
 	return -1
 End If
 

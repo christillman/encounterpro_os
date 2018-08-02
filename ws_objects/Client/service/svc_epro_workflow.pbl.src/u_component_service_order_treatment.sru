@@ -59,7 +59,7 @@ if isnull(ls_action) then
 		ls_action = "maintenance_rule"
 	elseif isnull(ls_treatment_type) then
 		if isnull(ll_problem_id) then
-			log.log(this, "xx_do_service()", "No action specified and no assessment and no treatment_type", 4)
+			log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "No action specified and no assessment and no treatment_type", 4)
 			return 2
 		else
 			ls_action = "pick"
@@ -72,34 +72,34 @@ end if
 CHOOSE CASE lower(ls_action)
 	CASE "treatment"
 		if isnull(ls_treatment_type) then
-			log.log(this, "xx_do_service()", "No treatment_type", 4)
+			log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "No treatment_type", 4)
 			return 2
 		end if
 		li_sts = order_from_attributes(ls_treatment_type, ll_problem_id)
 		return li_sts
 	CASE "treatment_type"
 		if isnull(ls_treatment_type) then
-			log.log(this, "xx_do_service()", "No treatment_type", 4)
+			log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "No treatment_type", 4)
 			return 2
 		end if
 		li_sts = order_from_treatment_type(ls_treatment_type, ll_problem_id)
 		return li_sts
 	CASE "pick"
 		if isnull(ll_problem_id) then
-			log.log(this, "xx_do_service()", "No problem_id", 4)
+			log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "No problem_id", 4)
 			return 2
 		end if
 		li_sts = order_from_pick_new_treatments()
 		return li_sts
 	CASE "maintenance_rule"
 		if isnull(ll_maintenance_rule_id) then
-			log.log(this, "xx_do_service()", "No maintenance_rule_id", 4)
+			log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "No maintenance_rule_id", 4)
 			return 2
 		end if
 		li_sts = order_from_maintenance_rule(ll_maintenance_rule_id)
 		return li_sts
 	CASE ELSE
-		log.log(this, "xx_do_service()", "invalid action (" + ls_action + ")", 4)
+		log.log(this, "u_component_service_order_treatment.xx_do_service.0044", "invalid action (" + ls_action + ")", 4)
 		return 2
 END CHOOSE
 
@@ -139,7 +139,7 @@ get_attribute("past_treatment", lb_past_treatment)
 // We have a treatment_type, so create the appropriate treatment component
 luo_treatment = f_get_treatment_component(ps_treatment_type)
 if isnull(luo_treatment) then
-	log.log(this, "clicked", "Unable to get treatment object (" + ps_treatment_type + ")", 4)
+	log.log(this, "u_component_service_order_treatment.order_from_treatment_type.0032", "Unable to get treatment object (" + ps_treatment_type + ")", 4)
 	return -1
 end if
 
@@ -195,7 +195,7 @@ setnull(ldt_null)
 
 lstr_maintenance_rule = datalist.get_maintenance_rule(pl_maintenance_rule_id)
 if isnull(lstr_maintenance_rule.maintenance_rule_id) then
-	log.log(this, "open", "Error getting maintenance rule structure", 4)
+	log.log(this, "u_component_service_order_treatment.order_from_maintenance_rule.0022", "Error getting maintenance rule structure", 4)
 	return -1
 end if
 
@@ -206,7 +206,7 @@ if lstr_maintenance_rule.assessment_flag = "Y" then
 	luo_data.set_dataobject("dw_maintenance_open_assessment_list")
 	li_sts = luo_data.retrieve(current_patient.cpr_id, lstr_maintenance_rule.maintenance_rule_id)
 	if li_sts < 0 then
-		log.log(this, "open", "Error getting open assessments", 4)
+		log.log(this, "u_component_service_order_treatment.order_from_maintenance_rule.0022", "Error getting open assessments", 4)
 		return -1
 	end if
 	

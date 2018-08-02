@@ -86,7 +86,7 @@ dw_treatment_type.settransobject(sqlca)
 
 ll_count = dw_observation_type.retrieve()
 if ll_count <= 0 then
-	log.log(this, "open", "error getting observation types", 4)
+	log.log(this, "w_pick_treatment_type.open.0022", "error getting observation types", 4)
 	closewithreturn(this, ls_null)
 	return
 end if

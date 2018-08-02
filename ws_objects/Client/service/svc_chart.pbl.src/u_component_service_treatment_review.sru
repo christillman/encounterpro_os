@@ -15,7 +15,7 @@ end prototypes
 public function integer xx_do_service ();str_popup_return popup_return
 
 if isnull(treatment) then
-	mylog.log(this, "xx_do_service()", "Null treatment object", 4)
+	mylog.log(this, "u_component_service_treatment_review.xx_do_service.0004", "Null treatment object", 4)
 	return -1
 end if
 

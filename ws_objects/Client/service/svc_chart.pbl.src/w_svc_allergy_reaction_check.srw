@@ -87,7 +87,7 @@ popup_return.items[1] = "ERROR"
 
 service = message.powerobjectparm
 if isnull(service) then
-	log.log(this, "open", "No service object", 4)
+	log.log(this, "w_svc_allergy_reaction_check.open.0015", "No service object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

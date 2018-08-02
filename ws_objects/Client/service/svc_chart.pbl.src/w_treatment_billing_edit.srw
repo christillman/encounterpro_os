@@ -141,7 +141,7 @@ long ll_menu_id
 service = message.powerobjectparm
 
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment context", 4)
+	log.log(this, "w_treatment_billing_edit.open.0007", "No treatment context", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)

@@ -89,7 +89,7 @@ CHOOSE CASE room_type
 		return "buttonxq.bmp"
 END CHOOSE
 
-log.log(this, "bitmap()", "Unknown room type (" + room_type + ")", 3)
+log.log(this, "u_room.bitmap.0045", "Unknown room type (" + room_type + ")", 3)
 return "button09.bmp"
 
 

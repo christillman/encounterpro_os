@@ -366,7 +366,7 @@ ll_encounter_id = current_patient.new_encounter(lstr_encounter, &
 										current_scribe.user_id, &
 										lb_open_encounter)
 if ll_encounter_id <= 0 then
-	log.log(this, "clicked", "Could not create a new encounter", 4)
+	log.log(this, "u_component_service_patient_checkin.checkin_patient.0108", "Could not create a new encounter", 4)
 	return -1
 end if
 

@@ -115,7 +115,7 @@ elseif popup.argument_count > 0 then
 	canned_update = true
 	top_20_code_1 = popup.argument[1]
 	if isnull(top_20_code_1) then
-		log.log(this, "open", "top_20_code_1 is NULL", 3)
+		log.log(this, "w_pop_prompt_string.open.0055", "top_20_code_1 is NULL", 3)
 		top_20_code_1 = ""
 	end if
 

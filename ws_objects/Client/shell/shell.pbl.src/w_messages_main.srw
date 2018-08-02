@@ -64,7 +64,7 @@ li_role_count = user_list.roles_assigned_to_user(current_user.user_id, lstra_rol
 for i = 1 to li_role_count
 	luo_tabpage = tab_messages.open_page("u_tabpage_todo_items", false)
 	if isnull(luo_tabpage) then
-		log.log(this, "open", "Error opening role-todo-items tab page", 4)
+		log.log(this, "w_messages_main.open.0013", "Error opening role-todo-items tab page", 4)
 		exit
 	end if
 	

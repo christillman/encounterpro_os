@@ -85,7 +85,7 @@ if ll_rowcount > 0 then
 		ls_find = "box_id=" + string(pl_box_id)
 		ll_row = dw_open_boxes.find(ls_find, 1, ll_rowcount)
 		if ll_row <= 0 then
-			log.log(this, "show_boxes()", "Invalid box id (" + string(pl_box_id) + ")", 3)
+			log.log(this, "w_scan_more.show_boxes.0014", "Invalid box id (" + string(pl_box_id) + ")", 3)
 			return 0
 		end if
 	else
@@ -298,7 +298,7 @@ popup_return.item_count = 1
 li_sts = show_sources()
 if li_sts <= 0 then
 	openwithparm(w_pop_message, "This computer does not have any available external sources.")
-	log.log(this, "open", "No external sources", 4)
+	log.log(this, "w_scan_more.post_open.0011", "No external sources", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -360,7 +360,7 @@ if popup_return.items[2] = "TRUE" then close_box()
 
 ll_box_id = new_box("LETTERS", popup_return.items[1])
 if ll_box_id <= 0 then
-	log.log(this, "clicked", "Unable to create new box", 4)
+	log.log(this, "w_scan_more.cb_new_box.clicked.0015", "Unable to create new box", 4)
 	return
 end if
 

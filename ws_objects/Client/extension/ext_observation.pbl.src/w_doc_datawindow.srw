@@ -95,13 +95,13 @@ end if
 
 li_sts = dw_document.saveas(file_save_params.file_path, le_saveastype, file_save_params.include_column_headings, le_encoding)
 if li_sts <= 0 then
-	log.log(this, "save_to_file()", "Error saving datawindow to file (" + file_save_params.file_path + ")", 4)
+	log.log(this, "w_doc_datawindow.save_to_file.0052", "Error saving datawindow to file (" + file_save_params.file_path + ")", 4)
 	return -1
 end if
 
 li_sts = log.file_read(file_save_params.file_path, lbl_document)
 if li_sts <= 0 then
-	log.log(this, "save_to_file()", "Error reading temp file (" + file_save_params.file_path + ")", 4)
+	log.log(this, "w_doc_datawindow.save_to_file.0052", "Error reading temp file (" + file_save_params.file_path + ")", 4)
 	return -1
 end if
 
@@ -129,7 +129,7 @@ ls_datawindow_definition = document.get_attribute("datawindow_definition")
 dw_document.Create(ls_datawindow_definition, ls_error_create)
 if Len(ls_error_create) > 0 THEN
 	if isnull(ls_error_create) then ls_error_create = "<Null>"
-	log.log(this, "open()", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "w_doc_datawindow.refresh.0020", "Error creating datastore (" + ls_error_create + ")", 4)
 	close(this)
 end if
 
@@ -171,7 +171,7 @@ if len(document.temp_stored_proc) > 0 then
 	ls_new_sql = "EXECUTE " + document.temp_stored_proc
 	
 	if document.temp_stored_proc_argument_count <> lstr_arguments.argument_count then
-		log.log(this, "refresh()", "SQL argument count does not match datawindow argument count", 3)
+		log.log(this, "w_doc_datawindow.refresh.0062", "SQL argument count does not match datawindow argument count", 3)
 	end if
 	
 	// Add the arguments found in the sql script
@@ -183,7 +183,7 @@ if len(document.temp_stored_proc) > 0 then
 //	li_sts = dw_document.setsqlselect(ls_new_sql)
 	ls_sts = dw_document.Modify("DataWindow.Table.Select=~"" + ls_new_sql + "~"")
 	if len(ls_sts) > 0 then
-		log.log(this, "refresh()", "Setting the datawindow SQL failed:  " + ls_sts + "~r~n" + ls_new_sql, 4)
+		log.log(this, "w_doc_datawindow.refresh.0062", "Setting the datawindow SQL failed:  " + ls_sts + "~r~n" + ls_new_sql, 4)
 		return -1
 	end if
 end if

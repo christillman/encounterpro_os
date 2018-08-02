@@ -146,7 +146,7 @@ FROM c_treatment_Type
 WHERE treatment_type = :treatment_type;
 if not tf_check() then return
 if sqlca.sqlcode = 100 then
-	log.log(this, "load_workplan()", "treatment_type not found (" + treatment_type + ")", 4)
+	log.log(this, "u_tabpage_treatment_type_properties.refresh.0039", "treatment_type not found (" + treatment_type + ")", 4)
 	return
 end if
 

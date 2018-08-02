@@ -27,7 +27,7 @@ str_attributes lstr_attributes
 component_id = "AUTH_JMJ"
 
 if debug_mode then
-	log.log(this, "xx_do_source()", "Debug Mode", 2)
+	log.log(this, "u_component_security_jmj_secure.xx_initialize.0007", "Debug Mode", 2)
 end if
 
 // Get the XML document for the component attributes
@@ -45,7 +45,7 @@ protected function integer xx_shutdown ();
 TRY
 	com_wrapper.disconnectobject( )
 CATCH (throwable lt_error)
-	log.log(this, "xx_do_source()", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.xx_initialize.0007", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -66,7 +66,7 @@ setnull(ls_null)
 TRY
 	ls_username = com_wrapper.Authenticate()
 CATCH (throwable lt_error)
-	log.log(this, "x_authenticate()", "Error Calling Authenticate (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_authenticate.0009", "Error Calling Authenticate (" + lt_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -84,7 +84,7 @@ setnull(ls_null)
 TRY
 	li_sts = com_wrapper.ChangePassword(ps_username)
 CATCH (throwable lt_error)
-	log.log(this, "x_changepassword()", "Error Calling ChangePassword (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_changepassword.0009", "Error Calling ChangePassword (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -103,7 +103,7 @@ setnull(ls_null)
 TRY
 	ls_username = com_wrapper.EstablishCredentials(ps_userid)
 CATCH (throwable lt_error)
-	log.log(this, "x_EstablishCredentials()", "Error Calling EstablishCredentials (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_establishcredentials.0009", "Error Calling EstablishCredentials (" + lt_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -121,7 +121,7 @@ setnull(ls_null)
 TRY
 	li_sts = com_wrapper.Reauthenticate(ps_username)
 CATCH (throwable lt_error)
-	log.log(this, "x_Reauthenticate()", "Error Calling Reauthenticate (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_reauthenticate.0009", "Error Calling Reauthenticate (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -140,7 +140,7 @@ setnull(ls_null)
 TRY
 	li_sts = com_wrapper.ResetPassword(ps_adminusername, ps_resetusername)
 CATCH (throwable lt_error)
-	log.log(this, "x_ResetPassword()", "Error Calling ResetPassword (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_resetpassword.0009", "Error Calling ResetPassword (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -159,7 +159,7 @@ setnull(ls_null)
 TRY
 	ls_response = com_wrapper.Challenge(ps_challenge)
 CATCH (throwable lt_error)
-	log.log(this, "x_Initialize()", "Error Calling Initialize (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_challenge.0009", "Error Calling Initialize (" + lt_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -177,7 +177,7 @@ setnull(ls_null)
 TRY
 	li_sts = com_wrapper.CheckUsername(ps_username)
 CATCH (throwable lt_error)
-	log.log(this, "x_changepassword()", "Error Calling CheckUsername (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_security_jmj_secure.x_changepassword.0009", "Error Calling CheckUsername (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -196,7 +196,7 @@ setnull(ls_null)
 //TRY
 //	li_sts = com_wrapper.ConfigureSecurity()
 //CATCH (throwable lt_error)
-//	log.log(this, "x_changepassword()", "Error Calling ConfigureSecurity (" + lt_error.text + ")", 4)
+//	log.log(this, "u_component_security_jmj_secure.x_changepassword.0009", "Error Calling ConfigureSecurity (" + lt_error.text + ")", 4)
 //	return -1
 //END TRY
 

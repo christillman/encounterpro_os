@@ -288,7 +288,7 @@ end function
 public function integer xx_initialize ();string ls_temp, ls_temp2
 get_attribute("ClinicCode", ls_temp)
 if isnull(ls_temp) or ls_temp = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: No Schedule Clinic Code Specified.", 4)
+	mylog.log(this, "u_component_schedule_medicat.xx_initialize.0004", "ERROR: No Schedule Clinic Code Specified.", 4)
 	return -1
 end if
 
@@ -319,7 +319,7 @@ loop
 is_ClinicCodes[ii_office_count] = ls_temp
 
 if isnull(is_ClinicCodes[1]) or is_ClinicCodes[1] = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: Schedule Clinic Code not entered.", 4)
+	mylog.log(this, "u_component_schedule_medicat.xx_initialize.0004", "ERROR: Schedule Clinic Code not entered.", 4)
 	ii_office_count = 0
 	return -1
 end if	
@@ -347,7 +347,7 @@ DO
 			for li_count = 1 to ii_office_count
 				if is_ClinicCodes[li_count] = ls_facilitycode then
 					is_offices[li_count] = ls_office
-					mylog.log(this, "xx_initialize()", "office=" + ls_office + ", facility=" + ls_facilitycode,2)
+					mylog.log(this, "u_component_schedule_medicat.xx_initialize.0004", "office=" + ls_office + ", facility=" + ls_facilitycode,2)
 					exit
 				end if	
 			next
@@ -435,7 +435,7 @@ LOOP While lb_loop
 if li_sts = 0 then return li_sts
 
 if li_sts > 0 then
-	mylog.log(this, "xx_get_next_checked_in()", "Retrieval " + string(pl_checked_in_id), 1)
+	mylog.log(this, "u_component_schedule_medicat.xx_get_next_checked_in.0072", "Retrieval " + string(pl_checked_in_id), 1)
 	// Check to see if the patient has already been checked in
 	SELECT encounter_id, status
 	INTO :ll_encounter_id, :ls_status

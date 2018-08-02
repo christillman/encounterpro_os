@@ -201,7 +201,7 @@ CHOOSE CASE buttons[button_pressed]
 				dw_workplans.deleterow(pl_row)
 			Else // this is referenced in other tables..
 				messagebox("Referenced","Deletion Failed:This workplan is referenced in "+ls_referenced_table+" table")
-				log.log(this,"workplan_menu()","workplan id "+string(ll_workplan_id)+" is referenced in "+ls_referenced_table,3)
+				log.log(this,"u_workplan_edit.workplan_menu.0094","workplan id "+string(ll_workplan_id)+" is referenced in "+ls_referenced_table,3)
 			End If
 		end if
 	CASE "CANCEL"

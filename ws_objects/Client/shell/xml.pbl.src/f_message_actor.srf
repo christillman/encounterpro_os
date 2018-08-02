@@ -16,7 +16,7 @@ string ls_owner_type
 setnull(lo_null)
 
 if isnull(pl_addressee) then
-	log.log(po_null, "f_message_actor()", "Null addressee", 4)
+	log.log(po_null, "f_message_actor.0011", "Null addressee", 4)
 	return lo_null
 end if
 

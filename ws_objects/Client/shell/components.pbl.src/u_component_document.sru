@@ -90,14 +90,14 @@ get_attribute("include_previously_sent", pstr_info.include_previously_sent)
 // Before we can process the script we need to determine the max record count, interfaceserviceid and document_patient_workplan_item_id
 get_attribute("document_patient_workplan_item_id", pstr_info.doc_patient_workplan_item_id)
 if isnull(pstr_info.doc_patient_workplan_item_id) then
-	log.log(this, "set_document_dontext_objects()", "document_patient_workplan_item_id attribute not found", 4)
+	log.log(this, "u_component_document.document_context_objects_info.0016", "document_patient_workplan_item_id attribute not found", 4)
 	return -1
 end if
 
 pstr_info.interfaceserviceid = sqlca.fn_document_interfaceserviceid(pstr_info.doc_patient_workplan_item_id)
 if not tf_check() then return -1
 if isnull(pstr_info.interfaceserviceid) then
-	log.log(this, "set_document_dontext_objects()", "Unable to determine interfaceserviceid", 4)
+	log.log(this, "u_component_document.document_context_objects_info.0016", "Unable to determine interfaceserviceid", 4)
 	return -1
 end if
 
@@ -299,7 +299,7 @@ ls_document_patient_workplan_item_id = get_attribute("document_patient_workplan_
 if isnull(ls_document_patient_workplan_item_id) then
 	ll_pos = pos(lower(ps_sql), lower(ls_objects_magic_table), ll_pos)
 	if ll_pos > 0 then
-		log.log(this, "f_get_collection_example()", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
+		log.log(this, "u_component_document.create_temp_stored_proc.0024", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
 		return -1
 	end if
 end if

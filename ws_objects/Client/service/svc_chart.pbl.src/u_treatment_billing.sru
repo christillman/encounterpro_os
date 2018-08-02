@@ -134,7 +134,7 @@ end function
 public function integer load_charges ();integer li_sts
 
 if isnull(current_display_encounter) then
-	log.log(this, "f_load_assessment_items()", "Invalid current_display_encounter", 4)
+	log.log(this, "u_treatment_billing.load_charges.0004", "Invalid current_display_encounter", 4)
 	return -1
 end if
 

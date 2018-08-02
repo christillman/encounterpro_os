@@ -72,7 +72,7 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 4 then
-	log.log(this, "open", "Invalid Arguments", 4)
+	log.log(this, "w_treatment_timeline_clicked.open.0012", "Invalid Arguments", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

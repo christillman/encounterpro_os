@@ -64,7 +64,7 @@ mle_error.text = sql_context.error
 if not isnull(sql_context.data) and isvalid(sql_context.data) then
 	li_sts = sql_context.data.getfullstate(lbl_report)
 	if li_sts < 0 then
-		log.log(this, "display_report()", "Error getting report state", 4)
+		log.log(this, "w_pop_display_sql_results.refresh.0014", "Error getting report state", 4)
 		mle_error.text = "Error getting datawindow state"
 		return -1
 	end if

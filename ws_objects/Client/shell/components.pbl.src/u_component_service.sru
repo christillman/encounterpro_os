@@ -84,7 +84,7 @@ end if
 // See if this user is authorized to execute this service
 if not user_list.is_user_authorized(current_user.user_id, service, context_object) then
 	set_progress("Access Denied")
-	mylog.log(this, "do_service()", "User not authorized to perform service (" + service + ")", 4)
+	mylog.log(this, "u_component_service.do_service.0066", "User not authorized to perform service (" + service + ")", 4)
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, "You are not authorized to perform the " + description + " service.")
 	end if
@@ -125,17 +125,17 @@ If not isnull(cpr_id) Then
 		li_sts = 1
 	elseif not inherited_patient then
 		// The current_patient exists but is the wrong patient.  Log a warning.
-		log.log(this, "do_service()", "Previous cpr_id different from current cpr_id (" + current_patient.cpr_id + ", " + cpr_id + ")", 3)
+		log.log(this, "u_component_service.do_service.0107", "Previous cpr_id different from current cpr_id (" + current_patient.cpr_id + ", " + cpr_id + ")", 3)
 		li_sts = f_set_patient(cpr_id)
 		my_patient = true
 	else
 		// The current_patient exists but is the wrong patient.  Log a warning.
-		log.log(this, "do_service()", "Error changing cpr_id (" + current_patient.cpr_id + ", " + cpr_id + ")", 4)
+		log.log(this, "u_component_service.do_service.0107", "Error changing cpr_id (" + current_patient.cpr_id + ", " + cpr_id + ")", 4)
 		restore_service_state(-1)
 		return -1
 	End if
 	If li_sts <= 0 Then
-		mylog.log(this, "do_service()", "unable to set patient (" + cpr_id + ")", 4)
+		mylog.log(this, "u_component_service.do_service.0066", "unable to set patient (" + cpr_id + ")", 4)
 		restore_service_state(-1)
 		Return -1
 	End If
@@ -145,7 +145,7 @@ If not isnull(cpr_id) Then
 	  and not f_strings_equal(current_user.user_id, current_patient.primary_provider_id) then
 	  // If the user is not the primary or secondary provider, then check the access control list
 		if not user_list.check_access(current_user.user_id, current_patient.access_control_list) then
-			mylog.log(this, "do_service()", "User not authorized to see this patient", 4)
+			mylog.log(this, "u_component_service.do_service.0066", "User not authorized to see this patient", 4)
 			if cpr_mode = "CLIENT" then
 				openwithparm(w_pop_message, "You are not authorized to perform any services for this patient.")
 			end if
@@ -160,7 +160,7 @@ End if
 if not isnull(encounter_id) then
 	li_sts = f_set_current_encounter(encounter_id)
 	If li_sts <= 0 Then
-		mylog.log(this, "do_service()", "unable to set current encounter (" + cpr_id + ", " + string(encounter_id) + ")", 4)
+		mylog.log(this, "u_component_service.do_service.0066", "unable to set current encounter (" + cpr_id + ", " + string(encounter_id) + ")", 4)
 		restore_service_state(-1)
 		Return -1
 	End If
@@ -193,7 +193,7 @@ else
 		my_treatment = true
 		li_sts = current_patient.treatments.treatment(treatment, treatment_id)
 		if li_sts <= 0 then
-			mylog.log(this, "do_service()", "Error getting treatment object (" + string(treatment_id) + ")", 4)
+			mylog.log(this, "u_component_service.do_service.0066", "Error getting treatment object (" + string(treatment_id) + ")", 4)
 			restore_service_state(-1)
 			Return -1
 		End If
@@ -256,7 +256,7 @@ TRY
 				If Not isnull(ls_next_room_id) Then
 					li_sts2 = current_patient.open_encounter.change_room(ls_next_room_id)
 					If li_sts2 < 0 Then
-						mylog.log(This, "do_service()", "Error changeing room (" + ls_next_room_id + ")", 4)
+						mylog.log(This, "u_component_service.do_service.0238", "Error changeing room (" + ls_next_room_id + ")", 4)
 					End If
 				End If
 			end if
@@ -404,7 +404,7 @@ CATCH (throwable lo_error)
 	if not isnull(lo_error.text) then
 		ls_error += " (" + lo_error.text + ")"
 	end if
-	log.log(this, "do_service()", ls_error, 4)
+	log.log(this, "u_component_service.do_service.0107", ls_error, 4)
 	li_sts = -1
 FINALLY
 	// Restore the previous service state
@@ -540,7 +540,7 @@ integer li_sts
 If ole_class then
 	li_sts = common_thread.get_adodb(adodb)
 	if li_sts <= 0 then
-		mylog.log(this, "xx_do_service()", "Unable to establish ADO Connection", 4)
+		mylog.log(this, "u_component_service.xx_do_service.0022", "Unable to establish ADO Connection", 4)
 		return -1
 	end if
 	
@@ -556,7 +556,7 @@ Else
 	if lower(classname(message.powerobjectparm)) = "str_popup_return" then
 		popup_return = message.powerobjectparm
 	else
-		log.log(this, "xx_do_service()", "Invalid class returned from service window (" + service + ", " + ls_window_class + ")", 4)
+		log.log(this, "u_component_service.xx_do_service.0038", "Invalid class returned from service window (" + service + ", " + ls_window_class + ")", 4)
 		return -1
 	end if
 	

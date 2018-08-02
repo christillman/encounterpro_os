@@ -20,7 +20,7 @@ if isnull(ps_report_id) then
 	li_x = 0
 	DO
 		if li_x > 1000 then
-			log.log(this, "tf_set_report_definition()", "Unable to generate new key", 4)
+			log.log(this, "tf_set_report_definition.0015", "Unable to generate new key", 4)
 			return -1
 		end if
 		if li_x > 0 then ls_report_id = left(ls_report_id, 24 - len(ls_x)) + ls_x

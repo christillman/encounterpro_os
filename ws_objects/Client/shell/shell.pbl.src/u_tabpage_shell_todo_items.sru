@@ -152,13 +152,13 @@ else
 end if
 
 if isnull(ls_service) then
-	log.log(this, "do_todo()", "Service is null for todo item (" + string(ll_patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_tabpage_shell_todo_items.do_todo.0036", "Service is null for todo item (" + string(ll_patient_workplan_item_id) + ")", 4)
 	return
 end if
 
 luo_service = service_list.get_service_component(ls_service)
 if isnull(luo_service) then
-	log.log(this, "do_todo()", "Service not found (" + ls_service + ")", 4)
+	log.log(this, "u_tabpage_shell_todo_items.do_todo.0036", "Service not found (" + ls_service + ")", 4)
 	return
 end if
 

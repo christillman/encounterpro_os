@@ -53,19 +53,19 @@ string ls_temp_file
 
 
 if isnull(ps_tiff_file) then
-	log.log(this, "convert_tiff_to_bmp()", "Null file name", 3)
+	log.log(this, "u_component_attachment_image.convert_tiff_to_bmp.0010", "Null file name", 3)
 	return -1
 end if
 
 if not fileexists(ps_tiff_file) then
-	log.log(this, "convert_tiff_to_bmp()", "File not found (" + ps_tiff_file + ")", 3)
+	log.log(this, "u_component_attachment_image.convert_tiff_to_bmp.0010", "File not found (" + ps_tiff_file + ")", 3)
 	return -1
 end if
 
 lo_tiffdll = CREATE oleobject
 li_sts = lo_tiffdll.connecttonewobject("TiffDLL50vic.ClsTiffDLL50")
 if li_sts < 0 then
-	log.log(this, "convert_tiff_to_bmp()", "Connection to TiffDLL failed (" + string(li_sts) + ")", 4)
+	log.log(this, "u_component_attachment_image.convert_tiff_to_bmp.0010", "Connection to TiffDLL failed (" + string(li_sts) + ")", 4)
 	return -1
 end if
 
@@ -77,11 +77,11 @@ ls_param += "out=" + ls_temp_file
 ls_param += ";format=bmp/0;"
 ll_result = lo_tiffdll.runtiffdll(ls_param)
 /*if ll_result = 0 then
-	log.log(this, "convert_tiff_to_bmp()", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
+	log.log(this, "u_component_attachment_image.convert_tiff_to_bmp.0010", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
 	return -1
 end if*/
 if ll_result < 0 then
-	log.log(this, "convert_tiff_to_bmp()", "RunTiffDLL failed (" + string(ll_result) + ", " + ls_param + ")", 4)
+	log.log(this, "u_component_attachment_image.convert_tiff_to_bmp.0010", "RunTiffDLL failed (" + string(ll_result) + ", " + ls_param + ")", 4)
 	return -1
 end if
 

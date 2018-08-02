@@ -19,7 +19,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(po_null, "attachment()", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(po_null, "f_render_file_as_image.0014", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if

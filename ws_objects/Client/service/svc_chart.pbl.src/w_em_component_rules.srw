@@ -151,7 +151,7 @@ popup = Message.powerobjectparm
 title = current_patient.id_line()
 
 if popup.data_row_count <> 4 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_em_component_rules.open.0013", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -169,7 +169,7 @@ INTO :st_documentation_guide.text
 FROM em_documentation_guide
 WHERE em_documentation_guide = :em_documentation_guide;
 if not tf_check() then
-	log.log(this, "open", "Error getting documentation guide", 4)
+	log.log(this, "w_em_component_rules.open.0013", "Error getting documentation guide", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -192,7 +192,7 @@ component_rules_passed.filter()
 
 li_sts = set_component_rules()
 if li_sts < 0 then
-	log.log(this, "open", "Error setting type levels", 4)
+	log.log(this, "w_em_component_rules.open.0013", "Error setting type levels", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

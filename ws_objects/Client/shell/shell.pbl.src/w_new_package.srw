@@ -219,7 +219,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_new_package.open.0007", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -231,7 +231,7 @@ st_title.text = "New " + dosage_form_description + " Package"
 
 li_sts = get_defaults()
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting defaults", 4)
+	log.log(this, "w_new_package.open.0007", "Error getting defaults", 4)
 	close(this)
 	return
 end if
@@ -529,7 +529,7 @@ lstr_package.dosage_form = dosage_form
 lstr_package.dose_amount = lr_dose_amount
 li_sts = drugdb.new_package(lstr_package)
 if li_sts <= 0 then
-	log.log(this, "clicked", "Error saving new package", 4)
+	log.log(this, "w_new_package.pb_done.clicked.0052", "Error saving new package", 4)
 	return
 end if
 package_id = lstr_package.package_id

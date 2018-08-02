@@ -50,7 +50,7 @@ ps_temp_file = f_temp_file("emf")
 
 li_sts = dw_psreport.saveas(ps_temp_file, EMF!, true)
 if li_sts <= 0 then
-	log.log(this, "render()", "Error saving datawindow to file (" + ps_temp_file + ")", 4)
+	log.log(this, "w_attachment_psreport_display.render.0007", "Error saving datawindow to file (" + ps_temp_file + ")", 4)
 	return -1
 end if
 
@@ -93,7 +93,7 @@ st_title.text = ls_title
 
 display_file = attachment.get_attachment()
 if isnull(display_file) then
-	log.log(this, "open", "Error getting attachment file", 4)
+	log.log(this, "w_attachment_psreport_display.open.0028", "Error getting attachment file", 4)
 	close(this)
 	return
 end if

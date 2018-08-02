@@ -49,7 +49,7 @@ if result_count = 0 then return 0
 ls_find = "record_type='Root'"
 ll_root = results.find(ls_find, 1, result_count)
 if ll_root <= 0 then
-	log.log(this, "initialize()", "root result not found", 4)
+	log.log(this, "u_dw_parent_observation_list.initialize.0021", "root result not found", 4)
 	return -1
 end if
 

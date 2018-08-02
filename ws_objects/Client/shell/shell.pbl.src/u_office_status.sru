@@ -382,7 +382,7 @@ ll_rowcount = rowcount()
 
 ll_last_row_on_page = Integer(Describe("DataWindow.LastRowOnPage"))
 IF ll_last_row_on_page <= 0 and ll_rowcount > 0 THEN
-	log.log(this, "refresh()", "Invalid lastrowonpage", 3)
+	log.log(this, "u_office_status.refresh.0078", "Invalid lastrowonpage", 3)
 	ll_last_row_on_page = ll_rowcount
 END IF
 
@@ -459,13 +459,13 @@ event dberror;string ls_message
 
 ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 
-log.log(this, "dberror", ls_message, 3)
+log.log(this, "u_office_status.dberror.0005", ls_message, 3)
 
 return 1
 
 end event
 
-event sqlpreview;log.log(this, "sqlpreview", sqlsyntax, 1)
+event sqlpreview;log.log(this, "u_office_status.sqlpreview.0001", sqlsyntax, 1)
 
 end event
 

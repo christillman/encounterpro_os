@@ -80,7 +80,7 @@ if first_time then
 			li_office_count += 1
 			luo_tabpages[li_office_count] = tab_todo_items.open_page("u_tabpage_todo_items", false)
 			if isnull(luo_tabpages[li_office_count]) then
-				log.log(this, "open", "Error opening office-todo-items tab page", 4)
+				log.log(this, "u_tabpage_todo_lists.refresh.0027", "Error opening office-todo-items tab page", 4)
 				exit
 			end if
 			
@@ -116,7 +116,7 @@ if first_time then
 		li_all_offices_tab = li_office_count + 1
 		luo_office_tabpage = tab_todo_items.open_page("u_tabpage_todo_items", false)
 		if isnull(luo_office_tabpage) then
-			log.log(this, "open", "Error opening office-todo-items tab page", 4)
+			log.log(this, "u_tabpage_todo_lists.refresh.0027", "Error opening office-todo-items tab page", 4)
 		else
 			luo_office_tabpage.parent_tabpage = this
 			luo_office_tabpage.tag = "ALL_OFFICES"
@@ -132,7 +132,7 @@ if first_time then
 	// Add the "Not-In-Office" tab
 	luo_office_tabpage = tab_todo_items.open_page("u_tabpage_todo_items", false)
 	if isnull(luo_office_tabpage) then
-		log.log(this, "open", "Error opening office-todo-items tab page", 4)
+		log.log(this, "u_tabpage_todo_lists.refresh.0027", "Error opening office-todo-items tab page", 4)
 	else
 		luo_office_tabpage.parent_tabpage = this
 		luo_office_tabpage.tag = "NOT_IN_OFFICE"

@@ -61,14 +61,14 @@ setnull(ls_config_object_id)
 // See if the key is specified by its actual key name
 ls_config_object_id = get_attribute("config_object_id")
 if isnull(ls_config_object_id) then
-	log.log(this, "xx_do_service()", "No config_object_id specified", 4)
+	log.log(this, "u_component_service_export_config.xx_do_service.0045", "No config_object_id specified", 4)
 	return -1
 end if
 
 // Get the config object info
 li_sts = f_get_config_object_info(ls_config_object_id, config_object_info)
 if li_sts <= 0 then
-	log.log(this, "xx_do_service()", "Error getting object information (" + ls_config_object_id + ")", 4)
+	log.log(this, "u_component_service_export_config.xx_do_service.0045", "Error getting object information (" + ls_config_object_id + ")", 4)
 	return -1
 end if
 
@@ -77,7 +77,7 @@ if sqlca.customer_id <> config_object_info.owner_id then
 	ls_message = "You must be the owner of a "
 	ls_message += lower(config_object_info.config_object_type) + " to export it.  Make a copy of the "
 	ls_message += lower(config_object_info.config_object_type) + " and export the copy."
-	log.log(this, "xx_do_service()", ls_message, 4)
+	log.log(this, "u_component_service_export_config.xx_do_service.0045", ls_message, 4)
 	openwithparm(w_pop_message, ls_message)
 	return 1
 end if
@@ -121,7 +121,7 @@ elseif ll_count = 1 then
 	WHERE config_object_id = :config_object_info.config_object_id;
 	if not tf_check() then return -1
 else
-	log.log(this, "xx_do_service()", "Config object has no version records (" + config_object_info.config_object_id + ")", 4)
+	log.log(this, "u_component_service_export_config.xx_do_service.0045", "Config object has no version records (" + config_object_info.config_object_id + ")", 4)
 	return -1
 end if
 
@@ -208,13 +208,13 @@ else
 	AND version = :ll_export_version;
 	if not tf_check() then return -1
 	if sqlca.sqlnrows <> 1 then
-		log.log(this, "xx_do_service()", "Config object version record not found", 4)
+		log.log(this, "u_component_service_export_config.xx_do_service.0045", "Config object version record not found", 4)
 		return -1
 	end if
 	
 	li_sts = log.file_write(lbl_export_xml, ls_path)
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Saving export document (" + config_object_info.config_object_type + ") failed", 4)
+		log.log(this, "u_component_service_export_config.xx_do_service.0045", "Saving export document (" + config_object_info.config_object_type + ") failed", 4)
 		return -1
 	end if
 	

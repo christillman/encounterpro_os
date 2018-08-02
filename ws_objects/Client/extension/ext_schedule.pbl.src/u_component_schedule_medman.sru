@@ -70,7 +70,7 @@ end function
 protected function integer xx_initialize ();string ls_temp, ls_temp2
 get_attribute("FacilityId", ls_temp)
 if isnull(ls_temp) or ls_temp = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: No Schedule Facility ID Specified.", 4)
+	mylog.log(this, "u_component_schedule_medman.xx_initialize.0004", "ERROR: No Schedule Facility ID Specified.", 4)
 	return -1
 end if
 
@@ -104,7 +104,7 @@ is_facilities[ii_office_count] = ls_temp
 
 
 if isnull(is_facilities[1]) or is_facilities[1] = ""  then
-	mylog.log(this, "xx_initialize()", "ERROR: Schedule Facility ID not found.", 4)
+	mylog.log(this, "u_component_schedule_medman.xx_initialize.0004", "ERROR: Schedule Facility ID not found.", 4)
 	ii_office_count = 0
 	return -1
 end if	
@@ -132,7 +132,7 @@ DO
 			for li_count = 1 to ii_office_count
 				if is_facilities[li_count] = ls_facility then
 					is_offices[li_count] = ls_office
-					mylog.log(this, "xx_initialize()", "office=" + ls_office + ", facility=" + ls_facility,2)
+					mylog.log(this, "u_component_schedule_medman.xx_initialize.0004", "office=" + ls_office + ", facility=" + ls_facility,2)
 					exit
 				end if	
 			next
@@ -230,7 +230,7 @@ Using cprdb;
 If not tf_check() then return -1
 
 If isnull(is_billing_id) Or len(trim(is_billing_id)) = 0 Then
-	mylog.log(this, "xx_get_next_checked_in()","no records for a given message id "+string(il_message_id),3)
+	mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083","no records for a given message id "+string(il_message_id),3)
 	Return 0
 end if
 
@@ -264,7 +264,7 @@ WHERE	status = 'SCHEDULED'
 		AND billing_id = :is_billing_id
 USING	cprdb;
 IF NOT cprdb.check() THEN RETURN -1
-mylog.log(this, "xx_get_next_checked_in()","Processing Message ID,billing id (" + string(il_message_id) + ", " + is_billing_id +")",2)
+mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083","Processing Message ID,billing id (" + string(il_message_id) + ", " + is_billing_id +")",2)
 
 if isnull(ldt_appointment_date_time) then
 	ldt_appointment_date_time = ldt_default_appointment
@@ -282,7 +282,7 @@ else
 	and billing_id = :is_billing_id
 	USING 	cprdb;
 	IF NOT cprdb.check() THEN RETURN -1
-	mylog.log(this, "xx_get_next_checked_in()","Encounter Billing ID, Message ID (" + is_billing_id + ", " + string(il_message_id) + ") is out of date",2)
+	mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083","Encounter Billing ID, Message ID (" + is_billing_id + ", " + string(il_message_id) + ") is out of date",2)
 	Return 1
 End if	
 
@@ -311,7 +311,7 @@ if not isnull(ll_encounter_id) then
 		and billing_id = :is_billing_id
 		USING 	cprdb;
 		IF NOT cprdb.check() THEN RETURN -1
-		mylog.log(this, "xx_get_next_checked_in()","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(il_message_id) + ")",3)
+		mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(il_message_id) + ")",3)
 		Return 1
 	End If
 End If
@@ -334,7 +334,7 @@ else
 	USING cprdb;
 	if not cprdb.check() then return -1
 end if	
-mylog.log(this, "xx_get_next_checked_in()","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
+mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
 If ii_office_count = 1 then
 	ps_office = is_offices[1]
 	return 1
@@ -358,7 +358,7 @@ Do
 	if li_count > ii_office_count then lb_loop = false
 LOOP	While lb_loop
 
-mylog.log(this, "xx_get_next_checked_in()", "Error with matching facility to office using default office, Billing ID, facility (" + ls_billing_id + ", " + ls_facility + ")",2)
+mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in.0083", "Error with matching facility to office using default office, Billing ID, facility (" + ls_billing_id + ", " + ls_facility + ")",2)
 
 // Now return to timer_ding with 1, run this again, and check for additional
 // records ready to be processed into an encounter

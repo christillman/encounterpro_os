@@ -39,7 +39,7 @@ end on
 event externalexception;
 error_code = integer(resultcode)
 error_text = description
-log.log(this, "externalexception", "ERROR (" + string(error_code) + ") - " + error_text, 4)
+log.log(this, "u_twain_scanner.externalexception.0004", "ERROR (" + string(error_code) + ") - " + error_text, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

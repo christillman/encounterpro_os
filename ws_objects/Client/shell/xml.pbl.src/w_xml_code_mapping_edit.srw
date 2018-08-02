@@ -287,7 +287,7 @@ elseif not isnull(mapping.epro_id) then
 	edit_which = "code"
 	st_code_title.text = "Epro ID:"
 else
-	log.log(this, "open", "No code or epro_id", 4)
+	log.log(this, "w_xml_code_mapping_edit.open.0017", "No code or epro_id", 4)
 	close(this)
 	return
 end if

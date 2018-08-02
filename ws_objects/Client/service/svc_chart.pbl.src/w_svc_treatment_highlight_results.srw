@@ -186,7 +186,7 @@ popup_return.item_count = 1
 popup_return.items[1] = "ERROR"
 
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment context", 4)
+	log.log(this, "w_svc_treatment_highlight_results.open.0009", "No treatment context", 4)
 	closewithreturn(this, popup_return)
 end if
 

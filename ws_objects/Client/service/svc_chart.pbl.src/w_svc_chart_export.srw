@@ -103,7 +103,7 @@ ls_path += patient_subdir + "\"
 if not directoryexists(ls_path) then
 	li_sts = createdirectory(ls_path)
 	if li_sts <= 0 then
-		log.log(this, "dump_patient()", "Error creating directory (" + ls_path + ")", 4)
+		log.log(this, "w_svc_chart_export.dump_patient.0045", "Error creating directory (" + ls_path + ")", 4)
 		return -1
 	end if
 end if
@@ -194,7 +194,7 @@ for i = 1 to ll_count
 					if not directoryexists(ls_savetofile) then
 						li_sts = createdirectory(ls_savetofile)
 						if li_sts <= 0 then
-							log.log(this, "dump_patient()", "Error creating directory (" + ls_savetofile + ")", 4)
+							log.log(this, "w_svc_chart_export.dump_patient.0045", "Error creating directory (" + ls_savetofile + ")", 4)
 							return -1
 						end if
 					end if
@@ -211,7 +211,7 @@ for i = 1 to ll_count
 					if not directoryexists(ls_savetofile) then
 						li_sts = createdirectory(ls_savetofile)
 						if li_sts <= 0 then
-							log.log(this, "dump_patient()", "Error creating directory (" + ls_savetofile + ")", 4)
+							log.log(this, "w_svc_chart_export.dump_patient.0045", "Error creating directory (" + ls_savetofile + ")", 4)
 							return -1
 						end if
 					end if
@@ -469,7 +469,7 @@ li_sts = dump_patient()
 
 if auto_perform or cpr_mode = "SERVER" then
 	if li_sts <= 0 then
-		log.log(this, "clicked", "Export Patient Chart Failed (" + service.cpr_id + ")", 4)
+		log.log(this, "w_svc_chart_export.cb_finished.clicked.0009", "Export Patient Chart Failed (" + service.cpr_id + ")", 4)
 		popup_return.item_count = 1
 		popup_return.items[1] = "ERROR"
 	else

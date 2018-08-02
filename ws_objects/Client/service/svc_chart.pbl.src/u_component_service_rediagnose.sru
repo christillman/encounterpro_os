@@ -24,13 +24,13 @@ str_assessment_description lstr_assessment
 setnull(ll_attachment_id)
 
 if isnull(problem_id) then
-	log.log(this, "xx_do_service()", "No problem_id", 4)
+	log.log(this, "u_component_service_rediagnose.xx_do_service.0013", "No problem_id", 4)
 	return -1
 end if
 
 li_sts = current_patient.assessments.assessment(lstr_assessment, problem_id)
 if li_sts <= 0 then
-	log.log(this, "xx_do_service()", "Error getting assessment (" + string(problem_id) + ", " + string(li_sts) + ")", 4)
+	log.log(this, "u_component_service_rediagnose.xx_do_service.0013", "Error getting assessment (" + string(problem_id) + ", " + string(li_sts) + ")", 4)
 	return -1
 end if
 

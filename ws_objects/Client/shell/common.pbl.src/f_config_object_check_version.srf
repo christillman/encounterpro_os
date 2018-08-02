@@ -38,7 +38,7 @@ if not tf_check() then return -1
 if ll_version_count = 0 then
 	if pstr_config_object.installed_version > 1 then
 		// If the installed_version is greater than 1 and there aren't any version records, assume an error condition
-		log.log(po_null, "f_config_object_check_version()", "Error:  No version records", 4)
+		log.log(po_null, "f_config_object_check_version.0033", "Error:  No version records", 4)
 		return -1
 	end if
 
@@ -92,7 +92,7 @@ AND version = :pstr_config_object.installed_version;
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
 	// If we still couldn't find a versionrecord then report an error
-	log.log(po_null, "f_config_object_check_version()", "Unable to find version record", 4)
+	log.log(po_null, "f_config_object_check_version.0033", "Unable to find version record", 4)
 	return -1
 elseif isnull(ll_len) then
 	ll_len = 0
@@ -133,7 +133,7 @@ if lower(ls_status) <> "checkedout" and ll_len <= 0 and (pstr_config_object.inst
 	li_sts = f_config_object_generate_xml(pstr_config_object.config_object_id, ls_config_object_data)
 	
 	if isnull(ls_config_object_data) or len(ls_config_object_data) = 0 then
-		log.log(po_null, "f_config_object_check_version()", "GetConfigObjectXml returned no data", 4)
+		log.log(po_null, "f_config_object_check_version.0033", "GetConfigObjectXml returned no data", 4)
 		return -1
 	end if
 	
@@ -150,7 +150,7 @@ end if
 // Requery the database to get the latest config object info
 li_sts = f_get_config_object_info(pstr_config_object.config_object_id, pstr_config_object)
 if li_sts <= 0 then
-	log.log(po_null, "f_config_object_check_version()", "Error getting object information (" + pstr_config_object.config_object_id + ")", 4)
+	log.log(po_null, "f_config_object_check_version.0033", "Error getting object information (" + pstr_config_object.config_object_id + ")", 4)
 	return -1
 end if
 

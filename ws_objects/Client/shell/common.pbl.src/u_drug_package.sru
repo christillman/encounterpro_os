@@ -148,7 +148,7 @@ INTO		:package_description[package_count + 1],
 WHERE c_Package.package_id = :ps_package_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "selectpackage()", "Package Not Found (" + ps_package_id + ")", 3)
+	log.log(this, "u_drug_package.selectpackage.0043", "Package Not Found (" + ps_package_id + ")", 3)
 	return 0
 end if
 

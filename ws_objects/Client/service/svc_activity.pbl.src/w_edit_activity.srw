@@ -254,7 +254,7 @@ popup_return.item_count = 0
 
 service = message.powerobjectparm
 if isnull(service.treatment) then
-	log.log(this, "open", "Null treatment object", 4)
+	log.log(this, "w_edit_activity.open.0014", "Null treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -293,7 +293,7 @@ top_20_user_id = current_user.user_id
 top_20_code = top_20_specific_code
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading pick list", 4)
+	log.log(this, "w_edit_activity.open.0014", "Error loading pick list", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -303,7 +303,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.specialty_id
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_edit_activity.open.0014", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -315,7 +315,7 @@ if li_sts = 0 then
 	top_20_code = top_20_generic_code
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_edit_activity.open.0014", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -326,7 +326,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.specialty_id
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading pick list", 4)
+		log.log(this, "w_edit_activity.open.0014", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

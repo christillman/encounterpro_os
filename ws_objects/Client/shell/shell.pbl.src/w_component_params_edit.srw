@@ -114,7 +114,7 @@ popup = message.powerobjectparm
 if popup.data_row_count > 0 then
 	st_id.text = popup.items[1]
 else
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_component_params_edit.open.0008", "Invalid parameters", 4)
 	close(this)
 	return
 end if

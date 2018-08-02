@@ -72,7 +72,7 @@ USING cprdb;
 if not cprdb.check() then return -1
 // if no records were found, return 0
 If cprdb.sqlcode = 100 then 
-	log.log(this, "xx_post_assessments()", "no records found in p_encounter_assessment for problem_id= (" + string(pl_problem_id) + ")", 3)
+	log.log(this, "u_component_billing_encounterpro.xx_post_assessment.0023", "no records found in p_encounter_assessment for problem_id= (" + string(pl_problem_id) + ")", 3)
 	Return 0
 End if
 
@@ -103,7 +103,7 @@ Else
 End If
 destroy luo_sp_get_assessment_icd10
 
-log.log(this, "xx_post_assessments()", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)
+log.log(this, "u_component_billing_encounterpro.xx_post_assessment.0023", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)
 return 1
 end function
 
@@ -226,11 +226,11 @@ AND encounter_id = :pl_encounter_id
 AND encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_treatment()", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_treatment.0049", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_post_treatment()", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_treatment.0049", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
 	return 0
 end if	
 
@@ -258,7 +258,7 @@ end if
 destroy luo_sp_get_procedure_cpt
 
 if isnull(ls_cpt_code) or ls_cpt_code = "" then
-	mylog.log(this, "xx_post_treatment()", "no cpt code for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id + ")", 3)	
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_treatment.0049", "no cpt code for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id + ")", 3)	
 	return -1
 else	
 	procedurecodeidentifier = ls_cpt_code
@@ -311,7 +311,7 @@ if ll_assessment_count < 0 then
 	return -1
 end if
 if ll_assessment_count = 0 then 
-	mylog.log(this, "xx_post_treatment()", "No associated ICD10 for CPT (" + ls_cpt_code + ", " + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_treatment.0049", "No associated ICD10 for CPT (" + ls_cpt_code + ", " + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 	return -1
 End If
 
@@ -341,7 +341,7 @@ where cpr_id = :ps_cpr_id
 	and encounter_charge_id = :pl_encounter_charge_id
 using cprdb;
 
-mylog.log(this, "xx_post_treatment()", ls_cpt_assembly,1)
+mylog.log(this, "u_component_billing_encounterpro.xx_post_treatment.0049", ls_cpt_assembly,1)
 ////////////////////////////////////////////
 
 Return 1
@@ -376,9 +376,9 @@ end if
 get_attribute("default_supervisor_id",ls_default_supervisor_id)
 if isnull(ls_default_supervisor_id) or ls_default_supervisor_id = '' then 
 	setnull(is_supervisor_doctor)
-	mylog.log(this, "xx_initialize()", "default_supervisor_id not found in table", 1)
+	mylog.log(this, "u_component_billing_encounterpro.xx_initialize.0030", "default_supervisor_id not found in table", 1)
 else
-	mylog.log(this, "xx_initialize()", "default_supervisor_id: "+ls_default_supervisor_id, 2)
+	mylog.log(this, "u_component_billing_encounterpro.xx_initialize.0030", "default_supervisor_id: "+ls_default_supervisor_id, 2)
 	SELECT billing_code
 		INTO :is_supervisor_doctor
 		FROM c_user
@@ -387,7 +387,7 @@ else
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then 
 		setnull(is_supervisor_doctor)
-		mylog.log(this, "xx_initialize()", "No billing code for default_supervisor_id ", 3)
+		mylog.log(this, "u_component_billing_encounterpro.xx_initialize.0030", "No billing code for default_supervisor_id ", 3)
 	end if
 
 end if	
@@ -431,7 +431,7 @@ ii_cpt_count = 0
 is_icd10_code = ls_emptyarray[]
 //ii_diagnosis_count = 0
 
-mylog.log(this, "xx_post_encounter()", "Start(" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 1)
+mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "Start(" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 1)
 setnull(ls_attending_doctor)
 
 // Get the EncounterPRO Billing ID
@@ -443,7 +443,7 @@ USING 	cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "xx_post_encounter()", "Patient Record does not exist", 4)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "Patient Record does not exist", 4)
 	RETURN -1
 END IF
 
@@ -465,7 +465,7 @@ USING cprdb;
 if not cprdb.check() then return -1
 
 If cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_post_encounter()", "Patient encounter Record does not exist ", 4)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "Patient encounter Record does not exist ", 4)
 	return -1
 End If
 
@@ -475,7 +475,7 @@ is_attending_doctor = ls_attending_doctor
 is_encounter_location = ls_office_id
 // Get the billing code for this office
 If isnull(ls_office_id) then 
-	mylog.log(this, "xx_post_encounter()", "office id is null, assumes default facility", 3)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "office id is null, assumes default facility", 3)
 	is_facilitycode = is_defaultfacility
 else
 	SELECT billing_id
@@ -485,7 +485,7 @@ else
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then
-		mylog.log(this,"xx_post_encounter","office id(id="+ls_office_id+") dont have a match in c_office", 3)
+		mylog.log(this,"u_component_billing_encounterpro.xx_post_encounter.0078","office id(id="+ls_office_id+") dont have a match in c_office", 3)
 		is_facilitycode = is_defaultfacility
 	end if
 	if isnull(ls_facilitycode) or ls_facilitycode = '' then
@@ -544,7 +544,7 @@ ls_encounter_id = string(pl_encounter_id)
 setnull(ls_nullcheck)
 
 If ii_cpt_count <= 0 then // Cancel the billing request
-	log.log(this, "xx_post_other()", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 End if
 if isnull(is_cpt_assembly[ii_cpt_count]) then
@@ -552,7 +552,7 @@ if isnull(is_cpt_assembly[ii_cpt_count]) then
 end if
 
 if ii_cpt_count <= 0 then // Cancel the billing request
-	log.log(this, "xx_post_other()", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 End if
 
@@ -564,12 +564,12 @@ WHERE	cpr_id = :ps_cpr_id AND
 		encounter_id = :pl_encounter_id
 USING 	cprdb;
 IF NOT cprdb.check() THEN 
-	log.log(this, "xx_post_other()", "select from x_encounterpro_arrivel error(" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "select from x_encounterpro_arrivel error(" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	RETURN -1
 end if
 	
 IF ll_count = 0 THEN
-	log.log(this, "xx_post_other()", "no arrival encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)	
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "no arrival encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)	
 	lb_interface_arrival= false
 	ls_facility = is_facilitycode
 	ld_scheduledatetime = idt_encounter_date
@@ -602,7 +602,7 @@ ELSEIF ll_count = 1 THEN
 	USING 	cprdb;
 	
 	IF NOT cprdb.check() THEN 
-		log.log(this, "xx_post_other()", "select from x_encounterpro_arrivel error (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+		log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "select from x_encounterpro_arrivel error (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 		RETURN -1
 	end if
 ELSE
@@ -636,7 +636,7 @@ ELSE
 				:ls_sending_destination:li_null[8],
 				:ld_scheduledatetime;
 		IF NOT cprdb.check() THEN 
-		log.log(this, "xx_post_other()", "Fetch from x_encounterpro_arrivel error (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+		log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "Fetch from x_encounterpro_arrivel error (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 		RETURN -1
 	end if
 	CLOSE X_cursor;	
@@ -666,7 +666,7 @@ INTO :ls_given:li_null[9],
 FROM p_Patient  
 WHERE cpr_id = :ps_cpr_id using cprdb  ;
 IF NOT cprdb.check() THEN 
-	log.log(this, "xx_post_other()", "patient record not found (" + ps_cpr_id  + ")", 3)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "patient record not found (" + ps_cpr_id  + ")", 3)
 	RETURN -1
 End if
 
@@ -691,7 +691,7 @@ end if
 if is_billingsystem = upper('MILLBROOK') then
 	ls_alternatevisitid_id = ps_cpr_id  + "." + string(pl_encounter_id)
 	ls_alternatevisitid_id = left(ls_alternatevisitid_id,12)
-	log.log(this, "xx_post_other()", "millbrook visit id (" + ls_visitnumber_id + ")" + " encounterpro visit id (" + ls_alternatevisitid_id + ")" + " scheduledatetime (" + ls_scheduledatetime+ ")", 2)	
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "millbrook visit id (" + ls_visitnumber_id + ")" + " encounterpro visit id (" + ls_alternatevisitid_id + ")" + " scheduledatetime (" + ls_scheduledatetime+ ")", 2)	
 end if	
 
 if isnull(ls_patient_class) then ls_patient_class = ""
@@ -705,10 +705,10 @@ CLOSE lsp_get_billable_provider;
 if not tf_check() then return -1
 
 IF isnull(ls_billable_provider) THEN 
-	log.log(this, "xx_post_encounter()", "BILLING FAILED.Attending doctor ("+is_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0209", "BILLING FAILED.Attending doctor ("+is_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
 	RETURN -1
 End if	
-log.log(this,"xx_post_encounter()","Billable Provider ID & Code:"+ls_billable_provider,2)
+log.log(this,"u_component_billing_encounterpro.xx_post_other.0212","Billable Provider ID & Code:"+ls_billable_provider,2)
 
 //The MIK requires doctor name
  SELECT c_User.first_name,   
@@ -730,7 +730,7 @@ log.log(this,"xx_post_encounter()","Billable Provider ID & Code:"+ls_billable_pr
     FROM c_user  
    WHERE c_user.billing_id = :ls_billable_provider using cprdb ;
 IF NOT cprdb.check() THEN 
-		log.log(this, "xx_post_other()", "provider record not found (" + is_attending_doctor  + ")", 3)
+		log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "provider record not found (" + is_attending_doctor  + ")", 3)
 		RETURN -1
 end if
 
@@ -747,7 +747,7 @@ if IsNull(ls_suffix) then ls_suffix = ""
 If Isnull(ls_facility) or ls_facility = "" then ls_facility = is_defaultfacility
 If IsNull(ls_sending_destination) then ls_sending_destination = ""
 If ls_billing_doc = '0' or isnull(ls_billing_doc) or trim(ls_billing_doc) = "" then
-	log.log(this, "xx_post_other()", "BILLING FAILED.Attending doctor ("+is_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "BILLING FAILED.Attending doctor ("+is_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
 	RETURN -1
 End if
 if IsNull(ls_dgiven) then ls_dgiven = ""
@@ -765,7 +765,7 @@ if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
 ls_filepath += "Messages"
 
 if not mylog.of_directoryexists(ls_filepath) then
-	mylog.log(this, "xx_post_other()", "Error getting temp path "+ls_filepath, 4)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "Error getting temp path "+ls_filepath, 4)
 	return -1
 end if
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
@@ -781,10 +781,10 @@ end if
 li_filehandle = fileopen(ls_current_filename,LineMode!,Write!,Shared!,Append!)
 // If the fileopen() function fails and returns -1 then Quit returning -1, we got a problem
 IF li_filehandle = -1 THEN 
-	log.log(this, "xx_post_other()", "The FileOpen function failed...Aborted )", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "The FileOpen function failed...Aborted )", 4)
 	RETURN -1		
 END IF
-log.log(this, "xx_post_other()", "Filename ("+ls_current_filename+") File handle("+string(li_filehandle)+")", 1)
+log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "Filename ("+ls_current_filename+") File handle("+string(li_filehandle)+")", 1)
 
 u_component_messageserver luo_messageserver
 // Pass the filename to the message server
@@ -805,7 +805,7 @@ end if
 // If the message was created successfully, then ship it.
 luo_messageserver = my_component_manager.get_component("JMJMESSAGESERVER")
 if isnull(luo_messageserver) then
-	log.log(this, "xx_post_other()", "Unable to get messageserver component", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "Unable to get messageserver component", 4)
 	return -1
 end if
 
@@ -843,11 +843,11 @@ else
 end if
 
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_encounter()", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 end if
 if isnull(ls_office_id) or len(ls_office_id) = 0 then
-	mylog.log(this, "xx_post_encounter()", "unable to find patient billing domain (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter.0024", "unable to find patient billing domain (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 end if
 
@@ -913,18 +913,18 @@ for l = 1 to k
 	end if
 next
 if li_record_count > 0 then
-	log.log(this, "xx_post_other()", "write HL7DFTP03 record for " + ls_family + "," + ls_given + ", cpt count+" + string(li_record_count), 1)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "write HL7DFTP03 record for " + ls_family + "," + ls_given + ", cpt count+" + string(li_record_count), 1)
 	li_sts = FileWrite(li_filehandle,ls_record)	
 end if	
-log.log(this, "xx_post_other()", "message ("+ls_record+")", 1)
+log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "message ("+ls_record+")", 1)
 // Close the file
 li_sts = FileClose(li_Filehandle)
 IF li_sts < 0 THEN
-	log.log(this, "xx_post_other()", "The FileClose function failed...Aborted )", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "The FileClose function failed...Aborted )", 4)
 	RETURN -1
 END IF
 if li_record_count <= 0 then 
-	log.log(this, "xx_post_other()", "Posting Failed:No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "Posting Failed:No billable CPT's & ICD10's for patient("+ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 end if
 
@@ -942,10 +942,10 @@ end if
 
 
 
-log.log(this, "xx_post_other()", "send_to_subscribers begin", 1)
+log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "send_to_subscribers begin", 1)
 li_sts = luo_messageserver.send_to_subscribers(ls_message_type, ls_current_filename,ps_cpr_id,pl_encounter_id,ls_batch_billing)
 if li_sts < 1 then return li_sts
-log.log(this, "xx_post_other()", "send_to_subscribers end", 1)
+log.log(this, "u_component_billing_encounterpro.xx_post_other.0048", "send_to_subscribers end", 1)
 
 my_component_manager.destroy_component(luo_messageserver)
 

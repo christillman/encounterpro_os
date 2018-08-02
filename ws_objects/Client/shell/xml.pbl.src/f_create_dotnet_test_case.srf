@@ -40,7 +40,7 @@ TRY
 	lo_xml.newdocument("JMJComponentTestCase")
 	lo_root = lo_xml.Getrootelement()
 CATCH (throwable lo_error)
-	log.log(po_null, "dotnet_create_test_case()", "Error creating document (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_create_dotnet_test_case.0035", "Error creating document (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 
@@ -107,11 +107,11 @@ TRY
 	lbl_data = f_string_to_blob(ls_xml, "UTF-8")
 	li_sts = log.file_write(lbl_data, ls_filename)
 	if li_sts < 0 then
-		log.log(po_null, "dotnet_create_test_case()", "Unable to save document", 4)
+		log.log(po_null, "f_create_dotnet_test_case.0035", "Unable to save document", 4)
 		return ls_null
 	end if
 CATCH (throwable lo_error2)
-	log.log(po_null, "dotnet_create_test_case()", "Error saving document (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_create_dotnet_test_case.0035", "Error saving document (" + lo_error.text + ")", 4)
 	return ls_null
 END TRY
 

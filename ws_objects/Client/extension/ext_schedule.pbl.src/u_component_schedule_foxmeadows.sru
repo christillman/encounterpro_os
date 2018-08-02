@@ -63,7 +63,7 @@ end function
 protected function integer xx_initialize ();string ls_temp, ls_temp2
 get_attribute("FacilityId", ls_temp)
 if isnull(ls_temp) or ls_temp = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: No Schedule Facility ID Specified.", 4)
+	mylog.log(this, "u_component_schedule_foxmeadows.xx_initialize.0004", "ERROR: No Schedule Facility ID Specified.", 4)
 	return -1
 end if
 get_attribute("arrived_success", arrived_success)
@@ -94,7 +94,7 @@ loop
 is_facilities[ii_office_count] = ls_temp
 
 if isnull(is_facilities[1]) or is_facilities[1] = ""  then
-	mylog.log(this, "xx_initialize()", "ERROR: Schedule Facility ID not found.", 4)
+	mylog.log(this, "u_component_schedule_foxmeadows.xx_initialize.0004", "ERROR: Schedule Facility ID not found.", 4)
 	ii_office_count = 0
 	return -1
 end if	
@@ -122,7 +122,7 @@ DO
 			for li_count = 1 to ii_office_count
 				if is_facilities[li_count] = ls_facility then
 					is_offices[li_count] = ls_office
-					mylog.log(this, "xx_initialize()", "office=" + ls_office + ", facility=" + ls_facility,2)
+					mylog.log(this, "u_component_schedule_foxmeadows.xx_initialize.0004", "office=" + ls_office + ", facility=" + ls_facility,2)
 					exit
 				end if	
 			next
@@ -298,7 +298,7 @@ IF cprdb.sqlcode = 0 THEN
 					and billing_id = :ls_billing_id
 					USING 	cprdb;
 					IF NOT cprdb.check() THEN RETURN -1
-					mylog.log(this, "xx_get_next_checked_in()","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(ll_message_id) + ")",3)
+					mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in.0160","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(ll_message_id) + ")",3)
 					Return 1
 				End If
 			End If
@@ -390,7 +390,7 @@ IF cprdb.sqlcode = 0 THEN
 					and billing_id = :ls_billing_id
 					USING 	cprdb;
 					IF NOT cprdb.check() THEN RETURN -1
-					mylog.log(this, "xx_get_next_checked_in()","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(ll_message_id) + ")",3)
+					mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in.0160","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + string(ll_message_id) + ")",3)
 					Return 1
 				End If
 			End If
@@ -404,7 +404,7 @@ IF cprdb.sqlcode = 0 THEN
 				ps_attending_doctor = ls_primary_provider_id
 				ls_status = "OPEN"
 			ELSE
-				mylog.log(this, "xx_get_next_checked_in()", "A new Encounter Message has invalid facility, Billing ID, Message ID (" + ls_billing_id + ", " + ls_facility + ")",4)
+				mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in.0160", "A new Encounter Message has invalid facility, Billing ID, Message ID (" + ls_billing_id + ", " + ls_facility + ")",4)
 				RETURN -1
 			END IF	
 		ELSE	
@@ -426,7 +426,7 @@ else
 		USING cprdb;
 		if not cprdb.check() then return -1
 end if	
-mylog.log(this, "xx_get_next_checked_in()","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
+mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in.0160","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
 If ii_office_count = 1 then
 	ps_office = is_offices[1]
 	return 1
@@ -451,7 +451,7 @@ Do
 	if li_count > ii_office_count then lb_loop = false
 LOOP	While lb_loop
 
-mylog.log(this, "xx_get_next_checked_in()", "Error with matching facility to office using default office, Billing ID, facility (" + ls_billing_id + ", " + ls_facility + ")",2)
+mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in.0160", "Error with matching facility to office using default office, Billing ID, facility (" + ls_billing_id + ", " + ls_facility + ")",2)
 
 // Now return to timer_ding with 1, run this again, and check for additional
 // records ready to be processed into an encounter

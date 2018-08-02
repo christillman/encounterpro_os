@@ -44,7 +44,7 @@ popup_return.item_count = 0
 
 li_sts = uo_carriers.initialize("PICK")
 if li_sts < 0 then
-	log.log(this, "open", "Error initializing carriers", 4)
+	log.log(this, "w_carrier_select.open.0009", "Error initializing carriers", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

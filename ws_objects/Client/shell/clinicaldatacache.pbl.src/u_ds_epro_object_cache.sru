@@ -321,7 +321,7 @@ ls_sql += " WHERE 1 = 2"
 ls_syntax = sqlca.SyntaxFromSQL(ls_sql, "", ls_error_string)
 
 if len(ls_error_string) > 0 then
-	log.log(this, "get_dw_syntax()", "Error getting syntax: SQL=" + ls_sql + ", ERROR=" + ls_error_string, 4)
+	log.log(this, "u_ds_epro_object_cache.initialize.0111", "Error getting syntax: SQL=" + ls_sql + ", ERROR=" + ls_error_string, 4)
 	return -1
 end if
 
@@ -331,7 +331,7 @@ dw_syntax = ls_syntax
 Create(dw_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
 	if isnull(ls_error_create) then ls_error_create = "<Null>"
-	log.log(this, "initialize()", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_epro_object_cache.initialize.0121", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -364,7 +364,7 @@ if isnull(pstr_property.which_object.which_object_string) and not isnull(pstr_pr
 																	ls_remainder, &
 																	ls_error_message)
 	if li_sts < 0 then
-		log.log(this, "load_epro_object_data()", "Error parsing default which_object string (" + pstr_property.referenced_epro_object.default_which_object + "): " + ls_error_message, 4)
+		log.log(this, "u_ds_epro_object_cache.resolve_object_reference.0025", "Error parsing default which_object string (" + pstr_property.referenced_epro_object.default_which_object + "): " + ls_error_message, 4)
 		return -1
 	end if
 else
@@ -789,7 +789,7 @@ if ll_property_index > 0 then
 				li_sts = get_cache_property_value_binary(ll_property_index, lbl_value, ls_filetype)
 				if li_sts <= 0 then
 					// If we don't recognize the property as a column, then log an error
-					log.log(this, "get_cache_property_value()", "Error handling binary property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+					log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Error handling binary property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 					return 0
 				end if
 				if isnull(lbl_value) or len(lbl_value) <= 0 then
@@ -804,7 +804,7 @@ if ll_property_index > 0 then
 				li_sts = get_cache_property_value_text(ll_property_index, ls_value)
 				if li_sts <= 0 then
 					// If we don't recognize the property as a column, then log an error
-					log.log(this, "get_cache_property_value()", "Error handling special property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+					log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Error handling special property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 					return 0
 				end if
 				pstr_property_value.value = ls_value
@@ -837,14 +837,14 @@ if ll_property_index > 0 then
 						if not tf_check() then return -1
 					CASE ELSE
 						// If we don't recognize the property as a column, then log an error
-						log.log(this, "get_cache_property_value()", "Unhandled Exception (" + property[ll_property_index].property_datatype + ") getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+						log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Unhandled Exception (" + property[ll_property_index].property_datatype + ") getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 						return 0
 				END CHOOSE
 				pstr_property_value.value = ls_value
 				pstr_property_value.datatype = property[ll_property_index].property_datatype
 			CASE ELSE
 				// If we don't recognize the property as a column, then log an error
-				log.log(this, "get_cache_property_value()", "Unhandled Exception getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+				log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Unhandled Exception getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 				return 0
 		END CHOOSE
 	else
@@ -852,7 +852,7 @@ if ll_property_index > 0 then
 		li_sts = get_cache_property_value_column(ll_property_index, ls_value)
 		if li_sts <= 0 then
 			// If we don't recognize the property as a column, then log an error
-			log.log(this, "get_cache_property_value()", "Error getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+			log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Error getting epro object property data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 			return 0
 		else
 			pstr_property_value.value = ls_value
@@ -861,7 +861,7 @@ if ll_property_index > 0 then
 	end if
 else
 	// If we don't recognize the property, then log an error
-	log.log(this, "get_cache_property_value()", "Invalid epro object property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+	log.log(this, "u_ds_epro_object_cache.get_cache_property_value.0217", "Invalid epro object property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 	return 0
 end if
 
@@ -1714,14 +1714,14 @@ CHOOSE CASE lower(ps_property)
 		next
 		if ll_property_index = 0 then
 			// If we don't recognize the property as a column, then log an error
-			log.log(this, "get_property()", "AttachmentData property not found and is needed to calculate AttachmentImage property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+			log.log(this, "u_ds_epro_object_cache.edas_property_handler_attachment.0039", "AttachmentData property not found and is needed to calculate AttachmentImage property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 			return 0
 		end if
 
 		li_sts = get_cache_property_value_binary(ll_property_index, lbl_value, ls_filetype)
 		if li_sts <= 0 then
 			// If we don't recognize the property as a column, then log an error
-			log.log(this, "get_property()", "Error handling binary property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+			log.log(this, "u_ds_epro_object_cache.edas_property_handler_attachment.0039", "Error handling binary property (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 			return 0
 		end if
 		
@@ -1833,7 +1833,7 @@ if li_sts <= 0 then
 		lb_get_whole_value = true
 	else
 		// If we don't recognize the property as a column, then log an error
-		log.log(this, "get_cache_property_value_exception()", "Invalid epro object property (" + epro_object.epro_object + ", " + property[pl_property_index].property_name + ")", 3)
+		log.log(this, "u_ds_epro_object_cache.get_cache_property_value_text.0034", "Invalid epro object property (" + epro_object.epro_object + ", " + property[pl_property_index].property_name + ")", 3)
 		return 0
 	end if
 elseif len(ls_value) = property[pl_property_index].cache_column_length then
@@ -1940,14 +1940,14 @@ CHOOSE CASE lower(ps_property)
 		next
 		if ll_property_index = 0 then
 			// If we don't recognize the property as a column, then log an error
-			log.log(this, "get_property()", "UserStampData property not found (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+			log.log(this, "u_ds_epro_object_cache.edas_property_handler_attachment.0039", "UserStampData property not found (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 			return 0
 		end if
 
 		li_sts = get_cache_property_value_text(ll_property_index, ls_value)
 		if li_sts <= 0 then
 			// If we don't recognize the property as a column, then log an error
-			log.log(this, "get_property()", "Error getting image data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
+			log.log(this, "u_ds_epro_object_cache.edas_property_handler_attachment.0039", "Error getting image data (" + epro_object.epro_object + ", " + ps_property + ")", 3)
 			return 0
 		end if
 		

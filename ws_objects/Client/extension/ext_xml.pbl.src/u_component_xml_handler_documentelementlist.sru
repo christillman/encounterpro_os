@@ -46,7 +46,7 @@ TRY
 	ll_count = UpperBound(lo_elem)
 	
 CATCH (pbdom_exception lo_error)
-	log.log(this, "process_xml", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_documentelementlist.xx_interpret_xml.0024", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 

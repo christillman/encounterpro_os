@@ -57,17 +57,17 @@ if ll_count > 0 then
 	ls_message_type = luo_data.object.message_type[1]
 	ls_stream_id = luo_data.object.stream_id[1]
 
-	mylog.log(this, "timer_ding()", "Retrying message #" + string(ll_message_id), 1)
+	mylog.log(this, "u_component_serverservice_streamer.timer_ding.0033", "Retrying message #" + string(ll_message_id), 1)
 
 	luo_streamer = get_streamer(ls_message_type, ls_stream_id)
 	if isnull(luo_streamer) then
-		log.log(this, "timer_ding()", "Error getting transport component (" + string(ll_subscription_id) + ")", 4)
+		log.log(this, "u_component_serverservice_streamer.timer_ding.0037", "Error getting transport component (" + string(ll_subscription_id) + ")", 4)
 		return -1
 	end if
 	
 	li_sts = luo_streamer.stream_message(ll_message_id)
 	if li_sts <= 0 then
-		log.log(this, "timer_ding()", "Error sending (" + string(ll_message_id) + ")", 4)
+		log.log(this, "u_component_serverservice_streamer.timer_ding.0037", "Error sending (" + string(ll_message_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -107,12 +107,12 @@ AND stream_id = :ps_stream_id
 USING cprdb;
 if not cprdb.check() then return luo_streamer
 if cprdb.sqlcode = 100 then
-	log.log(this, "get_streamer()", "Message Stream record not found (" + ps_message_type + ", " + ps_stream_id + ")", 4)
+	log.log(this, "u_component_serverservice_streamer.get_streamer.0015", "Message Stream record not found (" + ps_message_type + ", " + ps_stream_id + ")", 4)
 	return luo_streamer
 end if
 
 if isnull(ls_component_id) then
-	log.log(this, "get_streamer()", "Null streamer component for message_stream (" + ps_message_type + ", " + ps_stream_id + ")", 4)
+	log.log(this, "u_component_serverservice_streamer.get_streamer.0015", "Null streamer component for message_stream (" + ps_message_type + ", " + ps_stream_id + ")", 4)
 	return luo_streamer
 end if
 
@@ -124,7 +124,7 @@ next
 // If not, then create a new one
 luo_streamer = my_component_manager.get_component(ls_component_id)
 if isnull(luo_streamer) then
-	log.log(this, "get_streamer()", "Error getting streamer component (" + ls_component_id + ")", 4)
+	log.log(this, "u_component_serverservice_streamer.get_streamer.0015", "Error getting streamer component (" + ls_component_id + ")", 4)
 	return luo_streamer
 end if
 

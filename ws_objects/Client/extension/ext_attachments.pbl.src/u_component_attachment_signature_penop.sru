@@ -34,7 +34,7 @@ li_resy = 600
 li_sts = common_thread.mm.render_bmp(ls_filename, ps_file, li_resx, li_resy)
 
 If li_sts <= 0 Then
-	log.log(this, "render_signature()", "Unable to render signature", 3)
+	log.log(this, "u_component_attachment_signature_penop.xx_render.0014", "Unable to render signature", 3)
 End If
 
 filedelete(ls_filename)

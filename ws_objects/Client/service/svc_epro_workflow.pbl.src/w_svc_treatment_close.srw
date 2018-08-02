@@ -148,7 +148,7 @@ setnull(close_progress_key)
 close_progress_date_time = datetime(today(), now())
 
 if isnull(service.treatment) then
-	log.log(this, "xx_do_service()", "Null treatment object", 4)
+	log.log(this, "w_svc_treatment_close.initialize.0016", "Null treatment object", 4)
 	return -1
 end if
 
@@ -180,7 +180,7 @@ service.get_attribute("prompt_for_progress", close_progress_required)
 
 if isnull(service.encounter_id) then
 	if isnull(current_patient.open_encounter_id) then
-		log.log(this, "xx_do_service()", "No open encounter", 4)
+		log.log(this, "w_svc_treatment_close.initialize.0016", "No open encounter", 4)
 		return -1
 	else
 		close_encounter_id = current_patient.open_encounter_id

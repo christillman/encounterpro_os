@@ -280,7 +280,7 @@ CHOOSE CASE lower(progress_object)
 			progress_key_enumerated = f_string_to_boolean(ls_progress_key_enumerated_flag)
 		end if
 	CASE ELSE
-		log.log(this, "open", "invalid progress_object (" + progress_object + ")", 4)
+		log.log(this, "u_dw_progress_display.set_progress_type.0069", "invalid progress_object (" + progress_object + ")", 4)
 		return -1
 END CHOOSE
 
@@ -313,12 +313,12 @@ CHOOSE CASE lower(progress_object)
 		description = current_patient.name()
 	CASE "encounter"
 		if isnull(service.encounter_id) then
-			log.log(this, "open", "Null encounter_id", 4)
+			log.log(this, "u_dw_progress_display.set_progress_type.0069", "Null encounter_id", 4)
 			return -1
 		end if
 		li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
 		if li_sts <= 0 then
-			log.log(this, "open", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
+			log.log(this, "u_dw_progress_display.set_progress_type.0069", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_encounter_progress_type_pick"
@@ -327,12 +327,12 @@ CHOOSE CASE lower(progress_object)
 		description = encounter.description
 	CASE "assessment"
 		if isnull(service.problem_id) then
-			log.log(this, "open", "Null problem_id", 4)
+			log.log(this, "u_dw_progress_display.set_progress_type.0069", "Null problem_id", 4)
 			return -1
 		end if
 		li_sts = current_patient.assessments.assessment(assessment, service.problem_id)
 		if li_sts <= 0 then
-			log.log(this, "open", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
+			log.log(this, "u_dw_progress_display.set_progress_type.0069", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_assessment_progress_type_pick"
@@ -341,7 +341,7 @@ CHOOSE CASE lower(progress_object)
 		description = assessment.assessment
 	CASE "treatment"
 		if isnull(service.treatment) then
-			log.log(this, "open", "treatment progress must have treatment object", 4)
+			log.log(this, "u_dw_progress_display.set_progress_type.0069", "treatment progress must have treatment object", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_treatment_progress_type_pick"
@@ -349,7 +349,7 @@ CHOOSE CASE lower(progress_object)
 		progress_type_pick_code = service.treatment.treatment_type
 		description = service.treatment.treatment_description
 	CASE ELSE
-		log.log(this, "open", "invalid progress_object (" + progress_object + ")", 4)
+		log.log(this, "u_dw_progress_display.set_progress_type.0069", "invalid progress_object (" + progress_object + ")", 4)
 		return -1
 END CHOOSE
 

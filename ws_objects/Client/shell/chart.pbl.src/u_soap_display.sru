@@ -207,13 +207,13 @@ f_split_string(ls_key, ",", ls_problem_id, ls_diagnosis_sequence)
 
 li_sts = current_patient.assessments.assessment(lstr_assessment, long(ls_problem_id), integer(ls_diagnosis_sequence))
 if li_sts <= 0 then
-	log.log(this, "assessment_menu()", "Assessment not found (" + current_patient.cpr_id + ", " + ls_problem_id + ", " + ls_diagnosis_sequence + ")", 4)
+	log.log(this, "u_soap_display.assessment_menu.0019", "Assessment not found (" + current_patient.cpr_id + ", " + ls_problem_id + ", " + ls_diagnosis_sequence + ")", 4)
 	return
 end if
 
 li_sts = current_patient.assessments.assessment(lstr_assessment_new, long(ls_problem_id))
 if li_sts <= 0 then
-	log.log(this, "assessment_menu()", "Assessment not found (" + current_patient.cpr_id + ", " + ls_problem_id + ")", 4)
+	log.log(this, "u_soap_display.assessment_menu.0019", "Assessment not found (" + current_patient.cpr_id + ", " + ls_problem_id + ")", 4)
 	return
 end if
 
@@ -270,7 +270,7 @@ new_data = pb_new_data
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "load_encounter()", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_encounter.0019", "Error checking encounter context", 4)
 	return -1
 end if
 
@@ -379,7 +379,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "load_treatment_list()", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_treatment_list.0008", "Error checking encounter context", 4)
 	return -1
 end if
 
@@ -415,7 +415,7 @@ string ls_right
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "refresh_row()", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.refresh_row.0014", "Error checking encounter context", 4)
 	return -1
 end if
 
@@ -464,7 +464,7 @@ end function
 private function integer check_encounter_context ();integer li_sts
 
 if isnull(current_display_encounter) then
-	log.log(this, "check_encounter_context()", "Invalid current_display_encounter", 4)
+	log.log(this, "u_soap_display.check_encounter_context.0004", "Invalid current_display_encounter", 4)
 	return -1
 end if
 
@@ -472,7 +472,7 @@ end if
 if isnull(encounter_context.encounter_id) or encounter_context.encounter_id <> current_display_encounter.encounter_id then
 	li_sts = current_patient.encounters.encounter(encounter_context, current_display_encounter.encounter_id)
 	if li_sts <= 0 then
-		log.log(this, "check_encounter_context()", "Error getting encounter context", 4)
+		log.log(this, "u_soap_display.check_encounter_context.0004", "Error getting encounter context", 4)
 		return -1
 	end if
 end if
@@ -770,7 +770,7 @@ CHOOSE CASE display_mode
 			setnull(ll_problem_id)
 			ls_temp = object.key[pl_parent_row]
 			if isnull(ls_temp) then
-				log.log(this, "load_treatment_items()", "Null treatment_id", 4)
+				log.log(this, "u_soap_display.load_treatment_items.0039", "Null treatment_id", 4)
 				return -1
 			else
 				ll_parent_treatment_id = long(ls_temp)
@@ -778,13 +778,13 @@ CHOOSE CASE display_mode
 		elseif ls_soap_type = "ASSESSMENT" then
 			ls_temp = object.key[pl_parent_row]
 			if isnull(ls_temp) then
-				log.log(this, "load_treatment_items()", "Null assessment key", 4)
+				log.log(this, "u_soap_display.load_treatment_items.0039", "Null assessment key", 4)
 				return -1
 			end if
 			
 			f_split_string(ls_temp, ",", ls_left, ls_right)
 			if ls_left = "" then
-				log.log(this, "load_treatment_items()", "Invalid assessment key (" + ls_temp + ")", 4)
+				log.log(this, "u_soap_display.load_treatment_items.0039", "Invalid assessment key (" + ls_temp + ")", 4)
 				return -1
 			end if
 			
@@ -805,7 +805,7 @@ CHOOSE CASE display_mode
 		if ls_soap_type = "TREATMENT" then
 			ls_temp = object.key[pl_parent_row]
 			if isnull(ls_temp) then
-				log.log(this, "load_treatment_items()", "Null treatment_id", 4)
+				log.log(this, "u_soap_display.load_treatment_items.0039", "Null treatment_id", 4)
 				return -1
 			else
 				ll_parent_treatment_id = long(ls_temp)
@@ -964,7 +964,7 @@ if display_mode = "ATAT" then
 	// Add the treatments with no assessments
 	li_sts = load_treatment_items()
 	if li_sts < 0 then
-		log.log(this, "load_encounter()", "Error loading stand-alone treatments", 4)
+		log.log(this, "u_soap_display.load_encounter.0019", "Error loading stand-alone treatments", 4)
 		return -1
 	end if
 	
@@ -987,7 +987,7 @@ if display_mode = "TT" then
 	// Then load the treatment items
 	li_sts = load_treatment_items()
 	if li_sts < 0 then
-		log.log(this, "load_encounter()", "Error loading treatments", 4)
+		log.log(this, "u_soap_display.load_encounter.0019", "Error loading treatments", 4)
 		return -1
 	end if
 	
@@ -1032,7 +1032,7 @@ if display_mode = "AATT" then
 
 	li_sts = load_treatment_items()
 	if li_sts < 0 then
-		log.log(this, "load_encounter()", "Error loading treatments after assessments", 4)
+		log.log(this, "u_soap_display.load_encounter.0019", "Error loading treatments after assessments", 4)
 		return -1
 	end if
 	
@@ -1145,7 +1145,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "load_patient()", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_patient.0016", "Error checking encounter context", 4)
 	return -1
 end if
 

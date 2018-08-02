@@ -193,7 +193,7 @@ if ll_row = 0 then
 	
 	diluent_treatment_id = current_patient.treatments.new_treatment(lstr_new_allergen)
 	if diluent_treatment_id <= 0 then
-		log.log(this, "load_allergens()", "Error creating diluent treatment", 4)
+		log.log(this, "w_svc_allergy_vial_definition.load_allergens.0032", "Error creating diluent treatment", 4)
 		return -1
 	end if
 else
@@ -622,14 +622,14 @@ popup_return.items[1] = "ERROR"
 treatment = service.treatment
 
 if isnull(current_patient) then
-	log.log(this,"open","current patient object is null",4)
+	log.log(this,"w_svc_allergy_vial_definition.open.0010","current patient object is null",4)
 	close(this)
 	return -1
 end if
 
 if isnull(service.treatment) then
 	ls_text="treatment object is null for patient,encounter "+current_patient.cpr_id+","+string(current_patient.open_encounter_id)
-	log.log(this,"open",ls_text,4)
+	log.log(this,"w_svc_allergy_vial_definition.open.0010",ls_text,4)
 	closewithreturn(this,popup_return)
 	return
 end if
@@ -731,7 +731,7 @@ if isnull(dose_unit) then
 	
 	dose_unit = unit_list.find_unit(ls_dose_unit)
 	if isnull(dose_unit) then
-		log.log(this, "post_open", "Error getting dose unit", 4)
+		log.log(this, "w_svc_allergy_vial_definition.post_open.0070", "Error getting dose unit", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

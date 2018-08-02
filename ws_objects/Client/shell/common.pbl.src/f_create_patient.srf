@@ -34,13 +34,13 @@ if isnull(ls_cpr_id) then
 	DO
 		li_sts = tf_get_next_key("!CPR", "CPR_ID", ll_temp)
 		if li_sts <= 0 then
-			log.log(po_null, "f_create_patient()","Unable to generate cpr_id key", 4)
+			log.log(po_null, "f_create_patient.0029","Unable to generate cpr_id key", 4)
 			return 0
 		end if
 		ls_cpr_id = string(ll_temp)
 		li_sts = tf_patient_exists(ls_cpr_id)
 		if li_sts < 0 then
-			log.log(po_null, "f_create_patient()","Unable to check new cpr_id key", 4)
+			log.log(po_null, "f_create_patient.0029","Unable to check new cpr_id key", 4)
 			return 0
 		end if
 	LOOP UNTIL li_sts = 0

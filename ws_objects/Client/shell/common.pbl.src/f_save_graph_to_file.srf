@@ -25,7 +25,7 @@ common_thread.set_printer(ls_printer)
 ls_temp = "EncounterPRO Graph"
 ll_printjob = printopen(ls_temp, false)
 if ll_printjob < 0 then
-	log.log(po_null, "f_print_grapoh()", "Error opening print job (" + ls_temp + ")", 4)
+	log.log(po_null, "f_save_graph_to_file.0019", "Error opening print job (" + ls_temp + ")", 4)
 	return -1
 end if
 	
@@ -150,13 +150,13 @@ if isnull(le_saveastype) then
 	
 	li_sts = common_thread.eprolibnet4.SaveClipboardToFile(ps_filepath)
 	if li_sts <= 0 then
-		log.log(po_null, "open", "Error converting graph image to file", 4)
+		log.log(po_null, "f_save_graph_to_file.0097", "Error converting graph image to file", 4)
 		setnull(ps_filepath)
 	end if
 else
 	li_sts = puo_graph.SaveAs(ps_filepath, le_saveastype, true)
 	if li_sts <= 0 then
-		log.log(po_null, "open", "Error saving graph image to file", 4)
+		log.log(po_null, "f_save_graph_to_file.0097", "Error saving graph image to file", 4)
 		setnull(ps_filepath)
 	end if
 end if

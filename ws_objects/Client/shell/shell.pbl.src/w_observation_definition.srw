@@ -346,7 +346,7 @@ if not isnull(ls_collection_procedure_id) then
 												ldc_charge)
 	if li_sts < 0 then return li_sts
 	if li_sts = 0 then
-		log.log(this, "load_observation()", "Invalid collection procedure id (" + ps_observation_id + &
+		log.log(this, "w_observation_definition.load_observation.0070", "Invalid collection procedure id (" + ps_observation_id + &
 														", " + ls_collection_procedure_id + ")", 4)
 		setnull(collection_procedure_id)
 		st_collection_procedure.text = "N/A"
@@ -368,7 +368,7 @@ if not isnull(ls_perform_procedure_id) then
 												ldc_charge)
 	if li_sts < 0 then return li_sts
 	if li_sts = 0 then
-		log.log(this, "load_observation()", "Invalid perform procedure id (" + ps_observation_id + &
+		log.log(this, "w_observation_definition.load_observation.0070", "Invalid perform procedure id (" + ps_observation_id + &
 														", " + ls_perform_procedure_id + ")", 4)
 		setnull(perform_procedure_id)
 		st_perform_procedure.text = "N/A"
@@ -635,7 +635,7 @@ elseif popup.data_row_count = 0 then
 	allow_editing = true
 	new_observation()
 else
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_observation_definition.open.0024", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

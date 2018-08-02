@@ -77,7 +77,7 @@ if real(ls_sqlversion) < real(my_sql_version) then
 			close(w_logon)
 		end if
 	else
-		log.log(po_null, "f_check_version()", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
+		log.log(po_null, "f_check_version.0072", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
 	end if
 	close(w_logon)
 end if	
@@ -85,7 +85,7 @@ end if
 CHOOSE CASE cpr_mode
 	CASE "CLIENT"
 		// Make sure we have the necessary modification level
-		// log.log(po_null, "f_check_version()", "DB " + string(sqlca.modification_level) + ", App " + string(minimum_modification_level), 3)
+		// log.log(po_null, "f_check_version.0072", "DB " + string(sqlca.modification_level) + ", App " + string(minimum_modification_level), 3)
 		if sqlca.modification_level < minimum_modification_level then
 			ls_message = "This version of EncounterPRO-OS (" + f_app_version() + ")"
 			ls_message += " requires the database to be at modification level " + string(minimum_modification_level)
@@ -100,7 +100,7 @@ CHOOSE CASE cpr_mode
 					ls_message += "~r~n~r~nThe upgrade material (EncounterPRO.OS Schema-" + string(sqlca.modification_level + 1)
 					ls_message += ".mdlvl file) has not been located, so you will need to use the Load Schema File button before upgrading."
 				end if
-				log.log(po_null, "f_check_version()", ls_message, 2)
+				log.log(po_null, "f_check_version.0072", ls_message, 2)
 				ls_message += " Do you wish to configure the database now?"
 				openwithparm(w_pop_yes_no, ls_message)
 				popup_return = message.powerobjectparm
@@ -121,7 +121,7 @@ CHOOSE CASE cpr_mode
 			ls_message += " requires the database to be at modification level " + string(minimum_modification_level)
 			ls_message += " or higher.  This database is only at modification level " + string(sqlca.modification_level)
 			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
-			log.log(po_null, "f_check_version()", ls_message, 5)
+			log.log(po_null, "f_check_version.0072", ls_message, 5)
 			gnv_app.event close()
 			return -1
 		end if

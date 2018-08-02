@@ -719,7 +719,7 @@ cpr_id = ps_cpr_id
 //								ls_phone_number)
 
 if li_sts <= 0 then
-	log.log(this, "show_patient()", "Invalid cpr_id (" + ps_cpr_id + ")", 4)
+	log.log(this, "w_labsendout.show_patient.0029", "Invalid cpr_id (" + ps_cpr_id + ")", 4)
 	messagebox("Lab Sendout", "Invalid Patient ID (" + ps_cpr_id + ")" )
 	return
 end if
@@ -828,7 +828,7 @@ elseif popup.data_row_count = 1 then
 elseif popup.data_row_count = 2 then
 	show_patient(popup.items[1])
 else
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_labsendout.open.0015", "Invalid parameters", 4)
 	close(this)
 	return
 end if

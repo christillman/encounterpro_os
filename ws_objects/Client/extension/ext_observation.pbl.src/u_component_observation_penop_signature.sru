@@ -38,7 +38,7 @@ If fileexists(ls_sig_file) Then filedelete(ls_sig_file)
 
 li_sts = common_thread.mm.get_signature(ls_claimedid, ls_gravityprompt, ls_sig_file)
 if li_sts <= 0 then
-	log.log(this, "get_signature()", "No Signature Captured (" + string(common_thread.mm.error_code) + ")", 3)
+	log.log(this, "u_component_observation_penop_signature.xx_do_source.0027", "No Signature Captured (" + string(common_thread.mm.error_code) + ")", 3)
 	Return 0
 end if
 If Not fileexists(ls_sig_file) Then Return 0

@@ -131,7 +131,7 @@ li_sts = OpenUserObject(lo_new_param, &
 						obj_x, &
 						obj_y)
 if li_sts < 0 then
-	log.log(This,"Open","Unable to create param class for "+&
+	log.log(This,"w_param_wizard.activate_param.0016","Unable to create param class for "+&
 					params.params[current_index[nesting_level]].param_class,4)
 	Return
 End If
@@ -266,7 +266,7 @@ y = main_window.y + ((main_window.height - height) / 2)
 // Initialize the 1st param
 li_sts = add_nested_param_level(lstr_wizard.id, true)
 if li_sts < 0 then
-	log.log(this, "open", "Error initializing params", 4)
+	log.log(this, "w_param_wizard.open.0036", "Error initializing params", 4)
 	lstr_return.return_status = -1
 	closewithreturn(this, lstr_return)
 	return

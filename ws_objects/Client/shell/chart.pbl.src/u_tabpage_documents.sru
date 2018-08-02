@@ -42,7 +42,7 @@ setnull(end_date)
 
 if isnull(parent_tab.service) or not isvalid(parent_tab.service) then
 	if isnull(current_service) or not isvalid(current_service) then
-		log.log(this, "initialize()", "Service context not found", 4)
+		log.log(this, "u_tabpage_documents.initialize.0008", "Service context not found", 4)
 	else
 		view_context_object = current_service.context_object
 		view_cpr_id = current_service.cpr_id

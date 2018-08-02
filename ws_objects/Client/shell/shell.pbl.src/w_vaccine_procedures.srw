@@ -70,14 +70,14 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_vaccine_procedures.open.0009", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 vaccine_id = popup.items[1]
 if isnull(vaccine_id) or trim(vaccine_id) = "" then
-	log.log(this, "open", "Invalid Vaccine_id", 4)
+	log.log(this, "w_vaccine_procedures.open.0009", "Invalid Vaccine_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -93,7 +93,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "Vaccine_id not found (" + vaccine_id + ")", 4)
+	log.log(this, "w_vaccine_procedures.open.0009", "Vaccine_id not found (" + vaccine_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

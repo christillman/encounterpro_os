@@ -394,7 +394,7 @@ if ll_set > 0 and  ll_set <= document_element_context.document_elements.element_
 	if document_element_context.element_index > 0 and  document_element_context.element_index <= document_element_context.document_elements.element_set[ll_set].element_count then
 		document_element = document_element_context.document_elements.element_set[ll_set].element[document_element_context.element_index]
 	else
-		log.log(this, "open", "invalid document element index", 4)
+		log.log(this, "w_document_element_properties.open.0023", "invalid document element index", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -402,7 +402,7 @@ if ll_set > 0 and  ll_set <= document_element_context.document_elements.element_
 	//  Get an example collection for resolving the "Value in this context" display
 	collection = f_get_collection_example(document_element_context.document_elements.element_set[ll_set], context, attributes)
 else
-	log.log(this, "open", "invalid document element_set index", 4)
+	log.log(this, "w_document_element_properties.open.0023", "invalid document element_set index", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

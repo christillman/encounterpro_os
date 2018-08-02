@@ -34,24 +34,24 @@ end prototypes
 
 public function integer ahc_connect ();INTEGER li_sts
 
-mylog.log(this, "ahc_connect()", "ahc_connect() - Begin", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "ahc_connect() - Begin", 1)
 
-mylog.log(this, "ahc_connect()", "connecting to AHCMessager.", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "connecting to AHCMessager.", 1)
 oAHC = CREATE oleobject
 li_sts = oAHC.connecttonewobject("AHC.Messenger")
 if li_sts <> 0 then
-	mylog.log(this, "ahc_connect", "ERROR: connection to AHC Messenger object failed.", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0009", "ERROR: connection to AHC Messenger object failed.", 4)
 	DESTROY oAHC
 	setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to AHCMessager success", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "connection to AHCMessager success", 1)
 
 // Connect to AHC Messanger and returns AHC Message Manager
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object.", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "connection to IHCMessageManager object.", 1)
 omsgman = oAHC.Connect(source_app)
 If isnull(omsgman) Then
-	mylog.log(this, "ahc_connect()", "ERROR: connection to IHCMessageManager object failed.", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "ERROR: connection to IHCMessageManager object failed.", 4)
 	DESTROY oMsgMan
 	oAHC.Disconnect()
 	DESTROY oAHC
@@ -59,25 +59,25 @@ If isnull(omsgman) Then
 	Setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object successful.", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "connection to IHCMessageManager object successful.", 1)
 
-mylog.log(this, "ahc_connect()", "ahc_connect() - Successful", 1)
+mylog.log(this, "u_component_outgoing_report_hl7.ahc_connect.0003", "ahc_connect() - Successful", 1)
 
 return 1
 end function
 
 public function integer ahc_disconnect ();if not isnull(oAHC) and isvalid(oAHC) Then
-	mylog.log(this,"xx_shutdown","disconnecting from AHC Interface",1)
+	mylog.log(this,"u_component_outgoing_report_hl7.ahc_disconnect.0002","disconnecting from AHC Interface",1)
 	TRY
 		oAHC.Disconnect()
 	CATCH (throwable lt_error)
-		log.log(this, "chrg_mpm()", "Error disconnecting AHC Messanger:  " + lt_error.text, 4)
+		log.log(this, "u_component_outgoing_report_hl7.ahc_disconnect.0006", "Error disconnecting AHC Messanger:  " + lt_error.text, 4)
 	FINALLY
 		oahc.disconnectobject()
 		Destroy oAHC
 		Setnull(oAHC)
 	END TRY
-	mylog.log(this,"xx_shutdown","disconnected from AHC Interface",1)
+	mylog.log(this,"u_component_outgoing_report_hl7.ahc_disconnect.0002","disconnected from AHC Interface",1)
 End If
 
 if not isnull(omsgman) and isvalid(omsgman) Then
@@ -95,19 +95,19 @@ string   ls_sync,ls_retry_limit
 
 get_attribute("source_application",source_app)
 if isnull(source_app) then
-	mylog.log(this, "xx_initialize", "no object source.", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.xx_initialize.0006", "no object source.", 4)
 	return -1
 end if	
 
 get_attribute("destination_application", destination_app)
 if isnull(destination_app) or destination_app = '' then
-	mylog.log(this, "xx_initialize", "no object destination.", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.xx_initialize.0006", "no object destination.", 4)
 	return -1
 end if	
 
 get_attribute("receiving_app_path", recv_app_path)
 if isnull(recv_app_path) or recv_app_path = '' then
-	mylog.log(this, "xx_initialize", "recev app path is not specified", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.xx_initialize.0006", "recev app path is not specified", 4)
 	return -1
 end if	
 
@@ -126,7 +126,7 @@ end if
 
 get_attribute("TextEncoding", TextEncoding)
 
-mylog.log(this,"timer_ding()","connect AHC messagemanager ",1)
+mylog.log(this,"u_component_outgoing_report_hl7.xx_initialize.0037","connect AHC messagemanager ",1)
 li_rtn = ahc_connect()
 If li_rtn < 0 then return -1
 
@@ -223,12 +223,12 @@ WHERE message_id = :message_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_send_file()", "Message log record not found when getting message(" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.xx_send_file.0080", "Message log record not found when getting message(" + string(message_id) + ")", 4)
 	return -1
 end if
 
 send_text = f_blob_to_string(lblb_message)
-mylog.log(this, "xx_send_file", "Message Text: "+send_text, 1)	
+mylog.log(this, "u_component_outgoing_report_hl7.xx_send_file.0085", "Message Text: "+send_text, 1)	
 
 lcr_report(send_text)
 
@@ -262,7 +262,7 @@ OLEOBJECT omsgtype, OEnv, HL7ORU
 omsgtype = create oleobject
 li_sts = omsgtype.connecttonewobject("AHC.MessageType")
 if li_sts <> 0 then
-	mylog.log(this, "chrg_mpm()", "ERROR: connection to AHC messagetype object failed.", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.ahc_disconnect.0006", "ERROR: connection to AHC messagetype object failed.", 4)
 	DESTROY omsgtype
 	setnull(omsgtype)
 	return -1
@@ -276,7 +276,7 @@ omsgtype.Version = "HL7 2.3" 	// MUST be like this!
 oEnv = create oleobject
 oEnv = omsgman.CreateMessage(omsgtype)
 if isnull(oenv) then
-	mylog.log(this, "chrg_mpm()", "Error in getting message evnvelope object", 4)	
+	mylog.log(this, "u_component_outgoing_report_hl7.ahc_disconnect.0006", "Error in getting message evnvelope object", 4)	
 	return -1
 end if
 
@@ -285,7 +285,7 @@ HL7ORU = create oleobject
 //get a handle to the message content.
 HL7ORU = oEnv.Content
 if isnull(hl7oru) then
-	mylog.log(this, "chrg_mpm()", "Error in getting message type object from message envelope", 4)	
+	mylog.log(this, "u_component_outgoing_report_hl7.ahc_disconnect.0006", "Error in getting message type object from message envelope", 4)	
 	return -1
 end if
 
@@ -302,7 +302,7 @@ do while len(ps_text) > 0
 loop
 
 If upperbound(ls_fields) < 13 Then
-	log.log(this,"sendreport","Send Failed:message id ("+string(message_id)+") message count is invalid ",3)
+	log.log(this,"u_component_outgoing_report_hl7.sendreport.0065","Send Failed:message id ("+string(message_id)+") message count is invalid ",3)
 	
 	Update o_message_log
 	set status = 'BAD LEN'
@@ -434,12 +434,12 @@ u_ds_data	luo_data
 // check for acknowledgement messages
 ll_pending = omsgMan.NumMessagesPending()
 If ll_pending > 0 Then
-	mylog.log(this, "timer_ding()", "Acknowledge messages received (" + string(ll_pending) + ")", 2)
+	mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "Acknowledge messages received (" + string(ll_pending) + ")", 2)
 	For i = 1 to ll_pending
 	   coll = omsgMan.PollForMessage(1, count)
 		count = Coll.Count
    	// get messages
-		mylog.log(this, "timer_ding()", "Polling Count (" + string(count) + ")", 1)
+		mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "Polling Count (" + string(count) + ")", 1)
 		If count = 0 Then // no messages
 			coll.disconnectobject()
 			destroy coll
@@ -447,7 +447,7 @@ If ll_pending > 0 Then
 		End If
 		FOR j = 0 to count - 1
 			ls_message_type = coll.Item(j).Type.MessageTypeCode
-			mylog.log(this, "timer_ding()", "Collection Count (" + string(j) + ") message type ( "+ls_message_type+")", 1)
+			mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "Collection Count (" + string(j) + ") message type ( "+ls_message_type+")", 1)
 			If coll.Item(j).Type.MessageTypeCode = "ACK" Then
    			omsg = coll.Item(j)
 				ack = omsg.Content
@@ -473,7 +473,7 @@ If ll_pending > 0 Then
 				WHERE id = :ls_ack_message_id
 				Using cprdb;
 				If cprdb.sqlcode = 100 Then
-					mylog.log(this, "timer_ding()", "No records found for message ID (" + ls_ack_message_id + ")", 3)
+					mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "No records found for message ID (" + ls_ack_message_id + ")", 3)
 					continue
 				End If
 					
@@ -483,7 +483,7 @@ If ll_pending > 0 Then
 					WHERE id = :ls_ack_message_id
 					Using cprdb;
 					If not cprdb.check() THEN RETURN -1
-					mylog.log(this, "timer_ding()", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
+					mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
 				Elseif ls_ack_type = "AE" then
 					Update o_message_log
 					Set status = 'LCR_ACKREJ',
@@ -491,7 +491,7 @@ If ll_pending > 0 Then
 					Where id = :ls_ack_message_id
 					Using cprdb;
 					If Not cprdb.check() THEN Return -1		
-					mylog.log(this, "timer_ding()", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
+					mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
 				Else
 					Update o_message_log
 					Set status = 'LCR_NACK'
@@ -499,7 +499,7 @@ If ll_pending > 0 Then
 					AND status = 'LCR_ACK'
 					using cprdb;
 					if not cprdb.check() then return -1		
-					mylog.log(this, "timer_ding()", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
+					mylog.log(this, "u_component_outgoing_report_hl7.timer_ding.0018", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
 				End if	
 				omsgMan.donewithmessage(omsg)
 				omsg.disconnectobject()
@@ -562,7 +562,7 @@ do while len(ps_text) > 0
 loop
 
 If upperbound(ls_fields) < 13 Then
-	log.log(this,"sendreport","Send Failed:message id ("+string(message_id)+") message count is invalid ",3)
+	log.log(this,"u_component_outgoing_report_hl7.sendreport.0065","Send Failed:message id ("+string(message_id)+") message count is invalid ",3)
 	
 	Update o_message_log
 	set status = 'BAD LEN'
@@ -639,7 +639,7 @@ if len(ls_dsc) > 0 then
 else
 	ls_hl7 = ls_hl7_header + ls_pid + ls_obr + ls_obx + ls_eom
 end if
-mylog.log(this, "lcr_report()",ls_hl7, 1)
+mylog.log(this, "u_component_outgoing_report_hl7.lcr_report.0115",ls_hl7, 1)
 lblob_report = f_string_to_blob(ls_hl7, TextEncoding)
 
 Update o_message_log
@@ -655,12 +655,12 @@ ls_filename = ls_path + string(message_id) + string(today(),"yyyymmdd") + string
 
 
 if fileexists(ls_filename) then
-	mylog.log(this, "lcr_report()", "Error getting next file number", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.lcr_report.0115", "Error getting next file number", 4)
 	return -1
 end if
 
 if mylog.file_write(lblob_report,ls_filename) < 0 then
-	mylog.log(this, "lcr_report()", "Error writing the report into a file", 4)
+	mylog.log(this, "u_component_outgoing_report_hl7.lcr_report.0115", "Error writing the report into a file", 4)
 	Update o_message_log
 	set status = 'LCR_FAILED'
 	Where message_id = :message_id;

@@ -163,7 +163,7 @@ for i = 1 to 3
 																ls_title, &
 																selected_qualifiers)
 		if li_sts < 0 then
-			log.log(this, "display_qualifier_domains()", "Error initializing qualifier domain", 4)
+			log.log(this, "w_pick_qualifiers.display_qualifier_domains.0067", "Error initializing qualifier domain", 4)
 			return -1
 		end if
 	elseif i <= li_displayed_count then
@@ -187,7 +187,7 @@ for i = 1 to 3
 																ls_exclusive_flag, &
 																selected_qualifiers)
 		if li_sts < 0 then
-			log.log(this, "display_qualifier_domains()", "Error initializing qualifier domain", 4)
+			log.log(this, "w_pick_qualifiers.display_qualifier_domains.0067", "Error initializing qualifier domain", 4)
 			return -1
 		end if
 	else
@@ -368,7 +368,7 @@ integer i
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 6 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_pick_qualifiers.open.0013", "Invalid Parameters", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
@@ -394,7 +394,7 @@ WHERE cpr_id = :cpr_id
 AND encounter_id = :encounter_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "encounter not found (" + cpr_id + ", " + string(encounter_id) + ")", 4)
+	log.log(this, "w_pick_qualifiers.open.0013", "encounter not found (" + cpr_id + ", " + string(encounter_id) + ")", 4)
 	return -1
 end if
 
@@ -416,13 +416,13 @@ AND p.result_sequence = :result_sequence
 AND c.observation_id = :observation_id
 AND c.result_sequence = :result_sequence;
 if not tf_check() then
-	log.log(this, "open", "Error getting result", 4)
+	log.log(this, "w_pick_qualifiers.open.0013", "Error getting result", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "result not found", 4)
+	log.log(this, "w_pick_qualifiers.open.0013", "result not found", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
@@ -458,7 +458,7 @@ selected_qualifiers.filter()
 // First, create the object to display non-enumerated qualifiers
 openuserobject(non_enumerated_qualifier_domain, 150, 184)
 if not isvalid(non_enumerated_qualifier_domain) or isnull(non_enumerated_qualifier_domain) then
-	log.log(this, "display_qualifier_domains()", "Error opening non-enumerated qualifier domain", 4)
+	log.log(this, "w_pick_qualifiers.display_qualifier_domains.0067", "Error opening non-enumerated qualifier domain", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
@@ -468,7 +468,7 @@ end if
 for i = 1 to 3
 	openuserobject(qualifier_domain[i], 150 + (895 * (i - 1)), 184)
 	if not isvalid(qualifier_domain[i]) or isnull(qualifier_domain[i]) then
-		log.log(this, "display_qualifier_domains()", "Error opening qualifier domain", 4)
+		log.log(this, "w_pick_qualifiers.display_qualifier_domains.0067", "Error opening qualifier domain", 4)
 		popup_return.item_count = 0
 		closewithreturn(this, popup_return)
 		return
@@ -477,7 +477,7 @@ next
 
 li_sts = display_qualifier_domains()
 if li_sts < 0 then
-	log.log(this, "open", "Error displaying qualifiers", 4)
+	log.log(this, "w_pick_qualifiers.open.0013", "Error displaying qualifiers", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return

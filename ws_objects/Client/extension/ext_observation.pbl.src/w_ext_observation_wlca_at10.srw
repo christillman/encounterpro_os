@@ -129,7 +129,7 @@ event xmodemoncomm;
 if result = 20000 then
 	observation_component.timer_ding()
 else
-	observation_component.mylog.log(this, "xmodemoncom", "Error receiving file (" + string(result) + ")", 4)
+	observation_component.mylog.log(this, "w_ext_observation_wlca_at10.ole_at10.xmodemoncomm.0005", "Error receiving file (" + string(result) + ")", 4)
 end if
 
 end event

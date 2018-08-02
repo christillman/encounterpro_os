@@ -288,7 +288,7 @@ setnull(edit_service[1])
 
 observation_id[1] = service.root_observation_id()
 if isnull(observation_id[1]) then
-	log.log(this, "initialize()", "No Root observation_id", 4)
+	log.log(this, "w_physical_exam.initialize.0039", "No Root observation_id", 4)
 	return -1
 end if
 
@@ -305,7 +305,7 @@ end if
 
 observation_sequence[1] = service.get_root_observation()
 if isnull(observation_sequence[1]) or observation_sequence[1] <= 0 then
-	log.log(this, "initialize()", "Error getting observation_sequence", 4)
+	log.log(this, "w_physical_exam.initialize.0039", "Error getting observation_sequence", 4)
 	return -1
 end if
 
@@ -447,7 +447,7 @@ setnull(ll_parent_observation_sequence)
 ll_rowcount = results.rowcount()
 
 if question_number < 1 then
-	log.log(this, "set_results_for_row()", "Invalid Question Number", 4)
+	log.log(this, "w_physical_exam.set_results_for_row.0037", "Invalid Question Number", 4)
 	return -1
 end if
 
@@ -778,7 +778,7 @@ str_property lstr_property
 SetPointer(Hourglass!)
 
 if question_number < 1 then
-	log.log(this, "display_observation()", "Invalid Question Number", 4)
+	log.log(this, "w_physical_exam.display_observation.0044", "Invalid Question Number", 4)
 	return -1
 end if
 
@@ -982,7 +982,7 @@ else
 		// Start by getting the c_observation_result records
 		ll_location_count = datalist.locations_in_domain(ls_location_domain, lsa_location, lsa_location_description)
 		if ll_location_count < 0 then
-			log.log(this, "display_observation()", "error getting locations (" + ls_location_domain + ")", 4)
+			log.log(this, "w_physical_exam.display_observation.0044", "error getting locations (" + ls_location_domain + ")", 4)
 			return -1
 		end if
 		
@@ -1057,7 +1057,7 @@ next
 
 li_sts = display_results()
 if li_sts < 0 then
-	log.log(this, "display_observation()", "Error displaying results", 4)
+	log.log(this, "w_physical_exam.display_observation.0044", "Error displaying results", 4)
 	return -1
 end if
 
@@ -1179,14 +1179,14 @@ popup_return.item_count = 1
 popup_return.items[1] = "ERROR"
 
 if isnull(service.treatment) or not isvalid(service.treatment) then
-	log.log(this, "open", "Invalid treatment object", 4)
+	log.log(this, "w_physical_exam.open.0014", "Invalid treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this, "open", "Initialization failed", 4)
+	log.log(this, "w_physical_exam.open.0014", "Initialization failed", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -1273,7 +1273,7 @@ setnull(li_severity)
 setnull(ll_stage)
 
 if question_number < 1 then
-	log.log(this, "display_observation()", "Invalid Question Number", 4)
+	log.log(this, "w_physical_exam.display_observation.0044", "Invalid Question Number", 4)
 	return
 end if
 
@@ -1433,7 +1433,7 @@ for i = 1 to puo_observation.observation_count
 		end if
 		ll_attachment_id = current_patient.attachments.new_attachment(lstr_new_attachment, lstr_attachment.attachment)
 		if ll_attachment_id <= 0 then
-			log.log(this, "results_posted", "Error creating attachment", 4)
+			log.log(this, "w_physical_exam.results_posted.0196", "Error creating attachment", 4)
 			return
 		end if
 
@@ -1819,7 +1819,7 @@ setnull(ll_null)
 if service.treatment.any_results(observation_sequence[question_number], result_type) then
 	ls_exam_description = datalist.exam_description(pl_exam_sequence)
 	if isnull(ls_exam_description) then
-		log.log(this, "exam_selected", "Exam not found (" + string(pl_exam_sequence) + ")", 4)
+		log.log(this, "w_physical_exam.uo_standard_exams.exam_selected.0012", "Exam not found (" + string(pl_exam_sequence) + ")", 4)
 		return
 	end if
 	
@@ -2186,7 +2186,7 @@ CHOOSE CASE ls_column
 																					ll_stage, &
 																					true)
 							if ll_child_observation_sequence <= 0 then
-								log.log(this, "clicked", "Error adding/finding child observation_sequence", 4)
+								log.log(this, "w_physical_exam.dw_physical.clicked.0187", "Error adding/finding child observation_sequence", 4)
 								return
 							end if
 						end if
@@ -2292,7 +2292,7 @@ CHOOSE CASE ls_column
 																					ll_stage, &
 																					true)
 					if isnull(ll_child_observation_sequence) then
-						log.log(this, "clicked", "Unable to get child_observation_sequence", 4)
+						log.log(this, "w_physical_exam.dw_physical.clicked.0187", "Unable to get child_observation_sequence", 4)
 						return
 					end if
 				end if

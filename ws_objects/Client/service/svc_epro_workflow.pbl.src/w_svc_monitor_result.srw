@@ -303,7 +303,7 @@ if isnull(observation_id) then
 		observation_id = service.treatment.observation_id
 	end if
 	if isnull(observation_id) then
-		log.log(this, "open", "No observation_id found", 4)
+		log.log(this, "w_svc_monitor_result.open.0034", "No observation_id found", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -320,7 +320,7 @@ if isnull(result_sequence) then
 		if isnumber(ls_temp) then result_sequence = integer(ls_temp)
 	end if
 	if isnull(result_sequence) then
-		log.log(this, "open", "No result_sequence found", 4)
+		log.log(this, "w_svc_monitor_result.open.0034", "No result_sequence found", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -328,7 +328,7 @@ end if
 
 ls_observation = datalist.observation_description(observation_id)
 if isnull(ls_observation) then
-	log.log(this, "open", "Invalid observation_id (" + observation_id + ")", 4)
+	log.log(this, "w_svc_monitor_result.open.0034", "Invalid observation_id (" + observation_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -337,7 +337,7 @@ st_title.text = ls_observation
 
 lstr_result = datalist.observation_result(observation_id, result_sequence)
 if isnull(lstr_result.result_sequence) then
-	log.log(this, "open", "Invalid result_sequence (" + observation_id + ", " + string(result_sequence) + ")", 4)
+	log.log(this, "w_svc_monitor_result.open.0034", "Invalid result_sequence (" + observation_id + ", " + string(result_sequence) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

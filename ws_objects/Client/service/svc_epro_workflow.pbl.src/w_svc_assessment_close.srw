@@ -245,7 +245,7 @@ if service.manual_service then
 end if
 
 if isnull(service.problem_id) then
-	log.log(this, "open", "Error, no assessment context", 4)
+	log.log(this, "w_svc_assessment_close.open.0016", "Error, no assessment context", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -253,7 +253,7 @@ end if
 
 li_sts = current_patient.assessments.assessment(assessment, service.problem_id)
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
+	log.log(this, "w_svc_assessment_close.open.0016", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

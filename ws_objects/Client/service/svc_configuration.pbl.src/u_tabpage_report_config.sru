@@ -113,12 +113,12 @@ If Not tf_check() Then Return -1
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	log.log(this, "clicked", "Null component_id (" + st_report_id.text + ")", 4)
+	log.log(this, "u_tabpage_report_config.configure_report.0018", "Null component_id (" + st_report_id.text + ")", 4)
 	Return -1
 Else
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		log.log(this, "clicked", "Error getting component (" + ls_component_id + ")", 4)
+		log.log(this, "u_tabpage_report_config.configure_report.0018", "Error getting component (" + ls_component_id + ")", 4)
 		Return -1
 	End If
 End If
@@ -134,7 +134,7 @@ else
 end if
 
 if li_count < 0 then
-	log.log(this, "configure_report()", "Error getting attributes", 4)
+	log.log(this, "u_tabpage_report_config.configure_report.0039", "Error getting attributes", 4)
 	return -1
 end if
 

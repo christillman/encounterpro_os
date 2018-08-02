@@ -140,7 +140,7 @@ document.get_attribute("observation_sequence", lstr_new_attachment.observation_s
 
 ll_attachment_id = current_patient.attachments.new_attachment(lstr_new_attachment, temp_file, document.context_object, ls_progress_type)
 if ll_attachment_id <= 0 then
-	log.log(this, "results_posted", "Error creating attachment", 4)
+	log.log(this, "w_ext_document_rtf.attach.0035", "Error creating attachment", 4)
 	return -1
 end if
 
@@ -270,7 +270,7 @@ rte_report.set_view_mode(view_mode)
 
 document.get_attribute("display_script_id", ll_display_script_id)
 if isnull(ll_display_script_id) then
-	log.log(this, "open", "No display script", 4)
+	log.log(this, "w_ext_document_rtf.open.0067", "No display script", 4)
 	closewithreturn(this, "ERROR")
 	return
 end if

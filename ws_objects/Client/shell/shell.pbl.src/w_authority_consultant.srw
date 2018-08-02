@@ -75,7 +75,7 @@ string ls_type_desc
 
 popup = Message.powerobjectparm
 If popup.data_row_count < 1 Then
-	log.log(this,"open","Invalid Parameters",4)
+	log.log(this,"w_authority_consultant.open.0007","Invalid Parameters",4)
 	Close(this)
 	Return
 End If

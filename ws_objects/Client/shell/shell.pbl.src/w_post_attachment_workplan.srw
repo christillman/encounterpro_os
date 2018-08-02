@@ -117,7 +117,7 @@ ll_count = dw_workplans.retrieve(attachment_context.folder)
 
 // Error
 if ll_count < 0 then
-	log.log(this, "open", "Error getting folder workplans (" + attachment_context.folder + ")", 4)
+	log.log(this, "w_post_attachment_workplan.open.0012", "Error getting folder workplans (" + attachment_context.folder + ")", 4)
 	attachment_context.workplan_id = -1
 	closewithreturn(this, attachment_context)
 	return
@@ -138,13 +138,13 @@ INTO :ls_workplan_required_flag
 FROM c_Folder
 WHERE folder = :attachment_context.folder;
 if not tf_check() then
-	log.log(this, "open", "Error folder record (" + attachment_context.folder + ")", 4)
+	log.log(this, "w_post_attachment_workplan.open.0012", "Error folder record (" + attachment_context.folder + ")", 4)
 	attachment_context.workplan_id = -1
 	closewithreturn(this, attachment_context)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "folder record not found (" + attachment_context.folder + ")", 4)
+	log.log(this, "w_post_attachment_workplan.open.0012", "folder record not found (" + attachment_context.folder + ")", 4)
 	attachment_context.workplan_id = -1
 	closewithreturn(this, attachment_context)
 	return

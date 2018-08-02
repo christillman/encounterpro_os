@@ -123,7 +123,7 @@ long ll_row
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_observation_common_lists.open.0011", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -140,7 +140,7 @@ dw_specialties.settransobject(sqlca)
 dw_specialties.multiselect = true
 ll_rows = dw_specialties.retrieve()
 if ll_rows < 0 then
-	log.log(this, "open", "Error getting specialties", 4)
+	log.log(this, "w_observation_common_lists.open.0011", "Error getting specialties", 4)
 	close(this)
 	return
 end if
@@ -162,7 +162,7 @@ common_observation = CREATE u_ds_data
 common_observation.set_dataobject("dw_common_observation_list")
 ll_rows = common_observation.retrieve(observation_id)
 if ll_rows < 0 then
-	log.log(this, "open", "Error getting common observations", 4)
+	log.log(this, "w_observation_common_lists.open.0011", "Error getting common observations", 4)
 	close(this)
 	return
 end if

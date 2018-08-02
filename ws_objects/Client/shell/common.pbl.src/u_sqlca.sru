@@ -879,7 +879,7 @@ if check() then
 		return
 	end if
 
-	if transaction_level > 1 then mylog.log(this, "force_commit()", "Forcing a commit when level = " + string(transaction_level), 3)
+	if transaction_level > 1 then mylog.log(this, "u_sqlca.force_commit.0010", "Forcing a commit when level = " + string(transaction_level), 3)
 	commit using luo_this;
 	transaction_level = 0
 	transaction_open = false
@@ -893,7 +893,7 @@ integer li_retries
 luo_this = this
 li_retries = 0
 connected = false
-mylog.log(this, "dbreconnect()", "Database Connection Lost - Attempting to reconnect",4)
+mylog.log(this, "u_sqlca.dbreconnect.0007", "Database Connection Lost - Attempting to reconnect",4)
 
 DO
 	li_retries += 1
@@ -982,19 +982,19 @@ else
 	if pos(common_thread.default_database, "|") > 0 then
 		f_split_string(common_thread.default_database, "|", ls_dbserver, ls_dbname)
 		if ls_dbserver = "" or ls_dbname = "" then
-			log.log(this, "dbconnect()", "Invalid DB specification (" + common_thread.default_database + ")", 4)
+			log.log(this, "u_sqlca.dbconnect.0016", "Invalid DB specification (" + common_thread.default_database + ")", 4)
 			return -1
 		end if
 	else
 		ls_dbserver = profilestring(ini_file, common_thread.default_database, "dbserver", "")
 		if ls_dbserver = "" then
-			log.log(this, "dbconnect()", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+			log.log(this, "u_sqlca.dbconnect.0016", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 			return -1
 		end if
 		
 		ls_dbname = profilestring(ini_file, common_thread.default_database, "dbname", "")
 		if ls_dbserver = "" then
-			log.log(this, "dbconnect()", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+			log.log(this, "u_sqlca.dbconnect.0016", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 			return -1
 		end if
 	end if
@@ -1003,7 +1003,7 @@ else
 	ls_dbms = "SNC"
 //	ls_dbms = profilestring(ini_file, common_thread.default_database, "dbms", "")
 //	if ls_dbserver = "" then
-//		log.log(this, "dbconnect()", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+//		log.log(this, "u_sqlca.dbconnect.0016", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 //		return -1
 //	end if
 end if
@@ -1120,7 +1120,7 @@ ls_syntax = SyntaxFromSQL(ps_sql, "", ls_error_string)
 commit_transaction()
 
 if len(ls_error_string) > 0 then
-	mylog.log(this, "get_dw_syntax()", "Error getting syntax: SQL=" + ps_sql + ", ERROR=" + ls_error_string, 4)
+	mylog.log(this, "u_sqlca.get_dw_syntax.0035", "Error getting syntax: SQL=" + ps_sql + ", ERROR=" + ls_error_string, 4)
 	return -1
 end if
 
@@ -1168,12 +1168,12 @@ luo_this = this
 sqlcode = 1
 
 if isnull(ps_server) or trim(ps_server) = "" then
-	log.log(this, "dbconnect()", "Invalid Server", 4)
+	log.log(this, "u_sqlca.dbconnect.0016", "Invalid Server", 4)
 	return -1
 end if
 
 if isnull(ps_dbname) or trim(ps_dbname) = "" then
-	log.log(this, "dbconnect()", "Invalid Database", 4)
+	log.log(this, "u_sqlca.dbconnect.0016", "Invalid Database", 4)
 	return -1
 end if
 
@@ -1265,7 +1265,7 @@ if not connected and windows_authentication then
 			if len(sqlerrtext) > 0 then
 				ls_windows_error += " - " + sqlerrtext
 			end if
-			log.log(this, "dbconnect()", "Windows Authentication - " + ls_windows_error, 1)
+			log.log(this, "u_sqlca.dbconnect.0016", "Windows Authentication - " + ls_windows_error, 1)
 			dbdisconnect()
 		end if
 	else
@@ -1297,7 +1297,7 @@ if not connected and sql_authentication then
 			if len(sqlerrtext) > 0 then
 				ls_sql_error += " - " + sqlerrtext
 			end if
-			log.log(this, "dbconnect()", "SQL Authentication - " + ls_sql_error, 1)
+			log.log(this, "u_sqlca.dbconnect.0016", "SQL Authentication - " + ls_sql_error, 1)
 			dbdisconnect()
 		end if
 	else
@@ -1324,14 +1324,14 @@ if not connected then
 	
 	// Log the error message
 	ls_message += "~r~n" + error_message()
-	log.log(this, "dbconnect()", ls_message, 4)
+	log.log(this, "u_sqlca.dbconnect.0016", ls_message, 4)
 	return -1
 end if
 
 // If we get here then we've successfully connected
 
 if cpr_mode <> "SERVER" then
-	log.log(this, "dbconnect()", "Successfully connected to database (" + database + ") using " + connected_using + " authentication (spid = " + string(spid) + ").", 2)
+	log.log(this, "u_sqlca.dbconnect.0016", "Successfully connected to database (" + database + ") using " + connected_using + " authentication (spid = " + string(spid) + ").", 2)
 end if
 
 return 1
@@ -1358,9 +1358,9 @@ else
 end if
 
 if li_transaction_level > 0 then	
-	mylog.log(this, "commit_transaction()", "level=" + string(li_transaction_level) + ", caller=" + who_called(caller_object[li_transaction_level]) + ", script=" + caller_text[li_transaction_level], 1)
+	mylog.log(this, "u_sqlca.commit_transaction.0019", "level=" + string(li_transaction_level) + ", caller=" + who_called(caller_object[li_transaction_level]) + ", script=" + caller_text[li_transaction_level], 1)
 else
-	mylog.log(this, "commit_transaction()", "Commiting with transaction level < 1", 3)
+	mylog.log(this, "u_sqlca.commit_transaction.0019", "Commiting with transaction level < 1", 3)
 end if
 
 
@@ -1374,7 +1374,7 @@ transaction_open = true
 caller_object[transaction_level] = po_caller_object
 caller_text[transaction_level] = ps_caller_text
 
-mylog.log(this, "begin_transaction()", "level=" + string(transaction_level) + ", caller=" + who_called(po_caller_object) + ", script=" + ps_caller_text, 1)
+mylog.log(this, "u_sqlca.begin_transaction.0009", "level=" + string(transaction_level) + ", caller=" + who_called(po_caller_object) + ", script=" + ps_caller_text, 1)
 
 
 end subroutine
@@ -1435,15 +1435,15 @@ if sqlcode < 0 then
 		deadlock = false
 		// ... but still issue a warning
 		ls_message = "SQL WARNING = " + sqlerrtext
-		log.log(this, "check()", ls_message, 3)
+		log.log(this, "u_sqlca.check.0057", ls_message, 3)
 		return true
 	elseif ll_sqldbcode = 10005 then
 		connected = false
-		mylog.log(this, "check()", "Connection to database lost.  Attempting to reconnect...", 4)
+		mylog.log(this, "u_sqlca.check.0057", "Connection to database lost.  Attempting to reconnect...", 4)
 		DISCONNECT USING luo_this;
 		li_sts = dbreconnect()
 		if li_sts <= 0 then
-			log.log(this, "check()", "Unable to reconnect to database.  Exiting EncounterPRO.", 5)
+			log.log(this, "u_sqlca.check.0057", "Unable to reconnect to database.  Exiting EncounterPRO.", 5)
 			return false
 		end if
 		deadlock = false
@@ -1469,16 +1469,16 @@ if sqlcode < 0 then
 				transaction_open = false
 				transaction_level = 0
 				autocommit = true
-				log.log(this, "check()", ls_message, 4)
+				log.log(this, "u_sqlca.check.0057", ls_message, 4)
 			CASE 10038
 				// results pending
-				mylog.log(this, "check()", "SQL Server returned 'Results Pending'.  processing continues...", 1)
+				mylog.log(this, "u_sqlca.check.0057", "SQL Server returned 'Results Pending'.  processing continues...", 1)
 			CASE ELSE
 				rollback using luo_this;
 				transaction_open = false
 				transaction_level = 0
 				autocommit = true
-				log.log(this, "check()", ls_message, 4)
+				log.log(this, "u_sqlca.check.0057", ls_message, 4)
 		END CHOOSE
 
 		// Set the sqldbcode value back so the caller can check it
@@ -1486,7 +1486,7 @@ if sqlcode < 0 then
 		return false
 	else
 		ls_message = "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
-		log.log(this, "check()", ls_message, 4)
+		log.log(this, "u_sqlca.check.0057", ls_message, 4)
 		
 		// Set the sqldbcode value back so the caller can check it
 		sqldbcode = ll_sqldbcode
@@ -1632,7 +1632,7 @@ luo_this = this
 ls_sql = "USE [" + database + "]"
 EXECUTE IMMEDIATE :ls_sql USING luo_this;
 if sqlcode < 0 then
-	log.log(this, "check_database()", "Error executing SQL (" + ls_sql + ") sqlcode = " + string(sqlcode), 4)
+	log.log(this, "u_sqlca.check_database.0033", "Error executing SQL (" + ls_sql + ") sqlcode = " + string(sqlcode), 4)
 	return -1
 end if
 
@@ -1643,13 +1643,13 @@ INTO :spid, :sql_server_productversion, :ls_current_user
 FROM (SELECT objcount = count(*) FROM sysobjects) x
 USING luo_this;
 if sqlcode < 0 then
-	log.log(this, "check_database()", "Error getting sql info (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+	log.log(this, "u_sqlca.check_database.0033", "Error getting sql info (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
 	return -1
 end if
 
 ll_pos = pos(sql_server_productversion, ".")
 if ll_pos < 2 then
-	log.log(this, "check_database()", "Invalid SQL Server ProductVersion (" + sql_server_productversion + ")", 4)
+	log.log(this, "u_sqlca.check_database.0033", "Invalid SQL Server ProductVersion (" + sql_server_productversion + ")", 4)
 	return -1
 end if
 sql_version = long(left(sql_server_productversion, ll_pos - 1))
@@ -1659,7 +1659,7 @@ if sql_version <= 8 then
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_temp)
 	end if
-	log.log(this, "check_database()", ls_temp, 4)
+	log.log(this, "u_sqlca.check_database.0033", ls_temp, 4)
 	return -1
 else
 	// SQL 2005 has a database role checker
@@ -1668,7 +1668,7 @@ else
 	FROM (SELECT objcount = count(*) FROM sysobjects) x
 	USING luo_this;
 	if sqlcode < 0 then
-		log.log(this, "check_database()", "Error getting dbo status (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+		log.log(this, "u_sqlca.check_database.0033", "Error getting dbo status (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
 		return -1
 	end if
 	if ll_is_dbo = 1 then
@@ -1681,7 +1681,7 @@ else
 		AND type = 'A'
 		USING luo_this;
 		if sqlcode < 0 then
-			log.log(this, "check_database()", "Error checking application role"  , 4)
+			log.log(this, "u_sqlca.check_database.0033", "Error checking application role"  , 4)
 			return -1
 		end if
 		
@@ -1711,7 +1711,7 @@ FROM sys.database_files
 WHERE type = 0
 USING luo_this;
 if sqlcode < 0 then
-	log.log(this, "check_database()", "Error getting min file_id (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+	log.log(this, "u_sqlca.check_database.0033", "Error getting min file_id (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
 	return -1
 end if
 SELECT physical_name
@@ -1720,7 +1720,7 @@ FROM sys.database_files
 WHERE file_id = :ll_file_id
 USING luo_this;
 if sqlcode < 0 then
-	log.log(this, "check_database()", "Error getting physical name (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
+	log.log(this, "u_sqlca.check_database.0033", "Error getting physical name (" + string(sqlcode) + ", " + sqlerrtext + ")"  , 4)
 	return -1
 end if
 default_filepath = f_parse_filepath2(ls_physical_name)
@@ -1739,7 +1739,7 @@ if luo_this.sqlcode = 0 then
 			ls_temp = "This database (" + database + ")"
 			ls_temp += " does not appear to be a valid EncounterPRO database."
 			openwithparm(w_pop_message, ls_temp)
-			log.log(this, "check_database()", ls_temp, 4)
+			log.log(this, "u_sqlca.check_database.0033", ls_temp, 4)
 			return -1
 		end if
 	else
@@ -1763,7 +1763,7 @@ if luo_this.sqlcode = 0 then
 		USING luo_this;
 		if not this.check() then return -1
 		if this.sqlcode = 100 then
-			log.log(this, "check_database()", "No database status record", 4)
+			log.log(this, "u_sqlca.check_database.0033", "No database status record", 4)
 			return -1
 		end if
 		this.customer_id = ll_customer_id
@@ -1841,13 +1841,13 @@ if luo_this.sqlcode = 0 then
 					else
 						ls_temp += sqlerrtext
 					end if
-					log.log(this, "check_database()", ls_temp, 4)
+					log.log(this, "u_sqlca.check_database.0033", ls_temp, 4)
 					return -1
 				end if
 			else
 				// Msc 1/26/03 For now we won't report an error if the application role is not set
 				ls_temp = "The application role is not set for this database."
-				log.log(this, "check_database()", ls_temp, 2)
+				log.log(this, "u_sqlca.check_database.0033", ls_temp, 2)
 			end if
 		end if
 	end if
@@ -1858,7 +1858,7 @@ if luo_this.sqlcode = 0 then
 		if is_dbmode("production") then
 			ls_temp = "This database has an invalid customer id.  Please contact JMJ Customer Support to get a valid customer id."
 			openwithparm(w_pop_message, ls_temp)
-			log.log(this, "check_database()", "Invalid Customer ID", 5)
+			log.log(this, "u_sqlca.check_database.0033", "Invalid Customer ID", 5)
 			gnv_app.event close()
 		else
 			// If the customer_id is invalid and this is not a production database then
@@ -1875,7 +1875,7 @@ if luo_this.sqlcode = 0 then
 	end if
 
 else
-	log.log(this, "check_database()", "Error checking database", 4)
+	log.log(this, "u_sqlca.check_database.0033", "Error checking database", 4)
 	return -1
 end if
 
@@ -2000,7 +2000,7 @@ u_sqlca luo_this
 luo_this = this
 
 if isnull(ps_tablename) then
-	log.log(this, "sync_table()", "Null Table", 4)
+	log.log(this, "u_sqlca.sync_table.0008", "Null Table", 4)
 	return -1
 end if
 
@@ -2011,7 +2011,7 @@ FROM c_Database_Table
 WHERE tablename = :ps_tablename;
 if not luo_this.check() then return -1
 if luo_this.sqlcode = 100 then
-	log.log(this, "sync_table()", "Table not found (" + ps_tablename + ")", 4)
+	log.log(this, "u_sqlca.sync_table.0008", "Table not found (" + ps_tablename + ")", 4)
 	return -1
 end if
 
@@ -2055,7 +2055,7 @@ integer li_sts
 luo_this = this
 
 if isnull(ps_database_mode) then
-	log.log(this, "set_database_mode()", "Null database mode", 4)
+	log.log(this, "u_sqlca.set_database_mode.0008", "Null database mode", 4)
 	return -1
 end if
 
@@ -2079,7 +2079,7 @@ CHOOSE CASE ps_database_mode
 END CHOOSE
 
 if li_sts < 0 then
-	log.log(this, "set_database_mode()", "Error converting database to " + ps_database_mode, 4)
+	log.log(this, "u_sqlca.set_database_mode.0008", "Error converting database to " + ps_database_mode, 4)
 	return -1
 end if
 
@@ -2089,7 +2089,7 @@ if not luo_this.check() then return -1
 
 database_mode = ps_database_mode
 
-log.log(this, "set_database_status()", "Changed database mode to ~"" + database_mode + "~"", 3)
+log.log(this, "u_sqlca.set_database_mode.0042", "Changed database mode to ~"" + database_mode + "~"", 3)
 
 // reset the remote server
 set_remote_server()
@@ -2183,7 +2183,7 @@ ll_sts = sp_addlinkedserver(remote_server, &
 										ls_catalog)
 if not this.check() then return -1
 if ll_sts <> 0 then
-	log.log(this, "set_remote_server()", "Error adding linked server", 4)
+	log.log(this, "u_sqlca.set_remote_server.0085", "Error adding linked server", 4)
 	return -1
 end if
 
@@ -2194,7 +2194,7 @@ ll_sts = sp_addlinkedsrvlogin(remote_server, &
 										ls_pwd)
 if not this.check() then return -1
 if ll_sts <> 0 then
-	log.log(this, "set_remote_server()", "Error adding linked server login", 4)
+	log.log(this, "u_sqlca.set_remote_server.0085", "Error adding linked server login", 4)
 	return -1
 end if
 
@@ -2203,7 +2203,7 @@ ll_sts = sp_serveroption(remote_server, &
 										ls_connect_timeout )
 if not this.check() then return -1
 if ll_sts <> 0 then
-	log.log(this, "set_remote_server()", "Error adding linked server login", 4)
+	log.log(this, "u_sqlca.set_remote_server.0085", "Error adding linked server login", 4)
 	return -1
 end if
 
@@ -2212,7 +2212,7 @@ ll_sts = sp_serveroption(remote_server, &
 										ls_query_timeout )
 if not this.check() then return -1
 if ll_sts <> 0 then
-	log.log(this, "set_remote_server()", "Error adding linked server login", 4)
+	log.log(this, "u_sqlca.set_remote_server.0085", "Error adding linked server login", 4)
 	return -1
 end if
 
@@ -2264,7 +2264,7 @@ if not check() then return -1
 
 if pl_modification_level > ll_current_modification_level + 1 then
 	// Upgrades cannot skip mod levels
-	log.log(this, "upgrade_database()", "Attempting to upgrade mod level " + string(ll_current_modification_level) + " to mod level " + string(pl_modification_level) + ".  Mod levels may not be skipped.", 4)
+	log.log(this, "u_sqlca.upgrade_database.0028", "Attempting to upgrade mod level " + string(ll_current_modification_level) + " to mod level " + string(pl_modification_level) + ".  Mod levels may not be skipped.", 4)
 end if
 
 if pl_modification_level > ll_current_modification_level then
@@ -2294,7 +2294,7 @@ for i = 1 to ll_script_count
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		log.log(this, "upgrade_database()", "Error executing upgrade script #" + string(ll_script_id), 4)
+		log.log(this, "u_sqlca.upgrade_database.0028", "Error executing upgrade script #" + string(ll_script_id), 4)
 		exit
 	end if
 	
@@ -2398,7 +2398,7 @@ if not check() then return ls_null
 if len(ls_available_version) > 0 then
 	return ls_available_version
 else
-	log.log(this, "available_version()", "Unable to determine available version for " + ps_system_id, 4)
+	log.log(this, "u_sqlca.available_version.0031", "Unable to determine available version for " + ps_system_id, 4)
 	return ls_null
 end if
 
@@ -2435,7 +2435,7 @@ setnull(ll_modification_level)
 
 li_sts = parse_version(ls_available_version, ll_major_release, ls_database_version, ll_modification_level, ll_compile)
 if isnull(ll_modification_level) then
-	log.log(this, "upgrade_content()", "Unable to determine target modification level (" + ps_system_id + ")", 4)
+	log.log(this, "u_sqlca.upgrade_content.0032", "Unable to determine target modification level (" + ps_system_id + ")", 4)
 	return -1
 end if
 
@@ -2462,7 +2462,7 @@ for i = 1 to ll_rows
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		log.log(this, "upgrade_content()", "Error executing upgrade script #" + string(ll_script_id), 4)
+		log.log(this, "u_sqlca.upgrade_content.0032", "Error executing upgrade script #" + string(ll_script_id), 4)
 		f_please_wait_close(li_please_wait_index)
 		return -1
 	end if
@@ -2534,7 +2534,7 @@ integer li_sts
 lstr_status = f_empty_sql_script_status()
 
 if isnull(pb_beta_flag) then
-	log.log(this, "set_beta_status()", "beta flag cannot be null", 4)
+	log.log(this, "u_sqlca.set_beta_status.0009", "beta flag cannot be null", 4)
 	return -1
 end if
 
@@ -2548,7 +2548,7 @@ if not check() then return -1
 if ll_count = 0 then
 	execute_sql_script("ALTER TABLE c_Database_Status ADD [beta_flag] [bit] NOT NULL DEFAULT (0)", lstr_status)
 	if lstr_status.status < 0 then
-		log.log(this, "set_beta_status()", "Error creatiung beta_flag column (" + lstr_status.error_message + ")" , 4)
+		log.log(this, "u_sqlca.set_beta_status.0009", "Error creatiung beta_flag column (" + lstr_status.error_message + ")" , 4)
 		return -1
 	end if
 end if
@@ -2568,13 +2568,13 @@ end if
 
 li_sts = check_database()
 if li_sts <= 0 then
-	log.log(this, "set_beta_status()", "check_database_failed.  EncounterPRO must close.", 5)
+	log.log(this, "u_sqlca.set_beta_status.0009", "check_database_failed.  EncounterPRO must close.", 5)
 	return -1
 end if
 
 li_sts = bootstrap_database_scripts()
 if li_sts <= 0 then
-	log.log(this, "set_beta_status()", "Check Now failed.  EncounterPRO must close.", 5)
+	log.log(this, "u_sqlca.set_beta_status.0009", "Check Now failed.  EncounterPRO must close.", 5)
 	return -1
 end if
 
@@ -3049,7 +3049,7 @@ integer li_sts
 luo_this = this
 
 if isnull(ps_database_status) then
-	log.log(this, "set_database_status()", "Null database mode", 4)
+	log.log(this, "u_sqlca.set_database_mode.0042", "Null database mode", 4)
 	return -1
 end if
 
@@ -3064,7 +3064,7 @@ if not luo_this.check() then return -1
 
 database_status = ps_database_status
 
-log.log(this, "set_database_status()", "Changed database status to ~"" + database_status + "~"", 3)
+log.log(this, "u_sqlca.set_database_mode.0042", "Changed database status to ~"" + database_status + "~"", 3)
 
 return 1
 
@@ -3084,14 +3084,14 @@ string ls_tablename
 
 luo_this = this
 
-log.log(this, "reset_database_objects()", "Reset Database Objects starting...", 2)
+log.log(this, "u_sqlca.reset_database_objects.0014", "Reset Database Objects starting...", 2)
 
 li_please_wait_index = f_please_wait_open()
 
 // First make sure the c_Database_Scripts table is current
 li_sts = bootstrap_database_scripts()
 if li_sts <= 0 then
-	log.log(this, "reset_database_objects()", "Error updating database scripts", 4)
+	log.log(this, "u_sqlca.reset_database_objects.0014", "Error updating database scripts", 4)
 	f_please_wait_close(li_please_wait_index)
 	return -1
 end if
@@ -3100,7 +3100,7 @@ end if
 // Make sure the trigger scripts are current in c_Database_Table
 li_sts = execute_string("jmj_set_database_triggers")
 if li_sts <= 0 then
-	log.log(this, "reset_database_objects()", "Error setting triggers", 4)
+	log.log(this, "u_sqlca.reset_database_objects.0014", "Error setting triggers", 4)
 	f_please_wait_close(li_please_wait_index)
 	return -1
 end if
@@ -3132,7 +3132,7 @@ for i = 1 to ll_script_rows
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		log.log(this, "reset_database_objects()", "Error executing upgrade script #" + string(ll_script_id), 4)
+		log.log(this, "u_sqlca.reset_database_objects.0014", "Error executing upgrade script #" + string(ll_script_id), 4)
 		f_please_wait_close(li_please_wait_index)
 		return -1
 	end if
@@ -3146,7 +3146,7 @@ next
 //	ls_tablename = luo_triggers.object.tablename[i]
 //	li_sts = rebuild_table_triggers(ls_tablename)
 //	if li_sts <= 0 then
-//		log.log(this, "reset_database_objects()", "Error rebuilding triggers for table (" + ls_tablename + ")", 4)
+//		log.log(this, "u_sqlca.reset_database_objects.0014", "Error rebuilding triggers for table (" + ls_tablename + ")", 4)
 //		f_please_wait_close(li_please_wait_index)
 //		return -1
 //	end if
@@ -3160,7 +3160,7 @@ if not check() then return -1
 
 f_please_wait_close(li_please_wait_index)
 
-log.log(this, "reset_database_objects()", "Reset Database Objects Succeeded", 2)
+log.log(this, "u_sqlca.reset_database_objects.0014", "Reset Database Objects Succeeded", 2)
 
 return 1
 
@@ -3243,13 +3243,13 @@ for i = 1 to ll_rows
 				USING this;
 		END CHOOSE
 		if not check() then
-			log.log(this, "bootstrap_database_scripts()", "Error getting script from " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
+			log.log(this, "u_sqlca.bootstrap_database_scripts.0076", "Error getting script from " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
 			f_please_wait_close(li_please_wait_index)
 			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
 			return -1
 		end if
 		if sqlcode = 100 or sqlnrows <> 1 then
-			log.log(this, "bootstrap_database_scripts()", "Script not found in " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
+			log.log(this, "u_sqlca.bootstrap_database_scripts.0076", "Script not found in " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
 			f_please_wait_close(li_please_wait_index)
 			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
 			return -1
@@ -3260,7 +3260,7 @@ for i = 1 to ll_rows
 	
 	li_sts = execute_string(ls_script)
 	if li_sts <= 0 then
-		log.log(this, "bootstrap_database_scripts()", "Error executing remote scripts update", 4)
+		log.log(this, "u_sqlca.bootstrap_database_scripts.0076", "Error executing remote scripts update", 4)
 		f_please_wait_close(li_please_wait_index)
 		jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
 		return -1
@@ -3282,7 +3282,7 @@ blob lbl_trigger_script
 integer li_sts
 
 if isnull(ps_tablename) or trim(ps_tablename) = "" then
-	log.log(this, "rebuild_table_triggers()", "No Table name", 4)
+	log.log(this, "u_sqlca.rebuild_table_triggers.0006", "No Table name", 4)
 	return -1
 end if
 
@@ -3293,14 +3293,14 @@ WHERE tablename = :ps_tablename
 USING this;
 if not check() then return -1
 if sqlcode = 100 then
-	log.log(this, "rebuild_table_triggers()", "Table not found (" + ps_tablename + ")", 4)
+	log.log(this, "u_sqlca.rebuild_table_triggers.0006", "Table not found (" + ps_tablename + ")", 4)
 	return -1
 end if
 
 // Even if we don't have a script, go ahead and remove the existing triggers
 li_sts = execute_string("sp_drop_triggers '" + ps_tablename + "'")
 if li_sts < 0 then
-	log.log(this, "rebuild_table_triggers()", "Error dropping triggers (" + ps_tablename + ")", 4)
+	log.log(this, "u_sqlca.rebuild_table_triggers.0006", "Error dropping triggers (" + ps_tablename + ")", 4)
 	return -1
 end if
 
@@ -3309,7 +3309,7 @@ ls_trigger_script = f_blob_to_string(lbl_trigger_script)
 if len(ls_trigger_script) > 0 then
 	li_sts = execute_string(ls_trigger_script)
 	if li_sts < 0 then
-		log.log(this, "rebuild_table_triggers()", "Error creating triggers (" + ps_tablename + ")", 4)
+		log.log(this, "u_sqlca.rebuild_table_triggers.0006", "Error creating triggers (" + ps_tablename + ")", 4)
 		return -1
 	end if
 end if
@@ -3407,7 +3407,7 @@ luo_scripts.set_dataobject("dw_jmj_latest_scripts", luo_this)
 ll_script_count = luo_scripts.retrieve("Security", db_script_major_release, db_script_database_version, modification_level)
 if ll_script_count < 0 then return -1
 if ll_script_count = 0 then
-	log.log(this, "reset_permissions()", "No Security Scripts Found", 4)
+	log.log(this, "u_sqlca.reset_permissions.0022", "No Security Scripts Found", 4)
 	return -1
 end if
 
@@ -3451,7 +3451,7 @@ WHERE script_id = :pl_script_id
 USING this;
 if not check() then return -1
 if sqlcode = 100 then
-	log.log(this, "execute_script()", "Script_id not found (" + string(pl_script_id) + ")", 4)
+	log.log(this, "u_sqlca.execute_script.0027", "Script_id not found (" + string(pl_script_id) + ")", 4)
 	return -1
 end if
 
@@ -3670,14 +3670,14 @@ for i = 1 to lstr_scripts.script_count
 						exit
 					else
 						// Log a warning but continue
-						log.log(this, "execute_script()", ls_err_mes, 3)
+						log.log(this, "u_sqlca.execute_script.0027", ls_err_mes, 3)
 					end if
 				end if
 			else
 				deadlock = false
 			end if
 		CASE ELSE
-			log.log(this, "execute_script()", "Invalid script_type (" + lstr_scripts.script[i].script_type + ")", 3)
+			log.log(this, "u_sqlca.execute_script.0027", "Invalid script_type (" + lstr_scripts.script[i].script_type + ")", 3)
 	END CHOOSE
 next
 
@@ -3733,7 +3733,7 @@ WHERE material_id = :ll_material_id;
 if not tf_check() then return -1
 
 if isnull(lbl_script) or len(lbl_script) <= 0 then
-	log.log(this, "upgrade_database()", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
+	log.log(this, "u_sqlca.upgrade_database.0028", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
 	return -1
 end if
 
@@ -3748,11 +3748,11 @@ TRY
 	lo_doc = pbdombuilder_new.BuildFromString(ls_xml)
 	lo_root = lo_doc.getrootelement()
 	if lo_root.GetName() <> "EproDBSchema" then
-		log.log(this, "upgrade_database()", "XML schema incorrect", 4)
+		log.log(this, "u_sqlca.upgrade_database.0028", "XML schema incorrect", 4)
 		return -1
 	end if		
 CATCH (throwable lo_error)
-	log.log(this, "upgrade_database()", "Error reading XML schema data (" + lo_error.text + ")", 4)
+	log.log(this, "u_sqlca.upgrade_database.0028", "Error reading XML schema data (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -3775,13 +3775,13 @@ for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
 	
-	log.log(this, "upgrade_database()", "Executing " + ls_element, 1)
+	log.log(this, "u_sqlca.upgrade_database.0028", "Executing " + ls_element, 1)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
 		rollback_transaction()
 		f_please_wait_close(li_please_wait_index)
-		log.log(this, "upgrade_database()", "Failed executing " + ls_element, 5)
+		log.log(this, "u_sqlca.upgrade_database.0028", "Failed executing " + ls_element, 5)
 		DESTROY pbdombuilder_new
 		return -1
 	end if
@@ -3862,7 +3862,7 @@ for i = 1 to ll_file_count
 	// Read the file
 	li_sts = log.file_read(lsa_paths[i], lbl_file)
 	if li_sts <= 0 then
-		log.log(this, "f_generate_object_rebuild_script()", "Error reading file (" + lsa_paths[i] + ")", 4)
+		log.log(this, "u_sqlca.load_schema_file.0064", "Error reading file (" + lsa_paths[i] + ")", 4)
 		return -1
 	end if
 	
@@ -3916,7 +3916,7 @@ for i = 1 to ll_file_count
 	if not check() then return -1
 	
 	if isnull(ll_material_id) or ll_material_id <= 0 then
-		log.log(this,"clicked","Error creating new material",4)
+		log.log(this,"u_sqlca.load_schema_file.0118","Error creating new material",4)
 		return -1
 	end if
 		
@@ -3955,7 +3955,7 @@ if not tf_check() then return -1
 
 // If no material was found try loading the schema for this mod level
 if ll_material_id = 0 or isnull(ll_material_id) then
-	//log.log(this, "upgrade_mod_level()", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
+	//log.log(this, "u_sqlca.upgrade_material_id.0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
 	ll_material_id = load_schema_file(program_directory, ll_modification_level)
 	if ll_material_id <= 0 then
 		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level)
@@ -3964,7 +3964,7 @@ if ll_material_id = 0 or isnull(ll_material_id) then
 		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level)
 	end if
 	if ll_material_id <= 0 then
-		log.log(this, "upgrade_mod_level()", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+		log.log(this, "u_sqlca.upgrade_material_id.0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
 		return -1
 	end if
 end if

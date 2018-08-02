@@ -42,7 +42,7 @@ long ll_current_version_count
 setnull(ls_null)
 
 if isnull(ps_component_id) then
-	log.log(po_null, "f_new_component_version()", "Null component_id", 4)
+	log.log(po_null, "f_new_component_version.0037", "Null component_id", 4)
 	return ls_null
 end if
 
@@ -52,7 +52,7 @@ FROM c_Component_Definition
 WHERE component_id = :ps_component_id;
 if not tf_check() then return ls_null
 if sqlca.sqlnrows = 0 then
-	log.log(po_null, "f_new_component_version()", "component_id not found (" + ps_component_id + ")", 4)
+	log.log(po_null, "f_new_component_version.0037", "component_id not found (" + ps_component_id + ")", 4)
 	return ls_null
 end if
 

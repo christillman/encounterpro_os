@@ -294,7 +294,7 @@ service = message.powerobjectparm
 
 
 if isnull(service.treatment) then
-	log.log(this, "open", "Null treatment object", 4)
+	log.log(this, "w_svc_rx_refill_document.open.0014", "Null treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

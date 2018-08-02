@@ -62,7 +62,7 @@ u_ds_clinical_data_cache luo_data
 
 li_sts = get_data(ps_cpr_id, ps_context_object, pl_object_key, luo_data)
 if li_sts < 0 then
-	log.log(this, "if_condition()", "Error getting data", 4)
+	log.log(this, "u_clinical_data_cache.if_condition.0008", "Error getting data", 4)
 	return false
 end if
 
@@ -83,7 +83,7 @@ str_treatment_description lstr_treatment
 
 li_sts = get_data(ps_cpr_id, "Treatment", pl_object_key, luo_treatment)
 if li_sts <= 0 then
-	log.log(this, "get_treatment()", "Error getting treatment data", 4)
+	log.log(this, "u_clinical_data_cache.get_treatment.0009", "Error getting treatment data", 4)
 	return -1
 end if
 
@@ -285,7 +285,7 @@ CHOOSE CASE lower(ps_context_object)
 	CASE "attachment"
 		puo_cache_data = clinical_data_attachment
 	CASE ELSE
-		log.log(this, "get_data()", "Invalid context_object(" + ps_context_object + ")", 4)
+		log.log(this, "u_clinical_data_cache.get_data.0016", "Invalid context_object(" + ps_context_object + ")", 4)
 		return -1
 END CHOOSE
 

@@ -408,7 +408,7 @@ popup_return.item_count = 0
 service = Message.powerobjectparm
 
 If isnull(service.treatment) Then
-	log.log(this,"open","No Treatment Object",4)
+	log.log(this,"w_followup.open.0023","No Treatment Object",4)
 	closewithreturn(this, popup_return)
 	Return
 end if

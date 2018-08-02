@@ -233,7 +233,7 @@ attachments.settransobject(sqlca)
 
 li_sts = create_lists()
 if li_sts <= 0 then
-	log.log(this, "open", "Error creating posting lists", 4)
+	log.log(this, "w_scan_main.open.0031", "Error creating posting lists", 4)
 	close(this)
 	return
 end if

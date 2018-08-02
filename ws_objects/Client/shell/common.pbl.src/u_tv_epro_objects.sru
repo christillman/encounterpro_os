@@ -75,7 +75,7 @@ string ls_property_help
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "selectionchanged", "Error getting treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_epro_objects.item_selected.0024", "Error getting treeview item (" + string(pl_handle) + ")", 4)
 	return -1
 end if
 
@@ -97,7 +97,7 @@ DO
 	if ll_handle > 0 then
 		li_sts = getitem(ll_handle, ltvi_item)
 		if li_sts <= 0 then
-			log.log(this, "selectionchanged", "Error getting treeview item (" + string(pl_handle) + ")", 4)
+			log.log(this, "u_tv_epro_objects.item_selected.0024", "Error getting treeview item (" + string(pl_handle) + ")", 4)
 			return -1
 		end if
 		
@@ -136,7 +136,7 @@ str_edas_which_object lstr_which_object
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_epro_objects.get_which_object.0009", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return lstr_property_specification.which_object
 end if
 
@@ -187,7 +187,7 @@ setnull(ls_property_value_object)
 
 li_sts = getitem(handle, ltvi_parent_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_epro_objects.get_which_object.0009", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
@@ -367,7 +367,7 @@ treeviewitem ltvi_item
 
 li_sts = getitem(handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itemexpanding", "Error getting treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_epro_objects.itemexpanding.0006", "Error getting treeview item (" + string(handle) + ")", 4)
 	return -1
 end if
 

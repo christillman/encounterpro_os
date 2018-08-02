@@ -113,7 +113,7 @@ long ll_row
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_observation_coding_elements.open.0011", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -129,7 +129,7 @@ dw_observation_elements.settransobject(sqlca)
 
 ll_rows = dw_observation_elements.retrieve(observation_id)
 if ll_rows < 0 then
-	log.log(this, "open", "Error getting observation elements", 4)
+	log.log(this, "w_observation_coding_elements.open.0011", "Error getting observation elements", 4)
 	close(this)
 	return
 end if

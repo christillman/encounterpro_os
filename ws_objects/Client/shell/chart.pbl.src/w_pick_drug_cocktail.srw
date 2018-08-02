@@ -126,7 +126,7 @@ if li_count = 0 then li_count = f_get_drug_administer_unit(ls_drug_id, "%", lsa_
 if li_count < 0 then return
 
 if li_count = 0 then
-	log.log(this, "select_item()", "Unable to get drug administrations (" + ls_drug_id + ")", 4)
+	log.log(this, "w_pick_drug_cocktail.select_drug.0037", "Unable to get drug administrations (" + ls_drug_id + ")", 4)
 	openwithparm(w_pop_message, "No administration rules for this drug")
 	return
 elseif li_count = 1 then
@@ -150,7 +150,7 @@ setnull(ls_generic_code)
 
 luo_unit = unit_list.find_unit(ls_administer_unit)
 if isnull(luo_unit) then
-	log.log(this, "select_drug()", "Invalid admin unit (" + ls_administer_unit + ")", 4)
+	log.log(this, "w_pick_drug_cocktail.select_drug.0061", "Invalid admin unit (" + ls_administer_unit + ")", 4)
 	return
 end if
 
@@ -166,7 +166,7 @@ if not isnull(ls_value) then
 	if upper(ls_unit) <> upper(luo_unit.unit_id) then
 		luo_unit = unit_list.find_unit(ls_unit)
 		if isnull(luo_unit) then
-			log.log(this, "select_drug()", "Changed unit not found (" + ls_unit + ")", 4)
+			log.log(this, "w_pick_drug_cocktail.select_drug.0061", "Changed unit not found (" + ls_unit + ")", 4)
 			return
 		end if
 		ls_administer_unit = ls_unit
@@ -216,7 +216,7 @@ Elseif popup.data_row_count = 2 Then
 	top_20_code = popup.items[1]
 	allow_null_amount = f_string_to_boolean(popup.items[2])
 Else
-	log.log(this,"open","Invalid parameters",4)
+	log.log(this,"w_pick_drug_cocktail.open.0021","Invalid parameters",4)
 	pb_cancel.event clicked()
 	Return
 End If

@@ -129,7 +129,7 @@ integer li_sts
 
 li_sts = drugdb.get_drug_definition(treat_immun.drug_id, lstr_drug)
 if li_sts <= 0 then
-	log.log(this, "initialize()", "Error getting drug definition (" + treat_immun.drug_id + ")", 4)
+	log.log(this, "w_do_immunization.display_ndc.0006", "Error getting drug definition (" + treat_immun.drug_id + ")", 4)
 	st_reference_ndc_code.text = "<Error>"
 	return
 end if
@@ -310,7 +310,7 @@ Else
 	FROM c_Drug_Maker
 	WHERE maker_id = :maker_id;
 	If Not tf_check() Then
-		log.log(This, "post_open", "Error getting maker information", 4)
+		log.log(This, "w_do_immunization.post_open.0051", "Error getting maker information", 4)
 		closewithreturn(This, popup_return)
 		return
 	End If
@@ -397,7 +397,7 @@ Else
 	WHERE location_domain = :location_domain
 	AND location = :location;
 	If Not tf_check() Then
-		log.log(this, "post_open", "Error getting maker information", 4)
+		log.log(this, "w_do_immunization.post_open.0138", "Error getting maker information", 4)
 		closewithreturn(this, popup_return)
 		Return
 	End if
@@ -414,7 +414,7 @@ if isnull(treat_immun.drug_id) then
 						 + ") is not configured with a corresponding vaccine.  Please select a vaccine for this procedure " &
 						 + " on the procedure definition screen."
 		openwithparm(w_pop_message, ls_message)
-		log.log(this, "post_open", "Unable to locate vaccine for procedure " + treat_immun.procedure_id, 3)
+		log.log(this, "w_do_immunization.post_open.0138", "Unable to locate vaccine for procedure " + treat_immun.procedure_id, 3)
 		closewithreturn(this, popup_return)
 		Return
 	End if
@@ -588,7 +588,7 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.items[1] <> location_domain then
 			if not isnull(location_domain_preference_id) then
 				li_sts = datalist.update_preference("PREFERENCES", "Global", "Global", location_domain_preference_id, location_domain)
-				if li_sts <= 0 then log.log(this, "clicked", "Error updating location domain preference", 3)
+				if li_sts <= 0 then log.log(this, "w_do_immunization.cb_edit_location_domain.clicked.0060", "Error updating location domain preference", 3)
 			end if
 			location_domain = popup_return.items[1]
 			st_location.postevent("clicked")
@@ -744,7 +744,7 @@ end if
 
 li_sts = save_changes()
 if li_sts < 0 then
-	log.log(this, "clicked", "Error saving changes", 4)
+	log.log(this, "w_do_immunization.cb_done.clicked.0099", "Error saving changes", 4)
 	return
 end if
 
@@ -986,7 +986,7 @@ integer li_sts
 
 li_sts = save_changes()
 if li_sts < 0 then
-	log.log(this, "clicked", "Error saving changes", 4)
+	log.log(this, "w_do_immunization.cb_done.clicked.0099", "Error saving changes", 4)
 	return
 end if
 

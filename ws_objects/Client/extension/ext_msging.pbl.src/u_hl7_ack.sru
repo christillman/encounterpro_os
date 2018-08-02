@@ -43,7 +43,7 @@ public function integer app_ack (ref u_sqlca cprdb, ref u_event_log mylog, ref s
 //	setnull(oAHC_Ack)
 //	return -1
 //end if	
-//mylog.log(this, "dcom_app_ack", "connection to AHC Messenger object.", 2)
+//mylog.log(this, "u_hl7_ack.app_ack.0012", "connection to AHC Messenger object.", 2)
 ////IHCMessageManager
 ////create the manager object for acknowledgements
 ////Call the Connect method on the object and supply the registered application name 
@@ -54,7 +54,7 @@ public function integer app_ack (ref u_sqlca cprdb, ref u_event_log mylog, ref s
 //	mylog.log(this, "dcom_app_ack", "ERROR: connection to IHCMessageManager object failed.", 4)
 //	return -1
 //end if
-//mylog.log(this, "dcom_app_ack", "connection to IHCMessageManager object.", 2)
+//mylog.log(this, "u_hl7_ack.app_ack.0012", "connection to IHCMessageManager object.", 2)
 
 return 1
 
@@ -101,7 +101,7 @@ oleobject omsgtype
 oMsgtype = create oleobject
 li_sts = oMsgtype.connecttonewobject("AHC.MessageType")
 if li_sts <> 0 then
-	mylog.log(this, "ack()", "ERROR: connection to AHC messagetype object failed.", 4)
+	mylog.log(this, "u_hl7_ack.ack.0042", "ERROR: connection to AHC messagetype object failed.", 4)
 	DESTROY oMsgtype
 	setnull(oMsgtype)
 	return -1
@@ -120,7 +120,7 @@ AckMsg = ackmsgman.CreateResponseMessage(po_env,oMsgtype)
 
 li_sts = AckMsg.GetAutomationNativePointer (lul_envptr)
 if li_sts < 0 then
-	mylog.log(this, "ack()", "error native pointer to message object ", 4)	
+	mylog.log(this, "u_hl7_ack.ack.0042", "error native pointer to message object ", 4)	
 	return -1
 end if
 
@@ -155,7 +155,7 @@ if bs_system = 'IDX' or bs_system = 'MEDIC' then
 			goto finish
 	else
 		if isnull(dcom_app_port) then
-			mylog.log(this, "ack()", "error no port specified for ack ", 4)	
+			mylog.log(this, "u_hl7_ack.ack.0042", "error no port specified for ack ", 4)	
 			return -1
 		end if	
 		oleobject jsocket
@@ -165,14 +165,14 @@ if bs_system = 'IDX' or bs_system = 'MEDIC' then
 		if li_sts <> 0 then
 			DESTROY jsocket
 			setnull(jsocket)
-			mylog.log(this, "ack()", "ERROR: connection to jsocket object failed.", 4)
+			mylog.log(this, "u_hl7_ack.ack.0042", "ERROR: connection to jsocket object failed.", 4)
 			return -1
 		end if
 		socket_return = jsocket.SendString(ack_appl,dcom_app_port,ack_message)
 		if socket_return = 'Success' then
-			mylog.log(this,"ack()","message sent to jsocket " + ack_appl,1)
+			mylog.log(this,"u_hl7_ack.ack.0111","message sent to jsocket " + ack_appl,1)
 		else
-			mylog.log(this,"ack()","error with send to jsocket " + socket_return,4)
+			mylog.log(this,"u_hl7_ack.ack.0111","error with send to jsocket " + socket_return,4)
 			li_sts = -1
 		end if
 		DESTROY jsocket
@@ -183,7 +183,7 @@ end if
 
 li_sts = HL7MsgACK.GetAutomationNativePointer (lul_ackptr)
 if li_sts < 0 then
-	mylog.log(this, "ack()", "error native pointer to message object ", 4)	
+	mylog.log(this, "u_hl7_ack.ack.0042", "error native pointer to message object ", 4)	
 	return -1
 end if
 
@@ -201,7 +201,7 @@ end if
 HL7MsgACK.MessageAcknowledgment.ControlID.Value = ack_controlid
 
 // send message to destination
-mylog.log(this, "ack()", "sendmessage to" + is_FromApp + " from " + ack_appl, 1)	
+mylog.log(this, "u_hl7_ack.ack.0042", "sendmessage to" + is_FromApp + " from " + ack_appl, 1)	
 //determine if to file or to app
 if lb_ackfile then
 		ack_datetime = HL7MsgACK.MessageHeader.DatetimeOfMessage.valuestring
@@ -217,7 +217,7 @@ if lb_ackfile then
 		SetNull(ls_uuid)
 		ls_uuid = ackmsgman.SendMessage(AckMsg,dcom_ack_app)
 		if IsNull(ls_uuid) then
-			mylog.log(this,"send_ack()","error with send to AHCMessenger object",4)
+			mylog.log(this,"u_hl7_ack.ack.0158","error with send to AHCMessenger object",4)
 		end if
 end if
 

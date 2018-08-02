@@ -200,7 +200,7 @@ duration_prn = f_attribute_find_attribute(drug_attributes, "duration_prn")
 refills = integer(f_attribute_find_attribute(drug_attributes, "refills"))
 
 if isnull(drug_id) then
-	log.log(this, "post_open", "No drug_id", 4)
+	log.log(this, "w_drug_admin_edit.post_open.0034", "No drug_id", 4)
 	Closewithreturn(this, lstr_attributes)
 	Return
 End if
@@ -292,7 +292,7 @@ string ls_dea_number_required, ls_generic_name
 
 setnull(ls_null)
 
-log.log(this, "set_drug()", drug_id, 1)
+log.log(this, "w_drug_admin_edit.set_drug.0007", drug_id, 1)
 
 // Get the name and default duration
 li_sts = tf_get_drug(drug_id, &
@@ -305,7 +305,7 @@ li_sts = tf_get_drug(drug_id, &
 							ls_unit, &
 							ls_dea_number_required)
 if li_sts <= 0 then
-	if li_sts = 0 then log.log(this, "set_drug()","Invalid Drug ID (" + drug_id + ")", 4)
+	if li_sts = 0 then log.log(this, "w_drug_admin_edit.set_drug.0007","Invalid Drug ID (" + drug_id + ")", 4)
 	return li_sts
 end if
 

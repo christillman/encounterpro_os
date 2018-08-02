@@ -277,7 +277,7 @@ popup_return.items[1] = "ERROR"
 
 service = message.powerobjectparm
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment object", 4)
+	log.log(this, "w_svc_refer_treatment.open.0016", "No treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

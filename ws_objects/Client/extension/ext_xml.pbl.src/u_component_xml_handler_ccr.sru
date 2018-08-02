@@ -136,12 +136,12 @@ TRY
 	lo_root = xml.XML_Document.GetRootElement()
 	ls_root = lo_root.getname()
 CATCH (pbdom_exception lo_error)
-	log.log(this, "process_xml", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_ccr.xx_interpret_xml.0023", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
 if isnull(ls_root) or lower(ls_root) <> "continuityofcarerecord" then
-	log.log(this, "xx_interpret_xml()", "Error - Document root is not 'ContinuityOfCareRecord'", 4)
+	log.log(this, "u_component_xml_handler_ccr.xx_interpret_xml.0028", "Error - Document root is not 'ContinuityOfCareRecord'", 4)
 	return -1
 end if
 
@@ -149,7 +149,7 @@ lstr_element = get_element(lo_root)
 ccr_continuityofcarerecord = get_ccr_continuityofcarerecord(lstr_element)
 
 if actor_count = 0 then
-	log.log(this, "xx_interpret_xml()", "Error - Document has no actors", 4)
+	log.log(this, "u_component_xml_handler_ccr.xx_interpret_xml.0028", "Error - Document has no actors", 4)
 	return -1
 end if
 
@@ -192,7 +192,7 @@ if ccr_continuityofcarerecord.patient.actor_id > 0 then
 
 	li_sts = find_patient(epro_patient, lb_auto_create, lb_prompt_user, lb_new_object)
 	if li_sts <= 0 then
-		log.log(this,"xx_interpret_xml","unable to find a patient record",4)
+		log.log(this,"u_component_xml_handler_ccr.xx_interpret_xml.0079","unable to find a patient record",4)
 		return -1
 	end if
 	
@@ -315,7 +315,7 @@ interpret_objectcreate("Assessment", lstr_handling.objectcreate, lb_auto_create,
 
 ll_problem_id = find_assessment(lstr_assessment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(ll_problem_id) then 
-	log.log(this, "process_assessment()", "Unable to find or create assessment", 4)
+	log.log(this, "u_component_xml_handler_ccr.process_assessment.0045", "Unable to find or create assessment", 4)
 	return -1
 end if
 
@@ -455,7 +455,7 @@ interpret_objectcreate("Encounter", lstr_handling.objectcreate, lb_auto_create, 
 
 ll_encounter_id = find_encounter(lstr_encounter, lb_auto_create, lb_prompt_user, false, lb_new_object)
 if isnull(ll_encounter_id) then 
-	log.log(this, "process_encounter()", "Unable to find or create encounter", 4)
+	log.log(this, "u_component_xml_handler_ccr.process_encounter.0044", "Unable to find or create encounter", 4)
 	return -1
 end if
 
@@ -632,7 +632,7 @@ lstr_treatment.parent_treatment_id = parent_treatment_id
 
 // If we still don't have a treatment description then report an error
 if isnull(lstr_treatment.treatment_description) then
-	log.log(this,"process_treatment()","No treatment description provided in treatment block", 4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0048","No treatment description provided in treatment block", 4)
 	return -1
 end if
 
@@ -653,7 +653,7 @@ end if
 
 lstr_treatment.treatment_id = find_treatment(lstr_treatment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(lstr_treatment.treatment_id) then
-	log.log(this,"interpret_xml_treatment","unable to find or create treatment",4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0069","unable to find or create treatment",4)
 	return -1
 end if
 
@@ -3652,7 +3652,7 @@ end if
 
 ll_problem_id = find_assessment(lstr_assessment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(ll_problem_id) then 
-	log.log(this, "process_assessment()", "Unable to find or create assessment", 4)
+	log.log(this, "u_component_xml_handler_ccr.process_assessment.0045", "Unable to find or create assessment", 4)
 	return -1
 end if
 
@@ -3797,7 +3797,7 @@ end if
 
 ll_problem_id = find_assessment(lstr_assessment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(ll_problem_id) then 
-	log.log(this, "process_assessment()", "Unable to find or create assessment", 4)
+	log.log(this, "u_component_xml_handler_ccr.process_assessment.0045", "Unable to find or create assessment", 4)
 	return -1
 end if
 
@@ -3956,7 +3956,7 @@ next
 if upper(lstr_assessment.assessment_type) = "ALLERGY" and isnull(lstr_assessment.assessment_id) then
 	lstr_assessment.assessment_id = f_find_assessment_id(lstr_assessment.assessment_type, lstr_assessment.assessment, lstr_assessment.icd10_code)
 	if isnull(lstr_assessment.assessment_id) then
-		log.log(this, "translate_ccr_alert_info()", "Unable to find or create assessment_id (" + lstr_assessment.assessment + ")", 4)
+		log.log(this, "u_component_xml_handler_ccr.translate_ccr_alert_info.0063", "Unable to find or create assessment_id (" + lstr_assessment.assessment + ")", 4)
 		return lstr_assessment
 	end if
 	// If this allergy doesn't have any drugs, then add the agents that match drugs
@@ -4073,7 +4073,7 @@ lstr_treatment.parent_treatment_id = parent_treatment_id
 
 // If we still don't have a treatment description then report an error
 if isnull(lstr_treatment.treatment_description) then
-	log.log(this,"process_treatment()","No treatment description provided in treatment block", 4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0048","No treatment description provided in treatment block", 4)
 	return -1
 end if
 
@@ -4096,7 +4096,7 @@ end if
 
 lstr_treatment.treatment_id = find_treatment(lstr_treatment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(lstr_treatment.treatment_id) then
-	log.log(this,"interpret_xml_treatment","unable to find or create treatment",4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0069","unable to find or create treatment",4)
 	return -1
 end if
 
@@ -4481,7 +4481,7 @@ lstr_treatment.parent_treatment_id = parent_treatment_id
 
 // If we still don't have a treatment description then report an error
 if isnull(lstr_treatment.treatment_description) then
-	log.log(this,"process_treatment()","No treatment description provided in treatment block", 4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0048","No treatment description provided in treatment block", 4)
 	return -1
 end if
 
@@ -4520,7 +4520,7 @@ end if
 
 lstr_treatment.treatment_id = find_treatment(lstr_treatment, lb_auto_create, lb_prompt_user, lb_new_object)
 if isnull(lstr_treatment.treatment_id) then
-	log.log(this,"interpret_xml_treatment","unable to find or create treatment",4)
+	log.log(this,"u_component_xml_handler_ccr.process_treatment.0069","unable to find or create treatment",4)
 	return -1
 end if
 

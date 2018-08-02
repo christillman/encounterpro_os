@@ -51,7 +51,7 @@ if not tf_check() then
 	return lstr_material
 end if
 if sqlca.sqlcode = 100 then
-	log.log(po_null, "f_get_patient_material()", "Material_id not found (" + string(pl_material_id) + ")", 3)
+	log.log(po_null, "f_get_patient_material.0046", "Material_id not found (" + string(pl_material_id) + ")", 3)
 	setnull(lstr_material.material_id)
 	return lstr_material
 end if
@@ -85,7 +85,7 @@ if pb_include_object then
 		return lstr_material
 	end if
 	if sqlca.sqlcode = 100 then
-		log.log(po_null, "f_get_patient_material()", "Material_id not found getting object (" + string(pl_material_id) + ")", 3)
+		log.log(po_null, "f_get_patient_material.0046", "Material_id not found getting object (" + string(pl_material_id) + ")", 3)
 		setnull(lstr_material.material_id)
 		return lstr_material
 	end if

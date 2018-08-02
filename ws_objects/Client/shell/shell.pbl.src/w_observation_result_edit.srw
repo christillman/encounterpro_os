@@ -267,7 +267,7 @@ luo_result_sets.object.description[ll_row] = popup_return.items[1]
 
 li_sts = luo_result_sets.update()
 if li_sts <= 0 then
-	log.log(this, "new_result()", "Error creating new result set", 4)
+	log.log(this, "w_observation_result_edit.new_result_set.0034", "Error creating new result set", 4)
 	return -1
 end if
 
@@ -378,7 +378,7 @@ next
 
 li_sts = luo_observation_results.update()
 if li_sts < 0 then
-	log.log(this, "add_result_set()", "Error adding new result set items", 4)
+	log.log(this, "w_observation_result_edit.add_result_set.0051", "Error adding new result set items", 4)
 	return -1
 end if
 
@@ -768,7 +768,7 @@ if dw_results.rowcount() = 0 then
 	if ll_result_set > 0 then
 		li_sts = add_result_set(ll_result_set)
 		if li_sts <= 0 then
-			log.log(this, "clicked", "Error adding result set (" + string(ll_result_set) + ")", 4)
+			log.log(this, "w_observation_result_edit.cb_result_set.clicked.0021", "Error adding result set (" + string(ll_result_set) + ")", 4)
 			return
 		end if
 		display_results()

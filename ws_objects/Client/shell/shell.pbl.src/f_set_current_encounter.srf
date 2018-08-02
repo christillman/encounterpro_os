@@ -9,12 +9,12 @@ end prototypes
 global function integer f_set_current_encounter (long pl_encounter_id);integer li_sts
 
 if isnull(current_patient) then 
-	log.log(po_null, "f_set_current_encounter()", "Null current_patient", 4)
+	log.log(po_null, "f_set_current_encounter.0004", "Null current_patient", 4)
 	return -1
 end if
 
 if isnull(pl_encounter_id) then 
-	log.log(po_null, "f_set_current_encounter()", "Null encounter_id", 4)
+	log.log(po_null, "f_set_current_encounter.0004", "Null encounter_id", 4)
 	return -1
 end if
 
@@ -22,7 +22,7 @@ f_clear_current_encounter()
 
 li_sts = current_patient.encounters.encounter(current_display_encounter, pl_encounter_id)
 if li_sts <= 0 then
-	log.log(po_null, "f_set_current_encounter()", "Unable to set display encounter (" + string(pl_encounter_id) + ")", 4)
+	log.log(po_null, "f_set_current_encounter.0004", "Unable to set display encounter (" + string(pl_encounter_id) + ")", 4)
 	return -1
 end if
 

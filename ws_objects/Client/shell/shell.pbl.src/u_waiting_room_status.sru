@@ -103,7 +103,7 @@ if li_sts < 0 then return -1
 
 li_sts = f_set_current_encounter(ll_encounter_id)
 if li_sts <= 0 then
-	log.log(this, "patient_menu()", "Error setting encounter", 4)
+	log.log(this, "u_waiting_room_status.patient_menu.0021", "Error setting encounter", 4)
 	f_clear_patient()
 	return -1
 end if
@@ -141,7 +141,7 @@ event dberror;string ls_message
 
 ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 
-log.log(this, "dberror", ls_message, 3)
+log.log(this, "u_waiting_room_status.dberror.0005", ls_message, 3)
 
 return 1
 

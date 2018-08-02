@@ -19,7 +19,7 @@ str_attributes lstr_attributes
 
 get_attribute("menu_id", ll_menu_id)
 if isnull(ll_menu_id) then
-	log.log(this, "xx_do_service()", "No menu_id", 4)
+	log.log(this, "u_component_service_menu.xx_do_service.0008", "No menu_id", 4)
 	return 2
 end if
 

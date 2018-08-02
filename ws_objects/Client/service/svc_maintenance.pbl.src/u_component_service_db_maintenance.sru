@@ -32,14 +32,14 @@ mydb = CREATE u_sqlca
 mydb.connect_approle = false
 li_sts = mydb.dbconnect("EproDBMaintenance")
 if li_sts <= 0 then
-	log.log(this, "xx_do_service()", "Error Connecting to Database", 4)
+	log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error Connecting to Database", 4)
 	return -1
 end if
 
 
 // Make Sure we're a DBO
 if not mydb.is_dbo then
-	log.log(this, "xx_do_service()", "This user is not connected as a DBO (" + logon_id + ")", 4)
+	log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "This user is not connected as a DBO (" + logon_id + ")", 4)
 	mydb.dbdisconnect()
 	return -1
 end if	
@@ -54,7 +54,7 @@ get_attribute("Weekly Maintenance", lb_maintenance_infrequent, false)
 if lb_sync_database_scripts then
 	li_sts = sync_database_scripts()
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Error syncing database scripts", 4)
+		log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error syncing database scripts", 4)
 		// Abort if the db scripts sync fails
 		mydb.dbdisconnect()
 		return -1
@@ -64,28 +64,28 @@ end if
 if lb_sync_content then
 	li_sts = sync_content()
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Error syncing content", 4)
+		log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error syncing content", 4)
 	end if
 end if
 
 if lb_run_hotfixes then
 	li_sts = run_hotfixes()
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Error running hotfixes", 4)
+		log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error running hotfixes", 4)
 	end if
 end if
 
 if lb_maintenance_frequent then
 	li_sts = run_maintenance_frequent()
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Error running hotfixes", 4)
+		log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error running hotfixes", 4)
 	end if
 end if
 
 if lb_maintenance_infrequent then
 	li_sts = run_maintenance_infrequent()
 	if li_sts <= 0 then
-		log.log(this, "xx_do_service()", "Error running hotfixes", 4)
+		log.log(this, "u_component_service_db_maintenance.xx_do_service.0012", "Error running hotfixes", 4)
 	end if
 end if
 
@@ -99,7 +99,7 @@ private function integer sync_database_scripts ();integer li_sts
 
 li_sts = mydb.bootstrap_database_scripts()
 if li_sts <= 0 then
-	log.log(this, "set_available_versions()", "Error updating database scripts", 4)
+	log.log(this, "u_component_service_db_maintenance.sync_database_scripts.0005", "Error updating database scripts", 4)
 	return -1
 end if
 
@@ -111,7 +111,7 @@ private function integer sync_content ();integer li_sts
 
 mydb.jmjsys_daily_sync()
 if not mydb.check() then
-	log.log(this, "sync_content()", "Error syncing content", 4)
+	log.log(this, "u_component_service_db_maintenance.sync_content.0005", "Error syncing content", 4)
 	return -1
 end if
 
@@ -123,7 +123,7 @@ private function integer run_hotfixes ();integer li_sts
 
 li_sts = mydb.run_hotfixes(true)
 if li_sts <= 0 then
-	log.log(this, "set_available_versions()", "Error running hotfixes", 4)
+	log.log(this, "u_component_service_db_maintenance.sync_database_scripts.0005", "Error running hotfixes", 4)
 	return -1
 end if
 
@@ -147,7 +147,7 @@ end if
 
 mydb.sp_maintenance_frequent(li_encounter_started_days, li_encounter_not_started_days, current_user.user_id, current_scribe.user_id)
 if not mydb.check() then
-	log.log(this, "sync_content()", "Error running sp_maintenance_frequent", 4)
+	log.log(this, "u_component_service_db_maintenance.sync_content.0005", "Error running sp_maintenance_frequent", 4)
 	return -1
 end if
 
@@ -159,7 +159,7 @@ private function integer run_maintenance_infrequent ();integer li_sts
 
 mydb.sp_maintenance_infrequent()
 if not mydb.check() then
-	log.log(this, "sync_content()", "Error running sp_maintenance_frequent", 4)
+	log.log(this, "u_component_service_db_maintenance.sync_content.0005", "Error running sp_maintenance_frequent", 4)
 	return -1
 end if
 

@@ -120,7 +120,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_observation_comment.open.0011", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -191,7 +191,7 @@ st_comment_count.text = string(displayed_comment) + " of " + string(displayed_co
 st_comment_count.text += "  -  " + ls_temp
 
 if displayed_comment <= 0 then
-	log.log(this, "open", "Nothing to display", 3)
+	log.log(this, "w_observation_comment.open.0011", "Nothing to display", 3)
 	close(this)
 	return
 elseif displayed_comment = 1 then

@@ -167,13 +167,13 @@ if isnull(ps_unit_preference) then ps_unit_preference = unit_preference
 if upper(ps_unit_preference) = "ENGLISH" and this_unit_preference = "METRIC" then
 	luo_unit = unit_list.find_unit(english_unit)
 	if isnull(luo_unit) then
-		log.log(this, "pretty_unit()", "Unable to find english unit (" + english_unit + ")", 4)
+		log.log(this, "u_unit.pretty_unit.0009", "Unable to find english unit (" + english_unit + ")", 4)
 		return ""
 	end if
 elseif upper(ps_unit_preference) = "METRIC" and this_unit_preference = "ENGLISH" then
 	luo_unit = unit_list.find_unit(metric_unit)
 	if isnull(luo_unit) then
-		log.log(this, "pretty_unit()", "Unable to find english unit (" + metric_unit + ")", 4)
+		log.log(this, "u_unit.pretty_unit.0009", "Unable to find english unit (" + metric_unit + ")", 4)
 		return ""
 	end if
 else
@@ -269,7 +269,7 @@ public function string convert (string ps_to_unit_id, string ps_value);u_unit lu
 
 luo_unit = unit_list.find_unit(ps_to_unit_id)
 if isnull(luo_unit) then
-	log.log(this, "convert()", "Error finding unit (" + ps_to_unit_id + ")", 4)
+	log.log(this, "u_unit.convert.0005", "Error finding unit (" + ps_to_unit_id + ")", 4)
 	return ps_value
 end if
 
@@ -921,7 +921,7 @@ end if
 
 luo_unit = unit_list.find_unit(ps_to_unit_id)
 if isnull(luo_unit) then
-	log.log(this, "convert()", "Error finding unit (" + ps_to_unit_id + ")", 4)
+	log.log(this, "u_unit.convert.0005", "Error finding unit (" + ps_to_unit_id + ")", 4)
 	return ps_value
 end if
 

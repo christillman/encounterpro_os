@@ -136,7 +136,7 @@ for i = 1 to location_domain_count
 	loc_domain[i].load_locations()
 next
 
-log.log(this, "retrieve_location_domains()", "Locations Loaded", 1)
+log.log(this, "u_location_domain_list.load_location_domains.0036", "Locations Loaded", 1)
 
 DESTROY luo_data
 

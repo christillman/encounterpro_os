@@ -148,7 +148,7 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 13 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_health_maintenance_rule_edit.open.0012", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

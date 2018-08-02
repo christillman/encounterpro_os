@@ -37,7 +37,7 @@ str_popup_return popup_return
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_pop_time_interval.open.0007", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

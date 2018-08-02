@@ -178,7 +178,7 @@ str_popup popup
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_workplan_select_room.open.0007", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

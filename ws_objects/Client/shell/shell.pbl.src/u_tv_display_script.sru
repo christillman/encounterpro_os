@@ -152,7 +152,7 @@ if not allow_editing then return
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -363,7 +363,7 @@ for i = 1 to display_script_count
 	ll_old_display_script_id = display_script[i].display_script_id
 	li_sts = f_save_display_script(display_script[i])
 	if li_sts <= 0 then
-		log.log(this, "save_changes()", "Saving display script failed", 4)
+		log.log(this, "u_tv_display_script.save_changes.0011", "Saving display script failed", 4)
 		openwithparm(w_pop_message, "Saving display script failed")
 		return -1
 	end if
@@ -392,13 +392,13 @@ display_script_count = 0
 display_script_reference_count = 0
 
 if isnull(pl_display_script_id) then
-	log.log(this, "display_display_script()", "Null display_script_id", 4)
+	log.log(this, "u_tv_display_script.display_display_script.0018", "Null display_script_id", 4)
 	return -1
 end if
 
 ll_index = get_display_script(pl_display_script_id)
 if ll_index <= 0 then
-	log.log(this, "display_display_script()", "display_script not found (" + string(pl_display_script_id) + ")", 4)
+	log.log(this, "u_tv_display_script.display_display_script.0018", "display_script not found (" + string(pl_display_script_id) + ")", 4)
 	return -1
 end if
 
@@ -475,7 +475,7 @@ if not allow_editing then return
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -657,7 +657,7 @@ if not allow_editing then return
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -837,7 +837,7 @@ long ll_temp_handle
 
 li_sts = getitem(pl_handle, ltvi_parent_item)
 if li_sts <= 0 then
-	log.log(this, "display_children", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_children.0028", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return 1
 end if
 
@@ -855,13 +855,13 @@ loop
 lb_child_item_found = false
 
 if isnull(lstr_parent_item_data.display_script_id) or lstr_parent_item_data.display_script_id <= 0 then
-	log.log(this, "display_children", "Invalid display script id (" + string(lstr_parent_item_data.display_script_id) + ")", 4)
+	log.log(this, "u_tv_display_script.display_children.0028", "Invalid display script id (" + string(lstr_parent_item_data.display_script_id) + ")", 4)
 	return 1
 end if
 
 ll_display_script_index = get_display_script(lstr_parent_item_data.display_script_id)
 if ll_display_script_index <= 0 then
-	log.log(this, "display_children", "Error getting display script (" + string(lstr_parent_item_data.display_script_id) + ")", 4)
+	log.log(this, "u_tv_display_script.display_children.0028", "Error getting display script (" + string(lstr_parent_item_data.display_script_id) + ")", 4)
 	return 1
 end if
 
@@ -909,7 +909,7 @@ CHOOSE CASE upper(lstr_parent_item_data.node_type)
 		// Find the command
 		ll_display_command_index = get_display_command(ll_display_script_index, lstr_parent_item_data.display_command_id)
 		if ll_display_command_index <= 0 then
-			log.log(this, "display_children", "Error getting display command (" + string(lstr_parent_item_data.display_script_id) + ", " + string(lstr_parent_item_data.display_command_id) + ")", 4)
+			log.log(this, "u_tv_display_script.display_children.0028", "Error getting display command (" + string(lstr_parent_item_data.display_script_id) + ", " + string(lstr_parent_item_data.display_command_id) + ")", 4)
 			return 1
 		end if
 
@@ -1642,7 +1642,7 @@ if isnull(ll_handle) or ll_handle <= 0 then return 0
 
 li_sts = getitem(ll_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(ll_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(ll_handle) + ")", 4)
 	return -1
 end if
 
@@ -1689,7 +1689,7 @@ if isnull(ll_first_handle) or ll_first_handle <= 0 then return 0
 
 li_sts = getitem(ll_first_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(ll_first_handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(ll_first_handle) + ")", 4)
 	return -1
 end if
 
@@ -1720,7 +1720,7 @@ if isnull(ll_child_handle) or ll_child_handle <= 0 then return 0
 DO WHILE ll_child_handle > 0
 	li_sts = getitem(ll_child_handle, ltvi_item)
 	if li_sts <= 0 then
-		log.log(this, "itempopulate", "Error getting new treeview item (" + string(ll_child_handle) + ")", 4)
+		log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(ll_child_handle) + ")", 4)
 		return -1
 	end if
 	
@@ -1762,7 +1762,7 @@ if not allow_editing then return
 
 li_sts = getitem(handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
@@ -1795,7 +1795,7 @@ if not allow_editing then return
 
 li_sts = getitem(handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
@@ -2126,7 +2126,7 @@ if not allow_editing then return
 
 li_sts = getitem(newhandle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(newhandle) + ")", 4)
+	log.log(this, "u_tv_display_script.display_script_menu.0014", "Error getting new treeview item (" + string(newhandle) + ")", 4)
 	return 1
 end if
 

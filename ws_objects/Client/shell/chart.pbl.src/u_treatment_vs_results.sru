@@ -88,7 +88,7 @@ FROM c_Assessment_Definition
 WHERE assessment_id = :assessment_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "initialize_timeline()", "Assessment not found (" + assessment_id + ")", 4)
+	log.log(this, "u_treatment_vs_results.initialize_timeline.0036", "Assessment not found (" + assessment_id + ")", 4)
 	return -1
 end if
 
@@ -117,7 +117,7 @@ FROM c_observation
 WHERE observation_id = :ps_observation_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "initialize_graph()", "Objective list not found (" + string(ps_observation_id) + ")", 3)
+	log.log(this, "u_treatment_vs_results.initialize_graph.0017", "Objective list not found (" + string(ps_observation_id) + ")", 3)
 	return -1
 end if
 

@@ -57,10 +57,10 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_message_subscription_data")
 li_count = luo_data.retrieve(ps_message_type, "O")
 if li_count < 0 then
-	mylog.log(this, "send_to_subscribers()", "Error getting subscribers", 4)
+	mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Error getting subscribers", 4)
 	return -1
 elseif li_count = 0 then
-	mylog.log(this, "send_to_subscribers()", "No subscribers for message type.  Message will not be sent (" + ps_message_type + ")", 2)
+	mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "No subscribers for message type.  Message will not be sent (" + ps_message_type + ")", 2)
 	return -1
 end if
 
@@ -70,14 +70,14 @@ for i = 1 to li_count
 	ls_stream_id = luo_data.object.stream_id[i]
 	
 	if isnull(ll_subscription_id) then
-		mylog.log(this, "send_to_subscribers()", "Null subscription_id.  Message will not be sent(" + ps_message_type + ")", 4)
+		mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Null subscription_id.  Message will not be sent(" + ps_message_type + ")", 4)
 		continue
 	end if
 	
 	ll_message_id = queue_file(ls_message_type, ll_subscription_id, ps_filename)
 
 	if ll_message_id <= 0 then
-		mylog.log(this, "send_to_subscribers()", "Error queuing file (" + string(ll_subscription_id) + ")", 4)
+		mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Error queuing file (" + string(ll_subscription_id) + ")", 4)
 		continue
 	end if
 	
@@ -89,11 +89,11 @@ for i = 1 to li_count
 		AND stream_id = :ls_stream_id
 		USING cprdb;
 		if not cprdb.check() then
-			mylog.log(this, "send_to_subscribers()", "Error checking streamer", 4)
+			mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Error checking streamer", 4)
 			continue
 		end if
 		if cprdb.sqlcode = 100 then
-			mylog.log(this, "send_to_subscribers()", "Streamer not attached to message type (" + ls_stream_id + ", " + ls_message_type + ")", 4)
+			mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Streamer not attached to message type (" + ls_stream_id + ", " + ls_message_type + ")", 4)
 			continue
 		end if
 	ELSE
@@ -106,11 +106,11 @@ for i = 1 to li_count
 		WHERE message_id = :ll_message_id
 		USING cprdb;
 		if not cprdb.check() then
-			mylog.log(this, "send_to_subscribers()", "Error updating message status to 'STREAMED'", 4)
+			mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Error updating message status to 'STREAMED'", 4)
 			continue
 		end if
 		if cprdb.sqlcode = 100 then
-			mylog.log(this, "send_to_subscribers()", "Message log record not found (" + string(ll_message_id) + ")", 4)
+			mylog.log(this, "u_component_messageserver_standard.xx_send_to_subscribers.0017", "Message log record not found (" + string(ll_message_id) + ")", 4)
 			continue
 		end if
 		
@@ -134,18 +134,18 @@ string ls_sendfile
 long ll_message_id
 
 if isnull(pl_subscription_id) then
-	mylog.log(this, "queue_file()", "Null Subscription Id", 4)
+	mylog.log(this, "u_component_messageserver_standard.queue_file.0012", "Null Subscription Id", 4)
 	return -1
 end if
 
 if pl_subscription_id <= 0 then
-	mylog.log(this, "queue_file()", "Invalid Subscription Id (" + string(pl_subscription_id) + ")", 4)
+	mylog.log(this, "u_component_messageserver_standard.queue_file.0012", "Invalid Subscription Id (" + string(pl_subscription_id) + ")", 4)
 	return -1
 end if
 ls_sendfile = ps_file
 ll_message_id = log_message(ps_message_type, pl_subscription_id, ls_sendfile)
 If ll_message_id <= 0 then
-	mylog.log(this, "queue_file()", "Error logging message", 4)
+	mylog.log(this, "u_component_messageserver_standard.queue_file.0012", "Error logging message", 4)
 	filedelete(ls_sendfile)
 	return -1
 End if	

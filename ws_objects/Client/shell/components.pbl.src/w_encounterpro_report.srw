@@ -62,7 +62,7 @@ dw_report.width = pb_done.x - 100
 
 li_sts = puo_report_component.report_datastore.getfullstate(lbl_report)
 if li_sts < 0 then
-	puo_report_component.mylog.log(this, "display_report()", "Error getting report state", 4)
+	puo_report_component.mylog.log(this, "w_encounterpro_report.display_report.0018", "Error getting report state", 4)
 	close(this)
 	return
 end if
@@ -106,7 +106,7 @@ u_component_report luo_report
 luo_report = message.powerobjectparm
 
 if isnull(luo_report) or not isvalid(luo_report) then
-	luo_report.mylog.log(this, "open", "Invalid report object", 4)
+	luo_report.mylog.log(this, "w_encounterpro_report.open.0010", "Invalid report object", 4)
 	close(this)
 	return
 end if
@@ -117,7 +117,7 @@ FROM c_Report_Definition
 WHERE report_id = :luo_report.report_id
 USING luo_report.cprdb;
 if not luo_report.cprdb.check() then
-	luo_report.mylog.log(this, "open", "Error getting report description", 4)
+	luo_report.mylog.log(this, "w_encounterpro_report.open.0010", "Error getting report description", 4)
 	close(this)
 	return
 end if

@@ -32,7 +32,7 @@ end function
 public function integer start_receiving (long pl_subscription_id);subscription_id = pl_subscription_id
 
 if isnull(pl_subscription_id) then
-	log.log(this, "send_file()", "Null Subscription ID", 4)
+	log.log(this, "u_component_incoming.start_receiving.0004", "Null Subscription ID", 4)
 	return -1
 end if
 
@@ -43,14 +43,14 @@ WHERE subscription_id = :subscription_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	log.log(this, "start_receiving()", "Subscription record not found (" + string(subscription_id) + ")", 4)
+	log.log(this, "u_component_incoming.start_receiving.0015", "Subscription record not found (" + string(subscription_id) + ")", 4)
 	return -1
 end if
 
 fix_address()
 
 if isnull(message_type) then
-	log.log(this, "start_receiving()", "Null Message Type", 4)
+	log.log(this, "u_component_incoming.start_receiving.0015", "Null Message Type", 4)
 	return -1
 end if
 
@@ -129,7 +129,7 @@ if li_sts <= 0 then return -1
 
 IF Fileexists(ls_message_file) THEN
 	if not Filedelete(ls_message_file) then
-		mylog.log(this, "log_message()",ps_file + ": File Delete Failed", 3)
+		mylog.log(this, "u_component_incoming.log_message.0032",ps_file + ": File Delete Failed", 3)
 		Return -1
 	END IF
 END IF
@@ -148,14 +148,14 @@ SET message = :lblb_message
 WHERE message_id = :ll_message_id
 USING cprdb;
 if not cprdb.check() then return -1
-mylog.log(this, "log_message()",ps_file + ": read into blob", 1)
+mylog.log(this, "u_component_incoming.log_message.0032",ps_file + ": read into blob", 1)
 
 UPDATE o_Message_Log
 SET status = 'READY'
 WHERE message_id = :ll_message_id
 USING cprdb;
 if not cprdb.check() then return -1
-mylog.log(this, "log_message()",ps_file + ": read into blob and updated to o_message_log for "+string(ll_message_id), 1)
+mylog.log(this, "u_component_incoming.log_message.0032",ps_file + ": read into blob and updated to o_message_log for "+string(ll_message_id), 1)
 
 return ll_message_id
 end function

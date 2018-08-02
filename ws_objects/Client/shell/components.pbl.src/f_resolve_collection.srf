@@ -98,7 +98,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			lstr_collection.collectiondata.Create(lstr_collection.collectiondefinition, ls_error_create)
 			if Len(ls_error_create) > 0 THEN
 				if isnull(ls_error_create) then ls_error_create = "<Null>"
-				log.log(po_null, "f_get_collection_example()", "Error creating datastore (" + ls_error_create + ")", 4)
+				log.log(po_null, "f_resolve_collection.0034", "Error creating datastore (" + ls_error_create + ")", 4)
 				DESTROY lstr_collection.collectiondata
 				setnull(lstr_collection.collectiondata)
 				return lstr_collection

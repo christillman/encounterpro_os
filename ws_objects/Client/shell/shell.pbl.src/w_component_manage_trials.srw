@@ -77,7 +77,7 @@ FROM c_Component_Definition
 WHERE component_id = :ps_component_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "upgrade_component()", "Component not found (" + ps_component_id + ")", 4)
+	log.log(this, "w_component_manage_trials.upgrade_component.0015", "Component not found (" + ps_component_id + ")", 4)
 	return -1
 end if
 
@@ -88,7 +88,7 @@ WHERE component_id = :ps_component_id
 AND compile_name = :ps_version_name;
 if not tf_check() then return -1
 if isnull(ll_version) then
-	log.log(this, "upgrade_component()", "Component Version not found (" + ps_component_id + ", " + ps_version_name + ")", 4)
+	log.log(this, "w_component_manage_trials.upgrade_component.0015", "Component Version not found (" + ps_component_id + ", " + ps_version_name + ")", 4)
 	return -1
 end if
 
@@ -149,7 +149,7 @@ FROM c_Component_Definition
 WHERE component_id = :ps_component_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "stop_trial()", "Component not found (" + ps_component_id + ")", 4)
+	log.log(this, "w_component_manage_trials.stop_trial.0015", "Component not found (" + ps_component_id + ")", 4)
 	return -1
 end if
 
@@ -160,7 +160,7 @@ WHERE component_id = :ps_component_id
 AND compile_name = :ps_version_name;
 if not tf_check() then return -1
 if isnull(ll_version) then
-	log.log(this, "stop_trial()", "Component Version not found (" + ps_component_id + ", " + ps_version_name + ")", 4)
+	log.log(this, "w_component_manage_trials.stop_trial.0015", "Component Version not found (" + ps_component_id + ", " + ps_version_name + ")", 4)
 	return -1
 end if
 

@@ -53,7 +53,7 @@ boolean lb_loop
     FROM c_Vaccine
  ORDER BY	c_Vaccine.vaccine_id;
 
-log.log(this, "load_vaccines", "Loading vaccines...", 1)
+log.log(this, "u_vaccine_list.load_vaccines.0012", "Loading vaccines...", 1)
 
 tf_begin_transaction(this, "")
 
@@ -83,7 +83,7 @@ CLOSE lc_schedule;
 
 tf_commit()
 
-log.log(this, "load_vaccines", "Vaccines loaded", 1)
+log.log(this, "u_vaccine_list.load_vaccines.0012", "Vaccines loaded", 1)
 
 return 1
 

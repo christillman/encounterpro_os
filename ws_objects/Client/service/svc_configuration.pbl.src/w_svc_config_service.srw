@@ -470,7 +470,7 @@ end if
 
 li_sts = dw_services.update()
 if li_sts < 0 then 
-	log.log(this, "st_secure_flag", "Update unsuccessful for " + dw_services.object.service[ll_row], 4)
+	log.log(this, "w_svc_config_service.st_secure_flag.clicked.0017", "Update unsuccessful for " + dw_services.object.service[ll_row], 4)
 end if
 
 end event

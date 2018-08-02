@@ -471,7 +471,7 @@ FROM c_Property
 WHERE property_id = :ll_property_id;
 if not tf_check() then return
 if sqlca.sqlcode = 100 then
-	log.log(this, "property_menu()", "Property not found (" + string(ll_property_id) + ")", 4)
+	log.log(this, "u_dw_property_list.item_menu.0031", "Property not found (" + string(ll_property_id) + ")", 4)
 	openwithparm(w_pop_message, "Property not found")
 	return
 end if

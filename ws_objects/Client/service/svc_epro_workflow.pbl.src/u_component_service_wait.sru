@@ -32,7 +32,7 @@ CHOOSE CASE upper(ls_event_type)
 		if check_progress() then return 1
 	CASE ELSE
 		// If we don't recognize the event type then log an error and cancel the wait service
-		log.log(this, "xx_do_service()", "Unrecognized event type (" + ls_event_type + ")", 3)
+		log.log(this, "u_component_service_wait.xx_do_service.0018", "Unrecognized event type (" + ls_event_type + ")", 3)
 		return 2
 END CHOOSE
 
@@ -44,7 +44,7 @@ if cpr_mode = "CLIENT" then
 	if lower(classname(message.powerobjectparm)) = "str_popup_return" then
 		popup_return = message.powerobjectparm
 	else
-		log.log(this, "xx_do_service()", "Invalid class returned from service window (" + service + ", " + "w_svc_wait" + ")", 4)
+		log.log(this, "u_component_service_wait.xx_do_service.0018", "Invalid class returned from service window (" + service + ", " + "w_svc_wait" + ")", 4)
 		return -1
 	end if
 	

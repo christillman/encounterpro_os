@@ -39,7 +39,7 @@ li_sts = OpenUserObject(param_object, &
 						obj_x, &
 						obj_y)
 if li_sts < 0 then
-	log.log(This,"Open","Unable to create param class for "+&
+	log.log(This,"w_param_setting.initialize.0013","Unable to create param class for "+&
 					params.params[1].param_class,4)
 	Return -1
 End If
@@ -101,7 +101,7 @@ li_sts = OpenUserObject(param_object, &
 						obj_x, &
 						obj_y)
 if li_sts < 0 then
-	log.log(This,"Open","Unable to create param class for "+&
+	log.log(This,"w_param_setting.initialize.0013","Unable to create param class for "+&
 					params.params[1].param_class,4)
 	lstr_return.return_status = -1
 	closewithreturn(this, lstr_return)

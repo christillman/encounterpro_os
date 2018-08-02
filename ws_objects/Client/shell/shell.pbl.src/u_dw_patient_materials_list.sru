@@ -546,7 +546,7 @@ if isnull(ll_material_id) then return 0
 
 li_sts = f_display_patient_material(ll_material_id)
 if li_sts <= 0 then
-	log.log(this, "display_material()", "Error displaying material (" + string(ll_material_id) + ")", 4)
+	log.log(this, "u_dw_patient_materials_list.display_material.0012", "Error displaying material (" + string(ll_material_id) + ")", 4)
 	return -1
 end if
 

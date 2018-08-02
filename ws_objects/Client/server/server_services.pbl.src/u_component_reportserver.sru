@@ -20,7 +20,7 @@ public function integer timer_ding ()
 end prototypes
 
 private subroutine mark_error (long pl_report_key);
-mylog.log(this, "mark_error()", "Marking report with error status (" + string(pl_report_key) + ")", 3)
+mylog.log(this, "u_component_reportserver.mark_error.0002", "Marking report with error status (" + string(pl_report_key) + ")", 3)
 
 cprdb.begin_transaction(this, "mark_error()")
 
@@ -40,7 +40,7 @@ string ls_temp
 
 li_sts = f_initialize_objects()
 if li_sts <= 0 then
-	mylog.log(this, "xx_initialize()", "Error initializing objects", 4)
+	mylog.log(this, "u_component_reportserver.xx_initialize.0006", "Error initializing objects", 4)
 	return -1
 end if
 
@@ -120,7 +120,7 @@ cprdb.commit_transaction()
 li_report_count = report_queue.rowcount()
 
 for ll_row = 1 to li_report_count
-	mylog.log(this, "do_reports()", "Processing #" + string(ll_row) + " of " + string(li_report_count), 1)
+	mylog.log(this, "u_component_reportserver.timer_ding.0022", "Processing #" + string(ll_row) + " of " + string(li_report_count), 1)
 	ll_report_key = report_queue.object.report_key[ll_row]
 	ls_report_id = report_queue.object.report_id[ll_row]
 	ldt_order_date_time = report_queue.object.order_date_time[ll_row]
@@ -132,23 +132,23 @@ for ll_row = 1 to li_report_count
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then
-		mylog.log(this, "timer_ding()", "Invalid Report ID (" + ls_report_id + ")", 4)
+		mylog.log(this, "u_component_reportserver.timer_ding.0034", "Invalid Report ID (" + ls_report_id + ")", 4)
 		ls_status = "ERROR"
 	end if
 	
 	lstr_attributes = get_report_queue_attributes(ll_report_key)
 
 	if li_attribute_count < 0 then
-		mylog.log(this, "do_reports()", "Unable to get report attributes (" + ls_report_id + ")", 4)
+		mylog.log(this, "u_component_reportserver.timer_ding.0022", "Unable to get report attributes (" + ls_report_id + ")", 4)
 		ls_status = "ERROR"
 	end if
 			
 	if ls_status <> "ERROR" then
-		mylog.log(this, "do_reports()", "Started report - " + ls_report_id, 1)
+		mylog.log(this, "u_component_reportserver.timer_ding.0022", "Started report - " + ls_report_id, 1)
 
 		luo_report = my_component_manager.get_component(ls_component_id)
 		if isnull(luo_report) then
-			mylog.log(this, "timer_ding()", "Unable to get report component (" + ls_component_id + ")", 4)
+			mylog.log(this, "u_component_reportserver.timer_ding.0034", "Unable to get report component (" + ls_component_id + ")", 4)
 			ls_status = "ERROR"
 		else
 			li_sts = luo_report.printreport(ls_report_id, lstr_attributes)
@@ -176,7 +176,7 @@ for ll_row = 1 to li_report_count
 
 	cprdb.commit_transaction()
 
-	mylog.log(this, "do_reports()", "Report finished, status = " + ls_status, 1)
+	mylog.log(this, "u_component_reportserver.timer_ding.0022", "Report finished, status = " + ls_status, 1)
 
 next
 

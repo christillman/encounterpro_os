@@ -33,7 +33,7 @@ long ll_row
 integer li_treatment_count
 
 if isnull(current_display_encounter) then
-	log.log(this, "f_load_assessment_items()", "Invalid current_display_encounter", 4)
+	log.log(this, "w_svc_treatment_associate_assessments.refresh.0013", "Invalid current_display_encounter", 4)
 	return -1
 end if
 
@@ -106,7 +106,7 @@ popup_return.item_count = 1
 popup_return.items[1] = "ERROR"
 
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment context", 4)
+	log.log(this, "w_svc_treatment_associate_assessments.open.0009", "No treatment context", 4)
 	closewithreturn(this, popup_return)
 end if
 

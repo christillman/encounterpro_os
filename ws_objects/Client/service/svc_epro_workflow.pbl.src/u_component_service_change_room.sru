@@ -30,7 +30,7 @@ integer li_sts
 
 if in_office_flag = "Y" then
 	If isnull(current_patient.open_encounter) Then
-		log.log(this, "change_room()", "No current encounter", 3)
+		log.log(this, "u_component_service_change_room.xx_do_service.0019", "No current encounter", 3)
 		Return 2
 	End If
 	
@@ -44,7 +44,7 @@ if in_office_flag = "Y" then
 elseif patient_workplan_id > 0 then
 	
 else
-	log.log(this, "xx_do_service()", "not-in-office service without a workplan cannot change rooms", 3)
+	log.log(this, "u_component_service_change_room.xx_do_service.0033", "not-in-office service without a workplan cannot change rooms", 3)
 	return 1
 end if
 

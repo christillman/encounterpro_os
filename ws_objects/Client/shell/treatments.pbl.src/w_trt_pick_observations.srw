@@ -179,7 +179,7 @@ popup = Message.powerobjectparm
 // Item 2 = specialty_id
 
 if popup.data_row_count <> 2 then
-	log.log(this, "open()", "Invalid Parameters", 4)
+	log.log(this, "w_trt_pick_observations.open.0023", "Invalid Parameters", 4)
 	closewithreturn(this, lstr_observations)
 	return
 end if

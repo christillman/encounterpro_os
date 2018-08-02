@@ -106,7 +106,7 @@ service = message.powerobjectparm
 
 user_id = service.get_attribute("user_id")
 if isnull(user_id) then
-	log.log(this, "open", "No user_id", 4)
+	log.log(this, "w_svc_show_actor.open.0011", "No user_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -117,12 +117,12 @@ INTO :actor_id, :actor_class
 FROM c_User
 WHERE user_id = :user_id;
 if not tf_check() then
-	log.log(this, "open", "Error getting actor", 4)
+	log.log(this, "w_svc_show_actor.open.0011", "Error getting actor", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "Actor not found (" + user_id + ")", 4)
+	log.log(this, "w_svc_show_actor.open.0011", "Actor not found (" + user_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

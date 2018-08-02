@@ -239,7 +239,7 @@ if ll_row <= 0 then return
 ls_room_id = dw_rooms.object.room_id[ll_row]
 lstr_room = datalist.office_room(ls_room_id)
 if isnull(lstr_room.room_id) then
-	log.log(this, "clicked", "Room_id not found (" + ls_room_id + ")", 4)
+	log.log(this, "w_pick_room.cb_ok.clicked.0011", "Room_id not found (" + ls_room_id + ")", 4)
 	return
 end if
 

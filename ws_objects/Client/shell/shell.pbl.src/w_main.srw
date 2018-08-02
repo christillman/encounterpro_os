@@ -190,7 +190,7 @@ string ls_status
 li_sts = GetEnvironment(env)
 if env.numberofcolors > 1 and env.numberofcolors < 65000 then
 	f_message(17)
-	log.log(this, "post_open", "System operating with too few colors (" + string(env.numberofcolors) + ")", 3)
+	log.log(this, "w_main.post_open.0011", "System operating with too few colors (" + string(env.numberofcolors) + ")", 3)
 end if	
 
 open(w_splash)
@@ -200,7 +200,7 @@ f_cpr_set_msg("Initializing - Please Wait...")
 li_sts = f_initialize_common("EncounterPRO")
 if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
-		log.log(this, "post_open", "Error initializing EncounterPRO", 5)
+		log.log(this, "w_main.post_open.0011", "Error initializing EncounterPRO", 5)
 	end if
 	close(this)
 	return
@@ -214,7 +214,7 @@ f_cpr_set_msg("Database Connected")
 li_sts = f_initialize_objects()
 if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
-		log.log(this, "post_open", "Error initializing objects", 5)
+		log.log(this, "w_main.post_open.0011", "Error initializing objects", 5)
 	end if
 	close(this)
 	return
@@ -231,7 +231,7 @@ if li_sts <= 0 then
 	return
 end if
 
-log.log(this, "post_open", "Done Loading.", 1)
+log.log(this, "w_main.post_open.0011", "Done Loading.", 1)
 
 ls_temp = datalist.get_preference("SYSTEM", "window_resizable")
 if f_string_to_boolean(ls_temp) then
@@ -301,7 +301,7 @@ if lstr_stamp.license <> "D" then
 	li_sts = f_check_attachment_location()
 	if li_sts < 0 then
 		openwithparm(w_pop_message, "An error occured while attempting to verify attachment location.  Please contact JMJ Technical Support.")
-		log.log(this, "post_open", "Error checking attachment location", 5)
+		log.log(this, "w_main.post_open.0011", "Error checking attachment location", 5)
 		close(this)
 		return
 	end if

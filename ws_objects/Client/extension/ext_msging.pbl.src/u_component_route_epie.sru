@@ -35,7 +35,7 @@ INTO :ll_addressee, :ls_route_document_type
 FROM dbo.fn_document_route_information(:puo_document.dispatch_method);
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(this, "xx_document_send()", "Invalid dispatch_method (" + puo_document.dispatch_method + ")", 4)
+	log.log(this, "u_component_route_epie.xx_send_document.0015", "Invalid dispatch_method (" + puo_document.dispatch_method + ")", 4)
 	return -1
 end if
 
@@ -45,18 +45,18 @@ end if
 end if
 
 if isnull(ll_addressee) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+	log.log(this, "u_component_route_epie.xx_send_document.0015", puo_document.dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 	return -1
 end if
 
 if isnull(ls_document_type) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method does not have a valid document type", 4)
+	log.log(this, "u_component_route_epie.xx_send_document.0015", puo_document.dispatch_method + " dispatch_method does not have a valid document type", 4)
 	return -1
 end if
 
 li_sts = puo_document.get_document(lstr_document)
 if li_sts <= 0 then
-	log.log(this, "xx_document_send()", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_route_epie.xx_send_document.0015", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -106,7 +106,7 @@ ll_sts = conn.SetSoapLogFile (ls_templog)
 
 rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
 if rVal <> 0 then
-	log.log(this, "xx_initialize()", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
+	log.log(this, "u_component_route_epie.xx_initialize.0020", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
 	destroy conn
 	return -1
 end if

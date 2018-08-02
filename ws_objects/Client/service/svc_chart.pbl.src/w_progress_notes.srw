@@ -126,14 +126,14 @@ service = message.powerobjectparm
 
 ls_progress_object = service.get_attribute("progress_object")
 if isnull(ls_progress_object) then
-	log.log(this, "open", "null progress_object", 4)
+	log.log(this, "w_progress_notes.open.0018", "null progress_object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = dw_progress.initialize(service, ls_progress_object)
 if li_sts <= 0 then
-	log.log(this, "open", "Error initializing progress display", 4)
+	log.log(this, "w_progress_notes.open.0018", "Error initializing progress display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -150,7 +150,7 @@ if isnull(ls_progress_type) then
 		return
 	elseif li_sts = 0 then
 		DESTROY luo_data
-		log.log(this, "open", "No progress_type defined (" + dw_progress.progress_type_pick_code + ")", 4)
+		log.log(this, "w_progress_notes.open.0018", "No progress_type defined (" + dw_progress.progress_type_pick_code + ")", 4)
 		closewithreturn(this, popup_return)
 		return
 	elseif li_sts = 1 then

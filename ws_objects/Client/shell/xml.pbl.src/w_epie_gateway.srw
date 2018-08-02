@@ -81,21 +81,21 @@ TRY
 	if now() > DailyMaintenanceTime and date(last_dailymaintenance) < today() then
 		li_sts = do_dailymaintenance()
 		if li_sts <= 0 then
-			log.log(this, "timer", "Error doing daily maintenance", 4)
+			log.log(this, "w_epie_gateway.timer.0025", "Error doing daily maintenance", 4)
 		end if
 	end if
 	
 	// Get the EpIE data
 	li_sts = do_epiedownload()
 	if li_sts <= 0 then
-		log.log(this, "timer", "Error doing epie download", 4)
+		log.log(this, "w_epie_gateway.timer.0025", "Error doing epie download", 4)
 	end if
 CATCH (throwable lo_error)
 	ls_error = "Error in timer_ding function"
 	if not isnull(lo_error.text) then
 		ls_error += " (" + lo_error.text + ")"
 	end if
-	log.log(this, "timer", ls_error, 4)
+	log.log(this, "w_epie_gateway.timer.0025", ls_error, 4)
 	li_sts = -1
 FINALLY
 	// If timer_ding() returns the special value 2, then don't restart the time

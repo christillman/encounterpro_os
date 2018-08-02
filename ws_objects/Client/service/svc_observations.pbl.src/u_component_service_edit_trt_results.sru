@@ -38,7 +38,7 @@ string ls_temp
 
 // First make sure we have a treatment
 if isnull(treatment) then
-	log.log(this, "xx_do_service()", "Null treatment", 4)
+	log.log(this, "u_component_service_edit_trt_results.xx_do_service.0027", "Null treatment", 4)
 	return -1
 end if
 
@@ -59,7 +59,7 @@ end if
 ll_count = treatment.find_observations(ls_find, lstra_observations)
 
 if ll_count < 0 then
-	log.log(this, "xx_do_service()", "Error finding roots", 4)
+	log.log(this, "u_component_service_edit_trt_results.xx_do_service.0027", "Error finding roots", 4)
 	return -1
 elseif ll_count = 0 then
 	ll_root_idx = 0

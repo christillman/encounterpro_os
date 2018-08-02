@@ -153,7 +153,7 @@ document.get_attribute("observation_sequence", lstr_new_attachment.observation_s
 
 ll_attachment_id = current_patient.attachments.new_attachment(lstr_new_attachment, temp_file, document.context_object, ls_progress_type)
 if ll_attachment_id <= 0 then
-	log.log(this, "results_posted", "Error creating attachment", 4)
+	log.log(this, "w_component_template_config.attach.0035", "Error creating attachment", 4)
 	return -1
 end if
 

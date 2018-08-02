@@ -143,7 +143,7 @@ report.get_attribute("observation_sequence", lstr_new_attachment.observation_seq
 
 ll_attachment_id = current_patient.attachments.new_attachment(lstr_new_attachment, ls_temp_file, report.report_object, ls_progress_type)
 if ll_attachment_id <= 0 then
-	log.log(this, "results_posted", "Error creating attachment", 4)
+	log.log(this, "w_encounterpro_report_rtf.attach.0037", "Error creating attachment", 4)
 	return -1
 end if
 
@@ -191,7 +191,7 @@ FROM c_Report_Definition
 WHERE report_id = :report.report_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "report_id not found (" + report.report_id + ")", 4)
+	log.log(this, "w_encounterpro_report_rtf.do_template.0039", "report_id not found (" + report.report_id + ")", 4)
 	return -1
 end if
 
@@ -276,7 +276,7 @@ rte_report.clear_rtf()
 TRY
 	li_sts = do_template( )
 CATCH (throwable le_error)
-	log.log(this, "open", "Error calling do_template()", 4)
+	log.log(this, "w_encounterpro_report_rtf.do_template.0039", "Error calling do_template()", 4)
 	close(this)
 	return -1
 END TRY
@@ -453,14 +453,14 @@ elseif ls_destination = "FILE" then
 
 	li_sts = rte_report.savedocument(ls_path)
 	if li_sts <= 0 then
-		log.log(this, "open", "Save to file failed (" + ls_path + ")", 4)
+		log.log(this, "w_encounterpro_report_rtf.do_template.0039", "Save to file failed (" + ls_path + ")", 4)
 		setnull(lstr_document.attachment)
 		closewithreturn(this, lstr_document)
 	end if
 	
 	li_sts = log.file_read(ls_path, lstr_document.attachment)
 	if li_sts <= 0 then
-		log.log(this, "open", "Error reading file (" + ls_path + ")", 4)
+		log.log(this, "w_encounterpro_report_rtf.do_template.0039", "Error reading file (" + ls_path + ")", 4)
 		setnull(lstr_document.attachment)
 		closewithreturn(this, lstr_document)
 	end if
@@ -488,12 +488,12 @@ else
 		ls_message += ls_office_id
 	end if
 
-	log.log_db(this, "open", "Print Command Starting~n" + ls_message, 2)
+	log.log_db(this, "w_encounterpro_report_rtf.open.0160", "Print Command Starting~n" + ls_message, 2)
 	li_sts = rte_report.Print(1, "", false, true)
 	if li_sts <= 0 then
-		log.log(this, "open", "Print Command Failed~n" + ls_message, 4)
+		log.log(this, "w_encounterpro_report_rtf.do_template.0039", "Print Command Failed~n" + ls_message, 4)
 	else
-		log.log_db(this, "open", "Print Command Succeeded~n" + ls_message, 2)
+		log.log_db(this, "w_encounterpro_report_rtf.open.0160", "Print Command Succeeded~n" + ls_message, 2)
 	end if
 	close(this)
 	return

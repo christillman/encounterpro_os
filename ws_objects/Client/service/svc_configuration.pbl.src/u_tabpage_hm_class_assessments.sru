@@ -66,7 +66,7 @@ for i = 1 to lstr_assessments.assessment_count
 	AND p.assessment_type = t.assessment_type;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "add_proc()", "assessment_type not found for assessment (" + lstr_assessments.assessments[i].assessment_id + ")", 4)
+		log.log(this, "u_tabpage_hm_class_assessments.add_assessment.0038", "assessment_type not found for assessment (" + lstr_assessments.assessments[i].assessment_id + ")", 4)
 		return -1
 	end if
 	

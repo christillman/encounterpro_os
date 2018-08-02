@@ -54,7 +54,7 @@ ll_attachment_id = sqlca.jmj_new_attachment2( pstr_new_document.attachment_comme
 if not tf_check() then return -1
 
 if isnull(ll_attachment_id) or ll_attachment_id <= 0 then
-	log.log(this, "new_document()", "Error creating attachment.  Invalid attachment_id returned.", 4)
+	log.log(this, "u_component_document_receiver.new_document.0034", "Error creating attachment.  Invalid attachment_id returned.", 4)
 	return -1
 end if
 

@@ -95,7 +95,7 @@ IF li_pos = 1 THEN
 	lb_loop = TRUE					// OK to loop
 	li_ctr = 1
 ELSE
-	mylog.log(this, "parse_csv()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1
 END IF	
 
@@ -119,7 +119,7 @@ DO WHILE lb_loop
 		li_end = li_comma 								//	Set the end same as start of the quote,comma,quote test location
 		li_length = li_end - li_start					//	Set the length of the string to get the desired characters
 		IF li_length > li_value_max_len THEN 
-			mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+			mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 			RETURN -1
 		END IF
 		if li_length = 0 then
@@ -138,7 +138,7 @@ DO WHILE lb_loop
 						li_end = li_comma
 						li_length = li_end - li_start
 					else
-						mylog.log(this, "parse_csv()", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
+						mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
 						RETURN -1
 					end if
 				else
@@ -156,7 +156,7 @@ DO WHILE lb_loop
 		//	This ELSE section runs only once, on the last array element
 		IF li_ctr = 1 THEN
 			lb_loop = FALSE								//	Set lb_loop to false, we're not going to start
-			mylog.log(this, "parse_csv()", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 		ELSE
 			// This ELSE section runs only once, on the last array element if above test is passed
@@ -165,7 +165,7 @@ DO WHILE lb_loop
 			li_start ++
 			li_length = li_end - li_start 				//	This gives the selected character string length
 			IF li_length > li_value_max_len THEN 
-				mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+				mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 				RETURN -1
 			END IF	
 			ls_value = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -177,7 +177,7 @@ DO WHILE lb_loop
 	li_pos = li_comma  + 1								//	Increments ll_pos for the next loop, if one is coming
 	ls_value = ''												//	Set ls_value to an empty string
 	IF li_ctr > li_max_fields THEN
-		mylog.log(this, "parse_csv()", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
+		mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
 		RETURN -1
 	END IF
 LOOP	
@@ -201,7 +201,7 @@ DO WHILE li_test_ctr <= li_array_upper and lb_empty_flag = TRUE
 LOOP
  
 IF lb_empty_flag THEN
-	mylog.log(this, "parse_csv()", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_medware.parse_csv.0073", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1	
 END IF
 
@@ -246,7 +246,7 @@ ls_filepath = message_file
 IF FileExists(ls_filepath) THEN
 	li_filenum = FileOpen(ls_filepath)
 ELSE
-	mylog.log(this, "xx_handle_message()", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
+	mylog.log(this, "u_component_message_handler_medware.xx_handle_message.0038", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
 	RETURN -1
 END IF
 
@@ -273,7 +273,7 @@ IF li_filenum > 0 THEN
 				IF li_pos = 1 THEN 
 					li_start = li_pos + 1		// If so, it;s OK to start
 				ELSE
-					mylog.log(this, "xx_handle_message()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+					mylog.log(this, "u_component_message_handler_medware.xx_handle_message.0038", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 					RETURN -1
 				END IF
 				li_comma = pos(is_stg,"~",~"",li_pos)	// Be sure this is a quote,comma,quote sequence
@@ -281,7 +281,7 @@ IF li_filenum > 0 THEN
 				IF li_comma > 0 THEN				// We're still in a valid string
 					li_length = li_comma - li_start	//	Set the length of the string to get the desired characters
 					IF li_length > li_value_max_len THEN 
-						mylog.log(this, "xx_handle_message()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+						mylog.log(this, "u_component_message_handler_medware.xx_handle_message.0038", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 						RETURN -1
 					END IF	
 					
@@ -306,7 +306,7 @@ IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	//	If the FileClose() function returns less than 1, then quit
 	IF li_sts < 1 THEN
-		mylog.log(this, "xx_handle_message()", "Unable to close the medware.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medware.xx_handle_message.0038", "Unable to close the medware.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 END IF
@@ -364,17 +364,17 @@ integer li_priority
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "medware_patient()", "The parse_csv() function failed Aborting Encounter Creation)", 4)
+	mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "The parse_csv() function failed Aborting Encounter Creation)", 4)
 	RETURN -1
 END IF	
 
 ls_billing_id = is_array[1] 
 if isnull(ls_billing_id) or ls_billing_id = '' then
-	mylog.log(this, "medware_patient()", "no patient billing_id " + is_array[2] + "," + is_array[3], 2)
+	mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "no patient billing_id " + is_array[2] + "," + is_array[3], 2)
 	return 1
 end if
 
-mylog.log(this, "medware_patient()", "The patient billing_id=" + ls_billing_id, 2)
+mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "The patient billing_id=" + ls_billing_id, 2)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -410,7 +410,7 @@ setnull(ls_allocation)
 
 if (is_array[6] = "0" or isnull(is_array[6]) or is_array[6] = "") then
 	ls_error = is_array[6]
-	mylog.log(this, "medware_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -425,7 +425,7 @@ else
 			ldt_date_of_birth = datetime(ld_birthdate)
 		else
 			ls_error = is_array[6]
-			mylog.log(this, "medware_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+			mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 			setnull(ld_birthdate)
 			setnull(ldt_date_of_birth)
 		end if	
@@ -446,7 +446,7 @@ setnull(li_priority)
 setnull(ls_ssn)
 
 if isnull(ls_cpr_id) then
-	mylog.log(this, "medware_patient()", "create new patient, lname=" + ls_last_name, 1)
+	mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "create new patient, lname=" + ls_last_name, 1)
 	li_sts = f_create_new_patient( &
 						ls_cpr_id,   &
 						ls_race,   &
@@ -484,7 +484,7 @@ else
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then return -5
 end if
-mylog.log(this, "medware_patient()", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
+mylog.log(this, "u_component_message_handler_medware.medware_patient.0046", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
 
 if isnull(is_array[10]) or is_array[10] = '' then return 1
 ls_name = is_array[10]

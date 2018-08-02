@@ -72,7 +72,7 @@ if li_sts <= 0 then
 	TRY
 		lb_connected = external_source.com_source.is_connected()
 	CATCH (throwable lt_error)
-		log.log(this, "xx_initialize()", "Error calling com source (" + lt_error.text + ")", 4)
+		log.log(this, "w_ext_observation_com.timer.0017", "Error calling com source (" + lt_error.text + ")", 4)
 		return -1
 	END TRY
 	

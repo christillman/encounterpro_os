@@ -50,7 +50,7 @@ if isnull(current_scribe) then
 			end if
 		end if
 	
-		log.log_db( po_null, "f_user_logon()", "User " + current_scribe.user_short_name + " has logged on", 2)
+		log.log_db( po_null, "f_user_logon.0045", "User " + current_scribe.user_short_name + " has logged on", 2)
 	end if
 
 	// Refresh the main window	

@@ -26,7 +26,7 @@ lstr_nodes.node_count = 0
 
 luo_practice = user_list.find_user(node.key)
 if isnull(luo_practice) then
-	log.log(this, "display_practice()", "practice_user_id not found (" + node.key + ")", 4)
+	log.log(this, "u_configuration_node_practice.get_children.0009", "practice_user_id not found (" + node.key + ")", 4)
 	return lstr_nodes
 end if
 

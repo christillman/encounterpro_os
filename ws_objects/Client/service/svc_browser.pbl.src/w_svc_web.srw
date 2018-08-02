@@ -146,7 +146,7 @@ service = message.powerobjectparm
 
 url = service.get_attribute("url")
 if isnull(url) then
-	log.log(this, "open", "No URL", 4)
+	log.log(this, "w_svc_web.open.0015", "No URL", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

@@ -271,14 +271,14 @@ popup = Message.powerobjectparm
 treatment = popup.objectparm
 
 if isnull(treatment) or not isvalid(treatment) then
-	log.log(this, "open", "Invalid Treatment", 4)
+	log.log(this, "w_treatment_properties.open.0009", "Invalid Treatment", 4)
 	close(this)
 	return
 end if
 
 li_sts = load_properties()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading properties", 4)
+	log.log(this, "w_treatment_properties.open.0009", "Error loading properties", 4)
 	close(this)
 	return
 end if

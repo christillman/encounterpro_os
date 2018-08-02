@@ -152,7 +152,7 @@ TRY
 	
 	lstr_element.valid = true
 CATCH (pbdom_exception lo_error)
-	log.log(this, "get_element()", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_base.get_element.0027", "Error - " + lo_error.text, 4)
 	lstr_element.valid = false
 END TRY
 
@@ -1008,7 +1008,7 @@ ll_treatment_id = current_patient.treatments.find_treatment(ps_treatment_type, l
 if isnull(ll_treatment_id) or ll_treatment_id <= 0 then
 	li_sts = current_patient.treatments.new_treatment(luo_treatment, false)
 	if li_sts <= 0 then
-		log.log(this, "process_results()", "Error creating result treatment (" + luo_treatment.treatment_description + ")", 4)
+		log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result treatment (" + luo_treatment.treatment_description + ")", 4)
 		return -1
 	else
 		ll_treatment_id = luo_treatment.treatment_id
@@ -1018,7 +1018,7 @@ end if
 // Create the root observation
 ll_root_observation_sequence = luo_treatment.add_root_observation( ls_root_observation_id, ls_null, ls_null)
 if ll_root_observation_sequence <= 0 then
-	log.log(this, "process_results()", "Error creating result root observation (" + luo_treatment.treatment_description + ")", 4)
+	log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result root observation (" + luo_treatment.treatment_description + ")", 4)
 	return -1
 end if
 
@@ -1055,7 +1055,7 @@ if not isnull(pstr_result.location) then
 											"N", &
 											ls_null)
 	else
-		log.log(this, "process_results()", "Error creating result result (" + pstr_result.location + ")", 4)
+		log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result result (" + pstr_result.location + ")", 4)
 		return -1
 	end if
 end if
@@ -1089,7 +1089,7 @@ if not isnull(pstr_result.position) then
 											"N", &
 											ls_null)
 	else
-		log.log(this, "process_results()", "Error creating result result (" + pstr_result.location + ")", 4)
+		log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result result (" + pstr_result.location + ")", 4)
 		return -1
 	end if
 end if
@@ -1123,7 +1123,7 @@ if not isnull(pstr_result.method) then
 											"N", &
 											ls_null)
 	else
-		log.log(this, "process_results()", "Error creating result result (" + pstr_result.location + ")", 4)
+		log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result result (" + pstr_result.location + ")", 4)
 		return -1
 	end if
 end if
@@ -1186,7 +1186,7 @@ for i = 1 to upperbound(pstr_result.test)
 											ls_abnormal_nature, &
 											pstr_result.test[i].normalrange)
 	else
-		log.log(this, "process_results()", "Error creating result result (" + pstr_result.location + ")", 4)
+		log.log(this, "u_component_xml_handler_base.add_results_treatment.0052", "Error creating result result (" + pstr_result.location + ")", 4)
 		return -1
 	end if
 next
@@ -1692,7 +1692,7 @@ if isnull(lstr_actor.name) and len(ls_description) > 0 then
 end if
 
 if isnull(lstr_actor.name) or trim(lstr_actor.name) = "" then
-	log.log(this, "get_actor_type()", "Actor record must have a <Name> element", 4)
+	log.log(this, "u_component_xml_handler_base.get_actor_type.0120", "Actor record must have a <Name> element", 4)
 	return lstr_actor
 end if
 
@@ -1812,10 +1812,10 @@ if isnull(lstr_actor.actor_id) then
 	CHOOSE CASE lower(lstr_actor.actorclass)
 		CASE "user"
 			// If we don't already have a user_id then we have an error
-			log.log(this, "get_actor_type()", "User not mapped (" + lstr_actor.name + ")" , 3)
+			log.log(this, "u_component_xml_handler_base.get_actor_type.0120", "User not mapped (" + lstr_actor.name + ")" , 3)
 		CASE "office"
 			// If we don't already have a user_id then we have an error
-			log.log(this, "get_actor_type()", "Office not mapped (" + lstr_actor.name + ")" , 3)
+			log.log(this, "u_component_xml_handler_base.get_actor_type.0120", "Office not mapped (" + lstr_actor.name + ")" , 3)
 		CASE "person", "patient"
 			// A "Person" actor is actually a patient, probably for a relative or guarantor or something
 			lstr_patient = f_empty_patient()
@@ -2319,7 +2319,7 @@ TRY
 	po_actors.getchildelements(lo_actor)
 	actor_count = upperbound(lo_actor)
 CATCH (pbdom_exception lo_error)
-	log.log(this, "get_actors()", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_base.get_actors.0018", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
@@ -4385,7 +4385,7 @@ ll_observation_sequence = sqlca.sp_xml_add_observation(my_context.cpr_id, &
 if not tf_check() then return -1
 
 if isnull(ll_observation_sequence) or ll_observation_sequence <= 0 then
-	log.log(this,"process_observation()","Error getting observation_sequence",4)
+	log.log(this,"u_component_xml_handler_base.add_observation_and_results.0095","Error getting observation_sequence",4)
 	return -1
 end if
 

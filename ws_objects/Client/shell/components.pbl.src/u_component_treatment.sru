@@ -478,7 +478,7 @@ ll_p_rows = p_observation_result.rowcount()
 
 // We must have have an observation sequence
 if isnull(pl_observation_sequence) then
-	log.log(this, "get_result()", "Null observation sequence", 4)
+	log.log(this, "u_component_treatment.get_result.0011", "Null observation sequence", 4)
 	return -1
 end if
 
@@ -857,13 +857,13 @@ string ls_observation_id
 
 ls_observation_id = get_observation_id(pl_observation_sequence)
 if isnull(ls_observation_id) then
-	log.log(this, "get_location_description()", "Error getting observation_id", 4)
+	log.log(this, "u_component_treatment.get_location_description.0009", "Error getting observation_id", 4)
 	return -1
 end if
 
 lstr_c_result = datalist.observation_result(ls_observation_id, pi_result_sequence)
 if isnull(lstr_c_result.result_sequence) then
-	log.log(this, "get_location_description()", "Error getting result (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.get_location_description.0009", "Error getting result (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
 	return -1
 end if
 	
@@ -1137,7 +1137,7 @@ setnull(ldt_comment_date_time)
 setnull(ll_patient_workplan_item_id)
 
 if isnull(pl_observation_sequence) then
-	log.log(this, "add_comment()", "Null observation_sequence", 4)
+	log.log(this, "u_component_treatment.add_comment.0017", "Null observation_sequence", 4)
 	return -1
 end if
 
@@ -1181,7 +1181,7 @@ if isnull(pl_observation_sequence) then return ls_observation_id
 ls_find = "observation_sequence=" + string(pl_observation_sequence)
 ll_row = p_observation.find(ls_find, 1, ll_o_count)
 if ll_row <= 0 then
-	log.log(this, "remove_results()", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.get_observation_id.0015", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
 	return ls_observation_id
 end if
 
@@ -1209,7 +1209,7 @@ for i = 1 to pi_default_result_count
 								ls_null, &
 								ls_null )
 	if li_sts < 0 then
-		log.log(this, "set_exam_defaults()", "Error adding default results", 4)
+		log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error adding default results", 4)
 		return -1
 	end if
 next
@@ -1265,7 +1265,7 @@ integer li_diagnosis_sequence
 long ll_patient_workplan_item_id
 
 if isnull(pl_observation_sequence) then
-	log.log(this, "add_comment()", "Null observation_sequence", 4)
+	log.log(this, "u_component_treatment.add_comment.0017", "Null observation_sequence", 4)
 	return -1
 end if
 
@@ -1323,7 +1323,7 @@ if isnull(pl_observation_sequence) then return ls_observation_id
 ls_find = "observation_sequence=" + string(pl_observation_sequence)
 ll_row = p_observation.find(ls_find, 1, ll_o_count)
 if ll_row <= 0 then
-	log.log(this, "remove_results()", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.get_observation_id.0015", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
 	return ls_observation_id
 end if
 
@@ -1758,7 +1758,7 @@ public function long add_observation (long pl_parent_observation_sequence, strin
 setnull(ls_service)
 
 if isnull(pl_parent_observation_sequence) then
-	log.log(this, "add_observation()", "This method is not allowed to add a root observation", 4)
+	log.log(this, "u_component_treatment.add_observation.0006", "This method is not allowed to add a root observation", 4)
 	return -1
 end if
 
@@ -1796,7 +1796,7 @@ for i = 1 to pstr_tree.branch_count
 																	ll_stage, &
 																	true)
 	if ll_child_observation_sequence <= 0 then
-		log.log(this, "set_exam_defaults()", "Error adding new observation", 4)
+		log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error adding new observation", 4)
 		if lb_wait then close(w_pop_please_wait)
 		return -1
 	end if
@@ -1806,7 +1806,7 @@ for i = 1 to pstr_tree.branch_count
 		// If this child is composite then recursively call this function to set its default results
 		li_sts = set_exam_defaults(ll_child_observation_sequence, pstr_tree.branch[i].child_observation_tree)
 		if li_sts < 0 then
-			log.log(this, "set_exam_defaults()", "Error adding child defaults", 4)
+			log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error adding child defaults", 4)
 			if lb_wait then close(w_pop_please_wait)
 			return -1
 		elseif li_sts > 0 then
@@ -1815,7 +1815,7 @@ for i = 1 to pstr_tree.branch_count
 	else
 		li_sts = set_exam_defaults(ll_child_observation_sequence, pstr_tree.branch[i].default_result_count, pstr_tree.branch[i].default_result)
 		if li_sts < 0 then
-			log.log(this, "set_exam_defaults()", "Error setting default results", 4)
+			log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error setting default results", 4)
 			if lb_wait then close(w_pop_please_wait)
 			return -1
 		elseif li_sts > 0 then
@@ -1858,7 +1858,7 @@ if isnull(pl_observation_sequence) then return ls_service
 ls_find = "observation_sequence=" + string(pl_observation_sequence)
 ll_row = p_observation.find(ls_find, 1, ll_o_count)
 if ll_row <= 0 then
-	log.log(this, "remove_results()", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.get_observation_id.0015", "Observation_sequence not found (" + string(pl_observation_sequence) + ")", 4)
 	return ls_service
 end if
 
@@ -2169,13 +2169,13 @@ boolean lb_wait
 setnull(ls_null)
 
 if isnull(pl_observation_sequence) then
-	log.log(this, "set_exam_defaults()", "Null root_observation_sequence", 4)
+	log.log(this, "u_component_treatment.set_exam_defaults.0019", "Null root_observation_sequence", 4)
 	return -1
 end if
 
 ls_root_observation_id = get_observation_id(pl_observation_sequence) 
 if isnull(ls_root_observation_id) then
-	log.log(this, "set_exam_defaults()", "No exam root (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.set_exam_defaults.0019", "No exam root (" + string(pl_observation_sequence) + ")", 4)
 	return -1
 end if
 
@@ -2184,14 +2184,14 @@ if isnull(pl_exam_sequence) or pl_exam_sequence <= 0 then
 end if
 	
 if isnull(pl_exam_sequence) or pl_exam_sequence <= 0 then
-	log.log(this, "set_exam_defaults()", "Invalid exam_sequence", 4)
+	log.log(this, "u_component_treatment.set_exam_defaults.0019", "Invalid exam_sequence", 4)
 	return -1
 end if
 
 // See if exam_sequence exists
 ls_exam_root_observation_id = datalist.exam_root_observation_id(pl_exam_sequence)
 if isnull(ls_exam_root_observation_id) then
-	log.log(this, "set_exam_defaults()", "exam_sequence not found (" + string(pl_exam_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.set_exam_defaults.0019", "exam_sequence not found (" + string(pl_exam_sequence) + ")", 4)
 	return -1
 end if
 
@@ -2200,7 +2200,7 @@ if pl_branch_id > 0 then
 	lstr_branch = datalist.observation_tree_branch(pl_branch_id)
 	
 	if isnull(lstr_branch.child_observation_id) then
-		log.log(this, "set_exam_defaults()", "branch not found (" + string(pl_branch_id) + ")", 4)
+		log.log(this, "u_component_treatment.set_exam_defaults.0019", "branch not found (" + string(pl_branch_id) + ")", 4)
 		return -1
 	end if
 
@@ -2310,29 +2310,29 @@ ll_p_rows = p_observation_result.rowcount()
 
 // We must have have an observation sequence
 if isnull(pl_observation_sequence) then
-	log.log(this, "set_result()", "Null observation sequence", 4)
+	log.log(this, "u_component_treatment.set_result.0035", "Null observation sequence", 4)
 	return -1
 end if
 
 if isnull(pi_result_sequence) then
-	log.log(this, "set_result()", "Null result sequence", 4)
+	log.log(this, "u_component_treatment.set_result.0035", "Null result sequence", 4)
 	return -1
 end if
 
 if isnull(ps_location) then
-	log.log(this, "set_result()", "Null location", 4)
+	log.log(this, "u_component_treatment.set_result.0035", "Null location", 4)
 	return -1
 end if
 
 ls_observation_id = get_observation_id(pl_observation_sequence)
 if isnull(ls_observation_id) then
-	log.log(this, "set_result()", "Observation Not Found (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.set_result.0035", "Observation Not Found (" + string(pl_observation_sequence) + ")", 4)
 	return -1
 end if
 
 lstr_result = datalist.observation_result(ls_observation_id, pi_result_sequence)
 if isnull(lstr_result.result_sequence) then
-	log.log(this, "set_result()", "Observation Result Not Found (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.set_result.0035", "Observation Result Not Found (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
 	return -1
 end if
 
@@ -2368,7 +2368,7 @@ CHOOSE CASE upper(lstr_result.result_type)
 		
 			luo_result_unit = unit_list.find_unit(ls_result_unit)
 			if isnull(luo_result_unit) then
-				log.log(this, "set_result()", "Error finding unit (" + ls_result_unit + ")", 4)
+				log.log(this, "u_component_treatment.set_result.0035", "Error finding unit (" + ls_result_unit + ")", 4)
 				return -1
 			end if
 			
@@ -2379,7 +2379,7 @@ CHOOSE CASE upper(lstr_result.result_type)
 			ls_temp = luo_result_unit.pretty_unit(lstr_result.unit_preference, ls_display_unit_id)
 			luo_display_unit = unit_list.find_unit(ls_display_unit_id)
 			if isnull(luo_display_unit) then
-				log.log(this, "set_result()", "Error finding display unit (" + ls_display_unit_id + ")", 4)
+				log.log(this, "u_component_treatment.set_result.0035", "Error finding display unit (" + ls_display_unit_id + ")", 4)
 				return -1
 			end if
 		
@@ -2426,7 +2426,7 @@ CHOOSE CASE upper(lstr_result.result_type)
 									ls_abnormal_flag, &
 									ls_abnormal_nature )
 		if li_sts <= 0 then
-			log.log(this, "set_result()", "Error adding result", 4)
+			log.log(this, "u_component_treatment.set_result.0035", "Error adding result", 4)
 			return -1
 		end if
 	CASE "COMMENT"
@@ -2732,7 +2732,7 @@ for i = 1 to ll_rowcount
 																		ll_stage, &
 																		true)
 		if lla_observation_sequence[i] <= 0 then
-			log.log(this, "set_exam_defaults()", "Error adding new observation", 4)
+			log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error adding new observation", 4)
 			if lb_wait then close(w_pop_please_wait)
 			return -1
 		end if
@@ -2752,7 +2752,7 @@ for i = 1 to ll_rowcount
 											ls_null, &
 											ls_null )
 				if li_sts < 0 then
-					log.log(this, "set_exam_defaults()", "Error adding default results", 4)
+					log.log(this, "u_component_treatment.set_exam_defaults.0019", "Error adding default results", 4)
 					if lb_wait then close(w_pop_please_wait)
 					return -1
 				end if
@@ -2891,7 +2891,7 @@ public function long add_observation_stage (long pl_parent_observation_sequence,
 setnull(ls_service)
 
 if isnull(pl_parent_observation_sequence) then
-	log.log(this, "add_observation()", "This method is not allowed to add a root observation", 4)
+	log.log(this, "u_component_treatment.add_observation.0006", "This method is not allowed to add a root observation", 4)
 	return -1
 end if
 
@@ -2932,7 +2932,7 @@ long ll_original_branch_id
 if pb_find_existing then
 	ll_observation_sequence = find_observation(pl_parent_observation_sequence, ps_observation_id, pi_child_ordinal, ps_observation_tag, pl_stage)
 	if ll_observation_sequence < 0 then
-		log.log(this, "add_observation()", "Error finding observation (" + ps_observation_id + ")", 4)
+		log.log(this, "u_component_treatment.add_observation.0006", "Error finding observation (" + ps_observation_id + ")", 4)
 		return -1
 	end if
 
@@ -2985,14 +2985,14 @@ p_observation.object.created_by[ll_row] = current_scribe.user_id
 
 li_sts = p_observation.update()
 if li_sts <= 0 then
-	log.log(this, "add_observation()", "Error adding p_observation record", 4)
+	log.log(this, "u_component_treatment.add_observation.0006", "Error adding p_observation record", 4)
 	return -1
 end if
 
 ll_observation_sequence = p_observation.object.observation_sequence[ll_row]
 
 if isnull(ll_observation_sequence) then
-	log.log(this, "add_observation()", "Error adding p_observation record, null observation_sequence", 4)
+	log.log(this, "u_component_treatment.add_observation.0006", "Error adding p_observation record, null observation_sequence", 4)
 	return -1
 end if
 
@@ -3014,13 +3014,13 @@ if (sqlca.sqlcode = 100) or (ll_check_treatment_id <> treatment_id) then
 	AND observation_id = :ps_observation_id;
 	if not tf_check() then return -1
 	if isnull(ll_observation_sequence) then
-		log.log(this, "add_observation()", "Unable to determine the correct observation_sequence (" + string(ll_incorrect_observation_sequence) + ")", 4)
+		log.log(this, "u_component_treatment.add_observation.0006", "Unable to determine the correct observation_sequence (" + string(ll_incorrect_observation_sequence) + ")", 4)
 		return -1
 	end if
 	
 	p_observation.object.observation_sequence[ll_row] = ll_observation_sequence
 	p_observation.setitemstatus(ll_row, 0, Primary!, NotModified!)
-	log.log_db(this, "add_observation()", "Correct observation_sequence found (" + string(ll_incorrect_observation_sequence) + ", " + string(ll_observation_sequence) + ")", 3)
+	log.log_db(this, "u_component_treatment.add_observation.0114", "Correct observation_sequence found (" + string(ll_incorrect_observation_sequence) + ", " + string(ll_observation_sequence) + ")", 3)
 end if
 
 
@@ -3196,12 +3196,12 @@ If current_user.certified <> "Y" or isnull(current_user.certified) Then
 	// If the drug/package doesn't exist then assume it's authorized
 	if li_sts = 0 then return true
 	if li_sts < 0 then
-		log.log(this, "is_authorized()", "Error getting Drug/Package (" + drug_id + ", " + package_id + ")", 4)
+		log.log(this, "u_component_treatment.is_authorized.0030", "Error getting Drug/Package (" + drug_id + ", " + package_id + ")", 4)
 		return false
 	end if
 	If lstr_drug_package.prescription_flag = "Y" Then
 		If isnull(current_user.supervisor) Then
-			mylog.log(This, "add_medication()", "User (" + current_user.user_id +&
+			mylog.log(This, "u_component_treatment.is_authorized.0035", "User (" + current_user.user_id +&
 											") not authorized to write prescription", 3)
 			Openwithparm(w_pop_message, "You are not authorized to write a "+&
 							"		prescription for " + lstr_drug.common_name)
@@ -3426,7 +3426,7 @@ ll_p_rows = p_observation_result.rowcount()
 
 // We must have have an observation sequence
 if isnull(pl_observation_sequence) then
-	log.log(this, "get_result()", "Null observation sequence", 4)
+	log.log(this, "u_component_treatment.get_result.0011", "Null observation sequence", 4)
 	return -1
 end if
 
@@ -3585,7 +3585,7 @@ if isnull(treatment_description) then
 	elseif not isnull(drug_id) then
 		li_sts = drugdb.get_drug_definition(drug_id, lstr_drug)
 		if li_sts <= 0 then
-			mylog.log(this, "order_treatment()", "Unable to get drug definition (" + drug_id + ")", 4)
+			mylog.log(this, "u_component_treatment.order_treatment_old.0109", "Unable to get drug definition (" + drug_id + ")", 4)
 			treatment_description = "Drug Treatment"
 		else
 			treatment_description = lstr_drug.common_name
@@ -3598,7 +3598,7 @@ if isnull(treatment_description) then
 		USING cprdb;
 		if not cprdb.check() then return -1
 		if cprdb.sqlcode = 100 then
-			mylog.log(this, "order_treatment()", "Unable to get procedure definition (" + procedure_id + ")", 4)
+			mylog.log(this, "u_component_treatment.order_treatment_old.0109", "Unable to get procedure definition (" + procedure_id + ")", 4)
 			treatment_description = "Procedure Treatment"
 		end if
 	else
@@ -3707,7 +3707,7 @@ ll_p_rows = p_observation_result.rowcount()
 
 // We must have have an observation sequence
 if isnull(pl_observation_sequence) then
-	log.log(this, "add_result()", "Null observation sequence", 4)
+	log.log(this, "u_component_treatment.add_result_record.0017", "Null observation sequence", 4)
 	return -1
 end if
 
@@ -3715,7 +3715,7 @@ end if
 ls_find = "observation_sequence=" + string(pl_observation_sequence)
 ll_row = p_observation.find(ls_find, 1, p_observation.rowcount())
 if ll_row <= 0 then
-	log.log(this, "add_result()", "observation sequence not found (" + string(pl_observation_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.add_result_record.0017", "observation sequence not found (" + string(pl_observation_sequence) + ")", 4)
 	return -1
 end if
 
@@ -3723,7 +3723,7 @@ ls_observation_id = p_observation.object.observation_id[ll_row]
 
 lstr_result = datalist.observation_result(ls_observation_id, pi_result_sequence)
 if isnull(lstr_result.result_sequence) then
-	log.log(this, "add_result()", "observation result not found (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
+	log.log(this, "u_component_treatment.add_result_record.0017", "observation result not found (" + ls_observation_id + ", " + string(pi_result_sequence) + ")", 4)
 	return -1
 end if
 
@@ -3739,20 +3739,20 @@ if upper(lstr_result.result_amount_flag) = "Y" then
 	// If the result unit is not supplied then default to the result definition
 	if isnull(ps_result_unit) then ps_result_unit = lstr_result.result_unit
 	if isnull(ps_result_unit) then
-		log.log(this, "add_result_record()", "result_amount_flag is Y but unit is not provided", 4)
+		log.log(this, "u_component_treatment.add_result_record.0049", "result_amount_flag is Y but unit is not provided", 4)
 		return -1
 	end if
 	
 	luo_unit = unit_list.find_unit(ps_result_unit)
 	if isnull(luo_unit) then
-		log.log(this, "add_result_record()", "Unit not found (" + ps_result_unit + ")", 4)
+		log.log(this, "u_component_treatment.add_result_record.0049", "Unit not found (" + ps_result_unit + ")", 4)
 		return -1
 	end if
 	
 	// Now that we have the unit object, make sure that this result is valid
 	li_sts = luo_unit.check_value(ps_result_value)
 	if li_sts < 0 then
-		log.log(this, "add_result_record()", "Result value not valid (" + ps_result_value + ")", 4)
+		log.log(this, "u_component_treatment.add_result_record.0049", "Result value not valid (" + ps_result_value + ")", 4)
 		return -1
 	end if
 end if
@@ -3797,7 +3797,7 @@ p_observation_result.object.location_sort_sequence[ll_row] = li_location_sort_se
 tf_begin_transaction(this, "add_result_record()")
 li_sts = p_observation_result.update()
 if li_sts <= 0 then
-	log.log(this, "add_result()", "Error adding p_observation_result record", 4)
+	log.log(this, "u_component_treatment.add_result_record.0017", "Error adding p_observation_result record", 4)
 	tf_rollback()
 	return -1
 end if

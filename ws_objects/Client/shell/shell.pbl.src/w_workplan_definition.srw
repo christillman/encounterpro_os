@@ -326,7 +326,7 @@ FROM c_Workplan
 WHERE workplan_id = :workplan_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "load_workplan()", "Workplan not found (" + string(workplan_id) + ")", 4)
+	log.log(this, "w_workplan_definition.load_workplan.0017", "Workplan not found (" + string(workplan_id) + ")", 4)
 	return -1
 end if
 
@@ -643,7 +643,7 @@ item_attributes = CREATE u_ds_data
 item_attributes.set_dataobject("dw_workplan_item_attribute_data")
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_workplan_definition.open.0018", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -651,7 +651,7 @@ end if
 workplan_id = long(popup.items[1])
 
 if isnull(workplan_id) then
-	log.log(this, "open", "Null workplan_id", 4)
+	log.log(this, "w_workplan_definition.open.0018", "Null workplan_id", 4)
 	close(this)
 	return
 end if
@@ -758,7 +758,7 @@ event post_open;call super::post_open;integer li_sts
 
 li_sts = load_workplan()
 if li_sts <= 0 then
-	log.log(this, "open", "Error loading workplan (" + string(workplan_id) + ")", 4)
+	log.log(this, "w_workplan_definition.open.0018", "Error loading workplan (" + string(workplan_id) + ")", 4)
 	close(this)
 	return
 end if

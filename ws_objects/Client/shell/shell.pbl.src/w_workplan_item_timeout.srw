@@ -132,7 +132,7 @@ popup = message.powerobjectparm
 st_title.text = popup.title
 
 if popup.data_row_count <> 4 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_workplan_item_timeout.open.0009", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

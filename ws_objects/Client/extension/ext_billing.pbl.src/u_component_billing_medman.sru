@@ -202,7 +202,7 @@ if ii_cpt_count > 0 then
 end if	
 
 if ii_cpt_count  = 0 then 
-	mylog.log(this, "xx_post_other()", "There was no cpt charged for (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "There was no cpt charged for (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 	return 1
 end if
 
@@ -228,7 +228,7 @@ if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
 ls_filepath += "Messages"
 
 if not mylog.of_directoryexists(ls_filepath) then
-	mylog.log(this, "xx_post_other()", "Error getting temp path "+ls_filepath, 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "Error getting temp path "+ls_filepath, 4)
 	return -1
 end if
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
@@ -246,7 +246,7 @@ end if
 li_filehandle = fileopen(ls_current_filename,LineMode!,Write!,Shared!,Append!)
 // If the fileopen() function fails and returns -1 then Quit returning -1, we got a problem
 IF li_filehandle = -1 THEN 
-	mylog.log(this, "xx_post_other()", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1		
 END IF
 
@@ -294,7 +294,7 @@ For  ti_loop_count  = 1 to  ii_cpt_count
 		// Write the row to the previously named and opened file		
 		li_write_sts = FileWrite(li_filehandle,ls_medman_row)	
 				IF li_write_sts < 0 THEN 
-			mylog.log(this, "xx_post_other()", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+			mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 			RETURN -1
 		END IF
 		li_record_count ++
@@ -304,7 +304,7 @@ Next
 li_file_sts = FileClose(li_filehandle)
 
 IF li_file_sts < 0 THEN
-	mylog.log(this, "xx_post_other()", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -318,7 +318,7 @@ end if
 // If the message was created successfully, then ship it.
 luo_messageserver = my_component_manager.get_component("JMJMESSAGESERVER")
 if isnull(luo_messageserver) then
-	mylog.log(this, "xx_post_other()", "Unable to get messageserver component", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "Unable to get messageserver component", 4)
 	return -1
 end if
 
@@ -327,12 +327,12 @@ li_sts = luo_messageserver.send_to_subscribers(ls_message_type, ls_current_filen
 my_component_manager.destroy_component(luo_messageserver)
 
 if li_sts <= 0 then
-	mylog.log(this, "xx_post_other()", "Error sending message", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "Error sending message", 4)
 	return -1
 end if
 
 IF li_sts < 0 THEN
-	mylog.log(this, "xx_post_other()", "The Message_Server.send_to_subscribers function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_other.0092", "The Message_Server.send_to_subscribers function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -417,7 +417,7 @@ USING cprdb;
 
 EXECUTE lsp_get_treatment_assessments;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_treatment()", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_medman.xx_post_treatment.0076", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 
@@ -457,7 +457,7 @@ DO
 			:ls_assessment_charge_bill_flag;
 			
 	if not cprdb.check() then 
-		mylog.log(this, "xx_post_treatment()", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+		mylog.log(this, "u_component_billing_medman.xx_post_treatment.0076", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 		return -1
 	end if	
 
@@ -502,11 +502,11 @@ AND encounter_id = :pl_encounter_id
 AND encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_treatment()", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_medman.xx_post_treatment.0076", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_post_treatment()", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_medman.xx_post_treatment.0076", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
 	return 0
 end if	
 
@@ -720,12 +720,12 @@ AND problem_id = :pl_problem_id
 USING cprdb;
 // if an sql error occurs return -1
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_assessments()", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_medman.xx_post_assessment.0020", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return -1
 end if	
 // if no records were found, return 0
 if cprdb.sqlcode = 100 then 
-	mylog.log(this, "xx_post_assessments()", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_medman.xx_post_assessment.0020", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return 0
 end if
 
@@ -883,13 +883,13 @@ USING cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 // IF we don't get an Encounter record, THEN QUIT
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "xx_post_encounter()", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  	RETURN -1
 END IF
 
 // Get the billing code for this office
 If isnull(ls_office_id) then 
-	mylog.log(this, "xx_post_encounter()", "office id is null in patient_encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "office id is null in patient_encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return 0
 end if
 
@@ -899,7 +899,7 @@ FROM c_Office
 WHERE office_id = :ls_office_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_encounter()", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 	end if	
 if cprdb.sqlcode = 100 then return 0
@@ -916,7 +916,7 @@ USING 	cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 IF isnull(is_doctor_id) THEN RETURN -3
 IF cprdb.sqlcode = 100 THEN 
-	mylog.log(this, "xx_post_encounter()", "Unable to retrieve an Attending Doctor ID..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "Unable to retrieve an Attending Doctor ID..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  		RETURN -1
 END IF
 
@@ -930,7 +930,7 @@ if not (isnull(ls_supervisor) or ls_supervisor = '' or is_doctor_id = ls_supervi
 		AND c_User_Role.role_id = '!NURSE'
 	USING cprdb;
 	if not cprdb.check() then 
-		mylog.log(this, "xx_post_encounter()", "Unable to retrieve a supervising Doctor ID..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+		mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "Unable to retrieve a supervising Doctor ID..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  		RETURN -1
 	end if	
 end if
@@ -944,10 +944,10 @@ CLOSE lsp_get_billable_provider;
 if not tf_check() then return -1
 
 IF isnull(ls_billable_provider) or ls_billable_provider = "" THEN 
-	log.log(this, "xx_post_encounter()", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
+	log.log(this, "u_component_billing_medman.xx_post_encounter.0164", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
 	RETURN -1
 End if	
-log.log(this,"xx_post_encounter()","Billable Provider ID & Code:"+ls_billable_provider,2)
+log.log(this,"u_component_billing_medman.xx_post_encounter.0167","Billable Provider ID & Code:"+ls_billable_provider,2)
 is_doctor_id = ls_billable_provider
 
 li_charge_count = 1
@@ -957,7 +957,7 @@ f_split_string(ls_billing_id, ".", ss_charge_acct, ss_charge_dep)
 IF isNull(ldt_encounter_date) THEN
 	// If we don't have an Encounter date and time, then we can't pass the encounter
 	// to the Medical Manager billing system
-	mylog.log(this, "xx_post_encounter()", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter.0103", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 		

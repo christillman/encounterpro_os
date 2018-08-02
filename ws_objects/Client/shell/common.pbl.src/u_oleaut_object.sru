@@ -19,7 +19,7 @@ event externalexception;
 oleobject lo_object
 error_code = integer(resultcode)
 error_text = description
-log.log(this, "externalexception", "ERROR (" + string(error_code) + ") - " + error_text, 4)
+log.log(this, "u_oleaut_object.externalexception.0005", "ERROR (" + string(error_code) + ") - " + error_text, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

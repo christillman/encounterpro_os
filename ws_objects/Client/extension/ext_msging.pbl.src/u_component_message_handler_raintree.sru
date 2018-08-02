@@ -59,7 +59,7 @@ ls_filepath = message_file
 IF FileExists(ls_filepath) THEN
 	li_filenum = FileOpen(ls_filepath)
 ELSE
-	mylog.log(this, "xx_handle_message()", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
+	mylog.log(this, "u_component_message_handler_raintree.xx_handle_message.0035", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
 	RETURN -1
 END IF
 
@@ -86,7 +86,7 @@ IF li_filenum > 0 THEN
 				IF li_pos = 1 THEN 
 					li_start = li_pos + 1		// If so, it;s OK to start
 				ELSE
-					mylog.log(this, "xx_handle_message()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+					mylog.log(this, "u_component_message_handler_raintree.xx_handle_message.0035", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 					RETURN -1
 				END IF
 				li_comma = pos(is_stg,"~",~"",li_pos)	// Be sure this is a quote,comma,quote sequence
@@ -94,7 +94,7 @@ IF li_filenum > 0 THEN
 				IF li_comma > 0 THEN				// We're still in a valid string
 					li_length = li_comma - li_start	//	Set the length of the string to get the desired characters
 					IF li_length > li_value_max_len THEN 
-						mylog.log(this, "xx_handle_message()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+						mylog.log(this, "u_component_message_handler_raintree.xx_handle_message.0035", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 						RETURN -1
 					END IF	
 					ls_rectype = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -118,14 +118,14 @@ IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	//	If the FileClose() function returns less than 1, then quit
 	IF li_sts < 1 THEN
-		mylog.log(this, "xx_handle_message()", "Unable to close the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message.0035", "Unable to close the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 	
 	lb_sts = FileDelete(ls_filepath)
 	//	If the FileDelete() function does not return TRUE, then quit	
 	IF NOT lb_sts THEN
-		mylog.log(this, "xx_handle_message()", "Unable to delete the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message.0035", "Unable to delete the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 END IF
@@ -392,7 +392,7 @@ IF li_pos = 1 THEN
 	lb_loop = TRUE					// OK to loop
 	li_ctr = 1
 ELSE
-	mylog.log(this, "parse_csv()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1
 END IF	
 
@@ -414,7 +414,7 @@ DO WHILE lb_loop
 		li_end = li_comma 								//	Set the end same as start of the quote,comma,quote test location
 		li_length = li_end - li_start					//	Set the length of the string to get the desired characters
 		IF li_length > li_value_max_len THEN 
-			mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+			mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 			RETURN -1
 		END IF	
 		li_quote = pos(is_stg,"~"",li_start)  // check for a beginning quote in the value
@@ -428,7 +428,7 @@ DO WHILE lb_loop
 						li_end = li_comma
 						li_length = li_end - li_start
 					else
-						mylog.log(this, "parse_csv()", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
+						mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
 						RETURN -1
 					end if
 				else
@@ -444,7 +444,7 @@ DO WHILE lb_loop
 		//	This ELSE section runs only once, on the last array element
 		IF li_ctr = 1 THEN
 			lb_loop = FALSE								//	Set lb_loop to false, we're not going to start
-			mylog.log(this, "parse_csv()", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 		ELSE
 			// This ELSE section runs only once, on the last array element if above test is passed
@@ -453,7 +453,7 @@ DO WHILE lb_loop
 			li_start ++
 			li_length = li_end - li_start 				//	This gives the selected character string length
 			IF li_length > li_value_max_len THEN 
-				mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+				mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 				RETURN -1
 			END IF
 			ls_value = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -465,7 +465,7 @@ DO WHILE lb_loop
 	li_pos = li_comma  + 1								//	Increments ll_pos for the next loop, if one is coming
 	ls_value = ''												//	Set ls_value to an empty string
 	IF li_ctr > li_max_fields THEN
-		mylog.log(this, "parse_csv()", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
+		mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
 		RETURN -1
 	END IF
 LOOP	
@@ -484,7 +484,7 @@ DO WHILE li_test_ctr <= li_array_upper and lb_empty_flag = TRUE
 LOOP
  
 IF lb_empty_flag THEN
-	mylog.log(this, "parse_csv()", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_raintree.parse_csv.0066", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1	
 END IF
 
@@ -544,12 +544,12 @@ long ll_array_count
 
 li_sts = parse_csv(14)
 IF li_sts < 0 THEN
-	mylog.log(this, "raintree_patient()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(ii_message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(ii_message_id) + ")", 4)
 	RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
 ls_billing_id = is_array[1] 
-mylog.log(this, "raintree_patient()", "The patient billing_id=" + ls_billing_id, 2)
+mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "The patient billing_id=" + ls_billing_id, 2)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -584,7 +584,7 @@ ls_sex			= is_array[6]
 
 if (is_array[7] = "0" or isnull(is_array[7]) or is_array[7] = "") then
 	ls_error = is_array[7]
-	mylog.log(this, "raintree_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -594,7 +594,7 @@ else
 		ldt_date_of_birth = datetime(ld_birthdate)
 	else
 		ls_error = is_array[7]
-		mylog.log(this, "raintree_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 		return -1
 	end if
 end if
@@ -617,7 +617,7 @@ setnull(li_priority)
 setnull(ls_ssn)
 
 if isnull(ls_cpr_id) then
-	mylog.log(this, "raintree_patient()", "create new patient, lname=" + ls_last_name, 2)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "create new patient, lname=" + ls_last_name, 2)
 	li_sts = f_create_new_patient( &
 									ls_cpr_id,   &
 									ls_race,   &
@@ -656,7 +656,7 @@ else
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then return -5
 end if
-mylog.log(this, "raintree_patient()", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
+mylog.log(this, "u_component_message_handler_raintree.raintree_patient.0049", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
 If ll_array_count < 11 then return 1
 
 ls_insurance_id = is_array[11]
@@ -800,7 +800,7 @@ ld_scheduledatetime = ldt_encounter_date_time
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(10)
 IF li_sts < 0 THEN
-		mylog.log(this, "raintree arrived()", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0058", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
@@ -808,7 +808,7 @@ END IF
 //	Populate variables with the array contents
 ls_billing_id = is_array[1] 
 If isnull(ls_billing_id) or ls_billing_id = "" then
-	mylog.log(this, "raintree arrived()", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0058", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 
@@ -831,7 +831,7 @@ else
 	If isnumber(char2) then
 		ll_encounter_billing_id = long(char2)
 	else
-		mylog.log(this, "raintree arrived()", "Billingid cannot be converted ...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0058", "Billingid cannot be converted ...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 	END IF	
 END IF
@@ -939,7 +939,7 @@ end if
 				//	LOG an ERROR, no cpr_ID on file, 
 				//	CANNOT process the encounter request
 				//	Demographic data not received yet
-				mylog.log(this, "raintree_arrived()", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0197", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		 		RETURN 1
 			END IF
 
@@ -954,7 +954,7 @@ END IF
 string ls_error
 If Isnull(ls_primary_provider_id) then
 	ls_error = is_array[4]
-	mylog.log(this, "raintree_arrived()", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0197", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 End if			
 
@@ -994,7 +994,7 @@ ls_status = "SCHEDULED"
 	
 			IF NOT cprdb.check() THEN 
 				// The new entry failed
-				mylog.log(this, "xx_raintree_arrived()", "Unable write a record to x_raintree_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived.0252", "Unable write a record to x_raintree_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 				RETURN -1									
 			END IF
 	

@@ -40,7 +40,7 @@ TRY
 	
 	lo_document = lo_document.setrootelement(lo_root)
 CATCH (throwable lo_error)
-	log.log(po_null, "f_attributes_to_xml()", "Error creating attributes document (" + lo_error.text + ")", 4)
+	log.log(po_null, "f_attributes_to_xml.0035", "Error creating attributes document (" + lo_error.text + ")", 4)
 	return lo_null
 END TRY
 

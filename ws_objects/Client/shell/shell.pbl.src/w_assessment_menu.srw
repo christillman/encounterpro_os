@@ -48,7 +48,7 @@ setnull(ls_null)
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 5 then
-	log.log(this, "open", "invalid parameters", 4)
+	log.log(this, "w_assessment_menu.open.0011", "invalid parameters", 4)
 	closewithreturn(this, ls_null)
 	return
 end if
@@ -146,12 +146,12 @@ INTO :ls_description,
 FROM c_Assessment_Definition
 WHERE assessment_id = :assessment_id;
 if not tf_check() then
-	log.log(this, "open", "Error selecting assessment", 4)
+	log.log(this, "w_assessment_menu.open.0011", "Error selecting assessment", 4)
 	closewithreturn(this, ls_null)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "Assessment not found (" + assessment_id + ")", 4)
+	log.log(this, "w_assessment_menu.open.0011", "Assessment not found (" + assessment_id + ")", 4)
 	closewithreturn(this, ls_null)
 	return
 end if

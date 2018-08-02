@@ -166,7 +166,7 @@ if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
 ls_filepath += "Messages"
 
 if not mylog.of_directoryexists(ls_filepath) then
-	mylog.log(this, "xx_post_other()", "Error getting temp path "+ls_filepath, 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0093", "Error getting temp path "+ls_filepath, 4)
 	return -1
 end if
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
@@ -184,7 +184,7 @@ end if
 li_filehandle = fileopen(ls_current_filename,LineMode!,Write!,Shared!,Append!)
 // If the fileopen() function fails and returns -1 then Quit returning -1, we got a problem
 IF li_filehandle = -1 THEN 
-	mylog.log(this, "xx_post_other()", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0093", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1		
 END IF
 
@@ -208,7 +208,7 @@ For  ti_loop_count  = 1 to  ii_cpt_count
 		// Write the row to the previously named and opened file		
 		li_write_sts = FileWrite(li_filehandle,ls_lytec_row)	
 		IF li_write_sts < 0 THEN 
-			mylog.log(this, "xx_post_other()", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+			mylog.log(this, "u_component_billing_lytec.xx_post_other.0093", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 			RETURN -1
 		END IF
 NEXT
@@ -216,11 +216,11 @@ NEXT
 // Close the file
 li_file_sts = FileClose(li_filehandle)
 IF li_file_sts < 0 THEN
-	mylog.log(this, "xx_post_other()", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0093", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 If FileLength(ls_current_filename) <= 0 Then
-	mylog.log(this, "xx_post_other()", "Billing failed for cpr-id ("+ps_cpr_id+" and encounter id ("+string(pl_encounter_id)+")",4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0093", "Billing failed for cpr-id ("+ps_cpr_id+" and encounter id ("+string(pl_encounter_id)+")",4)
 	FileDelete(ls_current_filename)
 	Return 1
 End If
@@ -231,7 +231,7 @@ if isnull(ls_message_type) then ls_message_type = "LYTEC_CHECKOUT"
 // If the message was created successfully, then ship it.
 luo_messageserver = my_component_manager.get_component("JMJMESSAGESERVER")
 if isnull(luo_messageserver) then
-	mylog.log(this, "xx_do_event()", "Unable to get messageserver component", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0158", "Unable to get messageserver component", 4)
 	return -1
 end if
 
@@ -240,7 +240,7 @@ li_sts = luo_messageserver.send_to_subscribers(ls_message_type, ls_current_filen
 my_component_manager.destroy_component(luo_messageserver)
 
 If li_sts <= 0 then
-	mylog.log(this, "xx_do_event()", "Error sending message", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other.0158", "Error sending message", 4)
 	Return -1
 End if
 
@@ -339,11 +339,11 @@ DECLARE lsp_get_treatment_assessments PROCEDURE FOR dbo.sp_get_treatment_assessm
    @pl_encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 
-mylog.log(this, "xx_post_treatment()", "treatment start (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 1)	
+mylog.log(this, "u_component_billing_lytec.xx_post_treatment.0091", "treatment start (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 1)	
 
 EXECUTE lsp_get_treatment_assessments;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_treatment()", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_lytec.xx_post_treatment.0091", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 
@@ -383,7 +383,7 @@ DO
 			:ls_assessment_charge_bill_flag;
 			
 	if not cprdb.check() then 
-		mylog.log(this, "xx_post_treatment()", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+		mylog.log(this, "u_component_billing_lytec.xx_post_treatment.0091", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 		return -1
 	end if	
 
@@ -425,11 +425,11 @@ AND encounter_id = :pl_encounter_id
 AND encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_treatment()", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_lytec.xx_post_treatment.0091", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_post_treatment()", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_lytec.xx_post_treatment.0091", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
 	return 0
 end if	
 
@@ -687,12 +687,12 @@ AND problem_id = :pl_problem_id
 USING cprdb;
 // if an sql error occurs return -1
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_assessments()", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_lytec.xx_post_assessment.0043", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return -1
 end if	
 // if no records were found, return 0
 if cprdb.sqlcode = 100 then 
-	mylog.log(this, "xx_post_assessments()", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_lytec.xx_post_assessment.0043", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return 0
 end if
 
@@ -700,7 +700,7 @@ end if
 //CWW, BEGIN
 //EXECUTE lsp_get_assessment_icd10;
 //if not cprdb.check() then 
-//	mylog.log(this, "xx_post_assessments()", "EXECUTE lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "u_component_billing_lytec.xx_post_assessment.0043", "EXECUTE lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //integer i
@@ -708,7 +708,7 @@ end if
 //
 //FETCH lsp_get_assessment_icd10 INTO :ls_insurance_id, :ls_icd10_code;
 //if not cprdb.check() then 
-//	mylog.log(this, "xx_post_assessments()", "fetch lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "u_component_billing_lytec.xx_post_assessment.0043", "fetch lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //
@@ -720,7 +720,7 @@ end if
 //
 //CLOSE lsp_get_assessment_icd10;
 //
-//mylog.log(this, "xx_post_assessments()", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)	
+//mylog.log(this, "u_component_billing_lytec.xx_post_assessment.0043", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)	
 
 integer i
 i = upperbound(is_icd10_code)
@@ -863,7 +863,7 @@ USING cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 // IF we don't get an Encounter record, THEN QUIT
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "xx_post_encounter()", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter.0092", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  	RETURN -1
 END IF
 
@@ -883,11 +883,11 @@ else
 	USING cprdb;
 end if
 if not cprdb.check() then 
-	mylog.log(this, "xx_post_encounter()", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter.0092", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 end if
 if isnull(ls_office_id) or len(ls_office_id) = 0 then
-	mylog.log(this, "xx_post_encounter()", "unable to find patient billing domain (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter.0092", "unable to find patient billing domain (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 end if
 // Get the billable Provider
@@ -899,10 +899,10 @@ CLOSE lsp_get_billable_provider;
 if not tf_check() then return -1
 
 IF isnull(ls_billable_provider) THEN 
-	log.log(this, "xx_post_encounter()", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
+	log.log(this, "u_component_billing_lytec.xx_post_encounter.0128", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
 	RETURN -1
 End if	
-log.log(this,"xx_post_encounter()","Billable Provider ID & Code:"+ls_billable_provider,2)
+log.log(this,"u_component_billing_lytec.xx_post_encounter.0131","Billable Provider ID & Code:"+ls_billable_provider,2)
 
 // Translate a provider
 ls_doctor_id = sqlca.fn_lookup_user_billingid(ls_office_id,ls_billable_provider)
@@ -917,7 +917,7 @@ ss_charge_acct = ls_billing_id
 IF isNull(ldt_encounter_date) THEN
 	// If we don't have an Encounter date and time, then we can't pass the encounter
 	// to the lytec billing system
-	mylog.log(this, "xx_post_encounter()", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter.0092", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 		

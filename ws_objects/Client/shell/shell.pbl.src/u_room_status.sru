@@ -42,7 +42,7 @@ if li_sts < 0 then return -1
 
 li_sts = f_set_current_encounter(ll_encounter_id)
 if li_sts <= 0 then
-	log.log(this, "patient_menu()", "Error setting encounter", 4)
+	log.log(this, "u_room_status.patient_menu.0014", "Error setting encounter", 4)
 	f_clear_patient()
 	return -1
 end if
@@ -265,7 +265,7 @@ if isnull(ps_room_id) or ps_room_id = "!!NOWHERE" then
 else
 	luo_room = room_list.find_room(ps_room_id)
 	if isnull(luo_room) then
-		log.log(this, "initialize()", "Invalid room_id (" + ps_room_id + ")", 4)
+		log.log(this, "u_room_status.initialize.0011", "Invalid room_id (" + ps_room_id + ")", 4)
 		return -1
 	end if
 	
@@ -327,7 +327,7 @@ event dberror;string ls_message
 
 ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 
-log.log(this, "dberror", ls_message, 3)
+log.log(this, "u_room_status.dberror.0005", ls_message, 3)
 
 return 1
 

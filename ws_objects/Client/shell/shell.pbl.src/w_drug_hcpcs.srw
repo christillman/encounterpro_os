@@ -84,7 +84,7 @@ end if
 
 administer_unit = unit_list.find_unit(ls_unit_id)
 if isnull(administer_unit) then
-	log.log(this, "default_admin_unit", "Admin unit not found (" + ls_unit_id + ")", 3)
+	log.log(this, "w_drug_hcpcs.default_admin_unit.0025", "Admin unit not found (" + ls_unit_id + ")", 3)
 	st_unit.text = ""
 else
 	st_unit.text = administer_unit.description
@@ -169,17 +169,17 @@ elseif popup.data_row_count = 1 then
 	li_sts = default_admin_unit()
 	if li_sts = 0 then
 		openwithparm(w_pop_message, "This drug has no valid administration units")
-		log.log(this, "open", "No valid admin units for this drug (" + drug_id + ")", 4)
+		log.log(this, "w_drug_hcpcs.open.0034", "No valid admin units for this drug (" + drug_id + ")", 4)
 		closewithreturn(this, popup_return)
 		return
 	elseif li_sts < 0 then
-		log.log(this, "open", "Error retrieving default admin unit", 4)
+		log.log(this, "w_drug_hcpcs.open.0034", "Error retrieving default admin unit", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
 	hcpcs_procedure.postevent("clicked")
 else
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_drug_hcpcs.open.0034", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

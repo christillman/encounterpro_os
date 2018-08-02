@@ -67,7 +67,7 @@ blob lbl_attachment
 // get the attachment
 ll_sts = attachment.get_attachment_blob(lbl_attachment)
 If ll_sts <= 0 Then
-	log.log(this,"xx_render()","failed to get signature attachment from database / file",3)
+	log.log(this,"w_attachment_signature_isf_display.post_open.0008","failed to get signature attachment from database / file",3)
 	pb_done.event clicked()
 	return
 Else

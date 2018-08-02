@@ -36,7 +36,7 @@ boolean lb_document
 // If we have a wia_device_id then we don't need an external_source
 ls_document_component_id = get_attribute("document_component_id")
 if isnull(ls_document_component_id) then
-	log.log(this, "xx_printreport()", "No document component specified", 4)
+	log.log(this, "u_component_report_document_component.xx_printreport.0019", "No document component specified", 4)
 	printreport_status = -1
 	return -1
 end if
@@ -60,7 +60,7 @@ end if
 
 luo_document = component_manager.get_component(ls_document_component_id, lstr_attributes)
 if isnull(luo_document) then
-	log.log(this, "xx_printreport()", "error getting component (" + ls_document_component_id + ")", 4)
+	log.log(this, "u_component_report_document_component.xx_printreport.0019", "error getting component (" + ls_document_component_id + ")", 4)
 	printreport_status = -1
 	return -1
 end if
@@ -68,12 +68,12 @@ end if
 TRY
 	li_sts = luo_document.create_document()
 	if li_sts < 0 then
-		log.log(this, "xx_printreport()", "Error calling document component (" + ls_document_component_id + ")", 4)
+		log.log(this, "u_component_report_document_component.xx_printreport.0019", "Error calling document component (" + ls_document_component_id + ")", 4)
 		printreport_status = -1
 		return -1
 	end if
 CATCH (exception le_error)
-	log.log(this, "xx_printreport()", "Error calling document component (" + ls_document_component_id + "): " + le_error.text, 4)
+	log.log(this, "u_component_report_document_component.xx_printreport.0019", "Error calling document component (" + ls_document_component_id + "): " + le_error.text, 4)
 	printreport_status = -1
 	return -1
 END TRY
@@ -86,7 +86,7 @@ if luo_document.document_count > 0 then
 	if luo_document.document_count > 1 then
 		ls_message = string(luo_document.document_count) + " documents were returned from the document component.  The first document will be used for the report "
 		ls_message += "and subsequent documents will be ignored."
-		log.log(this, "xx_printreport()", ls_message, 3)
+		log.log(this, "u_component_report_document_component.xx_printreport.0019", ls_message, 3)
 	end if
 end if
 

@@ -129,7 +129,7 @@ CATCH (throwable lo_error)
 	if not isnull(lo_error.text) then
 		ls_error += " (" + lo_error.text + ")"
 	end if
-	log.log(this, "timer", ls_error, 4)
+	log.log(this, "u_component_base_class.timer.0026", ls_error, 4)
 	li_sts = -1
 FINALLY
 	// If timer_ding() returns the special value 2, then don't restart the time
@@ -190,7 +190,7 @@ if isnull(lr_timer) or lr_timer <= 0 then lr_timer = 10
 
 if not isvalid(timer) or isnull(timer) then timer = CREATE u_component_timer
 
-log.log(this, "set_timer()", "Setting timer (" + string(lr_timer) + ")", 1)
+log.log(this, "u_component_base_class.set_timer.0010", "Setting timer (" + string(lr_timer) + ")", 1)
 
 timer.initialize(this, double(lr_timer))
 
@@ -206,7 +206,7 @@ timer.initialize(this, pdb_interval)
 
 end subroutine
 
-public function integer timer_ding ();mylog.log(this, "timer_ding()", "ding...", 1)
+public function integer timer_ding ();mylog.log(this, "u_component_base_class.timer.0026_ding()", "ding...", 1)
 
 if ole_class then
 	return ole.timer_ding()
@@ -253,7 +253,7 @@ public function integer configure ();return xx_configure()
 end function
 
 public function integer shutdown ();
-if server_service_id > 0 then mylog.log(this, "shutdown()", "Service shutting down(" + string(server_service_id) + ")", 2)
+if server_service_id > 0 then mylog.log(this, "u_component_base_class.shutdown.0002", "Service shutting down(" + string(server_service_id) + ")", 2)
 
 if isvalid(timer) and not isnull(timer) then
 	timer.shutdown()
@@ -303,7 +303,7 @@ public function integer db_connect ();string ls_database
 
 ls_database = get_attribute("DATABASE")
 if isnull(ls_database) then
-	mylog.log(this, "db_connect()", "Unable to determine database", 4)
+	mylog.log(this, "u_component_base_class.db_connect.0005", "Unable to determine database", 4)
 	return -1
 end if
 
@@ -337,7 +337,7 @@ ls_dbparm = get_dbparm()
 if isnull(ps_database) or trim(ps_database) = "" then
 	ps_database = get_attribute("DATABASE")
 	if isnull(ps_database) then
-		mylog.log(this, "db_connect()", "Unable to determine database", 4)
+		mylog.log(this, "u_component_base_class.db_connect.0005", "Unable to determine database", 4)
 		return -1
 	end if
 end if
@@ -368,7 +368,7 @@ if ole_class then
 	li_sts = ole.connecttonewobject(component_class)
 	
 	if li_sts <> 0 then
-		mylog.log(this, "connect_component()", "Error connecting to component class (" + component_class + ", " + string(li_sts) + ")", 4)
+		mylog.log(this, "u_component_base_class.connect_component.0011", "Error connecting to component class (" + component_class + ", " + string(li_sts) + ")", 4)
 		DESTROY ole
 		setnull(ole)
 		setnull(component_class)
@@ -709,7 +709,7 @@ string ls_message
 lstr_context = f_current_context()
 
 if isnull(dotnet_component_wrapper_class) or trim(dotnet_component_wrapper_class) = "" then
-	log.log(this, "initialize_dotnet_wrapper()", "Error! NULL component_wrapper_class", 4)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "Error! NULL component_wrapper_class", 4)
 	return -1
 end if
 
@@ -724,15 +724,15 @@ end if
 
 com_wrapper = CREATE oleobject
 if debug_mode then
-	log.log(this, "initialize_dotnet_wrapper()", "Attempting to instantiate com object (" + dotnet_component_wrapper_class + ")", 2)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "Attempting to instantiate com object (" + dotnet_component_wrapper_class + ")", 2)
 end if
 li_sts = com_wrapper.connecttonewobject(dotnet_component_wrapper_class)
 if li_sts = 0 then
 	if debug_mode then
-		log.log(this, "initialize_dotnet_wrapper()", "instantiation successful (" + dotnet_component_wrapper_class + ")", 2)
+		log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "instantiation successful (" + dotnet_component_wrapper_class + ")", 2)
 	end if
 else
-	log.log(this, "initialize_dotnet_wrapper()", "Error connecting to com source (" + dotnet_component_wrapper_class + ", " + string(li_sts) + ")", 4)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "Error connecting to com source (" + dotnet_component_wrapper_class + ", " + string(li_sts) + ")", 4)
 	return -1
 end if
 
@@ -748,7 +748,7 @@ li_sts = lo_xml.create_xml_from_attributes("ComponentAttributes", &
 														pstr_component_attributes,&
 														dotnet_component_attributes_xml)
 if li_sts < 0 or isnull(dotnet_component_attributes_xml) then
-	log.log(this, "initialize_dotnet_wrapper()", "Error getting context attributes", 4)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "Error getting context attributes", 4)
 	return -1
 end if
 
@@ -757,7 +757,7 @@ lstr_attributes.attribute_count = 0
 sqlca.add_credentials(ls_access_level, lstr_attributes)
 dotnet_credential_attributes_xml = f_attributes_to_xml_for_component("CredentialAttributes", lstr_attributes)
 if isnull(dotnet_credential_attributes_xml) then
-	log.log(this, "initialize_dotnet_wrapper()", "Error getting credential attributes", 4)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", "Error getting credential attributes", 4)
 	return -1
 end if
 
@@ -774,7 +774,7 @@ CATCH (oleruntimeerror lt_error)
 	ls_message = "Error calling ConnectClass~r~n"
 	ls_message += dotnet_component_version + "~r~n" + dotnet_component_class + "~r~n"
 	ls_message += lt_error.text + "~r~n" + lt_error.description
-	log.log(this, "initialize_dotnet_wrapper()", ls_message, 4)
+	log.log(this, "u_component_base_class.initialize_dotnet_wrapper.0011", ls_message, 4)
 	dotnet_create_test_case()
 	return -1
 END TRY

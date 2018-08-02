@@ -93,7 +93,7 @@ str_component_version lstr_component_version
 setnull(luo_component)
 
 if isnull(ps_component_id) then
-	log.log(this, "get_uninitialized_component()", "component_id is null", 4)
+	log.log(this, "u_component_manager.get_uninitialized_component.0012", "component_id is null", 4)
 	return luo_component
 end if
 
@@ -205,7 +205,7 @@ if lb_try_create then
 			ls_message += ", " + lstr_component_version.version_name
 		end if
 		ls_message += ")~r~n" + le_error.text
-		log.log(this, "get_component()", ls_message, 4)
+		log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 		setnull(luo_component)
 	END TRY
 	
@@ -219,7 +219,7 @@ if lb_try_create then
 				ls_message += ", " + lstr_component_version.version_name
 			end if
 			ls_message += ")"
-			log.log(this, "get_component()", ls_message, 4)
+			log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 			luo_component.shutdown()
 			DESTROY luo_component
 			setnull(luo_component)
@@ -257,7 +257,7 @@ if li_sts > 0 then
 			ls_message += ", " + lstr_component_version.version_name
 		end if
 		ls_message += ")~r~n" + le_error2.text
-		log.log(this, "get_component()", ls_message, 4)
+		log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 		setnull(luo_component)
 	END TRY
 	
@@ -271,7 +271,7 @@ if li_sts > 0 then
 				ls_message += ", " + lstr_component_version.version_name
 			end if
 			ls_message += ")"
-			log.log(this, "get_component()", ls_message, 4)
+			log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 			luo_component.shutdown()
 			DESTROY luo_component
 			setnull(luo_component)
@@ -283,7 +283,7 @@ else
 		ls_message += ", " + lstr_component_version.version_name
 	end if
 	ls_message += ")"
-	log.log(this, "get_component()", ls_message, 4)
+	log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 end if
 
 
@@ -321,7 +321,7 @@ if isnull(ls_system_user_id) then ls_system_user_id = system_user_id
 // First log on as the system_user_id found
 current_scribe = user_list.set_admin_user(ls_system_user_id)
 if isnull(current_scribe) then
-	log.log(this, "start_service()", "Error setting admin user (" + ls_system_user_id + ")", 4)
+	log.log(this, "u_component_manager.start_service.0031", "Error setting admin user (" + ls_system_user_id + ")", 4)
 	return -1
 end if
 
@@ -332,7 +332,7 @@ current_user = current_scribe
 log.initialize(ls_service_name)
 
 if lower(server_service.component_id) = "epie" then
-	log.log(this, "start_service()", "EpIE Download Service is no longer available", 3)
+	log.log(this, "u_component_manager.start_service.0031", "EpIE Download Service is no longer available", 3)
 	UPDATE o_Server_Component
 	SET status = 'NA'
 	WHERE component_id = 'EPIE';
@@ -379,7 +379,7 @@ else
 	lb_ole_class = false
 end if
 
-log.log(this,"create_component()", "Creating component: " + ls_class , 1)
+log.log(this,"u_component_manager.create_component.0017", "Creating component: " + ls_class , 1)
 
 luo_component = CREATE USING ls_class
 if not isvalid(luo_component) or isnull(luo_component) then
@@ -463,7 +463,7 @@ end if
 lstr_component_version = f_get_component_version(pstr_component_definition.component_id, pstr_component_version.version_name, true)
 if isnull(lstr_component_version.objectdata) then
 	ls_message = "Component version has no objectdata (" + pstr_component_definition.component_id + ", " + lstr_component_version.version_name + ")"
-	log.log(this, "install_component_version()", ls_message, 4)
+	log.log(this, "u_component_manager.install_component_version.0035", ls_message, 4)
 	sqlca.jmj_component_log(pstr_component_definition.component_id , &
 							lstr_component_version.version,  &
 							"Install", & 
@@ -483,7 +483,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 		li_sts = log.file_write(lstr_component_version.objectdata , ls_setup_exe)
 		if li_sts <= 0 then
 			ls_message = "Error saving setup.exe to file (" + pstr_component_definition.component_id + ", " + lstr_component_version.version_name + ", " + ls_setup_exe + ")"
-			log.log(this, "install_component_version()", ls_message, 4)
+			log.log(this, "u_component_manager.install_component_version.0035", ls_message, 4)
 			sqlca.jmj_component_log(pstr_component_definition.component_id , &
 									lstr_component_version.version,  &
 									"Install", & 
@@ -510,7 +510,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 			ls_message = "Error Installing Component ~r~n"
 			ls_message += pstr_component_definition.component_id + ", " + lstr_component_version.version_name + "~r~n" + ls_setup_exe + "~r~n"
 			ls_message += lt_error.text + "~r~n" + lt_error.description
-			log.log(this, "install_component_version()", ls_message, 4)
+			log.log(this, "u_component_manager.install_component_version.0035", ls_message, 4)
 			sqlca.jmj_component_log(pstr_component_definition.component_id , &
 									lstr_component_version.version,  &
 									"Install", & 
@@ -525,7 +525,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 		END TRY
 	CASE ELSE
 		ls_message = "Unknown installer (" + lstr_component_version.installer + ")"
-		log.log(this, "install_component_version()", ls_message, 4)
+		log.log(this, "u_component_manager.install_component_version.0035", ls_message, 4)
 		sqlca.jmj_component_log(pstr_component_definition.component_id , &
 								lstr_component_version.version,  &
 								"Install", & 
@@ -598,7 +598,7 @@ if li_sts <= 0 then
 		ls_message += ", " + lstr_component_version.version_name
 	end if
 	ls_message += ")"
-	log.log(this, "get_component()", ls_message, 4)
+	log.log(this, "u_component_manager.get_component.0048", ls_message, 4)
 	openwithparm(w_pop_message, ls_message)
 	return -1
 end if

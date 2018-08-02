@@ -314,7 +314,7 @@ luo_data = CREATE u_ds_data
 if isnull(ps_user_id) or trim(ps_user_id) = "" then return
 luo_user = user_list.find_user(ps_user_id)
 if isnull(luo_user) then
-	log.log(this, "add_actor()", "Invalid user_id (" + ps_user_id + ")", 4)
+	log.log(this, "u_xml_script.add_actor.0031", "Invalid user_id (" + ps_user_id + ")", 4)
 	return
 end if
 
@@ -342,7 +342,7 @@ if not lb_found then
 		
 		// Add the element to the current element
 		root_element.addcontent(actors_element)
-//		log.log(this, "add_actor()", "No Actor element defined", 4)
+//		log.log(this, "u_xml_script.add_actor.0031", "No Actor element defined", 4)
 //		return
 	end if
 
@@ -553,7 +553,7 @@ current_element = po_current_element
 // Get the display script commands
 li_sts = datalist.display_script(pl_display_script_id,lstr_display_script)
 if li_sts <= 0 then
-	log.log(this, "create_xml", "Error getting display_script structure", 4)
+	log.log(this, "u_xml_script.create_xml.0049", "Error getting display_script structure", 4)
 	return -1
 end if
 
@@ -796,7 +796,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		luo_data.setsqlselect(ls_sql)
 		ll_count = luo_data.retrieve()
 		if ll_count < 0 then
-			log.log(this, "create_xml_command_patient()", "Error retrieving assessments", 4)
+			log.log(this, "u_xml_script.create_xml.0049_command_patient()", "Error retrieving assessments", 4)
 			return -1
 		end if
 		
@@ -985,7 +985,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 			ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 			ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 			ls_temp += ", query=" + ls_query
-			log.log(this, "display_script_command_general()", ls_temp, 4)
+			log.log(this, "u_xml_script.create_xml_command_perform.0401", ls_temp, 4)
 		end if
 	CASE "if element"
 		ls_condition = f_attribute_find_attribute(pstr_command.attributes, "condition")
@@ -1132,7 +1132,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 			return 0
 		end if
 		if ll_count < 0 then
-			log.log(this, "create_xml_command_patient()", "Error retrieving assessments", 4)
+			log.log(this, "u_xml_script.create_xml.0049_command_patient()", "Error retrieving assessments", 4)
 			return -1
 		end if
 		
@@ -1279,7 +1279,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		luo_data.set_dataobject("dw_fn_patient_observation_dates")
 		ll_count = luo_data.retrieve(last_context.cpr_id, ls_context_object, ll_object_key, ls_observation_id, li_result_sequence, ls_result_type)
 		if ll_count < 0 then
-			log.log(this, "create_xml_command_patient()", "Error retrieving assessments", 4)
+			log.log(this, "u_xml_script.create_xml.0049_command_patient()", "Error retrieving assessments", 4)
 			return -1
 		end if
 
@@ -1448,7 +1448,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				current_element = lo_element
 			end if
 		else
-			log.log(this, "create_xml_command_patient()", "No tag", 4)
+			log.log(this, "u_xml_script.create_xml.0049_command_patient()", "No tag", 4)
 			return -1
 		end if
 	CASE "root"
@@ -1477,7 +1477,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		luo_data.setsqlselect(ls_sql)
 		ll_count = luo_data.retrieve()
 		if ll_count < 0 then
-			log.log(this, "create_xml_command_patient()", "Error retrieving treatments", 4)
+			log.log(this, "u_xml_script.create_xml.0049_command_patient()", "Error retrieving treatments", 4)
 			return -1
 		end if
 		
@@ -1872,7 +1872,7 @@ lo_config_object.setattribute("object_index", string(ll_config_object_index))
 
 // Make sure we have a parent
 if not isvalid(config_element) or isnull(config_element) then
-	log.log(this, "add_config_object()", "No config element defined", 4)
+	log.log(this, "u_xml_script.add_config_object.0050", "No config element defined", 4)
 	return 0
 end if
 
@@ -2181,7 +2181,7 @@ else
 		if len(pstr_result.normal_range) > 0 then add_element( lo_element, "ReferenceRange", pstr_result.normal_range)
 		add_element( lo_element, "ResultStatus", "F")
 	CATCH (throwable lo_error)
-		log.log(this, "create_xml()", "Error adding result elements (" + lo_error.text + ")", 4)
+		log.log(this, "u_xml_script.create_xml.0049()", "Error adding result elements (" + lo_error.text + ")", 4)
 		return -1
 	END TRY
 end if
@@ -2449,7 +2449,7 @@ If not tf_check() Then Return -1
 // Check to make sure everything looks right
 // First, did we find a workplan item
 if sqlca.sqlcode = 100 then
-	log.log(this, "add_task()", "Workplan Item Record not found (" + string(pl_patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_xml_script.add_task.0071", "Workplan Item Record not found (" + string(pl_patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -2526,14 +2526,14 @@ lo_element2 = add_element(lo_element, "OwnerID", string(pstr_material.owner_id))
 if len(pstr_material.material_object) > 0 then
 	ls_hexbinary = common_thread.eprolibnet4.convertbinarytohex(pstr_material.material_object)
 	if isnull(ls_hexbinary) or len(ls_hexbinary) = 0 then
-		log.log(this, "add_datafile()", "Error converting file data to hexbinary (" + string(pstr_material.material_id) + ")", 4)
+		log.log(this, "u_xml_script.add_datafile.0026", "Error converting file data to hexbinary (" + string(pstr_material.material_id) + ")", 4)
 		return -1
 	end if
 	lo_element2 = add_element(lo_element, "MaterialData", ls_hexbinary)
 elseif len(pstr_material.url) > 0 then
 	lo_element2 = add_element(lo_element, "MaterialURL", pstr_material.url)
 else
-	log.log(this, "add_datafile()", "Material has no data and no URL (" + string(pstr_material.material_id) + ")", 4)
+	log.log(this, "u_xml_script.add_datafile.0026", "Material has no data and no URL (" + string(pstr_material.material_id) + ")", 4)
 	return -1
 end if
 
@@ -2632,18 +2632,18 @@ TRY
 	xml_document.newdocument(ps_root_element)
 	current_element = xml_document.Getrootelement()
 CATCH (throwable lo_error)
-	log.log(this, "create_xml()", "Error creating document (" + lo_error.text + ")", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Error creating document (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
 // Double check here that we have a valid document and current element
 if isnull(xml_document) or not isvalid(xml_document) then
-	log.log(this, "create_xml()", "Invalid document", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid document", 4)
 	return -1
 end if
 
 if isnull(current_element) or not isvalid(current_element) then
-	log.log(this, "create_xml()", "Invalid current element", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid current element", 4)
 	return -1
 end if
 
@@ -2737,18 +2737,18 @@ TRY
 	xml_document.newdocument(ps_root_element)
 	current_element = xml_document.Getrootelement()
 CATCH (throwable lo_error)
-	log.log(this, "create_xml()", "Error creating document (" + lo_error.text + ")", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Error creating document (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
 // Double check here that we have a valid document and current element
 if isnull(xml_document) or not isvalid(xml_document) then
-	log.log(this, "create_xml()", "Invalid document", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid document", 4)
 	return -1
 end if
 
 if isnull(current_element) or not isvalid(current_element) then
-	log.log(this, "create_xml()", "Invalid current element", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid current element", 4)
 	return -1
 end if
 
@@ -2764,7 +2764,7 @@ if not isnull(pl_patient_workplan_item_id) then
 							pl_patient_workplan_item_id, &
 							pstr_context)
 	if li_sts < 0 then
-		log.log(this, "create_xml()", "Error adding task block", 4)
+		log.log(this, "u_xml_script.create_xml.0049()", "Error adding task block", 4)
 		return -1
 	end if
 end if
@@ -2774,7 +2774,7 @@ li_sts = add_systemsettings( current_element, &
 						pl_patient_workplan_item_id, &
 						pstr_context)
 if li_sts < 0 then
-	log.log(this, "create_xml()", "Error adding task block", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Error adding task block", 4)
 	return -1
 end if
 
@@ -2794,7 +2794,7 @@ if len(ls_document_field_map) > 0 then
 		// Convert the previous mapping to structures
 		li_sts = f_get_document_elements_from_xml(ls_document_field_map, lstr_document_elements)
 		if li_sts < 0 then
-			log.log(this, "create_xml()", "Unable to read document element mappings", 4)
+			log.log(this, "u_xml_script.create_xml.0049()", "Unable to read document element mappings", 4)
 		else
 			// Transfer any previous mappings to the new mapping
 			for ll_set = 1 to lstr_document_elements.element_set_count
@@ -2862,12 +2862,12 @@ document_attributes = pstr_attributes
 ls_root_element = f_attribute_find_attribute(document_attributes, "root_element")
 
 if isnull(ps_xml_class) then
-	log.log(this, "create_xml()", "No xml_class attribute found", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "No xml_class attribute found", 4)
 	return -1
 else
 	lstr_xml_class = datalist.get_xml_class(ps_xml_class)
 	if isnull(lstr_xml_class.xml_class) then
-		log.log(this, "create_xml()", "XML class not found (" + ps_xml_class + ")", 4)
+		log.log(this, "u_xml_script.create_xml.0049()", "XML class not found (" + ps_xml_class + ")", 4)
 		return -1
 	end if
 	if isnull(ls_root_element) then ls_root_element = lstr_xml_class.root_element
@@ -2902,18 +2902,18 @@ TRY
 	xml_document.newdocument(ls_root_element)
 	current_element = xml_document.Getrootelement()
 CATCH (throwable lo_error)
-	log.log(this, "create_xml()", "Error creating document (" + lo_error.text + ")", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Error creating document (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
 // Double check here that we have a valid document and current element
 if isnull(xml_document) or not isvalid(xml_document) then
-	log.log(this, "create_xml()", "Invalid document", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid document", 4)
 	return -1
 end if
 
 if isnull(current_element) or not isvalid(current_element) then
-	log.log(this, "create_xml()", "Invalid current element", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid current element", 4)
 	return -1
 end if
 
@@ -2945,7 +2945,7 @@ document_attributes = pstr_attributes
 ls_root_element = f_attribute_find_attribute(document_attributes, "root_element")
 
 if isnull(pl_xml_script_id) or pl_xml_script_id <= 0 then
-	log.log(this, "create_xml()", "No XML script", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "No XML script", 4)
 	return -1
 end if
 
@@ -2974,18 +2974,18 @@ TRY
 	xml_document.newdocument(ls_root_element)
 	current_element = xml_document.Getrootelement()
 CATCH (throwable lo_error)
-	log.log(this, "create_xml()", "Error creating document (" + lo_error.text + ")", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Error creating document (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
 // Double check here that we have a valid document and current element
 if isnull(xml_document) or not isvalid(xml_document) then
-	log.log(this, "create_xml()", "Invalid document", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid document", 4)
 	return -1
 end if
 
 if isnull(current_element) or not isvalid(current_element) then
-	log.log(this, "create_xml()", "Invalid current element", 4)
+	log.log(this, "u_xml_script.create_xml.0049()", "Invalid current element", 4)
 	return -1
 end if
 

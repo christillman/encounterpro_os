@@ -126,7 +126,7 @@ user_id = current_user.user_id
 st_which_list.text = "Personal List"
 li_sts = load_list()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading graph list", 4)
+	log.log(this, "w_graph_load_graph.open.0014", "Error loading graph list", 4)
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts = 0 then
@@ -134,7 +134,7 @@ elseif li_sts = 0 then
 	st_which_list.text = "Common List"
 	li_sts = load_list()
 	if li_sts < 0 then
-		log.log(this, "open", "Error loading graph list", 4)
+		log.log(this, "w_graph_load_graph.open.0014", "Error loading graph list", 4)
 		closewithreturn(this, popup_return)
 		return
 	elseif li_sts = 0 then

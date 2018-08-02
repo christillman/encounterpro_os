@@ -238,7 +238,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "Report not found (" + report_id + ")", 4)
+	log.log(this, "w_report_printer.open.0014", "Report not found (" + report_id + ")", 4)
 	close(this)
 	return
 end if

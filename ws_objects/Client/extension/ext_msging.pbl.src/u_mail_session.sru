@@ -38,7 +38,7 @@ mailmessage luo_message
 
 lm_sts = mailGetMessages()
 if lm_sts <> mailReturnSuccess! then
-	mylog.log(this, "get_messages()", "Error downloading mail messages (" + string(lm_sts) + ")", 4)
+	mylog.log(this, "u_mail_session.get_messages.0012", "Error downloading mail messages (" + string(lm_sts) + ")", 4)
 	return -1
 end if
 
@@ -47,7 +47,7 @@ ll_count = UpperBound(MessageID)
 for i = 1 to ll_count
 	lm_sts = mailReadMessage(MessageID[i], luo_message, mailEntireMessage!, FALSE)
 	if lm_sts <> mailReturnSuccess! then
-		mylog.log(this, "get_messages()", "Error getting mail message (" + string(lm_sts) + ")", 4)
+		mylog.log(this, "u_mail_session.get_messages.0012", "Error getting mail message (" + string(lm_sts) + ")", 4)
 		return -1
 	end if
 	
@@ -56,13 +56,13 @@ for i = 1 to ll_count
 	if not isnull(luo_to_user) then
 		li_sts = post_message(luo_from_user, luo_to_user, luo_message)
 		if li_sts <= 0 then
-			mylog.log(this, "get_messages()", "Error posting mail message (" + luo_message.subject + ")", 4)
+			mylog.log(this, "u_mail_session.get_messages.0012", "Error posting mail message (" + luo_message.subject + ")", 4)
 			return -1
 		end if
 		
 		lm_sts = mailDeleteMessage(MessageID[i])
 		if lm_sts <> mailReturnSuccess! then
-			mylog.log(this, "get_messages()", "Error deleting mail message (" + luo_message.subject + ", " + string(lm_sts) + ")", 4)
+			mylog.log(this, "u_mail_session.get_messages.0012", "Error deleting mail message (" + luo_message.subject + ", " + string(lm_sts) + ")", 4)
 			return -1
 		end if
 	end if
@@ -137,7 +137,7 @@ ls_mailpassword = datalist.get_preference("PREFERENCES", "mail_password", "")
 
 lm_sts = maillogon(ls_mailuser,ls_mailpassword,mailNewSessionWithDownLoad!)
 if lm_sts <> mailReturnSuccess! then
-	mylog.log(this, "get_messages()", "Error starting mail session (" + string(lm_sts) + ")", 4)
+	mylog.log(this, "u_mail_session.get_messages.0012", "Error starting mail session (" + string(lm_sts) + ")", 4)
 	return -1
 end if
 
@@ -166,7 +166,7 @@ luo_message.Recipient[1].RecipientType = mailTo!
 lm_sts = mailSend(luo_message)
 
 if lm_sts <> mailReturnSuccess! THEN
-	mylog.log(this, "send_message()", "Error sending message", 4)
+	mylog.log(this, "u_mail_session.send_message.0021", "Error sending message", 4)
 	return -1
 end if
 

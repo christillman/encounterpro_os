@@ -56,25 +56,25 @@ else
 	// This is the default message processing to do if xx_create_message is not overridden by a decendent class
 	li_sts = db_connect(message_file)
 	if li_sts <= 0 then
-		mylog.log(this, "xx_create_message()", "Unable to connect to message database (" + message_file + ")", 4)
+		mylog.log(this, "u_component_message_creator.xx_create_message.0014", "Unable to connect to message database (" + message_file + ")", 4)
 		return -1
 	end if
 	
 	li_sts = initialize_message(li_count, lsa_attributes, lsa_values)
 	if li_sts <= 0 then
-		mylog.log(this, "xx_create_message()", "Error initializing message", 4)
+		mylog.log(this, "u_component_message_creator.xx_create_message.0014", "Error initializing message", 4)
 		return -1
 	end if
 
 	li_sts = process_parts()
 	if li_sts <= 0 then
-		mylog.log(this, "xx_create_message()", "Error processing parts", 4)
+		mylog.log(this, "u_component_message_creator.xx_create_message.0014", "Error processing parts", 4)
 		return -1
 	end if
 
 	li_sts = archive_parts()
 	if li_sts <= 0 then
-		mylog.log(this, "xx_create_message()", "Error archiving parts into message file (" + message_file + ")", 4)
+		mylog.log(this, "u_component_message_creator.xx_create_message.0014", "Error archiving parts into message file (" + message_file + ")", 4)
 		return -1
 	end if
 
@@ -93,7 +93,7 @@ string ls_filename
 string ls_extension
 long ll_message_number
 
-mylog.log(this, "create_message()", "Creating Message (" + ps_message_type + ")", 2)
+mylog.log(this, "u_component_message_creator.create_message.0010", "Creating Message (" + ps_message_type + ")", 2)
 
 // Record parameters
 message_type = ps_message_type
@@ -102,14 +102,14 @@ message_type = ps_message_type
 // Determine the message file
 li_sts = get_message_file()
 if li_sts < 0 then
-	mylog.log(this, "create_message()", "Error getting message file", 4)
+	mylog.log(this, "u_component_message_creator.create_message.0010", "Error getting message file", 4)
 	return -1
 end if
 
 // Load message parts
 li_sts = load_parts()
 if li_sts < 0 then
-	mylog.log(this, "create_message()", "Error loading message parts", 4)
+	mylog.log(this, "u_component_message_creator.create_message.0010", "Error loading message parts", 4)
 	return -1
 end if
 
@@ -120,7 +120,7 @@ if li_sts <= 0 then return li_sts
 // If all went well, return the message file spec to the caller
 ps_message_file = message_file
 
-mylog.log(this, "create_message()", "Successfully created message (" + ps_message_type + ")", 2)
+mylog.log(this, "u_component_message_creator.create_message.0010", "Successfully created message (" + ps_message_type + ")", 2)
 
 return 1
 
@@ -186,7 +186,7 @@ WHERE message_type = :message_type
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "create_message()", "Message type not found (" + message_type + ")", 4)
+	mylog.log(this, "u_component_message_creator.create_message.0010", "Message type not found (" + message_type + ")", 4)
 	return -1
 end if
 
@@ -198,7 +198,7 @@ f_split_string(ls_template_file, ".", ls_filename, ls_extension)
 
 ls_message_location = temp_path
 if not mylog.of_directoryexists(ls_message_location) then
-	mylog.log(this, "xx_post_other()", "Error getting temp path "+ls_message_location, 4)
+	mylog.log(this, "u_component_message_creator.get_message_file.0030", "Error getting temp path "+ls_message_location, 4)
 	return -1
 end if
 if right(ls_message_location, 1) <> "\" then ls_message_location += "\"
@@ -206,7 +206,7 @@ if right(ls_message_location, 1) <> "\" then ls_message_location += "\"
 // Construct the filename using a component counter
 ll_message_number = next_component_counter("file_number")
 if ll_message_number <= 0 or isnull(ll_message_number) then
-	mylog.log(this, "get_message_file()", "Error getting next file number", 4)
+	mylog.log(this, "u_component_message_creator.get_message_file.0038", "Error getting next file number", 4)
 	return -1
 end if
 message_file = message_type + "_" + office_id + "_OUT_" + string(ll_message_number) + "." + ls_extension
@@ -237,7 +237,7 @@ ls_path = ls_drive + ls_directory + "\"
 luo_data = CREATE u_ds_data
 
 for i = 1 to part_count
-	mylog.log(this, "process_parts()", "Processing part (" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 1)
+	mylog.log(this, "u_component_message_creator.process_parts.0018", "Processing part (" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 1)
 	ls_query = parts[i].part_query
 	if not isnull(ls_query) then fix_query(ls_query)
 	CHOOSE CASE parts[i].part_type
@@ -250,19 +250,19 @@ for i = 1 to part_count
 		CASE "SPECIAL"
 			li_sts = process_part_special(parts[i],ls_query)
 		CASE ELSE
-			mylog.log(this, "process_parts()", parts[i].part_type + " Part Type is not supported", 3)
+			mylog.log(this, "u_component_message_creator.process_parts.0018", parts[i].part_type + " Part Type is not supported", 3)
 			continue
 	END CHOOSE
 	
 	if li_sts < 0 then
-		mylog.log(this, "process_parts()", "Error loading data for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+		mylog.log(this, "u_component_message_creator.process_parts.0018", "Error loading data for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 		return -1
 	end if
 	
 	if parts[i].part_type <> "SPECIAL" then
 		li_sts = process_fkeys(i)
 		if li_sts < 0 then
-			mylog.log(this, "process_parts()", "Error processing fkeys for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+			mylog.log(this, "u_component_message_creator.process_parts.0018", "Error processing fkeys for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 			return -1
 		end if
 	end if
@@ -298,7 +298,7 @@ DO
 	
 	ls_value = get_attribute(ls_token)
 	if isnull(ls_value) then
-		mylog.log(this, "fix_query()", "Query token not found (" + ls_token + ")", 3)
+		mylog.log(this, "u_component_message_creator.fix_query.0022", "Query token not found (" + ls_token + ")", 3)
 		ls_value = ""
 	end if
 	
@@ -334,7 +334,7 @@ luo_key_data = CREATE u_ds_data
 
 ll_rows = luo_data.load_query("select * from " + parts[pi_part].part_table)
 if ll_rows < 0 then
-	mylog.log(this, "process_fkeys()", "Error loading message records (" + parts[pi_part].part_table + ")", 4)
+	mylog.log(this, "u_component_message_creator.process_fkeys.0022", "Error loading message records (" + parts[pi_part].part_table + ")", 4)
 	return -1
 end if
 	
@@ -342,7 +342,7 @@ if lower(parts[pi_part].part_table) = "p_patient" then
 	for i = 1 to ll_rows
 		ls_billing_id = luo_data.object.billing_id[i]
 		if isnull(ls_billing_id) then
-			mylog.log(this, "process_fkeys()", "Patient has no billing_id.  Patient will be skipped. (" + string(luo_data.object.cpr_id[i]) + ")", 3)
+			mylog.log(this, "u_component_message_creator.process_fkeys.0022", "Patient has no billing_id.  Patient will be skipped. (" + string(luo_data.object.cpr_id[i]) + ")", 3)
 			luo_data.deleterow(i)
 			i -= 1
 			ll_rows -= 1
@@ -352,7 +352,7 @@ end if
 
 // For each fkey, load the records from the message table and look up the foreign key
 for i = 1 to parts[pi_part].fkey_count
-	mylog.log(this, "process_fkeys()", "Processing fkeys for table (" + parts[pi_part].fkey[i].target_table + ")", 1)
+	mylog.log(this, "u_component_message_creator.process_fkeys.0022", "Processing fkeys for table (" + parts[pi_part].fkey[i].target_table + ")", 1)
 	CHOOSE CASE upper(parts[pi_part].fkey[i].target_location)
 		CASE "MESSAGE"
 			li_sts = copy_fkeys_from_message(parts[pi_part], i, luo_data)
@@ -549,7 +549,7 @@ if not isnull(pstr_fkey.fkey1) then
 	end if
 	ls_where_clause = "WHERE " + pstr_fkey.target_key1 + " = " + ls_item
 else
-	mylog.log(this, "fkey_where_clause()", "First fkey is null", 4)
+	mylog.log(this, "u_component_message_creator.fkey_where_clause.0019", "First fkey is null", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if
@@ -615,12 +615,12 @@ if lower(pstr_fkey.target_table) = "p_assessment" and isnull(pstr_fkey.fkey3) an
 		luo_data.set_database(cprdb)
 		li_sts = luo_data.load_query(ls_sql)
 		if li_sts < 0 then
-			log.log(this, "fkey_where_clause()", "Error getting min diagnosis sequence (" + ls_where_clause + ")", 4)
+			log.log(this, "u_component_message_creator.fkey_where_clause.0085", "Error getting min diagnosis sequence (" + ls_where_clause + ")", 4)
 			setnull(ls_where_clause)
 			DESTROY luo_data
 			return ls_where_clause
 		elseif li_sts = 0 then
-			log.log(this, "fkey_where_clause()", "No min diagnosis sequence (" + ls_where_clause + ")", 4)
+			log.log(this, "u_component_message_creator.fkey_where_clause.0085", "No min diagnosis sequence (" + ls_where_clause + ")", 4)
 			setnull(ls_where_clause)
 			DESTROY luo_data
 			return ls_where_clause
@@ -634,7 +634,7 @@ if lower(pstr_fkey.target_table) = "p_assessment" and isnull(pstr_fkey.fkey3) an
 	end if
 
 	if isnull(li_diagnosis_sequence) then
-		log.log(this, "fkey_where_clause()", "Null min diagnosis sequence (" + ls_where_clause + ")", 4)
+		log.log(this, "u_component_message_creator.fkey_where_clause.0085", "Null min diagnosis sequence (" + ls_where_clause + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -874,15 +874,15 @@ for j = 1 to ll_rows
 	// Check results
 	if li_sts < 0 then
 		// Error
-		mylog.log(this, "copy_fkeys_from_database()", "Error executing lookup query (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_database.0066", "Error executing lookup query (" + ls_query + ")", 4)
 		return -1
 	elseif li_sts = 0 then
 		// Key lookup not found
-		mylog.log(this, "copy_fkeys_from_database()", "Foerign key not found (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_database.0066", "Foerign key not found (" + ls_query + ")", 4)
 		return -1
 	elseif li_sts > 1 then
 		// too many keys found
-		mylog.log(this, "copy_fkeys_from_database()", "Foerign key lookup found multiple records (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_database.0066", "Foerign key lookup found multiple records (" + ls_query + ")", 4)
 		return -1
 	end if
 	
@@ -994,7 +994,7 @@ next
 // Now save the message records back to the message database
 li_sts = puo_data.replace_table(pstr_part.part_table)
 if li_sts < 0 then
-	mylog.log(this, "copy_fkeys_from_database()", "Error saving message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_creator.copy_fkeys_from_database.0066", "Error saving message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1077,14 +1077,14 @@ for j = 1 to ll_rows
 	// Check results
 	if li_sts < 0 then
 		// Error
-		mylog.log(this, "copy_fkeys_from_both()", "Error executing lookup query (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_both.0074", "Error executing lookup query (" + ls_query + ")", 4)
 		return -1
 	elseif li_sts = 0 then
 		// Key lookup not found
 		// When we fail to find the target of a foreign key lookup, then we have an orphan record.
 		// If this is a required foreign key then the orphan record won't show up in the chart and
 		// can safely be ignored.  If the foreign key is not required then the foreign key should be nullified.
-		mylog.log(this, "copy_fkeys_from_both()", "Foerign key not found (" + ls_query + ")", 3)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_both.0074", "Foerign key not found (" + ls_query + ")", 3)
 		if pstr_part.fkey[pi_fkey].required_flag = "Y" then
 			continue
 		else
@@ -1092,7 +1092,7 @@ for j = 1 to ll_rows
 		end if
 	elseif li_sts > 1 then
 		// too many keys found
-		mylog.log(this, "copy_fkeys_from_both()", "Foerign key lookup found multiple records (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_creator.copy_fkeys_from_both.0074", "Foerign key lookup found multiple records (" + ls_query + ")", 4)
 		return -1
 	end if
 	
@@ -1205,7 +1205,7 @@ next
 // Now save the message records back to the message database
 li_sts = puo_data.replace_table(pstr_part.part_table)
 if li_sts < 0 then
-	mylog.log(this, "copy_fkeys_from_both()", "Error saving message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_creator.copy_fkeys_from_both.0074", "Error saving message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1224,13 +1224,13 @@ CHOOSE CASE pstr_part.part_table
 	CASE "Attachment_Files"
 		li_sts = luo_data.save_query_to_table(mydb, mydb, ps_query, pstr_part.part_table)
 		if li_sts < 0 then
-			mylog.log(this, "process_part_special()", "Error getting attachment file records", 4)
+			mylog.log(this, "u_component_message_creator.process_part_special.0010", "Error getting attachment file records", 4)
 			return -1
 		end if
 		
 		li_sts = get_attachment_files()
 		if li_sts < 0 then
-			mylog.log(this, "process_part_special()", "Error getting attachment files", 4)
+			mylog.log(this, "u_component_message_creator.process_part_special.0010", "Error getting attachment files", 4)
 			return -1
 		end if
 		

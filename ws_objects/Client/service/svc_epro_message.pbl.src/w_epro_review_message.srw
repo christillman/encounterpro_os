@@ -277,7 +277,7 @@ service = message.powerobjectparm
 
 service.get_attribute("message_workplan_item_id", message_workplan_item_id)
 if isnull(message_workplan_item_id) then
-	log.log(this, "open", "No message_workplan_item_id", 4)
+	log.log(this, "w_epro_review_message.open.0011", "No message_workplan_item_id", 4)
 	return -1
 end if
 
@@ -300,7 +300,7 @@ popup_return.items[1] = "ERROR"
 
 li_sts = get_message()
 if li_sts <= 0 then
-	log.log(this, "open", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
+	log.log(this, "w_epro_review_message.open.0011", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

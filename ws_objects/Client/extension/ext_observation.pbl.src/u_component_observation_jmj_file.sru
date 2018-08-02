@@ -29,7 +29,7 @@ protected function integer xx_do_source ();integer li_sts
 
 li_sts = get_attachments()
 if li_sts < 0 then
-	log.log(this, "xx_do_source()", "Error getting attachments", 4)
+	log.log(this, "u_component_observation_jmj_file.xx_do_source.0005", "Error getting attachments", 4)
 	return -1
 end if
 
@@ -98,12 +98,12 @@ if pi_status > 0 then
 		ls_temp = ls_move_to_success + ls_filename
 		li_sts = filemove(ps_id, ls_temp)
 		if li_sts<= 0 then
-			log.log(this, "xx_do_source()", "Error moving file (" + ps_id + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
+			log.log(this, "u_component_observation_jmj_file.xx_do_source.0005", "Error moving file (" + ps_id + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
 		end if
 	elseif lb_delete_file then
 		// If we're supposed to delete it then delete it
 		if not filedelete(ps_id) then
-			log.log(this, "xx_do_source()", "Error deleting file (" + ps_id + ")", 4)
+			log.log(this, "u_component_observation_jmj_file.xx_do_source.0005", "Error deleting file (" + ps_id + ")", 4)
 			li_sts = -1
 		end if
 	end if
@@ -112,12 +112,12 @@ else
 		ls_temp = ls_move_to_error + ls_filename
 		li_sts = filemove(ps_id, ls_temp)
 		if li_sts<= 0 then
-			log.log(this, "xx_do_source()", "Error moving file (" + ps_id + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
+			log.log(this, "u_component_observation_jmj_file.xx_do_source.0005", "Error moving file (" + ps_id + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
 		end if
 	elseif lb_delete_file then
 		// If we're supposed to delete it then delete it
 		if not filedelete(ps_id) then
-			log.log(this, "xx_do_source()", "Error deleting file (" + ps_id + ")", 4)
+			log.log(this, "u_component_observation_jmj_file.xx_do_source.0005", "Error deleting file (" + ps_id + ")", 4)
 			li_sts = -1
 		end if
 	end if
@@ -195,7 +195,7 @@ if isnull(ls_address) then return 0
 
 if lower(ls_address) = "pick" then
 	if cpr_mode = "SERVER" then
-		log.log(this, "get_attachments()", "address is required in server mode", 4)
+		log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "address is required in server mode", 4)
 		return -1
 	else
 		ls_filter = get_attribute("attachment_file_filter")
@@ -236,7 +236,7 @@ for i = 1 to li_count
 	
 	// Skip the file if it's too big
 	if lstr_file_attributes.filesize > max_file_size then
-		log.log(this, "get_attachments()", "File too large", 4)
+		log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "File too large", 4)
 		set_processed(lsa_paths[i], -1)
 		continue
 	end if
@@ -265,7 +265,7 @@ for i = 1 to li_count
 		if lb_read_xml  then
 			li_sts2 = f_observation_read_xml_documents(this, f_blob_to_string(lbl_file), lsa_paths[i])
 			if li_sts2 < 0 then
-				log.log(this, "get_attachments()", "Error reading xml document (" + lsa_paths[i] + ")", 4)
+				log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "Error reading xml document (" + lsa_paths[i] + ")", 4)
 				li_sts = 0 //skip this file
 			end if
 		else
@@ -297,15 +297,15 @@ for i = 1 to li_count
 					// If we moved the file, then point the id to the new place
 					observations[observation_count].external_item_id = ls_temp
 				else
-					log.log(this, "get_attachments()", "Error moving file (" + lsa_paths[i] + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
+					log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "Error moving file (" + lsa_paths[i] + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
 				end if
 			end if
 		else
-			log.log(this, "get_attachments()", "Error: file is empty (" + lsa_paths[i] + ")", 4)
+			log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "Error: file is empty (" + lsa_paths[i] + ")", 4)
 			li_sts = -1
 		end if
 	elseif li_sts < 0 then
-		log.log(this, "get_attachments()", "Error reading file (" + lsa_paths[i] + ", " + string(li_sts) + ")", 4)
+		log.log(this, "u_component_observation_jmj_file.get_attachments.0068", "Error reading file (" + lsa_paths[i] + ", " + string(li_sts) + ")", 4)
 	end if
 	
 	// If we didn't successfully handle the file then skip it
@@ -339,7 +339,7 @@ ls_command = f_attribute_value_substitute_string(ls_command, lstr_context, lstr_
 
 li_sts = windows_api.kernel32.run_command(ls_command, true, lul_pid)
 if li_sts < 0 then
-	log.log(this, "run_command()", "Error running command (" + ls_command + ")", 4)
+	log.log(this, "u_component_observation_jmj_file.run_program_old.0021", "Error running command (" + ls_command + ")", 4)
 	return -1
 end if
 

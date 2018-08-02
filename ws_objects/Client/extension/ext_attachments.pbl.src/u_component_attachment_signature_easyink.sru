@@ -62,7 +62,7 @@ if pi_width > 0 and pi_height > 0 then
 	luo_ImageControl = CREATE oleobject
 	li_sts = luo_ImageControl.connecttonewobject("EncounterPRO.OS.ImageManipulation")
 	if li_sts < 0 then
-		log.log(this, "xx_render()", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
+		log.log(this, "u_component_attachment_signature_easyink.xx_render.0038", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
 		ps_file = ls_tempfile
 	else
 		li_luminanceCutoff = integer(get_attribute("luminance_cutoff"))
@@ -73,11 +73,11 @@ if pi_width > 0 and pi_height > 0 then
 		TRY
 			li_sts = luo_ImageControl.ResizeDarkenBitmap(ls_tempfile, ps_file, pi_width, pi_height, li_luminanceCutoff)
 			if li_sts <= 0 then
-				log.log(this, "xx_render()", "Error reducing bitmap (" + string(li_sts) + ")", 3)
+				log.log(this, "u_component_attachment_signature_easyink.xx_render.0038", "Error reducing bitmap (" + string(li_sts) + ")", 3)
 				ps_file = ls_tempfile
 			end if
 		CATCH (throwable lo_error)
-			log.log(this, "xx_render()", "Error calling ResizeDarkenBitmap (" + lo_error.text + ")", 3)
+			log.log(this, "u_component_attachment_signature_easyink.xx_render.0038", "Error calling ResizeDarkenBitmap (" + lo_error.text + ")", 3)
 			ps_file = ls_tempfile
 		FINALLY
 			luo_ImageControl.disconnectobject()

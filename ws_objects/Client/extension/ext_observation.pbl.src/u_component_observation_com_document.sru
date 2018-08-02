@@ -37,7 +37,7 @@ setnull(ls_xslt)
 get_attribute("lb_debug_mode", lb_debug_mode)
 
 if lb_debug_mode then
-	log.log(this, "xx_do_source()", "Debug Mode", 2)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Debug Mode", 2)
 end if
 
 get_attribute("ls_xslt_material_id", ll_material_id)
@@ -53,21 +53,21 @@ end if
 
 ls_com_id = get_attribute("com_id")
 if isnull(ls_com_id) then
-	log.log(this, "xx_do_source()", "com_id not defined", 4)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "com_id not defined", 4)
 	return -1
 end if
 
 lo_com_document = CREATE oleobject
 if lb_debug_mode then
-	log.log(this, "xx_do_source()", "Attempting to instantiate com object (" + ls_com_id + ")", 2)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Attempting to instantiate com object (" + ls_com_id + ")", 2)
 end if
 li_sts = lo_com_document.connecttonewobject(ls_com_id)
 if li_sts = 0 then
 	if lb_debug_mode then
-		log.log(this, "xx_do_source()", "instantiation successful (" + ls_com_id + ")", 2)
+		log.log(this, "u_component_observation_com_document.xx_do_source.0022", "instantiation successful (" + ls_com_id + ")", 2)
 	end if
 else
-	log.log(this, "xx_do_source()", "Error connecting to com source (" + ls_com_id + ", " + string(li_sts) + ")", 4)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Error connecting to com source (" + ls_com_id + ", " + string(li_sts) + ")", 4)
 	return -1
 end if
 
@@ -84,14 +84,14 @@ sqlca.add_credentials(ls_access_level, lstr_attributes)
 // Convert the attributes to an XML string
 ls_xml = f_attributes_to_xml_string("Context", lstr_attributes)
 if isnull(ls_xml) then
-	log.log(this, "xx_do_source()", "Error getting context attributes", 4)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Error getting context attributes", 4)
 	return -1
 end if
 
 TRY
 	ls_results_xml = lo_com_document.CreateDocument(ls_xml)
 CATCH (throwable lt_error)
-	log.log(this, "xx_do_source()", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -102,13 +102,13 @@ if len(ls_xslt) > 0 then
 	TRY
 		ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
 	CATCH (throwable lt_error2)
-		log.log(this, "xx_do_source()", "Error calling com source (" + lt_error2.text + ")", 4)
+		log.log(this, "u_component_observation_com_document.xx_do_source.0022", "Error calling com source (" + lt_error2.text + ")", 4)
 		return -1
 	END TRY
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else
-		log.log(this, "get_results()", "Error transforming xml", 3)
+		log.log(this, "u_component_observation_com_document.xx_do_source.0093", "Error transforming xml", 3)
 	end if
 end if
 
@@ -117,7 +117,7 @@ DESTROY lo_com_document
 
 li_sts = read_data(ls_results_xml, "")
 if li_sts < 0 then
-	log.log(this, "get_results()", "Error reading xml documents", 4)
+	log.log(this, "u_component_observation_com_document.xx_do_source.0093", "Error reading xml documents", 4)
 	return -1
 end if
 

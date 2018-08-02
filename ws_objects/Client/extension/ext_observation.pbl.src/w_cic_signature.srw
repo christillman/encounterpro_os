@@ -88,7 +88,7 @@ If popup.data_row_count = 2 Then
 	st_prompt.text = popup.items[2]
 	visible = true
 Else
-	log.log(This, "open", "invalid parameters", 4)
+	log.log(This, "w_cic_signature.open.0012", "invalid parameters", 4)
 	closewithreturn(This, popup_return)
 	Return
 End If

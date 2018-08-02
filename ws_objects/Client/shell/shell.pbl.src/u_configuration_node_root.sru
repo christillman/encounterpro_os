@@ -24,13 +24,13 @@ lstr_nodes.node_count = 0
 
 
 if isnull(common_thread.practice_user_id) then
-	log.log(this, "display_practice()", "NULL practice_user_id", 4)
+	log.log(this, "u_configuration_node_root.get_children.0009", "NULL practice_user_id", 4)
 	return lstr_nodes
 end if
 
 luo_practice = user_list.find_user(common_thread.practice_user_id)
 if isnull(luo_practice) then
-	log.log(this, "display_practice()", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
+	log.log(this, "u_configuration_node_root.get_children.0009", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
 	return lstr_nodes
 end if
 

@@ -41,7 +41,7 @@ for i = 1 to this_section.page_count
 		ls_text = "EncounterPRO encountered an error opening a chart page ("
 		ls_text += this_section.page[i].page_class + ").  The following error message was returned:  "
 		ls_text += lt_error.text
-		log.log(this, "open_pages()", ls_text, 4)
+		log.log(this, "u_cpr_multi_page_section.open_pages.0012", ls_text, 4)
 		chart_window.event POST load_error("EncounterPRO encountered an error opening the chart")
 		return -1
 	END TRY
@@ -62,7 +62,7 @@ for i = 1 to this_section.page_count
 		ls_text = "EncounterPRO encountered an error initializing a chart page ("
 		ls_text += this_section.page[i].page_class + ").  The following error message was returned:  "
 		ls_text += lt_error2.text
-		log.log(this, "open_pages()", ls_text, 4)
+		log.log(this, "u_cpr_multi_page_section.open_pages.0012", ls_text, 4)
 		chart_window.event POST load_error("EncounterPRO encountered an error initializing the chart")
 		return -1
 	END TRY

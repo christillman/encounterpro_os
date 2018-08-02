@@ -85,7 +85,7 @@ public function integer initialize ();integer li_sts
 string ls_temp
 
 if isnull(current_patient) then
-	log.log(this, "initialize()", "No current patient", 4)
+	log.log(this, "u_tabpage_patient_employer.initialize.0005", "No current patient", 4)
 	return -1
 else
 	st_cpr_id.text = current_patient.cpr_id

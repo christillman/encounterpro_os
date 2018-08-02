@@ -29,7 +29,7 @@ string ls_window_class
 
 ls_window_class = get_attribute("window_class")
 if isnull(ls_window_class) then
-	log.log(this, "xx_do_service()", "Unable to determine window class", 4)
+	log.log(this, "u_component_service_utility.xx_do_service.0018", "Unable to determine window class", 4)
 	return -1
 end if
 

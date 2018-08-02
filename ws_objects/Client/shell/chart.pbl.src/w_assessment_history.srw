@@ -125,7 +125,7 @@ popup = message.powerobjectparm
 
 assessment_id = popup.item
 if isnull(assessment_id) then
-	log.log(this, "open", "Null assessment_id", 4)
+	log.log(this, "w_assessment_history.open.0010", "Null assessment_id", 4)
 	close(this)
 	return
 end if

@@ -36,7 +36,7 @@ Openwithparm(service_window, this, ls_window_class, f_active_window())
 if lower(classname(message.powerobjectparm)) = "str_popup_return" then
 	popup_return = message.powerobjectparm
 else
-	log.log(this, "xx_do_service()", "Invalid class returned from service window (" + service + ", " + ls_window_class + ")", 4)
+	log.log(this, "u_component_service_close_treatment.xx_do_service.0025", "Invalid class returned from service window (" + service + ", " + ls_window_class + ")", 4)
 	return -1
 end if
 

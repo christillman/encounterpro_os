@@ -47,11 +47,11 @@ string ls_extension
 string ls_target_dir
 
 if isnull(ps_compression_type) or trim(ps_compression_type) = "" then
-	log.log(this, "uncompress_file()", "Null or empty compression type", 3)
+	log.log(this, "u_mmserver.uncompress_file.0008", "Null or empty compression type", 3)
 	return 0
 end if
 
-log.log(this, "uncompress_file()", ps_compressed_file, 1)
+log.log(this, "u_mmserver.uncompress_file.0008", ps_compressed_file, 1)
 
 f_parse_filepath(ps_compressed_file, ls_drive, ls_directory, ls_filename, ls_extension)
 ls_target_dir = ls_drive + ls_directory
@@ -66,7 +66,7 @@ END CHOOSE
 if isnull(ps_uncompressed_file) or trim(ps_uncompressed_file) = "" then return -1
 
 if not fileexists(ps_uncompressed_file) then
-	log.log(this, "uncompress_file()", "Error uncompressing file", 3)
+	log.log(this, "u_mmserver.uncompress_file.0008", "Error uncompressing file", 3)
 	return -1
 end if
 
@@ -89,7 +89,7 @@ end on
 
 event externalexception;error_code = integer(resultcode)
 error_text = description
-log.log(this, "externalexception", "ERROR (" + string(error_code) + ") - " + error_text, 4)
+log.log(this, "u_mmserver.externalexception.0003", "ERROR (" + string(error_code) + ") - " + error_text, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

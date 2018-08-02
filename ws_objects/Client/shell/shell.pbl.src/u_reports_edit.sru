@@ -172,7 +172,7 @@ If Not tf_check() Then Return -1
 If Not Isnull(ls_component_id) Or Len(ls_component_id) > 0 Then
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		log.log(This, "u_report_edit", "Error getting report component (" + &
+		log.log(This, "u_reports_edit.setup_report.0027", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return -1
 	End If
@@ -183,7 +183,7 @@ If Not Isnull(ls_component_id) Or Len(ls_component_id) > 0 Then
 		End If
 		component_manager.destroy_component(luo_report)
 	Else
-		log.log(This, "u_report_edit", "Invalid report id ("+ps_report_id+")", 4)
+		log.log(This, "u_reports_edit.setup_report.0027", "Invalid report id ("+ps_report_id+")", 4)
 		Return -1
 	End If
 End If
@@ -326,14 +326,14 @@ ls_report_id = object.report_id[clicked_row]
 If Not Isnull(ls_component_id) Or Len(ls_component_id) > 0 Then
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		log.log(This, "u_report_edit", "Error getting report component (" + &
+		log.log(This, "u_reports_edit.setup_report.0027", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return 
 	End If
 	If Not Isnull(ls_report_id) Or Len(ls_report_id) > 0 Then
 		li_return = luo_report.setupreport(ls_report_id)
 	Else
-		log.log(This, "u_report_edit", "Invalid report id ("+ls_report_id+")", 4)
+		log.log(This, "u_reports_edit.setup_report.0027", "Invalid report id ("+ls_report_id+")", 4)
 	End If
 component_manager.destroy_component(luo_report)
 End If

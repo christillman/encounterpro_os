@@ -175,7 +175,7 @@ boolean lb_auto_dose
 Setnull(ls_null)
 drug_id 		  = treat_medication.drug_id
 if isnull(drug_id) then
-	log.log(this, "post_open", "Null drug_id", 4)
+	log.log(this, "w_svc_drug_treatment_edit.post_open.0019", "Null drug_id", 4)
 	treat_medication.treatment_definition[1].attribute_count = -1
 	Close(This)
 	Return
@@ -269,7 +269,7 @@ string ls_dea_number_required, ls_generic_name
 
 setnull(ls_null)
 
-log.log(this, "set_drug()", drug_id, 1)
+log.log(this, "w_svc_drug_treatment_edit.set_drug.0007", drug_id, 1)
 
 // Get the name and default duration
 li_sts = tf_get_drug(drug_id, &
@@ -282,7 +282,7 @@ li_sts = tf_get_drug(drug_id, &
 							ls_unit, &
 							ls_dea_number_required)
 if li_sts <= 0 then
-	if li_sts = 0 then log.log(this, "set_drug()","Invalid Drug ID (" + drug_id + ")", 4)
+	if li_sts = 0 then log.log(this, "w_svc_drug_treatment_edit.set_drug.0007","Invalid Drug ID (" + drug_id + ")", 4)
 	return li_sts
 end if
 

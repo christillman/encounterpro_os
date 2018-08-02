@@ -45,18 +45,18 @@ WHERE subscription_id = :pl_subscription_id
 USING cprdb;
 if not cprdb.check() then return luo_outgoing
 if cprdb.sqlcode = 100 then
-	log.log(this, "get_outgoing()", "Message subscription record not found (" + string(pl_subscription_id) + ")", 4)
+	log.log(this, "u_component_serverservice_outgoing.get_transport.0018", "Message subscription record not found (" + string(pl_subscription_id) + ")", 4)
 	return luo_outgoing
 end if
 
 if isnull(ls_transport_component_id) then
-	log.log(this, "get_outgoing()", "Null transport component for subscription (" + string(pl_subscription_id) + ")", 4)
+	log.log(this, "u_component_serverservice_outgoing.get_transport.0018", "Null transport component for subscription (" + string(pl_subscription_id) + ")", 4)
 	return luo_outgoing
 end if
 
 luo_outgoing = my_component_manager.get_component(ls_transport_component_id)
 if isnull(luo_outgoing) then
-	log.log(this, "get_outgoing()", "Error getting transport component (" + ls_transport_component_id + ")", 4)
+	log.log(this, "u_component_serverservice_outgoing.get_transport.0018", "Error getting transport component (" + ls_transport_component_id + ")", 4)
 	return luo_outgoing
 end if
 
@@ -100,23 +100,23 @@ luo_data.set_dataobject("dw_messages_to_send", cprdb)
 ll_count = luo_data.retrieve()
 
 If ll_count > 0 Then
-		log.log(this,"timer_ding()","sending charges begin ",1)
+		log.log(this,"u_component_serverservice_outgoing.timer_ding.0014","sending charges begin ",1)
 
 		ll_message_id = luo_data.object.message_id[1]
 		ls_message_type = luo_data.object.message_type[1]
 		ll_subscription_id = luo_data.object.subscription_id[1]
 
-		log.log(this, "timer_ding()", "Retrying message #" + string(ll_message_id), 1)
+		log.log(this, "u_component_serverservice_outgoing.timer_ding.0020", "Retrying message #" + string(ll_message_id), 1)
 		
 		luo_transport = get_transport(ll_subscription_id)
 		if isnull(luo_transport) then
-			log.log(this, "timer_ding()", "Error getting transport component (" + string(ll_subscription_id) + ")", 4)
+			log.log(this, "u_component_serverservice_outgoing.timer_ding.0020", "Error getting transport component (" + string(ll_subscription_id) + ")", 4)
 			return -1
 		end if
 	
 		li_sts = luo_transport.send_file(ll_message_id)
 		if li_sts <= 0 then
-			log.log(this, "timer_ding()", "Error sending (" + string(ll_message_id) + ")", 4)
+			log.log(this, "u_component_serverservice_outgoing.timer_ding.0020", "Error sending (" + string(ll_message_id) + ")", 4)
 			return -1
 		end if
 		 // if synchronized (wait for ACK before sending next msg)

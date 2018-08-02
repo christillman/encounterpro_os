@@ -131,7 +131,7 @@ list_assessment_id = parent_tab.service.get_attribute("assessment_id")
 if isnull(list_assessment_id) then
 	// If a specific assessment_id isn't requested then use the current context to determine the assessment_id
 	if isnull(parent_tab.service.problem_id) then
-		log.log(this, "initialize()", "No assessment_id available", 4)
+		log.log(this, "u_tabpage_new_treatment_picklist.initialize.0016", "No assessment_id available", 4)
 		return -1
 	else
 		li_sts = current_patient.assessments.assessment(assessment, parent_tab.service.problem_id, li_diagnosis_sequence)
@@ -945,7 +945,7 @@ else
 		dw_treatments.object.new_treatment_index[pl_row] = new_treatment_count
 		return new_treatment_count
 	else
-		log.log(this, "edit_treatment_def()", "Treatment with null definition_id must have new treatment structure", 4)
+		log.log(this, "u_tabpage_new_treatment_picklist.get_treatment_definition_index.0024", "Treatment with null definition_id must have new treatment structure", 4)
 		return -1
 	end if
 end if

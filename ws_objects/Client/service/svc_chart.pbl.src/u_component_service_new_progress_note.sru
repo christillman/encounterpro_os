@@ -38,7 +38,7 @@ integer li_sts
 
 progress_type = get_attribute("progress_type")
 if isnull(progress_type) then
-	log.log(this, "set_progress_type()", "no progress_type", 4)
+	log.log(this, "u_component_service_new_progress_note.set_progress_type.0007", "no progress_type", 4)
 	return -1
 end if
 
@@ -56,12 +56,12 @@ CHOOSE CASE lower(context_object)
 		progress_key_enumerated = false
 	CASE "encounter"
 		if isnull(encounter_id) then
-			log.log(this, "open", "Null encounter_id", 4)
+			log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "Null encounter_id", 4)
 			return -1
 		end if
 		li_sts = current_patient.encounters.encounter(encounter, encounter_id)
 		if li_sts <= 0 then
-			log.log(this, "open", "Error getting assessment object (" + string(problem_id) + ")", 4)
+			log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "Error getting assessment object (" + string(problem_id) + ")", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_encounter_progress_type_pick"
@@ -89,12 +89,12 @@ CHOOSE CASE lower(context_object)
 		end if
 	CASE "assessment"
 		if isnull(problem_id) then
-			log.log(this, "open", "Null problem_id", 4)
+			log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "Null problem_id", 4)
 			return -1
 		end if
 		li_sts = current_patient.assessments.assessment(assessment, problem_id)
 		if li_sts <= 0 then
-			log.log(this, "open", "Error getting assessment object (" + string(problem_id) + ")", 4)
+			log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "Error getting assessment object (" + string(problem_id) + ")", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_assessment_progress_type_pick"
@@ -122,7 +122,7 @@ CHOOSE CASE lower(context_object)
 		end if
 	CASE "treatment"
 		if isnull(treatment) then
-			log.log(this, "open", "treatment progress must have treatment object", 4)
+			log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "treatment progress must have treatment object", 4)
 			return -1
 		end if
 		progress_pick_dw = "dw_treatment_progress_type_pick"
@@ -152,7 +152,7 @@ CHOOSE CASE lower(context_object)
 			progress_key_enumerated = f_string_to_boolean(ls_progress_key_enumerated_flag)
 		end if
 	CASE ELSE
-		log.log(this, "set_progress_type()", "invalid context_object (" + context_object + ")", 4)
+		log.log(this, "u_component_service_new_progress_note.set_progress_type.0007", "invalid context_object (" + context_object + ")", 4)
 		return -1
 END CHOOSE
 
@@ -179,7 +179,7 @@ integer li_sts
 
 li_sts = set_progress_type()
 if li_sts <= 0 then
-	log.log(this, "open", "Error setting progress object", 4)
+	log.log(this, "u_component_service_new_progress_note.set_progress_type.0025", "Error setting progress object", 4)
 	return -1
 end if
 

@@ -63,14 +63,14 @@ service = message.powerobjectparm
 
 ls_config_object_id = service.get_attribute("config_object_id")
 if isnull(ls_config_object_id) then
-	log.log(this, "open", "No config_object_id", 4)
+	log.log(this, "w_svc_config_vaccine_schedule.open.0012", "No config_object_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if	
 
 li_sts = f_get_config_object_info(ls_config_object_id, tab_vaccine_schedule.config_object_info)
 if li_sts <= 0 then
-	log.log(this, "open", "Error getting config object info", 4)
+	log.log(this, "w_svc_config_vaccine_schedule.open.0012", "Error getting config object info", 4)
 	closewithreturn(this, popup_return)
 	return
 end if	

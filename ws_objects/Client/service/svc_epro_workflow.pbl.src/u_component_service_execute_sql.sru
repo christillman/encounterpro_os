@@ -20,7 +20,7 @@ str_popup_return popup_return
 
 get_attribute("sql", ls_sql)
 if isnull(ls_sql) then
-	log.log(this, "xx_do_service()", "No sql attribute", 4)
+	log.log(this, "u_component_service_execute_sql.xx_do_service.0009", "No sql attribute", 4)
 	return 2
 end if
 

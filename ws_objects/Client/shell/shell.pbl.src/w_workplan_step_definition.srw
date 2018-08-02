@@ -193,7 +193,7 @@ ll_item_number = dw_workplan_items.object.item_number[pl_row]
 if isnull(ll_item_number) then
 	ll_item_number = dw_workplan_items.object.temp_item_number[pl_row]
 	if isnull(ll_item_number) then
-		log.log(this, "item_menu()", "Item number is null", 4)
+		log.log(this, "w_workplan_step_definition.configure_service.0019", "Item number is null", 4)
 		item_attributes.setfilter("")
 		item_attributes.filter()
 		return -1
@@ -208,14 +208,14 @@ item_attributes.filter()
 // Get the service component object
 ls_ordered_service = dw_workplan_items.object.ordered_service[pl_row]
 if isnull(ls_ordered_service) then
-	log.log(this, "item_menu()", "Null service", 4)
+	log.log(this, "w_workplan_step_definition.configure_service.0019", "Null service", 4)
 	item_attributes.setfilter("")
 	item_attributes.filter()
 	return -1
 end if
 luo_service = service_list.get_service_component(ls_ordered_service)
 if isnull(luo_service) then
-	log.log(this, "item_menu()", "Error getting service component (" + ls_ordered_service + ")", 4)
+	log.log(this, "w_workplan_step_definition.configure_service.0019", "Error getting service component (" + ls_ordered_service + ")", 4)
 	item_attributes.setfilter("")
 	item_attributes.filter()
 	return -1
@@ -295,7 +295,7 @@ FROM c_Workplan
 WHERE workplan_id = :workplan_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "load_workplan()", "Workplan not found (" + string(workplan_id) + ")", 4)
+	log.log(this, "w_workplan_step_definition.load_workplan_items.0012", "Workplan not found (" + string(workplan_id) + ")", 4)
 	return -1
 end if
 
@@ -315,7 +315,7 @@ WHERE workplan_id = :workplan_id
 AND step_number = :step_number;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "load_workplan()", "Workplan step not found (" + string(workplan_id) + ", " + string(step_number) + ")", 4)
+	log.log(this, "w_workplan_step_definition.load_workplan_items.0012", "Workplan step not found (" + string(workplan_id) + ", " + string(step_number) + ")", 4)
 	return -1
 end if
 
@@ -659,7 +659,7 @@ item_attributes = CREATE u_ds_data
 item_attributes.set_dataobject("dw_workplan_item_attribute_data")
 
 if popup.data_row_count <> 2 then
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_workplan_step_definition.open.0012", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -667,7 +667,7 @@ end if
 workplan_id = long(popup.items[1])
 
 if isnull(workplan_id) then
-	log.log(this, "open", "Null workplan_id", 4)
+	log.log(this, "w_workplan_step_definition.open.0012", "Null workplan_id", 4)
 	close(this)
 	return
 end if
@@ -675,7 +675,7 @@ end if
 step_number = long(popup.items[2])
 
 if isnull(workplan_id) then
-	log.log(this, "open", "Null step_number", 4)
+	log.log(this, "w_workplan_step_definition.open.0012", "Null step_number", 4)
 	close(this)
 	return
 end if
@@ -779,7 +779,7 @@ event post_open;call super::post_open;integer li_sts
 
 li_sts = load_workplan_items()
 if li_sts <= 0 then
-	log.log(this, "open", "Error loading workplan items (" + string(workplan_id) + ", " + string(step_number) + ")", 4)
+	log.log(this, "w_workplan_step_definition.open.0012", "Error loading workplan items (" + string(workplan_id) + ", " + string(step_number) + ")", 4)
 	close(this)
 	return
 end if
@@ -982,7 +982,7 @@ if isnull(ls_service) then return
 
 ls_description = datalist.service_description(ls_service)
 if isnull(ls_description) then
-	log.log(this, "clicked", "Invalid service (" + ls_service + ")", 4)
+	log.log(this, "w_workplan_step_definition.cb_add_service.clicked.0029", "Invalid service (" + ls_service + ")", 4)
 	return
 end if
 
@@ -1152,7 +1152,7 @@ if isnull(ls_treatment_type) then return 0
 
 luo_treatment_component = f_get_treatment_component(ls_treatment_type)
 if isnull(luo_treatment_component) then
-	log.log(this, "clicked", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
+	log.log(this, "w_workplan_step_definition.cb_add_service.clicked.0029", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
 	return
 end if
 

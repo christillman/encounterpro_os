@@ -51,7 +51,7 @@ integer li_sts
 long ll_x
 
 if isnull(current_scribe) then
-	log.log(this, "open", "The terminal lock window should only be opened when a user is logged in", 3)
+	log.log(this, "w_lock_terminal.open.0007", "The terminal lock window should only be opened when a user is logged in", 3)
 	close(this)
 end if
 

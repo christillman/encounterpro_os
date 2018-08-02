@@ -213,7 +213,7 @@ end if
 
 li_sts = common_thread.get_external_source(external_source, external_source_properties)
 if li_sts <= 0 then
-	mylog.log(this, "base_initialize()", "External Source not found (" + external_source + ")", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "External Source not found (" + external_source + ")", 4)
 	return -1
 end if
 
@@ -222,7 +222,7 @@ luo_attributes = CREATE u_ds_data
 luo_attributes.set_dataobject("dw_c_external_source_attribute")
 li_sts = luo_attributes.retrieve(external_source)
 if li_sts < 0 then
-	mylog.log(this, "base_initialize()", "error getting external source attributes (" + external_source + ")", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "error getting external source attributes (" + external_source + ")", 4)
 	return -1
 end if
 f_attribute_ds_to_str(luo_attributes, lstr_attributes)
@@ -231,7 +231,7 @@ f_attribute_ds_to_str(luo_attributes, lstr_attributes)
 luo_attributes.set_dataobject("dw_o_external_source_attribute")
 li_sts = luo_attributes.retrieve(external_source, computer_id, office_id)
 if li_sts < 0 then
-	mylog.log(this, "base_initialize()", "error getting external source attributes (" + external_source + ")", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "error getting external source attributes (" + external_source + ")", 4)
 	return -1
 end if
 f_attribute_ds_to_str(luo_attributes, lstr_attributes)
@@ -254,19 +254,19 @@ c_external_observation_result.set_dataobject("dw_c_external_observation_result",
 
 li_sts = c_external_observation.retrieve(external_source)
 if li_sts < 0 then
-	mylog.log(this, "base_initialize()", "Error retrieving observations", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "Error retrieving observations", 4)
 	return -1
 end if
 
 li_sts = c_external_observation_location.retrieve(external_source)
 if li_sts < 0 then
-	mylog.log(this, "base_initialize()", "Error retrieving locations", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "Error retrieving locations", 4)
 	return -1
 end if
 
 li_sts = c_external_observation_result.retrieve(external_source)
 if li_sts < 0 then
-	mylog.log(this, "base_initialize()", "Error retrieving results", 4)
+	mylog.log(this, "u_component_observation.base_initialize.0015", "Error retrieving results", 4)
 	return -1
 end if
 
@@ -549,7 +549,7 @@ end if
 // The document was sent successfully so now process the epiehandler instructions
 li_sts = process_epiehandler(pstr_attachment.epiehandler, f_current_context())
 if li_sts < 0 then
-	log.log(this, "send_attachment()", "Error processing EpIEHandler instructions", 4)
+	log.log(this, "u_component_observation.send_attachment.0058", "Error processing EpIEHandler instructions", 4)
 	return -1
 end if
 
@@ -688,7 +688,7 @@ end if
 TRY
 	li_sts = xx_do_source()
 CATCH (exception le_error)
-	log.log(this, "do_source_2()", "Error calling xx_do_source (" + le_error.text + ")", 4)
+	log.log(this, "u_component_observation.do_source_2.0027", "Error calling xx_do_source (" + le_error.text + ")", 4)
 	THROW le_error
 END TRY
 
@@ -703,7 +703,7 @@ if observation_count = 1 then
 				ls_xml = f_blob_to_string(observations[1].attachment_list.attachments[1].attachment)
 				li_sts = read_data(ls_xml, "")
 				if li_sts < 0 then
-					log.log(this, "do_source_2()", "Error reading xml documents", 4)
+					log.log(this, "u_component_observation.do_source_2.0027", "Error reading xml documents", 4)
 					return -1
 				end if
 			end if

@@ -173,14 +173,14 @@ end if
 
 audio_file = attachment.get_attachment()
 if isnull(audio_file) then
-	log.log(this, "open", "Error getting attachment file", 4)
+	log.log(this, "w_attachment_audio_display.open.0053", "Error getting attachment file", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this, "open", "Error initializing dictation", 4)
+	log.log(this, "w_attachment_audio_display.open.0053", "Error initializing dictation", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

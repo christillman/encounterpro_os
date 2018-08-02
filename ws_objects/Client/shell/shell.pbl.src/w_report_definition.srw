@@ -112,7 +112,7 @@ elseif popup.data_row_count = 1 then
 										 st_report_type.text)
 	if isnull(report_type) then st_report_type.text = "<< Blank >>"
 else
-	log.log(this, "open", "Invalid Argument", 4)
+	log.log(this, "w_report_definition.open.0023", "Invalid Argument", 4)
 	close(this)
 end if
 

@@ -19,7 +19,7 @@ if pl_width > 0 and pl_height > 0 then
 	luo_ImageControl = CREATE oleobject
 	li_sts = luo_ImageControl.connecttonewobject("EncounterPRO.OS.ImageManipulation")
 	if li_sts < 0 then
-		log.log(po_null, "xx_render()", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
+		log.log(po_null, "f_resize_signature_bitmap.0014", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
 		ls_resized_file = ps_file
 	else
 		ls_resized_file = f_temp_file(".bmp")
@@ -27,11 +27,11 @@ if pl_width > 0 and pl_height > 0 then
 		TRY
 			li_sts = luo_ImageControl.ResizeDarkenBitmap(ps_file, ls_resized_file, pl_width, pl_height, pi_luminanceCutoff)
 			if li_sts <= 0 then
-				log.log(po_null, "xx_render()", "Error reducing bitmap (" + string(li_sts) + ")", 3)
+				log.log(po_null, "f_resize_signature_bitmap.0014", "Error reducing bitmap (" + string(li_sts) + ")", 3)
 				ls_resized_file = ps_file
 			end if
 		CATCH (throwable lo_error)
-			log.log(po_null, "xx_render()", "Error calling ResizeDarkenBitmap (" + lo_error.text + ")", 3)
+			log.log(po_null, "f_resize_signature_bitmap.0014", "Error calling ResizeDarkenBitmap (" + lo_error.text + ")", 3)
 			ls_resized_file = ps_file
 		FINALLY
 			luo_ImageControl.disconnectobject()

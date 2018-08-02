@@ -130,7 +130,7 @@ end subroutine
 public function integer initialize (string ps_location_domain);
 
 if isnull(ps_location_domain) then
-	log.log(this, "Initialize()", "null location domain", 4)
+	log.log(this, "u_str_location_domain.initialize.0004", "null location domain", 4)
 	return -1
 end if
 
@@ -142,7 +142,7 @@ FROM c_Location_Domain
 WHERE location_domain = :ps_location_domain;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "Initialize()", "location domain not found (" + ps_location_domain + ")", 4)
+	log.log(this, "u_str_location_domain.initialize.0004", "location domain not found (" + ps_location_domain + ")", 4)
 	return -1
 end if
 

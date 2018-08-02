@@ -110,7 +110,7 @@ FROM c_Component_Definition
 WHERE component_id = :ps_component_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "upgrade_component()", "Component not found (" + ps_component_id + ")", 4)
+	log.log(this, "w_component_manage_upgrades.upgrade_component.0020", "Component not found (" + ps_component_id + ")", 4)
 	return -1
 end if
 

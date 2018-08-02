@@ -305,7 +305,7 @@ if li_sts < 0 then return
 
 li_sts = f_set_current_encounter(ll_encounter_id)
 if li_sts <= 0 then
-	log.log(this, "menu()", "Error setting encounter", 4)
+	log.log(this, "u_checked_out.menu.0019", "Error setting encounter", 4)
 	f_clear_patient()
 	return
 end if
@@ -495,7 +495,7 @@ str_attributes		lstra_attributes
 
 ls_display_script_id = datalist.get_preference("PREFERENCES","billing_error_display_script_id")
 if isnull(ls_display_script_id) then
-	log.log(this,"clicked","no display script id for this report. set a preference_id = billing_error_display_script_id and a valid display script id",3)
+	log.log(this,"u_checked_out.st_error.clicked.0009","no display script id for this report. set a preference_id = billing_error_display_script_id and a valid display script id",3)
 	return
 end if
 

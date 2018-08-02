@@ -178,7 +178,7 @@ ll_count = dw_workplans.retrieve(folder)
 
 // Error
 if ll_count < 0 then
-	log.log(this, "open", "Error getting folder workplans (" + folder + ")", 4)
+	log.log(this, "w_folder_workplan.open.0012", "Error getting folder workplans (" + folder + ")", 4)
 	close(this)
 	return
 end if
@@ -190,12 +190,12 @@ INTO :ls_workplan_required_flag, :folder_context_object
 FROM c_Folder
 WHERE folder = :folder;
 if not tf_check() then
-	log.log(this, "open", "Error folder record (" + folder + ")", 4)
+	log.log(this, "w_folder_workplan.open.0012", "Error folder record (" + folder + ")", 4)
 	close(this)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "folder record not found (" + folder + ")", 4)
+	log.log(this, "w_folder_workplan.open.0012", "folder record not found (" + folder + ")", 4)
 	close(this)
 	return
 end if

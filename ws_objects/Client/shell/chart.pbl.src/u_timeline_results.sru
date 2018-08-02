@@ -109,7 +109,7 @@ FROM c_Observation
 WHERE observation_id = :observation_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "set_obj_list()", "Objective list not found (" + observation_id + ")", 3)
+	log.log(this, "u_timeline_results.set_obj_list.0017", "Objective list not found (" + observation_id + ")", 3)
 	return -1
 end if
 

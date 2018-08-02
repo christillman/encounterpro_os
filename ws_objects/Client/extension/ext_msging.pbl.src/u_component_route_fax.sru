@@ -26,7 +26,7 @@ str_external_observation_attachment lstr_document
 
 li_sts = puo_document.get_document(lstr_document)
 if li_sts <= 0 then
-	log.log(this, "xx_send_document()", "Error getting document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_route_fax.xx_send_document.0010", "Error getting document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -43,7 +43,7 @@ end if
 // We need to use the attachment component to perform the printing because it may have proprietary logic specific to the document type
 li_sts = file_action.print_file(lstr_document, ls_printer)
 if li_sts <= 0 then
-	log.log(this, "xx_send_document()", "Error printing document" + string(puo_document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_route_fax.xx_send_document.0010", "Error printing document" + string(puo_document.patient_workplan_item_id) + ")", 4)
 	f_please_wait_close(li_wait)
 	return -1
 end if

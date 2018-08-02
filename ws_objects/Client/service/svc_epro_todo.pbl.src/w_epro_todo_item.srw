@@ -351,7 +351,7 @@ popup_return.items[1] = "ERROR"
 
 li_sts = get_message()
 if li_sts <= 0 then
-	log.log(this, "open", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
+	log.log(this, "w_epro_todo_item.open.0043", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

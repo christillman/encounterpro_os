@@ -313,7 +313,7 @@ end function
 public function str_patient get_patient ();str_patient lstr_patient
 
 if isnull(cpr_id) then
-	log.log(this, "get_patient()", "cpr_id has not been set", 4)
+	log.log(this, "u_ds_patient.get_patient.0004", "cpr_id has not been set", 4)
 	setnull(lstr_patient.cpr_id)
 	return lstr_patient
 end if
@@ -342,7 +342,7 @@ date ld_date
 string ls_guardian_cpr_id
 
 if isnull(cpr_id) then
-	log.log(this, "get_property()", "cpr_id has not been set", 4)
+	log.log(this, "u_ds_patient.get_property.0017", "cpr_id has not been set", 4)
 	lstr_property_value = f_empty_property_value()
 	return lstr_property_value
 end if

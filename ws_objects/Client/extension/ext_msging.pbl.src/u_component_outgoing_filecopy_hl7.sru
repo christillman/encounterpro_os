@@ -202,7 +202,7 @@ end if
 ls_line_break = "~013"
 
 garbagecollect()
-mylog.log(this, "xx_send_file", ps_address, 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", ps_address, 1)
 
 if ps_address = "!dummy.dcom" then
 	msg_transport_type = "D"
@@ -219,15 +219,15 @@ WHERE message_id = :message_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "send_file()", "Message log record not found when getting message(" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0087", "Message log record not found when getting message(" + string(message_id) + ")", 4)
 	return -1
 end if
 
 flatwire = f_blob_to_string(lblb_message)
-mylog.log(this, "xx_send_file", "billing message string1: "+flatwire, 1)	
+mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "billing message string1: "+flatwire, 1)	
 ll_pos = POS(flatwire,ls_line_break)
 if isnull(ll_pos) or ll_pos = 0 then
-	mylog.log(this, "xx_send_file", "message type not found ", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "message type not found ", 4)	
 	return -1
 end if
 
@@ -235,25 +235,25 @@ msg_type = Mid(flatwire,1,ll_pos - 1)
 flatwire = Mid(flatwire,ll_pos + 1)
 ll_pos = POS(flatwire,ls_line_break)
 if isnull(ll_pos) or ll_pos = 0 then
-	mylog.log(this, "xx_send_file", "message count not found ", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "message count not found ", 4)	
 	return -1
 end if
 
 msg_count = Mid(flatwire,1,ll_pos - 1)
 if not IsNumber(msg_count) then
-	mylog.log(this, "xx_send_file", "message count not numeric ", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "message count not numeric ", 4)	
 	return -1
 end if
 is_msg_count = integer(msg_count)
 if is_msg_count < 1 then return -1
 flatwire = Mid(flatwire,ll_pos + 1)
-mylog.log(this, "xx_send_file", "billing message string2: "+flatwire, 1)	
+mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "billing message string2: "+flatwire, 1)	
 if (msg_type = "HL7DFTP03") OR (msg_type = "HL7ORMO01") then
-	mylog.log(this, "xx_send_file", "message count "+string(is_msg_count), 1)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "message count "+string(is_msg_count), 1)	
 	if left(flatwire,1) = "~013" then	flatwire = Mid(flatwire,ll_pos + 1) // ugly fix..somehow extra linebreak is included for few cases
-	mylog.log(this, "xx_send_file", "billing message string3: "+flatwire, 1)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "billing message string3: "+flatwire, 1)	
 else
-	mylog.log(this, "xx_send_file", "message type not known " + msg_type, 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_send_file.0070", "message type not known " + msg_type, 4)	
 	return -1
 end if	
 
@@ -296,7 +296,7 @@ end if
 
 get_attribute("dcom_source",dcom_source)
 if isnull(dcom_source) then
-	mylog.log(this, "xx_initialize", "no object source.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_initialize.0023", "no object source.", 4)
 	return -1
 end if	
 
@@ -304,7 +304,7 @@ dcom_app = dcom_source
 
 get_attribute("dcom_app_dest", dcom_app_dest)
 if isnull(dcom_app_dest) or dcom_app_dest = '' then
-	mylog.log(this, "xx_initialize", "no object destination.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_initialize.0023", "no object destination.", 4)
 	return -1
 end if	
 
@@ -322,7 +322,7 @@ if IsNumber(ls_port) then dcom_app_port = long(ls_port)
 get_attribute("dcom_app_address", dcom_app_address)
 if dcom_app_port > 0 Then
 	if isnull(dcom_app_address) then
-		mylog.log(this, "xx_initialize", "no destination computer address.", 4)
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_initialize.0023", "no destination computer address.", 4)
 		return -1
 	end if	
 End If
@@ -387,7 +387,7 @@ else
 end if
 
 if not ib_hold_outgoing then
-	mylog.log(this,"xx_initialize()","saving copy of the bill is disabled. To enable this set Attribute = 'hold_outgoing' Value = 'YES' FOR Component = 'trn_out_filecopy_hl7'",3)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.xx_initialize.0114","saving copy of the bill is disabled. To enable this set Attribute = 'hold_outgoing' Value = 'YES' FOR Component = 'trn_out_filecopy_hl7'",3)
 end if
 
 get_attribute("show_cpt_icd_description",show_cpt_icd_description)
@@ -398,7 +398,7 @@ if left(show_cpt_icd_description,1)="N" or left(show_cpt_icd_description,1)="F" 
 
 get_attribute("recv_app_path", recv_app_path)
 if isnull(recv_app_path) and (bs_system = "PRACTICEPOINT" or bs_system='MCKESSON') Then
-	mylog.log(this, "xx_initialize", "missing component attribute <recv_app_path>; this holds valid path name to write the charge message", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.xx_initialize.0023", "missing component attribute <recv_app_path>; this holds valid path name to write the charge message", 4)
 	return -1
 end if
 
@@ -422,24 +422,24 @@ Boolean lb_listen
 if ib_dcom_activ then return 1
 
 lb_listen = FALSE
-mylog.log(this, "ahc_connect()", "ahc_connect() - Begin", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "ahc_connect() - Begin", 1)
 
-mylog.log(this, "ahc_connect()", "connecting to AHCMessager.", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "connecting to AHCMessager.", 1)
 oAHC = CREATE oleobject
 li_sts = oAHC.connecttonewobject("AHC.Messenger")
 if li_sts <> 0 then
-	mylog.log(this, "ahc_connect", "ERROR: connection to AHC Messenger object failed.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0014", "ERROR: connection to AHC Messenger object failed.", 4)
 	DESTROY oAHC
 	setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to AHCMessager success", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "connection to AHCMessager success", 1)
 
 // Connect to AHC Messanger and returns AHC Message Manager
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object.", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "connection to IHCMessageManager object.", 1)
 omsgman = oAHC.Connect(dcom_source)
 If isnull(omsgman) Then
-	mylog.log(this, "ahc_connect()", "ERROR: connection to IHCMessageManager object failed.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "ERROR: connection to IHCMessageManager object failed.", 4)
 	DESTROY oMsgMan
 	oAHC.Disconnect()
 	DESTROY oAHC
@@ -447,11 +447,11 @@ If isnull(omsgman) Then
 	Setnull(oAHC)
 	return -1
 end if
-mylog.log(this, "ahc_connect()", "connection to IHCMessageManager object successful.", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "connection to IHCMessageManager object successful.", 1)
 
 ib_dcom_activ = true
 il_count = 0
-mylog.log(this, "ahc_connect()", "ahc_connect() - Successful", 1)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.ahc_connect.0008", "ahc_connect() - Successful", 1)
 
 
 return 1
@@ -508,7 +508,7 @@ int start_pos
 omsgtype = CREATE oleobject
 li_sts = omsgtype.connecttonewobject("AHC.MessageType")
 IF li_sts <> 0 THEN
-	mylog.log(this, "chrg()", "ERROR: connection to AHC messagetype object failed.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "ERROR: connection to AHC messagetype object failed.", 4)
 	DESTROY omsgtype
 	setnull(omsgtype)
 	RETURN -1
@@ -522,7 +522,7 @@ omsgtype.Version = "HL7 2.3" 	// MUST be like this!
 oEnv = CREATE oleobject
 oEnv = omsgman.CreateMessage(omsgtype)
 IF isnull(oenv) THEN
-	mylog.log(this, "chrg()", "error in creating message envelope object ", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "error in creating message envelope object ", 4)	
 	RETURN -1
 END IF
 //Declare a message object of the type created in the previous step 
@@ -530,7 +530,7 @@ HL7DFTP03 = CREATE oleobject
 //get a handle to the message content.
 HL7DFTP03 = oEnv.Content
 IF isnull(hl7dftp03) THEN
-	mylog.log(this, "chrg()", "error in getting message type object from message envelope ", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "error in getting message type object from message envelope ", 4)	
 	RETURN -1
 END IF
 
@@ -541,7 +541,7 @@ IF ll_tab_pos > 0 THEN
 	ll_len = ll_tab_pos - 1
 END IF
 IF ll_len = 0  OR ps_message = "" THEN
-	mylog.log(this, "chrg()","MessageId: "+string(message_id)+":No charge message",3)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052","MessageId: "+string(message_id)+":No charge message",3)
 	return f_posting_failed(message_id,"NO CHARGE")
 END IF
 
@@ -566,7 +566,7 @@ NEXT
 
 ll_len = upperbound(ls_fields)
 If ll_len < 27 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"BAD LEN")
 End If
 ls_thisdatetime = string(today(),"yyyy/mm/dd hh:mm:ss")
@@ -605,7 +605,7 @@ else
 end if	
 ldt_encounter_datetime = Datetime(Date(left(ls_encounter_date,10)),Time(Mid(ls_encounter_date,12)))
 if isnull(ldt_encounter_datetime) then 
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 procedurecodeidentifier = ls_fields[22] // procedure code
@@ -624,7 +624,7 @@ for i = 1 to li_diagnosis_count
 next	
 
 IF isnull(procedurecodeidentifier) or procedurecodeidentifier = "" then 
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO PROCEDURE")
 END IF
 
@@ -685,7 +685,7 @@ FROM c_User
 WHERE billing_id = :ls_provider
 USING cprdb;
 if not cprdb.check() OR cprdb.sqlcode = 100 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
 	return f_posting_failed(message_id,"NO PROVIDER")
 end if	
 	
@@ -739,7 +739,7 @@ else
 	WHERE user_id = :ls_supervisor
 	USING cprdb;
 	If not cprdb.check() or cprdb.sqlcode = 100 or isnull(ls_supervisor_code) then 
-		mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
 		lb_same_id = true
 	End if
 end if
@@ -891,11 +891,11 @@ Else
 			
 			ls_billable_provider = ls_provider + ls_supervisor_code
 			if isnull(ls_billable_provider) then ls_billable_provider = ls_supervisor_code
-			mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Billable Provider(PASupervisor): " + ls_billable_provider, 2)	
+			mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Billable Provider(PASupervisor): " + ls_billable_provider, 2)	
 			HL7DFTP03.PatientVisit.Attendingdoctor.Item[0].IDNumber.value = ls_billable_provider
 		else
 			HL7DFTP03.PatientVisit.Attendingdoctor.Item[0].IDNumber.value = ls_supervisor_code
-			mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Billable Provider: " + ls_supervisor_code, 2)	
+			mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Billable Provider: " + ls_supervisor_code, 2)	
 		end if
 	end if	
 	if not isnull(ls_sdfamily) then
@@ -917,7 +917,7 @@ Else
 		HL7DFTP03.PatientVisit.Attendingdoctor.Item[0].Degree.value = ls_sddegree
 	end if
 End If
-mylog.log(this, "chrg()", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
 If not isnull(ls_visitnumber_id) Then
 	HL7DFTP03.PatientVisit.VisitNumber.ID.value = ls_visitnumber_id
 End If
@@ -1189,20 +1189,20 @@ if isnull(dcom_app_dest) or len(dcom_app_dest) = 0 then
 end if
 ls_uuid = omsgman.sendmessage(oEnv,dcom_app_dest)
 IF IsNull(ls_uuid) then
-	mylog.log(this,"chrg()","error with send to destination " + dcom_app_dest,4)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg.0733","error with send to destination " + dcom_app_dest,4)
 	li_rtn = -1
 ELSE
-	mylog.log(this,"chrg()","message " + string(message_id) + "sent to " + dcom_app_dest,1)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg.0733","message " + string(message_id) + "sent to " + dcom_app_dest,1)
 END IF
 
 // save copy of the bill??
 if ib_hold_outgoing then 
 	ls_uuid = omsgman.sendmessage(oEnv,"EPROHOLDMESSAGES")
 	IF IsNull(ls_uuid) then
-		mylog.log(this,"chrg()","error with send to destination EPROHOLDMESSAGES" ,4)
+		mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg.0733","error with send to destination EPROHOLDMESSAGES" ,4)
 		li_rtn = -1
 	ELSE
-		mylog.log(this,"chrg()","message " + string(message_id) + "sent to EPROHOLDMESSAGES" ,1)
+		mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg.0733","message " + string(message_id) + "sent to EPROHOLDMESSAGES" ,1)
 	END IF
 end if
 omsgman.donewithmessage(oEnv)
@@ -1230,7 +1230,7 @@ setnull(omsgtype)
 GarbageCollectSetTimeLimit(0)
 GarbageCollect()
 
-mylog.log(this,"chrg()","message sent to destinations, returning",1)
+mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg.0733","message sent to destinations, returning",1)
 Return li_rtn
 end function
 
@@ -1282,7 +1282,7 @@ OLEOBJECT omsgtype, OEnv, HL7DFTP03
 omsgtype = create oleobject
 li_sts = omsgtype.connecttonewobject("AHC.MessageType")
 if li_sts <> 0 then
-	mylog.log(this, "chrg_mpm()", "ERROR: connection to AHC messagetype object failed.", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "ERROR: connection to AHC messagetype object failed.", 4)
 	DESTROY omsgtype
 	setnull(omsgtype)
 	return -1
@@ -1296,7 +1296,7 @@ omsgtype.Version = "HL7 2.3" 	// MUST be like this!
 oEnv = create oleobject
 oEnv = omsgman.CreateMessage(omsgtype)
 if isnull(oenv) then
-	mylog.log(this, "chrg_mpm()", "Error in getting message evnvelope object", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "Error in getting message evnvelope object", 4)	
 	return -1
 end if
 
@@ -1305,7 +1305,7 @@ HL7DFTP03 = create oleobject
 //get a handle to the message content.
 HL7DFTP03 = oEnv.Content
 if isnull(hl7dftp03) then
-	mylog.log(this, "chrg_mpm()", "Error in getting message type object from message envelope", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "Error in getting message type object from message envelope", 4)	
 	return -1
 end if
 
@@ -1316,7 +1316,7 @@ IF ll_tab_pos > 0 THEN
 	ll_len = ll_tab_pos - 1
 END IF
 IF ll_len = 0  OR ps_message = "" THEN
-	mylog.log(this, "chrg_mpm()","MessageId: "+string(message_id)+":No charge message",3)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049","MessageId: "+string(message_id)+":No charge message",3)
 	return f_posting_failed(message_id,"NO CHARGE")
 END IF
 
@@ -1341,7 +1341,7 @@ NEXT
 
 ll_len = upperbound(ls_fields)
 If ll_len < 27 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"BAD LEN")
 End If
 
@@ -1375,11 +1375,11 @@ else
 end if	
 ldt_encounter_datetime = Datetime(Date(left(ls_encounter_date,10)),Time(Mid(ls_encounter_date,12)))
 if isnull(ldt_encounter_datetime) then 
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 
-mylog.log(this, "chrg_mpm()", "facility id" + ls_facility, 1)	
+mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "facility id" + ls_facility, 1)	
 
 procedurecodeidentifier = ls_fields[22] // procedure code
 ls_modifier = ls_fields[23] // modifier
@@ -1402,7 +1402,7 @@ for i = li_diagnosis_count to 1 step -1
 next	
 
 if isnull(procedurecodeidentifier) or procedurecodeidentifier = "" then 
-	mylog.log(this, "chrg_mpm()", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO PROCEDURE")
 end if	
 
@@ -1464,7 +1464,7 @@ FROM c_User
 WHERE billing_id = :ls_provider
 USING cprdb;
 if not cprdb.check() OR cprdb.sqlcode = 100 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
 	return f_posting_failed(message_id,"NO PROVIDER")
 end if	
 	
@@ -1518,7 +1518,7 @@ else
 	WHERE user_id = :ls_supervisor
 	USING cprdb;
 	If not cprdb.check() or cprdb.sqlcode = 100 or isnull(ls_supervisor_id) then 
-		mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
 		lb_same_id = true
 	End if
 end if
@@ -1540,7 +1540,7 @@ if ls_sdprefix = "" then SetNull(ls_sdprefix)
 if ls_sddegree = "" then SetNull(ls_sddegree)
 if ls_sdUPIN = "" then SetNull(ls_sdUPIN)
 	
-mylog.log(this, "chrg_mpm()", "message construct:facility id" + ls_facility, 1)	
+mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0049", "message construct:facility id" + ls_facility, 1)	
 
 //rest of header
 //P = production
@@ -1648,7 +1648,7 @@ else
 end if
 
 if isnull(ls_visitnumber_id) then ls_temp = ""
-mylog.log(this, "dftp03()", "encounterpro visitnumber. " + ls_alternatevisitid_id + " millbrook alternatevisitid. " + ls_temp, 2)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm.0415", "encounterpro visitnumber. " + ls_alternatevisitid_id + " millbrook alternatevisitid. " + ls_temp, 2)
 if not isnull(ls_alternatevisitid_id) then
 	HL7DFTP03.PatientVisit.VisitNumber.ID.value = ls_alternatevisitid_id
 end if
@@ -1877,20 +1877,20 @@ if isnull(dcom_app_dest) or len(dcom_app_dest) = 0 then
 end if
 ls_uuid = omsgman.sendmessage(oEnv,dcom_app_dest)
 if IsNull(ls_uuid) then
-	mylog.log(this,"dftp03()","error with send to destination " + dcom_app_dest,4)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg_mpm.0644","error with send to destination " + dcom_app_dest,4)
 	li_rtn = -1
 else
-	mylog.log(this,"dftp03()","message " + string(message_id) + "sent to " + dcom_app_dest,1)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg_mpm.0644","message " + string(message_id) + "sent to " + dcom_app_dest,1)
 end if
 
 // save copy of the bill??
 if ib_hold_outgoing then 
 	ls_uuid = omsgman.sendmessage(oEnv,"EPROHOLDMESSAGES")
 	IF IsNull(ls_uuid) then
-		mylog.log(this,"chrg_mpm()","error with send to destination EPROHOLDMESSAGES" ,4)
+		mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg_mpm.0654","error with send to destination EPROHOLDMESSAGES" ,4)
 		li_rtn = -1
 	ELSE
-		mylog.log(this,"chrg_mpm()","message " + string(message_id) + "sent to EPROHOLDMESSAGES" ,1)
+		mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg_mpm.0654","message " + string(message_id) + "sent to EPROHOLDMESSAGES" ,1)
 	END IF
 end if
 
@@ -1915,7 +1915,7 @@ setnull(oEnv)
 setnull(HL7DFTP03)
 setnull(omsgtype)
 
-mylog.log(this,"chrg_mpm()","message sent to destinations,returning", 1)
+mylog.log(this,"u_component_outgoing_filecopy_hl7.chrg_mpm.0654","message sent to destinations,returning", 1)
 GarbageCollectSetTimeLimit(0)
 GarbageCollect()
 
@@ -1939,12 +1939,12 @@ u_ds_data	luo_data
 // check for acknowledgement messages
 ll_pending = omsgMan.NumMessagesPending()
 If ll_pending > 0 Then
-	mylog.log(this, "timer_ding()", "Acknowledge messages received (" + string(ll_pending) + ")", 2)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Acknowledge messages received (" + string(ll_pending) + ")", 2)
 	For i = 1 to ll_pending
 	   coll = omsgMan.PollForMessage(1, count)
 		ll_count = Coll.Count
    	// get messages
-		mylog.log(this, "timer_ding()", "Polling Count (" + string(count) + ")", 1)
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Polling Count (" + string(count) + ")", 1)
 		If ll_count = 0 Then // no messages
 			coll.disconnectobject()
 			destroy coll
@@ -1952,7 +1952,7 @@ If ll_pending > 0 Then
 		End If
 		FOR j = 0 to ll_count - 1
 			ls_message_type = coll.Item(j).Type.MessageTypeCode
-			mylog.log(this, "timer_ding()", "Collection Count (" + string(j) + ") message type ( "+ls_message_type+")", 1)
+			mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Collection Count (" + string(j) + ") message type ( "+ls_message_type+")", 1)
 			If upper(trim(ls_message_type)) = "ACK" Then
    			omsg = coll.Item(j)
 				ack = omsg.Content
@@ -1989,10 +1989,10 @@ If ll_pending > 0 Then
 					WHERE message_id = :ls_ack_message_id2
 					Using cprdb;
 
-					mylog.log(this, "timer_ding()", "No records found for message ID (" + ls_ack_message_id2 + ")", 3)
+					mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "No records found for message ID (" + ls_ack_message_id2 + ")", 3)
 					continue
 				End If
-				mylog.log(this, "timer_ding()", "Ack message ( "+ls_ack_type + " ) for message id (" + ls_ack_message_id + ")", 1)
+				mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Ack message ( "+ls_ack_type + " ) for message id (" + ls_ack_message_id + ")", 1)
 				
 				If ls_ack_type = "AA" or ls_ack_type = "AL" or ls_ack_type = 'CA' then // bill Accepted
 					Update o_message_log
@@ -2002,7 +2002,7 @@ If ll_pending > 0 Then
 					Using cprdb;
 					If NOT cprdb.check() THEN RETURN -1		
 					
-					mylog.log(this, "timer_ding()", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
+					mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Acknowledge received for message ID (" + ls_ack_message_id + ")", 2)
 				Elseif ls_ack_type = "AE" then
 					Update o_message_log
 					Set status = 'ACK_REJECT',
@@ -2012,7 +2012,7 @@ If ll_pending > 0 Then
 					Using cprdb;
 					If Not cprdb.check() THEN Return -1		
 					
-					mylog.log(this, "timer_ding()", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
+					mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "Ack Reject received for message ID (" + ls_ack_message_id + "), Error: "+ls_error, 4)	
 
 				Else
 					Update o_message_log
@@ -2023,7 +2023,7 @@ If ll_pending > 0 Then
 					using cprdb;
 					if not cprdb.check() then return -1		
 					
-					mylog.log(this, "timer_ding()", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
+					mylog.log(this, "u_component_outgoing_filecopy_hl7.timer_ding.0018", "NonAcknowledge received for message ID (" + ls_ack_message_id + ")" , 2)	
 				End if	
 
 				omsgMan.donewithmessage(omsg)
@@ -2051,17 +2051,17 @@ Return 1
 end function
 
 public function integer ahc_disconnect ();if not isnull(oAHC) and isvalid(oAHC) Then
-	mylog.log(this,"xx_shutdown","disconnecting from AHC Interface",1)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.ahc_disconnect.0002","disconnecting from AHC Interface",1)
 	TRY
 		oAHC.Disconnect()
 	CATCH (throwable lt_error)
-		log.log(this, "chrg_mpm()", "Error disconnecting AHC Messanger:  " + lt_error.text, 4)
+		log.log(this, "u_component_outgoing_filecopy_hl7.ahc_disconnect.0006", "Error disconnecting AHC Messanger:  " + lt_error.text, 4)
 	FINALLY
 		oahc.disconnectobject()
 		Destroy oAHC
 		Setnull(oAHC)
 	END TRY
-	mylog.log(this,"xx_shutdown","disconnected from AHC Interface",1)
+	mylog.log(this,"u_component_outgoing_filecopy_hl7.ahc_disconnect.0002","disconnected from AHC Interface",1)
 End If
 
 if not isnull(omsgman) and isvalid(omsgman) Then
@@ -2128,7 +2128,7 @@ IF ll_tab_pos > 0 THEN
 	ll_len = ll_tab_pos - 1
 END IF
 IF ll_len = 0  OR ps_message = "" THEN
-	mylog.log(this, "chrg()","MessageId: "+string(message_id)+":No charge message",3)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052","MessageId: "+string(message_id)+":No charge message",3)
 	return f_posting_failed(message_id,"NO CHARGE")
 END IF
 
@@ -2153,7 +2153,7 @@ NEXT
 
 ll_len = upperbound(ls_fields)
 If ll_len < 27 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Invalid Billing message count, message( "+string(ll_len)+"," + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"BAD LEN")
 End If
 ls_thisdatetime = string(today(),"yyyy/mm/dd hh:mm:ss")
@@ -2192,7 +2192,7 @@ else
 end if	
 ldt_encounter_date = Date(left(ls_encounter_date,10))
 if isnull(ldt_encounter_date) then 
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 
@@ -2212,7 +2212,7 @@ for i = 1 to li_diagnosis_count
 next	
 
 IF isnull(procedurecodeidentifier) or procedurecodeidentifier = "" then 
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":No Procedure, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO PROCEDURE")
 END IF
 
@@ -2245,7 +2245,7 @@ FROM c_User
 WHERE billing_id = :ls_provider
 USING cprdb;
 if not cprdb.check() OR cprdb.sqlcode = 100 then
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+":Billing failed.Invalid Provider " + ls_provider, 4)	
 	return f_posting_failed(message_id,"NO PROVIDER")
 end if	
 	
@@ -2299,7 +2299,7 @@ else
 	WHERE user_id = :ls_supervisor
 	USING cprdb;
 	If not cprdb.check() or cprdb.sqlcode = 100 or isnull(ls_supervisor_code) then 
-		mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Invalid supervisor user id " + ls_provider+". Assuming the attending doc ("+ls_provider+" is billable", 4)	
 		lb_same_id = true
 	End if
 end if
@@ -2365,7 +2365,7 @@ if lb_same_id then
 	
 	ls_pv1 += ls_provider+"^"+ls_dfamily+"^"+ls_dgiven+"^"+ls_dmiddle+"^"+ls_dsuffix+"^"+ls_dprefix+"^"+ls_ddegree
 	
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Billable Provider: " + ls_provider, 2)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Billable Provider: " + ls_provider, 2)	
 else
 	if isnull(ls_supervisor_code) then ls_supervisor_code=""
 	if isnull(ls_sdfamily) then ls_sdfamily = ""
@@ -2376,9 +2376,9 @@ else
 	if isnull(ls_sddegree) then ls_sddegree=""
 
 	ls_pv1 += ls_supervisor_code+"^"+ls_sdfamily+"^"+ls_sdgiven+"^"+ls_sdmiddle+"^"+ls_sdsuffix+"^"+ls_sdprefix+"^"+ls_sddegree
-	mylog.log(this, "chrg()", "MessageId: "+string(message_id)+"Billable Provider: " + ls_supervisor_code, 2)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "MessageId: "+string(message_id)+"Billable Provider: " + ls_supervisor_code, 2)	
 End If
-mylog.log(this, "chrg()", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
+mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg.0052", "encounterpro visitnumber. " + ls_visitnumber_id , 2)
 
 if isnull(ls_visitnumber_id) then ls_visitnumber_id=""
 ls_pv1 += "||||||||||||"+ls_visitnumber_id+"|||||||||||||||||||||||||"+string(ldt_encounter_date,"yyyymmdd")
@@ -2555,7 +2555,7 @@ if is_msg_count > 1 then
 END IF
 
 if isnull(ls_msg) or len(ls_msg) = 0 then 
-	mylog.log(this, "xx_do_service", "Billing Failed:charge message is null or empty", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson.0482", "Billing Failed:charge message is null or empty", 4)	
 	return -1 // error 
 end if
 
@@ -2569,12 +2569,12 @@ if right(recv_app_path, 1) <> "\" then ls_path += "\"
 ls_filename = ls_path + string(message_id) + string(today(),"yyyymmdd") + string(now(),"hhmmss") + ".txt"
 
 if fileexists(ls_filename) then
-	mylog.log(this, "chrg_mckesson()", "Error getting next file number "+ls_filename, 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson.0496", "Error getting next file number "+ls_filename, 4)
 	return -1
 end if
 
 if mylog.file_write(lblb_bill,ls_filename) < 0 then
-	mylog.log(this, "chrg_mckesson()", "Error writing the report into a file", 4)
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson.0496", "Error writing the report into a file", 4)
 	return -1
 end if
 
@@ -2586,12 +2586,12 @@ if not isnull(hold_outgoing) then
 	ls_filename = ls_path + string(message_id) + string(today(),"yyyymmdd") + string(now(),"hhmmss") + ".txt"
 
 	if fileexists(ls_filename) then
-		mylog.log(this, "chrg_mckesson()", "Error getting next file number", 4)
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson.0496", "Error getting next file number", 4)
 		return -1
 	end if
 
 	if mylog.file_write(lblb_bill,ls_filename) < 0 then
-		mylog.log(this, "chrg_mckesson()", "Error writing the report into a file", 4)
+		mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson.0496", "Error writing the report into a file", 4)
 	end if
 end if
 

@@ -75,7 +75,7 @@ if popup.data_row_count = 2 then
 	open_date = date(popup.items[2])
 	st_open_date.text = string(open_date, date_format_string)
 else
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_pop_close_assessment.open.0025", "Invalid parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

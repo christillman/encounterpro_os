@@ -564,7 +564,7 @@ popup = message.powerobjectparm
 graph_properties = popup.objectparm
 which_series = long(popup.item)
 if which_series <= 0 then
-	log.log(this, "open", "Invalid parameters", 4)
+	log.log(this, "w_graph_data_data.open.0012", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -578,7 +578,7 @@ display_date_range()
 
 ll_count = graph_properties.get_data_items(dw_series_data)
 if ll_count <= 0 then
-	log.log(this, "open", "No compatible data items found", 4)
+	log.log(this, "w_graph_data_data.open.0012", "No compatible data items found", 4)
 	close(this)
 	return
 end if

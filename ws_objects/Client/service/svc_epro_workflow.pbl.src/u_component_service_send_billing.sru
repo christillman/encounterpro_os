@@ -69,7 +69,7 @@ If isnull(ls_component_id) then // send to encounter location
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then
-		mylog.log(this, "xx_do_service()", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
+		mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -78,7 +78,7 @@ end if
 if isnull(ls_office_name) then ls_office_name = ""
 if isnull(ls_office_id) then ls_office_id = ""
 if isnull(ls_component_id) then
-	mylog.log(this, "xx_do_service()", "Billing not enabled for Encounter("+current_patient.cpr_id + ", " + string(encounter_id) + ") Office (" + ls_office_name + ", " + string(ls_office_id) + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Billing not enabled for Encounter("+current_patient.cpr_id + ", " + string(encounter_id) + ") Office (" + ls_office_name + ", " + string(ls_office_id) + ")", 1)
 	return 2
 end if
 
@@ -92,12 +92,12 @@ AND encounter_id = :encounter_id
 Using cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "xx_do_service()", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
 	return -1
 end if
 
 If ls_bill_flag = 'N' Then
-	mylog.log(this, "xx_do_service()", "Encounter is not billable (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Encounter is not billable (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 1)
 	Return 2 //  // Cancell the service
 end if
 
@@ -111,7 +111,7 @@ end if
 //
 ls_billable = sqlca.fn_check_encounter_owner_billable(current_patient.cpr_id,encounter_id)
 if isnull(ls_billable) or len(ls_billable) = 0 then
-	mylog.log(this, "xx_do_service()", "Billing disabled for this encounter owner (" + ls_billable + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Billing disabled for this encounter owner (" + ls_billable + ")", 1)
 	Return 2 //  // Cancell the service
 end if
 
@@ -153,7 +153,7 @@ else
 	// Local Billing Component
 	luo_billing = component_manager.get_component(ls_component_id)
 	if isnull(luo_billing) then
-		mylog.log(this, "xx_do_service()", "Error getting billing component (" + ls_component_id + ")", 4)
+		mylog.log(this, "u_component_service_send_billing.xx_do_service.0052", "Error getting billing component (" + ls_component_id + ")", 4)
 		return -1
 	end if
 	

@@ -1500,7 +1500,7 @@ for i = 1 to pstr_tree.branch_count
 		li_sts = exam_clear_default_results(pl_exam_sequence, ps_user_id, pstr_tree.branch[i].branch_id)
 	end if
 	if li_sts < 0 then
-		log.log(this, "exam_clear_default_results()", "Error clearing results", 4)
+		log.log(this, "u_list_data.exam_clear_default_results.0013", "Error clearing results", 4)
 		return -1
 	end if
 next
@@ -2241,7 +2241,7 @@ FROM o_Service
 WHERE service = :ps_service;
 if not tf_check() then return "Y"
 if sqlca.sqlcode = 100 then
-	log.log(this, "service_secure_flag()", "Service not found (" + ps_service + ")", 3)
+	log.log(this, "u_list_data.service_secure_flag.0011", "Service not found (" + ps_service + ")", 3)
 	return "Y"
 end if
 
@@ -3781,7 +3781,7 @@ for i = 1 to ll_rowcount
 	// Make sure the branch_id is non-zero.
 	ll_branch_id = observation_tree.object.branch_id[i]
 	if isnull(ll_branch_id) or ll_branch_id <= 0 then
-		log.log(this, "get_observation_tree()", "Invalid branch_id for parent observation (" + ps_parent_observation_id + ")", 3)
+		log.log(this, "u_list_data.get_observation_tree.0020", "Invalid branch_id for parent observation (" + ps_parent_observation_id + ")", 3)
 		continue
 	end if
 	
@@ -4061,7 +4061,7 @@ ls_find = "branch_id=" + string(pstr_branch.branch_id)
 ll_row = observation_tree.find(ls_find, 1, ll_rowcount)
 // If we didn't find this branch then return an error
 if ll_row <= 0 then
-	log.log(this, "observation_tree_branch_update()", "Branch not found (" + pstr_branch.parent_observation_id + ", " + string(pstr_branch.branch_id) + ")", 4)
+	log.log(this, "u_list_data.observation_tree_branch_update.0035", "Branch not found (" + pstr_branch.parent_observation_id + ", " + string(pstr_branch.branch_id) + ")", 4)
 	return -1
 end if
 
@@ -5913,7 +5913,7 @@ u_ds_data luo_data
 
 // Make sure it's not null
 if isnull(pl_maintenance_rule_id) then
-	log.log(this, "get_maintenance_rule()", "Null maintenance rule id", 4)
+	log.log(this, "u_list_data.get_maintenance_rule.0009", "Null maintenance rule id", 4)
 	setnull(lstr_maintenance_rule.maintenance_rule_id)
 	return lstr_maintenance_rule
 end if
@@ -5939,11 +5939,11 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_c_maintenance_rule")
 icount = luo_data.retrieve(lstr_maintenance_rule.maintenance_rule_id)
 if icount = 0 then
-	log.log(this, "get_maintenance_rule()", "Maintenance rule not found (" + string(lstr_maintenance_rule.maintenance_rule_id) + ")", 4)
+	log.log(this, "u_list_data.get_maintenance_rule.0009", "Maintenance rule not found (" + string(lstr_maintenance_rule.maintenance_rule_id) + ")", 4)
 	setnull(lstr_maintenance_rule.maintenance_rule_id)
 	return lstr_maintenance_rule
 elseif icount < 0 then
-	log.log(this, "get_maintenance_rule()", "Error getting maintenance rule", 4)
+	log.log(this, "u_list_data.get_maintenance_rule.0009", "Error getting maintenance rule", 4)
 	setnull(lstr_maintenance_rule.maintenance_rule_id)
 	return lstr_maintenance_rule
 end if
@@ -6125,7 +6125,7 @@ private function integer get_menu_items (ref str_menu pstr_menu);long i
 // Get the menu items
 pstr_menu.menu_item_count = menu_items.retrieve(pstr_menu.menu_id)
 if pstr_menu.menu_item_count < 0 then
-	log.log(this, "get_menu()", "Error retrieving menu items (" + string(pstr_menu.menu_id) + ")", 4)
+	log.log(this, "u_list_data.get_menu_items.0006", "Error retrieving menu items (" + string(pstr_menu.menu_id) + ")", 4)
 	return -1
 end if
 
@@ -6300,7 +6300,7 @@ end if
 
 li_sts = get_menu_items(lstr_menu)
 if li_sts < 0 then
-	log.log(this, "get_menu()", "Error getting menu items (" + string(lstr_menu.menu_id) + ")", 4)
+	log.log(this, "u_list_data.get_menu_items.0006", "Error getting menu items (" + string(lstr_menu.menu_id) + ")", 4)
 	// Return the empty menu
 	setnull(lstr_menu.menu_id)
 	setnull(lstr_menu.description)
@@ -6491,7 +6491,7 @@ string ls_find
 long ll_row
 
 if isnull(ps_xml_class) then
-	log.log(this, "get_xml_class()", "Null xml_class", 4)
+	log.log(this, "u_list_data.xml_class.0006", "Null xml_class", 4)
 	setnull(pstr_c_xml_class.xml_class)
 	return -1
 end if
@@ -6521,7 +6521,7 @@ if ll_row > 0 then
 	pstr_c_xml_class.config_object = xml_class.object.config_object[ll_row]
 	pstr_c_xml_class.xml_schema = xml_class.object.xml_schema[ll_row]
 else
-	log.log(this, "get_xml_class()", "xml_class not found (" + ps_xml_class + ")", 4)
+	log.log(this, "u_list_data.xml_class.0006", "xml_class not found (" + ps_xml_class + ")", 4)
 	return -1
 end if
 
@@ -6536,7 +6536,7 @@ string ls_find
 long ll_row
 
 if isnull(ps_config_object) then
-	log.log(this, "get_xml_class()", "Null config_object", 4)
+	log.log(this, "u_list_data.xml_class.0006", "Null config_object", 4)
 	return -1
 end if
 
@@ -6715,7 +6715,7 @@ long ll_rowcount
 datetime ldt_last_updated
 
 if isnull(pl_display_script_id) then
-	log.log(this, "display_script()", "null display_script_id", 4)
+	log.log(this, "u_list_data.display_script.0008", "null display_script_id", 4)
 	return -1
 end if
 
@@ -6746,7 +6746,7 @@ long ll_cache_index
 long ll_attribute_sequence
 
 if isnull(pl_display_script_id) then
-	log.log(this, "display_script()", "null display_script_id", 4)
+	log.log(this, "u_list_data.display_script.0008", "null display_script_id", 4)
 	return -1
 end if
 
@@ -6805,7 +6805,7 @@ FROM c_Display_Script
 WHERE display_script_id = :pl_display_script_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "display_script()", "display_script_id not found (" + string(pl_display_script_id) + ")", 4)
+	log.log(this, "u_list_data.display_script.0008", "display_script_id not found (" + string(pl_display_script_id) + ")", 4)
 	return -1
 end if
 
@@ -7091,12 +7091,12 @@ long ll_rowcount
 setnull(ll_null)
 
 if isnull(ps_epro_object) or trim(ps_epro_object) = "" then
-	log.log(this, "find_epro_object_property()", "Null epro object", 4)
+	log.log(this, "u_list_data.find_epro_object_property.0010", "Null epro object", 4)
 	return -1
 end if
 
 if isnull(ps_property_name) or trim(ps_property_name) = "" then
-	log.log(this, "find_epro_object_property()", "Null property", 4)
+	log.log(this, "u_list_data.find_epro_object_property.0010", "Null property", 4)
 	return -1
 end if
 
@@ -7130,7 +7130,7 @@ if ll_row > 0 then
 	return 1
 end if
 
-log.log(this, "find_epro_object_property()", "epro object property not found (" + ps_epro_object + ", " + ps_property_name + ")", 4)
+log.log(this, "u_list_data.find_epro_object_property.0010", "epro object property not found (" + ps_epro_object + ", " + ps_property_name + ")", 4)
 
 return -1
 
@@ -7170,27 +7170,27 @@ integer li_replace_flag
 
 // Validate required fields
 if isnull(pstr_c_xml_code.owner_id) then
-	log.log(this, "add_code()", "No owner_id", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No owner_id", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.code_domain) or trim(pstr_c_xml_code.code_domain) = "" then
-	log.log(this, "add_code()", "No code_domain", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No code_domain", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.code) or trim(pstr_c_xml_code.code) = "" then
-	log.log(this, "add_code()", "No code", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No code", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.epro_domain) or trim(pstr_c_xml_code.epro_domain) = "" then
-	log.log(this, "add_code()", "No epro_domain", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No epro_domain", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.epro_id) or trim(pstr_c_xml_code.epro_id) = "" then
-	log.log(this, "add_code()", "No epro_id", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No epro_id", 4)
 	return -1
 end if
 
@@ -7261,27 +7261,27 @@ end if
 
 // Validate required fields
 if isnull(pstr_c_xml_code.owner_id) then
-	log.log(this, "add_code()", "No owner_id", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No owner_id", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.code_domain) or trim(pstr_c_xml_code.code_domain) = "" then
-	log.log(this, "add_code()", "No code_domain", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No code_domain", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.code) or trim(pstr_c_xml_code.code) = "" then
-	log.log(this, "add_code()", "No code", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No code", 4)
 	return -1
 end if
 
 if isnull(pstr_c_xml_code.epro_domain) or trim(pstr_c_xml_code.epro_domain) = "" then
-	log.log(this, "add_code()", "No epro_domain", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No epro_domain", 4)
 	return -1
 end if
 
 if (isnull(pstr_c_xml_code.epro_id) or trim(pstr_c_xml_code.epro_id) = "") and not pb_remove_all then
-	log.log(this, "add_code()", "No epro_id", 4)
+	log.log(this, "u_list_data.xml_add_mapping.0008", "No epro_id", 4)
 	return -1
 end if
 

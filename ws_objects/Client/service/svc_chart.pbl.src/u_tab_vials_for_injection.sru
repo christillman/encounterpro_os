@@ -39,7 +39,7 @@ luo_allergy_trts.set_dataobject("dw_sp_get_open_allergy_treatments", sqlca)
 ll_rowcount = luo_allergy_trts.retrieve(ls_cpr_id)
 
 If ll_rowcount <= 0 Then
-	log.log(this,"initialize()","no open allergy treatments",3)
+	log.log(this,"u_tab_vials_for_injection.initialize.0019","no open allergy treatments",3)
 	return -1
 End If
 

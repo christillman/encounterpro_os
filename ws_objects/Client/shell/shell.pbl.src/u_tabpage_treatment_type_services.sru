@@ -201,13 +201,13 @@ if isnull(ll_service_sequence) then return 0
 // Get the service component object
 ls_service = dw_services.object.service[pl_row]
 if isnull(ls_service) then
-	log.log(this, "configure_service()", "Null service", 4)
+	log.log(this, "u_tabpage_treatment_type_services.configure_service.0018", "Null service", 4)
 	return -1
 end if
 
 ls_service_id = datalist.service_id(ls_service)
 if isnull(ls_service_id) then
-	log.log(this, "configure_service()", "Service not found (" + ls_service + ")", 4)
+	log.log(this, "u_tabpage_treatment_type_services.configure_service.0018", "Service not found (" + ls_service + ")", 4)
 	return -1
 end if
 
@@ -240,7 +240,7 @@ next
 
 li_sts = luo_data.update()
 if li_sts < 0 then
-	log.log(this, "configure_service()", "Error updating attributes", 4)
+	log.log(this, "u_tabpage_treatment_type_services.configure_service.0018", "Error updating attributes", 4)
 	return -1
 end if
 

@@ -136,7 +136,7 @@ public function integer set_tab_user (string ps_user_id, string ps_tag, string p
 
 
 if isnull(ps_user_id) then
-	log.log(this, "set_tab_user()", "Null user_id", 4)
+	log.log(this, "u_tabpage_shell_todo_lists.set_tab_user.0005", "Null user_id", 4)
 	return -1
 end if
 
@@ -148,7 +148,7 @@ if used_tab_count >= tab_todo.page_count then
 	// We need a new page
 	luo_tabpage = tab_todo.open_page("u_tabpage_shell_todo_items", false)
 	if isnull(luo_tabpage) then
-		log.log(this, "set_tab_user()", "Error opening todo-items tab page (" + ps_user_id + ")", 4)
+		log.log(this, "u_tabpage_shell_todo_lists.set_tab_user.0005", "Error opening todo-items tab page (" + ps_user_id + ")", 4)
 		return -1
 	end if
 	luo_tabpage.resize_tabpage( )

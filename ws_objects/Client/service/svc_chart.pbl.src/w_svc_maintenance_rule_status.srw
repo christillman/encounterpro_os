@@ -142,14 +142,14 @@ End If
 
 service.get_attribute("maintenance_rule_id", ll_maintenance_rule_id)
 if isnull(ll_maintenance_rule_id) then
-	log.log(this, "open", "No maintenance_rule_id", 4)
+	log.log(this, "w_svc_maintenance_rule_status.open.0020", "No maintenance_rule_id", 4)
 	close(this)
 	return
 end if
 
 maintenance_rule = datalist.get_maintenance_rule(ll_maintenance_rule_id)
 if isnull(maintenance_rule.maintenance_rule_id) then
-	log.log(this, "open", "Error getting maintenance rule structure", 4)
+	log.log(this, "w_svc_maintenance_rule_status.open.0020", "Error getting maintenance rule structure", 4)
 	close(this)
 	return
 end if
@@ -163,7 +163,7 @@ if maintenance_rule.assessment_flag = "Y" then
 	luo_data.set_dataobject("dw_maintenance_open_assessment_list")
 	li_sts = luo_data.retrieve(current_patient.cpr_id, maintenance_rule.maintenance_rule_id)
 	if li_sts < 0 then
-		log.log(this, "open", "Error getting open assessments", 4)
+		log.log(this, "w_svc_maintenance_rule_status.open.0020", "Error getting open assessments", 4)
 		close(this)
 		return
 	end if
@@ -172,12 +172,12 @@ if maintenance_rule.assessment_flag = "Y" then
 		luo_data.set_dataobject("dw_maintenance_closed_assessment_list")
 		li_sts = luo_data.retrieve(current_patient.cpr_id, maintenance_rule.maintenance_rule_id)
 		if li_sts < 0 then
-			log.log(this, "open", "Error getting closed assessments", 4)
+			log.log(this, "w_svc_maintenance_rule_status.open.0020", "Error getting closed assessments", 4)
 			close(this)
 			return
 		end if
 		if li_sts = 0 then
-			log.log(this, "open", "Qualifying assessment not found", 3)
+			log.log(this, "w_svc_maintenance_rule_status.open.0020", "Qualifying assessment not found", 3)
 			st_assessment.text = "N/A"
 		end if
 	end if

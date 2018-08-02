@@ -89,7 +89,7 @@ service = Message.powerobjectparm
 
 // Make sure we have a treatment
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment object", 4)
+	log.log(this, "w_do_procedure.open.0013", "No treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

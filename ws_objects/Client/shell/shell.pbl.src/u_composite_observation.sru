@@ -72,7 +72,7 @@ if not isnull(pl_branch_id) then
 	WHERE branch_id = :pl_branch_id;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "itempopulate", "branch not found (" + string(pl_branch_id) + ")", 4)
+		log.log(this, "u_composite_observation.update_observation.0017", "branch not found (" + string(pl_branch_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -128,7 +128,7 @@ treeviewitem ltvi_item
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "observation_menu", "Error getting treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_composite_observation.convert_handle.0007", "Error getting treeview item (" + string(pl_handle) + ")", 4)
 	return -1
 end if
 
@@ -303,7 +303,7 @@ CHOOSE CASE buttons[button_pressed]
 		// Update the database
 		li_sts = datalist.observation_tree_branch_update(lstr_branch)
 		if li_sts <= 0 then
-			log.log(this, "clicked", "Error saving branch changes", 4)
+			log.log(this, "u_composite_observation.observation_menu.0139", "Error saving branch changes", 4)
 			return
 		end if
 
@@ -731,7 +731,7 @@ CHOOSE CASE buttons[button_pressed]
 		// Update the database
 		li_sts = datalist.observation_tree_branch_update(lstr_branch)
 		if li_sts <= 0 then
-			log.log(this, "clicked", "Error saving branch changes", 4)
+			log.log(this, "u_composite_observation.observation_menu.0139", "Error saving branch changes", 4)
 			return
 		end if
 
@@ -780,7 +780,7 @@ integer li_followon_severity
 
 li_sts = getitem(handle, ltvi_parent_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_composite_observation.update_observation.0017", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
@@ -804,17 +804,17 @@ elseif not isnull(ll_parent_branch_id) then
 	WHERE branch_id = :ll_parent_branch_id;
 	if not tf_check() then return 1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "itempopulate", "branch not found (" + string(ll_parent_branch_id) + ")", 4)
+		log.log(this, "u_composite_observation.update_observation.0017", "branch not found (" + string(ll_parent_branch_id) + ")", 4)
 		return 1
 	end if
 	if isnull(ls_followon_observation_id) then
-		log.log(this, "itempopulate", "No followon observation for branch (" + string(ll_parent_branch_id) + ")", 3)
+		log.log(this, "u_composite_observation.update_observation.0017", "No followon observation for branch (" + string(ll_parent_branch_id) + ")", 3)
 		return 1
 	end if
 	
 	ls_description = datalist.observation_description(ls_followon_observation_id)
 	if isnull(ls_description) then
-		log.log(this, "itempopulate", "Followon observation not found (" + string(ll_parent_branch_id) + ", " + ls_followon_observation_id + ")", 3)
+		log.log(this, "u_composite_observation.update_observation.0017", "Followon observation not found (" + string(ll_parent_branch_id) + ", " + ls_followon_observation_id + ")", 3)
 		return 1
 	end if
 
@@ -834,7 +834,7 @@ elseif not isnull(ll_parent_branch_id) then
 	ll_new_handle = insertitemlast(handle, ltvi_new_item)
 	return 0
 else
-	log.log(this, "itempopulate", "Not a composite observation and no branch_id", 3)
+	log.log(this, "u_composite_observation.update_observation.0017", "Not a composite observation and no branch_id", 3)
 	return 1
 end if
 

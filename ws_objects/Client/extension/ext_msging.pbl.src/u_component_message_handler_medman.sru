@@ -46,12 +46,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "medman_diagnosis()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_diagnosis.0011", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman diagnosis()", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_diagnosis.0016", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -166,12 +166,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "medman_procedure()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_procedure.0016", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman procedure()", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_procedure.0021", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -339,7 +339,7 @@ ELSE
 	li_length = li_end - li_start
 	ls_numvalue = Mid(is_stg,li_start,li_length) 
 	IF not IsNumber(ls_numvalue) then
-			mylog.log(this, "parse_csv()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 	END IF
 	is_array [1] = ls_numvalue
@@ -349,17 +349,17 @@ ELSE
 END IF	
 
 li_str_len = len(is_stg)
-mylog.log(this, "parse_csv()", "Message received (" + is_stg + ")",1)
+mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "Message received (" + is_stg + ")",1)
 
 //IF pos(is_stg,"~"",li_str_len) = 0 THEN
 //	if pos(is_stg,"~,",li_str_len) = 0 THEN
-//		mylog.log(this, "parse_csv()", "The input string does not end with a comma, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+//		mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "The input string does not end with a comma, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 //		RETURN -1
 //	elseif pos(is_stg,"~ ",li_str_len) = 0 THEN
-//		mylog.log(this, "parse_csv()", "The input string does not end with a space, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+//		mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "The input string does not end with a space, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 //		RETURN -1	
 //	else
-//		mylog.log(this, "parse_csv()", "The input string does not end with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+//		mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "The input string does not end with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 //		RETURN -1
 //	END IF	
 //END IF
@@ -380,7 +380,7 @@ DO WHILE lb_loop
 		li_end = li_comma 								//	Set the end same as start of the quote,comma,quote test location
 		li_length = li_end - li_start					//	Set the length of the string to get the desired characters
 		IF li_length > li_value_max_len THEN 
-			mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+			mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 			RETURN -1
 		END IF
 		if li_length = 0 then
@@ -399,7 +399,7 @@ DO WHILE lb_loop
 						li_end = li_comma
 						li_length = li_end - li_start
 					else
-						mylog.log(this, "parse_csv()", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
+						mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
 						RETURN -1
 					end if
 				else
@@ -417,7 +417,7 @@ DO WHILE lb_loop
 		//	This ELSE section runs only once, on the last array element
 		IF li_ctr = 1 THEN
 			lb_loop = FALSE								//	Set lb_loop to false, we're not going to start
-			mylog.log(this, "parse_csv()", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 		ELSE
 			// This ELSE section runs only once, on the last array element if above test is passed
@@ -426,7 +426,7 @@ DO WHILE lb_loop
 			li_start ++
 			li_length = li_end - li_start 				//	This gives the selected character string length
 			IF li_length > li_value_max_len THEN 
-				mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+				mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 				RETURN -1
 			END IF	
 			ls_value = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -438,7 +438,7 @@ DO WHILE lb_loop
 	li_pos = li_comma  + 1								//	Increments ll_pos for the next loop, if one is coming
 	ls_value = ''												//	Set ls_value to an empty string
 	IF li_ctr > li_max_fields THEN
-		mylog.log(this, "parse_csv()", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
+		mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
 		RETURN -1
 	END IF
 LOOP	
@@ -457,7 +457,7 @@ DO WHILE li_test_ctr <= li_array_upper and lb_empty_flag = TRUE
 LOOP
  
 IF lb_empty_flag THEN
-	mylog.log(this, "parse_csv()", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.parse_csv.0077", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1	
 END IF
 
@@ -517,7 +517,7 @@ long ll_message_len
 // Read the file into a local blob
 li_sts = mylog.file_read(message_file, lblb_message)
 if li_sts <= 0 then
-	mylog.log(this, "xx_handle_message()", "Unable to find the message_file at the expected location, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.xx_handle_message.0053", "Unable to find the message_file at the expected location, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -545,12 +545,12 @@ ls_formfeed = "~f"
 
 ls_stg = f_blob_to_string(lblb_message)
 IF (ls_stg = "" or isnull(ls_stg)) THEN 
-	mylog.log(this, "xx_handle_message()", "the message_file has no message, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.xx_handle_message.0053", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 ll_str_len = len(ls_stg)
 if ll_str_len = 0 THEN 
-	mylog.log(this, "xx_handle_message()", "the message_file has no message, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.xx_handle_message.0053", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -639,7 +639,7 @@ Do while ll_str_len > 0
 LOOP	
 
 if li_strings_count = 0 then
-		mylog.log(this, "xx_handle_message()", "the message_file has no message, message id (" + message_file + ")",4)
+		mylog.log(this, "u_component_message_handler_medman.xx_handle_message.0053", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -792,24 +792,24 @@ boolean lb_new_patient
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "patient_guarantor()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman patient()", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0065", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
 END IF	
 
 IF li_sts < 27 then
-	mylog.log(this, "medman patient()", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
+	mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0065", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
 	return -1
 END IF	
 
 ls_billing_id = is_array[1] + '.0'
-mylog.log(this, "patient_guarantor()", "The patient billing_id=" + ls_billing_id, 1)
+mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "The patient billing_id=" + ls_billing_id, 1)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -841,7 +841,7 @@ end if
 
 if (is_array[14] = "0" or isnull(is_array[14]) or is_array[14] = "") then
 	ls_error = is_array[14]
-	mylog.log(this, "patient_guarantor()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -851,7 +851,7 @@ else
 		ldt_date_of_birth = datetime(ld_birthdate)
 	else
 		ls_error = is_array[14]
-		mylog.log(this, "patient_guarantor()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 		return -1
 	end if
 end if
@@ -876,7 +876,7 @@ if yamajala_rules  = "Y" then
 	end if
 end if
 if isnull(ls_cpr_id) then
-	mylog.log(this, "patient_guarantor()", "create new patient, lname=" + ls_last_name, 1)
+	mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "create new patient, lname=" + ls_last_name, 1)
 	li_sts = f_create_new_patient( &
 									ls_cpr_id,   &
 									ls_race,   &
@@ -929,7 +929,7 @@ if lb_new_patient then
 	end if	
 end if
 
-mylog.log(this, "patient_guarantor()", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
+mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0060", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
 
 return 1
 end function
@@ -953,7 +953,7 @@ li_pos = pos(is_stg,"~"",1)	// Validate the 1st character is a quote
 IF li_pos = 1 THEN 
 	li_start = li_pos + 1		// If so, it;s OK to start
 ELSE
-	mylog.log(this, "parse_message()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.parse_message.0020", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	is_stg = ''
 	RETURN -1
 END IF
@@ -964,7 +964,7 @@ IF li_comma > 0 THEN				// We're still in a valid string
 	li_length = li_comma - li_start	//	Set the length of the string to get the desired characters
 	
 	IF li_length > li_value_max_len THEN 
-		mylog.log(this, "parse_message()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+		mylog.log(this, "u_component_message_handler_medman.parse_message.0020", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 		is_stg = ''
 		RETURN -1
 	END IF	
@@ -1027,7 +1027,7 @@ protected function integer xx_initialize ();string ls_temp, ls_temp2,ls_siblings
 	end if
 
 if isnull(ls_temp) or ls_temp = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: No Schedule Facility ID Specified.", 4)
+	mylog.log(this, "u_component_message_handler_medman.xx_initialize.0014", "ERROR: No Schedule Facility ID Specified.", 4)
 	return 1
 end if
 
@@ -1056,13 +1056,13 @@ loop
 is_offices[ii_office_count] = ls_temp
 
 if isnull(is_offices[1]) or is_offices[1] = "" then
-	mylog.log(this, "xx_initialize()", "ERROR: Schedule Facility not entered.", 4)
+	mylog.log(this, "u_component_message_handler_medman.xx_initialize.0014", "ERROR: Schedule Facility not entered.", 4)
 	ii_office_count = 0
 	return -1
 end if	
 
 for li_count = 1 to ii_office_count
-	mylog.log(this, "xx_initialize()", " schedule facility=" + is_offices[li_count],2)
+	mylog.log(this, "u_component_message_handler_medman.xx_initialize.0014", " schedule facility=" + is_offices[li_count],2)
 next	
 
 DECLARE lc_facilitycursor CURSOR FOR  
@@ -1140,12 +1140,12 @@ string ls_cpr_id
 integer li_sts
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "medman insurance()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_insurance.0034", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman insurance()", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_insurance.0034", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -1202,7 +1202,7 @@ ls_insurance_id = left(ls_insurance_id,24)
 		if not cprdb.check() then return -1
 	end if
 	
-mylog.log(this, "medman insurance()", ls_insurance_id + "," + ls_name + "," + ls_insurance_type,2)
+mylog.log(this, "u_component_message_handler_medman.medman_insurance.0034", ls_insurance_id + "," + ls_name + "," + ls_insurance_type,2)
 return 1
 end function
 
@@ -1274,26 +1274,26 @@ boolean lb_new_patient
 // reserved
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "medman_patient()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman patient()", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0065", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
 END IF	
 
 IF li_sts < 19 then
-	mylog.log(this, "medman patient()", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
+	mylog.log(this, "u_component_message_handler_medman.patient_guarantor.0065", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
 	return -1
 END IF	
 
 ls_billing_id = is_array[1] + "." + is_array[2] 
 ls_gbilling_id = is_array[1] + ".0" // gurantor
 
-mylog.log(this, "medman_patient()", "The patient billing_id=" + ls_billing_id, 1)
+mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The patient billing_id=" + ls_billing_id, 1)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -1340,7 +1340,7 @@ ls_sex			= is_array[7]
 
 if (is_array[8] = "0" or isnull(is_array[8]) or is_array[8] = "") then
 	ls_error = is_array[8]
-	mylog.log(this, "medman_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -1350,7 +1350,7 @@ else
 		ldt_date_of_birth = datetime(ld_birthdate)
 	else
 		ls_error = is_array[8]
-		mylog.log(this, "medman_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 		return -1
 	end if
 end if
@@ -1379,7 +1379,7 @@ setnull(ls_secondary_provider_id)
 setnull(li_priority)
 setnull(ll_null)
 if isnull(ls_cpr_id) then
-	mylog.log(this, "medman_patient()", "create new patient, lname=" + ls_last_name, 1)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "create new patient, lname=" + ls_last_name, 1)
 	li_sts = f_create_new_patient( &
 									ls_cpr_id,   &
 									ls_race,   &
@@ -1461,7 +1461,7 @@ if siblings_phone then
 	using cprdb;
 end if
 
-mylog.log(this, "medman_patient()", "The patient funcion complete, cpr_id=" + ls_cpr_id, 2)
+mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The patient funcion complete, cpr_id=" + ls_cpr_id, 2)
 
 string ls_insurance_id
 string ls_allocation
@@ -1478,7 +1478,7 @@ SELECT count(authority_id) into :ll_count
 	USING cprdb;
 	if not cprdb.check() then return 1
 if ll_count = 0 then 
-	mylog.log(this, "medman_patient()", "The patient insurance plan " +  ls_insurance_id + " is missing for " + ls_cpr_id, 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The patient insurance plan " +  ls_insurance_id + " is missing for " + ls_cpr_id, 4)
 	return 1
 end if
 
@@ -1520,7 +1520,7 @@ SELECT count(authority_id) into :ll_count
 	USING cprdb;
 	if not cprdb.check() then return 1
 if ll_count = 0 then 
-	mylog.log(this, "medman_patient()", "The patient insurance plan " +  ls_insurance_id + "is missing for " + ls_cpr_id, 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The patient insurance plan " +  ls_insurance_id + "is missing for " + ls_cpr_id, 4)
 	return 1
 end if
 
@@ -1554,7 +1554,7 @@ SELECT count(authority_id) into :ll_count
 	USING cprdb;
 	if not cprdb.check() then return 1
 if ll_count = 0 then 
-	mylog.log(this, "medman_patient()", "The patient insurance plan " +  ls_insurance_id + "is missing for " + ls_cpr_id, 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_patient.0069", "The patient insurance plan " +  ls_insurance_id + "is missing for " + ls_cpr_id, 4)
 	return 1
 end if
 
@@ -1660,17 +1660,17 @@ ld_scheduledatetime = ldt_encounter_date_time
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "medman arrived()", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "medman arrived()", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "The parse_csv() function failed Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
 	IF li_sts < 24 then
-		mylog.log(this, "medman arrived()", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "The message is short (" + ls_billing_id + ", " + string(message_id) + ", " + string(li_sts) +  ", " + is_stg + ")", 2)
 		return -1
 	END IF	
 END IF	
@@ -1684,7 +1684,7 @@ end if
 
 // If this is a write-in then reject
 if is_array[1] = "******" then
-	mylog.log(this, "medman arrived()", "Write IN -- Reject (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Write IN -- Reject (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN 1
 end if	
 
@@ -1693,7 +1693,7 @@ end if
 ls_checkin_time = is_array[24]
 if northampton_rules = "Y" Then
 	If Isnull(ls_checkin_time) or ls_checkin_time = "" then
-		mylog.log(this, "medman_arrived()", "No checkin Time not provided, Message ID (" + ls_billing_id + ", " + string(message_id) + ")",2)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0113", "No checkin Time not provided, Message ID (" + ls_billing_id + ", " + string(message_id) + ")",2)
 		return 1
 	END IF
 END IF	
@@ -1701,12 +1701,12 @@ END IF
 //check for date supplied in appt date
 ls_check_date = is_array[3]
 If ls_check_date = "0" or isnull(ls_check_date) or ls_check_date = "" then
-	mylog.log(this, "medman arrived()", "Date of arrival not supplied (" + ls_billing_id + ", " + string(message_id) + ")", 2)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Date of arrival not supplied (" + ls_billing_id + ", " + string(message_id) + ")", 2)
 	RETURN 1
 End IF
 If IsDate(ls_check_date) then
 	if today() > Date(ls_check_date) THEN
-		mylog.log(this, "medman arrived()", "Date of arrival not today (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date + ")", 2)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Date of arrival not today (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date + ")", 2)
 		RETURN 1
 	end if
 	ld_medman_date = date(ls_check_date)
@@ -1714,12 +1714,12 @@ else
 	fix_date = left(ls_check_date,4) + ' ' + mid(ls_check_date,5,2) + ' ' + mid(ls_check_date,7,2)
 	if isdate(fix_date) then
 		if today() > Date(fix_date) THEN
-			mylog.log(this, "medman arrived()", "Date of arrival not today (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date + ")", 2)
+			mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Date of arrival not today (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date + ")", 2)
 			RETURN 1
 		end if
 		ld_medman_date = date(fix_date)
 	else	
-		mylog.log(this, "medman arrived()", "Date of arrival not valid (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date +")", 2)
+		mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Date of arrival not valid (" + ls_billing_id + ", " + string(message_id) + ", " + ls_check_date +")", 2)
 		RETURN 1	
 	end if	
 end if
@@ -1746,7 +1746,7 @@ and patient_status = 'ACTIVE'
 USING		cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "medman_arrived()", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 2)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0113", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 2)
 	RETURN 1
 END IF		
 
@@ -1755,7 +1755,7 @@ lb_noappt_type = false
 if isnull(ls_appointment_type) or ls_appointment_type = "" then
 	setnull(ls_encounter_type)
 	setnull(ls_new_flag)
-	mylog.log(this, "medman arrived()", "AppointmentType not provided (" + ls_billing_id + ", " + string(message_id) + ")", 2)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "AppointmentType not provided (" + ls_billing_id + ", " + string(message_id) + ")", 2)
 else	
 	SELECT encounter_type,
 			 new_flag
@@ -1799,7 +1799,7 @@ If (ISNumber(is_array[10])) then
 	ll_DoctorId = long(is_array[10])
 else
 	setnull(ll_DoctorId)
-	mylog.log(this, "medman arrived()", "Numeric DoctorId not provided (" + ls_billing_id + ", " + string(message_id) + ", " + ls_doctorid  +")", 2)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Numeric DoctorId not provided (" + ls_billing_id + ", " + string(message_id) + ", " + ls_doctorid  +")", 2)
 END IF	
 
 //Special for northampton ...rules
@@ -1823,7 +1823,7 @@ else
 			if ii_office_count = 1 then
 				ls_facilityid = is_offices[1]
 			else
-				mylog.log(this, "medman arrived()", "facility is required for multi-office practices, messge rejected (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "facility is required for multi-office practices, messge rejected (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 				return 1
 			end if
 		else
@@ -1905,13 +1905,13 @@ end if
 
 If Isnull(ls_primary_provider_id) or ls_primary_provider_id = "0" then
 	ls_error = is_array[10]
-	mylog.log(this, "medman_arrived()", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0113", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 end if
 
 ls_check_billing_id = trim(ls_check_billing_id)
 if not isnumber(ls_check_billing_id) then
-	mylog.log(this, "medman_arrived()", "billingId not numeric, ..Aborting Encounter Creation for Message ID (" + ls_billing_id + ", " + string(message_id) + ")",4)
+	mylog.log(this, "u_component_message_handler_medman.medman_arrived.0113", "billingId not numeric, ..Aborting Encounter Creation for Message ID (" + ls_billing_id + ", " + string(message_id) + ")",4)
 	RETURN -1
 END IF	
 
@@ -1933,7 +1933,7 @@ ls_status = "SCHEDULED"
 
 //	Write a new "ARRIVED" record to the "x_MedMan_Arrived" table
 //	It will be processed by the Scheduler
-mylog.log(this, "medman arrived()", "Schedule Date,AttendingDoctor for (" + ls_billing_id + " is ( " +string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss") + ","+ls_primary_provider_id+")", 2)
+mylog.log(this, "u_component_message_handler_medman.medman_arrived.0080", "Schedule Date,AttendingDoctor for (" + ls_billing_id + " is ( " +string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss") + ","+ls_primary_provider_id+")", 2)
 		
 			INSERT INTO 	x_MedMan_Arrived (
 								billing_id,
@@ -1970,7 +1970,7 @@ mylog.log(this, "medman arrived()", "Schedule Date,AttendingDoctor for (" + ls_b
 	
 			IF NOT cprdb.check() THEN 
 				// The new entry failed
-				mylog.log(this, "xx_medman_arrived()", "Unable write a record to x_MedMan_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_medman.medman_arrived.0390", "Unable write a record to x_MedMan_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 				RETURN 1								
 			END IF
 		

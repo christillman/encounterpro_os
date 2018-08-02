@@ -30,13 +30,13 @@ string ls_return
 
 // Make sure we have a treatment object
 if isnull(treatment) then
-	log.log(this, "xx_do_service()", "No treatment object", 4)
+	log.log(this, "u_component_service_get_medication.xx_do_service.0019", "No treatment object", 4)
 	return 2
 end if
 
 // Make sure we have a drug_id
 if isnull(treatment.drug_id) then
-	log.log(this, "xx_do_service()", "Null Drug_id", 4)
+	log.log(this, "u_component_service_get_medication.xx_do_service.0019", "Null Drug_id", 4)
 	return 2
 end if
 
@@ -61,7 +61,7 @@ CHOOSE CASE upper(ls_return)
 END CHOOSE
 
 // If we get here then log a warning and just return success without saving
-log.log(this, "xx_do_service()", "unrecognized return status (" + ls_return + ")", 3)
+log.log(this, "u_component_service_get_medication.xx_do_service.0019", "unrecognized return status (" + ls_return + ")", 3)
 Return 1
 
 end function

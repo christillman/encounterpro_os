@@ -187,7 +187,7 @@ end function
 
 public function integer new_result ();
 if isnull(observation_id) or observation_id = "" then
-	log.log(this, "open", "Invalid observation id", 4)
+	log.log(this, "w_new_observation_result.new_result.0003", "Invalid observation id", 4)
 	return -1
 end if
 
@@ -243,14 +243,14 @@ if popup.data_row_count = 3 then
 	if isnull(result_type) then result_type = "PERFORM"
 	status = popup.items[3]
 else
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_new_observation_result.new_result.0003", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
 
 li_sts = new_result()
 if li_sts < 0 then
-	log.log(this, "open", "Error initializing new result", 4)
+	log.log(this, "w_new_observation_result.new_result.0003", "Error initializing new result", 4)
 	close(this)
 	return
 end if

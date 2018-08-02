@@ -107,7 +107,7 @@ setnull(ls_null)
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 2 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_find_assessment.open.0019", "Invalid Parameters", 4)
 	closewithreturn(this, ls_null)
 end if
 

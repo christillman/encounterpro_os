@@ -96,7 +96,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			if isnull(ls_document_patient_workplan_item_id) then
 				ll_pos = pos(lower(lstr_collection.collectiondefinition), lower(ls_objects_magic_table), ll_pos)
 				if ll_pos > 0 then
-					log.log(po_null, "f_get_collection_example()", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
+					log.log(po_null, "f_resolve_sql.0031", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
 					return lstr_collection
 				end if
 			end if
@@ -123,7 +123,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			lstr_collection.collectiondata = CREATE u_ds_data
 			lstr_collection.collectionobjectcount = lstr_collection.collectiondata.load_query(ls_sql)
 			if lstr_collection.collectionobjectcount < 0 then
-				log.log(po_null, "f_resolve_collection()", "Error resolving SQL:~r~n" + ls_procdef, 4)
+				log.log(po_null, "f_resolve_sql.0058", "Error resolving SQL:~r~n" + ls_procdef, 4)
 				DESTROY lstr_collection.collectiondata
 				setnull(lstr_collection.collectiondata)
 			end if
@@ -136,7 +136,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			lstr_collection.collectiondata.Create(lstr_collection.collectiondefinition, ls_error_create)
 			if Len(ls_error_create) > 0 THEN
 				if isnull(ls_error_create) then ls_error_create = "<Null>"
-				log.log(po_null, "f_get_collection_example()", "Error creating datastore (" + ls_error_create + ")", 4)
+				log.log(po_null, "f_resolve_sql.0031", "Error creating datastore (" + ls_error_create + ")", 4)
 				DESTROY lstr_collection.collectiondata
 				setnull(lstr_collection.collectiondata)
 				return lstr_collection
@@ -176,7 +176,7 @@ ls_document_patient_workplan_item_id = f_attribute_find_attribute(pstr_sql_conte
 if isnull(ls_document_patient_workplan_item_id) then
 	ll_pos = pos(lower(pstr_sql_context.sql), lower(ls_objects_magic_table), ll_pos)
 	if ll_pos > 0 then
-		log.log(po_null, "f_get_collection_example()", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
+		log.log(po_null, "f_resolve_sql.0031", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
 		return -1
 	end if
 end if
@@ -207,7 +207,7 @@ end if
 ll_datacount = pstr_sql_context.data.load_query(ls_sql)
 if ll_datacount < 0 then
 	pstr_sql_context.error = sqlca.sqlerrtext
-	log.log(po_null, "f_resolve_collection()", "Error resolving SQL:~r~n" + pstr_sql_context.final_sql, 4)
+	log.log(po_null, "f_resolve_sql.0058", "Error resolving SQL:~r~n" + pstr_sql_context.final_sql, 4)
 end if
 
 ls_sql = "DROP PROCEDURE " + ls_temp_proc_name

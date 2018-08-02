@@ -82,7 +82,7 @@ ll_count = dwc_component.retrieve()
 dw_attachment_extension.settransobject(sqlca)
 ll_count = dw_attachment_extension.retrieve(extension)
 if ll_count <> 1 then
-	log.log(this, "open", "attachment extension not found (" + extension + ")", 4)
+	log.log(this, "w_config_attachment_extension.open.0018", "attachment extension not found (" + extension + ")", 4)
 	close(this)
 	return
 end if
@@ -225,7 +225,7 @@ luo_data.set_dataobject("dw_c_attachment_extension_attribute")
 li_count = luo_data.retrieve(extension)
 
 if li_count < 0 then
-	log.log(this, "configure_report()", "Error getting attributes", 4)
+	log.log(this, "w_config_attachment_extension.cb_config.clicked.0033", "Error getting attributes", 4)
 	return -1
 end if
 

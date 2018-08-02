@@ -45,7 +45,7 @@ TRY
 		ls_results_xml = ""
 	end if
 CATCH (throwable lt_error)
-	log.log(this, "xx_do_source()", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_do_source.0023", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -57,13 +57,13 @@ if len(xslt) > 0 then
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else
-		log.log(this, "get_results()", "Error transforming xml", 4)
+		log.log(this, "u_component_observation_jmj_com.xx_do_source.0035", "Error transforming xml", 4)
 	end if
 end if
 
 li_sts = read_data(ls_results_xml, "")
 if li_sts < 0 then
-	log.log(this, "get_results()", "Error reading xml documents", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_do_source.0035", "Error reading xml documents", 4)
 	return -1
 end if
 
@@ -85,7 +85,7 @@ setnull(xslt)
 get_attribute("debug_mode", debug_mode)
 
 if debug_mode then
-	log.log(this, "xx_initialize()", "Debug Mode", 2)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Debug Mode", 2)
 end if
 
 get_attribute("xslt_material_id", ll_material_id)
@@ -96,7 +96,7 @@ end if
 
 ls_com_id = get_attribute("com_id")
 if isnull(ls_com_id) then
-	log.log(this, "xx_initialize()", "com_id not defined", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "com_id not defined", 4)
 	return -1
 end if
 
@@ -106,7 +106,7 @@ else
 	ls_context_xml = f_get_context_xml(f_current_context())
 end if
 if isnull(ls_context_xml) then
-	log.log(this, "xx_initialize()", "Error getting context xml", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error getting context xml", 4)
 	return -1
 end if
 
@@ -115,38 +115,38 @@ if debug_mode then
 	lbl_temp = blob(ls_context_xml)
 	li_sts = log.file_write(lbl_temp, ls_temp)
 	if li_sts <= 0 then
-		log.log(this, "xx_initialize()", "Error writing context xml to file (" + ls_temp + ")", 4)
+		log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error writing context xml to file (" + ls_temp + ")", 4)
 	end if
 end if
 
 com_source = CREATE oleobject
 if debug_mode then
-	log.log(this, "xx_initialize()", "Attempting to instantiate com object (" + ls_com_id + ")", 2)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Attempting to instantiate com object (" + ls_com_id + ")", 2)
 end if
 li_sts = com_source.connecttonewobject(ls_com_id)
 if li_sts = 0 then
 	if debug_mode then
-		log.log(this, "xx_initialize()", "instantiation successful (" + ls_com_id + ")", 2)
+		log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "instantiation successful (" + ls_com_id + ")", 2)
 	end if
 	TRY
 		li_sts = com_source.initialize(ls_context_xml)
 		if li_sts <= 0 then
-			log.log(this, "xx_initialize()", "Error initializing com object (" + ls_com_id + ")", 4)
+			log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error initializing com object (" + ls_com_id + ")", 4)
 			return -1
 		end if
 		if debug_mode then
-			log.log(this, "xx_initialize()", "initialize successful (" + ls_com_id + ")", 2)
+			log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "initialize successful (" + ls_com_id + ")", 2)
 		end if
 		lb_connected = com_source.is_connected()
 		if debug_mode then
-			log.log(this, "xx_initialize()", "is_connected successful (" + ls_com_id + ")", 2)
+			log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "is_connected successful (" + ls_com_id + ")", 2)
 		end if
 	CATCH (throwable lt_error)
-		log.log(this, "xx_initialize()", "Error calling com source (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error calling com source (" + lt_error.text + ")", 4)
 		return -1
 	END TRY
 else
-	log.log(this, "xx_initialize()", "Error connecting to com source (" + ls_com_id + ", " + string(li_sts) + ")", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error connecting to com source (" + ls_com_id + ", " + string(li_sts) + ")", 4)
 	return -1
 end if
 
@@ -157,7 +157,7 @@ TRY
 	// Set callback window handle to this window
 	com_source.SetCallbackWindow(handle(com_window))
 CATCH (throwable lt_error2)
-	log.log(this, "xx_initialize()", "Error setting callback window (" + lt_error2.text + ")", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_initialize.0015", "Error setting callback window (" + lt_error2.text + ")", 4)
 	return -1
 END TRY
 
@@ -173,7 +173,7 @@ protected function integer xx_set_processed (string ps_id, integer pi_status);in
 TRY
 	li_sts = com_source.set_processed(ps_id, pi_status)
 CATCH (throwable lt_error)
-	log.log(this, "xx_set_processed()", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_jmj_com.xx_set_processed.0007", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

@@ -81,7 +81,7 @@ If ole_class Then
 		if not isnull(lo_error.text) then
 			ls_error += " (" + lo_error.text + ")"
 		end if
-		log.log(this, "base_initialize()", ls_error, 4)
+		log.log(this, "u_component_report.xx_displayable.0023", ls_error, 4)
 		lb_displayable = false
 	END TRY
 	
@@ -116,7 +116,7 @@ If ole_class Then
 		if not isnull(lo_error.text) then
 			ls_error += " (" + lo_error.text + ")"
 		end if
-		log.log(this, "base_initialize()", ls_error, 4)
+		log.log(this, "u_component_report.xx_displayable.0023", ls_error, 4)
 		lb_printable = false
 	END TRY
 	
@@ -227,7 +227,7 @@ str_attributes lstr_attributes
 
 li_sts = common_thread.get_adodb(adodb)
 if li_sts <= 0 then
-	mylog.log(this, "xx_printreport()", "Unable to establish ADO Connection", 4)
+	mylog.log(this, "u_component_report.xx_printreport.0022", "Unable to establish ADO Connection", 4)
 	return -1
 end if
 
@@ -248,7 +248,7 @@ if ole_class then
 		if not isnull(lo_error.text) then
 			ls_error += " (" + lo_error.text + " : " + lo_error.description + ")"
 		end if
-		log.log(this, "base_initialize()", ls_error, 4)
+		log.log(this, "u_component_report.xx_displayable.0023", ls_error, 4)
 		li_sts = -1
 	END TRY
 	
@@ -315,7 +315,7 @@ string ls_destination
 
 report_id = ps_report_id
 if isnull(report_id) then
-	mylog.log(this, "printreport()", "Report not found (" + ps_report_id + ")", 4)
+	mylog.log(this, "u_component_report.printreport.0027", "Report not found (" + ps_report_id + ")", 4)
 	printreport_status = -1  // Yuck!  PowerBuilder is sometimes losing the return status so lets set an instance variable as a backup
 	return -1
 end if
@@ -382,7 +382,7 @@ if li_sts > 0 then
 		li_sts = xx_printreport()
 		if li_sts = 0 then li_sts = printreport_status  //  Yuck.  This is needed because sometimes PowerBuilder isn't passing back the return status from xx_printreport()
 	CATCH (throwable le_error)
-		log.log(this, "printreport()", "Error printing report (" + le_error.text + ")", 3)
+		log.log(this, "u_component_report.printreport.0094", "Error printing report (" + le_error.text + ")", 3)
 		li_sts = -1
 	END TRY
 	
@@ -457,21 +457,21 @@ elseif ls_destination = "FILE" then
 			le_saveastype = PDF!
 			lb_column_headings = false
 		CASE ELSE
-			log.log(this, "open", "Invalid save-as extension (" + document_file.extension + ")", 4)
+			log.log(this, "u_component_report.print_datastore.0047", "Invalid save-as extension (" + document_file.extension + ")", 4)
 			setnull(document_file.attachment)
 			return -1
 	END CHOOSE
 
 	li_sts = report_datastore.saveas(ls_path, le_saveastype, lb_column_headings)
 	if li_sts <= 0 then
-		log.log(this, "open", "Save to file failed (" + ls_path + ")", 4)
+		log.log(this, "u_component_report.print_datastore.0047", "Save to file failed (" + ls_path + ")", 4)
 		setnull(document_file.attachment)
 		return -1
 	end if
 	
 	li_sts = log.file_read(ls_path, document_file.attachment)
 	if li_sts <= 0 then
-		log.log(this, "open", "Error reading file (" + ls_path + ")", 4)
+		log.log(this, "u_component_report.print_datastore.0047", "Error reading file (" + ls_path + ")", 4)
 		setnull(document_file.attachment)
 		return -1
 	end if
@@ -497,13 +497,13 @@ else
 	end if
 
 	
-	log.log_db(this, "print_datastore()", "Print Command Starting~n" + ls_message, 2)
+	log.log_db(this, "u_component_report.print_datastore.0087", "Print Command Starting~n" + ls_message, 2)
 	li_sts = report_datastore.print(false)
 	if li_sts <= 0 then
-		log.log(this, "print_datastore()", "Print Command Failed~n" + ls_message, 4)
+		log.log(this, "u_component_report.print_datastore.0090", "Print Command Failed~n" + ls_message, 4)
 		return -1
 	else
-		log.log_db(this, "print_datastore()", "Print Command Succeeded~n" + ls_message, 2)
+		log.log_db(this, "u_component_report.print_datastore.0087", "Print Command Succeeded~n" + ls_message, 2)
 	end if
 end if
 
@@ -521,7 +521,7 @@ CATCH (throwable lo_error)
 	if not isnull(lo_error.text) then
 		ls_error += " (" + lo_error.text + ")"
 	end if
-	log.log(this, "base_initialize()", ls_error, 4)
+	log.log(this, "u_component_report.xx_displayable.0023", ls_error, 4)
 END TRY
 
 
@@ -551,7 +551,7 @@ WHERE report_id = :report_id
 USING cprdb;
 if not tf_check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "printreport()", "Report not found (" + report_id + ")", 4)
+	mylog.log(this, "u_component_report.printreport.0027", "Report not found (" + report_id + ")", 4)
 	return -1
 end if
 
@@ -661,7 +661,7 @@ if lower(left(ps_attribute, 5)) = "text." then
 	
 	ls_sts = pds_datastore.Modify(ls_text_field + ".text='" + ps_value + "'")
 	if ls_sts <> "" then
-		mylog.log(this, "apply_dw_attributes()", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
+		mylog.log(this, "u_component_report.apply_dw_attribute.0016", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
 		li_sts = -1
 	end if
 end if
@@ -670,7 +670,7 @@ if lower(left(ps_attribute, 11)) = "datawindow." then
 	ls_current_value = pds_datastore.describe(ps_attribute)
 	ls_sts = pds_datastore.modify(ps_attribute + "=" + ps_value)
 	if ls_sts <> "" then
-		mylog.log(this, "apply_dw_attributes()", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
+		mylog.log(this, "u_component_report.apply_dw_attribute.0016", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
 		li_sts = -1
 	end if
 end if
@@ -678,7 +678,7 @@ end if
 if left(lower(ps_attribute), 8) = "dwmodify" then
 	ls_sts = pds_datastore.modify(ps_value)
 	if ls_sts <> "" then
-		mylog.log(this, "apply_dw_attributes()", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
+		mylog.log(this, "u_component_report.apply_dw_attribute.0016", "Error Applying Repoort Attribute (" + ps_attribute + ", " + ps_value + ") - " + ls_sts, 4)
 		li_sts = -1
 	end if
 end if
@@ -716,11 +716,11 @@ if isnull(ll_attachment_id) then
 		if li_sts <= 0 then return li_sts
 		get_attribute("attachment_id", ll_attachment_id)
 		if isnull(ll_attachment_id) then
-			log.log(this, "document_view()", "Document created but not found", 4)
+			log.log(this, "u_component_report.document_view_old.0013", "Document created but not found", 4)
 			return -1
 		end if
 	else
-		log.log(this, "document_view()", "Document not found", 4)
+		log.log(this, "u_component_report.document_view_old.0013", "Document not found", 4)
 		return -1
 	end if
 end if
@@ -753,7 +753,7 @@ f_attribute_add_attribute(lstr_attributes, "report_id", report_id)
 
 luo_document = component_manager.get_component(ls_document_component_id, lstr_attributes)
 if isnull(luo_document) then
-	log.log(this, "xx_printreport()", "error getting component (" + ls_document_component_id + ")", 4)
+	log.log(this, "u_component_report.document_component.0021", "error getting component (" + ls_document_component_id + ")", 4)
 	setnull(luo_document)
 	return luo_document
 end if

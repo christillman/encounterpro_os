@@ -107,7 +107,7 @@ if pbdom_root.HasAttributes() then
 				// There must have been an error converting to a blob
 				ls_errortext = "Error converting string (" +ls_encoding + ") to blob:  " + left(ls_text, 40)
 				if len(ls_text) > 40 then ls_errortext += "..."
-				log.log(po_null, "f_observation_add_xml_document()", ls_errortext, 4)
+				log.log(po_null, "f_observation_add_xml_document.0102", ls_errortext, 4)
 				return -1
 			end if
 			

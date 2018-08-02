@@ -39,7 +39,7 @@ else
 	lo_tiffdll = CREATE oleobject
 	li_sts = lo_tiffdll.connecttonewobject("TiffDLL50vic.ClsTiffDLL50")
 	if li_sts < 0 then
-		log.log(this, "load_and_annotate_file()", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
+		log.log(this, "u_component_observation_jmj_scanner.load_and_annotate_file.0019", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
 		return -1
 	end if
 	
@@ -53,11 +53,11 @@ else
 	ls_param += "text=1/0/1/" + ps_annotation + ";"
 	ll_result = lo_tiffdll.runtiffdll(ls_param)
 /*	if ll_result = 0 then
-		log.log(this, "load_and_annotate_file()", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
+		log.log(this, "u_component_observation_jmj_scanner.load_and_annotate_file.0019", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
 		return -1
 	end if */
 	if ll_result < 0 then
-		log.log(this, "load_and_annotate_file()", "RunTiffDLL failed (" + string(ll_result) + ", " + ls_param + ")", 4)
+		log.log(this, "u_component_observation_jmj_scanner.load_and_annotate_file.0019", "RunTiffDLL failed (" + string(ll_result) + ", " + ls_param + ")", 4)
 		return -1
 	end if
 	
@@ -69,7 +69,7 @@ end if
 
 li_sts = mylog.file_read(ls_temp_file, pbl_blob)
 if li_sts <= 0 then
-	log.log(this, "load_and_annotate_file()", "Read into blob failed", 4)
+	log.log(this, "u_component_observation_jmj_scanner.load_and_annotate_file.0019", "Read into blob failed", 4)
 	return -1
 end if
 
@@ -121,7 +121,7 @@ if lb_reverse then
 	for i = popup_return.item_count to 1 step -1
 		li_sts = add_attachment(observation_count, popup_return.items[i])
 		if li_sts < 0 then
-			log.log(this, "xx_do_source()", "Error loading scanned file", 4)
+			log.log(this, "u_component_observation_jmj_scanner.xx_do_source.0045", "Error loading scanned file", 4)
 			return -1
 		end if
 	next
@@ -129,7 +129,7 @@ else
 	for i = 1 to popup_return.item_count
 		li_sts = add_attachment(observation_count, popup_return.items[i])
 		if li_sts < 0 then
-			log.log(this, "xx_do_source()", "Error loading scanned file", 4)
+			log.log(this, "u_component_observation_jmj_scanner.xx_do_source.0045", "Error loading scanned file", 4)
 			return -1
 		end if
 	next
@@ -204,7 +204,7 @@ DO WHILE true
 			// Is the user wants to skip the annotation, then just load the file into the attachment blob
 			li_sts = mylog.file_read(ps_file, observations[pl_observation_index].attachment_list.attachments[ll_attachment_count + 1].attachment)
 			if li_sts <= 0 then
-				log.log(this, "xx_do_source()", "Read into blob failed", 4)
+				log.log(this, "u_component_observation_jmj_scanner.xx_do_source.0045", "Read into blob failed", 4)
 				return -1
 			end if
 			exit

@@ -89,7 +89,7 @@ AND p_Family_History.family_history_sequence = :pl_family_history_sequence;
 if not tf_check() then close(this)
 
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "Invalid family_history_sequence (" &
+	log.log(this, "w_relative.load_relative.0023", "Invalid family_history_sequence (" &
 		+ current_patient.cpr_id + ", "  &
 		+ string(pl_family_history_sequence) + ")", 4)
 	return 0
@@ -170,7 +170,7 @@ if isnull(popup.item) then
 else
 	ll_family_history_sequence = long(popup.item)
 	if ll_family_history_sequence <= 0 then
-		log.log(this, "open", "Negative or Zero family_history_sequence (" &
+		log.log(this, "w_relative.load_relative.0023", "Negative or Zero family_history_sequence (" &
 			+ current_patient.cpr_id + ", "  &
 			+ string(ll_family_history_sequence) + ")", 4)
 		close(this)

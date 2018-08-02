@@ -362,7 +362,7 @@ next
 
 // Make sure we have at least one group
 if group_count <= 0 then
-	log.log(this, "initialize()", "No Groups Found", 5)
+	log.log(this, "u_main_tab.initialize.0049", "No Groups Found", 5)
 	return
 end if
 
@@ -375,7 +375,7 @@ for i = 1 to group_count
 	
 	li_sts = open_page(groups[i].tab_page, i, groups[i].description, "LOCALOFFICE")
 	if li_sts <= 0 then
-		log.log(this, "initialize()", "Unable to open page", 5)
+		log.log(this, "u_main_tab.initialize.0049", "Unable to open page", 5)
 		return
 	end if
 	groups[i].tab_page.initialize(groups[i].group_id, groups[i].description, groups[i].description)
@@ -396,7 +396,7 @@ if not lb_default_group_found then default_group_id = groups[1].group_id
 //if li_count >= 1 then
 //	li_sts = open_page(other_office, group_count + 1, "Other Offices", "OTHEROFFICE")
 //	if li_sts <= 0 then
-//		log.log(this, "initialize()", "Unable to open 'Other Offices' page", 5)
+//		log.log(this, "u_main_tab.initialize.0049", "Unable to open 'Other Offices' page", 5)
 //		return
 //	end if
 //	other_office.initialize()

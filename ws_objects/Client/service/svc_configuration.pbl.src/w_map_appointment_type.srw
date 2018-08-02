@@ -88,7 +88,7 @@ event open;call super::open;str_popup popup
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 5 then
-	log.log(this,"open()","invalid parameters",4)
+	log.log(this,"w_map_appointment_type.open.0005","invalid parameters",4)
 	close(this)
 end if
 

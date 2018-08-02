@@ -115,7 +115,7 @@ popup_return.items[1] = "ERROR"
 service = message.powerobjectparm
 
 if isnull(service.treatment) then
-	log.log(this, "open", "Null Treatment Object", 4)
+	log.log(this, "w_do_vitals.open.0022", "Null Treatment Object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -139,7 +139,7 @@ uo_allergies.set_value()
 
 li_sts = dw_vitals.initialize(service, unit_preference)
 if li_sts <= 0 then
-	log.log(this, "open", "Error initializing vitals display", 4)
+	log.log(this, "w_do_vitals.open.0022", "Error initializing vitals display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -149,14 +149,14 @@ uo_unit_preference.initialize("Eng", "ENGLISH", "Met", "METRIC", unit_preference
 
 li_sts = dw_timed_set_list.initialize(service)
 if li_sts < 0 then
-	log.log(this, "open", "Error initializing vitals display", 4)
+	log.log(this, "w_do_vitals.open.0022", "Error initializing vitals display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = dw_timed_set_list.load()
 if li_sts < 0 then
-	log.log(this, "open", "Error loading vitals display", 4)
+	log.log(this, "w_do_vitals.open.0022", "Error loading vitals display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -167,14 +167,14 @@ st_timed_set_title.visible = dw_timed_set_list.visible
 if dw_timed_set_list.visible then
 	ll_row = dw_timed_set_list.select_set()
 	if ll_row <= 0 then
-		log.log(this, "open", "Error selecting timed set", 4)
+		log.log(this, "w_do_vitals.open.0022", "Error selecting timed set", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
 elseif dw_timed_set_list.rowcount() > 0 then
 	dw_timed_set_list.select_set(1)
 else
-	log.log(this, "open", "Error loading timed set - set not found", 4)
+	log.log(this, "w_do_vitals.open.0022", "Error loading timed set - set not found", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

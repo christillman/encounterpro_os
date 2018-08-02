@@ -126,7 +126,7 @@ str_p_observation lstr_observation
 ls_observation_id = service.root_observation_id()
 ll_observation_sequence = service.get_root_observation()
 if isnull(ll_observation_sequence) then
-	log.log(this, "load()", "root observation not found", 4)
+	log.log(this, "u_timed_set_list.load.0015", "root observation not found", 4)
 	return -1
 end if
 

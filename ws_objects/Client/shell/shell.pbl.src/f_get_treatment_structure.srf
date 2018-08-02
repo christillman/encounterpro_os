@@ -17,7 +17,7 @@ luo_data.set_dataobject("dw_treatment_data_single")
 
 ll_count = luo_data.retrieve(ps_cpr_id, pl_treatment_id)
 if isnull(ll_count) or ll_count <= 0 then
-	log.log(po_null, "f_get_treatment_structure()", "Error getting treatment data (" + ps_cpr_id + ", " + string(pl_treatment_id) + ")", 4)
+	log.log(po_null, "f_get_treatment_structure.0012", "Error getting treatment data (" + ps_cpr_id + ", " + string(pl_treatment_id) + ")", 4)
 	return -1
 end if
 

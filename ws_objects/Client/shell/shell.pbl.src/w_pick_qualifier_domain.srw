@@ -111,7 +111,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 1 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_pick_qualifier_domain.open.0010", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -133,7 +133,7 @@ dw_qualifiers.settransobject(sqlca)
 
 li_sts = dw_qualifier_domains.retrieve(qualifier_domain_category_id)
 if li_sts < 0 then
-	log.log(this, "open", "Error getting qualifier domains", 4)
+	log.log(this, "w_pick_qualifier_domain.open.0010", "Error getting qualifier domains", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

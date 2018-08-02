@@ -227,7 +227,7 @@ setnull(ls_parent_config_object_id)
 ll_material_id = sqlca.jmj_new_material(sle_title.text, category_id, "OK", "URL", ls_id, sle_url.text, current_scribe.user_id, ls_filename, ll_from_material_id, ls_parent_config_object_id)
 if not tf_check() then return
 if isnull(ll_material_id) or ll_material_id <= 0 then
-	log.log(this,"clicked","Error creating new material",4)
+	log.log(this,"w_new_material_url.cb_finished.clicked.0026","Error creating new material",4)
 	return
 end if
 

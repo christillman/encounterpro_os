@@ -40,12 +40,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "foxmeadows_diagnosis()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_diagnosis.0011", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "foxmeadows diagnosis()", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_diagnosis.0016", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -160,12 +160,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "foxmeadows_procedure()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_procedure.0016", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "foxmeadows procedure()", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_procedure.0021", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -339,14 +339,14 @@ IF li_pos = 1 THEN
 	lb_loop = TRUE					// OK to loop
 	li_ctr = 1
 ELSE
-	mylog.log(this, "parse_csv()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1
 END IF	
 
 li_str_len = len(is_stg)
 char lc_last_char
 lc_last_char = Right(is_Stg,1)
-mylog.log(this, "parse_csv()", "Message received (" + is_stg + ")",1)
+mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "Message received (" + is_stg + ")",1)
 
 //	Start the main data parsing loop
 DO WHILE lb_loop 
@@ -364,7 +364,7 @@ DO WHILE lb_loop
 		li_end = li_comma 								//	Set the end same as start of the quote,comma,quote test location
 		li_length = li_end - li_start					//	Set the length of the string to get the desired characters
 		IF li_length > li_value_max_len THEN 
-			mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+			mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 			RETURN -1
 		END IF
 		if li_length = 0 then
@@ -383,7 +383,7 @@ DO WHILE lb_loop
 						li_end = li_comma
 						li_length = li_end - li_start
 					else
-						mylog.log(this, "parse_csv()", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
+						mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
 						RETURN -1
 					end if
 				else
@@ -401,7 +401,7 @@ DO WHILE lb_loop
 		//	This ELSE section runs only once, on the last array element
 		IF li_ctr = 1 THEN
 			lb_loop = FALSE								//	Set lb_loop to false, we're not going to start
-			mylog.log(this, "parse_csv()", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 		ELSE
 			// This ELSE section runs only once, on the last array element if above test is passed
@@ -410,7 +410,7 @@ DO WHILE lb_loop
 			li_start ++
 			li_length = li_end - li_start 				//	This gives the selected character string length
 			IF li_length > li_value_max_len THEN 
-				mylog.log(this, "parse_csv()", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+				mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 				RETURN -1
 			END IF	
 			ls_value = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -422,7 +422,7 @@ DO WHILE lb_loop
 	li_pos = li_comma  + 1								//	Increments ll_pos for the next loop, if one is coming
 	ls_value = ''												//	Set ls_value to an empty string
 	IF li_ctr > li_max_fields THEN
-		mylog.log(this, "parse_csv()", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
+		mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
 		RETURN -1
 	END IF
 LOOP	
@@ -446,7 +446,7 @@ DO WHILE li_test_ctr <= li_array_upper and lb_empty_flag = TRUE
 LOOP
  
 IF lb_empty_flag THEN
-	mylog.log(this, "parse_csv()", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_foxy.parse_csv.0083", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1	
 END IF
 
@@ -494,13 +494,13 @@ setnull(ls_allocation)
 integer li_sts
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "foxmeadows insurance()", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "foxmeadows insurance()", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -525,7 +525,7 @@ if ls_insurance_type = '' then
 	end if
 end if	
 
-	mylog.log(this, "foxmeadows insurance()", "Patient billing id  ("+ ls_billing_id + ")", 2)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "Patient billing id  ("+ ls_billing_id + ")", 2)
 	SELECT cpr_id
 	INTO :ls_cpr_id
 	FROM p_Patient
@@ -534,11 +534,11 @@ end if
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then 
-		mylog.log(this, "foxmeadows insurance()", "Patient does not exist for  ("+ ls_billing_id + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "Patient does not exist for  ("+ ls_billing_id + ")", 4)
 		RETURN -1
 	end if
 	
-	mylog.log(this, "foxmeadows insurance()", "Patient billing id  ("+ ls_insurance_id + ")",1)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "Patient billing id  ("+ ls_insurance_id + ")",1)
 	SELECT authority_id
 	INTO :ls_insurance_id
 	FROM c_Authority
@@ -601,7 +601,7 @@ end if
 			USING cprdb;
 		if not cprdb.check() then return -1
 
-mylog.log(this, "foxmeadows insurance()", "end of insurance ", 1)
+mylog.log(this, "u_component_message_handler_foxy.foxmeadows_insurance.0022", "end of insurance ", 1)
 
 return 1
 	
@@ -681,12 +681,12 @@ Integer li_priority
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "foxmeadows_patient()", "The parse_csv() function failed Aborting Encounter Creation)", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "The parse_csv() function failed Aborting Encounter Creation)", 4)
 	RETURN -1
 END IF	
 
 ls_billing_id = is_array[1] 
-mylog.log(this, "foxmeadows_patient()", "The patient billing_id=" + ls_billing_id, 2)
+mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "The patient billing_id=" + ls_billing_id, 2)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -711,7 +711,7 @@ else
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then
-		mylog.log(this, "foxmeadows_patient()", "provider id =" + ls_doctorid+ " is not mapped", 3)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "provider id =" + ls_doctorid+ " is not mapped", 3)
 		ls_primary_provider_id = '!PHYSICIAN'
 	end if
 end if
@@ -724,7 +724,7 @@ ls_sex		= is_array[6]
 
 if (is_array[7] = "0" or isnull(is_array[7]) or is_array[7] = "") then
 	ls_error = is_array[7]
-	mylog.log(this, "foxmeadows_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -739,7 +739,7 @@ else
 			ldt_date_of_birth = datetime(ld_birthdate)
 		else
 			ls_error = is_array[7]
-			mylog.log(this, "foxmeadows_patient()", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+			mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 			setnull(ld_birthdate)
 			setnull(ldt_date_of_birth)
 		end if	
@@ -807,11 +807,11 @@ INTO :ls_consultant
 FROM c_Consultant
 WHERE consultant_id = :ls_ref_provider_id;
 if isnull(ls_consultant) or len(ls_consultant) = 0 then
-	mylog.log(this, "foxmeadows_patient()", "Referring provider id=" + ls_ref_provider_id+" is not found in c_Consultant", 3)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "Referring provider id=" + ls_ref_provider_id+" is not found in c_Consultant", 3)
 	setnull(ls_ref_provider_id)
 end if
 if isnull(ls_cpr_id) then
-	mylog.log(this, "foxmeadows_patient()", "create new patient, lname=" + ls_last_name, 1)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "create new patient, lname=" + ls_last_name, 1)
 	li_sts = f_create_new_patient( &
 									ls_cpr_id,   &
 									ls_race,   &
@@ -863,7 +863,7 @@ and patient_status = 'ACTIVE'
 USING cprdb;
 If NOT cprdb.check() then return -1
 
-mylog.log(this, "foxmeadows_patient()", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
+mylog.log(this, "u_component_message_handler_foxy.foxmeadows_patient.0073", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
 
 Return 1
 end function
@@ -939,7 +939,7 @@ setnull(ls_Attending_doctor)
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "foxmeadows arrived()", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 int li_array_upper
@@ -954,7 +954,7 @@ ld_scheduledatetime = ldt_encounter_date_time
 
 if is_interface = 'COMPUMEDIC' THEN
 	if li_array_upper < 9 then
-		mylog.log(this, "compumedic arrived()", "array length is short (" + string(li_array_upper) + ")", 4)
+		mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0087", "array length is short (" + string(li_array_upper) + ")", 4)
 		RETURN -1
 	else
 		if isnumber(is_array[6]) then
@@ -979,7 +979,7 @@ if is_interface = 'COMPUMEDIC' THEN
 			lt_arrival_time = time(integer(ls_hours),integer(ls_minutes),integer(ls_seconds))
 			ld_scheduledatetime = datetime(ld_compumedic_date,lt_arrival_time)
 		else
-			mylog.log(this, "compumedic arrived()", "date not provided", 2)
+			mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0087", "date not provided", 2)
 		end if	
 	end if	
 else
@@ -1023,13 +1023,13 @@ end if
 //	Populate variables with the array contents
 ls_billing_id = is_array[1] 
 If isnull(ls_billing_id) or ls_billing_id = "" then
-	mylog.log(this, "foxmeadows arrived()", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 If isnumber(ls_billing_id) then
 	ll_encounter_billing_id = long(ls_billing_id)
 else
-	mylog.log(this, "foxmeadows arrived()", "Billingid not numeric Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "Billingid not numeric Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -1042,10 +1042,10 @@ WHERE billing_id = :ls_billing_id AND
 	using cprdb;
 if not cprdb.check() then return -1
 if ll_count > 0 then 
-	mylog.log(this, "foxmeadows arrived()", "billing id,scheduledatetime "+ls_billing_id+","+string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss")+" already arrived", 3)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "billing id,scheduledatetime "+ls_billing_id+","+string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss")+" already arrived", 3)
 	return 1
 end if
-mylog.log(this, "foxmeadows arrived()", "billing id,scheduledatetime "+ls_billing_id+","+string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss")+" arrived", 2)
+mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "billing id,scheduledatetime "+ls_billing_id+","+string(ld_scheduledatetime,"mm/dd/yyyy hh:mm:ss")+" arrived", 2)
 ls_appointment_type = is_array[2]
 
 lb_noappt_type = false
@@ -1090,7 +1090,7 @@ if isnull(is_Array[4]) then
 	setnull(ls_primary_provider_id)
 else
 	ls_doctor_id = is_Array[4]
-	mylog.log(this, "foxmeadows arrived()", "Doctor Code: " + string(ls_doctor_id) , 2)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0072", "Doctor Code: " + string(ls_doctor_id) , 2)
 	if isnull(ls_doctor_id) or len(ls_doctor_id) = 0 Then
 			setnull(ls_primary_provider_id)
 	else
@@ -1120,7 +1120,7 @@ and patient_status = 'ACTIVE'
 USING		cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "foxmeadows_arrived()", "Unable to retrieve a CPR_ID for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0253", "Unable to retrieve a CPR_ID for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN 1
 END IF
 
@@ -1135,7 +1135,7 @@ END IF
 string ls_error
 If Isnull(ls_primary_provider_id) then
 	ls_error = is_array[4]
-	mylog.log(this, "foxmeadows_arrived()", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0253", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 End if	
 
@@ -1171,7 +1171,7 @@ VALUES (
 				:ld_scheduledatetime);
 	
 IF NOT cprdb.check() THEN 
-	mylog.log(this, "xx_foxmeadows_arrived()", "Unable write a record to x_foxmeadows_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_foxy.foxmeadows_arrived.0304", "Unable write a record to x_foxmeadows_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 	RETURN -1									
 END IF
 	
@@ -1233,13 +1233,13 @@ ls_filepath = message_file
 
 IF FileExists(ls_filepath) THEN
 	If FileLength(ls_filepath) <= 0 Then
-		mylog.log(this, "xx_handle_message()", "message file is empty ("+ ls_filepath + ")",3)
+		mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056", "message file is empty ("+ ls_filepath + ")",3)
 		FileDelete(ls_filepath)
 		Return 1
 	End If
 	li_filenum = FileOpen(ls_filepath)
 ELSE
-	mylog.log(this, "xx_handle_message()", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
+	mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056", "Unable to find the message_file at the expected location, message id (" + ls_filepath + ", " + string(li_message_id) + ")",4)
 	RETURN -1
 END IF
 
@@ -1272,7 +1272,7 @@ IF li_filenum > 0 THEN
 						ib_doublequote = true
 						li_start = li_pos + 1		// If so, it;s OK to start
 					ELSE
-						mylog.log(this, "xx_handle_message()", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 						RETURN -1
 					END IF
 				END IF
@@ -1285,7 +1285,7 @@ IF li_filenum > 0 THEN
 				IF li_comma > 0 THEN				// We're still in a valid string
 					li_length = li_comma - li_start	//	Set the length of the string to get the desired characters
 					IF li_length > li_value_max_len THEN 
-						mylog.log(this, "xx_handle_message()", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 						if li_filenum > 0 then FileClose(li_filenum)
 						RETURN -1
 					END IF	
@@ -1297,18 +1297,18 @@ IF li_filenum > 0 THEN
 					
 					CHOOSE CASE ls_rectype
 					CASE "PAT" 
-						mylog.log(this, "xx_handle_message()","entering foxmeadows_patient()",1)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056","entering foxmeadows_patient()",1)
 						li_sts = foxmeadows_patient()
 					CASE "INS"
-						mylog.log(this, "xx_handle_message()","entering foxmeadows_insurance()",1)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056","entering foxmeadows_insurance()",1)
 						li_sts = foxmeadows_insurance()	
 					CASE "REF"
 						li_sts = referring_provider()	
 					CASE "DGN"
-						mylog.log(this, "xx_handle_message()","entering foxmeadows_diagnosis()",1)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056","entering foxmeadows_diagnosis()",1)
 						li_sts = foxmeadows_diagnosis()		
 					CASE "CHK"
-						mylog.log(this, "xx_handle_message()","entering foxmeadows_arrived()",1)
+						mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056","entering foxmeadows_arrived()",1)
 						li_sts = foxmeadows_arrived()
 						if li_sts < 1 then
 							li_sts_stg = -1
@@ -1330,7 +1330,7 @@ END IF
 IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	IF li_sts < 1 THEN
-		mylog.log(this, "xx_handle_message()", "Unable to close the file (" + ls_filepath + ")", 3)
+		mylog.log(this, "u_component_message_handler_foxy.xx_handle_message.0056", "Unable to close the file (" + ls_filepath + ")", 3)
 	END IF
 END IF
 RETURN 1
@@ -1380,7 +1380,7 @@ string ls_consultant_id,ls_name
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "foxmeadows_refering_providers()", "The parse_csv() function failed to parse ref provider", 4)
+	mylog.log(this, "u_component_message_handler_foxy.referring_provider.0044", "The parse_csv() function failed to parse ref provider", 4)
 	RETURN -1
 END IF
 

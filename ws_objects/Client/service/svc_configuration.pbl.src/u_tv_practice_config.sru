@@ -121,13 +121,13 @@ u_user luo_practice
 allow_editing = pb_allow_editing
 
 if isnull(common_thread.practice_user_id) then
-	log.log(this, "display_practice()", "NULL practice_user_id", 4)
+	log.log(this, "u_tv_practice_config.display_practice.0013", "NULL practice_user_id", 4)
 	return -1
 end if
 
 luo_practice = user_list.find_user(common_thread.practice_user_id)
 if isnull(luo_practice) then
-	log.log(this, "display_practice()", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
+	log.log(this, "u_tv_practice_config.display_practice.0013", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
 	return -1
 end if
 
@@ -692,7 +692,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -772,7 +772,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -921,7 +921,7 @@ if not allow_editing then return
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1022,7 +1022,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1288,7 +1288,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1403,7 +1403,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1496,7 +1496,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1663,7 +1663,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1743,7 +1743,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -1928,7 +1928,7 @@ long ll_group_id
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -2429,7 +2429,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -2585,7 +2585,7 @@ string ls_original_send_from
 string ls_original_commcomponent
 
 if isnull(pl_interfaceserviceid) then
-	log.log(this, "new_interface_transport()", "NULL interface service id", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "NULL interface service id", 4)
 	return -1
 end if
 
@@ -2596,7 +2596,7 @@ FROM c_component_interface
 WHERE interfaceserviceid = :pl_interfaceserviceid;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 	return -1
 end if
 
@@ -2620,7 +2620,7 @@ if isnull(pl_transportsequence) then
 	end if
 	popup.title = "New Transport Direction"
 	if popup.data_row_count = 0 then
-		log.log(this, "configure_interface_transport()", "Interface does not allow either sending or receiving (" + string(pl_interfaceserviceid) + ")", 4)
+		log.log(this, "u_tv_practice_config.configure_local_interface_transport.0069", "Interface does not allow either sending or receiving (" + string(pl_interfaceserviceid) + ")", 4)
 		return -1
 	end if
 	if popup.data_row_count = 1 then
@@ -2892,7 +2892,7 @@ string ls_document_format
 string ls_send_from
 
 if isnull(pl_interfaceserviceid) then
-	log.log(this, "new_interface_transport()", "NULL interface service id", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "NULL interface service id", 4)
 	return -1
 end if
 
@@ -2904,7 +2904,7 @@ WHERE subscriber_owner_id = :sqlca.customer_id
 AND interfaceserviceid = :pl_interfaceserviceid;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 	return -1
 end if
 
@@ -3088,7 +3088,7 @@ else
 	WHERE interfaceserviceid = :pl_interfaceserviceid;
 	if not tf_check() then return -1
 	if sqlca.sqlnrows = 0 then
-		log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+		log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 		return -1
 	end if
 	
@@ -3339,12 +3339,12 @@ boolean lb_found
 string ls_document_format
 
 if isnull(pl_interfaceserviceid) then
-	log.log(this, "new_interface_transport()", "NULL interface service id", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "NULL interface service id", 4)
 	return -1
 end if
 
 if isnull(pl_transportsequence) then
-	log.log(this, "new_interface_transport()", "NULL transport sequence", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "NULL transport sequence", 4)
 	return -1
 end if
 
@@ -3355,7 +3355,7 @@ FROM c_component_interface
 WHERE interfaceserviceid = :pl_interfaceserviceid;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 	return -1
 end if
 
@@ -3366,7 +3366,7 @@ WHERE interfaceserviceid = :pl_interfaceserviceid
 AND transportsequence = :pl_transportsequence;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "interface service id not found (" + string(pl_interfaceserviceid) + ")", 4)
 	return -1
 end if
 
@@ -3382,7 +3382,7 @@ FROM c_Document_Route
 WHERE document_route = :ls_document_route;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "new_interface_transport()", "document_route not found (" + ls_document_route + ")", 4)
+	log.log(this, "u_tv_practice_config.configure_local_interface_transport.0034", "document_route not found (" + ls_document_route + ")", 4)
 	return -1
 end if
 
@@ -3560,7 +3560,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -3689,7 +3689,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -3896,7 +3896,7 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting new treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
@@ -4078,19 +4078,19 @@ Setnull(ll_null)
 
 li_sts = getitem(pl_handle, ltvi_item)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
 ll_parent_handle = finditem(ParentTreeItem!, pl_handle)
 if ll_parent_handle <= 0 then
-	log.log(this, "itempopulate", "Error finding parent treeview item (" + string(pl_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error finding parent treeview item (" + string(pl_handle) + ")", 4)
 	return
 end if
 
 li_sts = getitem(ll_parent_handle, ltvi_item_parent)
 if li_sts <= 0 then
-	log.log(this, "itempopulate", "Error getting parent treeview item (" + string(ll_parent_handle) + ")", 4)
+	log.log(this, "u_tv_practice_config.practice_menu.0025", "Error getting parent treeview item (" + string(ll_parent_handle) + ")", 4)
 	return
 end if
 

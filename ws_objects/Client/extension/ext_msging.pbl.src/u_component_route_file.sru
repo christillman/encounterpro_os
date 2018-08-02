@@ -35,19 +35,19 @@ INTO :ll_addressee, :ls_document_type, :ll_transportsequence
 FROM dbo.fn_document_route_information(:puo_document.dispatch_method);
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(this, "xx_document_send()", "Invalid dispatch_method (" + puo_document.dispatch_method + ")", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", "Invalid dispatch_method (" + puo_document.dispatch_method + ")", 4)
 	return -1
 end if
 
 
 if isnull(ll_addressee) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", puo_document.dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 	return -1
 end if
 
 li_sts = puo_document.get_document(lstr_document)
 if li_sts <= 0 then
-	log.log(this, "xx_xx_document_send()", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0036", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -59,19 +59,19 @@ DESTROY luo_data
 
 ls_temp = f_attribute_find_attribute(lstr_attributes, "attachment_location_id")
 if isnull(ls_temp) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", puo_document.dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
 	return -1
 end if
 ll_attachment_location_id = long(ls_temp)
 ls_send_to_directory = f_attribute_find_attribute(lstr_attributes, "send_to_directory")
 if isnull(ls_send_to_directory) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", puo_document.dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
 	return -1
 end if
 
 lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
 if isnull(lstr_attachment_location.attachment_location_id) then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", puo_document.dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
 	return -1
 end if
 
@@ -101,7 +101,7 @@ i = 0
 DO WHILE fileexists(ls_save_file)
 	i += 1
 	if i >= 1000 then
-		log.log(this, "xx_document_send()", "Unable to determine file path that does not already exist (" + ls_save_file + ")", 4)
+		log.log(this, "u_component_route_file.xx_send_document.0024", "Unable to determine file path that does not already exist (" + ls_save_file + ")", 4)
 		return -1
 	end if
 	ls_save_file = ls_save_path + "_" + string(i) + "." + lstr_document.extension
@@ -110,7 +110,7 @@ LOOP
 
 li_sts = log.file_write(lstr_document.attachment, ls_save_file)
 if li_sts < 0 then
-	log.log(this, "xx_document_send()", puo_document.dispatch_method + "Error saving document (" + ls_save_file + ")", 4)
+	log.log(this, "u_component_route_file.xx_send_document.0024", puo_document.dispatch_method + "Error saving document (" + ls_save_file + ")", 4)
 	return -1
 end if
 

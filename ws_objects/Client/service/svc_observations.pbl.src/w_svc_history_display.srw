@@ -122,7 +122,7 @@ service = message.powerobjectparm
 
 observation_id = service.root_observation_id()
 if isnull(observation_id) then
-	log.log(this, "open", "No observation_id", 4)
+	log.log(this, "w_svc_history_display.open.0017", "No observation_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -147,7 +147,7 @@ if isnull(tab_parents.abnormal_flag) then
 	FROM c_Observation_Treatment_Type
 	WHERE observation_id = :observation_id;
 	if not tf_check() then
-		log.log(this, "open", "Error getting observation treatment_type", 4)
+		log.log(this, "w_svc_history_display.open.0017", "Error getting observation treatment_type", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

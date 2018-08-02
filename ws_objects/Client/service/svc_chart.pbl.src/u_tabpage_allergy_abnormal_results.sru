@@ -31,12 +31,12 @@ dw_results.height = height
 
 
 if isnull(parent_tab.service) then
-	log.log(this, "initialize()", "No service context", 4)
+	log.log(this, "u_tabpage_allergy_abnormal_results.initialize.0006", "No service context", 4)
 	return -1
 end if
 
 if isnull(parent_tab.service.treatment) then
-	log.log(this, "initialize()", "No treatment context", 4)
+	log.log(this, "u_tabpage_allergy_abnormal_results.initialize.0006", "No treatment context", 4)
 	return -1
 end if
 

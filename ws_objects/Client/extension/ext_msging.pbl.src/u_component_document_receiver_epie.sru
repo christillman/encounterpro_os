@@ -54,19 +54,19 @@ conn = create SoapConnection  //Instantiated connection
 
 ls_usr = sqlca.fn_get_preference( "SYSTEM", "epie_user", ls_null, ll_null)
 if isnull(ls_usr) or ls_usr = "" then
-	log.log(this, "xx_get_documents()", "EpIE User is not set", 4)
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents.0033", "EpIE User is not set", 4)
 	return -1
 end if
 ls_pwd_e = sqlca.fn_get_preference( "SYSTEM", "epie_pwd", ls_null, ll_null)
 if isnull(ls_pwd_e) or ls_pwd_e = "" then
-	log.log(this, "xx_get_documents()", "EpIE Password is not set", 4)
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents.0033", "EpIE Password is not set", 4)
 	return -1
 end if
 
 TRY
 	ls_pwd = common_thread.eprolibnet4.decryptstring(ls_pwd_e, common_thread.key())
 CATCH (throwable le_error)
-	log.log(this, "xx_get_documents()", "Error getting EpIE credentials: " + le_error.text, 4)
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents.0033", "Error getting EpIE credentials: " + le_error.text, 4)
 	return -1
 END TRY
 
@@ -75,7 +75,7 @@ ll_sts = conn.SetSoapLogFile (ls_templog)
 
 rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
 if rVal <> 0 then
-	log.log(this, "xx_get_documents()", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents.0033", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
 	destroy conn
 	return -1
 end if
@@ -122,7 +122,7 @@ TRY
 		ls_results_xml = ""
 	end if
 CATCH ( SoapException lt_error )
-	log.log(this, "xx_do_source()", "Error calling EpIE download gateway (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents.0101", "Error calling EpIE download gateway (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

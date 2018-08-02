@@ -189,7 +189,7 @@ else
 				attachment_context = message.powerobjectparm
 				if isnull(attachment_context.object_key) then return 0
 			else
-				log.log(this, "post_to_folder()", "Cannot assign object key in server mode", 4)
+				log.log(this, "w_post_attachment.post_to_folder.0093", "Cannot assign object key in server mode", 4)
 				return 0
 			end if
 		CASE ELSE
@@ -325,7 +325,7 @@ ll_folder_count = dw_post_to.retrieve(folder_selection_info.context_object, &
 													folder_selection_info.attachment_type, &
 													folder_selection_info.extension)
 if ll_folder_count < 0 then
-	log.log(this, "open", "Error getting folder list", 4)
+	log.log(this, "w_post_attachment.open.0063", "Error getting folder list", 4)
 	setnull(attachment_context.folder)
 	closewithreturn(this, attachment_context)
 	return
@@ -345,13 +345,13 @@ if len(folder_selection_info.attachment_folder) > 0 then
 	FROM c_Folder
 	WHERE folder = :folder_selection_info.attachment_folder;
 	if not tf_check() then
-		log.log(this, "open", "Error looking up pre-selected folder (" + folder_selection_info.attachment_folder + ")", 4)
+		log.log(this, "w_post_attachment.open.0063", "Error looking up pre-selected folder (" + folder_selection_info.attachment_folder + ")", 4)
 		setnull(attachment_context.folder)
 		closewithreturn(this, attachment_context)
 		return
 	end if
 	if sqlca.sqlcode = 100 then
-		log.log(this, "open", "Pre-selected folder not valid (" + folder_selection_info.attachment_folder + ")", 4)
+		log.log(this, "w_post_attachment.open.0063", "Pre-selected folder not valid (" + folder_selection_info.attachment_folder + ")", 4)
 		setnull(attachment_context.folder)
 		closewithreturn(this, attachment_context)
 		return

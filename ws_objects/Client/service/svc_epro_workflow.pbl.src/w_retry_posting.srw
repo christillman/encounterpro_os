@@ -169,7 +169,7 @@ service = message.powerobjectparm
 
 
 if isnull(service.encounter_id) then
-	log.log(this, "open", "Null encounter_id", 4)
+	log.log(this, "w_retry_posting.open.0012", "Null encounter_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -178,7 +178,7 @@ title = current_patient.id_line()
 
 li_sts = current_patient.encounters.encounter(lstr_encounter, service.encounter_id)
 if li_sts <= 0 then
-	log.log(this, "open", "Inavlid encounter_id (" + string(service.encounter_id) + ")", 4)
+	log.log(this, "w_retry_posting.open.0012", "Inavlid encounter_id (" + string(service.encounter_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

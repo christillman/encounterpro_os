@@ -171,7 +171,7 @@ end if
 
 ll_display_command_id = dw_display_commands.object.display_command_id[ll_row]
 if isnull(ll_display_command_id) or ll_display_command_id <= 0 then
-	log.log(this, "new_command()", "Invalid command id", 4)
+	log.log(this, "w_display_script_edit.new_command.0056", "Invalid command id", 4)
 	return -1
 end if
 
@@ -179,7 +179,7 @@ end if
 show_attributes(ll_row)
 li_sts = configure_command(ll_row)
 if li_sts < 0 then
-	log.log(this, "new_command()", "Configure_command failed", 4)
+	log.log(this, "w_display_script_edit.new_command.0056", "Configure_command failed", 4)
 	return -1
 end if
 
@@ -208,19 +208,19 @@ str_attributes lstr_state_attributes
 
 ll_display_command_id = dw_display_commands.object.display_command_id[pl_row]
 if isnull(ll_display_command_id) or ll_display_command_id <= 0 then
-	log.log(this, "configure_command()", "Invalid command id", 4)
+	log.log(this, "w_display_script_edit.configure_command.0015", "Invalid command id", 4)
 	return -1
 end if
 
 ls_context_object = dw_display_commands.object.context_object[pl_row]
 if isnull(ls_context_object) then
-	log.log(this, "configure_command()", "null context object", 4)
+	log.log(this, "w_display_script_edit.configure_command.0015", "null context object", 4)
 	return -1
 end if
 
 ls_display_command = dw_display_commands.object.display_command[pl_row]
 if isnull(ls_display_command) then
-	log.log(this, "configure_command()", "Null display_command", 4)
+	log.log(this, "w_display_script_edit.configure_command.0015", "Null display_command", 4)
 	return -1
 end if
 
@@ -232,7 +232,7 @@ AND display_command = :ls_display_command
 AND script_type = :script_type;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "configure_command()", "command not found (" + ls_context_object + ", " + ls_display_command + ")", 4)
+	log.log(this, "w_display_script_edit.configure_command.0015", "command not found (" + ls_context_object + ", " + ls_display_command + ")", 4)
 	return -1
 end if
 
@@ -291,7 +291,7 @@ next
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(this, "configure_command()", "Error updating command attributes", 4)
+	log.log(this, "w_display_script_edit.configure_command.0015", "Error updating command attributes", 4)
 	return -1
 end if
 
@@ -382,7 +382,7 @@ event open;call super::open;integer li_sts
 display_script_id = message.doubleparm
 
 if isnull(display_script_id) then
-	log.log(this, "open", "null display script", 4)
+	log.log(this, "w_display_script_edit.open.0006", "null display script", 4)
 	close(this)
 	return
 end if
@@ -399,12 +399,12 @@ INTO :st_context_object.text,
 FROM c_Display_Script
 WHERE display_script_id = :display_script_id;
 if not tf_check() then
-	log.log(this, "open", "error getting display script (" + string(display_script_id) + ")", 4)
+	log.log(this, "w_display_script_edit.open.0006", "error getting display script (" + string(display_script_id) + ")", 4)
 	close(this)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "open", "display script not found (" + string(display_script_id) + ")", 4)
+	log.log(this, "w_display_script_edit.open.0006", "display script not found (" + string(display_script_id) + ")", 4)
 	close(this)
 	return
 end if
@@ -412,7 +412,7 @@ end if
 
 li_sts = show_commands()
 if li_sts < 0 then
-	log.log(this, "open", "error showing display script commands (" + string(display_script_id) + ")", 4)
+	log.log(this, "w_display_script_edit.open.0006", "error showing display script commands (" + string(display_script_id) + ")", 4)
 	close(this)
 	return
 end if
@@ -723,7 +723,7 @@ ll_row = dw_display_commands.get_selected_row()
 if ll_row > 0 then
 	li_sts = configure_command(ll_row)
 	if li_sts < 0 then
-		log.log(this, "clicked", "Configure_command failed", 4)
+		log.log(this, "w_display_script_edit.dw_command_attributes.clicked.0009", "Configure_command failed", 4)
 		return -1
 	end if
 	dw_display_commands.event post selected(ll_row)

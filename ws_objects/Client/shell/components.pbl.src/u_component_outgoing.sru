@@ -62,7 +62,7 @@ date				mes_date, this_date
 
 message_id = pl_message_id
 IF isnull(message_id) or message_id <= 0  THEN
-	mylog.log(this, "send_file()", "Invalid Message Id (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "Invalid Message Id (" + string(message_id) + ")", 4)
 	return -1
 END IF
 // Get the log record from o_message_log
@@ -85,11 +85,11 @@ WHERE message_id = :message_id
 USING cprdb;
 IF NOT cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "send_file()", "Message log record not found (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "Message log record not found (" + string(message_id) + ")", 4)
 	return -1
 end if
 if isnull(subscription_id) then
-	mylog.log(this, "send_file()", "Null Subscription Id", 4)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "Null Subscription Id", 4)
 	return -1
 end if
 // get the outgoing message address info
@@ -101,7 +101,7 @@ AND message_type = :message_type
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "send_file()", "Subscription record not found (" + string(subscription_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "Subscription record not found (" + string(subscription_id) + ")", 4)
 	return -1
 end if
 // Check whether the billing is posted within given interval
@@ -116,22 +116,22 @@ IF Isnumber(ls_killer) THEN
 		lt_stop_time = RelativeTime(mes_time,killer)
 		mes_stopper = datetime(mes_date,lt_stop_time)
 		IF mes_stopper < ldt_datetime THEN
-			mylog.log(this, "send_file()", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
+			mylog.log(this, "u_component_outgoing.send_file.0028", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
 			Return f_posting_failed(message_id,"NEVERSENT")
 		END IF
 	END IF
 	IF daysafter(mes_date,today()) > 1 THEN
-		mylog.log(this, "send_file()", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
+		mylog.log(this, "u_component_outgoing.send_file.0028", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
 		Return f_posting_failed(message_id,"NEVERSENT")
 	END IF
 	lt_stop_time = RelativeTime(now(),killer)
 	IF mes_time > lt_stop_time THEN
-		mylog.log(this, "send_file()", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
+		mylog.log(this, "u_component_outgoing.send_file.0028", "Message Id (" + string(message_id) + ")" + "datetime too old " + string(mes_datetime), 4)
 		Return f_posting_failed(message_id,"NEVERSENT")
 	END IF
 END IF
 
-mylog.log(this, "send_file()", "Sending Message (" + string(pl_message_id) + ")", 1)
+mylog.log(this, "u_component_outgoing.send_file.0028", "Sending Message (" + string(pl_message_id) + ")", 1)
 
 
 message_compression_type = "NONE"
@@ -141,7 +141,7 @@ message_compression_type = "NONE"
 //end if
 //if not mylog.of_directoryexists(ls_path) Then // check directory exists
 //	if mylog.of_createdirectory(ls_path) <= 0 then // create new directory
-//		mylog.log(this, "send_file()", "unable to create temp folder "+ls_path, 4)
+//		mylog.log(this, "u_component_outgoing.send_file.0028", "unable to create temp folder "+ls_path, 4)
 //		return -1
 //	end if
 //end if
@@ -152,7 +152,7 @@ message_compression_type = "NONE"
 //if ll_next_counter > 0 then
 //	sendfilename = file_prefix + string(ll_next_counter)
 //else
-//	mylog.log(this, "send_file()", "Error getting next file number", 4)
+//	mylog.log(this, "u_component_outgoing.send_file.0028", "Error getting next file number", 4)
 //	return -1
 //end if
 //
@@ -168,24 +168,24 @@ message_compression_type = "NONE"
 fix_address()
 
 if address = "!dummy.dcom" then
-	mylog.log(this, "send_file()", "calling xx_send_file", 1)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "calling xx_send_file", 1)
 	li_sts = xx_send_file(ls_sendfile,address)
-	mylog.log(this, "send_file()", "return from xx_send_file "+string(li_sts), 1)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "return from xx_send_file "+string(li_sts), 1)
 	if li_sts = 2 then 
-		mylog.log(this, "send_file()", "return from xx_send_file,ACK WAIT - Synchronized "+string(li_sts), 1)
+		mylog.log(this, "u_component_outgoing.send_file.0028", "return from xx_send_file,ACK WAIT - Synchronized "+string(li_sts), 1)
 //		f_posting_failed(pl_message_id,"ACK_WAIT-Sync")
 		return li_sts // ACK WAIT - Synchronized
 	end if
 	if li_sts = -1 then
 		f_posting_failed(pl_message_id,"SENDERROR")
 	else
-		mylog.log(this, "send_file()", "Sent Message (" + string(pl_message_id) + ")", 2)
+		mylog.log(this, "u_component_outgoing.send_file.0028", "Sent Message (" + string(pl_message_id) + ")", 2)
 	end if
-	mylog.log(this, "send_file()", "deleting file "+ls_sendfile, 1)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "deleting file "+ls_sendfile, 1)
 	if fileexists(ls_sendfile) then
 		FileDelete(ls_sendfile)
 	end if
-	mylog.log(this, "send_file()", "return from send_file "+string(li_sts), 1)
+	mylog.log(this, "u_component_outgoing.send_file.0028", "return from send_file "+string(li_sts), 1)
 	return li_sts
 end if
 
@@ -197,7 +197,7 @@ end if
 
 message_status("SENT")
 
-mylog.log(this, "send_file()", "Successfully Sent Message (" + string(pl_message_id) + ")", 2)
+mylog.log(this, "u_component_outgoing.send_file.0028", "Successfully Sent Message (" + string(pl_message_id) + ")", 2)
 
 Return 1
 

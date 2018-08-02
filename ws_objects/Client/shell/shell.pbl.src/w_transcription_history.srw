@@ -83,7 +83,7 @@ attachment = message.powerobjectparm
 li_count = attachment.get_attachment_progress("1=1",lstra_progress)
 
 if li_count <= 0 then
-	log.log(this, "open", "No transcription history", 4)
+	log.log(this, "w_transcription_history.open.0013", "No transcription history", 4)
 	close(this)
 	return
 end if
@@ -280,7 +280,7 @@ CHOOSE CASE upper(ls_progress_type)
 		WHERE attachment_id = :attachment.attachment_id
 		USING sqlca;
 		if not tf_check() then 
-			log.log(this,"post_click()","unable to get attachment image",3)
+			log.log(this,"w_transcription_history.dw_transcription_history.post_click.0020","unable to get attachment image",3)
 			return
 		end if
 	
@@ -302,7 +302,7 @@ CHOOSE CASE upper(ls_progress_type)
 		AND attachment_progress_sequence = :ll_attachment_progress_sequence
 		USING sqlca;
 		if not tf_check() then 
-			log.log(this,"post_click()","unable to get attachment image",3)
+			log.log(this,"w_transcription_history.dw_transcription_history.post_click.0020","unable to get attachment image",3)
 			return
 		end if
 	

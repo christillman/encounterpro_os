@@ -47,7 +47,7 @@ public function integer initialize ();integer li_sts
 string ls_temp
 
 if isnull(current_patient) then
-	log.log(this, "initialize()", "No current patient", 4)
+	log.log(this, "u_tabpage_patient_authority.initialize.0005", "No current patient", 4)
 	return -1
 else
 	st_cpr_id.text = current_patient.cpr_id
@@ -103,7 +103,7 @@ if isnull(ps_authority_type) or trim(ps_authority_type) = "" then
 	WHERE authority_id = :ps_authority_id;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "update_authority()", "Authority not found (" + ps_authority_id + ")", 4)
+		log.log(this, "u_tabpage_patient_authority.update_authority.0013", "Authority not found (" + ps_authority_id + ")", 4)
 		return -1
 	end if
 end if

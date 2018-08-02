@@ -230,7 +230,7 @@ ldt_now = datetime(today(), now())
 setnull(ls_null)
 
 if isnull(pl_problem_id) then
-	log.log(this, "save_attachment()", "ERROR! Cannot save attachment when problem_id=null", 4)
+	log.log(this, "u_ds_assessment.save_attachment.0009", "ERROR! Cannot save attachment when problem_id=null", 4)
 	return -1
 end if
 
@@ -346,14 +346,14 @@ setnull(ls_null)
 setnull(li_null)
 
 if isnull(pl_problem_id) then
-	log.log(this, "rediagnose", "Null problem_id", 4)
+	log.log(this, "u_ds_assessment.rediagnose.0015", "Null problem_id", 4)
 	return li_null
 end if
 
 ls_find = "problem_id=" + string(pl_problem_id) + " and isnull(assessment_status)"
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "rediagnose", "Invalid problem_id", 4)
+	log.log(this, "u_ds_assessment.rediagnose.0015", "Invalid problem_id", 4)
 	return li_null
 end if
 
@@ -554,12 +554,12 @@ integer ll_patient_workplan_item_id
 setnull(ll_patient_workplan_item_id)
 
 if isnull(parent_patient.open_encounter) then
-	log.log(this, "set_progress()", "No Open Encounter", 4)
+	log.log(this, "u_ds_assessment.set_progress.0013", "No Open Encounter", 4)
 	return -1
 end if
 
 if isnull(ps_progress_type) or trim(ps_progress_type) = "" then
-	log.log(this, "set_progress()", "Invalid progress type", 4)
+	log.log(this, "u_ds_assessment.set_progress.0013", "Invalid progress type", 4)
 	return -1
 end if
 
@@ -576,7 +576,7 @@ end if
 
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "set_progress()", "assessment not found", 4)
+	log.log(this, "u_ds_assessment.set_progress.0013", "assessment not found", 4)
 	return -1
 end if
 
@@ -794,11 +794,11 @@ long ll_first_row_for_encounter
 long ll_last_row_for_encounter
 string ls_find
 
-log.log(this, "add_assessment()", "Adding assessment " + ps_assessment_id, 1)
+log.log(this, "u_ds_assessment.add_assessment.0015", "Adding assessment " + ps_assessment_id, 1)
 
 li_sts = tf_get_next_key(parent_patient.cpr_id, "PROBLEM_ID", ll_problem_id)
 if li_sts <= 0 then
-	log.log(this, "add_assessment()","Unable to generate problem_id key", 4)
+	log.log(this, "u_ds_assessment.add_assessment.0015","Unable to generate problem_id key", 4)
 	return 0
 end if
 
@@ -1169,7 +1169,7 @@ else
 	
 	// assessment_id is required
 	if isnull(pstr_assessment.assessment_id) then
-		log.log(this, "add_assessment()", "assessment_id is required for new records", 4)
+		log.log(this, "u_ds_assessment.add_assessment.0015", "assessment_id is required for new records", 4)
 		return -1
 	end if
 	
@@ -1352,7 +1352,7 @@ integer li_sts
 ls_find = "problem_id=" + string(pl_problem_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "set_assessment_changed()", "assessment not found", 4)
+	log.log(this, "u_ds_assessment.set_assessment_changed.0008", "assessment not found", 4)
 	return 
 end if
 

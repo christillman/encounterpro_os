@@ -111,12 +111,12 @@ setnull(ls_null)
 if trim(attachment_file_path) = "" then setnull(attachment_file_path)
 
 if isnull(attachment_file) or (trim(attachment_file) = "") then
-	log.log(this, "attachment_file_path()", "No attachment file name", 4)
+	log.log(this, "u_component_attachment.attachment_file_path.0012", "No attachment file name", 4)
 	return ls_null
 end if
 
 if isnull(extension) or (trim(extension) = "") then
-	log.log(this, "attachment_file_path()", "No attachment file extension", 4)
+	log.log(this, "u_component_attachment.attachment_file_path.0012", "No attachment file extension", 4)
 	return ls_null
 end if
 
@@ -161,7 +161,7 @@ string ls_find
 long ll_row
 
 if isnull(ps_file) then
-	log.log(this, "save_as()", "Null filename", 4)
+	log.log(this, "u_component_attachment.save_as.0009", "Null filename", 4)
 	return -1
 end if
 
@@ -191,7 +191,7 @@ else
 			if not cprdb.check() then return -1
 		end if
 		if isnull(lbl_attachment) then
-			log.log(this, "save_as()", "Null attachment file data (" + string(attachment_id) + ")", 3)
+			log.log(this, "u_component_attachment.save_as.0009", "Null attachment file data (" + string(attachment_id) + ")", 3)
 			lbl_attachment = blob("")
 		end if
 		li_sts = mylog.file_write(lbl_attachment, ps_file)
@@ -206,7 +206,7 @@ end if
 
 // One last check to make sure the file exists
 if not fileexists(ps_file) then
-	log.log(this, "save_as()", "Error saving attachment to file (" + string(attachment_id) + ", " + ps_file + ")", 4)
+	log.log(this, "u_component_attachment.save_as.0009", "Error saving attachment to file (" + string(attachment_id) + ", " + ps_file + ")", 4)
 	return -1
 end if
 
@@ -248,7 +248,7 @@ if ole_class then
 	TRY
 		li_sts = ole.display(lbl_attachment, extension)
 	CATCH (throwable lt_error1)
-		log.log(this, "xx_edit()", "Error editing attachment (" + lt_error1.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_display.0023", "Error editing attachment (" + lt_error1.text + ")", 4)
 		return -1
 	END TRY
 	
@@ -271,7 +271,7 @@ CHOOSE CASE lower(ls_display_how)
 		
 		li_sts = windows_api.shell32.open_file_ex(ls_file, ls_verb, lb_wait_for_completion, lul_process_id)
 		if li_sts < 0 then
-			log.log(this, "xx_display()", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
+			log.log(this, "u_component_attachment.xx_display.0046", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
 			return -1
 		end if
 	CASE "specify program"
@@ -296,7 +296,7 @@ CHOOSE CASE lower(ls_display_how)
 				ls_message = "Error Displaying Attachment ~r~n"
 				ls_message += ls_executable + "  " + ls_arguments + "~r~n"
 				ls_message += lt_error.text + "~r~n" + lt_error.description
-				log.log(this, "xx_display()", ls_message, 4)
+				log.log(this, "u_component_attachment.xx_display.0046", ls_message, 4)
 				return -1
 			END TRY
 		end if
@@ -327,7 +327,7 @@ if ole_class then
 		if isnull(pi_height) then pi_height = 0
 		lbl_bitmap = ole.render(lbl_attachment, extension, pi_width, pi_height)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_render()", "Error rendering attachment (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_render.0015", "Error rendering attachment (" + lt_error.text + ")", 4)
 		return -1
 	END TRY
 
@@ -401,7 +401,7 @@ if ole_class then
 	TRY
 		lbl_modified_attachment = ole.edit(lbl_attachment, extension)
 	CATCH (throwable lt_error1)
-		log.log(this, "xx_edit()", "Error editing attachment (" + lt_error1.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_display.0023", "Error editing attachment (" + lt_error1.text + ")", 4)
 		return -1
 	END TRY
 	
@@ -426,18 +426,18 @@ end if
 ls_file = get_attachment()
 
 if isnull(ls_file) then
-	log.log(this, "edit_attachment()", "Null attachment file", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Null attachment file", 4)
 	return -1
 end if
 
 if not fileexists(ls_file) then
-	log.log(this, "edit_attachment()", "Attachment file does not exist (" + ls_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Attachment file does not exist (" + ls_file + ")", 4)
 	return -1
 end if
 
 li_sts = log.file_attributes(ls_file, lstr_file)
 if li_sts <= 0 then
-	log.log(this, "edit_attachment()", "Error getting file attributes (" + ls_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error getting file attributes (" + ls_file + ")", 4)
 	return -1
 end if
 
@@ -460,7 +460,7 @@ CHOOSE CASE lower(ls_edit_how)
 		
 		li_sts = windows_api.shell32.open_file_ex(ls_file, ls_verb, lb_wait_for_completion, lul_process_id)
 		if li_sts < 0 then
-			log.log(this, "xx_edit()", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
+			log.log(this, "u_component_attachment.xx_display.0023", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
 			return -1
 		end if
 	CASE "specify program"
@@ -484,7 +484,7 @@ CHOOSE CASE lower(ls_edit_how)
 				ls_message = "Error editing Attachment ~r~n"
 				ls_message += ls_executable + "  " + ls_arguments + "~r~n"
 				ls_message += lt_error.text + "~r~n" + lt_error.description
-				log.log(this, "xx_edit()", ls_message, 4)
+				log.log(this, "u_component_attachment.xx_display.0023", ls_message, 4)
 				return -1
 			END TRY
 		end if
@@ -493,7 +493,7 @@ CHOOSE CASE lower(ls_edit_how)
 		// true = wait until program closes
 		li_sts = f_open_file(ls_file, true)
 		if li_sts <= 0 then
-			log.log(this, "edit_attachment()", "Error opening attachment (" + ls_file + ")", 4)
+			log.log(this, "u_component_attachment.xx_edit.0052", "Error opening attachment (" + ls_file + ")", 4)
 			return -1
 		end if
 END CHOOSE
@@ -508,7 +508,7 @@ return 1
 // Get the mod date after editing
 li_sts = log.file_attributes(ls_file, lstr_file)
 if li_sts <= 0 then
-	log.log(this, "edit_attachment()", "Error getting file attributes after editing (" + ls_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error getting file attributes after editing (" + ls_file + ")", 4)
 	return -1
 end if
 ldt_after = datetime(lstr_file.lastwritedate, lstr_file.lastwritetime)
@@ -518,7 +518,7 @@ if ldt_after > ldt_before then
 	// The user modified the attachment, so post the updated file into Epro
 	li_sts = add_update(ls_file)
 	if li_sts <= 0 then
-		log.log(this, "edit_attachment()", "Error saving modified attachment (" + ls_file + ")", 4)
+		log.log(this, "u_component_attachment.xx_edit.0052", "Error saving modified attachment (" + ls_file + ")", 4)
 		return -1
 	end if
 end if
@@ -586,7 +586,7 @@ if li_sts < 0 then return -1
 ll_attachment_progress_sequence = attachment_progress.object.attachment_progress_sequence[ll_row]
 if ll_attachment_progress_sequence <= 0 then
 	tf_rollback()
-	log.log(this, "add_update()", "Unable to get new progress record", 4)
+	log.log(this, "u_component_attachment.add_update.0040", "Unable to get new progress record", 4)
 	return -1
 end if
 
@@ -604,7 +604,7 @@ if storage_flag = "F" then
 		li_sts = mylog.file_read(attachment_file_path(), lbl_original)
 		if li_sts <= 0 then
 			tf_rollback()
-			log.log(this, "add_update()", "Error reading original attachment file", 4)
+			log.log(this, "u_component_attachment.add_update.0040", "Error reading original attachment file", 4)
 			return -1
 		end if
 		
@@ -617,7 +617,7 @@ if storage_flag = "F" then
 	li_sts = mylog.file_write(pbl_attachment, attachment_file_path())
 	if li_sts <= 0 then
 		tf_rollback()
-		log.log(this, "add_update()", "Error writing updated attachment file", 4)
+		log.log(this, "u_component_attachment.add_update.0040", "Error writing updated attachment file", 4)
 		return -1
 	end if
 end if
@@ -747,7 +747,7 @@ if ole_class then
 	TRY
 		lb_is_editable = ole.is_editable(extension)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_is_editable()", "Error calling is_editable (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_is_editable.0007", "Error calling is_editable (" + lt_error.text + ")", 4)
 		return false
 	END TRY
 else
@@ -775,7 +775,7 @@ if ole_class then
 	TRY
 		lb_is_displayable = ole.is_displayable(extension)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_is_displayable()", "Error calling is_displayable (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_is_displayable.0007", "Error calling is_displayable (" + lt_error.text + ")", 4)
 		return false
 	END TRY
 else
@@ -813,18 +813,18 @@ datetime ldt_after
 
 
 if isnull(ps_attachment_file) then
-	log.log(this, "edit_attachment()", "Null attachment file", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Null attachment file", 4)
 	return -1
 end if
 
 if not fileexists(ps_attachment_file) then
-	log.log(this, "edit_attachment()", "Attachment file does not exist (" + ps_attachment_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Attachment file does not exist (" + ps_attachment_file + ")", 4)
 	return -1
 end if
 
 li_sts = log.file_attributes(ps_attachment_file, lstr_file)
 if li_sts <= 0 then
-	log.log(this, "edit_attachment()", "Error getting file attributes (" + ps_attachment_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error getting file attributes (" + ps_attachment_file + ")", 4)
 	return -1
 end if
 
@@ -834,14 +834,14 @@ ldt_before = datetime(lstr_file.lastwritedate, lstr_file.lastwritetime)
 // true = wait until program closes
 li_sts = f_open_file(ps_attachment_file, true)
 if li_sts <= 0 then
-	log.log(this, "edit_attachment()", "Error opening attachment (" + ps_attachment_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error opening attachment (" + ps_attachment_file + ")", 4)
 	return -1
 end if
 
 // Get the mod date after editing
 li_sts = log.file_attributes(ps_attachment_file, lstr_file)
 if li_sts <= 0 then
-	log.log(this, "edit_attachment()", "Error getting file attributes after editing (" + ps_attachment_file + ")", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error getting file attributes after editing (" + ps_attachment_file + ")", 4)
 	return -1
 end if
 ldt_after = datetime(lstr_file.lastwritedate, lstr_file.lastwritetime)
@@ -851,7 +851,7 @@ if ldt_after > ldt_before then
 	// The user modified the attachment
 	li_sts = add_update(ps_attachment_file)
 	if li_sts <= 0 then
-		log.log(this, "edit_attachment()", "Error saving modified attachment (" + ps_attachment_file + ")", 4)
+		log.log(this, "u_component_attachment.xx_edit.0052", "Error saving modified attachment (" + ps_attachment_file + ")", 4)
 		return -1
 	end if
 end if
@@ -866,7 +866,7 @@ public function integer edit_attachment ();string ls_file
 
 ls_file = get_attachment()
 if isnull(ls_file) then
-	log.log(this, "edit_attachment()", "Error getting attachment file", 4)
+	log.log(this, "u_component_attachment.xx_edit.0052", "Error getting attachment file", 4)
 	return -1
 end if
 
@@ -896,7 +896,7 @@ public function integer open_attachment ();string ls_file
 
 ls_file = get_attachment()
 if isnull(ls_file) then
-	log.log(this, "open_attachment()", "Error getting attachment file", 4)
+	log.log(this, "u_component_attachment.open_attachment.0005", "Error getting attachment file", 4)
 	return -1
 end if
 
@@ -913,7 +913,7 @@ integer li_sts
 
 ls_file = get_attachment()
 if isnull(ls_file) then
-	log.log(this, "open_attachment()", "Error getting attachment file", 4)
+	log.log(this, "u_component_attachment.open_attachment.0005", "Error getting attachment file", 4)
 	return -1
 end if
 
@@ -934,7 +934,7 @@ if ole_class then
 	TRY
 		lb_is_interpretable = ole.is_interpretable(extension)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_is_interpretable()", "Error calling is_interpretable (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_is_interpretable.0007", "Error calling is_interpretable (" + lt_error.text + ")", 4)
 		return false
 	END TRY
 else
@@ -967,7 +967,7 @@ if ole_class then
 	TRY
 		ls_xml = ole.interpret(lbl_attachment, extension)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_edit()", "Error editing attachment (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_display.0023", "Error editing attachment (" + lt_error.text + ")", 4)
 		return -1
 	END TRY
 	
@@ -1043,7 +1043,7 @@ if ole_class then
 	TRY
 		lb_is_printable = ole.is_printable(extension)
 	CATCH (throwable lt_error)
-		log.log(this, "xx_is_printable()", "Error calling is_printable (" + lt_error.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_is_printable.0007", "Error calling is_printable (" + lt_error.text + ")", 4)
 		return false
 	END TRY
 else
@@ -1092,7 +1092,7 @@ if ole_class then
 	TRY
 		li_sts = ole.display(lbl_attachment, extension)
 	CATCH (throwable lt_error1)
-		log.log(this, "xx_edit()", "Error editing attachment (" + lt_error1.text + ")", 4)
+		log.log(this, "u_component_attachment.xx_display.0023", "Error editing attachment (" + lt_error1.text + ")", 4)
 		return -1
 	END TRY
 	
@@ -1116,12 +1116,12 @@ CHOOSE CASE lower(ls_print_how)
 		
 		li_sts = windows_api.shell32.open_file_ex(ls_file, ls_verb, lb_wait_for_completion, lul_process_id)
 		if li_sts < 0 then
-			log.log(this, "xx_print()", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
+			log.log(this, "u_component_attachment.xx_print.0048", "Error calling the Windows Shell ~"" + ls_verb + "~" verb", 4)
 			return -1
 		end if
 	CASE "epro image"
 		// This option is not support for printing
-		log.log(this, "xx_print()", "Epro Image is not supported for printing", 4)
+		log.log(this, "u_component_attachment.xx_print.0048", "Epro Image is not supported for printing", 4)
 		return -1
 	CASE "specify program"
 		ls_executable = get_attribute("print_executable")
@@ -1157,7 +1157,7 @@ CHOOSE CASE lower(ls_print_how)
 				ls_message = "Error Printing Attachment ~r~n"
 				ls_message += ls_executable + "  " + ls_arguments + "~r~n"
 				ls_message += lt_error.text + "~r~n" + lt_error.description
-				log.log(this, "xx_print()", ls_message, 4)
+				log.log(this, "u_component_attachment.xx_print.0048", ls_message, 4)
 				return -1
 			END TRY
 		end if

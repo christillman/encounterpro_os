@@ -338,7 +338,7 @@ popup_return.item_count = 0
 service = Message.Powerobjectparm
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "open", "No open encounter", 4)
+	log.log(this, "w_approve_encounter.open.0012", "No open encounter", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

@@ -35,7 +35,7 @@ end function
 private function integer connect_device ();
 
 if not isvalid(at10_window) then
-	mylog.log(this, "connect_device()", "No valid window", 4)
+	mylog.log(this, "u_component_observation_wlca_at10.connect_device.0004", "No valid window", 4)
 	return -1
 end if
 
@@ -54,7 +54,7 @@ end if
 if not mylog.of_directoryexists(attachment_path) then
 	li_sts = mylog.of_createdirectory(attachment_path)
 	if li_sts <= 0 then
-		log.log(this, "xx_initialize()", "Error creating directory (" + attachment_path + ")", 4)
+		log.log(this, "u_component_observation_wlca_at10.xx_initialize.0012", "Error creating directory (" + attachment_path + ")", 4)
 		return -1
 	end if
 end if
@@ -83,7 +83,7 @@ setnull(ls_interp)
 TEcgData = CREATE oleobject
 li_sts = TEcgData.connecttonewobject("WAEcgSvr.EcgData")
 if li_sts <> 0 then
-	mylog.log(this, "ecg_interpretation()", "Error connecting to WAEcgSvr.EcgData (" + string(li_sts) + ")", 4)
+	mylog.log(this, "u_component_observation_wlca_at10.ecg_interpretation.0015", "Error connecting to WAEcgSvr.EcgData (" + string(li_sts) + ")", 4)
 	return ls_interp
 end if
 

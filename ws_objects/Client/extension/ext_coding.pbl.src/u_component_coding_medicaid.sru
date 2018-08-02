@@ -138,7 +138,7 @@ if is_billed("SICK") then
 	if li_count > 0 then
 		ls_procedure_id = luo_data.object.procedure_id[li_count]
 	else
-		mylog.log(this, "well_encounter()", "Unable to get abnormal code for stage", 3)
+		mylog.log(this, "u_component_coding_medicaid.well_encounter.0037", "Unable to get abnormal code for stage", 3)
 		return 0
 	end if
 
@@ -190,7 +190,7 @@ else
 	if li_count > 0 then
 		ls_procedure_id = luo_data.object.procedure_id[li_count]
 	else
-		mylog.log(this, "well_encounter()", "Unable to get normal code for stage", 3)
+		mylog.log(this, "u_component_coding_medicaid.well_encounter.0037", "Unable to get normal code for stage", 3)
 		return 0
 	end if
 

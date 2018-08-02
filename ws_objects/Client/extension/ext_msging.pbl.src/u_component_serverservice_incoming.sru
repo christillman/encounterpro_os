@@ -32,10 +32,10 @@ luo_data.set_dataobject("dw_message_subscription_data")
 li_count = luo_data.retrieve("%", "I")
 
 if li_count < 0 then
-	mylog.log(this, "xx_initialize()", "Error getting subscribers", 4)
+	mylog.log(this, "u_component_serverservice_incoming.xx_initialize.0014", "Error getting subscribers", 4)
 	return -1
 elseif li_count = 0 then
-	mylog.log(this, "xx_initialize()", "No incoming subscribers", 2)
+	mylog.log(this, "u_component_serverservice_incoming.xx_initialize.0014", "No incoming subscribers", 2)
 end if
 
 subscription_count = 0
@@ -45,13 +45,13 @@ for i = 1 to li_count
 	ll_subscription_id = luo_data.object.subscription_id[i]
 	
 	if isnull(ls_transport_component_id) then
-		mylog.log(this, "xx_initialize()", "Null transport_component_id", 4)
+		mylog.log(this, "u_component_serverservice_incoming.xx_initialize.0014", "Null transport_component_id", 4)
 		continue
 	end if
 
 	luo_transport = my_component_manager.get_component(ls_transport_component_id)
 	if isnull(luo_transport) then
-		mylog.log(this, "xx_initialize()", "Unable to get component (" + ls_transport_component_id + ")", 4)
+		mylog.log(this, "u_component_serverservice_incoming.xx_initialize.0014", "Unable to get component (" + ls_transport_component_id + ")", 4)
 		continue
 	end if
 	
@@ -60,7 +60,7 @@ for i = 1 to li_count
 	
 	li_sts = luo_transport.start_receiving(ll_subscription_id)
 	if li_sts <= 0 then
-		mylog.log(this, "xx_initialize()", "Error starting receiving (" + ls_transport_component_id + ")", 4)
+		mylog.log(this, "u_component_serverservice_incoming.xx_initialize.0014", "Error starting receiving (" + ls_transport_component_id + ")", 4)
 		continue
 	end if
 next

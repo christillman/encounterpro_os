@@ -64,7 +64,7 @@ integer li_sts
 If ole_class then
 	li_sts = common_thread.get_adodb(adodb)
 	if li_sts <= 0 then
-		mylog.log(this, "xx_do_service()", "Unable to establish ADO Connection", 4)
+		mylog.log(this, "u_component_xml_handler.xx_interpret_xml.0022", "Unable to establish ADO Connection", 4)
 		return -1
 	end if
 	
@@ -288,7 +288,7 @@ else
 	
 		ls_message += ")."
 	
-		log.log(this, "set_patient_id()", ls_message, 4)
+		log.log(this, "u_component_xml_handler.set_patient_id.0093", ls_message, 4)
 		return -1
 	end if
 	
@@ -501,7 +501,7 @@ if not isnull(pstr_treatment.begin_date) &
 			if lstr_encounter.encounter_id > 0 then
 				pstr_treatment.open_encounter_id = lstr_encounter.encounter_id
 			else
-				log.log(this, "find_treatment()", "Unable to find last encounter", 4)
+				log.log(this, "u_component_xml_handler.find_treatment.0156", "Unable to find last encounter", 4)
 				return -1
 			end if
 		else
@@ -530,7 +530,7 @@ if not isnull(pstr_treatment.begin_date) &
 		return ll_treatment_id
 	end if
 	
-	log.log(this, "find_treatment()", "Error creating new treatment (" + pstr_treatment.treatment_description + ")", 4)
+	log.log(this, "u_component_xml_handler.find_treatment.0156", "Error creating new treatment (" + pstr_treatment.treatment_description + ")", 4)
 end if
 
 
@@ -695,7 +695,7 @@ if not isnull(pstr_assessment.begin_date) and len(pstr_assessment.assessment) > 
 		return ll_problem_id
 	end if
 	
-	log.log(this, "find_assessment()", "Error creating new assessment (" + pstr_assessment.assessment + ", " +  string(pstr_assessment.begin_date) + ")", 4)
+	log.log(this, "u_component_xml_handler.find_assessment.0097", "Error creating new assessment (" + pstr_assessment.assessment + ", " +  string(pstr_assessment.begin_date) + ")", 4)
 end if
 
 
@@ -843,7 +843,7 @@ if not isnull(ls_cpr_id) then
 	elseif current_patient.cpr_id = ls_cpr_id then
 		GOTO SUCCESS
 	else
-		log.log(this, "find_treatment()", "The current patient does not match the patient found for this XML document.", 4)
+		log.log(this, "u_component_xml_handler.find_treatment.0156", "The current patient does not match the patient found for this XML document.", 4)
 		if pb_prompt_user then
 			openwithparm(w_pop_message, "The current patient does not match the patient found for this XML document.  EncounterPRO is unable to process this XML document.")
 		end if
@@ -860,13 +860,13 @@ if not isnull(pstr_patient.last_name) &
 	
 	li_sts = f_new_patient(pstr_patient)
 	if li_sts <= 0 then
-		log.log(this, "find_treatment()", "Error creating new patient (" + pstr_patient.last_name + ", " + pstr_patient.first_name +")", 4)
+		log.log(this, "u_component_xml_handler.find_treatment.0156", "Error creating new patient (" + pstr_patient.last_name + ", " + pstr_patient.first_name +")", 4)
 		return -1
 	end if
 
 	li_sts = f_set_patient(pstr_patient.cpr_id)
 	if li_sts <= 0 then
-		log.log(this, "find_treatment()", "Error setting patient (" + pstr_patient.cpr_id + ")", 4)
+		log.log(this, "u_component_xml_handler.find_treatment.0156", "Error setting patient (" + pstr_patient.cpr_id + ")", 4)
 		return -1
 	end if
 
@@ -901,7 +901,7 @@ if not pb_prompt_user or cpr_mode <> "CLIENT" then
 		ls_temp += ", " + pstr_patient.first_name
 	end if
 	
-	log.log(this, "find_patient()", "Patient not found and auto-create not allowed (" + ls_temp + ")", 3)
+	log.log(this, "u_component_xml_handler.find_patient.0162", "Patient not found and auto-create not allowed (" + ls_temp + ")", 3)
 	return 0
 end if
 
@@ -1060,7 +1060,7 @@ if not isnull(pstr_encounter.encounter_date) and pb_create_automatically then
 		pstr_encounter.encounter_type = datalist.get_preference( "PREFERENCES", "default_encounter_type")
 	end if
 	if isnull(pstr_encounter.encounter_type) then
-		log.log(this, "find_encounter()", "Unable to create new encounter because the message contains no Encounter Type and no default Encounter Type is set in Preferences.", 3)
+		log.log(this, "u_component_xml_handler.find_encounter.0086", "Unable to create new encounter because the message contains no Encounter Type and no default Encounter Type is set in Preferences.", 3)
 	else
 		if pb_checkin then
 			lb_workflow = true
@@ -1087,7 +1087,7 @@ if not isnull(pstr_encounter.encounter_date) and pb_create_automatically then
 			return ll_encounter_id
 		end if
 		
-		log.log(this, "find_encounter()", "Error creating new encounter (" + string(pstr_encounter.encounter_date) + ")", 4)
+		log.log(this, "u_component_xml_handler.find_encounter.0086", "Error creating new encounter (" + string(pstr_encounter.encounter_date) + ")", 4)
 	end if
 end if
 

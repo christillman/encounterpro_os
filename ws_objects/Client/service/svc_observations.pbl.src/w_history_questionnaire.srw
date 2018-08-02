@@ -330,7 +330,7 @@ str_observation_tree lstr_tree
 setnull(ll_null)
 
 if question_number <= 0 then
-	log.log(this, "find_simple_child()", "no parent observation", 4)
+	log.log(this, "w_history_questionnaire.find_simple_child.0017", "no parent observation", 4)
 	return -1
 end if
 
@@ -369,7 +369,7 @@ if ls_composite_flag = "Y" then
 	return 0
 else
 	// This function should only have been called when the previous observation is composite
-	log.log(this, "find_simple_child()", "Prev observation not composite (" + string(branch[question_number].branch_id) + ")", 4)
+	log.log(this, "w_history_questionnaire.find_simple_child.0017", "Prev observation not composite (" + string(branch[question_number].branch_id) + ")", 4)
 	return -1
 end if
 
@@ -434,7 +434,7 @@ if ls_composite_flag = "Y" then
 		for i = ll_starting_question_number to question_number
 			li_sts = add_observation(i)
 			if li_sts <= 0 then
-				log.log(this, "get_next_observation()", "Error adding child p record", 4)
+				log.log(this, "w_history_questionnaire.add_branch.0022", "Error adding child p record", 4)
 				return -1
 			end if
 		next
@@ -444,7 +444,7 @@ else
 	// Add the p_Observation record
 	li_sts = add_observation(question_number)
 	if li_sts <= 0 then
-		log.log(this, "get_next_observation()", "Error adding simple p record", 4)
+		log.log(this, "w_history_questionnaire.add_branch.0022", "Error adding simple p record", 4)
 		return -1
 	end if
 	return 1
@@ -476,7 +476,7 @@ str_observation_comment_list lstr_comments
 string ls_comment_title
 
 if question_number <= 1 then
-	log.log(this, "display_observation()", "Question number must be greater than 1", 4)
+	log.log(this, "w_history_questionnaire.display_observation.0025", "Question number must be greater than 1", 4)
 	return -1
 end if
 
@@ -487,7 +487,7 @@ ls_child_observation_id = branch_child(question_number)
 
 ls_composite_flag = datalist.observation_composite_flag(ls_child_observation_id)
 if ls_composite_flag = "Y" then
-	log.log(this, "display_observation()", "observation is composite (" + ls_child_observation_id + ")", 4)
+	log.log(this, "w_history_questionnaire.display_observation.0025", "observation is composite (" + ls_child_observation_id + ")", 4)
 	return -1
 end if
 
@@ -646,7 +646,7 @@ if current_view = "R" then
 	for i = 1 to ll_location_count
 		li_sts = location_description(current_result_sequence, lsa_locations[i], ls_description)
 		if li_sts < 0 then
-			log.log(this, "display_right_side()", "Error getting right side description.  Location skipped (" + lsa_locations[i] + ")", 4)
+			log.log(this, "w_history_questionnaire.display_right_side.0022", "Error getting right side description.  Location skipped (" + lsa_locations[i] + ")", 4)
 		else
 			ll_row = dw_right.insertrow(0)
 			dw_right.object.selected_flag[ll_row] = li_sts
@@ -665,7 +665,7 @@ else
 				ll_row = dw_right.insertrow(0)
 				li_sts = result_description(li_result_sequence, current_location, ls_description)
 				if li_sts < 0 then
-					log.log(this, "display_right_side()", "Error getting right side description.  Location skipped (" + string(li_result_sequence) + ")", 4)
+					log.log(this, "w_history_questionnaire.display_right_side.0022", "Error getting right side description.  Location skipped (" + string(li_result_sequence) + ")", 4)
 				else
 					dw_right.object.selected_flag[ll_row] = li_sts
 					dw_right.object.description[ll_row] = ls_description
@@ -730,7 +730,7 @@ if ls_composite_flag = "Y" then
 		for i = 2 to question_number
 			li_sts = add_observation(i)
 			if li_sts <= 0 then
-				log.log(this, "get_next_observation()", "Error adding root child p record", 4)
+				log.log(this, "w_history_questionnaire.add_branch.0022", "Error adding root child p record", 4)
 				return -1
 			end if
 		next
@@ -796,7 +796,7 @@ ls_composite_flag = datalist.observation_composite_flag(ls_prev_observation_id)
 
 if ls_composite_flag = "Y" then
 	// This function should only be called from a simple observation so return error
-	log.log(this, "get_next_observation()", "previous observation_sequence not found (" + string(ll_parent_observation_sequence) + ")", 4)
+	log.log(this, "w_history_questionnaire.add_branch.0022", "previous observation_sequence not found (" + string(ll_parent_observation_sequence) + ")", 4)
 	return -1
 end if
 
@@ -835,7 +835,7 @@ DO WHILE ll_backup < question_number
 				branch_followon[question_number] = true
 				li_sts = add_branch()
 				if li_sts <= 0 then
-					log.log(this, "get_next_observation()", "Error adding followon branch", 4)
+					log.log(this, "w_history_questionnaire.add_branch.0022", "Error adding followon branch", 4)
 					return -1
 				end if
 				return 1
@@ -856,7 +856,7 @@ DO WHILE ll_backup < question_number
 				branch[question_number] = lstr_tree.branch[i]
 				li_sts = add_branch()
 				if li_sts < 0 then
-					log.log(this, "get_next_observation()", "Error adding child branch", 4)
+					log.log(this, "w_history_questionnaire.add_branch.0022", "Error adding child branch", 4)
 					return -1
 				end if
 				if li_sts > 0 then return 1
@@ -969,14 +969,14 @@ service = Message.powerobjectparm
 popup_return.item_count = 0
 
 if isnull(service.treatment) or not isvalid(service.treatment) then
-	log.log(this, "open", "Invalid treatment object", 4)
+	log.log(this, "w_history_questionnaire.open.0009", "Invalid treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 root_observation_id = service.root_observation_id()
 if isnull(root_observation_id) then
-	log.log(this, "open", "Invalid observation", 4)
+	log.log(this, "w_history_questionnaire.open.0009", "Invalid observation", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -987,7 +987,7 @@ title = current_patient.id_line()
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this, "open", "Initialization failed", 4)
+	log.log(this, "w_history_questionnaire.open.0009", "Initialization failed", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -1497,7 +1497,7 @@ str_popup popup
 str_popup_return popup_return
 
 if question_number < 1 then
-	log.log(this, "display_observation()", "Invalid Question Number", 4)
+	log.log(this, "w_history_questionnaire.display_observation.0025", "Invalid Question Number", 4)
 	return -1
 end if
 

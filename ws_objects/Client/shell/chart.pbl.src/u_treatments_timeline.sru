@@ -432,7 +432,7 @@ for i = 1 to treatment_count
 	// Make sure we don't exceed the available lines.
 	li_line_count += 1
 	if li_line_count > treatment_line_count then
-		log.log(this, "refresh()", "Displayable treatments exceeded max treatment lines (" + string(treatment_line_count) + ")", 3)
+		log.log(this, "u_treatments_timeline.refresh.0072", "Displayable treatments exceeded max treatment lines (" + string(treatment_line_count) + ")", 3)
 		exit
 	end if
 	luo_line = treatment_lines[li_line_count]
@@ -453,7 +453,7 @@ for i = 1 to treatment_count
 	LOOP WHILE j <= stack_height
 	
 	if j > stack_height then
-		log.log(this, "refresh()", "Maximum stack height exceeded (" + string(stack_height) + ")", 3)
+		log.log(this, "u_treatments_timeline.refresh.0072", "Maximum stack height exceeded (" + string(stack_height) + ")", 3)
 		continue
 	end if
 	
@@ -818,7 +818,7 @@ treatment_types = CREATE u_ds_data
 treatment_types.set_dataobject("dw_treatment_type_select")
 ll_rows = treatment_types.retrieve()
 if ll_rows <= 0 then
-	log.log(this, "initialize()", "Error getting treatment types", 4)
+	log.log(this, "u_treatments_timeline.initialize.0009", "Error getting treatment types", 4)
 	return -1
 end if
 

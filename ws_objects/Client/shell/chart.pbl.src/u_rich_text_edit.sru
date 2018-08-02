@@ -705,7 +705,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 			ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 			ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 			ls_temp += ", query=" + ls_query
-			log.log(this, "display_script_command_general()", ls_temp, 4)
+			log.log(this, "u_rich_text_edit.display_script_command_general.0216", ls_temp, 4)
 			add_text("<Query Error>")
 		else
 			add_text(ls_empty_phrase)
@@ -799,7 +799,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		if isnull(ls_query) or trim(ls_query) = "" then
-			log.log(this, "display_script_command_general()", "No Query", 3)
+			log.log(this, "u_rich_text_edit.display_script_command_general.0216", "No Query", 3)
 			li_sts = 0
 		else
 			li_sts = display_sql_query(ls_query, lb_show_headings, lb_show_lines)
@@ -808,7 +808,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 				ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 				ls_temp += ", query=" + ls_query
-				log.log(this, "display_script_command_general()", ls_temp, 4)
+				log.log(this, "u_rich_text_edit.display_script_command_general.0216", ls_temp, 4)
 				add_text("<Query Error>")
 			end if
 		end if
@@ -859,7 +859,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 			ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 			ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 			ls_temp += ", query=" + ls_query
-			log.log(this, "display_script_command_general()", ls_temp, 4)
+			log.log(this, "u_rich_text_edit.display_script_command_general.0216", ls_temp, 4)
 			add_text("<Query Error>")
 		elseif li_sts = 0 then
 			add_text(ls_empty_phrase)
@@ -1364,7 +1364,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		if isnull(ls_query) or trim(ls_query) = "" then
-			log.log(this, "display_script_command_assessment()", "No Query", 3)
+			log.log(this, "u_rich_text_edit.display_script_command_assessment.0384", "No Query", 3)
 			li_sts = 0
 		else
 			li_sts = display_sql_query(ls_query, lb_show_headings, lb_show_lines)
@@ -1373,7 +1373,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 				ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 				ls_temp += ", query=" + ls_query
-				log.log(this, "display_script_command_assessment()", ls_temp, 4)
+				log.log(this, "u_rich_text_edit.display_script_command_assessment.0384", ls_temp, 4)
 				add_text("<Query Error>")
 			end if
 		end if
@@ -1946,7 +1946,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		if isnull(ls_query) or trim(ls_query) = "" then
-			log.log(this, "display_script_command_encounter()", "No Query", 3)
+			log.log(this, "u_rich_text_edit.display_script_command_encounter.0482", "No Query", 3)
 			li_sts = 0
 		else
 			li_sts = display_sql_query(ls_query, lb_show_headings, lb_show_lines)
@@ -1955,7 +1955,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 				ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 				ls_temp += ", query=" + ls_query
-				log.log(this, "display_script_command_encounter()", ls_temp, 4)
+				log.log(this, "u_rich_text_edit.display_script_command_encounter.0482", ls_temp, 4)
 				add_text("<Query Error>")
 			end if
 		end if
@@ -2643,7 +2643,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		if isnull(ls_query) or trim(ls_query) = "" then
-			log.log(this, "display_script_command_patient()", "No Query", 3)
+			log.log(this, "u_rich_text_edit.display_script_command_patient.0523", "No Query", 3)
 			li_sts = 0
 		else
 			li_sts = display_sql_query(ls_query, lb_show_headings, lb_show_lines)
@@ -2652,7 +2652,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 				ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 				ls_temp += ", query=" + ls_query
-				log.log(this, "display_script_command_patient()", ls_temp, 4)
+				log.log(this, "u_rich_text_edit.display_script_command_patient.0523", ls_temp, 4)
 				add_text("<Query Error>")
 			end if
 		end if
@@ -3413,7 +3413,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		if isnull(ls_query) or trim(ls_query) = "" then
-			log.log(this, "display_script_command_treatment()", "No Query", 3)
+			log.log(this, "u_rich_text_edit.display_script_command_treatment.0607", "No Query", 3)
 			li_sts = 0
 		else
 			li_sts = display_sql_query(ls_query, lb_show_headings, lb_show_lines)
@@ -3422,7 +3422,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 				ls_temp += "display_script_id=" + string(pstr_command.display_script_id)
 				ls_temp += ", display_command_id=" + string(pstr_command.display_command_id)
 				ls_temp += ", query=" + ls_query
-				log.log(this, "display_script_command_treatment()", ls_temp, 4)
+				log.log(this, "u_rich_text_edit.display_script_command_treatment.0607", ls_temp, 4)
 				add_text("<Query Error>")
 			end if
 		end if
@@ -4596,7 +4596,7 @@ boolean lb_found
 
 if isnull(current_display_encounter) then
 	log_error("Invalid current_display_encounter")
-	log.log(this, "load_treatment_items()", "Invalid current_display_encounter", 4)
+	log.log(this, "u_rich_text_edit.display_encounter_objects.0023", "Invalid current_display_encounter", 4)
 	return -1
 end if
 
@@ -5889,7 +5889,7 @@ lstr_aggregate_font_settings = f_empty_font_settings()
 lstr_aggregate_font_settings.bold = true
 
 if isnull(ps_sql) or trim(ps_sql) = "" then
-	log.log(this, "display_grid_data()", "No sql query specified", 4)
+	log.log(this, "u_rich_text_edit.display_sql_query_renorm.0043", "No sql query specified", 4)
 	return -1
 end if
 
@@ -5909,7 +5909,7 @@ luo_data.set_dataobject("dw_rtf_query_grid_data")
 ll_rowcount = luo_data.retrieve()
 if ll_rowcount < 0 then
 	log_error("Error retrieving data")
-	log.log(this, "display_grid_data()", "Error running sql query: " + ps_sql, 4)
+	log.log(this, "u_rich_text_edit.display_sql_query_renorm.0043", "Error running sql query: " + ps_sql, 4)
 	return -1
 end if
 if ll_rowcount = 0 then
@@ -6167,21 +6167,21 @@ end if
 luo_data = CREATE u_ds_data
 li_sts = luo_data.create(ps_dwsyntax , ls_error)
 if li_sts <= 0 then
-	log.log(this, "display_datawindowobject()", "Error creating datawindow object -- " + ls_error, 4)
+	log.log(this, "u_rich_text_edit.display_datawindowobject.0023", "Error creating datawindow object -- " + ls_error, 4)
 	log_error("Error creating datawindow object -- " + ls_error)
 	return -1
 end if
 
 li_sts = luo_data.setsqlselect("EXECUTE #tmprptproc_query_grid")
 if li_sts < 0 then
-	log.log(this, "display_datawindowobject()", "Error setting sql select", 4)
+	log.log(this, "u_rich_text_edit.display_datawindowobject.0023", "Error setting sql select", 4)
 	log_error("Error setting sql select")
 	return -1
 end if
 
 ll_count = luo_data.retrieve()
 if li_sts < 0 then
-	log.log(this, "display_datawindowobject()", "Error executing datawindow", 4)
+	log.log(this, "u_rich_text_edit.display_datawindowobject.0023", "Error executing datawindow", 4)
 	log_error("Error executing datawindow")
 	return -1
 end if
@@ -6192,7 +6192,7 @@ li_sts = luo_data.saveas(ls_tempfile, HTMLTable!, true)
 TRY
 //	object.load(ls_tempfile, 0, 4, true)
 CATCH (throwable lt_error)
-	log.log(this, "display_datawindowobject()", "Error loading html into rtf control -- " + lt_error.text , 4)
+	log.log(this, "u_rich_text_edit.display_datawindowobject.0023", "Error loading html into rtf control -- " + lt_error.text , 4)
 	log_error("Error loading html into rtf control -- " + lt_error.text)
 	return -1
 END TRY
@@ -6542,7 +6542,7 @@ ls_report_id = f_attribute_find_attribute(pstr_command.attributes, "report_id")
 if isnull(ls_report_id) then
 	ls_document_component_id = f_attribute_find_attribute(pstr_command.attributes, "document_component_id")
 	if isnull(ls_document_component_id) then
-		log.log(this, "display_document()", "document command must have a report_id or document_component_id attribute", 4)
+		log.log(this, "u_rich_text_edit.display_document.0056", "document command must have a report_id or document_component_id attribute", 4)
 		return -1
 	else
 		li_sts = f_create_document(ls_document_component_id, &

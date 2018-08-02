@@ -222,13 +222,13 @@ public function integer load_query_data (string ps_query);//////////////////////
 //query_data.set_database(SQLCA)
 //ll_rows = query_data.load_query(ls_query)
 //If ll_rows < 0 Then 
-//	log.log(This,"clicked()","Unable to load values to prepare popup list..",4)
+//	log.log(This,"u_param_base.get_popup_selections.0031","Unable to load values to prepare popup list..",4)
 //	DESTROY query_data
 //	setnull(query_data)
 //	Return -1
 //End If
 //If ll_rows = 0 Then
-//	log.log(This,"clicked()","Popup query returned no rows",3)
+//	log.log(This,"u_param_base.get_popup_selections.0031","Popup query returned no rows",3)
 //	DESTROY query_data
 //	setnull(query_data)
 //	Return 0
@@ -268,12 +268,12 @@ luo_data = Create u_ds_data
 luo_data.set_database(SQLCA)
 ll_rows = luo_data.load_query(ps_query)
 If ll_rows < 0 Then 
-	log.log(This,"clicked()","Unable to load values to prepare popup list..",4)
+	log.log(This,"u_param_base.get_popup_selections.0031","Unable to load values to prepare popup list..",4)
 	DESTROY luo_data
 	Return popup
 End If
 If ll_rows = 0 Then
-//	log.log(This,"clicked()","Popup query returned no rows",3)
+//	log.log(This,"u_param_base.get_popup_selections.0031","Popup query returned no rows",3)
 	DESTROY luo_data
 	Return popup
 End If

@@ -420,7 +420,7 @@ service.get_attribute("document_patient_workplan_item_id", ll_document_patient_w
 
 if isnull(ll_interfaceserviceid) then
 	if isnull(ll_document_patient_workplan_item_id) then
-		log.log(this, "open", "Either interfaceserviceid or document_patient_workplan_item_id is required", 4)
+		log.log(this, "w_svc_code_mappings.open.0029", "Either interfaceserviceid or document_patient_workplan_item_id is required", 4)
 		popup_return.item_count = 1
 		popup_return.items[1] = "ERROR"
 		closewithreturn(this, popup_return)
@@ -449,7 +449,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlnrows = 0 then
-	log.log(this, "open", "InterfaceServiceID  not found (" + string(ll_interfaceserviceid) + ")", 4)
+	log.log(this, "w_svc_code_mappings.open.0029", "InterfaceServiceID  not found (" + string(ll_interfaceserviceid) + ")", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)

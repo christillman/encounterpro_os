@@ -290,7 +290,7 @@ if isnull(role_id) then
 			
 			li_sts = load_role(role_id)
 			if li_sts <= 0 then
-				log.log(this, "open", "Invalid Role ID (" + popup.item + ")", 4)
+				log.log(this, "w_role_definition.post_open.0054", "Invalid Role ID (" + popup.item + ")", 4)
 				popup_return.item_count = 0
 				closewithreturn(this, popup_return)
 			end if
@@ -305,7 +305,7 @@ if isnull(role_id) then
 else
 	li_sts = load_role(role_id)
 	if li_sts <= 0 then
-		log.log(this, "open", "Invalid Role ID (" + popup.item + ")", 4)
+		log.log(this, "w_role_definition.post_open.0054", "Invalid Role ID (" + popup.item + ")", 4)
 		popup_return.item_count = 0
 		closewithreturn(this, popup_return)
 	end if

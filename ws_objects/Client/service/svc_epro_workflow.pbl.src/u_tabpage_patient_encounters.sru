@@ -50,7 +50,7 @@ string ls_temp
 this.event TRIGGER resize_tabpage()
 
 if isnull(current_patient) then
-	log.log(this, "initialize()", "No current patient", 4)
+	log.log(this, "u_tabpage_patient_encounters.initialize.0008", "No current patient", 4)
 	return -1
 else
 	st_cpr_id.text = current_patient.cpr_id

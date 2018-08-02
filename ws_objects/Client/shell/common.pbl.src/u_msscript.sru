@@ -46,7 +46,7 @@ ls_string = ls_string + "Script        : " + errorscript + "~r~n"
 ls_string = ls_string + "Line Number   : " + string(errorline) + "~r~n"
 ls_string = ls_string + "Window Menu   : " + errorwindowmenu + "~r~n"
 
-log.log(this, "error", ls_string, 4)
+log.log(this, "u_msscript.error.0014", ls_string, 4)
 
 
 end event
@@ -61,7 +61,7 @@ end if
 
 ls_message += "resultcode=" + string(resultcode) + " - " + description
 
-log.log(this, "externalexception", ls_message, 4)
+log.log(this, "u_msscript.externalexception.0011", ls_message, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

@@ -32,7 +32,7 @@ WHERE message_id = :message_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "send_file()", "Message log record not found when getting message(" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_outgoing_filecopy.xx_send_file.0014", "Message log record not found when getting message(" + string(message_id) + ")", 4)
 	return -1
 end if
 
@@ -46,7 +46,7 @@ if ll_next_counter > 0 then
 		ps_address = reverse(ls_filename)
 	End If
 end if
-mylog.log(this,"xx_Sendfile","write to "+ps_address,1)
+mylog.log(this,"u_component_outgoing_filecopy.xx_send_file.0028","write to "+ps_address,1)
 
 li_sts = mylog.file_write(lblb_message, ps_address)
 // Save a copy of the file
@@ -57,13 +57,13 @@ If len(hold_bills_address) > 0 and hold_outgoing Then
 			ls_copy_to = hold_bills_address + ls_temp
 			li_rtn = mylog.file_copy(ps_filename,ls_copy_to)
 			if li_rtn < 1 Then
-				mylog.log(this, "timer_ding()", "Saving a copy of outgoing file ("+ps_filename+") failed.", 3)
+				mylog.log(this, "u_component_outgoing_filecopy.xx_send_file.0039", "Saving a copy of outgoing file ("+ps_filename+") failed.", 3)
 			End If
 		else
-			mylog.log(this, "xx_post_other()", "Error getting next file number", 4)
+			mylog.log(this, "u_component_outgoing_filecopy.xx_send_file.0042", "Error getting next file number", 4)
 		end if
 	Else
-		mylog.log(this, "timer_ding()", "Saving a copy of outgoing file failed. Directory ("+hold_bills_address+") not found.", 3)
+		mylog.log(this, "u_component_outgoing_filecopy.xx_send_file.0039", "Saving a copy of outgoing file failed. Directory ("+hold_bills_address+") not found.", 3)
 	End If
 End If
 
@@ -79,17 +79,17 @@ else
 	hold_outgoing = false
 end if
 if not hold_outgoing then
-	log.log(this,"xx_initialize()","Saving outgoing message not enabled; To enable set Attribute = 'hold_bills' Value = 'Y' FOR Component = 'trn_out_filecopy'.",3)
+	log.log(this,"u_component_outgoing_filecopy.xx_initialize.0010","Saving outgoing message not enabled; To enable set Attribute = 'hold_bills' Value = 'Y' FOR Component = 'trn_out_filecopy'.",3)
 	hold_outgoing = false
 End If
 
 get_attribute("hold_bills_directory", hold_bills_address)
 If len(hold_bills_address) = 0 Then 
-	log.log(this,"xx_initialize()","WARNING: Saving outgoing message not enabled; To enable set Attribute = 'hold_outgoing_directory' Value = '<enter valid dir>' FOR Component = 'trn_out_filecopy'.",3)
+	log.log(this,"u_component_outgoing_filecopy.xx_initialize.0010","WARNING: Saving outgoing message not enabled; To enable set Attribute = 'hold_outgoing_directory' Value = '<enter valid dir>' FOR Component = 'trn_out_filecopy'.",3)
 	Setnull(hold_bills_address)
 Else
 	if right(hold_bills_address,1) <> "\" Then hold_bills_address += "\"
-	log.log(this,"xx_initialize()","save outgoing at "+hold_bills_address,1)
+	log.log(this,"u_component_outgoing_filecopy.xx_initialize.0010","save outgoing at "+hold_bills_address,1)
 End If
 
 
@@ -115,7 +115,7 @@ public function integer timer_ding ();//long 			ll_message_id
 //		ls_message_type = luo_data.object.message_type[i]
 //		ll_subscription_id = luo_data.object.subscription_id[i]
 //
-//		mylog.log(this, "timer_ding()", "Retrying message #" + string(ll_message_id), 1)
+//		mylog.log(this, "u_component_outgoing_filecopy.xx_send_file.0039", "Retrying message #" + string(ll_message_id), 1)
 //		
 //		li_sts = send_file(ll_message_id)
 //		IF li_sts <= 0 THEN

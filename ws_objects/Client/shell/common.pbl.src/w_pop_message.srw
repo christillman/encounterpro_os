@@ -39,7 +39,7 @@ long ll_scroll_position
 long ll_scroll_maximum
 
 if cpr_mode = "SERVER" then
-	log.log(this, "open", message.stringparm, 2)
+	log.log(this, "w_pop_message.open.0006", message.stringparm, 2)
 	close(this)
 	return
 end if

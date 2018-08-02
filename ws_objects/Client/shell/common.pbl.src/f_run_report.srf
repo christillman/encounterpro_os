@@ -48,7 +48,7 @@ setnull(ls_service)
 setnull(ls_null)
 
 if isnull(ps_report_id) then
-	log.log(po_null, "run_report()", "Null report_id", 4)
+	log.log(po_null, "f_run_report.0043", "Null report_id", 4)
 	return -1
 end if
 
@@ -59,7 +59,7 @@ FROM c_Report_Definition
 WHERE report_id = :ps_report_id;
 If Not tf_check() Then Return -1
 if sqlca.sqlnrows = 0 then
-	log.log(po_null, "run_report()", "report_id not found (" + ps_report_id + ")", 4)
+	log.log(po_null, "f_run_report.0043", "report_id not found (" + ps_report_id + ")", 4)
 	return -1
 end if
 
@@ -78,7 +78,7 @@ if lower(ls_this_document_format) <> lower(ps_document_format) and len(ps_docume
 	if not tf_check() then return -1
 	
 	if isnull(ll_max_attribute_sequence) then
-		log.log(po_null, "run_report()", "A " + ps_document_format + " readable document is required", 4)
+		log.log(po_null, "f_run_report.0043", "A " + ps_document_format + " readable document is required", 4)
 		return -1
 	end if
 	
@@ -119,12 +119,12 @@ ls_destination = "FILE"
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	log.log(po_null, "run_report()", "Null component_id (" + ps_report_id + ")", 4)
+	log.log(po_null, "f_run_report.0043", "Null component_id (" + ps_report_id + ")", 4)
 	Return -1
 Else
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		log.log(po_null, "print()", "Error getting report component (" + &
+		log.log(po_null, "f_run_report.0119", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return -1
 	End If

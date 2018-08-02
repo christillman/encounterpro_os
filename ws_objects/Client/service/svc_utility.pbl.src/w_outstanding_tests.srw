@@ -166,12 +166,12 @@ ll_encounter_id = dw_tests.object.open_encounter_id[selected_row]
 if isnull(current_patient) then
 	li_sts = f_set_patient(ls_cpr_id)
 	if li_sts <= 0 then
-		log.log(this, "selected", "Error loading patient (" + ls_cpr_id + ")", 4)
+		log.log(this, "w_outstanding_tests.perform.0021", "Error loading patient (" + ls_cpr_id + ")", 4)
 		return
 	end if
 else
 	if current_patient.cpr_id <> ls_cpr_id then
-		log.log(this, "selected", "Current patient not correct (" + current_patient.cpr_id + ", " + ls_cpr_id + ")", 4)
+		log.log(this, "w_outstanding_tests.perform.0021", "Current patient not correct (" + current_patient.cpr_id + ", " + ls_cpr_id + ")", 4)
 		return
 	end if
 	lb_nested = true

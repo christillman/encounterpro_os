@@ -80,7 +80,7 @@ Else
 	FROM c_Drug_Maker
 	WHERE maker_id = :maker_id;
 	If Not tf_check() Then
-		log.log(This, "post_open", "Error getting maker information", 4)
+		log.log(This, "w_vial_instance_details.post_open.0019", "Error getting maker information", 4)
 		close(This)
 		return
 	End If

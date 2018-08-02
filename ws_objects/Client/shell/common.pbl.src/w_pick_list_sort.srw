@@ -100,14 +100,14 @@ end if
 
 list_count = pick_list.rowcount()
 if list_count <= 0 then
-	log.log(this, "open", "pick list empty", 4)
+	log.log(this, "w_pick_list_sort.open.0031", "pick list empty", 4)
 	close(this)
 	return
 end if
 
 ll_row = pick_list.get_selected_row()
 if ll_row <= 0 then
-	log.log(this, "open", "no selected row", 4)
+	log.log(this, "w_pick_list_sort.open.0031", "no selected row", 4)
 	close(this)
 	return
 end if

@@ -102,7 +102,7 @@ popup = message.powerobjectparm
 st_title.text = popup.title
 
 if popup.data_row_count <> 3 then
-	log.log(this, "open", "Invalid Parameters", 4)
+	log.log(this, "w_exam_selection_criteria.open.0008", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -135,7 +135,7 @@ else
 	FROM c_Age_Range
 	WHERE age_range_id = :age_range_id;
 	if not tf_check() then
-		log.log(this, "open", "Error getting stage description", 4)
+		log.log(this, "w_exam_selection_criteria.open.0008", "Error getting stage description", 4)
 		close(this)
 		return
 	end if

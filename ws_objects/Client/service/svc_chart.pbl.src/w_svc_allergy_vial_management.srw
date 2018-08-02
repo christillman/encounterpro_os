@@ -90,7 +90,7 @@ if isnull(luo_unit) then
 end if
 
 if isnull(luo_unit) then
-	log.log(this, "load_allergens()", "Error finding unit", 4)
+	log.log(this, "w_svc_allergy_vial_management.load_allergens.0016", "Error finding unit", 4)
 	return -1
 end if
 
@@ -126,7 +126,7 @@ popup_return.items[1] = "ERROR"
 
 service = message.powerobjectparm
 if isnull(service.treatment) then
-	log.log(this, "open", "No treatment object", 4)
+	log.log(this, "w_svc_allergy_vial_management.open.0015", "No treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
