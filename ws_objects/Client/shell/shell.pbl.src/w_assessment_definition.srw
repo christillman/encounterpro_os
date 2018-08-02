@@ -18,7 +18,6 @@ global type w_assessment_definition from w_window_base
 integer width = 2944
 integer height = 1848
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -192,8 +191,10 @@ WHERE assessment_id = :assessment_id;
 if not tf_check() then return -1
 
 // drugs tab
-li_sts = tab_assessment.tabpage_drugs.dw_drugs.update()
-if li_sts < 0 then return -1
+if tab_assessment.tabpage_drugs.dw_drugs.rowcount() > 0 then
+	li_sts = tab_assessment.tabpage_drugs.dw_drugs.update()
+	if li_sts < 0 then return -1
+end if
 
 return 1
 
