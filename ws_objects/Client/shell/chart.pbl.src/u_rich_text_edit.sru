@@ -136,6 +136,7 @@ private str_reentry_state reentry_state
  
 
 end variables
+
 forward prototypes
 public function string workplan_item_attribute (u_ds_data puo_workplan_items, string ps_which_item, string ps_attribute)
 public function string treatment_workplan_attribute (long pl_treatment_id, string ps_attribute)
@@ -406,8 +407,6 @@ long ll_temp_indentl
 
 setnull(ll_null)
 setnull(ls_text)
-
-this.setredraw(false)
 
 //ll_temp_indentl = object.indentl
 
@@ -3837,8 +3836,6 @@ string ls_temp
 // Don't do anything if we don't have a display_script_id
 if isnull(pl_display_script_id) then return
 
-this.setredraw(false)
-
 // This version will normally be called from a service and the initial settings of
 // encounter_id, problem_id, and treatment_id will come from the current_service object
 
@@ -3889,8 +3886,6 @@ end if
 
 display_script(pl_display_script_id, lstr_encounter, lstr_assessment, lstr_treatment)
 
-this.setredraw(true)
-
 
 end subroutine
 
@@ -3911,7 +3906,9 @@ if isnull(pl_display_script_id) then
 	pl_display_script_id = datalist.get_display_script_id("Treatment", lstr_treatment.treatment_type)
 end if
 
+setredraw(false)
 display_script(pl_display_script_id, last_encounter, last_assessment, lstr_treatment)
+setredraw(true)
 
 // Restore treatment context
 if lstr_last_treatment.treatment_id > 0 then
@@ -3943,7 +3940,9 @@ if isnull(pl_display_script_id) or pl_display_script_id <= 0 then
 	return
 end if
 
+setredraw(false)
 display_script(pl_display_script_id, lstr_encounter, last_assessment, last_treatment)
+setredraw(true)
 
 // Restore encounter context
 if lstr_last_encounter.encounter_id > 0 then
@@ -4669,7 +4668,9 @@ if isnull(pl_display_script_id) then
 	if isnull(pl_display_script_id) or pl_display_script_id <= 0 then log_error("No display script_id")
 end if
 
+setredraw(false)
 display_script(pl_display_script_id, last_encounter, pstr_assessment, last_treatment)
+setredraw(true)
 
 // Restore the last assessment
 if lstr_last_assessment.problem_id > 0 then
