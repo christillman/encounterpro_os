@@ -565,7 +565,6 @@ end subroutine
 public subroutine button_pressed (integer pi_button);integer li_index
 integer li_sts
 str_attributes lstr_attributes
-
 lstr_attributes.attribute_count = 0
 
 if pi_button <= menu_button_count then
@@ -1490,8 +1489,7 @@ integer y = 88
 integer width = 882
 integer height = 340
 integer taborder = 110
-borderstyle borderstyle = StyleRaised!
-string binarykey = "u_summary_page.udo"
+borderstyle borderstyle = styleraised!
 end type
 
 event click;call super::click;str_attributes lstr_attributes

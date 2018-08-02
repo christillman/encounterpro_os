@@ -25,7 +25,8 @@ event returntospirotest ( )
 end type
 global u_ole_erc u_ole_erc
 
-event externalexception;log.log(this, "externalexception", "ERROR (" + string(resultcode) + ") - " + description, 4)
+event externalexception;
+log.log(this, "externalexception", "ERROR (" + string(resultcode) + ") - " + description, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

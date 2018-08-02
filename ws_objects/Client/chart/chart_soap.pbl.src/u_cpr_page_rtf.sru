@@ -38,12 +38,10 @@ end subroutine
 public subroutine initialize (u_cpr_section puo_section, integer pi_page);this_section = puo_section
 this_page = pi_page
 
-
 rte_report.width = width
 rte_report.height = height
 
 this_section.load_params(this_page)
-
 display_script_id = long(this_section.get_attribute(this_section.page[this_page].page_id, "display_script_id"))
 
 end subroutine
@@ -69,8 +67,6 @@ integer width = 2715
 integer height = 972
 integer taborder = 10
 boolean border = false
-borderstyle borderstyle = stylebox!
-string binarykey = "u_cpr_page_rtf.udo"
 end type
 
 event fieldclicked;parent.postevent("refresh")

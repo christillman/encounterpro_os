@@ -106,6 +106,9 @@ destroy(this.cb_forward)
 destroy(this.cb_home)
 end on
 
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_cpr_page_browser_nav
+end type
+
 type ole_browser from u_browser within u_cpr_page_browser_nav
 integer width = 1559
 integer height = 776
@@ -114,11 +117,7 @@ string binarykey = "u_cpr_page_browser_nav.udo"
 end type
 
 event commandstatechange;
-//if enable then
-//	messagebox("Football", string(command) + "  true")
-//else
-//	messagebox("Football", string(command) + "  false")
-//end if
+
 CHOOSE CASE command
 	CASE 1
 		cb_forward.enabled = enable

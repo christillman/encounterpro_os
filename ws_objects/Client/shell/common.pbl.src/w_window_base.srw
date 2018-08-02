@@ -417,6 +417,8 @@ OLEObject lole_Word
 w_window_base lw_this
 
 lw_this = this
+Clipboard(this.classname())
+return 0
 
 //The routines you are using from the Windows API capture a rectangular area of the current screen, so to capture the current window you need to convert the window's width and height into pixels so they're ready for the routines. Add the following code to achieve this:
 

@@ -36,7 +36,8 @@ end on
 on u_twain_scanner.destroy
 end on
 
-event externalexception;error_code = integer(resultcode)
+event externalexception;
+error_code = integer(resultcode)
 error_text = description
 log.log(this, "externalexception", "ERROR (" + string(error_code) + ") - " + error_text, 4)
 

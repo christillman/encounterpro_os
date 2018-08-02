@@ -35,7 +35,6 @@ string ls_url
 if isnull(ps_url) then return ""
 
 ls_url = ps_url
-
 ls_url = f_string_substitute(ls_url, "%CPR_ID%", current_patient.cpr_id)
 
 if not isnull(current_patient.open_encounter_id) then
@@ -78,6 +77,9 @@ on u_cpr_page_browser.destroy
 call super::destroy
 destroy(this.ole_browser)
 end on
+
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_cpr_page_browser
+end type
 
 type ole_browser from u_browser within u_cpr_page_browser
 integer width = 1559

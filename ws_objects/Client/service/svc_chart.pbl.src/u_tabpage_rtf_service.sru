@@ -49,14 +49,12 @@ end on
 event resize_tabpage;call super::resize_tabpage;ole_rtf.height = height
 ole_rtf.width = width
 
-
 end event
 
 type ole_rtf from u_rich_text_edit within u_tabpage_rtf_service
 integer height = 1524
 integer taborder = 10
 borderstyle borderstyle = styleraised!
-string binarykey = "u_tabpage_rtf_service.udo"
 end type
 
 

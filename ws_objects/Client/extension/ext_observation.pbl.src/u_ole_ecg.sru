@@ -45,7 +45,8 @@ log.log(this, "error", ls_string, 4)
 
 end event
 
-event externalexception;log.log(this, "externalexception", "ERROR (" + string(resultcode) + ") - " + description, 4)
+event externalexception;
+log.log(this, "externalexception", "ERROR (" + string(resultcode) + ") - " + description, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1
