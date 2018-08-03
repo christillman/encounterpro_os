@@ -3741,7 +3741,7 @@ ls_xml = f_blob_to_string(lbl_script)
 
 
 // Now create the DOM version from the string version
-pbdombuilder_new = Create PBDOM_Builder
+pbdombuilder_new = Create pbdom_builder
 
 // Make sure this looks like XML
 TRY

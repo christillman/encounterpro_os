@@ -205,7 +205,7 @@ integer li_sts
 
 assessment_id = message.stringparm
 
-if user_list.is_user_service(current_user.user_id, "CONFIG_ASSESSMENTS") then
+if user_list.is_user_service(current_user.user_id, "Edit Assessment") then
 	allow_editing = true
 else
 	allow_editing = false

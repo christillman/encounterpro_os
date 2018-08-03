@@ -177,6 +177,20 @@ else
 	st_status.text = "Inactive"
 end if
 
+if NOT allow_editing then
+	sle_description.enabled = false
+	cb_equivalence.enabled = false
+	cb_common_list.enabled = false
+	sle_icd10.enabled = false
+	st_risk_level.enabled = false
+	st_status.enabled = false
+	st_assessment_category.enabled = false
+	st_complexity.enabled = false
+	st_location_domain.enabled = false
+	st_patient_reference_material.enabled = false
+	st_provider_reference_material.enabled = false
+end if
+
 
 return 1
 

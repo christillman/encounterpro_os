@@ -36,6 +36,10 @@ mle_long_description.height = height - (2 * mle_long_description.y)
 
 mle_long_description.text = long_description
 
+if NOT allow_editing then
+	mle_long_description.enabled = false
+end if
+
 return 1
 
 end function

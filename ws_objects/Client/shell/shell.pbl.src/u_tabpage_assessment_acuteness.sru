@@ -107,6 +107,15 @@ else
 	st_no.triggerevent("clicked")
 end if
 
+if NOT allow_editing then
+	st_auto_close_interval_amount.enabled = false
+	st_auto_close_interval_unit.enabled = false	
+	st_auto_close_delay.enabled = false
+	st_yes.enabled = false
+	st_no.enabled = false
+	st_acuteness.enabled = false
+end if
+
 return 1
 
 
