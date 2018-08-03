@@ -12,15 +12,15 @@
   !define PRODUCT   EncounterPRO-OS Full Demo Installation
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   6.1.1
+  !define VERSION   7.0.1
 
 ; Source Root
- !define SOURCE_ROOT "\\ICT1\ICTFileStore1\Open Source\Builds"
+ !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
   !define SQLServerExpress_VERSION   "2008R2"
-  !define Epro_NewDB_Version   200.3
-  !define EproClient_VERSION   6.1.1
+  !define Epro_NewDB_Version   202
+  !define EproClient_VERSION   7.0.1
 
   !define Required_Dotnet_VERSION   'v4.0'
 
@@ -128,19 +128,6 @@ Function PreInstall
       
       GiveUpNowmsi45:
       Abort "Please install Windows Installer version 4.5 or higher before running setup again."
-  ${EndIf}
-
-  Call isNet35Installed
-  Pop $R0
-  ${If} $R0 != 'Yes'
-      MessageBox MB_YESNO|MB_ICONEXCLAMATION "This program requires the .NET Framework 3.5 Service Pack 1.  Do you wish to download the required framework now?" IDYES OpenBrowser35 IDNO GiveUpNow35
-      
-      OpenBrowser35:
-      ${OpenURL} "http://www.microsoft.com/downloads/details.aspx?FamilyId=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en"
-      Abort "Please restart setup after installing the .NET Framework 3.5 Service Pack 1."
-      
-      GiveUpNow35:
-      Abort "Please install the .NET Framework 3.5 Service Pack 1 before running setup again."
   ${EndIf}
 
   Call isNet40Installed
