@@ -4,11 +4,12 @@
 !define PRODUCT_NAME "EncounterPRO-OS Utilities"
 
 ; Source Root
-!define SOURCE_ROOT "\\ICT1\ICTFileStore1\Open Source\Builds"
+!define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
 
 ; Component Versions
 !define EncounterPRO_Utilities_VERSION   1.0.0.6
-!define TPS_Foxit_Version 2.3
+; This has a virus in it
+; !define TPS_Foxit_Version 2.3
 !define EventLogInstaller_Version 1.1
 !define CSharpGACTool_Version 1.0.0.1
 !define ICSharpCode_SharpZipLib_Version 0.84.0.0
@@ -21,7 +22,7 @@
 
 ; Module Locations
 !define EncounterPRO_Utilities_SOURCE  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\${EncounterPRO_Utilities_VERSION}\Files'
-!define FOXIT_READER_SOURCE "${SOURCE_ROOT}\3rd Party Software\Foxit Reader\${TPS_Foxit_Version}"
+; !define FOXIT_READER_SOURCE "${SOURCE_ROOT}\3rd Party Software\Foxit Reader\${TPS_Foxit_Version}"
 !define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\Install\EproEventLogInstaller\${EventLogInstaller_Version}"
 !define CSharpGACTool_SOURCE "${SOURCE_ROOT}\Utilities\CSharpGACTool\${CSharpGACTool_Version}"
 !define PS_Distiller_Driver_SOURCE "${SOURCE_ROOT}\3rd Party Software\Adobe\PS Distiller Driver"
@@ -188,7 +189,7 @@ Section "EncounterPRO.OS.Utilities"
   File "${CSharpGACTool_SOURCE}\CSharpGACTool.exe"
 
   ; Foxit Reader
-  File "${FOXIT_READER_SOURCE}\Foxit Reader.exe"
+  ; File "${FOXIT_READER_SOURCE}\Foxit Reader.exe"
           
   ; Get the EncounterPRO.OS.Utilities files 
   File "${EncounterPRO_Utilities_SOURCE}\EncounterPRO.OS.Utilities.tlb"

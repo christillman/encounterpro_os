@@ -233,22 +233,24 @@
         Delete "$INSTDIR\*.mdlvl"
         SetOutPath '$INSTDIR'
         SetDetailsPrint both
-      
         DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
         SetOverwrite on
         SetDetailsPrint textonly
+        ; For 7.0.1.0 only
+        File "${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\201\*.mdlvl"
         File "${SRC_Mod_Level}\*.mdlvl"
     SectionEnd
 
     Section '-Attachments' SecAT
         IfFileExists '${SRC_Mod_Level}\Attachments\*.*' DoAttachments
         Goto SkipAttachments
-        :DoAttachments
+        DoAttachments:
         SetOutPath '\\localhost\attachments'
+        SetDetailsPrint both
+        DetailPrint "Installing Attachments in \\localhost\attachments ..."
         SetOverwrite on
         File "${SRC_Mod_Level}\Attachments\*.*"
-        SetDetailsPrint both
-        :SkipAttachments
+        SkipAttachments:
     SectionEnd
     
     Section -AdditionalIcons

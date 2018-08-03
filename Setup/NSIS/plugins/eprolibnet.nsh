@@ -12,7 +12,8 @@
   !define SOURCE_ROOT "\\ICT1\ICTFileStore1\Open Source\Builds"
 
 ; Component Versions
-  !define TPS_Foxit_Version 2.3
+; This has a virus in it
+;  !define TPS_Foxit_Version 2.3
   !define EventLogInstaller_Version 1.1
   
 ; Other source definitions
@@ -20,7 +21,7 @@
   !define THIRDPARTY_SOURCE "${SOURCE_ROOT}\3rd Party Software"
   
 ; Versioned module locations
-  !define FOXIT_READER_SOURCE "${THIRDPARTY_SOURCE}\Foxit Reader\${TPS_Foxit_Version}"
+;   !define FOXIT_READER_SOURCE "${THIRDPARTY_SOURCE}\Foxit Reader\${TPS_Foxit_Version}"
   !define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\Install\${EventLogInstaller_Version}"
 
 ; Installation constants
@@ -78,7 +79,7 @@
           SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\EproLibNET"
           
           ; Foxit Reader
-          File "${FOXIT_READER_SOURCE}\Foxit Reader.exe"
+          ; File "${FOXIT_READER_SOURCE}\Foxit Reader.exe"
           
           ; EproLibNET
           File "${EproLibNETSource}\EproLibNET.tlb"
