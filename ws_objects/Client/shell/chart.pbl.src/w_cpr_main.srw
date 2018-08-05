@@ -54,7 +54,6 @@ end forward
 
 global type w_cpr_main from w_window_base
 integer height = 1840
-boolean controlmenu = false
 windowtype windowtype = response!
 event post_open pbm_custom01
 event open_windows pbm_custom02
@@ -111,6 +110,7 @@ public subroutine initialize ()
 public subroutine display_portrait ()
 public subroutine refresh_screen ()
 public function integer refresh ()
+public function integer initialize_property (string ps_prop_num, ref u_st_property pst_prop, ref statictext pst_prop_title, ref str_attributes pstr_attributes)
 end prototypes
 
 event post_open;integer li_sts
@@ -269,6 +269,24 @@ return 1
 
 end function
 
+public function integer initialize_property (string ps_prop_num, ref u_st_property pst_prop, ref statictext pst_prop_title, ref str_attributes pstr_attributes);string ls_property, ls_property_title
+long ll_null
+
+setnull(ll_null)
+
+ls_property = current_service.get_attribute("property_" + ps_prop_num)
+if isnull(ls_property) then
+	pst_prop.visible = false
+	pst_prop_title.visible = false
+else
+	pst_prop.initialize(ls_property, pst_prop_title, ll_null, pstr_attributes)
+	ls_property_title = current_service.get_attribute("property_title_" + ps_prop_num)
+	if not isnull(ls_property_title) then pst_prop_title.text = ls_property_title
+end if
+	
+return 0
+end function
+
 event open;call super::open;str_popup_return popup_return
 string ls_encounter_flag
 integer li_sts
@@ -304,85 +322,14 @@ tab_cpr.initialize()
 current_service.add_attribute("chart_id", string(tab_cpr.chart_id))
 
 if not isnull(current_service) then
-	ls_property = current_service.get_attribute("property_1")
-	if isnull(ls_property) then
-		st_property_1.visible = false
-		st_property_title_1.visible = false
-	else
-		st_property_1.initialize(ls_property, st_property_title_1, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_1")
-		if not isnull(ls_property_title) then st_property_title_1.text = ls_property_title
-	end if
-	
-	ls_property = current_service.get_attribute("property_2")
-	if isnull(ls_property) then
-		st_property_2.visible = false
-		st_property_title_2.visible = false
-	else
-		st_property_2.initialize(ls_property, st_property_title_2, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_2")
-		if not isnull(ls_property_title) then st_property_title_2.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_3")
-	if isnull(ls_property) then
-		st_property_3.visible = false
-		st_property_title_3.visible = false
-	else
-		st_property_3.initialize(ls_property, st_property_title_3, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_3")
-		if not isnull(ls_property_title) then st_property_title_3.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_4")
-	if isnull(ls_property) then
-		st_property_4.visible = false
-		st_property_title_4.visible = false
-	else
-		st_property_4.initialize(ls_property, st_property_title_4, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_4")
-		if not isnull(ls_property_title) then st_property_title_4.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_5")
-	if isnull(ls_property) then
-		st_property_5.visible = false
-		st_property_title_5.visible = false
-	else
-		st_property_5.initialize(ls_property, st_property_title_5, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_5")
-		if not isnull(ls_property_title) then st_property_title_5.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_6")
-	if isnull(ls_property) then
-		st_property_6.visible = false
-		st_property_title_6.visible = false
-	else
-		st_property_6.initialize(ls_property, st_property_title_6, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_6")
-		if not isnull(ls_property_title) then st_property_title_6.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_7")
-	if isnull(ls_property) then
-		st_property_7.visible = false
-		st_property_title_7.visible = false
-	else
-		st_property_7.initialize(ls_property, st_property_title_7, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_7")
-		if not isnull(ls_property_title) then st_property_title_7.text = ls_property_title
-	end if
-		
-	ls_property = current_service.get_attribute("property_8")
-	if isnull(ls_property) then
-		st_property_8.visible = false
-		st_property_title_8.visible = false
-	else
-		st_property_8.initialize(ls_property, st_property_title_8, ll_null, lstr_attributes)
-		ls_property_title = current_service.get_attribute("property_title_8")
-		if not isnull(ls_property_title) then st_property_title_8.text = ls_property_title
-	end if
+	initialize_property("1", st_property_1, st_property_title_1, lstr_attributes)
+	initialize_property("2", st_property_2, st_property_title_2, lstr_attributes)
+	initialize_property("3", st_property_3, st_property_title_3, lstr_attributes)
+	initialize_property("4", st_property_4, st_property_title_4, lstr_attributes)
+	initialize_property("5", st_property_5, st_property_title_5, lstr_attributes)
+	initialize_property("6", st_property_6, st_property_title_6, lstr_attributes)
+	initialize_property("7", st_property_7, st_property_title_7, lstr_attributes)
+	initialize_property("8", st_property_8, st_property_title_8, lstr_attributes)
 end if
 
 uo_picture.initialize()
