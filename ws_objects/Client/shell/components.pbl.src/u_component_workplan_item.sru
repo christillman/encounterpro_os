@@ -191,7 +191,7 @@ public function integer set_progress (string ps_progress_type);datetime ldt_null
 setnull(ldt_null)
 
 if isnull(patient_workplan_item_id) then
-	mylog.log(this, "u_component_workplan_item.set_progress.0006", "Null patient_workplan_item_id", 4)
+	mylog.log(this, "u_component_workplan_item.set_progress:0006", "Null patient_workplan_item_id", 4)
 	return -1
 end if
 
@@ -451,7 +451,7 @@ if lb_already_locked then
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message)
 	else
-		log.log(this, "u_component_workplan_item.doing_service.0070", ls_message, 4)
+		log.log(this, "u_component_workplan_item.doing_service:0070", ls_message, 4)
 	end if
 	return 0
 end if
@@ -671,7 +671,7 @@ if not isnull(treatment) and not isnull(ll_root_observation_sequence) then
 	// If an observation_sequence is specified in the attributes, then make sure it exists.
 	ls_root_observation_id = treatment.get_observation_id(ll_root_observation_sequence)
 	if isnull(ls_root_observation_id) then
-		log.log(this, "u_component_workplan_item.get_root_observation.0022", "An observation_sequence was specified but can't be found (" + string(ll_root_observation_sequence) + ")", 4)
+		log.log(this, "u_component_workplan_item.get_root_observation:0022", "An observation_sequence was specified but can't be found (" + string(ll_root_observation_sequence) + ")", 4)
 		return ll_null
 	end if
 	
@@ -691,7 +691,7 @@ else
 	li_sts = 1
 end if
 if isnull(ls_root_observation_id) or li_sts <= 0 then
-	log.log(this, "u_component_workplan_item.get_root_observation.0022", "Unable to determine root observation_id", 4)
+	log.log(this, "u_component_workplan_item.get_root_observation:0042", "Unable to determine root observation_id", 4)
 	return ll_null
 end if
 
@@ -896,7 +896,7 @@ end if
 
 // First, did we find a workplan
 If cprdb.sqlcode = 100 Then
-	mylog.log(this, "u_component_workplan_item.initialize.0074", "Workplan record not found (" + &
+	mylog.log(this, "u_component_workplan_item.initialize:0074", "Workplan record not found (" + &
 							string(patient_workplan_id) + ")", 4)
 	Return -1
 End If
@@ -1021,7 +1021,7 @@ end function
 
 public function integer get_service_properties ();
 if isnull(patient_workplan_item_id) then
-	mylog.log(this, "u_component_workplan_item.get_service_properties.0003", "Null patient_workplan_item_id", 4)
+	mylog.log(this, "u_component_workplan_item.get_service_properties:0003", "Null patient_workplan_item_id", 4)
 	return -1
 end if
 
@@ -1107,20 +1107,20 @@ If not cprdb.check() Then Return -1
 // Check to make sure everything looks right
 // First, did we find a workplan item
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_workplan_item.get_service_properties.0003", "Workplan Item Record not found (" + string(patient_workplan_item_id) + ")", 4)
+	mylog.log(this, "u_component_workplan_item.get_service_properties:0089", "Workplan Item Record not found (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
 //// Next, is the item a service
 //If lower(item_type) <> "service" or isnull(item_type) Then
-//	mylog.log(this, "u_component_workplan_item.initialize.0074", "Workplan item not a service (" + &
+//	mylog.log(this, "u_component_workplan_item.get_service_properties:0095", "Workplan item not a service (" + &
 //							string(patient_workplan_item_id) + ")", 4)
 //	Return -1
 //End If
 //
 //// Next, do we have a service identifer
 //If isnull(service) Then
-//	mylog.log(this, "u_component_workplan_item.initialize.0074", "Null ordered_service (" +&
+//	mylog.log(this, "u_component_workplan_item.get_service_properties:0102", "Null ordered_service (" +&
 //							string(patient_workplan_item_id) + ")", 4)
 //	Return -1
 //End If
@@ -1185,7 +1185,7 @@ if isnull(treatment.observation_id) then
 	
 	// If we still don't have an observation_id then return null
 	if isnull(treatment.observation_id) then
-		log.log(this, "u_component_workplan_item.get_root_observation_ids.0057", "No treatment-root observation found", 4)
+		log.log(this, "u_component_workplan_item.get_root_observation_ids:0057", "No treatment-root observation found", 4)
 		return 0
 	else
 		treatment.set_progress_key('Modify', 'observation_id', treatment.observation_id)
@@ -1420,19 +1420,19 @@ CHOOSE CASE lower(context_object)
 		setnull(object_key)
 	CASE "patient"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "patient context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0009", "patient context but no cpr_id", 4)
 			return -1
 		end if
 		setnull(object_key)
 	CASE "encounter"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "encounter context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0015", "encounter context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(encounter_id) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key.0009", "encounter context but no encounter_id", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0021", "encounter context but no encounter_id", 4)
 				return -1
 			else
 				encounter_id = ll_object_key
@@ -1441,13 +1441,13 @@ CHOOSE CASE lower(context_object)
 		object_key = encounter_id
 	CASE "assessment"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "assessment context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0030", "assessment context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(problem_id) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key.0009", "assessment context but no problem_id", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0036", "assessment context but no problem_id", 4)
 				return -1
 			else
 				problem_id = ll_object_key
@@ -1456,13 +1456,13 @@ CHOOSE CASE lower(context_object)
 		object_key = problem_id
 	CASE "treatment"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "treatment context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0045", "treatment context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(treatment_id) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key.0009", "treatment context but no treatment object", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0051", "treatment context but no treatment object", 4)
 				return -1
 			else
 				treatment_id = ll_object_key
@@ -1471,13 +1471,13 @@ CHOOSE CASE lower(context_object)
 		object_key = treatment_id
 	CASE "observation"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "observation context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0060", "observation context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(observation_sequence) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key.0009", "observation context but no observation_sequence", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0066", "observation context but no observation_sequence", 4)
 				return -1
 			else
 				observation_sequence = ll_object_key
@@ -1486,13 +1486,13 @@ CHOOSE CASE lower(context_object)
 		object_key = observation_sequence
 	CASE "attachment"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key.0009", "attachment context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0075", "attachment context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(attachment_id) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key.0009", "attachment context but no attachment_id", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0081", "attachment context but no attachment_id", 4)
 				return -1
 			else
 				attachment_id = ll_object_key
@@ -1650,7 +1650,7 @@ Else
 		USING cprdb;
 		If Not cprdb.check() Then Return -1
 		If cprdb.sqlcode = 100 Then
-			mylog.log(this, "u_component_workplan_item.order_service.0105", "Treatment Workplan record not found (" + string(treatment.treatment_id) + ")", 4)
+			mylog.log(this, "u_component_workplan_item.order_service:0105", "Treatment Workplan record not found (" + string(treatment.treatment_id) + ")", 4)
 			Return -1
 		End if
 	end if
@@ -1754,7 +1754,7 @@ ll_attachment_id = f_new_attachment_2(cpr_id, &
 												ps_folder &
 												)
 if ll_attachment_id < 0 then
-	log.log(this, "u_component_workplan_item.new_attachment.0018", "Error creating new attachment", 4)
+	log.log(this, "u_component_workplan_item.new_attachment:0018", "Error creating new attachment", 4)
 	return -1
 end if
 
@@ -1771,12 +1771,12 @@ str_external_observation_attachment lstr_attachment
 str_filepath lstr_filepath
 
 if isnull(ps_filepath) then
-	log.log(this, "u_component_workplan_item.new_attachment.0006", "Null filepath", 4)
+	log.log(this, "u_component_workplan_item.new_attachment:0006", "Null filepath", 4)
 	return -1
 end if
 
 if not fileexists(ps_filepath) then
-	log.log(this, "u_component_workplan_item.new_attachment.0006", "File does not exist (" + ps_filepath + ")", 4)
+	log.log(this, "u_component_workplan_item.new_attachment:0011", "File does not exist (" + ps_filepath + ")", 4)
 	return -1
 end if
 

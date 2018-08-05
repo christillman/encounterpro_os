@@ -106,7 +106,7 @@ popup = message.powerobjectparm
 st_title.text = popup.title
 
 if popup.data_row_count <> 4 then
-	log.log(this, "w_observation_tree_attributes_composite.open.0008", "Invalid Parameters", 4)
+	log.log(this, "w_observation_tree_attributes_composite:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

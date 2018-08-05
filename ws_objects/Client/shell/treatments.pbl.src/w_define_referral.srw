@@ -223,7 +223,7 @@ Setnull(referral_workplan_id)
 duration_amount = -3  // ASAP
 
 If Not Isvalid(Message.powerobjectparm) Then
-	log.log(this,"w_define_referral.open.0018","Invalid parameter; Expecting treatment component as it's parameter",4)
+	log.log(this,"w_define_referral:open","Invalid parameter; Expecting treatment component as it's parameter",4)
 	cb_cancel.event clicked()
 	Return
 End If

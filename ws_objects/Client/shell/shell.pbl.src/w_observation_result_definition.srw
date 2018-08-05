@@ -139,7 +139,7 @@ end subroutine
 
 public function integer new_result ();
 if isnull(observation_id) or observation_id = "" then
-	log.log(this, "w_observation_result_definition.new_result.0003", "Invalid observation id", 4)
+	log.log(this, "w_observation_result_definition.new_result:0003", "Invalid observation id", 4)
 	return -1
 end if
 
@@ -175,12 +175,12 @@ end function
 
 public function integer load_result ();
 if isnull(observation_id) or observation_id = "" then
-	log.log(this, "w_observation_result_definition.new_result.0003", "Invalid observation id", 4)
+	log.log(this, "w_observation_result_definition.load_result:0003", "Invalid observation id", 4)
 	return -1
 end if
 
 if isnull(result_sequence) then
-	log.log(this, "w_observation_result_definition.new_result.0003", "Invalid result sequence", 4)
+	log.log(this, "w_observation_result_definition.load_result:0008", "Invalid result sequence", 4)
 	return -1
 end if
 
@@ -215,7 +215,7 @@ WHERE observation_id = :observation_id
 AND result_sequence = :result_sequence;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_observation_result_definition.new_result.0003", "Result not found", 4)
+	log.log(this, "w_observation_result_definition.load_result:0043", "Result not found", 4)
 	return -1
 end if
 
@@ -653,7 +653,7 @@ if (popup.data_row_count >= 2) and (popup.data_row_count <= 3) then
 		setnull(result_sequence)
 	end if
 else
-	log.log(this, "w_observation_result_definition.open.0016", "Invalid Parameters", 4)
+	log.log(this, "w_observation_result_definition:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -661,14 +661,14 @@ end if
 if isnull(result_sequence) then
 	li_sts = new_result()
 	if li_sts < 0 then
-		log.log(this, "w_observation_result_definition.open.0016", "Error initializing new result", 4)
+		log.log(this, "w_observation_result_definition:open", "Error initializing new result", 4)
 		close(this)
 		return
 	end if
 else
 	li_sts = load_result()
 	if li_sts < 0 then
-		log.log(this, "w_observation_result_definition.open.0016", "Error loading result", 4)
+		log.log(this, "w_observation_result_definition:open", "Error loading result", 4)
 		close(this)
 		return
 	end if

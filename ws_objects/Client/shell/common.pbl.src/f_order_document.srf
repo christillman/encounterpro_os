@@ -30,7 +30,7 @@ if isnull(ps_purpose) then
 	if not tf_check() then return -1
 	
 	if isnull(ps_purpose) then
-		log.log(po_null, "f_order_document.0025", "Document must have a purpose", 4)
+		log.log(po_null, "f_order_document:0025", "Document must have a purpose", 4)
 		return -1
 	end if
 end if

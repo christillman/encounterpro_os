@@ -20,7 +20,7 @@ if cpr_mode <> "SERVER" then
 	// Issue the startup message
 	ls_message = "Session started on " + log.get_computername() + " @ " + string(datetime(today(), now()), "[shortdate] [time]")
 	ls_message += ",  Version " + f_app_version()
-	log.log(po_null, "f_initialize_common.0015", ls_message, 2)
+	log.log(po_null, "f_initialize_common:0015", ls_message, 2)
 end if
 
 // Connect to the database
@@ -110,7 +110,7 @@ end if
 
 li_sts = f_set_computer()
 if li_sts <= 0 then
-	log.log(po_null, "f_initialize_common.0015", "Unable to set the computer", 5)
+	log.log(po_null, "f_initialize_common:0105", "Unable to set the computer", 5)
 	return -1
 end if
 
@@ -125,7 +125,7 @@ CHOOSE CASE lower(ls_security)
 	CASE ELSE
 		user_list = CREATE u_component_security_pin
 		ls_message = "Unrecognized authentication system (" + ls_security + ")."
-		log.log(po_null, "f_initialize_common.0015", ls_message, 4)
+		log.log(po_null, "f_initialize_common:0120", ls_message, 4)
 		if cpr_mode = "CLIENT" then
 			openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 		end if
@@ -134,7 +134,7 @@ END CHOOSE
 li_sts = user_list.initialize()
 if li_sts <= 0 then
 	ls_message = "Error initializing authentication system."
-	log.log(po_null, "f_initialize_common.0015", ls_message, 4)
+	log.log(po_null, "f_initialize_common:0129", ls_message, 4)
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if
@@ -154,7 +154,7 @@ elseif decimal_character <> ls_decimal_character then
 			+ decimal_character &
 			+ ") does not match computer decimal character (" &
 			+ ls_decimal_character + ")."
-	log.log(po_null, "f_initialize_common.0015", ls_message, 4)
+	log.log(po_null, "f_initialize_common:0149", ls_message, 4)
 	if cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if

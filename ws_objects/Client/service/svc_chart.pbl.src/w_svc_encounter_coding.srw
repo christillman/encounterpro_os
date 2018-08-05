@@ -417,14 +417,14 @@ popup_return.item_count = 0
 service = Message.powerobjectparm
 
 if isnull(service.encounter_id) then
-	log.log(this, "w_svc_encounter_coding.open.0025", "No current encounter", 4)
+	log.log(this, "w_svc_encounter_coding:open", "No current encounter", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_encounter_coding.open.0025", "Error getting encounter", 4)
+	log.log(this, "w_svc_encounter_coding:open", "Error getting encounter", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -488,7 +488,7 @@ INTO :st_documentation_guide.text
 FROM em_documentation_guide
 WHERE em_documentation_guide = :em_documentation_guide;
 if not tf_check() then
-	log.log(this, "w_svc_encounter_coding.open.0025", "Error getting documentation guide", 4)
+	log.log(this, "w_svc_encounter_coding:open", "Error getting documentation guide", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

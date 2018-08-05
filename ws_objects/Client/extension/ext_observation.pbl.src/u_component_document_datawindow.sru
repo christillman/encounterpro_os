@@ -27,7 +27,7 @@ integer li_sts
 TRY
 	set_document_context_objects()
 CATCH (exception le_error)
-	log.log(this, "u_component_document_datawindow.xx_do_source.0012", "Error setting document clinical objects (" + le_error.text + ")" , 4)
+	log.log(this, "u_component_document_datawindow.xx_do_source:0012", "Error setting document clinical objects (" + le_error.text + ")" , 4)
 	THROW le_error
 END TRY
 
@@ -35,7 +35,7 @@ ls_sql = get_attribute("datawindow_sql_script")
 if len(ls_sql) > 0 then
 	li_sts = create_temp_stored_proc(ls_sql)
 	if li_sts < 0 then
-		log.log(this, "u_component_document_datawindow.xx_do_source.0012", "Error creating temp stored proc from  datawindow_sql_script (" + ls_sql + ")" , 4)
+		log.log(this, "u_component_document_datawindow.xx_do_source:0020", "Error creating temp stored proc from  datawindow_sql_script (" + ls_sql + ")" , 4)
 		return -1
 	end if
 end if

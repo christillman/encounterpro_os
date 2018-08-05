@@ -99,7 +99,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_direct_open_encounter_display.open.0010", "Invalid Parameters", 4)
+	log.log(this, "w_direct_open_encounter_display:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

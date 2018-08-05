@@ -42,13 +42,13 @@ event open;call super::open;string ls_file
 ls_file = message.stringparm
 
 if isnull(ls_file) then
-	log.log(this, "w_picture_display.open.0006", "Null file", 4)
+	log.log(this, "w_picture_display:open", "Null file", 4)
 	close(this)
 	return
 end if
 
 if not fileexists(ls_file) then
-	log.log(this, "w_picture_display.open.0006", "File not found (" + ls_file + ")", 4)
+	log.log(this, "w_picture_display:open", "File not found (" + ls_file + ")", 4)
 	close(this)
 	return
 end if

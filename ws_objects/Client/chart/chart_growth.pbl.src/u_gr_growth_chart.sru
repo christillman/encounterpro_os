@@ -206,7 +206,7 @@ CHOOSE CASE lower(ps_infant_child)
 				ld_english_scale_increment = 1
 				ps_unit_preference = "METRIC"  // there is no such thing as an English BMI
 			Case Else
-				log.log(this,"u_gr_growth_chart.display_growth_chart.0166","Growth type "+ps_type+" not found..",3)
+				log.log(this,"u_gr_growth_chart.display_growth_chart:0166","Growth type "+ps_type+" not found..",3)
 				return -1
 		End Choose
 END CHOOSE
@@ -231,7 +231,7 @@ If Not tf_check() Then return -1
 
 ll_cdc_rowcount = cdc_data.rowcount()
 If ll_cdc_rowcount <= 0 Then
-	log.log(this,"u_gr_growth_chart.display_growth_chart.0166","Cdc data for this '"+ps_type+"' not found..",3)
+	log.log(this,"u_gr_growth_chart.display_growth_chart:0191","Cdc data for this '"+ps_type+"' not found..",3)
 	return -1
 End If
 
@@ -711,7 +711,7 @@ If Not tf_check() Then return -1
 
 ll_cdc_rowcount = cdc_data.rowcount()
 If ll_cdc_rowcount <= 0 Then
-	log.log(this,"u_gr_growth_chart.display_growth_chart.0166","Cdc data for this '"+cdc_data.dataobject +"' not found..",3)
+	log.log(this,"u_gr_growth_chart.display_height_vs_weight:0147","Cdc data for this '"+cdc_data.dataobject +"' not found..",3)
 	return -1
 End If
 
@@ -1076,7 +1076,7 @@ return 1
 //If Not tf_check() Then GOTO error
 //ll_cdc_rowcount = cdc_data.rowcount()
 //If ll_cdc_rowcount <= 0 Then
-//	log.log(this,"htwt_growth_charts()","Cdc data for this '"+ps_type+"' not found..",3)
+//	log.log(this,"u_gr_growth_chart.display_height_vs_weight:0512","Cdc data for this '"+ps_type+"' not found..",3)
 //	GOTO Error
 //End If
 //

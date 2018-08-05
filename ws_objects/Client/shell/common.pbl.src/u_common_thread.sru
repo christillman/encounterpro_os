@@ -232,7 +232,7 @@ if isnull(adodb) then
 	if li_sts < 0 then
 		DESTROY adodb
 		setnull(adodb)
-		log.log(this, "u_common_thread.get_adodb.0013", "Error creating connection object", 4)
+		log.log(this, "u_common_thread.get_adodb:0013", "Error creating connection object", 4)
 		return -1
 	end if
 	
@@ -242,12 +242,12 @@ if isnull(adodb) then
 		adodb.open(sqlca.adodb_connectstring)
 		ll_state = adodb.state
 	CATCH (throwable lo_error1)
-		log.log(this, "u_common_thread.get_adodb.0013", "Error opening ADODB Connection (" + lo_error1.text + ")", 3)
+		log.log(this, "u_common_thread.get_adodb:0023", "Error opening ADODB Connection (" + lo_error1.text + ")", 3)
 		li_sts = -1
 	END TRY
 	
 	if li_sts < 0 or ll_state = adStateClosed then
-		log.log(this, "u_common_thread.get_adodb.0013", "Unable to open ADODB Connection", 3)
+		log.log(this, "u_common_thread.get_adodb:0028", "Unable to open ADODB Connection", 3)
 		adodb.disconnectobject()
 		DESTROY adodb
 		setnull(adodb)
@@ -260,7 +260,7 @@ if isnull(adodb) then
 		TRY
 			adodb.execute(ls_query, ll_records, ll_cmdoptions)
 		CATCH (throwable lo_error2)
-			log.log(this, "u_common_thread.get_adodb.0013", "Error setting app role (" + lo_error2.text + ")", 3)
+			log.log(this, "u_common_thread.get_adodb:0041", "Error setting app role (" + lo_error2.text + ")", 3)
 			return -1
 		END TRY
 	end if
@@ -333,18 +333,18 @@ mm = eprolibnet4
 li_sts = getenvironment(lo_env)
 if li_sts > 0 then
 	if lo_env.ostype <> WindowsNT! then
-		log.log(this, "u_common_thread.initialize.0059", "EncounterPRO is only support on the Windows Operation System", 3)
+		log.log(this, "u_common_thread.initialize:0059", "EncounterPRO is only support on the Windows Operation System", 3)
 		osversion = 0
 	else
 		osversion = lo_env.OSMajorRevision
 		if lo_env.OSMajorRevision = 5 and lo_env.OSMinorRevision = 0 then
 			// Set Windows 2000 back to 4 to group it with the other OS versions that we don't support
-			log.log(this, "u_common_thread.initialize.0059", "EncounterPRO version 5 is only supported on Windows XP or later", 3)
+			log.log(this, "u_common_thread.initialize:0065", "EncounterPRO version 5 is only supported on Windows XP or later", 3)
 			osversion = 4
 		end if
 	end if
 else
-	log.log(this, "u_common_thread.initialize.0059", "Error getting environment information", 3)
+	log.log(this, "u_common_thread.initialize:0070", "Error getting environment information", 3)
 	osversion = 0
 end if
 
@@ -397,7 +397,7 @@ lstr_printer = get_printer(ps_printername)
 // If we couldn't find the specified printer then log a warning
 if isnull(lstr_printer.printername) or trim(lstr_printer.printername) = "" then
 	if isnull(ps_printername) then ps_printername = "<Null>"
-	log.log(this, "u_common_thread.set_printer.0016", "Printer not found (" + ps_printername + ")", 3)
+	log.log(this, "u_common_thread.set_printer:0016", "Printer not found (" + ps_printername + ")", 3)
 	return
 end if
 
@@ -411,20 +411,20 @@ if osversion <= 4 then
 	// To do that we'll first set the registry key which specifies the default printer
 	li_sts = RegistrySet("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows", "Device", current_printer.nt_device)
 	if li_sts <= 0 then
-		log.log(this, "u_common_thread.set_printer.0016", "Error setting default printer in registry (" + current_printer.printername + ")", 4)
+		log.log(this, "u_common_thread.set_printer:0030", "Error setting default printer in registry (" + current_printer.printername + ")", 4)
 	end if
 else
 	TRY
 		eprolibnet4.SetDefaultPrinter(current_printer.printername)
 	CATCH (oleruntimeerror lt_error)
-		log.log(this, "u_common_thread.set_printer.0016", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+		log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 	END TRY
 end if
 
 // Then we'll set the default printer with the powerbuilder system command.  This will affect the PowerBuild "Print" functions
 li_sts = PrintSetPrinter(current_printer.printerstring)
 if li_sts < 0 then
-	log.log(this, "u_common_thread.set_printer.0016", "Error setting printer (" + current_printer.printername + ")", 4)
+	log.log(this, "u_common_thread.set_printer:0043", "Error setting printer (" + current_printer.printername + ")", 4)
 end if
 
 end subroutine
@@ -452,7 +452,7 @@ if not default_printer_set then
 			TRY
 				ls_printer = eprolibnet4.GetDefaultPrinter()
 			CATCH (oleruntimeerror lt_error)
-				log.log(this, "u_common_thread.set_printer.0016", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+				log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 			END TRY
 		end if
 		
@@ -464,7 +464,7 @@ if not default_printer_set then
 		
 		if isnull(common_thread.default_printer.printername) or trim(common_thread.default_printer.printername) = "" then
 			// If we still don't have a default printer then log a warning
-			log.log(this, "u_common_thread.get_default_printer.0036", "Unable to determine default printer", 3)
+			log.log(this, "u_common_thread.get_default_printer:0036", "Unable to determine default printer", 3)
 		else
 			// If we found a default printer then set the current_printer to the default
 			current_printer = default_printer
@@ -549,7 +549,7 @@ if env.OSType = WindowsNT! and env.osmajorrevision = 5 and env.osminorrevision =
 	lo_wia_devicemanager = CREATE oleobject
 	li_sts = lo_wia_devicemanager.connecttonewobject("wia.devicemanager")
 	if li_sts < 0 then
-		log.log(this, "u_common_thread.get_external_sources.0050", "Error connecting to wia.devicemanager object (" + string(li_sts) + ")", 3)
+		log.log(this, "u_common_thread.get_external_sources:0050", "Error connecting to wia.devicemanager object (" + string(li_sts) + ")", 3)
 	else
 		// Get the WIA devices on this computer
 		ll_device_count = lo_wia_devicemanager.deviceinfos.count
@@ -839,7 +839,7 @@ end if
 lo_wia_devicemanager = CREATE oleobject
 li_sts = lo_wia_devicemanager.connecttonewobject("wia.devicemanager")
 if li_sts < 0 then
-	log.log(this, "u_common_thread.get_external_sources.0050", "Error connecting to wia.devicemanager object (" + string(li_sts) + ")", 4)
+	log.log(this, "u_common_thread.get_wia_attachments:0037", "Error connecting to wia.devicemanager object (" + string(li_sts) + ")", 4)
 	return lstr_attachments
 end if
 
@@ -847,7 +847,7 @@ end if
 lo_wia_commondialog = CREATE oleobject
 li_sts = lo_wia_commondialog.connecttonewobject("wia.commondialog")
 if li_sts < 0 then
-	log.log(this, "u_common_thread.get_external_sources.0050", "Error connecting to wia.commondialog object (" + string(li_sts) + ")", 4)
+	log.log(this, "u_common_thread.get_wia_attachments:0045", "Error connecting to wia.commondialog object (" + string(li_sts) + ")", 4)
 	return lstr_attachments
 end if
 
@@ -879,7 +879,7 @@ for i = 1 to ll_device_count
 	end if
 next
 if not lb_found then
-	log.log(this, "u_common_thread.get_wia_attachments.0077", "Device not found (" + ps_device_id + ")", 4)
+	log.log(this, "u_common_thread.get_wia_attachments:0077", "Device not found (" + ps_device_id + ")", 4)
 	return lstr_attachments
 end if
 
@@ -1375,7 +1375,7 @@ ll_sts = conn.SetSoapLogFile(ls_templog)
 
 rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
 if rVal <> 0 then
-	log.log(this, "u_common_thread.initialize_epie_gateway.0019", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
+	log.log(this, "u_common_thread.initialize_epie_gateway:0019", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
 	destroy conn
 	return -1
 end if
@@ -1558,13 +1558,13 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_domain_notranslate_list")
 ll_count = luo_data.retrieve("Config Vaccine Schedule")
 if ll_count > 1 then
-	log.log(this, "u_common_thread.vaccine_schedule.0014", "Multiple vaccine schedule config records found.  Only the first will be used.", 3)
+	log.log(this, "u_common_thread.vaccine_schedule:0014", "Multiple vaccine schedule config records found.  Only the first will be used.", 3)
 end if
 if ll_count > 0 then
 	ls_temp = luo_data.object.domain_item[1]
 	li_sts = f_get_config_object_info(ls_temp, lstr_config_object)
 	if li_sts < 0 then
-		log.log(this, "u_common_thread.vaccine_schedule.0014", "Error:  Vaccine Schedule load failed (" + ls_temp + ")", 4)
+		log.log(this, "u_common_thread.vaccine_schedule:0020", "Error:  Vaccine Schedule load failed (" + ls_temp + ")", 4)
 	end if
 end if
 
@@ -1664,7 +1664,7 @@ if epie_initialized then
 else
 	li_sts = initialize_epie_gateway()
 	if li_sts < 0 then
-		log.log(this, "u_common_thread.sendtoepie.0019", "Error initializing EpIE Gateway", 4)
+		log.log(this, "u_common_thread.sendtoepie:0019", "Error initializing EpIE Gateway", 4)
 		return -1
 	end if
 end if
@@ -1684,7 +1684,7 @@ TRY
 		ps_response = ""
 	end if
 CATCH ( SoapException lt_error )
-	log.log(this, "u_common_thread.sendtoepie.0019", "Error calling EpIE upload gateway (" + lt_error.text + ")", 4)
+	log.log(this, "u_common_thread.sendtoepie:0039", "Error calling EpIE upload gateway (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

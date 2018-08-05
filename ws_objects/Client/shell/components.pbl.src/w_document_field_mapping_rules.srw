@@ -262,7 +262,7 @@ if ll_set > 0 and  ll_set <= document_element_context.document_elements.element_
 	if document_element_context.element_index > 0 and  document_element_context.element_index <= document_element_context.document_elements.element_set[ll_set].element_count then
 		document_element = document_element_context.document_elements.element_set[ll_set].element[document_element_context.element_index]
 	else
-		log.log(this, "w_document_field_mapping_rules.open.0023", "invalid document element index", 4)
+		log.log(this, "w_document_field_mapping_rules:open", "invalid document element index", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -270,7 +270,7 @@ if ll_set > 0 and  ll_set <= document_element_context.document_elements.element_
 	//  Get an example collection for resolving the "Value in this context" display
 	collection = f_get_collection_example(document_element_context.document_elements.element_set[ll_set], context, attributes)
 else
-	log.log(this, "w_document_field_mapping_rules.open.0023", "invalid document element_set index", 4)
+	log.log(this, "w_document_field_mapping_rules:open", "invalid document element_set index", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -278,7 +278,7 @@ end if
 if document_element_context.mapped_property_index > 0 and  document_element_context.mapped_property_index <= document_element.mapped_property_count then
 	document_element_mapping = document_element.mapped_property[document_element_context.mapped_property_index]
 else
-	log.log(this, "w_document_field_mapping_rules.open.0023", "invalid document mapped property index", 4)
+	log.log(this, "w_document_field_mapping_rules:open", "invalid document mapped property index", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

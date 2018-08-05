@@ -10,12 +10,12 @@ global function integer f_config_object_install_sql (string ps_config_object_id,
 integer li_sts
 
 if isnull(ps_config_object_id) then
-	log.log(po_null, "f_config_object_install_sql.0005", "config_object_id is null", 4)
+	log.log(po_null, "f_config_object_install_sql:0005", "config_object_id is null", 4)
 	return -1
 end if
 
 if isnull(pl_version) then
-	log.log(po_null, "f_config_object_install_sql.0005", "Version is null", 4)
+	log.log(po_null, "f_config_object_install_sql:0010", "Version is null", 4)
 	return -1
 end if
 

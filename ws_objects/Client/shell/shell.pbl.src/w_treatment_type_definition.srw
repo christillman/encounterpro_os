@@ -51,7 +51,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_treatment_type_definition.open.0007", "Invalid parameters", 4)
+	log.log(this, "w_treatment_type_definition:open", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -59,7 +59,7 @@ end if
 treatment_type = popup.items[1]
 
 if isnull(treatment_type) then
-	log.log(this, "w_treatment_type_definition.open.0007", "Null treatment_type", 4)
+	log.log(this, "w_treatment_type_definition:open", "Null treatment_type", 4)
 	close(this)
 	return
 end if
@@ -68,7 +68,7 @@ st_description.text = datalist.treatment_type_description(treatment_type)
 
 li_sts = tab_treatment_type.initialize(treatment_type)
 if li_sts <= 0 then
-	log.log(this, "w_treatment_type_definition.open.0007", "Error initializing tabs (" + treatment_type + ")", 4)
+	log.log(this, "w_treatment_type_definition:open", "Error initializing tabs (" + treatment_type + ")", 4)
 	close(this)
 	return
 end if

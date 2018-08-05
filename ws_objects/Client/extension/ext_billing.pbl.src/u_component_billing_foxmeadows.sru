@@ -184,7 +184,7 @@ lb_loop = TRUE
 /*
 ls_filepath = temp_path
 if not mylog.of_directoryexists(ls_filepath) then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "Error getting temp path "+ls_filepath, 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0071", "Error getting temp path "+ls_filepath, 4)
 	return -1
 end if
 */
@@ -195,7 +195,7 @@ if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
 ls_filepath += "Messages"
 
 if not mylog.of_directoryexists(ls_filepath) then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "Error getting temp path "+ls_filepath, 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0082", "Error getting temp path "+ls_filepath, 4)
 	return -1
 end if
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"
@@ -213,7 +213,7 @@ end if
 li_filehandle = fileopen(ls_current_filename,LineMode!,Write!,Shared!,Append!)
 // If the fileopen() function fails and returns -1 then Quit returning -1, we got a problem
 IF li_filehandle = -1 THEN 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0100", "The FileOpen function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1		
 END IF
 
@@ -264,13 +264,13 @@ For  ti_loop_count  = 1 to  ii_cpt_count
 		// Write the row to the previously named and opened file
 		ll_len = len(ls_foxmeadows_row)
 		if isnull(ll_len) or ll_len = 0 then
-			mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "o length record...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+			mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0151", "o length record...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 			RETURN -1
 		end if	
-//		mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "Row " + ls_foxmeadows_row , 2)
+//		mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0154", "Row " + ls_foxmeadows_row , 2)
 		li_write_sts = FileWrite(li_filehandle,ls_foxmeadows_row)	
 				IF li_write_sts < 0 THEN 
-			mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+			mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0157", "The FileWrite function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 			RETURN -1
 		END IF
 
@@ -280,14 +280,14 @@ Next
 li_file_sts = FileClose(li_filehandle)
 
 IF li_file_sts < 0 THEN
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0167", "The FileClose function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 
 long ll_filelen
 ll_filelen = FileLength(ls_current_filename)
 If ll_filelen < 1 then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "No file length (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0174", "No file length (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return 1
 end if
 
@@ -300,22 +300,22 @@ end if
 
 luo_messageserver = my_component_manager.get_component("JMJMESSAGESERVER")
 if isnull(luo_messageserver) then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "Unable to get messageserver component", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0187", "Unable to get messageserver component", 4)
 	return -1
 end if
 
-mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "send "+ ls_message_type + ", " + ls_current_filename, 2)
+mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0191", "send "+ ls_message_type + ", " + ls_current_filename, 2)
 li_sts = luo_messageserver.send_to_subscribers(ls_message_type, ls_current_filename,ps_cpr_id,pl_encounter_id)
 
 my_component_manager.destroy_component(luo_messageserver)
 
 if li_sts <= 0 then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "Error sending message", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0197", "Error sending message", 4)
 	return -1
 end if
 
 IF li_sts < 0 THEN
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other.0071", "The Message_Server.send_to_subscribers function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_other:0202", "The Message_Server.send_to_subscribers function failed...Aborted Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -414,11 +414,11 @@ DECLARE lsp_get_treatment_assessments PROCEDURE FOR dbo.sp_get_treatment_assessm
    @pl_encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 
-//mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0090", "treatment start (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 2)	
+//mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0090", "treatment start (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 2)	
 
 EXECUTE lsp_get_treatment_assessments;
 if not cprdb.check() then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0094", "EXECUTE lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 
@@ -459,7 +459,7 @@ DO
 			:ls_assessment_charge_bill_flag;
 			
 	if not cprdb.check() then 
-		mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+		mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0135", "The Fetch not ok for lsp_get_treatment_assessments (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 		return -1
 	end if	
 
@@ -501,11 +501,11 @@ AND encounter_id = :pl_encounter_id
 AND encounter_charge_id = :pl_encounter_charge_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0177", "treatment charge access (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)	
 	return -1
 end if	
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0181", "treatment charge not found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_encounter_charge_id) + ")", 3)	
 	return 0
 end if	
 
@@ -513,7 +513,7 @@ end if
 //CWW, BEGIN
 //EXECUTE lsp_get_procedure_cpt;
 //if not cprdb.check() then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "EXECUTE lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0189", "EXECUTE lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 //	return -1
 //end if
 //
@@ -525,7 +525,7 @@ end if
 //		:lr_procedure_units ,
 //		:ldc_procedure_charge ;
 //if not cprdb.check() then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "The Fetch not ok for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0201", "The Fetch not ok for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 //	return -1
 //end if
 //CLOSE lsp_get_procedure_cpt;
@@ -552,7 +552,7 @@ destroy luo_sp_get_procedure_cpt
 //CWW, END
 
 if isnull(ls_cpt_code) or ls_cpt_code = "" then
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "no cpt code for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id + ")", 3)	
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0228", "no cpt code for lsp_get_procedure_cpt (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id + ")", 3)	
 	return -1
 end if
 
@@ -563,11 +563,11 @@ end if
 //WHERE procedure_id = :ls_procedure_id
 //USING cprdb;
 //if not cprdb.check() then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "select billing code failed (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0239", "select billing code failed (" + ps_cpr_id + ", " + string(pl_encounter_id) +  ")", 3)	
 //	return -1
 //end if	
 //if cprdb.sqlcode = 100 then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment.0094", "no billing code (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id +  ")", 3)	
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_treatment:0243", "no billing code (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_procedure_id +  ")", 3)	
 //	return 0
 //end if	
 
@@ -793,12 +793,12 @@ AND problem_id = :pl_problem_id
 USING cprdb;
 // if an sql error occurs return -1
 if not cprdb.check() then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment.0039", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment:0039", "select error p_Encounter_Assessment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return -1
 end if	
 // if no records were found, return 0
 if cprdb.sqlcode = 100 then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment.0039", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment:0044", "no records (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 	return 0
 end if
 
@@ -806,7 +806,7 @@ end if
 //CWW, BEGIN
 //EXECUTE lsp_get_assessment_icd10;
 //if not cprdb.check() then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment.0039", "EXECUTE lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment:0052", "EXECUTE lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //integer i
@@ -814,7 +814,7 @@ end if
 //
 //FETCH lsp_get_assessment_icd10 INTO :ls_insurance_id, :ls_icd10_code;
 //if not cprdb.check() then 
-//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment.0039", "fetch lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
+//	mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment:0060", "fetch lsp_get_assessment_icd10 (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(pl_problem_id) + ")", 3)
 //	return -1
 //end if	
 //
@@ -826,7 +826,7 @@ end if
 //
 //CLOSE lsp_get_assessment_icd10;
 //
-//mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment.0039", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)	
+//mylog.log(this, "u_component_billing_foxmeadows.xx_post_assessment:0072", "The icd10 retrieve done (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + ls_icd10_code + ")", 1)	
 
 integer i
 i = upperbound(is_icd10_code)
@@ -963,13 +963,13 @@ USING cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 // IF we don't get an Encounter record, THEN QUIT
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter.0084", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter:0084", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  	RETURN -1
 END IF
 
 // Get the billing code for this office
 If isnull(ls_office_id) then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter.0084", "office id is null in patient_encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter:0090", "office id is null in patient_encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return 0
 end if
 
@@ -979,7 +979,7 @@ FROM c_Office
 WHERE office_id = :ls_office_id
 USING cprdb;
 if not cprdb.check() then 
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter.0084", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter:0100", "get billing code not OK (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 	end if	
 if cprdb.sqlcode = 100 then return 0
@@ -993,17 +993,17 @@ CLOSE lsp_get_billable_provider;
 if not tf_check() then return -1
 
 IF isnull(ls_billable_provider) THEN 
-	log.log(this, "u_component_billing_foxmeadows.xx_post_encounter.0114", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
+	log.log(this, "u_component_billing_foxmeadows.xx_post_encounter:0114", "BILLING FAILED.Attending doctor ("+ls_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)
 	RETURN -1
 End if	
-log.log(this,"u_component_billing_foxmeadows.xx_post_encounter.0117","Billable Provider ID & Code:"+ls_billable_provider,2)
+log.log(this,"u_component_billing_foxmeadows.xx_post_encounter:0117","Billable Provider ID & Code:"+ls_billable_provider,2)
 is_doctor_id = ls_billable_provider
 ss_charge_acct = ls_billing_id
 
 IF isNull(ldt_encounter_date) THEN
 	// If we don't have an Encounter date and time, then we can't pass the encounter
 	// to the foxmeadows billing system
-	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter.0084", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_foxmeadows.xx_post_encounter:0124", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 		

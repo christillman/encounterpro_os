@@ -191,7 +191,7 @@ CHOOSE CASE buttons[button_pressed]
 	CASE "COMMENTS"
 		li_sts = current_patient.treatments.treatment(luo_treatment,ll_treatment_id)
 		if li_sts <= 0 then
-			log.log(this, "u_tabpage_history_parents_treatments.history_clicked.0096", "Error getting treatment object", 4)
+			log.log(this, "u_tabpage_history_parents_treatments.history_clicked:0096", "Error getting treatment object", 4)
 			return
 		end if
 

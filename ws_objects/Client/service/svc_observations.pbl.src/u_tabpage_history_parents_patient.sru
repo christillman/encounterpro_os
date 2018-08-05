@@ -56,7 +56,7 @@ if ll_result_count = 0 then return 0
 ls_find = "lower(record_type)='root'"
 ll_root = results.find(ls_find, 1, ll_result_count)
 if ll_root <= 0 then
-	log.log(this, "u_tabpage_history_parents_patient.load_observations.0027", "root result not found", 4)
+	log.log(this, "u_tabpage_history_parents_patient.load_observations:0027", "root result not found", 4)
 	return -1
 end if
 

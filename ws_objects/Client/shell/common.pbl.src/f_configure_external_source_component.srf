@@ -28,7 +28,7 @@ WHERE s.external_source = :ps_external_source;
 If Not tf_check() Then Return -1
 If sqlca.sqlcode = 100 then
 	openwithparm(w_pop_message, "f_configure_external_source_component()", "The component for this external_source is not valid")
-	log.log(po_null, "f_configure_external_source_component.0023", "The external_source component for this external_source is not valid (" + ps_external_source + ")", 4)
+	log.log(po_null, "f_configure_external_source_component:0023", "The external_source component for this external_source is not valid (" + ps_external_source + ")", 4)
 end if
 
 // Get the existing attributes
@@ -37,7 +37,7 @@ luo_data.set_dataobject("dw_c_external_source_component_attribute")
 li_count = luo_data.retrieve(ps_external_source)
 
 if li_count < 0 then
-	log.log(po_null, "f_configure_external_source_component.0032", "Error getting external_source component attributes", 4)
+	log.log(po_null, "f_configure_external_source_component:0032", "Error getting external_source component attributes", 4)
 	return -1
 end if
 
@@ -65,7 +65,7 @@ next
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(po_null, "f_configure_external_source_component.0060", "Error updating command attributes", 4)
+	log.log(po_null, "f_configure_external_source_component:0060", "Error updating command attributes", 4)
 	return -1
 end if
 

@@ -1080,7 +1080,7 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.items[1] <> location_domain then
 			if not isnull(preference_id) then
 				li_sts = datalist.update_preference("PREFERENCES", "Global", "Global", preference_id, location_domain)
-				if li_sts <= 0 then log.log(this, "u_tabpage_vial_injection.st_location_domain_edit.clicked.0060", "Error updating location domain preference", 3)
+				if li_sts <= 0 then log.log(this, "u_tabpage_vial_injection.st_location_domain_edit.clicked:0060", "Error updating location domain preference", 3)
 			end if
 			location_domain = popup_return.items[1]
 			cb_location.postevent("clicked")

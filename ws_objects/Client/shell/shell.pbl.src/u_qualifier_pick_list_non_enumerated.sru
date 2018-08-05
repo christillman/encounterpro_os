@@ -137,7 +137,7 @@ CHOOSE CASE ls_qualifier_class
 		if popup_return.item_count <> 1 then return ls_null
 		ls_qualifier = popup_return.items[1]
 	CASE ELSE
-		log.log(this, "u_qualifier_pick_list_non_enumerated.get_qualifier.0034", "Invalid qualifier class (" + ls_qualifier_class + ")", 4)
+		log.log(this, "u_qualifier_pick_list_non_enumerated.get_qualifier:0034", "Invalid qualifier class (" + ls_qualifier_class + ")", 4)
 		return ls_null
 END CHOOSE
 

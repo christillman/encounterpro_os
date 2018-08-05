@@ -183,7 +183,7 @@ else
 	FROM c_Age_Range
 	WHERE age_range_id = :criteria.age_range_id;
 	if not tf_check() then
-		log.log(this, "w_workplan_criteria.open.0036", "Error getting stage description", 4)
+		log.log(this, "w_workplan_criteria:open", "Error getting stage description", 4)
 		close(this)
 		return
 	end if

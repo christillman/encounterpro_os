@@ -57,7 +57,7 @@ get_attribute("workplan_id", ll_workplan_id)
 if isnull(ll_workplan_id) then
 	ll_workplan_id = pick_workplan()
 	if isnull(ll_workplan_id) then
-		mylog.log(this, "u_component_service_order_workplan.xx_do_service.0045", "No workplan_id", 4)
+		mylog.log(this, "u_component_service_order_workplan.xx_do_service:0045", "No workplan_id", 4)
 		return 2  // Cancel service
 	end if
 end if
@@ -68,13 +68,13 @@ FROM c_Workplan
 WHERE workplan_id = :ll_workplan_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	mylog.log(this, "u_component_service_order_workplan.xx_do_service.0045", "workplan_id not found (" + string(ll_workplan_id) + ")", 4)
+	mylog.log(this, "u_component_service_order_workplan.xx_do_service:0056", "workplan_id not found (" + string(ll_workplan_id) + ")", 4)
 	return 2
 end if
 
 if upper(ls_in_office_flag) = "Y" then
 	if isnull(encounter_id) then
-		mylog.log(this, "u_component_service_order_workplan.xx_do_service.0045", "An in-office workplan cannot be ordered without an encounter context", 4)
+		mylog.log(this, "u_component_service_order_workplan.xx_do_service:0062", "An in-office workplan cannot be ordered without an encounter context", 4)
 		return 2
 	end if
 	ls_encounter_status = current_patient.encounters.encounter_status(encounter_id)
@@ -88,7 +88,7 @@ if upper(ls_in_office_flag) = "Y" then
 				return 2
 			end if
 		else
-			mylog.log(this, "u_component_service_order_workplan.xx_do_service.0045", "An in-office workplan cannot be ordered when the encounter is closed", 4)
+			mylog.log(this, "u_component_service_order_workplan.xx_do_service:0076", "An in-office workplan cannot be ordered when the encounter is closed", 4)
 			return 2
 		end if
 	end if

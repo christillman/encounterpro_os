@@ -46,11 +46,11 @@ FROM p_Patient_WP_item
 WHERE patient_workplan_item_id = :pl_patient_workplan_item_id;
 if not tf_check() then return luo_service
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_service_list.get_service_component.0015", "Invalid patient_workplan_item_id (" + string(pl_patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_service_list.get_service_component:0015", "Invalid patient_workplan_item_id (" + string(pl_patient_workplan_item_id) + ")", 4)
 	return luo_service
 end if
 if isnull(ls_service) then
-	log.log(this, "u_service_list.get_service_component.0015", "Workplan item has null service (" + string(pl_patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_service_list.get_service_component:0019", "Workplan item has null service (" + string(pl_patient_workplan_item_id) + ")", 4)
 	return luo_service
 end if
 
@@ -139,13 +139,13 @@ setnull(luo_service)
 
 ls_component_id = datalist.service_component_id(ps_service)
 if isnull(ls_component_id) then
-	log.log(this, "u_service_list.get_service_component.0008", "Null component_id (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.get_service_component:0008", "Null component_id (" + ps_service + ")", 4)
 	return luo_service
 end if
 
 luo_service = component_manager.get_component(ls_component_id)
 if isnull(luo_service) then
-	log.log(this, "u_service_list.get_service_component.0008", "Error getting service component (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.get_service_component:0014", "Error getting service component (" + ps_service + ")", 4)
 	return luo_service
 end if
 
@@ -190,7 +190,7 @@ u_component_service luo_service
 
 luo_service = get_service_component(pl_patient_workplan_item_id)
 if isnull(luo_service) then
-	log.log(this, "u_service_list.get_service_component.0015", "Error getting service component (" + ls_service + ")", 4)
+	log.log(this, "u_service_list.do_service:0007", "Error getting service component (" + ls_service + ")", 4)
 	return -1
 end if
 
@@ -202,7 +202,7 @@ luo_service.manual_service = false
 
 li_sts = luo_service.do_service(pl_patient_workplan_item_id)
 if pl_patient_workplan_item_id <= 0 then
-	log.log(this, "u_service_list.get_service_component.0015", "Error doing service (" + ls_service + ")", 4)
+	log.log(this, "u_service_list.do_service:0019", "Error doing service (" + ls_service + ")", 4)
 	component_manager.destroy_component(luo_service)
 	return -1
 end if
@@ -227,7 +227,7 @@ u_component_treatment	luo_treatment
 setnull(luo_treatment)
 luo_service = get_service_component(ps_service)
 if isnull(luo_service) then
-	log.log(this, "u_service_list.order_service.0008", "Error getting service component (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.order_service:0008", "Error getting service component (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -239,7 +239,7 @@ end if
 
 ll_patient_workplan_item_id = luo_service.order_service(ps_cpr_id, pl_encounter_id, ps_ordered_for, pi_step_number, ps_description, pstr_attributes)
 if ll_patient_workplan_item_id <= 0 then
-	log.log(this, "u_service_list.order_service.0008", "Error ordering service (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.order_service:0020", "Error ordering service (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -256,7 +256,7 @@ string ls_context_object
 
 luo_service = get_service_component(ps_service)
 if isnull(luo_service) then
-	log.log(this, "u_service_list.get_service_component.0015", "Error getting service component (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.do_service:0009", "Error getting service component (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -269,7 +269,7 @@ end if
 
 ll_patient_workplan_item_id = luo_service.order_service(ps_cpr_id, pl_encounter_id, current_user.user_id, pstr_attributes)
 if ll_patient_workplan_item_id <= 0 then
-	log.log(this, "u_service_list.get_service_component.0015", "Error ordering service (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.do_service:0022", "Error ordering service (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -277,7 +277,7 @@ luo_service.manual_service = true
 
 li_sts = luo_service.do_service(ll_patient_workplan_item_id)
 if ll_patient_workplan_item_id <= 0 then
-	log.log(this, "u_service_list.get_service_component.0015", "Error doing service (" + ps_service + ")", 4)
+	log.log(this, "u_service_list.do_service:0030", "Error doing service (" + ps_service + ")", 4)
 	component_manager.destroy_component(luo_service)
 	return -1
 end if
@@ -314,7 +314,7 @@ u_component_workplan_item luo_wp_item
 
 //luo_service = get_service_component(pl_patient_workplan_item_id)
 //if isnull(luo_service) then
-//	log.log(this, "u_service_list.get_service_component.0015", "Error getting service component (" + ls_service + ")", 4)
+//	log.log(this, "u_service_list.display_service_properties:0007", "Error getting service component (" + ls_service + ")", 4)
 //	return -1
 //end if
 

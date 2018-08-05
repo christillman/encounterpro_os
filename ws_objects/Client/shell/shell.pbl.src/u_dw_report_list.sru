@@ -362,7 +362,7 @@ FROM c_Report_Definition
 WHERE report_id = :ls_report_id;
 if not tf_check() then return
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_dw_report_list.report_menu.0032", "Report not found (" + ls_report_id + ")", 4)
+	log.log(this, "u_dw_report_list.report_menu:0032", "Report not found (" + ls_report_id + ")", 4)
 	openwithparm(w_pop_message, "Report not found")
 	return
 end if

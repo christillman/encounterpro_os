@@ -129,13 +129,13 @@ popup_return.item_count = 1
 popup_return.items[1] = "ERROR"
 
 if isnull(service.problem_id) then
-	log.log(this, "w_svc_assessment_associate_treatments.open.0010", "No assessment context", 4)
+	log.log(this, "w_svc_assessment_associate_treatments:open", "No assessment context", 4)
 	closewithreturn(this, popup_return)
 end if
 
 li_sts = current_patient.assessments.assessment(assessment, service.problem_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_assessment_associate_treatments.open.0010", "Error getting assessment (" + string(service.problem_id) + ")", 4)
+	log.log(this, "w_svc_assessment_associate_treatments:open", "Error getting assessment (" + string(service.problem_id) + ")", 4)
 	closewithreturn(this, popup_return)
 end if
 

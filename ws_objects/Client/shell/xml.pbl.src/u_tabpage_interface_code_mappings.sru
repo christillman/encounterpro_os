@@ -260,7 +260,7 @@ CHOOSE CASE lower(lastcolumnname)
 			WHERE c.code_id = :ll_new_code_id;
 			if not tf_check() then return
 			if sqlca.sqlnrows < 1 then
-				log.log(this, "u_tabpage_interface_code_mappings.dw_mappings.selected.0037", "code_id not found (" + string(ll_new_code_id) + ")", 4)
+				log.log(this, "u_tabpage_interface_code_mappings.dw_mappings.selected:0037", "code_id not found (" + string(ll_new_code_id) + ")", 4)
 				return
 			end if
 			

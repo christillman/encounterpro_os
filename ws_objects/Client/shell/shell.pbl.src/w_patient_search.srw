@@ -783,7 +783,7 @@ if lastrow <= 0 then return
 ls_cpr_id = object.cpr_id[lastrow]
 
 if ls_cpr_id = "" then
-	log.log(this, "w_patient_search.dw_patients.post_click.0010", "Blank CPR_ID", 3)
+	log.log(this, "w_patient_search.dw_patients.post_click:0010", "Blank CPR_ID", 3)
 	return
 end if
 

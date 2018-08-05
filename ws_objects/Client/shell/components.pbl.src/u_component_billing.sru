@@ -88,48 +88,48 @@ DECLARE lsp_set_encounter_posted PROCEDURE FOR dbo.sp_set_encounter_posted
    @pl_encounter_id = :pl_encounter_id
 USING cprdb;
 
-mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
+mylog.log(this, "u_component_billing.post_encounter:0024", "Posting Encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 
 ll_sts = x_post_encounter( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0028", "Posting Encounter Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 ll_sts = x_post_assessments( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter-Assessments Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0034", "Posting Encounter-Assessments Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 ll_sts = x_post_treatments( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter-Treatments Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0040", "Posting Encounter-Treatments Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 ll_sts = x_post_followups( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter-Followups Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0046", "Posting Encounter-Followups Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 ll_sts = x_post_referrals( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter-Referrals Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0052", "Posting Encounter-Referrals Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 ll_sts = x_post_other( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter.0024", "Posting Encounter-Other Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0058", "Posting Encounter-Other Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
 EXECUTE lsp_set_encounter_posted;
 if not cprdb.check() then return -1
 
-mylog.log(this, "u_component_billing.post_encounter.0024", "Encounter Successfully Posted (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
+mylog.log(this, "u_component_billing.post_encounter:0065", "Encounter Successfully Posted (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 
 return 1
 
@@ -229,7 +229,7 @@ for i = 1 to ll_assessment_count
 	if isnull(ls_icd10_code) then
 		ls_icd10_code = get_icd10(ps_cpr_id, ls_assessment_id)
 		if isnull(ls_icd10_code) then
-			mylog.log(this, "u_component_billing.x_post_assessments.0053", "No icd10 for assessment (" + ls_assessment_id + ")", 3)
+			mylog.log(this, "u_component_billing.x_post_assessments:0053", "No icd10 for assessment (" + ls_assessment_id + ")", 3)
 			luo_data.object.bill_flag[i] = "N"
 			continue
 		end if
@@ -283,10 +283,10 @@ ll_assessment_count = luo_data.rowcount()
 luo_data.sort()
 
 if ll_assessment_count <= 0 Then // no assessments to bill
-	mylog.log(this, "u_component_billing.x_post_assessments.0053", "No billable icd's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	mylog.log(this, "u_component_billing.x_post_assessments:0107", "No billable icd's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	Return -1 
 end if
-mylog.log(this, "u_component_billing.x_post_assessments.0053", "("+string(ll_assessment_count)+") billable icd's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 1)
+mylog.log(this, "u_component_billing.x_post_assessments:0110", "("+string(ll_assessment_count)+") billable icd's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 1)
 // Now bill each assessment which is still marked as billable
 for i = 1 to ll_assessment_count
 	ls_bill_flag = upper(string(luo_data.object.bill_flag[i]))
@@ -392,7 +392,7 @@ for i = 1 to ll_treatment_count
 	if isnull(ls_cpt_code) then
 		ls_cpt_code = get_cpt(ps_cpr_id, ls_procedure_id)
 		if isnull(ls_cpt_code) then
-			mylog.log(this, "u_component_billing.x_post_treatments.0054", "No cpt for treatment (" + ls_procedure_id + ")", 3)
+			mylog.log(this, "u_component_billing.x_post_treatments:0054", "No cpt for treatment (" + ls_procedure_id + ")", 3)
 			luo_data.object.bill_flag[i] = "N"
 			continue
 		else
@@ -426,10 +426,10 @@ luo_data.filter()
 ll_treatment_count = luo_data.rowcount()
 
 if ll_treatment_count <= 0 Then // no billable treatments
-	mylog.log(this, "u_component_billing.x_post_treatments.0054", "No billable cpt's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 4)
+	mylog.log(this, "u_component_billing.x_post_treatments:0088", "No billable cpt's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 4)
 	return -1
 end if
-mylog.log(this, "u_component_billing.x_post_treatments.0054", "("+string(ll_treatment_count)+")billable cpt's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 1)
+mylog.log(this, "u_component_billing.x_post_treatments:0091", "("+string(ll_treatment_count)+")billable cpt's for patient,encounter(" + ps_cpr_id+","+string(pl_encounter_id)+")", 1)
 // Now post the PRIMARY treatments
 for i = 1 to ll_treatment_count
 	ll_encounter_charge_id = luo_data.object.encounter_charge_id[i]
@@ -783,7 +783,7 @@ for i = 1 to li_count
 	if isnull(lla_treatment_id[i]) then continue
 	li_sts = xx_post_followup(ps_cpr_id, pl_encounter_id, lla_treatment_id[i])
 	if li_sts < 0 then
-		mylog.log(this, "u_component_billing.x_post_followups.0058", "Error posting followup (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(lla_treatment_id[i]) + ")", 4)
+		mylog.log(this, "u_component_billing.x_post_followups:0058", "Error posting followup (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(lla_treatment_id[i]) + ")", 4)
 	end if
 next
 
@@ -858,7 +858,7 @@ for i = 1 to li_count
 	if isnull(lla_treatment_id[i]) then continue
 	li_sts = xx_post_referral(ps_cpr_id, pl_encounter_id, lla_treatment_id[i])
 	if li_sts < 0 then
-		mylog.log(this, "u_component_billing.x_post_referrals.0058", "Error posting referral (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(lla_treatment_id[i]) + ")", 4)
+		mylog.log(this, "u_component_billing.x_post_referrals:0058", "Error posting referral (" + ps_cpr_id + ", " + string(pl_encounter_id) + ", " + string(lla_treatment_id[i]) + ")", 4)
 	end if
 next
 

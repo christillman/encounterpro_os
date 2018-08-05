@@ -211,7 +211,7 @@ ll_problem_id = current_patient.assessments.add_assessment( &
 
 li_sts = current_patient.assessments.assessment(lstr_assessment, ll_problem_id)
 if li_sts <= 0 then
-	log.log(this, "u_component_service_order_assessment.order_assessment.0032", "New assessment not found (" + string(ll_problem_id) + ")", 4)
+	log.log(this, "u_component_service_order_assessment.order_assessment:0032", "New assessment not found (" + string(ll_problem_id) + ")", 4)
 	return -1
 end if
 

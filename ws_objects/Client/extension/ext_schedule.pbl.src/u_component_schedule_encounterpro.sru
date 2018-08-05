@@ -132,7 +132,7 @@ and encounter_date_time = :ldt_encounter_date_time
 Using cprdb;
 If not tf_check() then return -1
 If isnull(is_message_id) Or len(trim(is_message_id)) = 0 Then Return 0
-mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in.0075","Processing Message ID (" + is_message_id + ", " + string(ldt_encounter_date_time,"yyyy/mm/dd hh:mm:ss") + ")",2)
+mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0075","Processing Message ID (" + is_message_id + ", " + string(ldt_encounter_date_time,"yyyy/mm/dd hh:mm:ss") + ")",2)
 
 SELECT billing_id,
 		encounter_billing_id,
@@ -168,7 +168,7 @@ USING	cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 
 if len(trim(ls_cprid)) = 0 OR isnull(ls_cprid) Then
-	mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in.0075","Cpr id is NULL",2)
+	mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0111","Cpr id is NULL",2)
 	Return 0	
 End If
 IF cprdb.sqlcode = 0 THEN
@@ -193,7 +193,7 @@ IF cprdb.sqlcode = 0 THEN
 			message_id = :is_message_id
 			USING 	cprdb;
 			IF NOT cprdb.check() THEN RETURN -1
-			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in.0075","Encounter Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ") is out of date",2)
+			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0136","Encounter Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ") is out of date",2)
 			Return 1
 		ENd If	
 	else
@@ -225,7 +225,7 @@ IF cprdb.sqlcode = 0 THEN
 			and billing_id = :ls_billing_id
 			USING 	cprdb;
 			IF NOT cprdb.check() THEN RETURN -1
-			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in.0075","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + is_message_id + ")",3)
+			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0168","There's already an open encounter("+string(ll_encounter_id)+" for this Billing ID, Message ID (" + ls_billing_id + ", " + is_message_id + ")",3)
 			Return 1
 		End If
 	End If
@@ -244,7 +244,7 @@ ELSE
 END IF	
 
 // A valid row has now been processed from x_encounterpro_Arrived
-mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in.0075","Encounter Message has been processed, Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ")",2)
+mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0187","Encounter Message has been processed, Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ")",2)
 
 UPDATE x_encounterpro_Arrived
 SET  status = 'OK'

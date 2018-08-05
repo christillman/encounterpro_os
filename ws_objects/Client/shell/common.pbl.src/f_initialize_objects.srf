@@ -29,7 +29,7 @@ current_patient_hold = CREATE u_patient
 li_sts = sqlca.jmj_startup_check()
 if not tf_check() then return -1
 if li_sts <= 0 then
-	log.log(po_null, "f_initialize_objects.0078.0024","Startup Check failed", 5)
+	log.log(po_null, "f_initialize_objects:0024","Startup Check failed", 5)
 	return -1
 end if
 
@@ -42,7 +42,7 @@ if f_check_version() < 0 then
 end if
 
 // Instantiate Global Objects
-log.log(po_null, "f_initialize_objects.0078.0024", "Instantiate and Initialize Global Objects", 1)
+log.log(po_null, "f_initialize_objects:0037", "Instantiate and Initialize Global Objects", 1)
 vaccine_list = CREATE u_vaccine_list
 room_list = CREATE u_room_list
 service_list = CREATE u_service_list
@@ -52,48 +52,48 @@ temp_datastore = CREATE u_ds_data
 // Initialize Global Variables
 just_logged_on = false
 
-log.log(po_null, "f_initialize_objects.0078.0024", "Unit list load", 1)
+log.log(po_null, "f_initialize_objects:0047", "Unit list load", 1)
 li_sts = unit_list.load_units()
 if li_sts < 0 then
-	log.log(po_null, "f_initialize_objects.0078.0024","Unit list load failed", 5)
+	log.log(po_null, "f_initialize_objects:0050","Unit list load failed", 5)
 	return -1
 end if
 
-log.log(po_null, "f_initialize_objects.0078.0024", "Vaccine list load", 1)
+log.log(po_null, "f_initialize_objects:0054", "Vaccine list load", 1)
 li_sts = vaccine_list.load_vaccines()
 if li_sts < 0 then
-	log.log(po_null, "f_initialize_objects.0078.0024","Vaccine list load failed", 5)
+	log.log(po_null, "f_initialize_objects:0057","Vaccine list load failed", 5)
 	return -1
 end if
 
 // Don't do this at startup anymore
-//log.log(po_null, "f_initialize_objects.0078.0024", "User list load", 1)
+//log.log(po_null, "f_initialize_objects:0062", "User list load", 1)
 //li_sts = user_list.load_users()
 //if li_sts < 0 then
-//	log.log(po_null, "f_initialize_objects.0078.0024","User list load failed", 5)
+//	log.log(po_null, "f_initialize_objects:0065","User list load failed", 5)
 //	return -1
 //end if
 
-log.log(po_null, "f_initialize_objects.0078.0024", "Room list load", 1)
+log.log(po_null, "f_initialize_objects:0069", "Room list load", 1)
 room_list.load_rooms()
 if li_sts < 0 then
-	log.log(po_null, "f_initialize_objects.0078.0024","Room list load failed", 5)
+	log.log(po_null, "f_initialize_objects:0072","Room list load failed", 5)
 	return -1
 end if
 
 drugdb = component_manager.get_component(common_thread.drugdb_component())
 if isnull(drugdb) then
-	log.log(po_null, "f_initialize_objects.0078","Error getting drug database component", 5)
+	log.log(po_null, "f_initialize_objects:0078","Error getting drug database component", 5)
 	return -1
 end if
 
 // If the computername matches one of the room_id's then set the current_room
 current_room = room_list.find_room_computer(computer_id)
 
-log.log(po_null, "f_initialize_objects.0078.0024", "Clean up in case last time crashed", 1)
+log.log(po_null, "f_initialize_objects:0085", "Clean up in case last time crashed", 1)
 li_sts = f_crash_clean_up()
 if li_sts < 0 then
-	log.log(po_null, "f_initialize_objects.0078.0024","crash clean up failed", 5)
+	log.log(po_null, "f_initialize_objects:0088","crash clean up failed", 5)
 	return -1
 end if
 

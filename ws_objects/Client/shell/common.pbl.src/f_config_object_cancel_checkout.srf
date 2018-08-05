@@ -16,7 +16,7 @@ li_sts = f_get_config_object_info(ps_config_object_id, lstr_config_object_info)
 if li_sts <= 0 then return -1
 
 if isnull(lstr_config_object_info.installed_version) then
-	log.log(po_null, "f_config_object_cancel_checkout.0011", "ERROR:  installed version is null (" + lstr_config_object_info.config_object_id + ")", 4)
+	log.log(po_null, "f_config_object_cancel_checkout:0011", "ERROR:  installed version is null (" + lstr_config_object_info.config_object_id + ")", 4)
 	return -1
 end if
 
@@ -31,7 +31,7 @@ if popup_return.item <> "YES" then return 0
 ll_previous_version = sqlca.config_cancel_checkout(lstr_config_object_info.config_object_id, current_scribe.user_id)
 if not tf_check() then return -1
 if ll_previous_version < 0 then
-	log.log(po_null, "f_config_object_cancel_checkout.0011", "An error occured cancelling the checkout (" + lstr_config_object_info.config_object_id + ", " + string(ll_previous_version) + ")", 4)
+	log.log(po_null, "f_config_object_cancel_checkout:0026", "An error occured cancelling the checkout (" + lstr_config_object_info.config_object_id + ", " + string(ll_previous_version) + ")", 4)
 	return -1
 end if
 

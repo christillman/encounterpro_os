@@ -183,7 +183,7 @@ setnull(vial_properties.new_vial_unit)
 parent_treatment_id = message.doubleparm
 
 if isnull(parent_treatment_id) then
-	log.log(this, "w_new_vial_type_select.open.0015", "null treatment id", 4)
+	log.log(this, "w_new_vial_type_select:open", "null treatment id", 4)
 	closewithreturn(this, lstr_error)
 end if
 
@@ -197,7 +197,7 @@ if not tf_check() then
 end if
 
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_new_vial_type_select.open.0015", "treatment not found (" + string(parent_treatment_id) + ")", 4)
+	log.log(this, "w_new_vial_type_select:open", "treatment not found (" + string(parent_treatment_id) + ")", 4)
 	closewithreturn(this, lstr_error)
 end if
 

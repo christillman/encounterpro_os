@@ -148,7 +148,7 @@ string 	ls_logon
 // Check Whether current_user is valid
 if isnull(current_user) or not isvalid(current_user) then
 	if server_service_id <= 0 or isnull(server_service_id) then
-		log.log(this,"u_component_schedule.timer_ding.0029","current user can't be set ",3)
+		log.log(this,"u_component_schedule.timer_ding:0029","current user can't be set ",3)
 		Return 1
 	end if
 	SELECT system_user_id
@@ -159,7 +159,7 @@ if isnull(current_user) or not isvalid(current_user) then
 	current_user = user_list.find_user(ls_logon)
 end if
 if isnull(current_user) or not isvalid(current_user) then
-	log.log(this,"u_component_schedule.timer_ding.0029","current user object invalid ",3)
+	log.log(this,"u_component_schedule.timer_ding:0040","current user object invalid ",3)
 	return 1
 end if
 

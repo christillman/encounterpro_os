@@ -292,7 +292,7 @@ dw_preferences.settransobject(sqlca)
 
 ll_count = dw_preference_type.retrieve()
 if ll_count <= 0 then
-	log.log(this, "w_config_preferences.open.0021", "Error getting preference types", 4)
+	log.log(this, "w_config_preferences:open", "Error getting preference types", 4)
 	close(this)
 	return
 end if

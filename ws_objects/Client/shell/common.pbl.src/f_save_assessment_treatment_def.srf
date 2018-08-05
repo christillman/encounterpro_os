@@ -35,7 +35,7 @@ if isnull(pstr_treatment_def.definition_id) then
 	if ll_definition_id > 0 then
 		pstr_treatment_def.definition_id = ll_definition_id
 	else
-		log.log(po_null, "f_save_assessment_treatment_def.0030", "Invalid definition_id returned", 4)
+		log.log(po_null, "f_save_assessment_treatment_def:0030", "Invalid definition_id returned", 4)
 		return -1
 	end if
 else

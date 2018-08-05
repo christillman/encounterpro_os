@@ -56,7 +56,7 @@ setnull(ls_null)
 
 menu_id = f_get_context_menu(tag, ls_null)
 if isnull(menu_id) then
-	log.log(this, "u_tabpage_shell_configure.initialize.0007", "Unable to determine " + tag + " menu", 4)
+	log.log(this, "u_tabpage_shell_configure.initialize:0007", "Unable to determine " + tag + " menu", 4)
 	return -1
 end if
 

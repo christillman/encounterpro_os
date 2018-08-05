@@ -190,7 +190,7 @@ FROM dbo.fn_components()
 WHERE component_id = :ls_component_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_param_component.pick_param.0059", "component not found (" + ls_component_id + ")", 4)
+	log.log(this, "u_param_component.pick_param:0059", "component not found (" + ls_component_id + ")", 4)
 	setnull(ls_component_id)
 	setnull(ls_id)
 	ls_display = ""

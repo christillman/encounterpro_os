@@ -70,7 +70,7 @@ return 1
 //WHERE report_id = :report_id;
 //if not tf_check() then return -1
 //if sqlca.sqlcode = 100 then
-//	log.log(this, "open", "report_id not found (" + report_id + ")", 4)
+//	log.log(this, "u_component_report_rtf.xx_printreport:0053", "report_id not found (" + report_id + ")", 4)
 //	return -1
 //end if
 //

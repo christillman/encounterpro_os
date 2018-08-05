@@ -276,27 +276,27 @@ string ls_i
 
 // First, make sure the required fields are present
 if isnull(pstr_package.administer_method) or trim(pstr_package.administer_method) = "" then
-	log.log(this, "u_component_drug.new_package.0008", "administer_menthod required", 4)
+	log.log(this, "u_component_drug.new_package:0008", "administer_menthod required", 4)
 	return -1
 end if
 if isnull(pstr_package.description) or trim(pstr_package.description) = "" then
-	log.log(this, "u_component_drug.new_package.0008", "description required", 4)
+	log.log(this, "u_component_drug.new_package:0012", "description required", 4)
 	return -1
 end if
 if isnull(pstr_package.administer_unit) or trim(pstr_package.administer_unit) = "" then
-	log.log(this, "u_component_drug.new_package.0008", "administer_unit required", 4)
+	log.log(this, "u_component_drug.new_package:0016", "administer_unit required", 4)
 	return -1
 end if
 if isnull(pstr_package.dose_unit) or trim(pstr_package.dose_unit) = "" then
-	log.log(this, "u_component_drug.new_package.0008", "dose_unit required", 4)
+	log.log(this, "u_component_drug.new_package:0020", "dose_unit required", 4)
 	return -1
 end if
 if isnull(pstr_package.administer_per_dose) or pstr_package.administer_per_dose <= 0 then
-	log.log(this, "u_component_drug.new_package.0008", "administer_per_dose required", 4)
+	log.log(this, "u_component_drug.new_package:0024", "administer_per_dose required", 4)
 	return -1
 end if
 if isnull(pstr_package.dosage_form) or trim(pstr_package.dosage_form) = "" then
-	log.log(this, "u_component_drug.new_package.0008", "dosage_form required", 4)
+	log.log(this, "u_component_drug.new_package:0028", "dosage_form required", 4)
 	return -1
 end if
 if isnull(pstr_package.dose_amount) or pstr_package.dose_amount <= 0 then
@@ -319,7 +319,7 @@ for i = 1 to 999
 next
 
 if i >= 999 then
-	log.log(this, "u_component_drug.new_package.0008", "Unable to find unique package_id", 4)
+	log.log(this, "u_component_drug.new_package:0051", "Unable to find unique package_id", 4)
 	return -1
 end if
 
@@ -616,7 +616,7 @@ if li_sts <= 0 then return pstr_treatment.treatment_description
 
 ls_description = treatment_drug_description(pstr_treatment)
 if isnull(ls_description) then
-	log.log(this, "u_component_drug.treatment_drug_sig.0034", "No drug description available (" + pstr_treatment.drug_id + ")", 4)
+	log.log(this, "u_component_drug.treatment_drug_sig:0034", "No drug description available (" + pstr_treatment.drug_id + ")", 4)
 	return ls_description
 end if
 
@@ -687,7 +687,7 @@ end if
 if len(ls_description) > 0 then
 	return ls_description
 else
-	log.log(this, "u_component_drug.treatment_drug_sig.0034", "Drug has no common name and no generic name (" + pstr_treatment.drug_id + ")", 4)
+	log.log(this, "u_component_drug.treatment_drug_description:0029", "Drug has no common name and no generic name (" + pstr_treatment.drug_id + ")", 4)
 	return ls_null
 end if
 
@@ -994,7 +994,7 @@ u_ds_data luo_data
 long ll_count
 
 if isnull(pstr_drug.common_name) or trim(pstr_drug.common_name) = "" then
-	log.log(this, "u_component_drug.save_new_drug.0008", "No common name", 4)
+	log.log(this, "u_component_drug.save_new_drug:0008", "No common name", 4)
 	return -1
 end if
 
@@ -1015,7 +1015,7 @@ ll_count = luo_data.retrieve( pstr_drug.drug_type, &
 										pstr_drug.max_dose_per_day, & 
 										pstr_drug.max_dose_unit)
 if ll_count <= 0 then
-	log.log(this, "u_component_drug.save_new_drug.0008", "Error saving new drug", 4)
+	log.log(this, "u_component_drug.save_new_drug:0029", "Error saving new drug", 4)
 	return -1
 end if
 

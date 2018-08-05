@@ -38,7 +38,7 @@ u_component_messageserver luo_messageserver
 
 ls_cpr_id = current_service.cpr_id
 if isnull(ls_cpr_id) then
-	log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","no cpr id",4)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0022","no cpr id",4)
 	Return -1
 end if
 
@@ -57,7 +57,7 @@ If Not tf_check() Then Return -1
 
 ll_encounter_id = current_service.encounter_id
 if isnull(ls_cpr_id) then
-	log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","no encounter id",4)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0041","no encounter id",4)
 	Return -1
 end if
 
@@ -69,7 +69,7 @@ AND encounter_id = :ll_encounter_id;
 if not tf_check() then return -1
 
 if isnull(ls_external_id) or len(ls_external_id) = 0 then
-	log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","NO billing id:LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") failed ",4)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0053","NO billing id:LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") failed ",4)
 	return -1	
 end if
 
@@ -98,10 +98,10 @@ rte.display_script(display_script_id)
 
 ls_report_text = rte.get_text()
 if isnull(ls_report_text) or len(ls_report_text) = 0 then
-	log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","ERROR: LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") failed",4)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0082","ERROR: LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") failed",4)
 	Return -1
 else
-	log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_report_text,1)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0085","LCR Report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_report_text,1)
 end if
 
 SELECT internal_id
@@ -206,12 +206,12 @@ If ll_linecount > 150 Then
 		ls_temp1 = ls_temp1 + ls_cont_pointer + ls_line_break
 	
 		If len(ls_record) > 0 Then
-			log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","Logging LCR report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_record,1)
+			log.log(this,"u_component_send_report_lcr.xx_sendreport:0190","Logging LCR report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_record,1)
 			li_sts = log_message(ls_temp1)
 		End If
 
 		If li_sts <= 0 Then
-			log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","Error logging report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") ",4)
+			log.log(this,"u_component_send_report_lcr.xx_sendreport:0195","Error logging report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") ",4)
 			Return -1
 		End If
 			
@@ -225,12 +225,12 @@ Else
 	ls_record += ls_cont_pointer + ls_line_break
 
 	If len(ls_record) > 0 Then
-		log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","Logging LCR report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_record,1)
+		log.log(this,"u_component_send_report_lcr.xx_sendreport:0209","Logging LCR report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") "+ls_record,1)
 		li_sts = log_message(ls_record)
 	End If
 
 	if li_sts <= 0 then
-		log.log(this,"u_component_send_report_lcr.xx_sendreport.0022","Error logging report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") ",4)
+		log.log(this,"u_component_send_report_lcr.xx_sendreport:0214","Error logging report for encounter ("+ls_cpr_id+","+string(ll_encounter_id)+") ",4)
 		return -1
 	end if
 End If

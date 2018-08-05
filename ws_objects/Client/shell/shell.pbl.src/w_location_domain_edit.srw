@@ -276,7 +276,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_location_domain_edit.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_location_domain_edit:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -285,7 +285,7 @@ location_domain = popup.items[1]
 
 li_sts = tf_get_location_domain_description(location_domain, st_title.text)
 if li_sts <= 0 then
-	log.log(this, "w_location_domain_edit.open.0009", "Unable to get description for location domain (" + location_domain + ")", 4)
+	log.log(this, "w_location_domain_edit:open", "Unable to get description for location domain (" + location_domain + ")", 4)
 	close(this)
 	return
 end if

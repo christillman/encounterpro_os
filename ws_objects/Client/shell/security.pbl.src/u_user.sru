@@ -308,19 +308,19 @@ public subroutine logoff ();string ls_services_waiting
 			@pl_computer_id = :computer_id;
 
 
-log.log(this, "u_user.logoff.0013", "User " + user_short_name + " logging off...", 2)
+log.log(this, "u_user.logoff:0013", "User " + user_short_name + " logging off...", 2)
 // Force this message to the o_log table
 if log.dbloglevel > 2 then
-	log.log_db(this, "u_user.logoff.0016", "User " + user_short_name + " logging off...", 2)
+	log.log_db(this, "u_user.logoff:0016", "User " + user_short_name + " logging off...", 2)
 end if
 
 // Set the display log level back to the computer/global value
 log.displayloglevel = datalist.get_preference_int("SYSTEM", "display_log_level", 5)
 
 if isnull(current_user) then
-	log.log(this, "u_user.logoff.0013", "current_user is null", 3)
+	log.log(this, "u_user.logoff:0023", "current_user is null", 3)
 elseif current_user.user_id <> user_id then
-	log.log(this, "u_user.logoff.0013", "current_user is " + current_user.user_short_name, 3)
+	log.log(this, "u_user.logoff:0025", "current_user is " + current_user.user_short_name, 3)
 end if
 
 EXECUTE lsp_user_logoff;
@@ -384,7 +384,7 @@ if not tf_check() then return -1
 
 if ll_count = 0 then
 	// We didn't find the logon record so report a warning
-	log.log(this, "u_user.check_logon.0025", "User '" + user_full_name + "' is not logged in at computer # " + string(computer_id), 3)
+	log.log(this, "u_user.check_logon:0025", "User '" + user_full_name + "' is not logged in at computer # " + string(computer_id), 3)
 	
 	// If we're not working on a service, then log the user out
 	if isnull(current_service) then logoff()
@@ -667,7 +667,7 @@ public function integer update_communication (integer pi_comm_index, string ps_c
 if isnull(pi_comm_index) then return 0
 
 if pi_comm_index <= 0 or pi_comm_index > communication_count then
-	log.log(this, "u_user.update_communication.0005", "Invalid index", 4)
+	log.log(this, "u_user.update_communication:0005", "Invalid index", 4)
 	return -1
 end if
 
@@ -682,7 +682,7 @@ public function integer update_address (integer pi_address_index, string ps_addr
 if isnull(pi_address_index) then return 0
 
 if pi_address_index <= 0 or pi_address_index > address_count then
-	log.log(this, "u_user.update_address.0005", "Invalid index", 4)
+	log.log(this, "u_user.update_address:0005", "Invalid index", 4)
 	return -1
 end if
 
@@ -701,7 +701,7 @@ public function integer update_address (integer pi_address_index);
 if isnull(pi_address_index) then return 0
 
 if pi_address_index <= 0 or pi_address_index > address_count then
-	log.log(this, "u_user.update_address.0005", "Invalid index", 4)
+	log.log(this, "u_user.update_address:0005", "Invalid index", 4)
 	return -1
 end if
 
@@ -725,7 +725,7 @@ public function integer update_communication (integer pi_comm_index);
 if isnull(pi_comm_index) then return 0
 
 if pi_comm_index <= 0 or pi_comm_index > communication_count then
-	log.log(this, "u_user.update_communication.0005", "Invalid index", 4)
+	log.log(this, "u_user.update_communication:0005", "Invalid index", 4)
 	return -1
 end if
 

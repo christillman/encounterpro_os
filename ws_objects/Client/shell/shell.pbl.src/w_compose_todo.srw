@@ -199,7 +199,7 @@ elseif popup.data_row_count = 3 then
 //	if not isnull(popup.items[5]) then mle_message.text = popup.items[5]
 //	mle_message.setfocus()
 else
-	log.log(this, "w_compose_todo.open.0026", "Invalid Parameters", 4)
+	log.log(this, "w_compose_todo:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

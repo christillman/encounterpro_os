@@ -109,7 +109,7 @@ st_title.text = ls_title
 
 display_file = attachment.get_attachment()
 if isnull(display_file) then
-	log.log(this, "w_attachment_activex_display.open.0017", "Error getting attachment file", 4)
+	log.log(this, "w_attachment_activex_display:open", "Error getting attachment file", 4)
 	close(this)
 	return
 end if

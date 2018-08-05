@@ -136,7 +136,7 @@ if not fileexists(lstr_growth_chart_settings.return_file_path) then return -1
 // Read graph file
 li_sts = log.file_read(lstr_growth_chart_settings.return_file_path, lbl_image_file)
 if li_sts <= 0 then 
-	log.log(this, "u_component_document_growth_chart.xx_do_source.0121", "Error reading image file", 4)
+	log.log(this, "u_component_document_growth_chart.xx_do_source:0121", "Error reading image file", 4)
 	return -1
 end if
 

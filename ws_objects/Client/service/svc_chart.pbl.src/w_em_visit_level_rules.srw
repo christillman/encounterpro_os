@@ -170,7 +170,7 @@ popup = Message.powerobjectparm
 title = current_patient.id_line()
 
 if popup.data_row_count <> 3 then
-	log.log(this, "w_em_visit_level_rules.open.0013", "Invalid Parameters", 4)
+	log.log(this, "w_em_visit_level_rules:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -193,7 +193,7 @@ INTO :st_documentation_guide.text
 FROM em_documentation_guide
 WHERE em_documentation_guide = :em_documentation_guide;
 if not tf_check() then
-	log.log(this, "w_em_visit_level_rules.open.0013", "Error getting documentation guide", 4)
+	log.log(this, "w_em_visit_level_rules:open", "Error getting documentation guide", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -207,7 +207,7 @@ rules_passed.set_dataobject("dw_fn_em_visit_rules_passed")
 
 li_sts = set_rules()
 if li_sts < 0 then
-	log.log(this, "w_em_visit_level_rules.open.0013", "Error setting visit levels", 4)
+	log.log(this, "w_em_visit_level_rules:open", "Error setting visit levels", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

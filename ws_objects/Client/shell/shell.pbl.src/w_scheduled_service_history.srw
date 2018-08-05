@@ -70,7 +70,7 @@ string ls_user_full_name
 
 service_sequence = message.doubleparm
 if isnull(service_sequence) or service_sequence <= 0 then
-	log.log(this, "w_scheduled_service_history.open.0008", "Invalid service_sequence", 4)
+	log.log(this, "w_scheduled_service_history:open", "Invalid service_sequence", 4)
 	close(this)
 	return
 end if
@@ -89,7 +89,7 @@ st_title.text = ls_description + ", " + ls_schedule_description + " for " + ls_u
 dw_history.settransobject(sqlca)
 
 if refresh() < 0 then
-	log.log(this, "w_scheduled_service_history.open.0008", "Error refreshing screen", 4)
+	log.log(this, "w_scheduled_service_history:open", "Error refreshing screen", 4)
 	close(this)
 	return
 end if

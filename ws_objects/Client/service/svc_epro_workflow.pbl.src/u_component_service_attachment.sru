@@ -76,7 +76,7 @@ CHOOSE CASE lower(ls_action)
 	CASE "transcribe"
 		li_sts = f_transcribe_attachment_with_attributes(attachment_id, lstr_attributes)
 	CASE ELSE
-		log.log(this, "u_component_service_attachment.xx_do_service.0028", "Invalid action (" + ls_action + ")", 4)
+		log.log(this, "u_component_service_attachment.xx_do_service:0028", "Invalid action (" + ls_action + ")", 4)
 		return -1
 END CHOOSE
 
@@ -127,7 +127,7 @@ ls_attachment_tag = get_attribute("comment_title")
 ls_cpr_id = current_patient.cpr_id
 
 If isnull(context_object) Then
-	log.log(this, "u_component_service_attachment.show_attachments.0024", "Null context_object", 4)
+	log.log(this, "u_component_service_attachment.show_attachments:0024", "Null context_object", 4)
 	return -1
 end if
 
@@ -135,30 +135,30 @@ CHOOSE CASE lower(context_object)
 	CASE "patient"
 	CASE "encounter"
 		if isnull(encounter_id) then
-			mylog.log(this, "u_component_service_attachment.xx_do_service.0028", "Null encounter_id", 4)
+			mylog.log(this, "u_component_service_attachment.show_attachments:0032", "Null encounter_id", 4)
 			return -1
 		end if
 		ll_id = encounter_id
 	CASE "treatment"
 		if isnull(treatment_id) then
-			mylog.log(this, "u_component_service_attachment.xx_do_service.0028", "Null treatment_id", 4)
+			mylog.log(this, "u_component_service_attachment.show_attachments:0038", "Null treatment_id", 4)
 			return -1
 		end if
 		ll_id = treatment_id
 	CASE "observation"
 		if isnull(observation_sequence) then
-			mylog.log(this, "u_component_service_attachment.xx_do_service.0028", "Null observation_sequence", 4)
+			mylog.log(this, "u_component_service_attachment.show_attachments:0044", "Null observation_sequence", 4)
 			return -1
 		end if
 		ll_id = observation_sequence
 	CASE "assessment"
 		if isnull(problem_id) then
-			mylog.log(this, "u_component_service_attachment.xx_do_service.0028", "Null problem_id", 4)
+			mylog.log(this, "u_component_service_attachment.show_attachments:0050", "Null problem_id", 4)
 			return -1
 		end if
 		ll_id = problem_id
 	CASE ELSE
-		mylog.log(this, "u_component_service_attachment.xx_do_service.0028", "Invalid attachment_object (" + context_object + ")", 4)
+		mylog.log(this, "u_component_service_attachment.show_attachments:0055", "Invalid attachment_object (" + context_object + ")", 4)
 		return -1
 END CHOOSE
 Setnull(ls_null)

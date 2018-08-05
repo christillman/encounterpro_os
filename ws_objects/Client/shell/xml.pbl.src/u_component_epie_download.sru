@@ -45,7 +45,7 @@ TRY
 		ls_results_xml = ""
 	end if
 CATCH ( SoapException lt_error )
-	log.log(this, "u_component_epie_download.xx_do_source.0025", "Error calling EpIE download gateway (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_epie_download.xx_do_source:0025", "Error calling EpIE download gateway (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -55,7 +55,7 @@ if isnull(ls_results_xml) or ls_results_xml = "" then return 0
 
 li_sts = read_data(ls_results_xml, "")
 if li_sts < 0 then
-	log.log(this, "u_component_epie_download.xx_do_source.0035", "Error reading xml documents", 4)
+	log.log(this, "u_component_epie_download.xx_do_source:0035", "Error reading xml documents", 4)
 	return -1
 end if
 
@@ -84,7 +84,7 @@ ll_sts = conn.SetSoapLogFile (ls_templog)
 
 rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
 if rVal <> 0 then
-	log.log(this, "u_component_epie_download.xx_initialize.0022", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
+	log.log(this, "u_component_epie_download.xx_initialize:0022", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
 	destroy conn
 	return -1
 end if
@@ -111,7 +111,7 @@ protected function integer xx_set_processed (string ps_id, integer pi_status);in
 TRY
 	EpIE_Gateway.complete(ps_id, pi_status)
 CATCH ( SoapException lt_error )
-	log.log(this, "u_component_epie_download.xx_set_processed.0007", "Error calling gateway complete (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_epie_download.xx_set_processed:0007", "Error calling gateway complete (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

@@ -40,13 +40,13 @@ ls_string = ls_string + "Script        : " + errorscript + "~r~n"
 ls_string = ls_string + "Line Number   : " + string(errorline) + "~r~n"
 ls_string = ls_string + "Window Menu   : " + errorwindowmenu + "~r~n"
 
-log.log(this, "u_ole_ecg.error.0011", ls_string, 4)
+log.log(this, "u_ole_ecg:erro", ls_string, 4)
 
 
 end event
 
 event externalexception;
-log.log(this, "u_ole_ecg.externalexception.0002", "ERROR (" + string(resultcode) + ") - " + description, 4)
+log.log(this, "u_ole_ecg:exte", "ERROR (" + string(resultcode) + ") - " + description, 4)
 
 action = ExceptionSubstituteReturnValue!
 returnvalue = -1

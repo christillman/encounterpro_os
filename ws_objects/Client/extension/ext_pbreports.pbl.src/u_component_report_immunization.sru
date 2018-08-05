@@ -38,7 +38,7 @@ u_component_attachment 	luo_attachment
 
 // Check for valid patient & enocunter
 If isnull(current_patient) Then
-	mylog.log(this, "u_component_report_immunization.xx_printreport.0027", "No patient context ", 4)
+	mylog.log(this, "u_component_report_immunization.xx_printreport:0027", "No patient context ", 4)
 	Return -1
 End If
 ls_sort_by = upper(get_attribute("sort_by"))
@@ -77,7 +77,7 @@ USING cprdb;
 If Not cprdb.check() Then Return -1
 
 If sqlca.sqlcode = 100 Then
-	mylog.log(this, "u_component_report_immunization.xx_printreport.0027", "No office information", 4)
+	mylog.log(this, "u_component_report_immunization.xx_printreport:0066", "No office information", 4)
 	Return -1
 End if
 

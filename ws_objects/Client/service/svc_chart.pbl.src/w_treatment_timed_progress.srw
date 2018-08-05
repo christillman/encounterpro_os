@@ -453,7 +453,7 @@ popup_return.item_count = 0
 service = message.powerobjectparm
 
 if isnull(service.treatment) then
-	log.log(this, "w_treatment_timed_progress.open.0014", "No Treatment Object", 4)
+	log.log(this, "w_treatment_timed_progress:open", "No Treatment Object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -470,7 +470,7 @@ encounter_id = current_patient.open_encounter_id
 
 progress_type = service.get_attribute("progress_type")
 if isnull(progress_type) or trim(progress_type) = "" then
-	log.log(this, "w_treatment_timed_progress.open.0014", "No progress_type", 4)
+	log.log(this, "w_treatment_timed_progress:open", "No progress_type", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

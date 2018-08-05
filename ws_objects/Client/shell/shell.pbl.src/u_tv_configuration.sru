@@ -52,13 +52,13 @@ u_configuration_node_base luo_node
 allow_editing = pb_allow_editing
 
 if isnull(common_thread.practice_user_id) then
-	log.log(this, "u_tv_configuration.display_root.0013", "NULL practice_user_id", 4)
+	log.log(this, "u_tv_configuration.display_root:0013", "NULL practice_user_id", 4)
 	return -1
 end if
 
 luo_practice = user_list.find_user(common_thread.practice_user_id)
 if isnull(luo_practice) then
-	log.log(this, "u_tv_configuration.display_root.0013", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
+	log.log(this, "u_tv_configuration.display_root:0019", "practice_user_id not found (" + common_thread.practice_user_id + ")", 4)
 	return -1
 end if
 
@@ -103,7 +103,7 @@ if len(pstr_node.class) > 0 then
 	TRY
 		luo_node = CREATE USING pstr_node.class
 	CATCH (throwable lt_error)
-		log.log(this, "u_tv_configuration.get_node_object.0007", "Error instantiating class (" + pstr_node.class + ")~r~n" + lt_error.text, 4)
+		log.log(this, "u_tv_configuration.get_node_object:0007", "Error instantiating class (" + pstr_node.class + ")~r~n" + lt_error.text, 4)
 		setnull(luo_node)
 	END TRY
 else

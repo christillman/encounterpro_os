@@ -273,14 +273,14 @@ popup = message.powerobjectparm
 assessment = popup.objectparm
 
 if isnull(assessment) or not isvalid(assessment) then
-	log.log(this, "w_assessment_properties.open.0009", "Invalid Assessment", 4)
+	log.log(this, "w_assessment_properties:open", "Invalid Assessment", 4)
 	close(this)
 	return
 end if
 
 li_sts = load_properties()
 if li_sts < 0 then
-	log.log(this, "w_assessment_properties.open.0009", "Error loading properties", 4)
+	log.log(this, "w_assessment_properties:open", "Error loading properties", 4)
 	close(this)
 	return
 end if

@@ -63,11 +63,11 @@ long ll_message_number
 message_id = pl_message_id
 
 if isnull(message_id) then
-	mylog.log(this, "u_component_message_handler.handle_message.0015", "Null message_id", 4)
+	mylog.log(this, "u_component_message_handler.handle_message:0015", "Null message_id", 4)
 	return -1
 end if
 
-mylog.log(this, "u_component_message_handler.handle_message.0015", "Handling Message (" + string(message_id) + ")", 2)
+mylog.log(this, "u_component_message_handler.handle_message:0019", "Handling Message (" + string(message_id) + ")", 2)
 
 // Get message type
 SELECT message_type, subscription_id
@@ -77,7 +77,7 @@ WHERE message_id = :message_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_message_handler.handle_message.0015", "message_id not found (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler.handle_message:0029", "message_id not found (" + string(message_id) + ")", 4)
 	return -1
 end if
 
@@ -91,7 +91,7 @@ USING cprdb;
 // Determine the message file
 li_sts = get_message_file()
 if li_sts <= 0 then
-	mylog.log(this, "u_component_message_handler.handle_message.0043", "Error getting message file", 4)
+	mylog.log(this, "u_component_message_handler.handle_message:0043", "Error getting message file", 4)
 end if
 
 if li_sts > 0 then
@@ -107,7 +107,7 @@ if li_sts > 0 then
 end if
 
 if li_sts <= 0 then
-	mylog.log(this, "u_component_message_handler.handle_message.0015", "Error Handling Message (" + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler.handle_message:0059", "Error Handling Message (" + string(message_id) + ")", 4)
 	ldt_now = datetime(today(), now())
 	UPDATE o_Message_Log
 	SET status = 'HANDLEERROR',
@@ -118,7 +118,7 @@ if li_sts <= 0 then
 	if not cprdb.check() then return -1
 	return -1
 else
-	mylog.log(this, "u_component_message_handler.handle_message.0015", "Successfully Handled Message (" + string(message_id) + ")", 2)
+	mylog.log(this, "u_component_message_handler.handle_message:0070", "Successfully Handled Message (" + string(message_id) + ")", 2)
 	UPDATE o_Message_Log
 	SET status = 'RECEIVED'
 	WHERE message_id = :message_id
@@ -153,7 +153,7 @@ WHERE message_type = :message_type
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_message_handler.handle_message.0043", "Message type not found (" + message_type + ")", 4)
+	mylog.log(this, "u_component_message_handler.get_message_file:0022", "Message type not found (" + message_type + ")", 4)
 	return -1
 end if
 
@@ -169,7 +169,7 @@ if right(ls_message_location, 1) <> "\" then ls_message_location += "\"
 ls_message_location += "Messages"
 
 if not mylog.of_directoryexists(ls_message_location) then
-	mylog.log(this, "u_component_message_handler.get_message_file.0038", "Error getting temp path "+ls_message_location, 4)
+	mylog.log(this, "u_component_message_handler.get_message_file:0038", "Error getting temp path "+ls_message_location, 4)
 	return -1
 end if
 if right(ls_message_location, 1) <> "\" then ls_message_location += "\"
@@ -190,7 +190,7 @@ if not cprdb.check() then return -1
 
 li_sts = mylog.file_write(lblb_message, message_file)
 if li_sts <= 0 then
-	mylog.log(this, "u_component_message_handler.get_message_file.0059", "Error writing message file", 4)
+	mylog.log(this, "u_component_message_handler.get_message_file:0059", "Error writing message file", 4)
 	return -1
 end if
 
@@ -207,21 +207,21 @@ else
 	// Load message parts
 	li_sts = load_parts()
 	if li_sts < 0 then
-		mylog.log(this, "u_component_message_handler.handle_message.0043", "Error loading message parts", 4)
+		mylog.log(this, "u_component_message_handler.xx_handle_message:0011", "Error loading message parts", 4)
 		return -1
 	end if
 
 	// This is the default message processing to do if xx_create_message is not overridden by a decendent class
 	li_sts = db_connect(message_file)
 	if li_sts <= 0 then
-		mylog.log(this, "u_component_message_handler.xx_handle_message.0018", "Unable to connect to message database (" + message_file + ")", 4)
+		mylog.log(this, "u_component_message_handler.xx_handle_message:0018", "Unable to connect to message database (" + message_file + ")", 4)
 		return -1
 	end if
 	
 	li_sts = process_parts()
 	if li_sts <= 0 then
 		db_disconnect()
-		mylog.log(this, "u_component_message_handler.xx_handle_message.0018", "Error processing parts", 4)
+		mylog.log(this, "u_component_message_handler.xx_handle_message:0025", "Error processing parts", 4)
 		return -1
 	end if
 
@@ -270,35 +270,35 @@ FROM p_Attachment_Header
 WHERE attachment_id NOT IN (SELECT attachment_id FROM p_Attachment_List)
 USING mydb;
 if not mydb.check() then
-	mylog.log(this, "u_component_message_handler.process_parts.0034", "Error Error checking p_Attachment_List records", 4)
+	mylog.log(this, "u_component_message_handler.process_parts:0034", "Error Error checking p_Attachment_List records", 4)
 	return -1
 end if
 
 
 for i = 1 to part_count
-	mylog.log(this, "u_component_message_handler.process_parts.0034", "Translating part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ", " + parts[i].part_unique + ")", 1)
+	mylog.log(this, "u_component_message_handler.process_parts:0040", "Translating part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ", " + parts[i].part_unique + ")", 1)
 	if parts[i].part_type = "SPECIAL" then
 		li_sts = do_special_part(parts[i])
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.process_parts.0034", "Error doing special part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.process_parts:0044", "Error doing special part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 			return -1
 		end if
 	elseif parts[i].part_unique = "X" then
 		li_sts = translate_x_part(parts[i])
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.process_parts.0034", "Error translating x part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.process_parts:0050", "Error translating x part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 			return -1
 		end if
 	elseif parts[i].part_unique = "C" then
 		li_sts = translate_c_part(parts[i])
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.process_parts.0034", "Error translating C part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.process_parts:0056", "Error translating C part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 			return -1
 		end if
 	else
 		li_sts = translate_and_save_part(parts[i])
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.process_parts.0034", "Error translating fkeys for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.process_parts:0062", "Error translating fkeys for part(" + string(parts[i].message_part_sequence) + ", " + parts[i].part_table + ")", 4)
 			return -1
 		end if
 	end if
@@ -463,7 +463,7 @@ for i = 1 to part_count
 
 	ll_rows = luo_altkeys.load_query("select * from c_Table_Altkey where cpr_table = '" + parts[i].part_table + "'") 
 	if ll_rows < 0 then
-		mylog.log(this, "u_component_message_handler.load_parts.0047", "error getting altkeys", 4)
+		mylog.log(this, "u_component_message_handler.load_parts:0047", "error getting altkeys", 4)
 		return -1
 	elseif ll_rows = 0 then
 		setnull(parts[i].primary_key1)
@@ -596,7 +596,7 @@ luo_key_data.set_database(cprdb)
 
 ll_rows = luo_data.load_query("select * from " + pstr_part.part_table)
 if ll_rows < 0 then
-	mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error loading message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.translate_and_save_part:0027", "Error loading message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -674,7 +674,7 @@ for j = 1 to ll_rows
 					if li_col > 0 then luo_data.object.data[j, li_col] = message_encounter_id
 					continue
 				else
-					mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Invalid p_Patient_Encounter foreign key", 4)
+					mylog.log(this, "u_component_message_handler.translate_and_save_part:0105", "Invalid p_Patient_Encounter foreign key", 4)
 					return -1
 				end if
 			else
@@ -692,7 +692,7 @@ for j = 1 to ll_rows
 				luo_key_data.set_database(cprdb)
 				li_sts = luo_key_data.load_query(ls_cpr_query)
 				if li_sts < 0 then
-					mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error executing lookup query (" + ls_cpr_query + ")", 4)
+					mylog.log(this, "u_component_message_handler.translate_and_save_part:0123", "Error executing lookup query (" + ls_cpr_query + ")", 4)
 					return -1
 				end if
 			CASE ELSE
@@ -704,14 +704,14 @@ for j = 1 to ll_rows
 					luo_key_data.load_query("SELECT " + pstr_part.fkey[i].target_key_list + " FROM " + pstr_part.fkey[i].target_table + " WHERE 1 = 2")
 					li_sts = find_key_in_data(luo_data, luo_key_data, pstr_part.fkey[i], ls_dw_query)
 					if li_sts < 0 then
-						mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error finding key in message data (" + ls_msg_query + ")", 4)
+						mylog.log(this, "u_component_message_handler.translate_and_save_part:0135", "Error finding key in message data (" + ls_msg_query + ")", 4)
 						return -1
 					end if
 				else
 					luo_key_data.set_database(mydb)
 					li_sts = luo_key_data.load_query(ls_msg_query)
 					if li_sts < 0 then
-						mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error executing lookup query (" + ls_msg_query + ")", 4)
+						mylog.log(this, "u_component_message_handler.translate_and_save_part:0142", "Error executing lookup query (" + ls_msg_query + ")", 4)
 						return -1
 					end if
 				end if
@@ -719,7 +719,7 @@ for j = 1 to ll_rows
 					luo_key_data.set_database(cprdb)
 					li_sts = luo_key_data.load_query(ls_cpr_query)
 					if li_sts < 0 then
-						mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error executing lookup query (" + ls_cpr_query + ")", 4)
+						mylog.log(this, "u_component_message_handler.translate_and_save_part:0150", "Error executing lookup query (" + ls_cpr_query + ")", 4)
 						return -1
 					end if
 				end if
@@ -733,7 +733,7 @@ for j = 1 to ll_rows
 				// have a synchronization problem.  If we can't resolve it, then we'll order a refresh of this
 				// patient's chart.
 				
-				mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "P data not found.  Requesting chart refresh. (" + ls_cpr_query + ")", 2)
+				mylog.log(this, "u_component_message_handler.translate_and_save_part:0164", "P data not found.  Requesting chart refresh. (" + ls_cpr_query + ")", 2)
 //				order_chart_refresh()
 				cprdb.rollback_transaction()
 				return -1
@@ -742,13 +742,13 @@ for j = 1 to ll_rows
 				// missing data in this database.  Attempt to add the data from the message.
 				li_sts = add_missing_data(pstr_part, luo_data, luo_key_data, j, i)
 				if li_sts < 0 then
-					mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error adding missing data (" + pstr_part.fkey[i].target_table + ")", 4)
+					mylog.log(this, "u_component_message_handler.translate_and_save_part:0173", "Error adding missing data (" + pstr_part.fkey[i].target_table + ")", 4)
 					return -1
 				end if
 			end if
 		elseif li_sts > 1 then
 			// too many keys found
-			mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Foreign key lookup found multiple records (" + ls_cpr_query + ")", 1)
+			mylog.log(this, "u_component_message_handler.translate_and_save_part:0179", "Foreign key lookup found multiple records (" + ls_cpr_query + ")", 1)
 		end if
 		
 		// Now put the alternate key values back into message database
@@ -830,7 +830,7 @@ for j = 1 to ll_rows
 				luo_data.generate_new_key(pstr_part.part_table, j)
 				li_sts = luo_data.save_to_table(pstr_part.part_table, j)
 				if li_sts < 0 then
-					mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error adding patient record to database (" + ls_cpr_id + ")", 4)
+					mylog.log(this, "u_component_message_handler.translate_and_save_part:0261", "Error adding patient record to database (" + ls_cpr_id + ")", 4)
 					return -1
 				end if
 			elseif cprdb.sqlcode = 0 then
@@ -839,14 +839,14 @@ for j = 1 to ll_rows
 			end if
 			if ll_original_rows = 1 then message_cpr_id = luo_data.object.cpr_id[j]
 		else
-			mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Billing_id is null.  This patient cannot be replicated", 4)
+			mylog.log(this, "u_component_message_handler.translate_and_save_part:0270", "Billing_id is null.  This patient cannot be replicated", 4)
 			return -1
 		end if
 	else
 		// Check to see if this record already exists in the cpr database
 		li_sts = check_record_unique(luo_data, pstr_part, j)
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error checking unique record (" + pstr_part.part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.translate_and_save_part:0277", "Error checking unique record (" + pstr_part.part_table + ")", 4)
 			return -1
 		elseif li_sts > 0 then
 			// If this record already exists in the database, then we shouldn't add it again.  We'll just
@@ -864,7 +864,7 @@ for j = 1 to ll_rows
 			luo_data.generate_new_key(pstr_part.part_table, j)
 			li_sts = luo_data.save_to_table(pstr_part.part_table, j)
 			if li_sts < 0 then
-				mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error saving message records (" + pstr_part.part_table + ")", 4)
+				mylog.log(this, "u_component_message_handler.translate_and_save_part:0295", "Error saving message records (" + pstr_part.part_table + ")", 4)
 				return -1
 			else
 				// If this is the p_patient_encounter table and there is only one encounter record
@@ -884,7 +884,7 @@ next // row loop
 luo_data.set_database(mydb)
 li_sts = luo_data.replace_table(pstr_part.part_table)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.translate_and_save_part.0027", "Error replacing message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.translate_and_save_part:0315", "Error replacing message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -923,7 +923,7 @@ luo_key_data.set_database(cprdb)
 
 ll_rows = luo_data.load_query("select * from " + pstr_part.part_table)
 if ll_rows < 0 then
-	mylog.log(this, "u_component_message_handler.translate_x_part.0029", "Error loading message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.translate_x_part:0029", "Error loading message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -938,7 +938,7 @@ for i = 1 to ll_rows
 	// Construct the alternate key lookup where-clause for this message record
 	ls_where_clause = prikey_where_clause(luo_data, pstr_part.part_table, i)
 	if isnull(ls_where_clause) then
-		mylog.log(this, "u_component_message_handler.translate_x_part.0029", "Unable to get where_clause", 3)
+		mylog.log(this, "u_component_message_handler.translate_x_part:0044", "Unable to get where_clause", 3)
 		continue
 	end if
 	
@@ -950,19 +950,19 @@ for i = 1 to ll_rows
 	// Check results
 	if li_sts < 0 then
 		// Error
-		mylog.log(this, "u_component_message_handler.translate_x_part.0029", "Error executing lookup query (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_handler.translate_x_part:0056", "Error executing lookup query (" + ls_query + ")", 4)
 		return -1
 	elseif li_sts = 0 then
 		// If foreign key lookup fails and it should have found a "c_" table then we have
 		// missing data in this database.  Attempt to add the data from the message.
 		li_sts = add_missing_x_data(pstr_part, luo_data, luo_key_data, i)
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.translate_x_part.0029", "Error adding missing data (" + pstr_part.part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.translate_x_part:0063", "Error adding missing data (" + pstr_part.part_table + ")", 4)
 			return -1
 		end if
 	elseif li_sts > 1 then
 		// too many keys found
-		mylog.log(this, "u_component_message_handler.translate_x_part.0029", "Primary key lookup found multiple records (" + ls_query + ")", 1)
+		mylog.log(this, "u_component_message_handler.translate_x_part:0068", "Primary key lookup found multiple records (" + ls_query + ")", 1)
 	end if
 	
 	// If all went well and we found one row, then just loop to the next row
@@ -983,7 +983,7 @@ integer li_col
 u_ds_data luo_data
 
 if pi_fkey <= 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_data.0009", "Invalid fkey index", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_data:0009", "Invalid fkey index", 4)
 	return -1
 else
 	ls_query = "SELECT * FROM " + pstr_part.fkey[pi_fkey].target_table + " WHERE 1 = 2"
@@ -994,7 +994,7 @@ luo_data.set_database(cprdb)
 
 li_sts = luo_data.load_query(ls_query)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_data.0009", "Error creating empty datastore", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_data:0020", "Error creating empty datastore", 4)
 	return -1
 end if
 
@@ -1105,13 +1105,13 @@ end if
 
 li_sts = luo_data.generate_new_keys(pstr_part.fkey[pi_fkey].target_table)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_data.0009", "Error generating new primary keys (" + pstr_part.fkey[pi_fkey].target_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_data:0131", "Error generating new primary keys (" + pstr_part.fkey[pi_fkey].target_table + ")", 4)
 	return -1
 end if
 
 li_sts = luo_data.save_to_table(pstr_part.fkey[pi_fkey].target_table, false)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_data.0009", "Error saving message records (" + pstr_part.fkey[pi_fkey].target_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_data:0137", "Error saving message records (" + pstr_part.fkey[pi_fkey].target_table + ")", 4)
 	return -1
 end if
 
@@ -1245,7 +1245,7 @@ ls_syntax = puo_data.object.datawindow.syntax
 
 luo_data.create(ls_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	mydb.mylog.log(this, "u_component_message_handler.add_missing_x_data.0018", "Error creating datastore (" + ls_error_create + ")", 4)
+	mydb.mylog.log(this, "u_component_message_handler.add_missing_x_data:0018", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -1255,7 +1255,7 @@ luo_data.set_database(cprdb)
 
 li_sts = luo_data.save_to_table(pstr_part.part_table, false)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_x_data.0028", "Error saving message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_x_data:0028", "Error saving message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1287,7 +1287,7 @@ luo_key_data.set_database(cprdb)
 
 ll_rows = luo_data.load_query("select * from " + pstr_part.part_table)
 if ll_rows < 0 then
-	mylog.log(this, "u_component_message_handler.translate_c_part.0022", "Error loading message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.translate_c_part:0022", "Error loading message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1322,19 +1322,19 @@ for i = 1 to ll_rows
 	// Check results
 	if li_sts < 0 then
 		// Error
-		mylog.log(this, "u_component_message_handler.translate_c_part.0022", "Error executing lookup query (" + ls_query + ")", 4)
+		mylog.log(this, "u_component_message_handler.translate_c_part:0057", "Error executing lookup query (" + ls_query + ")", 4)
 		return -1
 	elseif li_sts = 0 then
 		// If foreign key lookup fails and it should have found a "c_" table then we have
 		// missing data in this database.  Attempt to add the data from the message.
 		li_sts = add_missing_c_data(pstr_part, luo_data, luo_key_data, i)
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.translate_c_part.0022", "Error adding missing data (" + pstr_part.part_table + ")", 4)
+			mylog.log(this, "u_component_message_handler.translate_c_part:0064", "Error adding missing data (" + pstr_part.part_table + ")", 4)
 			return -1
 		end if
 	elseif li_sts > 1 then
 		// too many keys found
-		mylog.log(this, "u_component_message_handler.translate_c_part.0022", "Foreign key lookup found multiple records (" + ls_query + ")", 1)
+		mylog.log(this, "u_component_message_handler.translate_c_part:0069", "Foreign key lookup found multiple records (" + ls_query + ")", 1)
 	end if
 	
 	// Now put the alternate key values back into message database
@@ -1416,7 +1416,7 @@ next
 luo_data.set_database(mydb)
 li_sts = luo_data.replace_table(pstr_part.part_table)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.translate_c_part.0022", "Error saving message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.translate_c_part:0151", "Error saving message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1444,7 +1444,7 @@ ls_syntax = puo_data.object.datawindow.syntax
 
 luo_data.create(ls_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	mydb.mylog.log(this, "u_component_message_handler.add_missing_c_data.0018", "Error creating datastore (" + ls_error_create + ")", 4)
+	mydb.mylog.log(this, "u_component_message_handler.add_missing_c_data:0018", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -1458,13 +1458,13 @@ luo_data.set_database(cprdb)
 
 li_sts = luo_data.generate_new_keys(pstr_part.part_table)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_c_data.0032", "Error generating new primary keys (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_c_data:0032", "Error generating new primary keys (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
 li_sts = luo_data.save_to_table(pstr_part.part_table, false)
 if li_sts < 0 then
-	mylog.log(this, "u_component_message_handler.add_missing_c_data.0032", "Error saving message records (" + pstr_part.part_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.add_missing_c_data:0038", "Error saving message records (" + pstr_part.part_table + ")", 4)
 	return -1
 end if
 
@@ -1566,11 +1566,11 @@ luo_altkeys = CREATE u_ds_data
 luo_altkeys.set_database(cprdb)
 ll_rows = luo_altkeys.load_query("select * from c_Table_Altkey where cpr_table = '" + ps_table + "'") 
 if ll_rows < 0 then
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "error getting altkeys", 4)
+	mylog.log(this, "u_component_message_handler.prikey_where_clause:0019", "error getting altkeys", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 elseif ll_rows = 0 then
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "c_Table_Altkey record not found (" + ps_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.prikey_where_clause:0023", "c_Table_Altkey record not found (" + ps_table + ")", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if
@@ -1587,13 +1587,13 @@ DESTROY luo_altkeys
 if not isnull(ls_primary_key1) then
 	ls_item = puo_data.where_clause_item(ls_primary_key1, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key1 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0040", "Null primary key field (" + ps_table + ", " + ls_primary_key1 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
 	ls_where_clause += "WHERE " + ls_primary_key1 + " = " + ls_item
 else
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "First primary_key is null", 4)
+	mylog.log(this, "u_component_message_handler.prikey_where_clause:0046", "First primary_key is null", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if
@@ -1601,7 +1601,7 @@ end if
 if not isnull(ls_primary_key2) then
 	ls_item = puo_data.where_clause_item(ls_primary_key2, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key2 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0054", "Null primary key field (" + ps_table + ", " + ls_primary_key2 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -1611,7 +1611,7 @@ end if
 if not isnull(ls_primary_key3) then
 	ls_item = puo_data.where_clause_item(ls_primary_key3, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key3 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0064", "Null primary key field (" + ps_table + ", " + ls_primary_key3 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -1621,7 +1621,7 @@ end if
 if not isnull(ls_primary_key4) then
 	ls_item = puo_data.where_clause_item(ls_primary_key4, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key4 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0074", "Null primary key field (" + ps_table + ", " + ls_primary_key4 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -1631,7 +1631,7 @@ end if
 if not isnull(ls_primary_key5) then
 	ls_item = puo_data.where_clause_item(ls_primary_key5, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key5 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0084", "Null primary key field (" + ps_table + ", " + ls_primary_key5 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -1641,7 +1641,7 @@ end if
 if not isnull(ls_primary_key6) then
 	ls_item = puo_data.where_clause_item(ls_primary_key6, pl_row)
 	if isnull(ls_item) then
-		mylog.log(this, "u_component_message_handler.prikey_where_clause.0040", "Null primary key field (" + ps_table + ", " + ls_primary_key6 + ")", 4)
+		mylog.log(this, "u_component_message_handler.prikey_where_clause:0094", "Null primary key field (" + ps_table + ", " + ls_primary_key6 + ")", 4)
 		setnull(ls_where_clause)
 		return ls_where_clause
 	end if
@@ -1676,7 +1676,7 @@ if not isnull(pstr_fkey.alt_key1) then
 		ls_where_clause += " AND " + ls_item
 	end if
 else
-	mylog.log(this, "u_component_message_handler.fkey_where_clause.0024", "First fkey is null", 4)
+	mylog.log(this, "u_component_message_handler.fkey_where_clause:0024", "First fkey is null", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if
@@ -1930,7 +1930,7 @@ CHOOSE CASE pstr_part.part_table
 	CASE "Attachment_Files"
 		li_sts = save_attachment_files()
 		if li_sts < 0 then
-			mylog.log(this, "u_component_message_handler.do_special_part.0007", "Error getting attachment files", 4)
+			mylog.log(this, "u_component_message_handler.do_special_part:0007", "Error getting attachment files", 4)
 			return -1
 		end if
 		
@@ -1986,7 +1986,7 @@ CONNECT USING luo_message;
 if luo_message.SQLCode = 0 then
 luo_message.connected = true
 else
-	mylog.log(this, "u_component_message_handler.save_attachment_files.0044", "Error connecting to message database (" + luo_message.sqlerrtext + ")", 4)
+	mylog.log(this, "u_component_message_handler.save_attachment_files:0044", "Error connecting to message database (" + luo_message.sqlerrtext + ")", 4)
 	return -1
 end if
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2048,11 +2048,11 @@ luo_altkeys = CREATE u_ds_data
 luo_altkeys.set_database(cprdb)
 ll_rows = luo_altkeys.load_query("select * from c_Table_Altkey where cpr_table = '" + ps_table + "'") 
 if ll_rows < 0 then
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "error getting altkeys", 4)
+	mylog.log(this, "u_component_message_handler.altkey_where_clause:0019", "error getting altkeys", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 elseif ll_rows = 0 then
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "c_Table_Altkey record not found (" + ps_table + ")", 4)
+	mylog.log(this, "u_component_message_handler.altkey_where_clause:0023", "c_Table_Altkey record not found (" + ps_table + ")", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if
@@ -2072,7 +2072,7 @@ if not isnull(ls_alt_key1) then
 	ls_item = puo_data.where_clause_item(ls_alt_key1, pl_row, ps_dbms)
 	if not isnull(ls_item) then ls_where_clause += " AND " + ls_alt_key1 + " = " + ls_item
 else
-	mylog.log(this, "u_component_message_handler.load_parts.0047", "First alt_key is null", 4)
+	mylog.log(this, "u_component_message_handler.altkey_where_clause:0043", "First alt_key is null", 4)
 	setnull(ls_where_clause)
 	return ls_where_clause
 end if

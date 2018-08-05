@@ -138,7 +138,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_edit_qualifier_domain.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_edit_qualifier_domain:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -154,7 +154,7 @@ FROM c_Qualifier_Domain_Category,
 WHERE c_Qualifier_Domain.qualifier_domain_id = :qualifier_domain_id
 AND c_Qualifier_Domain.qualifier_domain_category_id = c_Qualifier_Domain_Category.qualifier_domain_category_id;
 if not tf_check() then
-	log.log(this, "w_edit_qualifier_domain.open.0009", "Error getting descriptions", 4)
+	log.log(this, "w_edit_qualifier_domain:open", "Error getting descriptions", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -163,7 +163,7 @@ dw_qualifiers.settransobject(sqlca)
 
 li_sts = dw_qualifiers.retrieve(qualifier_domain_id)
 if li_sts < 0 then
-	log.log(this, "w_edit_qualifier_domain.open.0009", "Error getting qualifiers", 4)
+	log.log(this, "w_edit_qualifier_domain:open", "Error getting qualifiers", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

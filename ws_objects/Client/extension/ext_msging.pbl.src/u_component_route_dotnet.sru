@@ -59,7 +59,7 @@ li_sts = lo_xml.create_xml(puo_document.patient_workplan_item_id, &
 									lo_document)
 dotnet_xml_data = lo_document.xml_string
 if isnull(dotnet_xml_data) then
-	log.log(this, "u_component_route_dotnet.xx_send_document.0046", "Error getting xml data", 4)
+	log.log(this, "u_component_route_dotnet.xx_send_document:0046", "Error getting xml data", 4)
 	return -1
 end if
 
@@ -70,7 +70,7 @@ TRY
 	ll_return_status = com_wrapper.SendDocument(dotnet_xml_data)
 CATCH (oleruntimeerror lt_error)
 	ls_message += lt_error.text + "~r~n" + lt_error.description
-	log.log(this, "u_component_route_dotnet.xx_send_document.0046", "Error calling SendDocument:~r~n" + ls_message, 4)
+	log.log(this, "u_component_route_dotnet.xx_send_document:0057", "Error calling SendDocument:~r~n" + ls_message, 4)
 	dotnet_create_test_case()
 	return -1
 END TRY
@@ -84,7 +84,7 @@ if ll_return_status <= 0 OR isnull(ll_return_status)  then
 	else
 		ls_message = ".NET component returned an error code (" + string(ll_return_status) + ")"
 	end if
-	log.log(this, "u_component_route_dotnet.xx_send_document.0071", ls_message, 4)
+	log.log(this, "u_component_route_dotnet.xx_send_document:0071", ls_message, 4)
 	return -1
 end if
 
@@ -115,7 +115,7 @@ string ls_document_encoding
 
 li_sts = puo_document.get_document(lstr_document)
 if li_sts <= 0 then
-	log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0023", "Error sending document (" + string(puo_document.patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -128,22 +128,22 @@ CHOOSE CASE lower(ls_document_encoding)
 		TRY
 			ls_encoded_data = common_thread.eprolibnet4.convertbinarytobase64(lstr_document.attachment)
 			if isnull(ls_encoded_data) or len(ls_encoded_data) = 0 then
-				log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "Error converting file data to base64 (" + string(lstr_document.attachment) + ")", 4)
+				log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0036", "Error converting file data to base64 (" + string(lstr_document.attachment) + ")", 4)
 				return -1
 			end if
 		CATCH (oleruntimeerror lt_error)
-			log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "Error converting document datar ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+			log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0040", "Error converting document datar ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 		END TRY
 	CASE "hex", "binhex"
 		ls_document_encoding = "hex"
 		TRY
 			ls_encoded_data = common_thread.eprolibnet4.convertbinarytohex(lstr_document.attachment)
 			if isnull(ls_encoded_data) or len(ls_encoded_data) = 0 then
-				log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "Error converting file data to hex (" + string(lstr_document.attachment) + ")", 4)
+				log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0047", "Error converting file data to hex (" + string(lstr_document.attachment) + ")", 4)
 				return -1
 			end if
 		CATCH (oleruntimeerror lt_error2)
-			log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "Error converting document datar ~r~n" + lt_error2.text + "~r~n" + lt_error2.description, 4)
+			log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0051", "Error converting document datar ~r~n" + lt_error2.text + "~r~n" + lt_error2.description, 4)
 		END TRY
 	CASE "string"
 		ls_encoded_data = f_blob_to_string(lstr_document.attachment)
@@ -257,10 +257,10 @@ TRY
 	
 	ps_componentdata_xml = lo_document.savedocumentintostring()
 CATCH (PBDOM_EXCEPTION pbdom_except)
-	log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "XML Error: " + string(pbdom_except.GetExceptionCode()) + "~r~nText : " + pbdom_except.Text, 4)
+	log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0165", "XML Error: " + string(pbdom_except.GetExceptionCode()) + "~r~nText : " + pbdom_except.Text, 4)
 	return -1
 CATCH (throwable lo_error)
-	log.log(this, "u_component_route_dotnet.add_document_to_componentdata.0023", "XML Error: " + lo_error.Text, 4)
+	log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0168", "XML Error: " + lo_error.Text, 4)
 	return -1
 end try
 
@@ -274,7 +274,7 @@ str_attributes lstr_attributes
 
 
 if debug_mode then
-	log.log(this, "u_component_route_dotnet.xx_initialize.0006", "Debug Mode", 2)
+	log.log(this, "u_component_route_dotnet.xx_initialize:0006", "Debug Mode", 2)
 end if
 
 // Get the XML document for the component attributes

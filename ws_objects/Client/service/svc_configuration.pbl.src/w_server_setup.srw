@@ -365,7 +365,7 @@ NEXT
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(this, "w_server_setup.pm_get_scheduler_attributes.0036", "Error updating command attributes", 4)
+	log.log(this, "w_server_setup.pm_get_scheduler_attributes:0036", "Error updating command attributes", 4)
 	return
 end if
 
@@ -409,7 +409,7 @@ NEXT
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(this, "w_server_setup.pm_get_scheduler_attributes.0036", "Error updating command attributes", 4)
+	log.log(this, "w_server_setup.pm_get_billing_attributes:0036", "Error updating command attributes", 4)
 	return
 end if
 

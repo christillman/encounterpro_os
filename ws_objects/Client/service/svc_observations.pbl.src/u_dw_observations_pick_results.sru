@@ -142,13 +142,13 @@ service = puo_service
 
 observation_id = service.root_observation_id()
 if isnull(observation_id) then
-	log.log(this, "u_dw_observations_pick_results.initialize.0008", "No root observation_id", 4)
+	log.log(this, "u_dw_observations_pick_results.initialize:0008", "No root observation_id", 4)
 	return -1
 end if
 
 root_observation_sequence = service.get_root_observation()
 if not isnull(service.treatment) and isnull(root_observation_sequence) then
-	log.log(this, "u_dw_observations_pick_results.initialize.0008", "No root observation_sequence", 4)
+	log.log(this, "u_dw_observations_pick_results.initialize:0014", "No root observation_sequence", 4)
 	return -1
 end if
 
@@ -319,7 +319,7 @@ if isnull(ll_observation_sequence) then
 																					ll_stage, &
 																					true)
 	if isnull(ll_observation_sequence) then
-		log.log(this, "u_dw_observations_pick_results.save_result_treatment.0051", "Error adding observation (" + ls_observation_id + ")", 4)
+		log.log(this, "u_dw_observations_pick_results.save_result_treatment:0051", "Error adding observation (" + ls_observation_id + ")", 4)
 		return -1
 	end if
 end if
@@ -682,7 +682,7 @@ if isnull(ll_observation_sequence) then
 																					ll_stage, &
 																					true)
 	if isnull(ll_observation_sequence) then
-		log.log(this, "u_dw_observations_pick_results.treatment_row_clicked.0041", "Error adding observation (" + ls_observation_id + ")", 4)
+		log.log(this, "u_dw_observations_pick_results.treatment_row_clicked:0041", "Error adding observation (" + ls_observation_id + ")", 4)
 		return
 	else
 		object.observation_sequence[pl_row] = ll_observation_sequence

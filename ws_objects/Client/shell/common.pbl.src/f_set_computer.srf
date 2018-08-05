@@ -55,7 +55,7 @@ if sqlca.sqlcode = 100 then
 	lb_computer_not_found = true
 else
 	if ls_status <> "OK" then
-		log.log(po_null, "f_set_computer.0050", "Computer is disabled", 5)
+		log.log(po_null, "f_set_computer:0050", "Computer is disabled", 5)
 		gnv_app.event close()
 	end if
 	lb_computer_not_found = false
@@ -88,7 +88,7 @@ if trim(office_id) = "" or isnull(office_id) then
 		WHERE status = 'OK';
 		if not sqlca.check() then return -1
 		if sqlca.sqlcode = 100 or isnull(office_id) then
-			log.log(po_null, "f_set_computer.0083", "Unable to determine office_id", 4)
+			log.log(po_null, "f_set_computer:0083", "Unable to determine office_id", 4)
 			return -1
 		end if
 	end if
@@ -107,7 +107,7 @@ if lb_computer_not_found then
 		
 		CLOSE lsp_register_computer;
 	else
-		log.log(po_null, "f_set_computer.0050", "Computer is not registered and new computeres are not allowed", 5)
+		log.log(po_null, "f_set_computer:0102", "Computer is not registered and new computeres are not allowed", 5)
 		gnv_app.event close()
 	end if
 end if
@@ -129,7 +129,7 @@ FROM c_Office
 WHERE office_id = :office_id;
 if not sqlca.check() then return -1
 if sqlca.sqlcode <> 0 then
-	log.log(po_null, "f_set_computer.0083", "Invalid office_id (" + office_id + ")", 5)
+	log.log(po_null, "f_set_computer:0124", "Invalid office_id (" + office_id + ")", 5)
 	return -1
 end if
 

@@ -215,10 +215,10 @@ est_list_id = datalist.encounter_type_est_list_id(encounter_type)
 ll_count = xx_encounter_procedure(psa_procedure_id)
 
 if ll_count < 0 and upper(ls_encounter_bill_flag) = "Y" then
-	mylog.log(this, "u_component_coding.encounter_procedure.0107", "Error getting encounter procedure", 4)
+	mylog.log(this, "u_component_coding.encounter_procedure:0107", "Error getting encounter procedure", 4)
 	return -1
 elseif ll_count = 0 and upper(ls_encounter_bill_flag) = "Y" then
-	mylog.log(this, "u_component_coding.encounter_procedure.0107", "No encounter procedure found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_coding.encounter_procedure:0110", "No encounter procedure found (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return -1
 end if
 

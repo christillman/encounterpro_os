@@ -182,7 +182,7 @@ CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 		AND service_sequence = :ll_service_sequence;
 		if not tf_check() then return -1
 		if sqlca.sqlcode = 100 then
-			log.log(this, "w_do_treatment.button_pressed.0033", "invalid service_sequence (" + string(ll_service_sequence) + ")", 4)
+			log.log(this, "w_do_treatment.button_pressed:0033", "invalid service_sequence (" + string(ll_service_sequence) + ")", 4)
 			return -1
 		end if
 		
@@ -376,7 +376,7 @@ service = message.powerobjectparm
 treatment = service.treatment
 
 if isnull(treatment) then
-	log.log(this, "w_do_treatment.open.0011", "No Treatment Context", 4)
+	log.log(this, "w_do_treatment:open", "No Treatment Context", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -397,7 +397,7 @@ paint_buttons()
 //li_sts = initialize()
 //
 //if li_sts < 0 then
-//	log.log(this, "w_do_treatment.open.0011", "Error initializing window", 4)
+//	log.log(this, "w_do_treatment:open", "Error initializing window", 4)
 //	closewithreturn(this, popup_return)
 //	return
 //end if

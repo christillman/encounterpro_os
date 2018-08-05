@@ -17,7 +17,7 @@ string ls_xml_class
 setnull(ls_null)
 
 if isnull(ps_xml_class) then
-	log.log(po_null, "f_get_xml_document_from_class.0012", "No xml_class found", 4)
+	log.log(po_null, "f_get_xml_document_from_class:0012", "No xml_class found", 4)
 	return ls_null
 end if
 

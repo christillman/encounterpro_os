@@ -70,7 +70,7 @@ resize_tabpage()
 
 li_sts = create_lists()
 if li_sts <= 0 then
-	log.log(this, "u_tabpage_shell_incoming_documents.initialize.0011", "Error creating posting lists", 4)
+	log.log(this, "u_tabpage_shell_incoming_documents.initialize:0011", "Error creating posting lists", 4)
 	return -1
 end if
 

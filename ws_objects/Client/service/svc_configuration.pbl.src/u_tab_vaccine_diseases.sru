@@ -297,7 +297,7 @@ if newindex = 3 then
 			tabpage_schedule.st_schedule_title.text = tabpage_diseases.dw_diseases.object.description[ll_row] + " Schedule"
 			load_schedule()
 		else
-			log.log(this, "u_tab_vaccine_diseases.selectionchanging.0018", "Disease_id not found (" + string(disease_id) + ")", 4)
+			log.log(this, "u_tab_vaccine_diseases:sele", "Disease_id not found (" + string(disease_id) + ")", 4)
 			selecttab(oldindex)
 			return 1
 		end if
@@ -747,7 +747,7 @@ DO
 	FROM c_Vaccine
 	WHERE vaccine_id = :ls_vaccine_id;
 	if not tf_check() then
-		log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked.0037", "Error checking for duplicate vaccine_id", 4)
+		log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked:0037", "Error checking for duplicate vaccine_id", 4)
 		openwithparm(w_pop_message, "Error adding vaccine")
 		return
 	end if
@@ -769,7 +769,7 @@ dw_vaccines.scrolltorow(i)
 
 li_sts = dw_vaccines.update()
 if li_sts < 0 then
-	log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked.0037", "Error adding new vaccine", 4)
+	log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked:0059", "Error adding new vaccine", 4)
 	openwithparm(w_pop_message, "Error adding vaccine")
 	return
 end if
@@ -1654,7 +1654,7 @@ ld_age = date(popup_return.items[1])
 li_warning_days = integer(popup_return.items[2])
 
 if not (ld_age >= immunization_date_of_birth) then
-	log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked.0037", "Age not valid", 3)
+	log.log(this, "u_tab_vaccine_diseases.cb_add_schedule_item.clicked:0020", "Age not valid", 3)
 	return
 end if
 
@@ -1728,7 +1728,7 @@ ld_age = date(popup_return.items[1])
 li_warning_days = integer(popup_return.items[2])
 
 if not (ld_age >= immunization_date_of_birth) then
-	log.log(this, "u_tab_vaccine_diseases.cb_new_vaccine.clicked.0037", "Age not valid", 3)
+	log.log(this, "u_tab_vaccine_diseases.dw_schedule.edit_item:0026", "Age not valid", 3)
 	return
 end if
 

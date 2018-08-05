@@ -123,7 +123,7 @@ if li_count = 0 then
 	display_script_id = long(service.get_attribute("display_script_id"))
 	
 	if isnull(display_script_id) then
-		log.log(this, "w_svc_rtf.open.0053", "No display script defined", 4)
+		log.log(this, "w_svc_rtf:open", "No display script defined", 4)
 		closewithreturn(this, popup_return)
 		return
 	else

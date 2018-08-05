@@ -91,13 +91,13 @@ public function integer display_workplan (long pl_workplan_id, boolean pb_allow_
 long ll_handle
 
 if isnull(pl_workplan_id) then
-	log.log(this, "u_tv_workplan.display_workplan.0005", "Null workplan_id", 4)
+	log.log(this, "u_tv_workplan.display_workplan:0005", "Null workplan_id", 4)
 	return -1
 end if
 
 workplan = datalist.get_workplan(pl_workplan_id)
 if isnull(workplan.workplan_id) then
-	log.log(this, "u_tv_workplan.display_workplan.0005", "workplan not found (" + string(pl_workplan_id) + ")", 4)
+	log.log(this, "u_tv_workplan.display_workplan:0011", "workplan not found (" + string(pl_workplan_id) + ")", 4)
 	return -1
 end if
 
@@ -221,13 +221,13 @@ string ls_item_type
 
 li_sts = getitem(handle, ltvi_parent_item)
 if li_sts <= 0 then
-	log.log(this, "u_tv_workplan.itempopulate.0023", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_workplan:item", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
 f_split_string(string(ltvi_parent_item.data), "|", ls_node_type, ls_id)
 if isnull(ls_node_type) or trim(ls_node_type) = "" then
-	log.log(this, "u_tv_workplan.itempopulate.0023", "No node_type", 4)
+	log.log(this, "u_tv_workplan:item", "No node_type", 4)
 	return 1
 end if
 

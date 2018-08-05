@@ -44,7 +44,7 @@ TRY
 		ls_results_xml = ""
 	end if
 CATCH (throwable lt_error)
-	log.log(this, "u_component_observation_dotnet.xx_do_source.0023", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_dotnet.xx_do_source:0023", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -56,13 +56,13 @@ if len(xslt) > 0 then
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else
-		log.log(this, "u_component_observation_dotnet.xx_do_source.0035", "Error transforming xml", 4)
+		log.log(this, "u_component_observation_dotnet.xx_do_source:0035", "Error transforming xml", 4)
 	end if
 end if
 
 li_sts = read_data(ls_results_xml, "")
 if li_sts < 0 then
-	log.log(this, "u_component_observation_dotnet.xx_do_source.0035", "Error reading xml documents", 4)
+	log.log(this, "u_component_observation_dotnet.xx_do_source:0041", "Error reading xml documents", 4)
 	return -1
 end if
 
@@ -83,7 +83,7 @@ str_attributes lstr_attributes
 setnull(xslt)
 
 if debug_mode then
-	log.log(this, "u_component_observation_dotnet.xx_do_source.0023", "Debug Mode", 2)
+	log.log(this, "u_component_observation_dotnet.xx_initialize:0014", "Debug Mode", 2)
 end if
 
 // Get the XML document for the component attributes
@@ -91,7 +91,7 @@ lstr_attributes = get_attributes()
 
 li_sts = initialize_dotnet_wrapper(lstr_attributes)
 if li_sts < 0 then
-	log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "Error initializing dotnet wrapper", 4)
+	log.log(this, "u_component_observation_dotnet.xx_initialize:0022", "Error initializing dotnet wrapper", 4)
 	return -1
 end if
 
@@ -105,18 +105,18 @@ end if
 TRY
 	li_sts = com_wrapper.initialize(ls_context_xml)
 	if li_sts <= 0 then
-		log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "Error initializing com object (" + ls_com_id + ")", 4)
+		log.log(this, "u_component_observation_dotnet.xx_initialize:0036", "Error initializing com object (" + ls_com_id + ")", 4)
 		return -1
 	end if
 	if debug_mode then
-		log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "initialize successful (" + ls_com_id + ")", 2)
+		log.log(this, "u_component_observation_dotnet.xx_initialize:0040", "initialize successful (" + ls_com_id + ")", 2)
 	end if
 	lb_connected = com_wrapper.is_connected()
 	if debug_mode then
-		log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "is_connected successful (" + ls_com_id + ")", 2)
+		log.log(this, "u_component_observation_dotnet.xx_initialize:0044", "is_connected successful (" + ls_com_id + ")", 2)
 	end if
 CATCH (throwable lt_error)
-	log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_dotnet.xx_initialize:0047", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -128,7 +128,7 @@ TRY
 	// Set callback window handle to this window
 	com_wrapper.SetCallbackWindow(handle(com_window))
 CATCH (throwable lt_error2)
-	log.log(this, "u_component_observation_dotnet.xx_initialize.0022", "Error setting callback window (" + lt_error2.text + ")", 4)
+	log.log(this, "u_component_observation_dotnet.xx_initialize:0059", "Error setting callback window (" + lt_error2.text + ")", 4)
 	return -1
 END TRY
 
@@ -144,7 +144,7 @@ protected function integer xx_set_processed (string ps_id, integer pi_status);in
 TRY
 	li_sts = com_wrapper.set_processed(ps_id, pi_status)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_observation_dotnet.xx_set_processed.0007", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_dotnet.xx_set_processed:0007", "Error calling com source (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -157,7 +157,7 @@ protected function integer xx_shutdown ();
 TRY
 	com_wrapper.disconnectobject( )
 CATCH (throwable lt_error)
-	log.log(this, "u_component_observation_dotnet.xx_do_source.0023", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_observation_dotnet.xx_shutdown:0005", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

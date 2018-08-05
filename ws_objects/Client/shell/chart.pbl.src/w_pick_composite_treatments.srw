@@ -239,7 +239,7 @@ setnull(ls_null)
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this, "w_pick_composite_treatments.open.0015", "Invalid Parameters", 4)
+	log.log(this, "w_pick_composite_treatments:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

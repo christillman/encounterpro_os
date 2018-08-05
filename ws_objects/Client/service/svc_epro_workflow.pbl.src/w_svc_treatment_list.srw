@@ -82,14 +82,14 @@ service = message.powerobjectparm
 title = current_patient.id_line()
 
 if isnull(service.problem_id) then
-	log.log(this, "w_svc_treatment_list.open.0027", "Null problem_id", 4)
+	log.log(this, "w_svc_treatment_list:open", "Null problem_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = current_patient.assessments.assessment(assessment, service.problem_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_treatment_list.open.0027", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
+	log.log(this, "w_svc_treatment_list:open", "Error getting assessment object (" + string(service.problem_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

@@ -31,7 +31,7 @@ super::initialize()
 
 if isnull(parent_tab.service) or not isvalid(parent_tab.service) then
 	if isnull(current_service) or not isvalid(current_service) then
-		log.log(this, "u_tabpage_context_documents_incoming.initialize.0006", "Service context not found", 4)
+		log.log(this, "u_tabpage_context_documents_incoming.initialize:0006", "Service context not found", 4)
 	else
 		service = current_service
 		view_context_object = current_service.context_object

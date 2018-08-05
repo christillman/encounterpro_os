@@ -86,14 +86,14 @@ ls_new_syntax = sqlca.SyntaxFromSQL(ps_query, "", ls_error_syntaxfromSQL)
 sqlca.commit_transaction()
 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_file:0018", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
 // Create the datastore
 Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_file:0025", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -102,16 +102,16 @@ li_sts = settransobject(mydb)
 ls_sql = getsqlselect()
 li_sts = retrieve()
 if li_sts < 0 then
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error executing query (" + ps_query + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_file:0034", "Error executing query (" + ps_query + ")", 4)
 	return li_sts
 end if
 
 // Finally, save the data to the text file
 li_sts = saveas(ps_file, text!, false)
 if li_sts > 0 then
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Query data saved to file (" + ps_query + ", " + ps_file + ")", 1)
+	log.log(this, "u_ds_data.save_query_to_file:0041", "Query data saved to file (" + ps_query + ", " + ps_file + ")", 1)
 else
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error saving query to file (" + ps_query + ", " + ps_file + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_file:0043", "Error saving query to file (" + ps_query + ", " + ps_file + ")", 4)
 end if
 
 return li_sts
@@ -147,13 +147,13 @@ ls_new_syntax = sqlca.SyntaxFromSQL(ls_query, "", ls_error_syntaxfromSQL)
 sqlca.commit_transaction()
 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.save_table_to_file.0021", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_table_to_file:0021", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 else
 	// Create the datastore with the wildcard
 	Create(ls_new_syntax, ls_error_create)
 	if Len(ls_error_create) > 0 THEN
-		log.log(this, "u_ds_data.save_table_to_file.0021", "Error creating datastore (" + ls_error_create + ")", 4)
+		log.log(this, "u_ds_data.save_table_to_file:0027", "Error creating datastore (" + ls_error_create + ")", 4)
 		return -1
 	end if
 	
@@ -172,29 +172,29 @@ else
 	// Now rerun syntaxfromsql with the new query
 	ls_new_syntax = sqlca.SyntaxFromSQL(ls_query, "", ls_error_syntaxfromSQL)
 	if Len(ls_error_syntaxfromSQL) > 0 THEN
-		log.log(this, "u_ds_data.save_table_to_file.0021", "Error getting new query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+		log.log(this, "u_ds_data.save_table_to_file:0046", "Error getting new query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 		return -1
 	else
 		// Now recreate then datastore and retrieve the data
 		Create(ls_new_syntax, ls_error_create)
 		if Len(ls_error_create) > 0 THEN
-			log.log(this, "u_ds_data.save_table_to_file.0021", "Error creating new datastore (" + ls_error_create + ")", 4)
+			log.log(this, "u_ds_data.save_table_to_file:0052", "Error creating new datastore (" + ls_error_create + ")", 4)
 			return -1
 		end if
 		li_sts = settransobject(mydb)
 		ls_sql = getsqlselect()
 		li_sts = retrieve()
 		if li_sts < 0 then
-			log.log(this, "u_ds_data.save_table_to_file.0021", "Error executing query (" + ls_query + ")", 4)
+			log.log(this, "u_ds_data.save_table_to_file:0059", "Error executing query (" + ls_query + ")", 4)
 			return li_sts
 		end if
 
 		// Finally, save the data to the text file
 		li_sts = saveas(ps_file, text!, false)
 		if li_sts > 0 then
-			log.log(this, "u_ds_data.save_table_to_file.0021", "Table data saved to file (" + ps_table + ", " + ps_file + ")", 1)
+			log.log(this, "u_ds_data.save_table_to_file:0066", "Table data saved to file (" + ps_table + ", " + ps_file + ")", 1)
 		else
-			log.log(this, "u_ds_data.save_table_to_file.0021", "Error saving table to file (" + ps_table + ", " + ps_file + ")", 4)
+			log.log(this, "u_ds_data.save_table_to_file:0068", "Error saving table to file (" + ps_table + ", " + ps_file + ")", 4)
 		end if
 	end if
 end if
@@ -215,7 +215,7 @@ public function integer save_to_file (string ps_file, boolean pb_include_column_
 
 li_sts = saveas(ps_file, text!, pb_include_column_names)
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_to_file.0005", "Error saving to file (" + ps_file + ")", 4)
+	log.log(this, "u_ds_data.save_to_file:0005", "Error saving to file (" + ps_file + ")", 4)
 end if
 
 return li_sts
@@ -246,13 +246,13 @@ ls_new_syntax = sqlca.SyntaxFromSQL(ls_query, "", ls_error_syntaxfromSQL)
 sqlca.commit_transaction()
 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.save_table_to_table.0024", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_table_to_table:0024", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 else
 	// Create the datastore with the wildcard
 	Create(ls_new_syntax, ls_error_create)
 	if Len(ls_error_create) > 0 THEN
-		log.log(this, "u_ds_data.save_table_to_table.0024", "Error creating datastore (" + ls_error_create + ")", 4)
+		log.log(this, "u_ds_data.save_table_to_table:0030", "Error creating datastore (" + ls_error_create + ")", 4)
 		return -1
 	end if
 	
@@ -271,20 +271,20 @@ else
 	// Now rerun syntaxfromsql with the new query
 	ls_new_syntax = sqlca.SyntaxFromSQL(ls_query, "", ls_error_syntaxfromSQL)
 	if Len(ls_error_syntaxfromSQL) > 0 THEN
-		log.log(this, "u_ds_data.save_table_to_table.0024", "Error getting new query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+		log.log(this, "u_ds_data.save_table_to_table:0049", "Error getting new query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 		return -1
 	else
 		// Now recreate then datastore and retrieve the data
 		Create(ls_new_syntax, ls_error_create)
 		if Len(ls_error_create) > 0 THEN
-			log.log(this, "u_ds_data.save_table_to_table.0024", "Error creating new datastore (" + ls_error_create + ")", 4)
+			log.log(this, "u_ds_data.save_table_to_table:0055", "Error creating new datastore (" + ls_error_create + ")", 4)
 			return -1
 		end if
 		li_sts = settransobject(mydb)
 		ls_sql = getsqlselect()
 		ll_rows = retrieve()
 		if ll_rows < 0 then
-			log.log(this, "u_ds_data.save_table_to_table.0024", "Error executing query (" + ls_query + ")", 4)
+			log.log(this, "u_ds_data.save_table_to_table:0062", "Error executing query (" + ls_query + ")", 4)
 			return li_sts
 		end if
 
@@ -303,7 +303,7 @@ else
 		
 		li_sts = update()
 		if li_sts < 0 then
-			log.log(this, "u_ds_data.save_table_to_table.0024", "Error saving table", 4)
+			log.log(this, "u_ds_data.save_table_to_table:0081", "Error saving table", 4)
 			return -1
 		end if
 	end if
@@ -332,14 +332,14 @@ ls_new_syntax = sqlca.SyntaxFromSQL(ps_query, "", ls_error_syntaxfromSQL)
 sqlca.commit_transaction()
 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_table.0019", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_table:0019", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
 // Create the datastore
 Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_table.0019", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_table:0026", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -348,7 +348,7 @@ li_sts = settransobject(mydb)
 ls_sql = getsqlselect()
 li_sts = retrieve()
 if li_sts < 0 then
-	log.log(this, "u_ds_data.save_query_to_table.0019", "Error executing query (" + ps_query + ")", 4)
+	log.log(this, "u_ds_data.save_query_to_table:0035", "Error executing query (" + ps_query + ")", 4)
 	return li_sts
 end if
 
@@ -368,7 +368,7 @@ next
 
 li_sts = update()
 if li_sts < 0 then
-	log.log(this, "u_ds_data.save_table_to_table.0024", "Error saving query to table", 4)
+	log.log(this, "u_ds_data.save_query_to_table:0055", "Error saving query to table", 4)
 end if
 
 return li_sts
@@ -389,7 +389,7 @@ string ls_column_list
 // Create the datastore
 Create(ps_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_file:0014", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -398,16 +398,16 @@ li_sts = settransobject(mydb)
 ls_sql = getsqlselect()
 li_sts = retrieve()
 if li_sts < 0 then
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error executing query (" + ls_sql + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_file:0023", "Error executing query (" + ls_sql + ")", 4)
 	return li_sts
 end if
 
 // Finally, save the data to the text file
 li_sts = saveas(ps_file, text!, false)
 if li_sts > 0 then
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Query data saved to file (" + ls_sql + ", " + ps_file + ")", 1)
+	log.log(this, "u_ds_data.save_syntax_to_file:0030", "Query data saved to file (" + ls_sql + ", " + ps_file + ")", 1)
 else
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error saving query to file (" + ls_sql + ", " + ps_file + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_file:0032", "Error saving query to file (" + ls_sql + ", " + ps_file + ")", 4)
 end if
 
 return li_sts
@@ -429,7 +429,7 @@ set_database(puo_from_db)
 // Create the datastore
 Create(ps_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_table:0015", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -438,7 +438,7 @@ li_sts = settransobject(mydb)
 ls_sql = getsqlselect()
 li_sts = retrieve()
 if li_sts < 0 then
-	log.log(this, "u_ds_data.save_query_to_file.0018", "Error executing query (" + ls_sql + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_table:0024", "Error executing query (" + ls_sql + ")", 4)
 	return li_sts
 end if
 
@@ -458,7 +458,7 @@ next
 
 li_sts = update()
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_table_to_file.0021", "Error saving query to table (" + ls_sql + ", " + ps_table + ")", 4)
+	log.log(this, "u_ds_data.save_syntax_to_table:0044", "Error saving query to table (" + ls_sql + ", " + ps_table + ")", 4)
 end if
 
 return li_sts
@@ -475,7 +475,7 @@ long ll_rows
 // Now Create then datastore
 Create(ps_query, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_table_to_table.0024", "Error creating new datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.load_from_file:0010", "Error creating new datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -517,14 +517,14 @@ ls_query += ps_table
 // First get a datastore syntax from the query
 li_sts = sqlca.get_dw_syntax(ls_query, ls_new_syntax)
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_to_table.0031", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_to_table:0031", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
 // Create the datastore with the wildcard
 luo_tabledef.Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_to_table.0031", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_to_table:0038", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 Object.DataWindow.Table.UpdateKeyInPlace = "Yes"
@@ -576,7 +576,7 @@ next
 
 li_sts = update()
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_to_table.0031", "Error saving data to table", 4)
+	log.log(this, "u_ds_data.save_to_table:0090", "Error saving data to table", 4)
 	return -1
 end if
 
@@ -715,14 +715,14 @@ sqlca.commit_transaction()
 
 // Now get the 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.delete_record.0032", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.delete_record:0032", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
 // Create the datastore with the wildcard
 luo_tabledef.Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.delete_record.0032", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.delete_record:0039", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -751,7 +751,7 @@ if not isnull(ls_where) and trim(ls_where) <> "" then
 	li_sts = sqlca.execute_string(ls_query)
 	if li_sts < 0 then return -1
 	if li_sts = 0 then
-		log.log(this, "u_ds_data.delete_record.0032", "No record found (" + ls_query + ")", 3)
+		log.log(this, "u_ds_data.delete_record:0068", "No record found (" + ls_query + ")", 3)
 	end if
 end if
 
@@ -806,7 +806,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "assessment_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0033", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.assessment_id[pl_row] = ls_newkey
@@ -828,7 +828,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "stage_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0055", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.stage_id[pl_row] = ls_newkey
@@ -836,7 +836,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.common_name[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "drug_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0063", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.drug_id[pl_row] = ls_newkey
@@ -845,7 +845,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.maker_name[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "maker_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0072", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.maker_id[pl_row] = ls_newkey
@@ -862,7 +862,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "location", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0089", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.location[pl_row] = ls_newkey
@@ -871,7 +871,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "observation_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0098", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.observation_id[pl_row] = ls_newkey
@@ -880,7 +880,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "observation_category_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0107", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.observation_category_id[pl_row] = ls_newkey
@@ -901,7 +901,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "package_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0128", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.package_id[pl_row] = ls_newkey
@@ -909,7 +909,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "procedure_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0136", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 
@@ -919,7 +919,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "specialty_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0146", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.specialty_id[pl_row] = ls_newkey
@@ -927,7 +927,7 @@ CHOOSE CASE lower(ps_table)
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "vaccine_id", ls_description)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0154", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.vaccine_id[pl_row] = ls_newkey
@@ -1039,7 +1039,7 @@ CHOOSE CASE lower(ps_table)
 		ls_cpr_id = object.billing_id[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "cpr_id", ls_cpr_id)
 		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key.0033", "Error generating new key (" + ps_table + ")", 4)
+			log.log(this, "u_ds_data.generate_new_key:0266", "Error generating new key (" + ps_table + ")", 4)
 			return -1
 		end if
 		object.cpr_id[pl_row] = ls_newkey
@@ -1183,14 +1183,14 @@ ls_query += ps_table
 // First get a datastore syntax from the query
 li_sts = sqlca.get_dw_syntax(ls_query, ls_new_syntax)
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_to_table.0031", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.save_to_table:0035", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
 // Create the datastore with the wildcard
 luo_data.Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
-	log.log(this, "u_ds_data.save_to_table.0031", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.save_to_table:0042", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -1219,7 +1219,7 @@ setitemstatus(1, 0, PRIMARY!, NewModified!)
 luo_data.set_database(mydb)
 li_sts = luo_data.update()
 if li_sts <= 0 then
-	log.log(this, "u_ds_data.save_to_table.0031", "Error saving data to table", 4)
+	log.log(this, "u_ds_data.save_to_table:0071", "Error saving data to table", 4)
 	return -1
 end if
 
@@ -1228,7 +1228,7 @@ if not isnull(ls_identity_column) then
 	ls_query = "SELECT max(" + ls_identity_column + ") FROM " + ps_table
 	li_sts = luo_data.load_query(ls_query)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_data.save_to_table.0031", "Error getting identity column value", 4)
+		log.log(this, "u_ds_data.save_to_table:0080", "Error getting identity column value", 4)
 		return -1
 	end if
 	la_value = luo_data.object.data[1, 1]
@@ -1262,7 +1262,7 @@ AND c.id = o.id
 AND c.status - 128 >= 0
 USING mydb;
 if not sqlca.check() then
-	log.log(this, "u_ds_data.load_table_from_file.0021", "Error getting count " + ps_table,  4)
+	log.log(this, "u_ds_data.load_table_from_file:0021", "Error getting count " + ps_table,  4)
 	return -1
 end if
 
@@ -1279,13 +1279,13 @@ ls_new_syntax = sqlca.SyntaxFromSQL(ls_new_sql, "", ls_error_syntaxfromSQL)
 sqlca.commit_transaction()
 
 if Len(ls_error_syntaxfromSQL) > 0 THEN
-	log.log(this, "u_ds_data.load_table_from_file.0021", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.load_table_from_file:0038", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 else
 	// Create the datastore with the wildcard
 	Create(ls_new_syntax, ls_error_create)
 	if Len(ls_error_create) > 0 THEN
-		log.log(this, "u_ds_data.load_table_from_file.0021", "Error with create the datastore (" + ls_error_create + ")", 4)
+		log.log(this, "u_ds_data.load_table_from_file:0044", "Error with create the datastore (" + ls_error_create + ")", 4)
 		return -1
 	end if
 	
@@ -1302,13 +1302,13 @@ else
 	// Now rerun syntaxfromsql with the new query
 	ls_new_syntax = sqlca.SyntaxFromSQL(ls_new_sql, "", ls_error_syntaxfromSQL)
 	if Len(ls_error_syntaxfromSQL) > 0 THEN
-		log.log(this, "u_ds_data.load_table_from_file.0021", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
+		log.log(this, "u_ds_data.load_table_from_file:0061", "Error getting query syntax (" + ls_error_syntaxfromSQL + ")", 4)
 		return -1
 	else
 		// Now recreate then datastore
 		Create(ls_new_syntax, ls_error_create)
 		if Len(ls_error_create) > 0 THEN
-			log.log(this, "u_ds_data.load_table_from_file.0021", "Error with create the datastore (" + ls_error_create + ")", 4)
+			log.log(this, "u_ds_data.load_table_from_file:0067", "Error with create the datastore (" + ls_error_create + ")", 4)
 			return -1
 		end if
 		Object.DataWindow.Table.UpdateTable = ps_table
@@ -1318,13 +1318,13 @@ else
 			ls_sts = modify("#" + string(i) + ".update=Yes")
 		next
 		importfile(ps_file)
-		log.log(this, "u_ds_data.load_table_from_file.0021", string(rowcount()) + ps_file, 4)
+		log.log(this, "u_ds_data.load_table_from_file:0077", string(rowcount()) + ps_file, 4)
 		settransobject(mydb)
 		if lb_identity then
 			ls_sql = "SET IDENTITY_INSERT " + ps_table + " ON"
 			li_sts = sqlca.execute_string(ls_sql)
 			if li_sts <= 0 then
-				log.log(this, "u_ds_data.load_table_from_file.0021", "Error with set_identity_insert " + ps_file, 4)
+				log.log(this, "u_ds_data.load_table_from_file:0083", "Error with set_identity_insert " + ps_file, 4)
 				return li_sts
 			end if
 		end if
@@ -1333,14 +1333,14 @@ else
 			ls_sql = "DELETE " + ps_table
 			li_sts = sqlca.execute_string(ls_sql)
 			if li_sts <= 0 then
-				log.log(this, "u_ds_data.load_table_from_file.0021","Delete First error " + ps_file, 4)
+				log.log(this, "u_ds_data.load_table_from_file:0092","Delete First error " + ps_file, 4)
 				return li_sts
 			end if
 		end if
 
 		li_sts = update()
 		if li_sts <= 0 then
-			log.log(this, "u_ds_data.load_table_from_file.0021", "Update Error " + ps_file, 4)
+			log.log(this, "u_ds_data.load_table_from_file:0099", "Update Error " + ps_file, 4)
 		end if
 
 	end if
@@ -1731,7 +1731,7 @@ if isnull(ps_query) or trim(ps_query) = "" then return 0
 li_sts = sqlca.get_dw_syntax(ps_query, ls_new_syntax)
 if li_sts <= 0 then
 	if isnull(ls_error_syntaxfromSQL) then ls_error_syntaxfromSQL = "<Null>"
-	log.log(this, "u_ds_data.create_from_query.0015", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.create_from_query:0015", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
@@ -1739,7 +1739,7 @@ end if
 Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
 	if isnull(ls_error_create) then ls_error_create = "<Null>"
-	log.log(this, "u_ds_data.create_from_query.0015", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.create_from_query:0023", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -1767,7 +1767,7 @@ if isnull(ps_query) or trim(ps_query) = "" then return 0
 li_sts = sqlca.get_dw_syntax(ps_query, ls_new_syntax)
 if li_sts <= 0 then
 	if isnull(ls_error_syntaxfromSQL) then ls_error_syntaxfromSQL = "<Null>"
-	log.log(this, "u_ds_data.create_from_query.0015", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.load_query:0021", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
 	return -1
 end if
 
@@ -1775,7 +1775,7 @@ end if
 Create(ls_new_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
 	if isnull(ls_error_create) then ls_error_create = "<Null>"
-	log.log(this, "u_ds_data.create_from_query.0015", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_data.load_query:0029", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 
@@ -1785,7 +1785,7 @@ ls_sql = getsqlselect()
 retain_rows = pb_retain_rows
 ll_rows = retrieve()
 if ll_rows < 0 then
-	log.log(this, "u_ds_data.create_from_query.0015", "Error executing query (" + ps_query + ", " + sqlca.sqlerrtext + ")", 4)
+	log.log(this, "u_ds_data.load_query:0039", "Error executing query (" + ps_query + ", " + sqlca.sqlerrtext + ")", 4)
 	return ll_rows
 end if
 
@@ -1837,10 +1837,10 @@ TRY
 	ls_xml = lo_local_document.SaveDocumentIntoString()
 	po_xml_document = pbdombuilder_new.buildfromstring(ls_xml)
 CATCH (PBDOM_EXCEPTION pbdom_except)
-	log.log(this, "u_ds_data.load_query.0040", "XML Error: " + string(pbdom_except.GetExceptionCode()) + "~r~nText : " + pbdom_except.Text, 4)
+	log.log(this, "u_ds_data.load_query:0040", "XML Error: " + string(pbdom_except.GetExceptionCode()) + "~r~nText : " + pbdom_except.Text, 4)
 	return -1
 CATCH (throwable lo_error)
-	log.log(this, "u_ds_data.load_query.0040", "XML Error: " + lo_error.Text, 4)
+	log.log(this, "u_ds_data.load_query:0043", "XML Error: " + lo_error.Text, 4)
 	return -1
 end try
 
@@ -1868,7 +1868,7 @@ ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 ls_message += "~r~nDataobject = " + dataobject
 ls_message += "~r~nSQL Statement = " + sqlsyntax
 
-log.log(this, "u_ds_data.dberror.0009", ls_message, 3)
+log.log(this, "u_ds_data:dber", ls_message, 3)
 
 return 1
 

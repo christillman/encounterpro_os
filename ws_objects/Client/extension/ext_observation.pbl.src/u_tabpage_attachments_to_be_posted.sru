@@ -161,7 +161,7 @@ setnull(ls_null)
 lo_tiffdll = CREATE oleobject
 li_sts = lo_tiffdll.connecttonewobject("TiffDLL50vic.ClsTiffDLL50")
 if li_sts < 0 then
-	log.log(this, "u_tabpage_attachments_to_be_posted.append_selected.0021", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
+	log.log(this, "u_tabpage_attachments_to_be_posted.append_selected:0021", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
 	return ls_null
 end if
 
@@ -178,14 +178,14 @@ DO WHILE ll_row > 0
 		
 		// Make sure it exists
 		if not fileexists(ls_temp_file) then
-			log.log(this, "u_tabpage_attachments_to_be_posted.append_selected.0021", "Temp file doesn't exist (" + ls_temp_file + ")", 4)
+			log.log(this, "u_tabpage_attachments_to_be_posted.append_selected:0038", "Temp file doesn't exist (" + ls_temp_file + ")", 4)
 		else
 			// If this is the first file to be appended, just use it as the appended file
 			if lb_first_file then
 				ls_append_file = f_temp_file("TIF")
 				li_sts = filecopy(ls_temp_file, ls_append_file, true)
 				if li_sts <= 0 then
-					log.log(this, "u_tabpage_attachments_to_be_posted.append_selected.0021", "Error copying tif file (" + ls_temp_file + ", " + ls_append_file + ")", 4)
+					log.log(this, "u_tabpage_attachments_to_be_posted.append_selected:0045", "Error copying tif file (" + ls_temp_file + ", " + ls_append_file + ")", 4)
 					return ls_null
 				end if
 				lb_first_file = false
@@ -202,11 +202,11 @@ DO WHILE ll_row > 0
 					
 					li_sts = lo_tiffdll.runtiffdll(ls_param)
 			/*		if li_sts = 0 then
-						log.log(this, "u_tabpage_attachments_to_be_posted.append_selected.0021", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
+						log.log(this, "u_tabpage_attachments_to_be_posted.append_selected:0062", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
 						return ls_null
 					end if */
 					if li_sts < 0 then
-						log.log(this, "u_tabpage_attachments_to_be_posted.append_selected.0021", "RunTiffDLL failed (" + ls_param + ")", 4)
+						log.log(this, "u_tabpage_attachments_to_be_posted.append_selected:0066", "RunTiffDLL failed (" + ls_param + ")", 4)
 						return ls_null
 					end if
 				next
@@ -548,7 +548,7 @@ if isnull(ls_file) then
 	li_sts = attachments.attachment(luo_displayed_attachment, ll_attachment_id)
 	if li_sts <= 0 then
 		setnull(ls_file)
-		log.log(this, "u_tabpage_attachments_to_be_posted.dw_holding_list.selected.0037", "Error getting attachment object", 3)
+		log.log(this, "u_tabpage_attachments_to_be_posted.dw_holding_list.selected:0037", "Error getting attachment object", 3)
 	else
 		if isnull(ls_file) then
 			ls_file = luo_displayed_attachment.get_attachment()

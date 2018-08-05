@@ -129,18 +129,18 @@ long ll_owner_id
 st_external_source.text = external_source
 
 if isnull(external_source) or trim(external_source) = "" then
-	log.log(this, "w_config_document.refresh.0009", "Invalid external_source", 4)
+	log.log(this, "w_config_document.refresh:0009", "Invalid external_source", 4)
 	return -1
 end if
 
 external_source_data.set_dataobject("dw_external_source_data")
 ll_sts = external_source_data.retrieve(external_source)
 if ll_sts < 0 then
-	log.log(this, "w_config_document.refresh.0009", "Error retrieving external_source data (" + external_source + ")", 4)
+	log.log(this, "w_config_document.refresh:0016", "Error retrieving external_source data (" + external_source + ")", 4)
 	return -1
 end if
 if ll_sts = 0 then
-	log.log(this, "w_config_document.refresh.0009", "external_source not found (" + external_source + ")", 4)
+	log.log(this, "w_config_document.refresh:0020", "external_source not found (" + external_source + ")", 4)
 	return -1
 end if
 
@@ -358,7 +358,7 @@ else
 	cb_pick_external_source.visible = false
 	li_sts = refresh()
 	if li_sts <= 0 then
-		log.log(this, "w_config_document.post_open.0028", "Error opening external_source (" + external_source + ")", 4)
+		log.log(this, "w_config_document:post", "Error opening external_source (" + external_source + ")", 4)
 		popup_return.item_count = 1
 		popup_return.items[1] = "OK"
 		

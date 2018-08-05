@@ -38,12 +38,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_qrs.qrs_diagnosis.0011", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_diagnosis:0011", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "u_component_message_handler_qrs.qrs_diagnosis.0016", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_diagnosis:0016", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -158,12 +158,12 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_qrs.qrs_procedure.0016", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_procedure:0016", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "u_component_message_handler_qrs.qrs_procedure.0021", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_procedure:0021", "The parse_csv() function failed Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -322,7 +322,7 @@ IF li_pos = 1 THEN
 	lb_loop = TRUE					// OK to loop
 	li_ctr = 1
 ELSE
-	mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.parse_csv:0068", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1
 END IF	
 
@@ -346,7 +346,7 @@ DO WHILE lb_loop
 		li_end = li_comma 								//	Set the end same as start of the quote,comma,quote test location
 		li_length = li_end - li_start					//	Set the length of the string to get the desired characters
 		IF li_length > li_value_max_len THEN 
-			mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+			mylog.log(this, "u_component_message_handler_qrs.parse_csv:0092", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 			RETURN -1
 		END IF
 		if li_length = 0 then
@@ -365,7 +365,7 @@ DO WHILE lb_loop
 						li_end = li_comma
 						li_length = li_end - li_start
 					else
-						mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
+						mylog.log(this, "u_component_message_handler_qrs.parse_csv:0111", "A field of form 'x,x' does not have an ending quote PARSING FAILED for (" + is_stg + ")",4)
 						RETURN -1
 					end if
 				else
@@ -383,7 +383,7 @@ DO WHILE lb_loop
 		//	This ELSE section runs only once, on the last array element
 		IF li_ctr = 1 THEN
 			lb_loop = FALSE								//	Set lb_loop to false, we're not going to start
-			mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+			mylog.log(this, "u_component_message_handler_qrs.parse_csv:0129", "Never found an occurrance of quote-comma-quote in the input value, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 			RETURN -1
 		ELSE
 			// This ELSE section runs only once, on the last array element if above test is passed
@@ -392,7 +392,7 @@ DO WHILE lb_loop
 			li_start ++
 			li_length = li_end - li_start 				//	This gives the selected character string length
 			IF li_length > li_value_max_len THEN 
-				mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+				mylog.log(this, "u_component_message_handler_qrs.parse_csv:0138", "A field length exceeds maximum number of characters,string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 				RETURN -1
 			END IF	
 			ls_value = mid(is_stg,li_start,li_length)		// Assign the currently selected value to ls_value
@@ -404,7 +404,7 @@ DO WHILE lb_loop
 	li_pos = li_comma  + 1								//	Increments ll_pos for the next loop, if one is coming
 	ls_value = ''												//	Set ls_value to an empty string
 	IF li_ctr > li_max_fields THEN
-		mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
+		mylog.log(this, "u_component_message_handler_qrs.parse_csv:0150", "Number of fields in record " + string(li_ctr) + " exceeds the maximum of " + string(li_max_fields) + " PARSING FAILED for (" + is_stg + ", " + + ")",4)
 		RETURN -1
 	END IF
 LOOP	
@@ -428,7 +428,7 @@ DO WHILE li_test_ctr <= li_array_upper and lb_empty_flag = TRUE
 LOOP
  
 IF lb_empty_flag THEN
-	mylog.log(this, "u_component_message_handler_qrs.parse_csv.0068", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.parse_csv:0174", "None of the fields in record contains an entry, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	RETURN -1	
 END IF
 
@@ -472,7 +472,7 @@ long ll_message_len
 // Read the file into a local blob
 li_sts = mylog.file_read(message_file, lblb_message)
 if li_sts <= 0 then
-	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message.0037", "Unable to find the message_file at the expected location, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message:0037", "Unable to find the message_file at the expected location, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -500,12 +500,12 @@ ls_formfeed = "~f"
 
 ls_stg = f_blob_to_string(lblb_message)
 IF (ls_stg = "" or isnull(ls_stg)) THEN 
-	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message.0037", "the message_file has no message, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message:0065", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 ll_str_len = len(ls_stg)
 if ll_str_len = 0 THEN 
-	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message.0037", "the message_file has no message, message id (" + message_file + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.xx_handle_message:0070", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -601,7 +601,7 @@ Do while ll_str_len > 0
 LOOP	
 
 if li_strings_count = 0 then
-		mylog.log(this, "u_component_message_handler_qrs.xx_handle_message.0037", "the message_file has no message, message id (" + message_file + ")",4)
+		mylog.log(this, "u_component_message_handler_qrs.xx_handle_message:0166", "the message_file has no message, message id (" + message_file + ")",4)
 	RETURN -1
 END IF
 
@@ -745,7 +745,7 @@ li_pos = pos(is_stg,"~"",1)	// Validate the 1st character is a quote
 IF li_pos = 1 THEN 
 	li_start = li_pos + 1		// If so, it;s OK to start
 ELSE
-	mylog.log(this, "u_component_message_handler_qrs.parse_message.0050", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
+	mylog.log(this, "u_component_message_handler_qrs.parse_message:0050", "The input string does not start with a quote, string PARSING FAILED for (" + is_stg + ", " + + ")",4)
 	is_stg = ''
 	RETURN -1
 END IF
@@ -756,7 +756,7 @@ IF li_comma > 0 THEN				// We're still in a valid string
 	li_length = li_comma - li_start	//	Set the length of the string to get the desired characters
 	
 	IF li_length > li_value_max_len THEN 
-		mylog.log(this, "u_component_message_handler_qrs.parse_message.0050", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
+		mylog.log(this, "u_component_message_handler_qrs.parse_message:0061", "A field length exceeds maximum number of characters, string PARSING FAILED for (" + is_stg + ", " + string(li_value_max_len) + ")",4)
 		is_stg = ''
 		RETURN -1
 	END IF	
@@ -830,12 +830,12 @@ integer li_priority
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "The parse_csv() function failed Aborting Encounter Creation)", 4)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0041", "The parse_csv() function failed Aborting Encounter Creation)", 4)
 	RETURN -1
 END IF	
 
 ls_billing_id = is_array[1] 
-mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "The patient billing_id=" + ls_billing_id, 2)
+mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0046", "The patient billing_id=" + ls_billing_id, 2)
 SELECT cpr_id
 INTO :ls_cpr_id
 FROM p_Patient
@@ -871,7 +871,7 @@ ls_sex			= is_array[6]
 
 if (is_array[7] = "0" or isnull(is_array[7]) or is_array[7] = "") then
 	ls_error = is_array[7]
-	mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0082", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 3)
 	setnull(ldt_date_of_birth)
 	setnull(ld_birthdate)
 else	
@@ -886,7 +886,7 @@ else
 			ldt_date_of_birth = datetime(ld_birthdate)
 		else
 			ls_error = is_array[7]
-			mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
+			mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0097", "birthdate error=" + ls_error + " (" + is_stg + ", " + + ")", 4)
 			setnull(ld_birthdate)
 			setnull(ldt_date_of_birth)
 		end if	
@@ -906,7 +906,7 @@ setnull(ls_secondary_provider_id)
 setnull(li_priority)
 setnull(ls_ssn)
 if isnull(ls_cpr_id) then
-	mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "create new patient, lname=" + ls_last_name, 1)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0117", "create new patient, lname=" + ls_last_name, 1)
 	li_sts = f_create_new_patient( &
 									ls_cpr_id,   &
 									ls_race,   &
@@ -946,7 +946,7 @@ else
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then return -5
 end if
-mylog.log(this, "u_component_message_handler_qrs.qrs_patient.0041", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
+mylog.log(this, "u_component_message_handler_qrs.qrs_patient:0157", "The patient funcion complete, cpr_id=" + ls_cpr_id, 1)
 
 return 1
 end function
@@ -972,13 +972,13 @@ setnull(ls_allocation)
 integer li_sts
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance.0022", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance:0022", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
 ll_array_count = UpperBound(is_array)
 if (isnull(ll_array_count) or ll_array_count = -1) then 
-		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance.0022", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance:0028", "The parse_csv() function failed Message ID ("+ string(message_id) + ")", 4)
 		RETURN -1
 else 
 	li_sts = ll_array_count
@@ -1008,7 +1008,7 @@ end if
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then 
-		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance.0022", "Patient does not exist for  ("+ ls_billing_id + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_insurance:0058", "Patient does not exist for  ("+ ls_billing_id + ")", 4)
 		RETURN -1
 	end if
 	
@@ -1136,7 +1136,7 @@ ld_scheduledatetime = ldt_encounter_date_time
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0057", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0057", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
@@ -1159,13 +1159,13 @@ end if
 //	Populate variables with the array contents
 ls_billing_id = is_array[1] 
 If isnull(ls_billing_id) or ls_billing_id = "" then
-	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0057", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0080", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 If isnumber(ls_billing_id) then
 	ll_encounter_billing_id = long(ls_billing_id)
 else
-	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0057", "Billingid not numeric Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0086", "Billingid not numeric Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -1277,7 +1277,7 @@ end if
 				//	LOG an ERROR, no cpr_ID on file, 
 				//	CANNOT process the encounter request
 				//	Demographic data not received yet
-				mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0198", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0198", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		 		RETURN 1
 			END IF
 
@@ -1292,7 +1292,7 @@ END IF
 string ls_error
 If Isnull(ls_primary_provider_id) then
 	ls_error = is_array[4]
-	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0198", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0213", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 End if			
 
@@ -1332,7 +1332,7 @@ ls_status = "SCHEDULED"
 	
 			IF NOT cprdb.check() THEN 
 				// The new entry failed
-				mylog.log(this, "u_component_message_handler_qrs.qrs_arrived.0253", "Unable write a record to x_qrs_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_qrs.qrs_arrived:0253", "Unable write a record to x_qrs_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 				RETURN -1									
 			END IF
 	

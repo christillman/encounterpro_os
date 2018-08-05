@@ -236,7 +236,7 @@ string ls_parent_config_object_id
 popup = message.powerobjectparm
 
 if popup.data_row_count < 3 then
-	log.log(this, "w_display_script_config.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_display_script_config:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -259,7 +259,7 @@ if isnull(ls_parent_config_object_id) then
 else
 	li_sts = f_get_config_object_info(ls_parent_config_object_id, parent_config_object)
 	if li_sts <= 0 then
-		log.log(this, "w_display_script_config.open.0009", "Error getting config object info (" + ls_parent_config_object_id + ")" , 4)
+		log.log(this, "w_display_script_config:open", "Error getting config object info (" + ls_parent_config_object_id + ")" , 4)
 		close(this)
 		return
 	end if

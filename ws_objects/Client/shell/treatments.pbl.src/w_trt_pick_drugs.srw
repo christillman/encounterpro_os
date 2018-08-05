@@ -243,14 +243,14 @@ Elseif popup.data_row_count = 2 Then
 	treatment_type = popup.items[1]
 	past_treatment = f_string_to_boolean(popup.items[2])
 Else
-	log.log(this,"w_trt_pick_drugs.open.0021","Invalid parameters",4)
+	log.log(this,"w_trt_pick_drugs:open","Invalid parameters",4)
 	cb_cancel.event clicked()
 	Return
 End If
 
 if trim(treatment_type) = "" then setnull(treatment_type)
 If isnull(treatment_type) Then
-	log.log(this,"w_trt_pick_drugs.open.0021","treatment type can not be null",4)
+	log.log(this,"w_trt_pick_drugs:open","treatment type can not be null",4)
 	cb_cancel.event clicked()
 	Return
 End If

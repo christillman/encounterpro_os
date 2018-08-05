@@ -105,7 +105,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 				ll_pos = pos(lower(ls_procdef), lower(ls_objects_magic_table), ll_pos)
 				if ll_pos > 0 then
 					if isnull(ls_document_patient_workplan_item_id) then
-						log.log(po_null, "f_get_collection_example.0041", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
+						log.log(po_null, "f_get_collection_example:0041", "Script refers to x_document_objects, but no document_patient_workplan_item_id is found", 4)
 						return lstr_collection
 					else
 						// Replace the string with one that will match the substitution later
@@ -126,7 +126,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			ls_sql = "CREATE PROCEDURE " + ls_temp_proc_name + " AS " + ls_procdef
 			EXECUTE IMMEDIATE :ls_sql;
 			if not tf_check() then
-				log.log(po_null, "f_get_collection_example.0041", "Error creating temp procedure:~r~n" + ls_procdef, 4)
+				log.log(po_null, "f_get_collection_example:0062", "Error creating temp procedure:~r~n" + ls_procdef, 4)
 				setnull(lstr_collection.collectiondata)
 				return lstr_collection
 			end if
@@ -137,7 +137,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			lstr_collection.collectiondata = CREATE u_ds_data
 			li_sts = lstr_collection.collectiondata.create_from_query(ls_sql)
 			if li_sts < 0 then
-				log.log(po_null, "f_get_collection_example.0041", "Error executing SQL:~r~n" + ls_procdef, 4)
+				log.log(po_null, "f_get_collection_example:0073", "Error executing SQL:~r~n" + ls_procdef, 4)
 				DESTROY lstr_collection.collectiondata
 				setnull(lstr_collection.collectiondata)
 				return lstr_collection
@@ -148,7 +148,7 @@ if pstr_element_set.maptocollection and len(lstr_collection.collectiondefinition
 			lstr_collection.collectiondata.Create(lstr_collection.collectiondefinition, ls_error_create)
 			if Len(ls_error_create) > 0 THEN
 				if isnull(ls_error_create) then ls_error_create = "<Null>"
-				log.log(po_null, "f_get_collection_example.0041", "Error creating datastore (" + ls_error_create + ")", 4)
+				log.log(po_null, "f_get_collection_example:0084", "Error creating datastore (" + ls_error_create + ")", 4)
 				DESTROY lstr_collection.collectiondata
 				setnull(lstr_collection.collectiondata)
 				return lstr_collection

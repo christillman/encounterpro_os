@@ -232,7 +232,7 @@ st_title.text = service.description
 
 li_sts = get_message()
 if li_sts <= 0 then
-	log.log(this, "w_epro_message.open.0038", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
+	log.log(this, "w_epro_message:open", "Error retrieving message (" + string(service.patient_workplan_item_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

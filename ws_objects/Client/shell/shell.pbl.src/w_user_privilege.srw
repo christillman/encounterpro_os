@@ -114,7 +114,7 @@ integer li_sts
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 2 then
-	log.log(this, "w_user_privilege.open.0006", "Invalid parameters", 4)
+	log.log(this, "w_user_privilege:open", "Invalid parameters", 4)
 	close(this)
 end if
 
@@ -123,7 +123,7 @@ st_name.text = popup.items[2]
 
 li_sts = load_privs()
 if li_sts <= 0 then
-	log.log(this, "w_user_privilege.open.0006", "Unable to load privileges", 4)
+	log.log(this, "w_user_privilege:open", "Unable to load privileges", 4)
 	close(this)
 end if
 

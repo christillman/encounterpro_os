@@ -172,7 +172,7 @@ if ll_count > 0 then
 		object.t_title.text = ls_description
 		li_sts = display_workplan_level(1)
 	else
-		log.log(this, "u_dw_patient_object_workplan.display_workplan.0025", "First record isn't root", 4)
+		log.log(this, "u_dw_patient_object_workplan.display_workplan:0025", "First record isn't root", 4)
 		li_sts = -1
 	end if
 elseif ll_count < 0 then

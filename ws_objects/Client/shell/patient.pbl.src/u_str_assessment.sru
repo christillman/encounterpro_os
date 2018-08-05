@@ -104,7 +104,7 @@ public function integer check_updated_old (u_sqlca p_sqlca);//// FUNCTION		check
 //if not exists then return 0
 //
 //if isnull(last_update) then
-//	log.log(this, "check_updated()", "Assessment Last update is null (" + parent_patient.cpr_id + "," + string(problem_id) + ")", 3)
+//	log.log(this, "u_str_assessment.check_updated_old:0018", "Assessment Last update is null (" + parent_patient.cpr_id + "," + string(problem_id) + ")", 3)
 //	return 1
 //end if
 //
@@ -125,7 +125,7 @@ public function integer check_updated_old (u_sqlca p_sqlca);//// FUNCTION		check
 //		li_sts = 0
 //	end if
 //elseif sqlca.sqlcode = 100 then
-//	log.log(this, "check_updated()", "Problem # " + parent_patient.cpr_id + "," + string(problem_id) + " is not found", 4)
+//	log.log(this, "u_str_assessment.check_updated_old:0039", "Problem # " + parent_patient.cpr_id + "," + string(problem_id) + " is not found", 4)
 //	li_sts = -1
 //end if
 //

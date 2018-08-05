@@ -107,7 +107,7 @@ end if
 
 administer_unit = unit_list.find_unit(ls_unit_id)
 if isnull(administer_unit) then
-	log.log(this, "w_drug_administration.default_admin_unit.0025", "Admin unit not found (" + ls_unit_id + ")", 3)
+	log.log(this, "w_drug_administration.default_admin_unit:0025", "Admin unit not found (" + ls_unit_id + ")", 3)
 	st_unit.text = ""
 else
 	st_unit.text = administer_unit.description
@@ -193,7 +193,7 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_drug_administration.open.0010", "Invalid Parameters", 4)
+	log.log(this, "w_drug_administration:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -205,11 +205,11 @@ st_title.text = "Administration for " + popup.title
 li_sts = default_admin_unit()
 if li_sts = 0 then
 	openwithparm(w_pop_message, "This drug has no valid administration units")
-	log.log(this, "w_drug_administration.open.0010", "No valid admin units for this drug (" + drug_id + ")", 4)
+	log.log(this, "w_drug_administration:open", "No valid admin units for this drug (" + drug_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts < 0 then
-	log.log(this, "w_drug_administration.open.0010", "Error retrieving default admin unit", 4)
+	log.log(this, "w_drug_administration:open", "Error retrieving default admin unit", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

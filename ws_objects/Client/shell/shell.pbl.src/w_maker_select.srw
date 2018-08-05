@@ -57,7 +57,7 @@ dw_makers.retrieve()
 makers.set_database(sqlca)
 li_sts = makers.retrieve(vaccine_id)
 if li_sts < 0 then
-	log.log(this, "w_maker_select.load_makers.0014", "Error retrieving makers", 4)
+	log.log(this, "w_maker_select.load_makers:0014", "Error retrieving makers", 4)
 	return -1
 end if
 
@@ -134,7 +134,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count < 2 then
-	log.log(this, "w_maker_select.load_makers.0014", "Invalid parameters", 4)
+	log.log(this, "w_maker_select:open", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -153,7 +153,7 @@ end if
 
 li_sts = load_makers()
 if li_sts < 0 then
-	log.log(this, "w_maker_select.load_makers.0014", "Error loading makers", 4)
+	log.log(this, "w_maker_select:open", "Error loading makers", 4)
 	close(this)
 	return
 end if

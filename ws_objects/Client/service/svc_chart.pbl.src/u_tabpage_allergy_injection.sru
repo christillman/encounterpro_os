@@ -131,13 +131,13 @@ real lr_y_factor
 ll_treatment_id = long(ps_key)
 
 if isnull(ll_treatment_id) then
-	log.log(this, "u_tabpage_allergy_injection.initialize.0009", "Null treatment_id", 4)
+	log.log(this, "u_tabpage_allergy_injection.initialize:0009", "Null treatment_id", 4)
 	return -1
 end if
 
 li_sts = current_patient.treatments.treatment(treatment, ll_treatment_id)
 if li_sts <= 0 then
-	log.log(this, "u_tabpage_allergy_injection.initialize.0009", "Error gettting treatment (" + string(ll_treatment_id) + ")", 4)
+	log.log(this, "u_tabpage_allergy_injection.initialize:0015", "Error gettting treatment (" + string(ll_treatment_id) + ")", 4)
 	return -1
 end if
 
@@ -224,7 +224,7 @@ if first_time then
 	if isnull(dose_unit) then
 		dose_unit = unit_list.find_unit("ML")
 		if isnull(dose_unit) then
-			log.log(this, "u_tabpage_allergy_injection.refresh.0072", "Error - Unable to find the unit object", 4)
+			log.log(this, "u_tabpage_allergy_injection.refresh:0072", "Error - Unable to find the unit object", 4)
 			return
 		end if
 	end if
@@ -305,7 +305,7 @@ if isnull(ls_last_location) then
 	AND status = 'OK';
 	if not tf_check() then return
 	if isnull(ls_last_location) then
-		log.log(this, "u_tabpage_allergy_injection.refresh.0072", "Error - Unable to find a valid location (" + location_domain + ")", 4)
+		log.log(this, "u_tabpage_allergy_injection.refresh:0153", "Error - Unable to find a valid location (" + location_domain + ")", 4)
 		return
 	end if
 end if
@@ -327,7 +327,7 @@ if isnull(location) then
 	AND status = 'OK';
 	if not tf_check() then return
 	if isnull(location) then
-		log.log(this, "u_tabpage_allergy_injection.refresh.0072", "Error - Unable to find a valid location (" + location_domain + ")", 4)
+		log.log(this, "u_tabpage_allergy_injection.refresh:0175", "Error - Unable to find a valid location (" + location_domain + ")", 4)
 		return
 	end if
 end if

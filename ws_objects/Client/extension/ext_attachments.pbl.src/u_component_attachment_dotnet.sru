@@ -40,7 +40,7 @@ protected function boolean xx_is_displayable ();boolean lb_is_displayable
 TRY
 	lb_is_displayable = com_wrapper.is_displayable(extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_is_displayable.0006", "Error calling is_displayable (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_is_displayable:0006", "Error calling is_displayable (" + lt_error.text + ")", 4)
 	return false
 END TRY
 
@@ -53,7 +53,7 @@ protected function boolean xx_is_editable ();boolean lb_is_editable
 TRY
 	lb_is_editable = com_wrapper.is_editable(extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_is_editable.0006", "Error calling is_editable (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_is_editable:0006", "Error calling is_editable (" + lt_error.text + ")", 4)
 	return false
 END TRY
 
@@ -65,7 +65,7 @@ protected function integer xx_shutdown ();
 TRY
 	com_wrapper.disconnectobject( )
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_shutdown.0005", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_shutdown:0005", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -87,7 +87,7 @@ if li_sts <= 0 then return -1
 TRY
 	li_sts = com_wrapper.display(lbl_attachment, extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_display.0010", "Error editing attachment (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_display:0010", "Error editing attachment (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -108,7 +108,7 @@ if li_sts <= 0 then return -1
 TRY
 	lbl_modified_attachment = com_wrapper.edit(lbl_attachment, extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_display.0010", "Error editing attachment (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_edit:0011", "Error editing attachment (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -130,7 +130,7 @@ protected function boolean xx_is_printable ();boolean lb_is_printable
 TRY
 	lb_is_printable = com_wrapper.is_printable(extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_is_printable.0006", "Error calling is_printable (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_is_printable:0006", "Error calling is_printable (" + lt_error.text + ")", 4)
 	return false
 END TRY
 
@@ -148,7 +148,7 @@ if li_sts <= 0 then return -1
 TRY
 	li_sts = com_wrapper.print(lbl_attachment, extension)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_display.0010", "Error editing attachment (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_print:0011", "Error editing attachment (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -185,7 +185,7 @@ end if
 TRY
 	lbl_bitmap = com_wrapper.render(lbl_attachment, extension, pi_width, pi_height, ls_render_file_type)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_dotnet.xx_display.0010", "Error editing attachment (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_dotnet.xx_render:0027", "Error editing attachment (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

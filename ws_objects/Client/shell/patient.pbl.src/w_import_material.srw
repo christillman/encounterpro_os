@@ -183,7 +183,7 @@ ls_filepath = dw_materials_list.object.filepath[ll_row]
 
 li_sts = f_open_file(ls_filepath, false)
 if li_sts <= 0 then
-	log.log(this, "w_import_material.cb_display_file.clicked.0012", "Error opening material file.", 4)
+	log.log(this, "w_import_material.cb_display_file.clicked:0012", "Error opening material file.", 4)
 	return -1
 end if
 	
@@ -289,7 +289,7 @@ for i = 1 to ll_rowcount
 
 	li_sts = log.file_read(ls_file, lbl_object_data)
 	If li_sts < 0 Then
-		log.log(this,"w_import_material.cb_finished.clicked.0038","Error: "+String(li_sts) + " Unable to load "+ls_title,4)
+		log.log(this,"w_import_material.cb_finished.clicked:0038","Error: "+String(li_sts) + " Unable to load "+ls_title,4)
 		Continue
 	End if
 
@@ -302,7 +302,7 @@ for i = 1 to ll_rowcount
 	
 	if not tf_check() then return
 	if isnull(ll_material_id) or ll_material_id <= 0 then
-		log.log(this,"w_import_material.cb_finished.clicked.0038","Error creating new material",4)
+		log.log(this,"w_import_material.cb_finished.clicked:0051","Error creating new material",4)
 		return
 	end if
 		

@@ -169,7 +169,7 @@ public function integer dump_patient ();//string ls_path
 //if not directoryexists(ls_path) then
 //	li_sts = createdirectory(ls_path)
 //	if li_sts <= 0 then
-//		log.log(this, "dump_patient()", "Error creating directory (" + ls_path + ")", 4)
+//		log.log(this, "w_svc_multi_chart_export.dump_patient:0042", "Error creating directory (" + ls_path + ")", 4)
 //		return -1
 //	end if
 //end if
@@ -237,7 +237,7 @@ public function integer dump_patient ();//string ls_path
 //					if not directoryexists(ls_savetofile) then
 //						li_sts = createdirectory(ls_savetofile)
 //						if li_sts <= 0 then
-//							log.log(this, "dump_patient()", "Error creating directory (" + ls_savetofile + ")", 4)
+//							log.log(this, "w_svc_multi_chart_export.dump_patient:0110", "Error creating directory (" + ls_savetofile + ")", 4)
 //							return -1
 //						end if
 //					end if
@@ -254,7 +254,7 @@ public function integer dump_patient ();//string ls_path
 //					if not directoryexists(ls_savetofile) then
 //						li_sts = createdirectory(ls_savetofile)
 //						if li_sts <= 0 then
-//							log.log(this, "dump_patient()", "Error creating directory (" + ls_savetofile + ")", 4)
+//							log.log(this, "w_svc_multi_chart_export.dump_patient:0127", "Error creating directory (" + ls_savetofile + ")", 4)
 //							return -1
 //						end if
 //					end if

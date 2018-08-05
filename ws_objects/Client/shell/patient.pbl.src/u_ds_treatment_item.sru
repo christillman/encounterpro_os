@@ -121,7 +121,7 @@ long ll_treatment_id
 
 
 IF Isnull(parent_patient.open_encounter) THEN
-	log.log(This, "u_ds_treatment_item.refresh_service.0007", "No open encounter", 4)
+	log.log(This, "u_ds_treatment_item.refresh_service:0007", "No open encounter", 4)
 	RETURN -1
 END IF
 
@@ -133,7 +133,7 @@ AND encounter_id = :parent_patient.open_encounter_id
 AND encounter_log_id = :al_encounter_log_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_ds_treatment_item.refresh_service.0019", "encounter log record not found (" + string(al_encounter_log_id) + ")", 4)
+	log.log(this, "u_ds_treatment_item.refresh_service:0019", "encounter log record not found (" + string(al_encounter_log_id) + ")", 4)
 	return -1
 end if
 
@@ -283,14 +283,14 @@ public function integer refresh_status (long al_treatment_id, ref string as_trea
 Long			ll_row
 
 IF Isnull(al_treatment_id) or al_treatment_id <= 0 THEN
-	log.log(This, "u_ds_treatment_item.refresh_status.0005", "Invalid treatment_id", 4)
+	log.log(This, "u_ds_treatment_item.refresh_status:0005", "Invalid treatment_id", 4)
 	RETURN -1
 END IF
 
 ls_find = "treatment_id=" + string(al_treatment_id)
 ll_row = Find(ls_find, 1, rowcount())
 IF ll_row <= 0 THEN
-	log.log(This, "u_ds_treatment_item.refresh_status.0005", "treatment not found", 4)
+	log.log(This, "u_ds_treatment_item.refresh_status:0012", "treatment not found", 4)
 	RETURN -1
 END IF
 
@@ -310,7 +310,7 @@ al_close_encounter_id = object.close_encounter_id[ll_row]
 //AND treatment_id = :al_treatment_id;
 //IF not tf_check() THEN RETURN -1
 //IF sqlca.sqlcode = 100 THEN
-//	log.log(This, "u_ds_treatment_item.refresh_status.0005", "Unable to refresh treatment_status", 3)
+//	log.log(This, "u_ds_treatment_item.refresh_status:0032", "Unable to refresh treatment_status", 3)
 //ELSE
 //	object.treatment_status[ll_row] = as_treatment_status
 //	object.end_date[ll_row] = adt_end_date
@@ -880,7 +880,7 @@ long ll_open_encounter_id
 datetime ldt_original_begin_date
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "u_ds_treatment_item.update_treatment.0008", "Cannot save treatment without an encounter context", 4)
+	log.log(this, "u_ds_treatment_item.update_treatment:0008", "Cannot save treatment without an encounter context", 4)
 	return -1
 end if
 
@@ -1005,7 +1005,7 @@ end if
 ls_treatment_type = object.treatment_type[ll_row]
 puo_treatment = f_get_treatment_component(ls_treatment_type)
 If Isnull(puo_treatment) Then
-	log.log(This,"u_ds_treatment_item.treatment.0045","unable to create treatment component for "+&
+	log.log(This,"u_ds_treatment_item.treatment:0045","unable to create treatment component for "+&
 				ls_treatment_type,4)
 	Return 0
 End If
@@ -1131,7 +1131,7 @@ str_popup	popup
 str_popup_return popup_return
 
 if isnull(pl_treatment_id) or pl_treatment_id <= 0 then
-	log.log(this, "u_ds_treatment_item.set_treatment_progress.0019", "Invalid treatment_id", 4)
+	log.log(this, "u_ds_treatment_item.set_treatment_progress:0019", "Invalid treatment_id", 4)
 	return -1
 end if
 
@@ -1157,7 +1157,7 @@ end if
 ls_find = "treatment_id=" + string(pl_treatment_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_ds_treatment_item.set_treatment_progress.0019", "treatment not found", 4)
+	log.log(this, "u_ds_treatment_item.set_treatment_progress:0045", "treatment not found", 4)
 	return -1
 end if
 
@@ -1407,7 +1407,7 @@ setnull(ldt_created)
 
 ls_parent_treatment_type = treatment_type(pl_parent_treatment_id)
 if isnull(ls_parent_treatment_type) then
-	log.log(this, "u_ds_treatment_item.add_followup_treatment_item.0024", "error getting treatment_type (" + string(pl_parent_treatment_id) + ")", 4)
+	log.log(this, "u_ds_treatment_item.add_followup_treatment_item:0024", "error getting treatment_type (" + string(pl_parent_treatment_id) + ")", 4)
 	return -1
 end if
 
@@ -1843,7 +1843,7 @@ if ll_row <= 0 then return -1
 // Make sure we had a treatment_id generated
 pstr_treatment.treatment_id = object.treatment_id[ll_row]
 If isnull(pstr_treatment.treatment_id) Then
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "treatment_id not generated", 4)
+	log.log(this, "u_ds_treatment_item.new_treatment:0109", "treatment_id not generated", 4)
 	Return -1
 End if
 
@@ -1900,7 +1900,7 @@ integer li_count
 string ls_treatment_description
 
 If not Isvalid(puo_treatment) or Isnull(puo_treatment) Then
-	log.log(this, "u_ds_treatment_item.refresh_treatment_object.0008", "Invalid treatment object", 4)
+	log.log(this, "u_ds_treatment_item.refresh_treatment_object:0008", "Invalid treatment object", 4)
 	return -1
 end if
 
@@ -2417,7 +2417,7 @@ else
 	object.treatment_id[1] = pl_treatment_id
 	li_sts = reselectrow(1)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_treatment_item.initialize.0035", "Reselect treatment data failed", 4)
+		log.log(this, "u_ds_treatment_item.initialize:0035", "Reselect treatment data failed", 4)
 		return -1
 	end if
 	li_sts = p_Assessment_Treatment.retrieve(ps_cpr_id, pl_treatment_id)
@@ -2461,7 +2461,7 @@ for i = 1 to ll_rowcount
 	ll_treatment_id = luo_data.object.treatment_id[i]
 	li_sts = treatment(pstra_treatments[i], ll_treatment_id)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_treatment_item.get_encounter_treatments.0033", "Error getting treatment details (" + current_patient.cpr_id + ", " + string(ll_treatment_id) + ")", 4)
+		log.log(this, "u_ds_treatment_item.get_encounter_treatments:0033", "Error getting treatment details (" + current_patient.cpr_id + ", " + string(ll_treatment_id) + ")", 4)
 		return -1
 	end if
 next
@@ -2711,7 +2711,7 @@ if isnull(luo_treatment.treatment_description) then
 	elseif not isnull(luo_treatment.drug_id) then
 		li_sts = drugdb.get_drug_definition(luo_treatment.drug_id, lstr_drug)
 		if li_sts <= 0 then
-			log.log(this, "u_ds_treatment_item.order_treatment.0128", "Unable to get drug definition (" + luo_treatment.drug_id + ")", 4)
+			log.log(this, "u_ds_treatment_item.order_treatment:0128", "Unable to get drug definition (" + luo_treatment.drug_id + ")", 4)
 			luo_treatment.treatment_description = "Drug Treatment"
 		else
 			luo_treatment.treatment_description = lstr_drug.common_name
@@ -2723,7 +2723,7 @@ if isnull(luo_treatment.treatment_description) then
 		WHERE procedure_id = :luo_treatment.procedure_id;
 		if not tf_check() then return -1
 		if sqlca.sqlcode = 100 then
-			log.log(this, "u_ds_treatment_item.order_treatment.0128", "Unable to get procedure definition (" + luo_treatment.procedure_id + ")", 4)
+			log.log(this, "u_ds_treatment_item.order_treatment:0140", "Unable to get procedure definition (" + luo_treatment.procedure_id + ")", 4)
 			luo_treatment.treatment_description = "Procedure Treatment"
 		end if
 	else
@@ -2918,7 +2918,7 @@ FROM c_Treatment_Type
 WHERE treatment_type = :puo_treatment.treatment_type;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "Treatment type not found (" + puo_treatment.treatment_type + ")", 3)
+	log.log(this, "u_ds_treatment_item.new_treatment_old:0142", "Treatment type not found (" + puo_treatment.treatment_type + ")", 3)
 end if
 
 object.component_id[ll_row] = ls_component_id
@@ -2941,7 +2941,7 @@ tf_begin_transaction(this, "new_treatment()")
 li_sts = Update()
 If li_sts <= 0 Then
 	tf_rollback()
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "Error saving new treatment", 4)
+	log.log(this, "u_ds_treatment_item.new_treatment_old:0165", "Error saving new treatment", 4)
 	Return -1
 End if
 
@@ -2951,14 +2951,14 @@ tf_commit_transaction()
 // Make sure we had a treatment_id generated
 ll_treatment_id = object.treatment_id[ll_row]
 If isnull(ll_treatment_id) Then
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "treatment_id not generated", 4)
+	log.log(this, "u_ds_treatment_item.new_treatment_old:0175", "treatment_id not generated", 4)
 	Return -1
 End if
 
 // Make sure this is the correct treatment_id
 ll_real_treatment_id = sqlca.fn_last_treatment_for_patient( current_patient.cpr_id, ll_treatment_id)
 if isnull(ll_real_treatment_id) then
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "Incorrect Treatment_id", 4)
+	log.log(this, "u_ds_treatment_item.new_treatment_old:0182", "Incorrect Treatment_id", 4)
 	return -1
 end if
 
@@ -3306,7 +3306,7 @@ if ll_row <= 0 then return -1
 // Make sure we had a treatment_id generated
 ll_treatment_id = object.treatment_id[ll_row]
 If isnull(ll_treatment_id) Then
-	log.log(this, "u_ds_treatment_item.new_treatment.0109", "treatment_id not generated", 4)
+	log.log(this, "u_ds_treatment_item.new_treatment:0112", "treatment_id not generated", 4)
 	Return -1
 End if
 
@@ -3421,7 +3421,7 @@ if isnull(ls_treatment_type) or trim(ls_treatment_type) = "" then
 	AND treatment_id = :ll_treatment_id;
 	if not tf_check() then return -1
 	if isnull(ls_treatment_type) or trim(ls_treatment_type) = "" then
-		log.log(this, "u_ds_treatment_item.refresh_row.0031", "Invalid treatment_type (" + string(ll_treatment_id) + ")", 4)
+		log.log(this, "u_ds_treatment_item.refresh_row:0031", "Invalid treatment_type (" + string(ll_treatment_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -3510,14 +3510,14 @@ public subroutine set_treatment_changed (long pl_treatment_id);string ls_find
 long ll_row
 
 if isnull(pl_treatment_id) or pl_treatment_id <= 0 then
-	log.log(this, "u_ds_treatment_item.set_treatment_changed.0005", "Invalid treatment_id", 4)
+	log.log(this, "u_ds_treatment_item.set_treatment_changed:0005", "Invalid treatment_id", 4)
 	return
 end if
 
 ls_find = "treatment_id=" + string(pl_treatment_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_ds_treatment_item.set_treatment_changed.0005", "treatment not found", 4)
+	log.log(this, "u_ds_treatment_item.set_treatment_changed:0012", "treatment not found", 4)
 	return
 end if
 

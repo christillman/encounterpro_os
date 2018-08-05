@@ -87,7 +87,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlnrows = 0 then
-	log.log(this, "w_pop_printer_edit.open.0032", "Printer not found (" +st_printer.text + ")" , 4)
+	log.log(this, "w_pop_printer_edit:open", "Printer not found (" +st_printer.text + ")" , 4)
 	close(this)
 	return
 end if

@@ -56,7 +56,7 @@ event open;str_popup popup
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this, "w_pop_duration.open.0006", "Invalid popup parameter", 4)
+	log.log(this, "w_pop_duration:open", "Invalid popup parameter", 4)
 	close(this)
 	return
 end if

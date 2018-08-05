@@ -125,7 +125,7 @@ FROM c_External_Source e
 WHERE e.external_source = :ls_external_source;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_param_external_source.pick_param.0036", "external source component not found (" + ls_external_source + ")", 4)
+	log.log(this, "u_param_external_source.pick_param:0036", "external source component not found (" + ls_external_source + ")", 4)
 	setnull(ls_external_source)
 	setnull(ls_id)
 	ls_display = ""

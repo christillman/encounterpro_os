@@ -20,7 +20,7 @@ string ls_param_mode
 ls_param_mode = "Config"
 
 if isnull(ps_service) then
-	log.log(po_null, "f_configure_service.0015", "Null Service", 4)
+	log.log(po_null, "f_configure_service:0015", "Null Service", 4)
 	return -1
 end if
 
@@ -30,7 +30,7 @@ FROM o_Service
 WHERE service = :ps_service;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(po_null, "f_configure_service.0015", "Service not found (" + ps_service + ")", 4)
+	log.log(po_null, "f_configure_service:0025", "Service not found (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -45,7 +45,7 @@ luo_data.set_dataobject("dw_o_service_attribute")
 li_count = luo_data.retrieve(ps_service, ps_specialty_id)
 
 if li_count < 0 then
-	log.log(po_null, "f_configure_service.0040", "Error getting attributes", 4)
+	log.log(po_null, "f_configure_service:0040", "Error getting attributes", 4)
 	return -1
 end if
 

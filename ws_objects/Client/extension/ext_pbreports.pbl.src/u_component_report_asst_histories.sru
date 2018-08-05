@@ -38,7 +38,7 @@ If Isnull(ls_dataobject) Then ls_dataobject = "assessment"
 report_datastore.dataobject = ls_dataobject
 
 If Isnull(current_patient) Or Not Isvalid(current_patient) Then
-	mylog.log(this, "u_component_report_asst_histories.xx_printreport.0022", "No cpr_id", 4)
+	mylog.log(this, "u_component_report_asst_histories.xx_printreport:0022", "No cpr_id", 4)
 	return -1
 End if
 

@@ -128,7 +128,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_set_result_qualifiers.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_set_result_qualifiers:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -142,7 +142,7 @@ if not isnull(popup.title) and popup.title <> "" then
 else
 	li_sts = tf_get_observation_description(observation_id, st_observation.text)
 	if li_sts <= 0 then
-		log.log(this, "w_set_result_qualifiers.open.0009", "Invalid observation id (" + observation_id + ")", 4)
+		log.log(this, "w_set_result_qualifiers:open", "Invalid observation id (" + observation_id + ")", 4)
 		close(this)
 		return
 	end if
@@ -154,13 +154,13 @@ FROM c_Observation_Result
 WHERE observation_id = :observation_id
 AND result_sequence = :result_sequence;
 if not tf_check() then
-	log.log(this, "w_set_result_qualifiers.open.0009", "Error getting result", 4)
+	log.log(this, "w_set_result_qualifiers:open", "Error getting result", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_set_result_qualifiers.open.0009", "Result not found", 4)
+	log.log(this, "w_set_result_qualifiers:open", "Result not found", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -170,7 +170,7 @@ dw_qualifiers.settransobject(sqlca)
 
 li_sts = dw_qualifier_domains.retrieve(observation_id, result_sequence)
 if li_sts < 0 then
-	log.log(this, "w_set_result_qualifiers.open.0009", "Error getting qualifier domains", 4)
+	log.log(this, "w_set_result_qualifiers:open", "Error getting qualifier domains", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

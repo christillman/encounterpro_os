@@ -31,7 +31,7 @@ long ll_new_code_id
 str_domain_item lstr_domain_item
 
 if isnull(pl_code_id) then
-	log.log(po_null, "f_edit_mapping.0026", "null code_id", 4)
+	log.log(po_null, "f_edit_mapping:0026", "null code_id", 4)
 	return -1
 end if
 
@@ -42,7 +42,7 @@ FROM c_XML_Code c
 WHERE c.code_id = :pl_code_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows < 1 then
-	log.log(po_null, "f_edit_mapping.0026", "code_id not found (" + string(pl_code_id) + ")", 4)
+	log.log(po_null, "f_edit_mapping:0037", "code_id not found (" + string(pl_code_id) + ")", 4)
 	return -1
 end if
 

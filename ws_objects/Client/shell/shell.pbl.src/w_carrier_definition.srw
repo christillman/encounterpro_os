@@ -330,7 +330,7 @@ ElseIf popup.data_row_count = 1 Then
 		ON a.coding_component_id = b.component_id
 	WHERE a.authority_id = :authority_id;
 	if not tf_check() then
-		log.log(this, "w_carrier_definition.open.0048", "Error getting coding component", 4)
+		log.log(this, "w_carrier_definition:open", "Error getting coding component", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -342,7 +342,7 @@ ElseIf popup.data_row_count = 1 Then
 	dw_alternate_cpt_codes.retrieve(authority_id)
 	st_alt_icd10.event POST clicked()
 else
-	log.log(this, "w_carrier_definition.open.0048", "Invalid Parameters", 4)
+	log.log(this, "w_carrier_definition:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -353,7 +353,7 @@ If Not isnull(authority_type) Then
 	FROM c_authority_Type
 	WHERE authority_type = :authority_type;
 	If not tf_check() then
-		log.log(this, "w_carrier_definition.open.0048", "Error getting authority type", 4)
+		log.log(this, "w_carrier_definition:open", "Error getting authority type", 4)
 		closewithreturn(this, popup_return)
 		return
 	End If
@@ -365,7 +365,7 @@ If Not isnull(authority_type) Then
 		WHERE authority_type = :authority_type
 		And authority_category = :authority_category;
 		if not tf_check() then
-			log.log(this, "w_carrier_definition.open.0048", "Error getting authority type", 4)
+			log.log(this, "w_carrier_definition:open", "Error getting authority type", 4)
 			closewithreturn(this, popup_return)
 			return
 		end if
@@ -499,7 +499,7 @@ if isnull(authority_id) then
 		authority_id = ls_authority_id + string(i)
 	next
 	if i >= 99 then
-		log.log(this, "w_carrier_definition.pb_done.clicked.0034", "Error generating new authority id (" + ls_description + ")", 4)
+		log.log(this, "w_carrier_definition.pb_done.clicked:0034", "Error generating new authority id (" + ls_description + ")", 4)
 		return
 	end if
 	
@@ -521,13 +521,13 @@ if isnull(authority_id) then
 else
 	li_sts = dw_alternate_icd_codes.update()
 	if li_sts < 0 then
-		log.log(this, "w_carrier_definition.pb_done.clicked.0034", "Error saving icd codes", 4)
+		log.log(this, "w_carrier_definition.pb_done.clicked:0056", "Error saving icd codes", 4)
 		return
 	end if
 	
 	li_sts = dw_alternate_cpt_codes.update()
 	if li_sts < 0 then
-		log.log(this, "w_carrier_definition.pb_done.clicked.0034", "Error saving cpt codes", 4)
+		log.log(this, "w_carrier_definition.pb_done.clicked:0062", "Error saving cpt codes", 4)
 		return
 	end if
 	

@@ -34,7 +34,7 @@ str_attributes		lstr_attributes
 report_id =	ps_report_id
 
 if isnull(report_id) then
-	mylog.log(this, "u_component_send_report.sendreport.0010", "Report not found (" + ps_report_id + ")", 4)
+	mylog.log(this, "u_component_send_report.sendreport:0010", "Report not found (" + ps_report_id + ")", 4)
 	return -1
 end if
 
@@ -45,7 +45,7 @@ WHERE report_id = :report_id
 USING cprdb;
 If not tf_check() then return -1
 If cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_send_report.sendreport.0010", "Report not found (" + report_id + ")", 4)
+	mylog.log(this, "u_component_send_report.sendreport:0021", "Report not found (" + report_id + ")", 4)
 	return -1
 end if
 
@@ -121,10 +121,10 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_message_subscription_data")
 li_count = luo_data.retrieve(message_type, "O")
 if li_count < 0 then
-	mylog.log(this, "u_component_send_report.log_message.0033", "Error getting subscribers", 4)
+	mylog.log(this, "u_component_send_report.log_message:0033", "Error getting subscribers", 4)
 	return -1
 elseif li_count = 0 then
-	mylog.log(this, "u_component_send_report.log_message.0033", "No subscribers for message type.  Message will not be sent (" + message_type + ")", 2)
+	mylog.log(this, "u_component_send_report.log_message:0036", "No subscribers for message type.  Message will not be sent (" + message_type + ")", 2)
 	return -1
 end if
 
@@ -141,7 +141,7 @@ if not cprdb.check() then return -1
 CLOSE lsp_log_message;
 
 if ll_message_id <= 0 then
-	mylog.log(this, "u_component_send_report.log_message.0033", "Error logging report for (" + string(subscription_id) + ")", 4)
+	mylog.log(this, "u_component_send_report.log_message:0053", "Error logging report for (" + string(subscription_id) + ")", 4)
 	Return -1
 end if
 

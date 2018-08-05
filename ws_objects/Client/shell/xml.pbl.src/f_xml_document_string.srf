@@ -16,7 +16,7 @@ string ls_null
 setnull(ls_null)
 
 if isnull(po_document) or not isvalid(po_document) then
-	log.log(po_null, "f_xml_document_string.0011", "Invalid document object", 4)
+	log.log(po_null, "f_xml_document_string:0011", "Invalid document object", 4)
 	return ls_null
 end if
 
@@ -25,17 +25,17 @@ ls_file = f_temp_file("xml")
 TRY
 	lb_success = po_document.savedocument(ls_file)
 	if not lb_success then
-		log.log(po_null, "f_xml_document_string.0011", "Error saving document", 4)
+		log.log(po_null, "f_xml_document_string:0020", "Error saving document", 4)
 		return ls_null
 	end if
 CATCH (throwable lo_error2)
-	log.log(po_null, "f_xml_document_string.0011", "Error saving document (" + lo_error2.text + ")", 4)
+	log.log(po_null, "f_xml_document_string:0024", "Error saving document (" + lo_error2.text + ")", 4)
 	return ls_null
 END TRY
 
 li_sts = log.file_read(ls_file, lbl_xml)
 if li_sts <= 0 then
-	log.log(po_null, "f_xml_document_string.0011", "Error reading document", 4)
+	log.log(po_null, "f_xml_document_string:0030", "Error reading document", 4)
 	return ls_null
 end if
 

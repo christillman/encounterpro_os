@@ -14,7 +14,7 @@ if isnull(pl_material_id) then return 0
 
 lstr_material = f_get_patient_material(pl_material_id, true)
 if isnull(lstr_material.material_id) then
-	log.log(po_null, "f_display_patient_material.0009", "Error getting material (" + string(pl_material_id) + ")", 4)
+	log.log(po_null, "f_display_patient_material:0009", "Error getting material (" + string(pl_material_id) + ")", 4)
 	return -1
 end if
 
@@ -24,13 +24,13 @@ else
 	ls_file = f_temp_file(lstr_material.extension)
 	li_sts = log.file_write(lstr_material.material_object, ls_file)
 	if li_sts <= 0 then
-		log.log(po_null, "f_display_patient_material.0009", "Error writing material to file.", 4)
+		log.log(po_null, "f_display_patient_material:0019", "Error writing material to file.", 4)
 		return -1
 	end if
 	
 	li_sts = f_open_file(ls_file, false)
 	if li_sts <= 0 then
-		log.log(po_null, "f_display_patient_material.0009", "Error opening material file.", 4)
+		log.log(po_null, "f_display_patient_material:0025", "Error opening material file.", 4)
 		return -1
 	end if
 end if

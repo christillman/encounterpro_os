@@ -181,7 +181,7 @@ sle_button.text = modified_menu_item.button
 
 luo_treatment_component = f_get_treatment_component(ls_treatment_type)
 if isnull(luo_treatment_component) then
-	log.log(this, "w_edit_menu_item.get_treatment.0027", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
+	log.log(this, "w_edit_menu_item.get_treatment:0027", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
 	return
 end if
 
@@ -219,7 +219,7 @@ FROM o_Service
 WHERE service = :modified_menu_item.menu_item;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_edit_menu_item.configure_service.0024", "service not found (" + modified_menu_item.menu_item + ")", 4)
+	log.log(this, "w_edit_menu_item.configure_service:0024", "service not found (" + modified_menu_item.menu_item + ")", 4)
 	return -1
 end if
 
@@ -257,7 +257,7 @@ next
 li_sts = luo_data.update()
 DESTROY luo_data
 if li_sts < 0 then
-	log.log(this, "w_edit_menu_item.configure_service.0024", "Error updating command attributes", 4)
+	log.log(this, "w_edit_menu_item.configure_service:0062", "Error updating command attributes", 4)
 	return -1
 end if
 
@@ -358,7 +358,7 @@ end if
 
 luo_treatment_component = f_get_treatment_component(modified_menu_item.menu_item)
 if isnull(luo_treatment_component) then
-	log.log(this, "w_edit_menu_item.get_treatment.0027", "Unable to get treatment object (" + modified_menu_item.menu_item + ")", 4)
+	log.log(this, "w_edit_menu_item.configure_treatment:0017", "Unable to get treatment object (" + modified_menu_item.menu_item + ")", 4)
 	return -1
 end if
 
@@ -578,7 +578,7 @@ modified_menu_item = original_menu_item
 updated = false
 
 if isnull(original_menu_item.menu_id) or original_menu_item.menu_id <= 0 then
-	log.log(this, "w_edit_menu_item.open.0017", "Menu id is not valid", 3)
+	log.log(this, "w_edit_menu_item:open", "Menu id is not valid", 3)
 	closewithreturn(this, original_menu_item)
 	return
 end if

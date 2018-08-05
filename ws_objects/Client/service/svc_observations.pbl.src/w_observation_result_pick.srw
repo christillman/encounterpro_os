@@ -190,7 +190,7 @@ boolean lb_title
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 5 then
-	log.log(this, "w_observation_result_pick.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_observation_result_pick:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

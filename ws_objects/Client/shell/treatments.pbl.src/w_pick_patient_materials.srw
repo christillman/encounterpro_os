@@ -122,14 +122,14 @@ popup = message.powerobjectparm
 If popup.data_row_count = 1 Then
 	treatment_type = popup.items[1]
 Else
-	log.log(this,"w_pick_patient_materials.open.0018","Invalid parameters",4)
+	log.log(this,"w_pick_patient_materials:open","Invalid parameters",4)
 	pb_cancel.event clicked()
 	Return
 End If
 
 if trim(treatment_type) = "" then setnull(treatment_type)
 If isnull(treatment_type) Then
-	log.log(this,"w_pick_patient_materials.open.0018","treatment type can not be null",4)
+	log.log(this,"w_pick_patient_materials:open","treatment type can not be null",4)
 	pb_cancel.event clicked()
 	Return
 End If

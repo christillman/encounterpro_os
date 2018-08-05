@@ -30,7 +30,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(this, "u_file_action.display_file.0014", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_file_action.display_file:0014", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if
@@ -60,7 +60,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(this, "u_file_action.display_file.0014", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_file_action.print_file:0014", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if
@@ -90,7 +90,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(this, "u_file_action.display_file.0014", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_file_action.print_file:0014", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if
@@ -120,7 +120,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(this, "u_file_action.display_file.0014", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_file_action.edit_file:0014", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if
@@ -151,7 +151,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 luo_attachment = component_manager.get_component(ls_component_id)
 if isnull(luo_attachment) then
-	log.log(this, "u_file_action.display_file.0014", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_file_action.render_file:0015", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(luo_attachment)
 	return -1
 end if

@@ -228,14 +228,14 @@ End If
 if not log.of_directoryexists('c:\jmj') Then
 	Changedirectory('c:\')
 	If createdirectory('jmj') <> 1 then
-		log.log(this,"w_new_backup.cb_backup.clicked.0025","unable to create 'c:\jmj' directory",4)
+		log.log(this,"w_new_backup.cb_backup.clicked:0025","unable to create 'c:\jmj' directory",4)
 		return 
 	end if
 end if
 if not log.of_directoryexists('c:\jmj\backup') Then
 	Changedirectory('c:\jmj')
 	If createdirectory('backup') <> 1 then
-		log.log(this,"w_new_backup.cb_backup.clicked.0025","unable to create 'c:\jmj\backup' directory",4)
+		log.log(this,"w_new_backup.cb_backup.clicked:0032","unable to create 'c:\jmj\backup' directory",4)
 		return 
 	end if
 end if
@@ -243,7 +243,7 @@ end if
 ole_sqlserver = Create oleobject
 li_return = ole_sqlserver.connecttonewobject('SQLDMO.SQLServer')
 If li_return <> 0 Then
-	log.log(this,"w_new_backup.cb_backup.clicked.0025","unable to instantiate sqldmo.sqlserver ("+string(li_return)+")",4)
+	log.log(this,"w_new_backup.cb_backup.clicked:0040","unable to instantiate sqldmo.sqlserver ("+string(li_return)+")",4)
 	Return -1
 End If
 If windows_security Then
@@ -256,7 +256,7 @@ If not isnull(errnum) then
 	CASE "integer"
 		li_errnum = errnum
 		If li_errnum <> 0 then 
-			log.log(this,"w_new_backup.cb_backup.clicked.0025","error with connection to sqlserver server" + string(li_errnum),4)
+			log.log(this,"w_new_backup.cb_backup.clicked:0053","error with connection to sqlserver server" + string(li_errnum),4)
 			return -1
 		end if
 	Case "long"
@@ -264,7 +264,7 @@ If not isnull(errnum) then
 	CASE "string"
 		ls_errnum = errnum
 		If ls_errnum <> "0" then 
-			log.log(this,"w_new_backup.cb_backup.clicked.0025",	"error with connection to sqlserver server" + ls_errnum ,4)
+			log.log(this,"w_new_backup.cb_backup.clicked:0061",	"error with connection to sqlserver server" + ls_errnum ,4)
 			return -1
 		end if
 	END CHOOSE
@@ -301,7 +301,7 @@ If FileExists(ls_backup_path+ls_backupfile) Then
 	If not FileExists(ls_inifile) Then
 		li_FileNum = Fileopen(ls_inifile,LineMode!,Write!)
 		If li_FileNum <= 0 Or isnull(li_Filenum) Then
-			log.log(this,"w_new_backup.cb_backup.clicked.0025","unable to create 'INI' file",4)
+			log.log(this,"w_new_backup.cb_backup.clicked:0098","unable to create 'INI' file",4)
 			Return -1
 		End If
 		FileClose(li_Filenum)

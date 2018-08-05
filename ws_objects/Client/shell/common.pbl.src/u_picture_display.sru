@@ -190,7 +190,7 @@ f_open_file(picture_file, false)
 //li_sts = luo_ImageViewer.connecttonewobject("EPImageViewer.Image")
 //if li_sts < 0 then
 //	DESTROY luo_ImageViewer
-//	log.log(this, "display_image()", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
+//	log.log(this, "u_picture_display.view_image:0012", "Error creating ImageViewer object (" + string(li_sts) + ")", 4)
 //	return -1
 //end if
 //

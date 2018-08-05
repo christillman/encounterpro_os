@@ -275,7 +275,7 @@ lnvos_shellexecuteinfo.nShow = SW_NORMAL
 
 ll_ret = ShellExecuteEx(lnvos_shellexecuteinfo)
 IF ll_ret = 0 THEN
-	log.log(this, "n_cst_shell32.open_file_ex.0049", "Error opening file (" + ps_verb + ", " + ps_file + ")", 4)
+	log.log(this, "n_cst_shell32.open_file_ex:0049", "Error opening file (" + ps_verb + ", " + ps_file + ")", 4)
    RETURN -1
 END IF
 

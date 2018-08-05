@@ -468,7 +468,7 @@ event post_click;call super::post_click;//string ls_temp_file,ls_progress_type
 //		WHERE attachment_id = :attachment.attachment_id
 //		USING sqlca;
 //		if not tf_check() then 
-//			log.log(this,"post_click()","unable to get attachment image",3)
+//			log.log(this,"w_document_properties.dw_service_history.post_click:0020","unable to get attachment image",3)
 //			return
 //		end if
 //	
@@ -490,7 +490,7 @@ event post_click;call super::post_click;//string ls_temp_file,ls_progress_type
 //		AND attachment_progress_sequence = :ll_attachment_progress_sequence
 //		USING sqlca;
 //		if not tf_check() then 
-//			log.log(this,"post_click()","unable to get attachment image",3)
+//			log.log(this,"w_document_properties.dw_service_history.post_click:0042","unable to get attachment image",3)
 //			return
 //		end if
 //	
@@ -847,7 +847,7 @@ event post_click;call super::post_click;//string ls_temp_file,ls_progress_type
 //		WHERE attachment_id = :attachment.attachment_id
 //		USING sqlca;
 //		if not tf_check() then 
-//			log.log(this,"post_click()","unable to get attachment image",3)
+//			log.log(this,"w_document_properties.dw_service_attributes.post_click:0020","unable to get attachment image",3)
 //			return
 //		end if
 //	
@@ -869,7 +869,7 @@ event post_click;call super::post_click;//string ls_temp_file,ls_progress_type
 //		AND attachment_progress_sequence = :ll_attachment_progress_sequence
 //		USING sqlca;
 //		if not tf_check() then 
-//			log.log(this,"post_click()","unable to get attachment image",3)
+//			log.log(this,"w_document_properties.dw_service_attributes.post_click:0042","unable to get attachment image",3)
 //			return
 //		end if
 //	

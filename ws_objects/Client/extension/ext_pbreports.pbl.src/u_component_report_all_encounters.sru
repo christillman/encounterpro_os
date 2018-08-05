@@ -47,13 +47,13 @@ str_attributes				lstra_attributes
 
 // Check for valid patient & enocunter
 If isnull(current_patient) Or not isvalid(current_patient) Then
-	mylog.log(this, "u_component_report_all_encounters.xx_printreport.0026", "No patient context ", 4)
+	mylog.log(this, "u_component_report_all_encounters.xx_printreport:0026", "No patient context ", 4)
 	Return -1
 End If 
 Setnull(ls_report_id)
 ls_report_id = get_attribute("encounter_report_id")
 If isnull(ls_report_id) then
-	mylog.log(this, "u_component_report_all_encounters.xx_printreport.0026", "No report id ", 4)
+	mylog.log(this, "u_component_report_all_encounters.xx_printreport:0032", "No report id ", 4)
 	Return -1
 End If
 ls_service = get_attribute("report_service")

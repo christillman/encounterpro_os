@@ -70,7 +70,7 @@ if lb_reverse then
 	for i = lstr_attachments.attachment_count to 1 step -1
 		li_sts = add_attachment(observation_count, lstr_attachments.attachments[i])
 		if li_sts < 0 then
-			log.log(this, "u_component_observation_wia.xx_do_source.0046", "Error adding attachment", 4)
+			log.log(this, "u_component_observation_wia.xx_do_source:0046", "Error adding attachment", 4)
 			return -1
 		end if
 	next
@@ -78,7 +78,7 @@ else
 	for i = 1 to lstr_attachments.attachment_count
 		li_sts = add_attachment(observation_count, lstr_attachments.attachments[i])
 		if li_sts < 0 then
-			log.log(this, "u_component_observation_wia.xx_do_source.0046", "Error adding attachment", 4)
+			log.log(this, "u_component_observation_wia.xx_do_source:0054", "Error adding attachment", 4)
 			return -1
 		end if
 	next

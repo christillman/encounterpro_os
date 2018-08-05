@@ -138,7 +138,7 @@ refresh()
 
 //li_sts = load_meds()
 //if li_sts < 0 then
-//	log.log(this, "open", "Error loading current meds", 4)
+//	log.log(this, "w_svc_current_meds:open", "Error loading current meds", 4)
 //	close(this)
 //	return
 //end if

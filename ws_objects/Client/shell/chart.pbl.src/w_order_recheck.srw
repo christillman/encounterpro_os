@@ -97,7 +97,7 @@ end on
 event open;call super::open;str_popup popup
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "w_order_recheck.open.0004", "No open encounter", 4)
+	log.log(this, "w_order_recheck:open", "No open encounter", 4)
 	close(this)
 	return
 end if
@@ -105,7 +105,7 @@ end if
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_order_recheck.open.0004", "Invalid Parameters", 4)
+	log.log(this, "w_order_recheck:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -255,7 +255,7 @@ CHOOSE CASE mode
 		end if
 		ll_patient_workplan_item_id = current_patient.open_encounter.order_service(service, sle_description.text, to_user_id)
 		if ll_patient_workplan_item_id <= 0 then
-			log.log(this, "w_order_recheck.pb_done.clicked.0016", "Error ordering service (" + service + ")", 4)
+			log.log(this, "w_order_recheck.pb_done.clicked:0016", "Error ordering service (" + service + ")", 4)
 			return
 		end if
 END CHOOSE

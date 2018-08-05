@@ -58,7 +58,7 @@ attachment = message.powerobjectparm
 
 li_sts = attachment.get_attachment_blob(lbl_report)
 if li_sts <= 0 then
-	log.log(this, "w_attachment_brentwood_display.open.0009", "Error getting attachment", 4)
+	log.log(this, "w_attachment_brentwood_display:open", "Error getting attachment", 4)
 	close(this)
 	return
 end if

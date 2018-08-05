@@ -696,7 +696,7 @@ if isvalid(encounter) and not isnull(encounter) then
 else
 	li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
 	if li_sts <= 0 then
-		log.log(this, "w_billing_edit.refresh.0010", "Error getting encounter (" + string(service.encounter_id) + ")", 4)
+		log.log(this, "w_billing_edit.refresh:0010", "Error getting encounter (" + string(service.encounter_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -1093,7 +1093,7 @@ popup_return.items[1] = "ERROR"
 service = message.powerobjectparm
 
 if isnull(service.encounter_id) then
-	log.log(this, "w_billing_edit.refresh.0010", "Null Encounter_id", 4)
+	log.log(this, "w_billing_edit:open", "Null Encounter_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -1125,7 +1125,7 @@ dw_billing.settransobject(sqlca)
 
 li_sts = refresh()
 if li_sts < 0 then
-	log.log(this, "w_billing_edit.refresh.0010", "Error displaying encounter billing", 4)
+	log.log(this, "w_billing_edit:open", "Error displaying encounter billing", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

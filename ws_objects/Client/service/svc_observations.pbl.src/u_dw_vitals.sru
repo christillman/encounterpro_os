@@ -122,7 +122,7 @@ if isnull(ll_observation_sequence) then
 										stage, &
 										true)
 	if ll_observation_sequence < 0 then
-		log.log(this, "u_dw_vitals.observation_sequence.0019", "Error adding observation", 4)
+		log.log(this, "u_dw_vitals.observation_sequence:0019", "Error adding observation", 4)
 		return -1
 	end if
 	object.observation_sequence[pl_row] = ll_observation_sequence
@@ -163,7 +163,7 @@ if ls_location = "" then
 else
 	// Get the observation_sequence
 	if ll_observation_sequence < 0 then
-		log.log(this, "u_dw_vitals.get_collection_location.0032", "Error adding observation", 4)
+		log.log(this, "u_dw_vitals.get_collection_location:0032", "Error adding observation", 4)
 		return -1
 	end if
 
@@ -257,7 +257,7 @@ setnull(ls_null)
 service = puo_service
 
 if isnull(service.treatment) then
-	log.log(this, "u_dw_vitals.initialize.0027", "Null treatment object", 4)
+	log.log(this, "u_dw_vitals.initialize:0027", "Null treatment object", 4)
 	return -1
 end if
 
@@ -267,7 +267,7 @@ vitals_unit_preference = ps_unit_preference
 
 parent_observation_id = service.root_observation_id()
 if isnull(parent_observation_id) then
-	log.log(this, "u_dw_vitals.initialize.0027", "No root observation_id", 4)
+	log.log(this, "u_dw_vitals.initialize:0037", "No root observation_id", 4)
 	return -1
 end if
 
@@ -280,7 +280,7 @@ next
 lstr_tree = datalist.observation_tree(parent_observation_id)
 
 if lstr_tree.branch_count = 0 then
-	log.log(this, "u_dw_vitals.initialize.0027", "No children found (" + parent_observation_id + ")", 4)
+	log.log(this, "u_dw_vitals.initialize:0050", "No children found (" + parent_observation_id + ")", 4)
 	return -1
 end if
 
@@ -333,7 +333,7 @@ for i = 1 to lstr_tree.branch_count
 		if not isnull(lstr_result_1.result_unit) then
 			luo_unit = unit_list.find_unit(lstr_result_1.result_unit)
 			if isnull(luo_unit) then
-				log.log(this, "u_dw_vitals.initialize.0027", "result unit not found (" + lstr_result_1.result_unit + ")", 3)
+				log.log(this, "u_dw_vitals.initialize:0103", "result unit not found (" + lstr_result_1.result_unit + ")", 3)
 			else
 				ls_display_unit = luo_unit.pretty_unit(ls_unit_preference, ls_display_unit_id)
 				object.unit[ll_row] = ls_display_unit
@@ -366,7 +366,7 @@ for i = 1 to lstr_tree.branch_count
 		if not isnull(lstr_result_2.result_unit) then
 			luo_unit = unit_list.find_unit(lstr_result_2.result_unit)
 			if isnull(luo_unit) then
-				log.log(this, "u_dw_vitals.initialize.0027", "result unit not found (" + lstr_result_2.result_unit + ")", 3)
+				log.log(this, "u_dw_vitals.initialize:0136", "result unit not found (" + lstr_result_2.result_unit + ")", 3)
 			else
 				ls_display_unit = luo_unit.pretty_unit(ls_unit_preference, ls_display_unit_id)
 				object.unit[ll_row] = ls_display_unit
@@ -481,7 +481,7 @@ for i = 1 to puo_external_observation.observation_count
 					ls_result_amount_flag = object.result_amount_flag[ll_row]
 					ll_observation_sequence = observation_sequence(ll_row)
 					if ll_observation_sequence < 0 then
-						log.log(this, "u_dw_vitals.results_posted.0064", "Error adding observation", 4)
+						log.log(this, "u_dw_vitals.results_posted:0064", "Error adding observation", 4)
 						return -1
 					end if
 			
@@ -582,7 +582,7 @@ if not isnull(ls_collection_location_domain) and ls_collection_location_domain <
 	else
 		li_sts = get_collection_location(pl_row)
 		if li_sts < 0 then
-			log.log(this, "u_dw_vitals.update_row.0034", "Error getting collection location", 4)
+			log.log(this, "u_dw_vitals.update_row:0034", "Error getting collection location", 4)
 			return -1
 		end if
 	end if
@@ -692,13 +692,13 @@ if ls_result_amount_flag = "Y" then
 	ls_display_unit_id = object.display_unit_id[pl_row]
 	
 	if isnull(ls_display_unit_id) then
-		log.log(this, "u_dw_vitals.refresh_row.0071", "Null display unit (" + ls_observation_id + ")", 4)
+		log.log(this, "u_dw_vitals.refresh_row:0071", "Null display unit (" + ls_observation_id + ")", 4)
 		return -1
 	end if
 	
 	luo_display_unit = unit_list.find_unit(ls_display_unit_id)
 	if isnull(luo_display_unit) then
-		log.log(this, "u_dw_vitals.refresh_row.0071", "Invalid display unit (" + ls_display_unit_id + ")", 4)
+		log.log(this, "u_dw_vitals.refresh_row:0077", "Invalid display unit (" + ls_display_unit_id + ")", 4)
 		return -1
 	end if
 	
@@ -710,7 +710,7 @@ if ls_result_amount_flag = "Y" then
 	object.display_unit_id[pl_row] = ls_display_unit_id
 	luo_display_unit = unit_list.find_unit(ls_display_unit_id)
 	if isnull(luo_display_unit) then
-		log.log(this, "u_dw_vitals.refresh_row.0071", "Invalid display unit (" + ls_display_unit_id + ")", 4)
+		log.log(this, "u_dw_vitals.refresh_row:0089", "Invalid display unit (" + ls_display_unit_id + ")", 4)
 		return -1
 	end if
 	
@@ -759,13 +759,13 @@ if ls_result_amount_flag = "Y" then
 		
 		// We found a result, so use the result unit_id to get the display amount
 		if isnull(ls_result_unit) then
-			log.log(this, "u_dw_vitals.refresh_row.0071", "Null result unit 1 (" + ls_observation_id + ")", 4)
+			log.log(this, "u_dw_vitals.refresh_row:0138", "Null result unit 1 (" + ls_observation_id + ")", 4)
 			return -1
 		end if
 		
 		luo_result_unit = unit_list.find_unit(ls_result_unit)
 		if isnull(luo_result_unit) then
-			log.log(this, "u_dw_vitals.refresh_row.0071", "Invalid unit (" + ls_result_unit + ")", 4)
+			log.log(this, "u_dw_vitals.refresh_row:0144", "Invalid unit (" + ls_result_unit + ")", 4)
 			return -1
 		end if
 		
@@ -800,13 +800,13 @@ if ls_result_amount_flag = "Y" then
 			// We found the result, so get the corresponding unit object and generate the
 			// display amount
 			if isnull(ls_result_unit) then
-				log.log(this, "u_dw_vitals.refresh_row.0071", "Null result unit 2 (" + ls_observation_id + ")", 4)
+				log.log(this, "u_dw_vitals.refresh_row:0179", "Null result unit 2 (" + ls_observation_id + ")", 4)
 				return -1
 			end if
 			
 			luo_result_unit = unit_list.find_unit(ls_result_unit)
 			if isnull(luo_result_unit) then
-				log.log(this, "u_dw_vitals.refresh_row.0071", "Invalid unit (" + ls_result_unit + ")", 4)
+				log.log(this, "u_dw_vitals.refresh_row:0185", "Invalid unit (" + ls_result_unit + ")", 4)
 				return -1
 			end if
 			
@@ -917,14 +917,14 @@ string ls_perform_location
 // Get the observation_sequence
 ll_observation_sequence = observation_sequence(pl_row)
 if ll_observation_sequence < 0 then
-	log.log(this, "u_dw_vitals.update_row.0034", "Error adding observation", 4)
+	log.log(this, "u_dw_vitals.update_row:0022", "Error adding observation", 4)
 	return -1
 end if
 
 // Get the displayed unit_id
 ls_display_unit_id = object.display_unit_id[pl_row]
 if isnull(ls_display_unit_id) then
-	log.log(this, "u_dw_vitals.update_row.0029", "Null result unit id", 4)
+	log.log(this, "u_dw_vitals.update_row:0029", "Null result unit id", 4)
 	return -1
 end if
 
@@ -955,13 +955,13 @@ if isnull(ls_perform_location) then return 0
 // Get the unit objects
 luo_new_value_unit = unit_list.find_unit(ps_new_value_unit)
 if isnull(luo_new_value_unit) then
-	log.log(this, "u_dw_vitals.update_row.0029", "Error finding new value unit (" + ps_new_value_unit + ")", 4)
+	log.log(this, "u_dw_vitals.update_row:0060", "Error finding new value unit (" + ps_new_value_unit + ")", 4)
 	return -1
 end if
 
 luo_display_unit = unit_list.find_unit(ls_display_unit_id)
 if isnull(luo_display_unit) then
-	log.log(this, "u_dw_vitals.update_row.0029", "Error finding new value unit (" + ls_display_unit_id + ")", 4)
+	log.log(this, "u_dw_vitals.update_row:0066", "Error finding new value unit (" + ls_display_unit_id + ")", 4)
 	return -1
 end if
 
@@ -1102,7 +1102,7 @@ if dwo.name = "more" then
 		ls_unit_id = object.display_unit_id_2[row]
 		luo_unit = unit_list.find_unit(ls_unit_id)
 		if isnull(luo_unit) then
-			log.log(this, "u_dw_vitals.update_row.0029", "Error finding unit (" + ls_unit_id + ")", 4)
+			log.log(this, "u_dw_vitals:clic", "Error finding unit (" + ls_unit_id + ")", 4)
 			return
 		end if
 		
@@ -1125,7 +1125,7 @@ if dwo.name = "more" then
 	ls_unit_id = object.display_unit_id[row]
 	luo_unit = unit_list.find_unit(ls_unit_id)
 	if isnull(luo_unit) then
-		log.log(this, "u_dw_vitals.update_row.0029", "Error finding unit (" + ls_unit_id + ")", 4)
+		log.log(this, "u_dw_vitals:clic", "Error finding unit (" + ls_unit_id + ")", 4)
 		return
 	end if
 		
@@ -1232,7 +1232,7 @@ elseif dwo.name = "observation" then
 											ls_service, &
 											true)
 		if ll_observation_sequence < 0 then
-			log.log(this, "u_dw_vitals.update_row.0029", "Error adding observation", 4)
+			log.log(this, "u_dw_vitals:clic", "Error adding observation", 4)
 			return
 		end if
 		object.observation_sequence[row] = ll_observation_sequence

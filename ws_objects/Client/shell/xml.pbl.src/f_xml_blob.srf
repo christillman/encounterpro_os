@@ -15,7 +15,7 @@ TRY
 	lbl_data = common_thread.eprolibnet4.converthextobinary(ps_xml_blob)
 	if len(lbl_data) = 0 then setnull(lbl_data)
 CATCH (oleruntimeerror lt_error)
-	log.log(po_null, "f_xml_blob.0010", "Error converting hex-encoded binary to blob~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+	log.log(po_null, "f_xml_blob:0010", "Error converting hex-encoded binary to blob~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 	setnull(lbl_data)
 END TRY
 

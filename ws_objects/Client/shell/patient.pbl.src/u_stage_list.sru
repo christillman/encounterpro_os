@@ -63,7 +63,7 @@ ORDER BY c_Development_Stage.sort_order ASC,
          c_Development_Item.item_sequence ASC  ;
 
 
-log.log(this, "u_stage_list.load_stages.0040", "Loading development stages...", 1)
+log.log(this, "u_stage_list.load_stages:0040", "Loading development stages...", 1)
 
 tf_begin_transaction(this, "")
 
@@ -116,7 +116,7 @@ CLOSE lc_load_stages;
 
 tf_commit()
 
-log.log(this, "u_stage_list.load_stages.0040", "Stages loaded", 1)
+log.log(this, "u_stage_list.load_stages:0093", "Stages loaded", 1)
 
 return 1
 end function

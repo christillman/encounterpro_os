@@ -141,7 +141,7 @@ str_popup  			popup
 
 popup = message.powerobjectparm
 If popup.data_row_count <> 1 Then
-	log.log(this,"w_pick_procedures.open.0016","Invalid parameters",4)
+	log.log(this,"w_pick_procedures:open","Invalid parameters",4)
 	cb_cancel.event clicked()
 	Return
 End If

@@ -56,7 +56,7 @@ end if
 
 if batch_mode then
 	if time(ls_time) > now() then
-		log.log(this, "u_component_serverservice.xx_initialize.0035", "billing is running in batch mode and will start sending only @ "+string(batch_processing_time), 3)
+		log.log(this, "u_component_serverservice.xx_initialize:0035", "billing is running in batch mode and will start sending only @ "+string(batch_processing_time), 3)
 	end if
 end if
 
@@ -72,12 +72,12 @@ integer li_sts2
 
 li_sts1 = do_todo_services()
 if li_sts1 < 0 then
-	log.log(this, "u_component_serverservice.timer_ding.0007", "Error calling do_todo_services()", 4)
+	log.log(this, "u_component_serverservice.timer_ding:0007", "Error calling do_todo_services()", 4)
 end if
 
 li_sts2 = do_scheduled_services()
 if li_sts2 < 0 then
-	log.log(this, "u_component_serverservice.timer_ding.0007", "Error calling do_todo_services()", 4)
+	log.log(this, "u_component_serverservice.timer_ding:0012", "Error calling do_todo_services()", 4)
 end if
 
 if li_sts1 = 2 then return 2
@@ -112,12 +112,12 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_todo_list", cprdb)
 
 if isnull(luo_data) or not isvalid(luo_data) then
-	log.log(this,"u_component_serverservice.do_todo_services.0027","datastore is null ",3)
+	log.log(this,"u_component_serverservice.do_todo_services:0027","datastore is null ",3)
 	Return 1
 end if
 if isnull(current_user) or not isvalid(current_user) then
 	if server_service_id <= 0 or isnull(server_service_id) then
-		log.log(this,"u_component_serverservice.do_todo_services.0027","current user can't be set ",3)
+		log.log(this,"u_component_serverservice.do_todo_services:0032","current user can't be set ",3)
 		Return 1
 	end if
 	SELECT system_user_id
@@ -128,7 +128,7 @@ if isnull(current_user) or not isvalid(current_user) then
 	current_user = user_list.find_user(ls_logon)
 end if
 if isnull(current_user) or not isvalid(current_user) then
-	log.log(this,"u_component_serverservice.do_todo_services.0027","current user object invalid ",3)
+	log.log(this,"u_component_serverservice.do_todo_services:0043","current user object invalid ",3)
 	return 1
 end if
 ll_count = luo_data.retrieve(current_user.user_id, ls_null, "%")
@@ -148,7 +148,7 @@ if batch_mode then
 		f_get_global_preference("last_batch_billing_date",ls_date)
 		// dont order the batch service if it's already processed
 		If date(ls_date) >= date(today()) then
-			mylog.log(this, "u_component_serverservice.do_todo_services.0063", "Billing batch is already sent "+ls_date, 1)	
+			mylog.log(this, "u_component_serverservice.do_todo_services:0063", "Billing batch is already sent "+ls_date, 1)	
 			lb_batch_ready = false
 		else
 			lb_batch_ready = true
@@ -165,7 +165,7 @@ for i = 1 to ll_count
 	// Skip any item which was started too recently, except for the "Wait" service, which should always be attempted
 	ldt_begin_date = luo_data.object.begin_date[i]
 	if ldt_begin_date > ldt_not_started_since then 
-		log.log(this,"u_component_serverservice.do_todo_services.0027","Started recently!! so skipping workplan item id ("+string(ll_patient_workplan_item_id)+")",1)
+		log.log(this,"u_component_serverservice.do_todo_services:0080","Started recently!! so skipping workplan item id ("+string(ll_patient_workplan_item_id)+")",1)
 		continue
 	end if
 	
@@ -197,7 +197,7 @@ If batch_mode and lb_batch_ready then
 	f_get_global_preference("last_batch_billing_date",ls_date)
 	// dont order the batch billing service if it's already processed
 	If date(ls_date) >= date(today()) then
-		mylog.log(this, "u_component_serverservice.do_todo_services.0063", "Billing batch is already sent "+ls_date, 1)	
+		mylog.log(this, "u_component_serverservice.do_todo_services:0112", "Billing batch is already sent "+ls_date, 1)	
 	Else
 		if not isnull(batch_billing_service) then
 			li_sts = service_list.do_service(batch_billing_service)
@@ -235,7 +235,7 @@ luo_service_attributes.set_dataobject("dw_o_Service_Schedule_Attribute", cprdb)
 
 if isnull(current_user) or not isvalid(current_user) then
 	if server_service_id <= 0 or isnull(server_service_id) then
-		log.log(this,"u_component_serverservice.do_scheduled_services.0019","current user can't be set ",3)
+		log.log(this,"u_component_serverservice.do_scheduled_services:0019","current user can't be set ",3)
 		Return 1
 	end if
 	SELECT system_user_id
@@ -247,13 +247,13 @@ if isnull(current_user) or not isvalid(current_user) then
 end if
 
 if isnull(current_user) or not isvalid(current_user) then
-	log.log(this,"u_component_serverservice.do_scheduled_services.0019","current user object invalid ",3)
+	log.log(this,"u_component_serverservice.do_scheduled_services:0031","current user object invalid ",3)
 	return 1
 end if
 
 ll_count = luo_services.retrieve(current_user.user_id, office_id)
 if ll_count < 0 then
-	log.log(this,"u_component_serverservice.do_scheduled_services.0019","error getting scheduled services",3)
+	log.log(this,"u_component_serverservice.do_scheduled_services:0037","error getting scheduled services",3)
 	return -1
 end if
 
@@ -264,7 +264,7 @@ for i = 1 to ll_count
 	// Get the attributes
 	ll_attribute_count = luo_service_attributes.retrieve(current_user.user_id, ll_service_sequence)
 	if ll_attribute_count < 0 then
-		log.log(this,"u_component_serverservice.do_scheduled_services.0019","error getting service attributes (" + current_user.user_id + ", " + string(ll_service_sequence) + ")",4)
+		log.log(this,"u_component_serverservice.do_scheduled_services:0048","error getting service attributes (" + current_user.user_id + ", " + string(ll_service_sequence) + ")",4)
 		return -1
 	end if
 	lstr_attributes.attribute_count = 0

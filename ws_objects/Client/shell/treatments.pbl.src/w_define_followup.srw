@@ -219,7 +219,7 @@ Setnull(ordered_for)
 duration_amount = 0
 
 If Not Isvalid(Message.powerobjectparm) Then
-	log.log(this,"w_define_followup.open.0019","Invalid parameter; Expecting treatment component as it's parameter",4)
+	log.log(this,"w_define_followup:open","Invalid parameter; Expecting treatment component as it's parameter",4)
 	cb_cancel.event clicked()
 	Return
 End If

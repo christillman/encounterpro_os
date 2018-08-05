@@ -182,7 +182,7 @@ integer result
 
 result = ole_1.Activate(OffSite!)
 If result < 0 Then
-	log.log(this,"w_review_patient_material.ole_1.clicked.0014","Ole Error: "+String(result)+". Unable to "+&
+	log.log(this,"w_review_patient_material.ole_1.clicked:0014","Ole Error: "+String(result)+". Unable to "+&
 					"open file "+sle_title.text,4)
 End If
 end event

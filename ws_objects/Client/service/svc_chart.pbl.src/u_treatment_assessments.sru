@@ -70,7 +70,7 @@ integer li_treatment_count
 if initialized then return 1
 
 if isnull(current_display_encounter) then
-	log.log(this, "u_treatment_assessments.display_assessments.0015", "Invalid current_display_encounter", 4)
+	log.log(this, "u_treatment_assessments.display_assessments:0015", "Invalid current_display_encounter", 4)
 	return -1
 end if
 

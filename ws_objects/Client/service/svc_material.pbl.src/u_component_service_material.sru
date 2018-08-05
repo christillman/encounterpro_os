@@ -66,7 +66,7 @@ CHOOSE CASE lower(ls_which_material)
 					return 0
 				end if
 			else
-				log.log(this, "u_component_service_material.xx_do_service.0054", "reference material_id could not be determined", 4)
+				log.log(this, "u_component_service_material.xx_do_service:0054", "reference material_id could not be determined", 4)
 				return -1
 			end if
 		end if
@@ -78,7 +78,7 @@ CHOOSE CASE lower(ls_which_material)
 END CHOOSE
 
 if isnull(ll_material_id) then
-	log.log(this, "u_component_service_material.xx_do_service.0054", "material_id could not be determined", 4)
+	log.log(this, "u_component_service_material.xx_do_service:0066", "material_id could not be determined", 4)
 	return -1
 end if
 
@@ -98,7 +98,7 @@ CHOOSE CASE lower(ls_action)
 	CASE "open"
 		li_sts = f_open_patient_material(ll_material_id, "open", lb_wait_for_completion)
 		if li_sts <= 0 then
-			log.log(this, "u_component_service_material.xx_do_service.0054", "Error opening patient material", 4)
+			log.log(this, "u_component_service_material.xx_do_service:0086", "Error opening patient material", 4)
 			return -1
 		end if
 		
@@ -123,7 +123,7 @@ CHOOSE CASE lower(ls_action)
 		
 		li_sts = f_open_patient_material(ll_material_id, "print", false)
 		if li_sts <= 0 then
-			log.log(this, "u_component_service_material.xx_do_service.0054", "Error printing patient material", 4)
+			log.log(this, "u_component_service_material.xx_do_service:0111", "Error printing patient material", 4)
 			f_please_wait_close(li_wait)
 			return -1
 		end if
@@ -158,7 +158,7 @@ CHOOSE CASE lower(ls_action)
 		common_thread.set_printer(ls_printer)
 		li_sts = f_open_patient_material(ll_material_id, "print", false)
 		if li_sts <= 0 then
-			log.log(this, "u_component_service_material.xx_do_service.0054", "Error printing patient material", 4)
+			log.log(this, "u_component_service_material.xx_do_service:0146", "Error printing patient material", 4)
 			f_please_wait_close(li_wait)
 			return -1
 		end if

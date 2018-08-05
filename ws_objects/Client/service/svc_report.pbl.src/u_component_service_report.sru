@@ -143,7 +143,7 @@ CHOOSE CASE lower(ps_param_mode)
 		USING cprdb;
 		if not cprdb.check() then return -1
 		if cprdb.sqlcode = 100 then
-			mylog.log(this, "u_component_service_report.xx_configure_service.0021", "Invalid report id (" + ls_report_id + ")", 4)
+			mylog.log(this, "u_component_service_report.xx_configure_service:0021", "Invalid report id (" + ls_report_id + ")", 4)
 			return -1
 		end if
 		
@@ -246,7 +246,7 @@ If isnull(ls_report_id) then
 		// Add the report_id to the service attributes
 		add_workplan_item_attribute("report_id", ls_report_id)
 	else
-		log.log(this, "u_component_service_report.xx_do_service.0080", "No report_id", 4)
+		log.log(this, "u_component_service_report.xx_do_service:0080", "No report_id", 4)
 		Return -1
 	end if
 End if
@@ -303,12 +303,12 @@ If isnull(ls_destination) then lb_show_toolbar = true
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	log.log(this, "u_component_service_report.xx_do_service.0080", "Null component_id (" + ls_report_id + ")", 4)
+	log.log(this, "u_component_service_report.xx_do_service:0137", "Null component_id (" + ls_report_id + ")", 4)
 	Return -1
 Else
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		log.log(This, "u_component_service_report.xx_do_service.0142", "Error getting report component (" + &
+		log.log(This, "u_component_service_report.xx_do_service:0142", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return -1
 	End If
@@ -365,7 +365,7 @@ end if
 
 // Get the attributes for this service
 lstr_attributes = get_attributes()
-log.log(this, "u_component_service_report.xx_do_service.0080","processing report ("+ls_report_id+") on mode "+cpr_mode,1)
+log.log(this, "u_component_service_report.xx_do_service:0199","processing report ("+ls_report_id+") on mode "+cpr_mode,1)
 
 If cpr_mode = "CLIENT" Then
 	If lb_show_toolbar Then
@@ -610,11 +610,11 @@ if li_sts > 0 then
 															lstr_attachment.attachment &
 															)
 			if ll_attachment_id < 0 then
-				log.log(this, "u_component_service_report.xx_do_service.0080", "Error creating new attachment", 4)
+				log.log(this, "u_component_service_report.xx_do_service:0444", "Error creating new attachment", 4)
 				return -1
 			end if
 		else
-			log.log(this, "u_component_service_report.xx_do_service.0080", "Report completed successfully but did not produce a document.  Make sure this report component (" &
+			log.log(this, "u_component_service_report.xx_do_service:0448", "Report completed successfully but did not produce a document.  Make sure this report component (" &
 			 + luo_report.component_id + ") is capable of producing a document.  No document will be attached.", 3)
 		end if
 	end if
@@ -843,7 +843,7 @@ str_attributes lstr_attributes
 
 get_attribute("report_id", ls_report_id)
 if isnull(ls_report_id) then
-	log.log(this, "u_component_service_report.order_document.0031", "No report_id", 4)
+	log.log(this, "u_component_service_report.order_document:0031", "No report_id", 4)
 	return -1
 end if
 
@@ -853,7 +853,7 @@ FROM c_Report_Definition
 WHERE report_id = :ls_report_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_component_service_report.order_document.0031", "report_id not found (" + ls_report_id + ")", 4)
+	log.log(this, "u_component_service_report.order_document:0041", "report_id not found (" + ls_report_id + ")", 4)
 	return -1
 end if
 

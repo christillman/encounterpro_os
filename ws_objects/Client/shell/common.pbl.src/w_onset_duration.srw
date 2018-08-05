@@ -238,7 +238,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 4 then
-	log.log(this, "w_onset_duration.open.0014", "Invalid Parameters", 4)
+	log.log(this, "w_onset_duration:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

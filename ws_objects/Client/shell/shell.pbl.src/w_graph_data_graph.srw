@@ -251,7 +251,7 @@ integer li_sts
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 2 then
-	log.log(this, "w_graph_data_graph.open.0007", "Invalid Parameters", 4)
+	log.log(this, "w_graph_data_graph:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -260,7 +260,7 @@ graph_properties = CREATE u_graph_properties
 
 li_sts = load_graph(popup.items[1], long(popup.items[2]))
 if li_sts <= 0 then
-	log.log(this, "w_graph_data_graph.open.0007", "Error loading graph (" + popup.items[1] + ", " + popup.items[2] + ")", 4)
+	log.log(this, "w_graph_data_graph:open", "Error loading graph (" + popup.items[1] + ", " + popup.items[2] + ")", 4)
 	close(this)
 	return
 end if

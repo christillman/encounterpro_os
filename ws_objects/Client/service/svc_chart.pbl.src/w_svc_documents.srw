@@ -718,7 +718,7 @@ INTO :ls_communication_type, :ls_sender_component_id, :ls_send_from
 FROM dbo.fn_document_route_information(:ps_document_route);
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(this, "w_svc_documents.pick_address_old.0030", "Invalid document_route (" + ps_document_route + ")", 4)
+	log.log(this, "w_svc_documents.pick_address_old:0030", "Invalid document_route (" + ps_document_route + ")", 4)
 	return -1
 end if
 

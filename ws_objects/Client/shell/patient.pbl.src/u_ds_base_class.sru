@@ -202,7 +202,7 @@ sqlca.check()
 
 ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 
-log.log(this, "u_ds_base_class.dberror.0007", ls_message, 3)
+log.log(this, "u_ds_base_class:dber", ls_message, 3)
 
 return 1
 

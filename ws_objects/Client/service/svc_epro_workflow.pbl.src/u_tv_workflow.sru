@@ -91,7 +91,7 @@ long ll_handle
 string ls_data
 
 if isnull(ps_context_object) then
-	log.log(this, "u_tv_workflow.display_workflow.0006", "Null context_object", 4)
+	log.log(this, "u_tv_workflow.display_workflow:0006", "Null context_object", 4)
 	return -1
 end if
 
@@ -259,7 +259,7 @@ public subroutine menu (long pl_handle);//str_popup popup
 //		// Update the database
 //		li_sts = datalist.observation_tree_branch_update(lstr_branch)
 //		if li_sts <= 0 then
-//			log.log(this, "clicked", "Error saving branch changes", 4)
+//			log.log(this, "u_tv_workflow.menu:0139", "Error saving branch changes", 4)
 //			return
 //		end if
 //
@@ -329,13 +329,13 @@ datetime ldt_encounter_date
 
 li_sts = getitem(handle, ltvi_parent_item)
 if li_sts <= 0 then
-	log.log(this, "u_tv_workflow.itempopulate.0033", "Error getting new treeview item (" + string(handle) + ")", 4)
+	log.log(this, "u_tv_workflow:item", "Error getting new treeview item (" + string(handle) + ")", 4)
 	return 1
 end if
 
 f_split_string(string(ltvi_parent_item.data), "|", ls_node_type, ls_temp)
 if isnull(ls_node_type) or trim(ls_node_type) = "" then
-	log.log(this, "u_tv_workflow.itempopulate.0033", "No node_type", 4)
+	log.log(this, "u_tv_workflow:item", "No node_type", 4)
 	return 1
 end if
 

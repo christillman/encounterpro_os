@@ -83,7 +83,7 @@ autosave = true
 
 list_count = pick_list.rowcount()
 if list_count <= 0 then
-	log.log(this, "w_pop_order_datawindow.initialize.0013", "pick list empty", 4)
+	log.log(this, "w_pop_order_datawindow.initialize:0013", "pick list empty", 4)
 	close(this)
 	return -1
 end if

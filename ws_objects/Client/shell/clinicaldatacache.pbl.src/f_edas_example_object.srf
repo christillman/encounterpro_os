@@ -16,7 +16,7 @@ elseif len(ps_collectionproperty) > 0 then
 	// Parse the address
 	lstr_property_address = f_edas_parse_address("Root", ps_collectionproperty)
 	if lstr_property_address.return_status <= 0 then
-		log.log(po_null, "f_edas_example_object.0011", "EDAS Error parsing collection property (" + ps_collectionproperty + "): " + lstr_property_address.error_message, 3)
+		log.log(po_null, "f_edas_example_object:0011", "EDAS Error parsing collection property (" + ps_collectionproperty + "): " + lstr_property_address.error_message, 3)
 		ps_collection_object = ""
 		ps_example_key = ""
 		return -1

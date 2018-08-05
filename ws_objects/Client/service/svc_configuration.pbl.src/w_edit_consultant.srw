@@ -146,18 +146,18 @@ consultant_id = message.stringparm
 setnull(lstr_consultant.consultant_id)
 
 If isnull(consultant_id) or len(consultant_id) <= 0 Then
-	log.log(this,"w_edit_consultant.open.0009","Invalid Parameter",4)
+	log.log(this,"w_edit_consultant:open","Invalid Parameter",4)
 	closewithreturn(this, lstr_consultant)
 	Return
 End If
 
 li_sts = show_consultant()
 if li_sts < 0 then
-	log.log(this,"w_edit_consultant.open.0009","Error loading consultant (" + consultant_id + ")", 4)
+	log.log(this,"w_edit_consultant:open","Error loading consultant (" + consultant_id + ")", 4)
 	closewithreturn(this, lstr_consultant)
 	Return
 elseif li_sts = 0 then
-	log.log(this,"w_edit_consultant.open.0009","Consultant not found (" + consultant_id + ")", 4)
+	log.log(this,"w_edit_consultant:open","Consultant not found (" + consultant_id + ")", 4)
 	closewithreturn(this, lstr_consultant)
 	Return
 end if

@@ -95,7 +95,7 @@ object.attribute_value[row] = ls_display_value
 //		if len(ls_preference_enc) > 0 then
 //			ls_preference_value = ls_preference_enc
 //		else
-//			log.log(this, "selected", "Error encrypting value", 4)
+//			log.log(this, "u_dw_params_edit:clic", "Error encrypting value", 4)
 //			return
 //		end if
 //	end if

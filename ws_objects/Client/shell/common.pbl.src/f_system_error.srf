@@ -16,7 +16,7 @@ ls_msg += "~nevent   :"+error.objectevent
 ls_msg += "~nline    :"+string(error.line)
 
 IF NOT IsNull(log) AND IsValid(log) THEN
-	log.log(po_null, "f_system_error.0011", ls_msg, 4)
+	log.log(po_null, "f_system_error:0011", ls_msg, 4)
 ELSE
 	Clipboard(ls_msg)
 	DebugBreak()

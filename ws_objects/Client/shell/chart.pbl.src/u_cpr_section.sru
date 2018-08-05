@@ -124,7 +124,7 @@ if section_object.refresh_on_display or not section_object.displayed then
 		ls_text = "EncounterPRO encountered an error refreshing a chart section ("
 		ls_text += string(chart_id) + ", " + string(section_id) + ").  The following error message was returned:  "
 		ls_text += lt_error.text
-		log.log(this, "u_cpr_section.section_selected.0010", ls_text, 4)
+		log.log(this, "u_cpr_section.section_selected:0010", ls_text, 4)
 		return
 	END TRY
 	section_object.displayed = true

@@ -99,7 +99,7 @@ WHERE ( c_Package.administer_method = c_Administration_Method.administer_method 
 		( ( c_Package.package_id = :package_id ) )   ;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_package_description.set_package.0042", "Package not found (" + package_id + ")", 4)
+	log.log(this, "u_package_description.set_package:0042", "Package not found (" + package_id + ")", 4)
 	setnull(package_id)
 	st_package_name.text = ""
 	st_admin_method.text = ""

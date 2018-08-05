@@ -139,7 +139,7 @@ st_title.text = ls_temp
 //	st_prompt.text = popup.items[2]
 //	visible = true
 //Else
-//	log.log(This, "open", "invalid parameters", 4)
+//	log.log(This, "w_ext_observation_easyink_signature:open", "invalid parameters", 4)
 //	closewithreturn(this, lstr_captured_signature)
 //	Return
 //End If
@@ -174,14 +174,14 @@ ls_rendered_temp_file = f_temp_file(ls_rendered_attachment_extension)
 ole_signature.object.saveimage(ls_rendered_temp_file)
 
 if not fileexists(ls_rendered_temp_file) then
-	log.log(this, "w_ext_observation_easyink_signature.pb_done.clicked.0012", "An error occured saving this signature.  Please try again.", 4)
+	log.log(this, "w_ext_observation_easyink_signature.pb_done.clicked:0012", "An error occured saving this signature.  Please try again.", 4)
 	ole_signature.object.clear()
 	return
 end if
 
 li_sts = log.file_read(ls_rendered_temp_file, lbl_rendered_attachment)
 if li_sts <= 0 then
-	log.log(this, "w_ext_observation_easyink_signature.pb_done.clicked.0012", "An error occured while saving this signature.  Please try again.", 4)
+	log.log(this, "w_ext_observation_easyink_signature.pb_done.clicked:0019", "An error occured while saving this signature.  Please try again.", 4)
 	ole_signature.object.clear()
 	return
 end if

@@ -10,17 +10,17 @@ global function integer f_send_document_blob (string ps_document_type, long pl_a
 
 // validate the parameters
 if isnull(ps_document_type) then
-	log.log(po_null, "f_send_document_blob.0005", "Null document type", 4)
+	log.log(po_null, "f_send_document_blob:0005", "Null document type", 4)
 	return -1
 end if
 
 if isnull(pl_addressee) then
-	log.log(po_null, "f_send_document_blob.0005", "Null addressee", 4)
+	log.log(po_null, "f_send_document_blob:0010", "Null addressee", 4)
 	return -1
 end if
 
 if isnull(pbl_document) then
-	log.log(po_null, "f_send_document_blob.0005", "Null document", 4)
+	log.log(po_null, "f_send_document_blob:0015", "Null document", 4)
 	return -1
 end if
 
@@ -28,7 +28,7 @@ end if
 TRY
 	ls_hex = common_thread.eprolibnet4.convertbinarytohex(pbl_document)
 CATCH (throwable lt_error)
-	log.log(po_null, "f_send_document_blob.0005", "Error calling binary to hex conversion (" + lt_error.text + ")", 4)
+	log.log(po_null, "f_send_document_blob:0023", "Error calling binary to hex conversion (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

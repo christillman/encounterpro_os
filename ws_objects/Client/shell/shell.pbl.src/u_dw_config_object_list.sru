@@ -360,7 +360,7 @@ ls_description = object.description[pl_row]
 
 li_sts = f_get_config_object_info(ls_config_object_id, lstr_config_object_info)
 if li_sts <= 0 then
-	log.log(this, "u_dw_config_object_list.config_object_menu.0050", "error getting config object info (" + ls_config_object_id + ")", 4)
+	log.log(this, "u_dw_config_object_list.config_object_menu:0050", "error getting config object info (" + ls_config_object_id + ")", 4)
 	openwithparm(w_pop_message, "Object not found")
 	return
 end if
@@ -619,7 +619,7 @@ CHOOSE CASE buttons[button_pressed]
 		
 		li_sts = f_config_object_install(ls_config_object_id, ll_version)
 		if li_sts <= 0 then
-			log.log(this, "u_dw_config_object_list.config_object_menu.0309", "Error installing config object version (" + ls_config_object_id + ", " + string(ll_version) + ")", 4)
+			log.log(this, "u_dw_config_object_list.config_object_menu:0309", "Error installing config object version (" + ls_config_object_id + ", " + string(ll_version) + ")", 4)
 			return
 		end if
 	CASE "REINSTALL"
@@ -633,7 +633,7 @@ CHOOSE CASE buttons[button_pressed]
 		
 		li_sts = f_config_object_install(ls_config_object_id, ll_version)
 		if li_sts <= 0 then
-			log.log(this, "u_dw_config_object_list.config_object_menu.0309", "Error installing config object version (" + ls_config_object_id + ", " + string(ll_version) + ")", 4)
+			log.log(this, "u_dw_config_object_list.config_object_menu:0323", "Error installing config object version (" + ls_config_object_id + ", " + string(ll_version) + ")", 4)
 			return
 		end if
 	CASE "CONFIGURE"

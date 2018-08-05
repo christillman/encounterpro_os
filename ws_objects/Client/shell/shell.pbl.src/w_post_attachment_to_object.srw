@@ -137,7 +137,7 @@ end if
 //if isnull(attachment_context.context_object_type) or trim(attachment_context.context_object_type) = "" then
 //	ls_message = "Context Object Type could not be determined (" + attachment_context.folder + ")"
 //	openwithparm(w_pop_message, ls_message)
-//	log.log(this, "open()", ls_message, 4)
+//	log.log(this, "w_post_attachment_to_object:post", ls_message, 4)
 //	setnull(attachment_context.object_key)
 //	closewithreturn(this, attachment_context)
 //	Return
@@ -145,7 +145,7 @@ end if
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this,"w_post_attachment_to_object.post_open.0023","Initialize failed", 4)
+	log.log(this,"w_post_attachment_to_object:post","Initialize failed", 4)
 	setnull(attachment_context.object_key)
 	closewithreturn(this, attachment_context)
 	Return
@@ -353,7 +353,7 @@ CHOOSE CASE lower(attachment_context.context_object)
 			end if
 		next
 	CASE ELSE
-		log.log(this, "w_post_attachment_to_object.initialize.0201", "Invalid attachment_context.context_object (" + attachment_context.context_object + ")", 4)
+		log.log(this, "w_post_attachment_to_object.initialize:0201", "Invalid attachment_context.context_object (" + attachment_context.context_object + ")", 4)
 		return -1
 END CHOOSE
 
@@ -383,7 +383,7 @@ if isnull(ls_treatment_type) then return 0
 
 luo_treatment = f_get_treatment_component(ls_treatment_type)
 if isnull(luo_treatment) then
-	log.log(this, "w_post_attachment_to_object.pick_treatment.0019", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
+	log.log(this, "w_post_attachment_to_object.pick_treatment:0019", "Unable to get treatment object (" + ls_treatment_type + ")", 4)
 	return -1
 end if
 
@@ -611,7 +611,7 @@ lstr_encounter.encounter_id = current_patient.new_encounter(lstr_encounter, &
 																				current_scribe.user_id, &
 																				false)
 if lstr_encounter.encounter_id <= 0 then
-	log.log(this, "w_post_attachment_to_object.pick_treatment.0019", "Could not create a new encounter", 4)
+	log.log(this, "w_post_attachment_to_object.order_encounter:0021", "Could not create a new encounter", 4)
 	return -1
 end if
 
@@ -773,7 +773,7 @@ if isnull(attachment_context.context_object) or trim(attachment_context.context_
 	
 	// Make sure we have a folder
 	if isnull(attachment_context.folder) then
-		log.log(this,"w_post_attachment_to_object.post_open.0023","Null Folder",4)
+		log.log(this,"w_post_attachment_to_object:open","Null Folder",4)
 		setnull(attachment_context.object_key)
 		closewithreturn(this, attachment_context)
 		Return
@@ -785,13 +785,13 @@ if isnull(attachment_context.context_object) or trim(attachment_context.context_
 	FROM c_Folder
 	WHERE folder = :attachment_context.folder;
 	if not tf_check() then
-		log.log(this,"w_post_attachment_to_object.post_open.0023","Error getting Folder",4)
+		log.log(this,"w_post_attachment_to_object:open","Error getting Folder",4)
 		setnull(attachment_context.object_key)
 		closewithreturn(this, attachment_context)
 		Return
 	end if
 	if sqlca.sqlcode = 100 then
-		log.log(this,"w_post_attachment_to_object.post_open.0023","Folder not found (" + attachment_context.folder + ")",4)
+		log.log(this,"w_post_attachment_to_object:open","Folder not found (" + attachment_context.folder + ")",4)
 		setnull(attachment_context.object_key)
 		closewithreturn(this, attachment_context)
 		Return
@@ -1126,7 +1126,7 @@ attachment_context.context_object_type = ls_context_object_type
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this,"w_post_attachment_to_object.post_open.0023","Initialize failed", 4)
+	log.log(this,"w_post_attachment_to_object.st_type.clicked:0011","Initialize failed", 4)
 	setnull(attachment_context.object_key)
 	closewithreturn(parent, attachment_context)
 	Return

@@ -87,7 +87,7 @@ If ls_context = "Utility" Then st_title.text = 'Utilities'
 
 menu_id = f_get_context_menu(ls_context, ls_null)
 if isnull(menu_id) then
-	log.log(this, "w_prefs_main.open.0022", "Unable to determine "+ls_context+" menu", 4)
+	log.log(this, "w_prefs_main:open", "Unable to determine "+ls_context+" menu", 4)
 	close(this)
 	return
 end if

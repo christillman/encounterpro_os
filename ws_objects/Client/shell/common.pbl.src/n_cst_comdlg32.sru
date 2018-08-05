@@ -383,9 +383,9 @@ If GetSaveFileNameA(iOFN) Then
 Else
 	ll_errcode = CommDlgExtendedError()
 	If ll_errcode = 0 Then
-		log.log(this, "n_cst_comdlg32.getsavefilename.0066", "Error calling GetSaveFileNameA", 4)
+		log.log(this, "n_cst_comdlg32.getsavefilename:0066", "Error calling GetSaveFileNameA", 4)
 	Else
-		log.log(this, "n_cst_comdlg32.getsavefilename.0066", "Error calling GetSaveFileNameA (" + String(ll_errcode) + ")", 4)
+		log.log(this, "n_cst_comdlg32.getsavefilename:0068", "Error calling GetSaveFileNameA (" + String(ll_errcode) + ")", 4)
 	End If
 End If
 
@@ -470,9 +470,9 @@ If GetSaveFileNameA(iOFN) Then
 Else
 	ll_errcode = CommDlgExtendedError()
 	If ll_errcode = 0 Then
-		log.log(this, "n_cst_comdlg32.getsavefilename.0066", "Error calling GetSaveFileNameA", 4)
+		log.log(this, "n_cst_comdlg32.getsavefilename:0072", "Error calling GetSaveFileNameA", 4)
 	Else
-		log.log(this, "n_cst_comdlg32.getsavefilename.0066", "Error calling GetSaveFileNameA (" + String(ll_errcode) + ")", 4)
+		log.log(this, "n_cst_comdlg32.getsavefilename:0074", "Error calling GetSaveFileNameA (" + String(ll_errcode) + ")", 4)
 	End If
 End If
 

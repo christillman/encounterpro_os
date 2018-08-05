@@ -259,7 +259,7 @@ FROM c_Component_Definition
 WHERE component_id = :component_version.component_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "u_tabpage_component_version_properties.cb_try_this_version.clicked.0014", "Component not found (" + component_version.component_id + ")", 4)
+	log.log(this, "u_tabpage_component_version_properties.cb_try_this_version.clicked:0014", "Component not found (" + component_version.component_id + ")", 4)
 	return -1
 end if
 
@@ -340,7 +340,7 @@ FROM c_Component_Definition
 WHERE component_id = :component_version.component_id;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "u_tabpage_component_version_properties.cb_try_this_version.clicked.0014", "Component not found (" + component_version.component_id + ")", 4)
+	log.log(this, "u_tabpage_component_version_properties.cb_use_this_version.clicked:0014", "Component not found (" + component_version.component_id + ")", 4)
 	return -1
 end if
 

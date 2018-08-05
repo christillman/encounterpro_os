@@ -208,7 +208,7 @@ END CHOOSE
 ls_column_list = ""
 context_table_columncount = sqlca.table_column_list(context_tablename, context_table_columnnames)
 if context_table_columncount <= 0 then
-	log.log(this, "u_ds_clinical_data_cache.initialize.0041", "Error getting column list for table (" + context_tablename + ")", 4)
+	log.log(this, "u_ds_clinical_data_cache.initialize:0041", "Error getting column list for table (" + context_tablename + ")", 4)
 	return -1
 end if
 for i = 1 to context_table_columncount
@@ -246,7 +246,7 @@ ls_sql = sql_base + " WHERE a.cpr_id = '" + cpr_id + "'"
 ls_syntax = sqlca.SyntaxFromSQL(ls_sql, "", ls_error_string)
 
 if len(ls_error_string) > 0 then
-	log.log(this, "u_ds_clinical_data_cache.initialize.0079", "Error getting syntax: SQL=" + ls_sql + ", ERROR=" + ls_error_string, 4)
+	log.log(this, "u_ds_clinical_data_cache.initialize:0079", "Error getting syntax: SQL=" + ls_sql + ", ERROR=" + ls_error_string, 4)
 	return -1
 end if
 
@@ -256,7 +256,7 @@ dw_syntax = ls_syntax
 Create(dw_syntax, ls_error_create)
 if Len(ls_error_create) > 0 THEN
 	if isnull(ls_error_create) then ls_error_create = "<Null>"
-	log.log(this, "u_ds_clinical_data_cache.initialize.0041", "Error creating datastore (" + ls_error_create + ")", 4)
+	log.log(this, "u_ds_clinical_data_cache.initialize:0089", "Error creating datastore (" + ls_error_create + ")", 4)
 	return -1
 end if
 

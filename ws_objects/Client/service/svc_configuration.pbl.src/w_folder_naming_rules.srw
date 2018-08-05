@@ -120,7 +120,7 @@ folder = message.stringparm
 
 
 if isnull(folder) or trim(folder) = "" then
-	log.log(this, "w_folder_naming_rules.open.0008", "No folder name supplied", 4)
+	log.log(this, "w_folder_naming_rules:open", "No folder name supplied", 4)
 	close(this)
 	return
 end if
@@ -134,7 +134,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_folder_naming_rules.open.0008", "Folder not found (" + folder + ")", 4)
+	log.log(this, "w_folder_naming_rules:open", "Folder not found (" + folder + ")", 4)
 	close(this)
 	return
 end if

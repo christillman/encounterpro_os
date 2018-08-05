@@ -78,12 +78,12 @@ ll_sts = sqlca.jmj_new_document_config_object(  &
 										REF ls_report_id )
 if not tf_check() then return ls_null
 if ll_sts <> 1 then
-	log.log(po_null, "f_new_contraindication_alerts.0073", "Error creating new datafile", 4)
+	log.log(po_null, "f_new_contraindication_alerts:0073", "Error creating new datafile", 4)
 	return ls_null
 end if
 
 if isnull(ls_report_id) or trim(ls_report_id) = "" then
-	log.log(po_null, "f_new_contraindication_alerts.0073", "jmj_new_datafile returned NULL", 4)
+	log.log(po_null, "f_new_contraindication_alerts:0078", "jmj_new_datafile returned NULL", 4)
 	return ls_null
 end if
 

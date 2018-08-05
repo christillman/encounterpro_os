@@ -80,7 +80,7 @@ ls_report_id = get_attribute("report_id")
 if isnull(ls_report_id) then
 	get_attribute("material_id", ll_material_id)
 	if isnull(ll_material_id) then
-		log.log(this, "u_component_wp_item_document.document_create.0023", "No report_id", 4)
+		log.log(this, "u_component_wp_item_document.document_create:0023", "No report_id", 4)
 		document_error("Create")
 		return -1
 	end if
@@ -93,12 +93,12 @@ CHOOSE CASE lower(ls_document_type)
 	CASE "report"
 		li_sts = run_report(ls_report_id, lstr_document_file)
 		if li_sts < 0 then
-			log.log(this, "u_component_wp_item_document.document_create.0023", "Error running report (" + ls_report_id + ")", 4)
+			log.log(this, "u_component_wp_item_document.document_create:0036", "Error running report (" + ls_report_id + ")", 4)
 			document_error("Create")
 			return -1
 		end if
 		if isnull(lstr_document_file.attachment) or len(lstr_document_file.attachment) <= 0 then
-			log.log(this, "u_component_wp_item_document.document_create.0023", "Document ran successfully but returned no data (" + ls_report_id + ")", 3)
+			log.log(this, "u_component_wp_item_document.document_create:0041", "Document ran successfully but returned no data (" + ls_report_id + ")", 3)
 			return 0
 		end if
 		
@@ -124,7 +124,7 @@ CHOOSE CASE lower(ls_document_type)
 														ls_folder &
 														)
 		if ll_attachment_id < 0 then
-			log.log(this, "u_component_wp_item_document.document_create.0023", "Error creating new attachment", 4)
+			log.log(this, "u_component_wp_item_document.document_create:0067", "Error creating new attachment", 4)
 			document_error("Create")
 			return -1
 		end if
@@ -134,7 +134,7 @@ CHOOSE CASE lower(ls_document_type)
 		
 		li_sts = set_progress("Document Created")
 		if li_sts < 0 then
-			log.log(this, "u_component_wp_item_document.document_create.0023", "Error setting 'created' progress", 4)
+			log.log(this, "u_component_wp_item_document.document_create:0077", "Error setting 'created' progress", 4)
 			document_error("Create")
 			return -1
 		end if
@@ -154,7 +154,7 @@ public function integer document_cancel ();integer li_sts
 
 li_sts = set_progress("Cancelled")
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_create.0023", "Error setting 'cancelled' progress", 4)
+	log.log(this, "u_component_wp_item_document.document_cancel:0005", "Error setting 'cancelled' progress", 4)
 	return -1
 end if
 
@@ -166,7 +166,7 @@ public function integer document_confirm_receipt ();integer li_sts
 
 li_sts = set_progress("Success")
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_confirm_receipt.0005", "Error setting 'Success' progress", 4)
+	log.log(this, "u_component_wp_item_document.document_confirm_receipt:0005", "Error setting 'Success' progress", 4)
 	return -1
 end if
 
@@ -194,7 +194,7 @@ if isnull(ls_send_from) then
 	FROM dbo.fn_document_route_information(:dispatch_method);
 	if not tf_check() then return -1
 	if sqlca.sqlnrows <> 1 then
-		log.log(this, "u_component_wp_item_document.document_send.0021", "Invalid dispatch_method (" + dispatch_method + ")", 4)
+		log.log(this, "u_component_wp_item_document.document_send:0021", "Invalid dispatch_method (" + dispatch_method + ")", 4)
 		return -1
 	end if
 end if
@@ -211,7 +211,7 @@ if cpr_mode = "CLIENT" THEN
 else
 	// if we're on the server and the attribute says send from the client then return an error
 	if lower(ls_send_from) = "client" then
-		log.log(this, "u_component_wp_item_document.document_send.0021", "Unable to send this document because it must be sent from a client (" + string(patient_workplan_item_id) + ")", 4)
+		log.log(this, "u_component_wp_item_document.document_send:0038", "Unable to send this document because it must be sent from a client (" + string(patient_workplan_item_id) + ")", 4)
 		return -1
 	else
 		lb_send_from_here = true
@@ -266,7 +266,7 @@ setnull(ls_service)
 setnull(ls_null)
 
 if isnull(ps_report_id) then
-	log.log(this, "u_component_wp_item_document.run_report.0044", "Null report_id", 4)
+	log.log(this, "u_component_wp_item_document.run_report:0044", "Null report_id", 4)
 	return -1
 end if
 
@@ -277,7 +277,7 @@ FROM c_Report_Definition
 WHERE report_id = :ps_report_id;
 If Not tf_check() Then Return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "u_component_wp_item_document.run_report.0044", "report_id not found (" + ps_report_id + ")", 4)
+	log.log(this, "u_component_wp_item_document.run_report:0055", "report_id not found (" + ps_report_id + ")", 4)
 	return -1
 end if
 
@@ -292,7 +292,7 @@ if isnull(dispatch_method) then
 	AND document_format = :ls_this_document_format;
 	if not tf_check() then return -1
 	if sqlca.sqlnrows = 0 then
-		log.log(this, "u_component_wp_item_document.run_report.0044", "No dispatch_method is supplied and this recipients actor_class does not imply one", 4)
+		log.log(this, "u_component_wp_item_document.run_report:0070", "No dispatch_method is supplied and this recipients actor_class does not imply one", 4)
 		return -1
 	end if
 	
@@ -317,7 +317,7 @@ FROM c_Document_Route
 WHERE document_route = :dispatch_method;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(this, "u_component_wp_item_document.run_report.0044", "dispatch_method not valid (" + dispatch_method + ")", 4)
+	log.log(this, "u_component_wp_item_document.run_report:0095", "dispatch_method not valid (" + dispatch_method + ")", 4)
 	return -1
 end if
 
@@ -334,7 +334,7 @@ if lower(ls_this_document_format) <> lower(ls_required_document_format) and not 
 	if not tf_check() then return -1
 	
 	if isnull(ll_max_attribute_sequence) then
-		log.log(this, "u_component_wp_item_document.run_report.0044", "A " + ls_required_document_format + " readable document is required", 4)
+		log.log(this, "u_component_wp_item_document.run_report:0112", "A " + ls_required_document_format + " readable document is required", 4)
 		return -1
 	end if
 	
@@ -382,12 +382,12 @@ ls_destination = "FILE"
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	mylog.log(this, "u_component_wp_item_document.run_report.0044", "Null component_id (" + ps_report_id + ")", 4)
+	mylog.log(this, "u_component_wp_item_document.run_report:0160", "Null component_id (" + ps_report_id + ")", 4)
 	Return -1
 Else
 	luo_report = component_manager.get_component(ls_component_id)
 	If Isnull(luo_report) Then
-		mylog.log(This, "u_component_wp_item_document.run_report.0165", "Error getting report component (" + &
+		mylog.log(This, "u_component_wp_item_document.run_report:0165", "Error getting report component (" + &
 					ls_component_id + ")", 4)
 		Return -1
 	End If
@@ -412,7 +412,7 @@ end if
 
 // Get the attributes for this service
 lstr_attributes = get_attributes()
-mylog.log(this, "u_component_wp_item_document.run_report.0044","processing report ("+ps_report_id+") on mode "+cpr_mode,1)
+mylog.log(this, "u_component_wp_item_document.run_report:0190","processing report ("+ps_report_id+") on mode "+cpr_mode,1)
 
 if len(cpr_id) > 0 then
 	f_attribute_add_attribute(lstr_attributes, "cpr_id", cpr_id)
@@ -442,7 +442,7 @@ if luo_report.printreport_status > 0 then
 		pstr_document_file = luo_report.document_file
 		li_sts = 1
 	else
-		log.log(this, "u_component_wp_item_document.run_report.0044", "The report/datafile returned success but no report document is found + (" + ps_report_id + ")", 4)
+		log.log(this, "u_component_wp_item_document.run_report:0220", "The report/datafile returned success but no report document is found + (" + ps_report_id + ")", 4)
 		li_sts = -1
 	end if
 elseif luo_report.printreport_status = 0 then
@@ -453,11 +453,11 @@ elseif luo_report.printreport_status = 0 then
 		document_cancel()
 		li_sts = 0
 	else
-		log.log(this, "u_component_wp_item_document.run_report.0044", "The report/datafile returned no documents + (" + ps_report_id + ")", 4)
+		log.log(this, "u_component_wp_item_document.run_report:0231", "The report/datafile returned no documents + (" + ps_report_id + ")", 4)
 		li_sts = -1
 	end if
 else
-	log.log(this, "u_component_wp_item_document.run_report.0044", "The report/datafile returned an error + (" + ps_report_id + ")", 4)
+	log.log(this, "u_component_wp_item_document.run_report:0235", "The report/datafile returned an error + (" + ps_report_id + ")", 4)
 	li_sts = -1
 end if
 
@@ -473,7 +473,7 @@ public function integer document_sign ();integer li_sts
 
 li_sts = set_progress("Signed")
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_sign.0005", "Error setting 'signed' progress", 4)
+	log.log(this, "u_component_wp_item_document.document_sign:0005", "Error setting 'signed' progress", 4)
 	return -1
 end if
 
@@ -496,7 +496,7 @@ if isnull(ls_report_id) then
 	// If we have no report_id then see if we have a material_id
 	get_attribute("material_id", ll_material_id)
 	if isnull(ll_material_id) then
-		log.log(this, "u_component_wp_item_document.document_subtype.0016", "No report_id or material_id", 4)
+		log.log(this, "u_component_wp_item_document.document_subtype:0016", "No report_id or material_id", 4)
 		return ls_null
 	end if
 	return "Material"
@@ -641,7 +641,7 @@ private function integer document_send_set_ready ();integer li_sts
 
 li_sts = set_progress("Ready")
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error setting 'Ready' progress (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_send_set_ready:0005", "Error setting 'Ready' progress (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -701,7 +701,7 @@ end if
 
 li_sts = route_component(dispatch_method, luo_sender)
 if li_sts <= 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_send_now:0053", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
 	document_error("Send")
 	return -1
 end if
@@ -712,7 +712,7 @@ end if
 
 li_sts = luo_sender.send_document(this)
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error sending document: sender component returned error (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_send_now:0064", "Error sending document: sender component returned error (" + string(patient_workplan_item_id) + ")", 4)
 	document_error("Send")
 	return -1
 elseif li_sts > 0 then
@@ -722,7 +722,7 @@ elseif li_sts > 0 then
 	
 	li_sts = set_progress("Sent")
 	if li_sts < 0 then
-		log.log(this, "u_component_wp_item_document.document_send.0021", "Error setting 'sent' progress", 4)
+		log.log(this, "u_component_wp_item_document.document_send_now:0074", "Error setting 'sent' progress", 4)
 		document_error("Send")
 		return -1
 	end if
@@ -785,16 +785,16 @@ private function integer document_send_now_old ();//string ls_temp
 //					if li_sts <= 0 then return li_sts
 //					get_attribute("attachment_id", ll_attachment_id)
 //					if isnull(ll_attachment_id) then
-//						log.log(this, "u_component_wp_item_document.document_send.0021", "Document created but not found", 4)
+//						log.log(this, "u_component_wp_item_document.document_send_now_old:0052", "Document created but not found", 4)
 //						return -1
 //					end if
 //				else
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Document not found", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0056", "Document not found", 4)
 //					return -1
 //				end if
 //			end if
 //		elseif isnull(ll_attachment_id) then
-//			log.log(this, "u_component_wp_item_document.document_send.0021", "Status is 'Ready' but document not found (" + string(patient_workplan_item_id) + ")", 4)
+//			log.log(this, "u_component_wp_item_document.document_send_now_old:0061", "Status is 'Ready' but document not found (" + string(patient_workplan_item_id) + ")", 4)
 //			return -1
 //		end if
 //		
@@ -833,7 +833,7 @@ private function integer document_send_now_old ();//string ls_temp
 //		FROM dbo.fn_document_route_information(:dispatch_method);
 //		if not tf_check() then return -1
 //		if sqlca.sqlnrows <> 1 then
-//			log.log(this, "u_component_wp_item_document.document_send.0021", "Invalid dispatch_method (" + dispatch_method + ")", 4)
+//			log.log(this, "u_component_wp_item_document.document_send_now_old:0100", "Invalid dispatch_method (" + dispatch_method + ")", 4)
 //			return -1
 //		end if
 //		
@@ -867,7 +867,7 @@ private function integer document_send_now_old ();//string ls_temp
 //				
 //				li_sts = f_print_attachment_with_attributes(ll_attachment_id, lstr_attributes)
 //				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error printing attachment", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0134", "Error printing attachment", 4)
 //					f_please_wait_close(li_wait)
 //					return -1
 //				end if
@@ -875,13 +875,13 @@ private function integer document_send_now_old ();//string ls_temp
 //				f_please_wait_close(li_wait)
 //			CASE "filesender"
 //				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0142", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 //					return -1
 //				end if
 //
 //				li_sts = f_get_attachment(ll_attachment_id, lstr_attachment)
 //				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error getting attacment file", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0148", "Error getting attacment file", 4)
 //					return -1
 //				end if
 //				
@@ -893,19 +893,19 @@ private function integer document_send_now_old ();//string ls_temp
 //				
 //				ls_temp = f_attribute_find_attribute(lstr_attributes, "attachment_location_id")
 //				if isnull(ls_temp) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0160", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
 //					return -1
 //				end if
 //				ll_attachment_location_id = long(ls_temp)
 //				ls_send_to_directory = f_attribute_find_attribute(lstr_attributes, "send_to_directory")
 //				if isnull(ls_send_to_directory) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0166", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
 //					return -1
 //				end if
 //				
 //				lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
 //				if isnull(lstr_attachment_location.attachment_location_id) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0172", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
 //					return -1
 //				end if
 //				
@@ -932,14 +932,14 @@ private function integer document_send_now_old ();//string ls_temp
 //				
 //				li_sts = log.file_write(lstr_attachment.attachment, ls_save_path)
 //				if li_sts < 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0199", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
 //					return -1
 //				end if
 //
 //			CASE "sender_epie"
 //				// Verify that this customer is licensed to use the selected route
 //				if lower(dispatch_method) = "email" then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "This installation is not licensed to send documents via eMail", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0206", "This installation is not licensed to send documents via eMail", 4)
 //					if cpr_mode = "CLIENT" then
 //						openwithparm(w_pop_message, "This installation is not licensed to send documents via eMail")
 //					end if
@@ -947,7 +947,7 @@ private function integer document_send_now_old ();//string ls_temp
 //				end if
 //
 //				if lower(dispatch_method) = "fax" then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "This installation is not licensed to send documents via Fax", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0214", "This installation is not licensed to send documents via Fax", 4)
 //					if cpr_mode = "CLIENT" then
 //						openwithparm(w_pop_message, "This installation is not licensed to send documents via Fax")
 //					end if
@@ -955,18 +955,18 @@ private function integer document_send_now_old ();//string ls_temp
 //				end if
 //
 //				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0222", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 //					return -1
 //				end if
 //
 //				if isnull(ls_document_type) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid document type", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0227", dispatch_method + " dispatch_method does not have a valid document type", 4)
 //					return -1
 //				end if
 //				
 //				li_sts = f_get_attachment(ll_attachment_id, lstr_attachment)
 //				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error getting attacment file", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0233", "Error getting attacment file", 4)
 //					return -1
 //				end if
 //				
@@ -984,7 +984,7 @@ private function integer document_send_now_old ();//string ls_temp
 //		FROM dbo.fn_document_route_information(:dispatch_method);
 //		if not tf_check() then return -1
 //		if sqlca.sqlnrows <> 1 then
-//			log.log(this, "u_component_wp_item_document.document_send.0021", "Invalid dispatch_method (" + dispatch_method + ")", 4)
+//			log.log(this, "u_component_wp_item_document.document_send_now_old:0251", "Invalid dispatch_method (" + dispatch_method + ")", 4)
 //			return -1
 //		end if
 //		
@@ -999,7 +999,7 @@ private function integer document_send_now_old ();//string ls_temp
 //				end if
 //				li_sts = f_open_patient_material(ll_material_id, "print", false)
 //				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error printing patient material", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0266", "Error printing patient material", 4)
 //					f_please_wait_close(li_wait)
 //					return -1
 //				end if
@@ -1010,13 +1010,13 @@ private function integer document_send_now_old ();//string ls_temp
 //				f_please_wait_close(li_wait)
 //			CASE "sender_file"
 //				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0277", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 //					return -1
 //				end if
 //
 //				lstr_material = f_get_patient_material(ll_material_id, true)
 //				if isnull(lstr_material.material_id) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error getting material file", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0283", "Error getting material file", 4)
 //					return -1
 //				end if
 //				
@@ -1028,20 +1028,20 @@ private function integer document_send_now_old ();//string ls_temp
 //				
 //				ls_temp = f_attribute_find_attribute(lstr_attributes, "attachment_location_id")
 //				if isnull(ls_temp) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0295", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
 //					return -1
 //				end if
 //
 //				ll_attachment_location_id = long(ls_temp)
 //				ls_send_to_directory = f_attribute_find_attribute(lstr_attributes, "send_to_directory")
 //				if isnull(ls_send_to_directory) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0302", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
 //					return -1
 //				end if
 //				
 //				lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
 //				if isnull(lstr_attachment_location.attachment_location_id) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0308", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
 //					return -1
 //				end if
 //				
@@ -1068,14 +1068,14 @@ private function integer document_send_now_old ();//string ls_temp
 //				
 //				li_sts = log.file_write(lstr_material.material_object, ls_save_path)
 //				if li_sts < 0 then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0335", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
 //					return -1
 //				end if
 //
 //			CASE "sender_epie"
 //				// Verify that this customer is licensed to use the selected route
 //				if lower(dispatch_method) = "email" then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "This installation is not licensed to send documents via eMail", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0342", "This installation is not licensed to send documents via eMail", 4)
 //					if cpr_mode = "CLIENT" then
 //						openwithparm(w_pop_message, "This installation is not licensed to send documents via eMail")
 //					end if
@@ -1083,7 +1083,7 @@ private function integer document_send_now_old ();//string ls_temp
 //				end if
 //
 //				if lower(dispatch_method) = "fax" then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "This installation is not licensed to send documents via Fax", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0350", "This installation is not licensed to send documents via Fax", 4)
 //					if cpr_mode = "CLIENT" then
 //						openwithparm(w_pop_message, "This installation is not licensed to send documents via Fax")
 //					end if
@@ -1093,17 +1093,17 @@ private function integer document_send_now_old ();//string ls_temp
 //				// Send the document
 //				lstr_material = f_get_patient_material(ll_material_id, true)
 //				if isnull(lstr_material.material_id) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", "Error getting material file", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0360", "Error getting material file", 4)
 //					return -1
 //				end if
 //				
 //				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0365", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
 //					return -1
 //				end if
 //
 //				if isnull(ls_document_type) then
-//					log.log(this, "u_component_wp_item_document.document_send.0021", dispatch_method + " dispatch_method does not have a valid document type", 4)
+//					log.log(this, "u_component_wp_item_document.document_send_now_old:0370", dispatch_method + " dispatch_method does not have a valid document type", 4)
 //					return -1
 //				end if
 //				
@@ -1118,7 +1118,7 @@ private function integer document_send_now_old ();//string ls_temp
 //
 //li_sts = set_progress("Sent")
 //if li_sts < 0 then
-//	log.log(this, "u_component_wp_item_document.document_send.0021", "Error setting 'sent' progress", 4)
+//	log.log(this, "u_component_wp_item_document.document_send_now_old:0385", "Error setting 'sent' progress", 4)
 //	return -1
 //end if
 //
@@ -1134,7 +1134,7 @@ string ls_address_value
 // Get the route sender component
 li_sts = route_component(dispatch_method, luo_sender)
 if li_sts <= 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_pick_address:0009", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -1259,7 +1259,7 @@ if isnull(ls_new_dispatch_method) then return 0
 
 li_sts = route_component(ls_new_dispatch_method, luo_sender)
 if li_sts <= 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_pick_recipient:0110", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -1308,7 +1308,7 @@ if isnull(ls_new_dispatch_method) then return 0
 // Get the route sender component
 li_sts = route_component(ls_new_dispatch_method, luo_sender)
 if li_sts <= 0 then
-	log.log(this, "u_component_wp_item_document.document_send.0021", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.document_pick_dispatch_method:0015", "Error sending document: Unable to get sender component (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -1400,7 +1400,7 @@ private function integer route_component (string ps_dispatch_method, ref u_compo
 string ls_document_route
 
 if isnull(ps_dispatch_method) then
-	log.log(this, "u_component_wp_item_document.route_component.0005", "No dispatch_method has been set for this document (" + string(patient_workplan_item_id) + ")", 4)
+	log.log(this, "u_component_wp_item_document.route_component:0005", "No dispatch_method has been set for this document (" + string(patient_workplan_item_id) + ")", 4)
 	return -1
 end if
 
@@ -1409,13 +1409,13 @@ INTO :ls_component_id
 FROM dbo.fn_document_route_information(:ps_dispatch_method);
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(this, "u_component_wp_item_document.route_component.0005", "Route not found for this document (" + string(patient_workplan_item_id) + ", " + ps_dispatch_method + ")", 4)
+	log.log(this, "u_component_wp_item_document.route_component:0014", "Route not found for this document (" + string(patient_workplan_item_id) + ", " + ps_dispatch_method + ")", 4)
 	return -1
 end if
 
 puo_route = component_manager.get_component(ls_component_id)
 if isnull(puo_route) then
-	log.log(this, "u_component_wp_item_document.route_component.0005", "Error getting route component (" +  string(patient_workplan_item_id) + ", " + ls_component_id + ")", 4)
+	log.log(this, "u_component_wp_item_document.route_component:0020", "Error getting route component (" +  string(patient_workplan_item_id) + ", " + ls_component_id + ")", 4)
 	return -1
 end if
 
@@ -1488,7 +1488,7 @@ CHOOSE CASE lower(document_subtype())
 			li_sts = document_create()
 			if li_sts <= 0 then return li_sts
 			if not document_created then
-				log.log(this, "u_component_wp_item_document.document_send.0021", "Document created but not found", 4)
+				log.log(this, "u_component_wp_item_document.get_document:0034", "Document created but not found", 4)
 				return -1
 			end if
 			
@@ -1496,7 +1496,7 @@ CHOOSE CASE lower(document_subtype())
 			if failed_mappings then
 				get_attribute("force_send", lb_force_send)
 				if not lb_force_send then
-					log.log(this, "u_component_wp_item_document.document_send.0021", "Document mapping failed.  Document will not be sent (" + string(patient_workplan_item_id) + ")", 4)
+					log.log(this, "u_component_wp_item_document.get_document:0042", "Document mapping failed.  Document will not be sent (" + string(patient_workplan_item_id) + ")", 4)
 					document_error("Mapping")
 					return -1
 				end if
@@ -1507,7 +1507,7 @@ CHOOSE CASE lower(document_subtype())
 		
 		li_sts = f_get_attachment(attachment_id, pstr_document)
 		if li_sts <= 0 then
-			log.log(this, "u_component_wp_item_document.document_send.0021", "Error getting attacment file", 4)
+			log.log(this, "u_component_wp_item_document.get_document:0053", "Error getting attacment file", 4)
 			return -1
 		end if
 	CASE ELSE
@@ -1526,7 +1526,7 @@ setnull(ls_null)
 
 li_sts = set_progress("Reset")
 if li_sts < 0 then
-	log.log(this, "u_component_wp_item_document.document_reset.0009", "Error resetting document", 4)
+	log.log(this, "u_component_wp_item_document.document_reset:0009", "Error resetting document", 4)
 	return -1
 end if
 
@@ -1692,7 +1692,7 @@ if not document_created or failed_mappings then
 		viewing_document = false
 		if li_sts <= 0 then return li_sts
 		if not document_created then
-			log.log(this, "u_component_wp_item_document.document_send.0021", "Document created but not found", 4)
+			log.log(this, "u_component_wp_item_document.document_view:0017", "Document created but not found", 4)
 			return -1
 		end if
 		

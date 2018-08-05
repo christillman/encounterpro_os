@@ -78,7 +78,7 @@ end function
 
 event open;call super::open;authority_type = message.stringparm
 if isnull(authority_type) then
-	log.log(this,"w_authority_categories_edit.open.0003","authority type is not valid",4)
+	log.log(this,"w_authority_categories_edit:open","authority type is not valid",4)
 	Close(this)
 	Return
 end if

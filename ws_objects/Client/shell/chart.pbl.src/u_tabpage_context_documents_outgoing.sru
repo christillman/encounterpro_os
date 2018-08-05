@@ -133,7 +133,7 @@ status_refresh_documents.set_dataobject("dw_jmj_get_documents")
 
 if isnull(parent_tab.service) or not isvalid(parent_tab.service) then
 	if isnull(current_service) or not isvalid(current_service) then
-		log.log(this, "u_tabpage_context_documents_outgoing.initialize.0029", "Service context not found", 4)
+		log.log(this, "u_tabpage_context_documents_outgoing.initialize:0029", "Service context not found", 4)
 	else
 		service = current_service
 		view_context_object = current_service.context_object

@@ -11,7 +11,7 @@ string ls_user_id
 long ll_count
 
 if isnull(current_user) then
-	log.log(this, "tf_add_personal_top_20.0006", "No Current User", 3)
+	log.log(this, "tf_add_personal_top_20:0006", "No Current User", 3)
 	return 0
 end if
 

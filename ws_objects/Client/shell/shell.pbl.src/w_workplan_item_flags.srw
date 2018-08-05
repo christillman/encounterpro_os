@@ -161,7 +161,7 @@ st_title.text = popup.title
 popup_return.item_count = 0
 
 if popup.data_row_count <> 9 then
-	log.log(this, "w_workplan_item_flags.open.0011", "Invalid Parameters", 4)
+	log.log(this, "w_workplan_item_flags:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

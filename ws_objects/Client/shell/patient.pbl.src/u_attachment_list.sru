@@ -89,7 +89,7 @@ long ll_row
 
 // If the attachment is not valid, then log a warning
 if isnull(puo_attachment) or not isvalid(puo_attachment) then
-	log.log(this, "u_attachment_list.delete_attachment.0006", "Attachment not valid", 3)
+	log.log(this, "u_attachment_list.delete_attachment:0006", "Attachment not valid", 3)
 	return 0
 end if
 

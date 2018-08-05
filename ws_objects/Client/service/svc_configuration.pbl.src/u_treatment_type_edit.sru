@@ -340,7 +340,7 @@ DO
 LOOP WHILE i < 100
 
 if i >= 100 then
-	log.log(this, "u_treatment_type_edit.pb_new_treatment_type.clicked.0041", "Unable to generate new treatment_type key (" + ls_description + ")", 4)
+	log.log(this, "u_treatment_type_edit.pb_new_treatment_type.clicked:0041", "Unable to generate new treatment_type key (" + ls_description + ")", 4)
 	return
 end if
 

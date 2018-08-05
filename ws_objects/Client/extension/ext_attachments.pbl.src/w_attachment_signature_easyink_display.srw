@@ -74,7 +74,7 @@ end if
 // get the attachment
 ll_sts = attachment.get_attachment_blob(lbl_attachment)
 If ll_sts <= 0 Then
-	log.log(this,"w_attachment_signature_easyink_display.post_open.0014","failed to get signature attachment from database / file",3)
+	log.log(this,"w_attachment_signature_easyink_display:post","failed to get signature attachment from database / file",3)
 	pb_done.event clicked()
 	return
 Else

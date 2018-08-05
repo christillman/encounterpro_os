@@ -186,7 +186,7 @@ for i = 1 to ll_file_count
 	// Read the file
 	li_sts = log.file_read(lsa_paths[i], lbl_file)
 	if li_sts <= 0 then
-		log.log(this, "w_svc_config_database.load_schema_file.0066", "Error reading file (" + lsa_paths[i] + ")", 4)
+		log.log(this, "w_svc_config_database.load_schema_file:0066", "Error reading file (" + lsa_paths[i] + ")", 4)
 		return -1
 	end if
 	
@@ -206,7 +206,7 @@ for i = 1 to ll_file_count
 //	if isnumber(ls_right) then
 //		ll_modification_level = long(ls_right)
 //	else
-//		log.log(this, "load_schema_file()", "badly formed filename - could not find mod level (" + lstr_filepath.filename + ")", 4)
+//		log.log(this, "w_svc_config_database.load_schema_file:0086", "badly formed filename - could not find mod level (" + lstr_filepath.filename + ")", 4)
 //		return -1
 //	end if
 //
@@ -254,7 +254,7 @@ for i = 1 to ll_file_count
 	if not tf_check() then return -1
 	
 	if isnull(ll_material_id) or ll_material_id <= 0 then
-		log.log(this,"w_svc_config_database.load_schema_file.0134","Error creating new material",4)
+		log.log(this,"w_svc_config_database.load_schema_file:0134","Error creating new material",4)
 		return -1
 	end if
 		
@@ -318,7 +318,7 @@ dbo_connection.connect_approle = false
 li_sts = dbo_connection.dbconnect("EproOSDBConfig")
 if li_sts <= 0 then
 	openwithparm(w_pop_message, "Error connecting to database.  See event viewer for more information.")
-	log.log(this, "w_svc_config_database.open.0010", "Error Connecting to Database", 4)
+	log.log(this, "w_svc_config_database:open", "Error Connecting to Database", 4)
 	
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"

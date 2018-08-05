@@ -91,7 +91,7 @@ dataobject = "dw_pick_result_by_loc"
 luo_location_domain = CREATE u_str_location_domain
 li_sts = luo_location_domain.initialize(ps_location_domain)
 if li_sts < 0 then
-	log.log(this, "u_dw_pick_test_results.display_results_with_loc.0029", "Invalid location domain (" + ps_location_domain + ")", 4)
+	log.log(this, "u_dw_pick_test_results.display_results_with_loc:0029", "Invalid location domain (" + ps_location_domain + ")", 4)
 	DESTROY luo_location_domain
 	return -1
 end if

@@ -177,7 +177,7 @@ pretty_results_display = puo_datawindow
 
 observation_id = service.root_observation_id()
 if isnull(observation_id) then
-	log.log(this, "u_tab_history_parents.initialize.0011", "No observation_id", 4)
+	log.log(this, "u_tab_history_parents.initialize:0011", "No observation_id", 4)
 	return -1
 end if
 

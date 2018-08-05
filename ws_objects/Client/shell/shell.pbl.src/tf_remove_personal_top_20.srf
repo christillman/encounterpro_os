@@ -10,7 +10,7 @@ global function integer tf_remove_personal_top_20 (string ps_top_20_code, long p
 string ls_user_id
 
 if isnull(current_user) then
-	log.log(this, "tf_remove_personal_top_20.0005", "No Current User", 3)
+	log.log(this, "tf_remove_personal_top_20:0005", "No Current User", 3)
 	return 0
 end if
 

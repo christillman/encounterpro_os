@@ -287,7 +287,7 @@ lt_start_loading = now()
 popup_return.item_count = 0
 
 if isnull(current_service) or not isvalid(current_service) then
-	log.log(this, "w_cpr_main.open.0019", "Current service not valid", 4)
+	log.log(this, "w_cpr_main:open", "Current service not valid", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -295,10 +295,10 @@ end if
 tab_cpr.chart_window = this
 open(tab_cpr.wait_window, "w_pop_please_wait_chart")
 
-log.log(this, "w_cpr_main.open.0019", "Initializing w_cpr_main...", 1)
+log.log(this, "w_cpr_main:open", "Initializing w_cpr_main...", 1)
 initialize()
 
-log.log(this, "w_cpr_main.open.0019", "Initializing tab_cpr...", 1)
+log.log(this, "w_cpr_main:open", "Initializing tab_cpr...", 1)
 tab_cpr.initialize()
 
 current_service.add_attribute("chart_id", string(tab_cpr.chart_id))
@@ -387,12 +387,12 @@ end if
 
 uo_picture.initialize()
 
-log.log(this, "w_cpr_main.open.0019", "calling refresh_screen()...", 1)
+log.log(this, "w_cpr_main:open", "calling refresh_screen()...", 1)
 refresh_screen()
 
 if isvalid(tab_cpr.wait_window) then tab_cpr.wait_window.bump_progress()
 
-log.log(this, "w_cpr_main.open.0019", "calling tab_cpr.select_default_tab()", 1)
+log.log(this, "w_cpr_main:open", "calling tab_cpr.select_default_tab()", 1)
 tab_cpr.select_default_tab()
 
 // Log the amount of time it took to load the chart

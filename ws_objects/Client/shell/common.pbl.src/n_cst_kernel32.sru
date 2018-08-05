@@ -379,7 +379,7 @@ if isnull(pul_pid) or pul_pid = 0 then return 0
 TRY
 	lul_hwnd = common_thread.eprolibnet4.GetMainWindowHandle(pul_pid)
 CATCH (throwable lt_error)
-	log.log(this, "n_cst_kernel32.kill_process.0014", "Error getting main process window: " + lt_error.text, 4)
+	log.log(this, "n_cst_kernel32.kill_process:0014", "Error getting main process window: " + lt_error.text, 4)
 	return -1
 END TRY
 

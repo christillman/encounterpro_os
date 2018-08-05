@@ -129,7 +129,7 @@ if not isnull(ls_DeviceErrorMsg) then
 	ls_message += ls_DeviceErrorMsg
 end if
 
-observation_component.mylog.log(this, "w_ext_observation_wlca_spotcheck.ole_spotcheck.deviceerror.0018", ls_message, 3)
+observation_component.mylog.log(this, "w_ext_observation_wlca_spotcheck.ole_spotcheck.deviceerror:0018", ls_message, 3)
 
 object.DisconnectDevice()
 

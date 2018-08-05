@@ -466,7 +466,7 @@ elseif popup.data_row_count = 2 then
 	procedure_type = popup.items[1]
 	procedure_id = popup.items[2]
 else
-	log.log(this, "w_procedure_definition.open.0021", "Invalid parameters", 4)
+	log.log(this, "w_procedure_definition:open", "Invalid parameters", 4)
 	setnull(popup_return.item)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)

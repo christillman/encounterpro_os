@@ -260,7 +260,7 @@ dw_child_items.settransobject(sqlca)
 
 li_sts = display_treatment()
 if li_sts <= 0 then
-	log.log(this, "w_assessment_treatment_edit.open.0010", "Error displaying treatment definition", 4)
+	log.log(this, "w_assessment_treatment_edit:open", "Error displaying treatment definition", 4)
 	close(this)
 	return
 end if

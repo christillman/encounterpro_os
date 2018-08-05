@@ -201,7 +201,7 @@ ElseIf popup.data_row_count = 4 Then
 	special_top_20_code = popup.items[3]
 	composite_flag = popup.items[4] // 'Y'-Composite , 'N' - Simple
 Else
-	log.log(this, "w_pick_observations.open.0041", "Invalid Parameters", 4)
+	log.log(this, "w_pick_observations:open", "Invalid Parameters", 4)
 	closewithreturn(this, lstr_observations)
 	Return
 End If

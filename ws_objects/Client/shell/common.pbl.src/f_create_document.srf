@@ -22,18 +22,18 @@ string ls_context_object
 
 luo_document = component_manager.get_component(ps_document_component_id, pstr_attributes)
 if isnull(luo_document) then
-	log.log(po_null, "f_create_document.0017", "error getting component (" + ps_document_component_id + ")", 4)
+	log.log(po_null, "f_create_document:0017", "error getting component (" + ps_document_component_id + ")", 4)
 	return -1
 end if
 
 TRY
 	li_sts = luo_document.create_document()
 	if li_sts < 0 then
-		log.log(po_null, "f_create_document.0017", "Error calling document component (" + ps_document_component_id + ")", 4)
+		log.log(po_null, "f_create_document:0024", "Error calling document component (" + ps_document_component_id + ")", 4)
 		return -1
 	end if
 CATCH (exception le_error)
-	log.log(po_null, "f_create_document.0017", "Error calling document component (" + ps_document_component_id + "): " + le_error.text, 4)
+	log.log(po_null, "f_create_document:0028", "Error calling document component (" + ps_document_component_id + "): " + le_error.text, 4)
 	return -1
 END TRY
 

@@ -26,7 +26,7 @@ str_c_xml_class lstr_xml_class
 
 get_attribute("xml_script_id", ll_xml_script_id)
 if isnull(ll_xml_script_id) then
-	log.log(this, "u_component_document_xml.xx_do_source.0011", "No XML script specified", 4)
+	log.log(this, "u_component_document_xml.xx_do_source:0011", "No XML script specified", 4)
 	return -1
 end if
 

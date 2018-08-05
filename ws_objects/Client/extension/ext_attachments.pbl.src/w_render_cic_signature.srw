@@ -66,7 +66,7 @@ If popup.data_row_count = 4 then
 	
 	postevent("post_open")
 Else
-	log.log(this,"w_render_cic_signature.open.0017","Invalid parameters",4)
+	log.log(this,"w_render_cic_signature:open","Invalid parameters",4)
 	pb_done.event clicked()
 	Return
 End If
@@ -91,7 +91,7 @@ if ole_cic_signature.object.ink = ink then
 		ll_sts = ole_cic_signature.object.SaveToBitmapFile(bitmap_file)
 	end if
 else
-	log.log(this, "w_render_cic_signature.post_open.0020", "Invalid Ink Property", 3)
+	log.log(this, "w_render_cic_signature:post", "Invalid Ink Property", 3)
 	ll_sts = -1
 	setnull(bitmap_file)
 end if

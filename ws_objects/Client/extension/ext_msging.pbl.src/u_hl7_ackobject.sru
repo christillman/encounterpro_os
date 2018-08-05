@@ -8,7 +8,7 @@ global type u_hl7_ackobject from oleobject
 end type
 global u_hl7_ackobject u_hl7_ackobject
 
-event externalexception;log.log(this,"u_hl7_ackobject.externalexception.0001",description  + " exceptioncode=" + string(exceptioncode),3)
+event externalexception;log.log(this,"u_hl7_ackobject:exte",description  + " exceptioncode=" + string(exceptioncode),3)
 action = ExceptionIgnore!
 end event
 

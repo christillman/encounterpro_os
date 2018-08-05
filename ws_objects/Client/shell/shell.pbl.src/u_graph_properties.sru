@@ -123,14 +123,14 @@ string ls_category_type
 setnull(ls_null)
 
 if isnull(category_id) then
-	log.log(this, "u_graph_properties.category_type.0010", "category_id is null", 4)
+	log.log(this, "u_graph_properties.category_type:0010", "category_id is null", 4)
 	return ls_null
 end if
 
 ls_find = "category_id=" + string(category_id)
 ll_row = categories.find(ls_find, 1, categories.rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_graph_properties.category_type.0010", "category_id not found (" + string(category_id) + ")", 4)
+	log.log(this, "u_graph_properties.category_type:0017", "category_id not found (" + string(category_id) + ")", 4)
 	return ls_null
 end if
 
@@ -319,7 +319,7 @@ WHERE user_id = :user_id
 AND graph_id = :graph_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_graph_properties.load_graph.0037", "Graph not found (" + user_id + ", " + string(graph_id) + ")", 4)
+	log.log(this, "u_graph_properties.load_graph:0037", "Graph not found (" + user_id + ", " + string(graph_id) + ")", 4)
 	return -1
 end if
 
@@ -523,14 +523,14 @@ ldt_to_date = data_series.object.to_date[pl_series_row]
 
 
 if isnull(ll_data_id) then
-	log.log(this, "u_graph_properties.category_type.0010", "data_id is null", 4)
+	log.log(this, "u_graph_properties.get_query:0035", "data_id is null", 4)
 	return ls_null
 end if
 
 ls_find = "data_id=" + string(ll_data_id)
 ll_row = data_items.find(ls_find, 1, data_items.rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_graph_properties.category_type.0010", "data item not found (" + string(ll_data_id) + ")", 4)
+	log.log(this, "u_graph_properties.get_query:0042", "data item not found (" + string(ll_data_id) + ")", 4)
 	return ls_null
 end if
 
@@ -538,14 +538,14 @@ ls_tablename = data_items.object.tablename[ll_row]
 
 // Then get the category fields
 if isnull(category_id) then
-	log.log(this, "u_graph_properties.category_type.0010", "category_id is null", 4)
+	log.log(this, "u_graph_properties.get_query:0050", "category_id is null", 4)
 	return ls_null
 end if
 
 ls_find = "category_id=" + string(category_id)
 ll_row = categories.find(ls_find, 1, categories.rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_graph_properties.category_type.0010", "category_id not found (" + string(category_id) + ")", 4)
+	log.log(this, "u_graph_properties.get_query:0057", "category_id not found (" + string(category_id) + ")", 4)
 	return ls_null
 end if
 
@@ -569,7 +569,7 @@ ls_series_filter = "series_sequence=" + string(ll_series_sequence)
 restrictions.setfilter(ls_series_filter)
 li_sts = restrictions.filter()
 if li_sts <= 0 then
-	log.log(this, "u_graph_properties.category_type.0010()", "Error filtering restrictions", 4)
+	log.log(this, "u_graph_properties.get_query:0081", "Error filtering restrictions", 4)
 	return ls_null
 end if
 ll_restriction_count = restrictions.rowcount()
@@ -584,7 +584,7 @@ for i = 1 to ll_restriction_count
 	restriction_values.setfilter(ls_restriction_filter)
 	li_sts = restriction_values.filter()
 	if li_sts <= 0 then
-		log.log(this, "u_graph_properties.category_type.0010()", "Error filtering restriction values", 4)
+		log.log(this, "u_graph_properties.get_query:0096", "Error filtering restriction values", 4)
 		return ls_null
 	end if
 	ll_restriction_value_count = restriction_values.rowcount()
@@ -739,7 +739,7 @@ WHERE user_id = :user_id
 AND graph_id = :graph_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_graph_properties.load_graph.0037", "Graph not found (" + user_id + ", " + string(graph_id) + ")", 4)
+	log.log(this, "u_graph_properties.save_graph:0026", "Graph not found (" + user_id + ", " + string(graph_id) + ")", 4)
 	return -1
 end if
 
@@ -750,21 +750,21 @@ li_restriction_values_count = restriction_values.rowcount()
 // The update the data series
 li_sts = data_series.update()
 if li_sts <= 0 then
-	log.log(this, "u_graph_properties.load_graph.0037", "Error saving data series (" + user_id + ", " + string(graph_id) + ")", 4)
+	log.log(this, "u_graph_properties.save_graph:0037", "Error saving data series (" + user_id + ", " + string(graph_id) + ")", 4)
 	return -1
 end if
 
 // Save the restrictions
 li_sts = restrictions.update()
 if li_sts <= 0 then
-	log.log(this, "u_graph_properties.load_graph.0037", "Error saving restrictions (" + user_id + ", " + string(graph_id) + ")", 4)
+	log.log(this, "u_graph_properties.save_graph:0044", "Error saving restrictions (" + user_id + ", " + string(graph_id) + ")", 4)
 	return -1
 end if
 
 // Save the restriction values
 li_sts = restriction_values.update()
 if li_sts <= 0 then
-	log.log(this, "u_graph_properties.load_graph.0037", "Error saving restriction values (" + user_id + ", " + string(graph_id) + ")", 4)
+	log.log(this, "u_graph_properties.save_graph:0051", "Error saving restriction values (" + user_id + ", " + string(graph_id) + ")", 4)
 	return -1
 end if
 

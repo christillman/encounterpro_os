@@ -62,7 +62,7 @@ If popup.data_row_count = 3 then
 	attachment = popup.objectparm
 	postevent("post_open")
 Else
-	log.log(this,"w_render_easyink_signature.open.0011","Invalid parameters",4)
+	log.log(this,"w_render_easyink_signature:open","Invalid parameters",4)
 	pb_done.event clicked()
 	Return
 End If

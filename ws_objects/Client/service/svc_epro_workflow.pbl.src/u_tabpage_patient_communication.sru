@@ -67,7 +67,7 @@ long ll_count
 long i
 
 if isnull(current_patient) then
-	log.log(this, "u_tabpage_patient_communication.initialize.0008", "No current patient", 4)
+	log.log(this, "u_tabpage_patient_communication.initialize:0008", "No current patient", 4)
 	return -1
 else
 	st_cpr_id.text = current_patient.cpr_id

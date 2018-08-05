@@ -215,7 +215,7 @@ Settransobject(SQLCA)
 
 service = puo_service
 if isnull(service.treatment) then
-	log.log(this, "u_dw_child_treatments.initialize.0008", "Service has no treatment context", 4)
+	log.log(this, "u_dw_child_treatments.initialize:0008", "Service has no treatment context", 4)
 	return -1
 end if
 

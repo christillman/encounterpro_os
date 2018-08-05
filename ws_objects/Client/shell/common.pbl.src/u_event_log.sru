@@ -375,7 +375,7 @@ string ls_dir
 
 li_sts = f_parse_filepath(ps_fileto, ls_drive, ls_directory, ls_file, ls_extension)
 if li_sts <= 0 then
-	log.log(this, "u_event_log.file_copy.0035", "Invalid target (" + ps_fileto + ")", 4)
+	log.log(this, "u_event_log.file_copy:0035", "Invalid target (" + ps_fileto + ")", 4)
 end if
 
 ls_dir = ls_drive + ls_directory
@@ -386,9 +386,9 @@ end if
 li_sts = filecopy(ps_filefrom, ps_fileto, false)
 if li_sts <= 0 then
 	if li_sts = -1 then
-		log.log(this, "u_event_log.file_copy.0035", "Error opening source (" + ps_filefrom + ")", 4)
+		log.log(this, "u_event_log.file_copy:0046", "Error opening source (" + ps_filefrom + ")", 4)
 	elseif li_sts = -2 then
-		log.log(this, "u_event_log.file_copy.0035", "Error writing target (" + ps_fileto + ")", 4)
+		log.log(this, "u_event_log.file_copy:0048", "Error writing target (" + ps_fileto + ")", 4)
 	end if
 	
 	return -1
@@ -456,14 +456,14 @@ end function
 
 public function integer file_read (string ps_file, ref blob pblb_file);
 if isnull(ps_file) then
-	log.log(this, "u_event_log.file_read.0003", "Null file path", 4)
+	log.log(this, "u_event_log.file_read:0003", "Null file path", 4)
 	return -1
 end if
 
 TRY
 	pblb_file = common_thread.eprolibnet4.FileToBytes(ps_file)
 CATCH (throwable lt_error)
-	log.log(this, "u_event_log.file_read.0003", "Error reading file (" + ps_file + "): " + lt_error.text, 4)
+	log.log(this, "u_event_log.file_read:0010", "Error reading file (" + ps_file + "): " + lt_error.text, 4)
 	return -1
 END TRY
 
@@ -479,19 +479,19 @@ end function
 public function integer file_write (ref blob pblb_file, string ps_file);integer li_sts
 
 if isnull(ps_file) then
-	log.log(this, "u_event_log.file_write.0004", "Null file path", 4)
+	log.log(this, "u_event_log.file_write:0004", "Null file path", 4)
 	return -1
 end if
 
 if isnull(pblb_file) then
-	log.log(this, "u_event_log.file_write.0004", "Null file blob", 4)
+	log.log(this, "u_event_log.file_write:0009", "Null file blob", 4)
 	return -1
 end if
 
 TRY
 	li_sts = common_thread.eprolibnet4.BytesToFile(ps_file, pblb_file)
 CATCH (throwable lt_error)
-	log.log(this, "u_event_log.file_write.0004", "Error writing file (" + ps_file + ") : " + lt_error.text, 4)
+	log.log(this, "u_event_log.file_write:0016", "Error writing file (" + ps_file + ") : " + lt_error.text, 4)
 	return -1
 END TRY
 
@@ -1064,7 +1064,7 @@ FileLock le_filelock
 long ll_bytes
 
 if isnull(ps_file) then
-	log.log(this, "u_event_log.file_read.0003", "Null file path", 4)
+	log.log(this, "u_event_log.file_read2:0006", "Null file path", 4)
 	return -1
 end if
 
@@ -1076,13 +1076,13 @@ end if
 
 ll_fileNum = FileOpen(ps_file, StreamMode!, Read!, le_filelock)
 if ll_fileNum < 0 then
-	log.log(this, "u_event_log.file_read.0003", "Error opening file (" + ps_file + ")", 4)
+	log.log(this, "u_event_log.file_read2:0018", "Error opening file (" + ps_file + ")", 4)
 	return -1
 end if
 
 ll_bytes = FileReadEx(ll_fileNum, pblb_file)
 if ll_bytes = -1 then
-	log.log(this, "u_event_log.file_read.0003", "Error reading file (" + ps_file + ")", 4)
+	log.log(this, "u_event_log.file_read2:0024", "Error reading file (" + ps_file + ")", 4)
 	return -1
 end if
 

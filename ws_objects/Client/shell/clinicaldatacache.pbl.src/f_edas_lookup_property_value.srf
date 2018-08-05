@@ -98,7 +98,7 @@ CASE "observation"
 			CASE "global"
 			CASE "dependent"
 			CASE ELSE
-				log.log(po_null, "f_edas_lookup_property_value.0093", "Invalid parent object type (" + pstr_epro_object.object_type + ")", 4)
+				log.log(po_null, "f_edas_lookup_property_value:0093", "Invalid parent object type (" + pstr_epro_object.object_type + ")", 4)
 				return -1
 		END CHOOSE
 	CASE "sql"
@@ -121,7 +121,7 @@ CASE "observation"
 		// Use the associated scripting component to process the property
 		ls_component_id = datalist.property_type_component_id(pstr_property.property.property_type)
 		if isnull(ls_component_id) then
-			log.log(po_null, "f_edas_lookup_property_value.0116", "property type component_id not found (" +pstr_property.property.property_type + ")", 4)
+			log.log(po_null, "f_edas_lookup_property_value:0116", "property type component_id not found (" +pstr_property.property.property_type + ")", 4)
 			return -1
 		end if
 		

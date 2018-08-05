@@ -90,32 +90,32 @@ CHOOSE CASE lower(ls_attachment_object)
 	CASE "patient"
 	CASE "encounter"
 		if isnull(lstr_new_attachment.encounter_id) then
-			mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0043", "Null encounter_id", 4)
+			mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0043", "Null encounter_id", 4)
 			return -1
 		end if
 	CASE "treatment"
 		if isnull(lstr_new_attachment.treatment_id) then
-			mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0043", "Null treatment_id", 4)
+			mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0048", "Null treatment_id", 4)
 			return -1
 		end if
 	CASE "observation"
 		if isnull(lstr_new_attachment.observation_sequence) then
-			mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0043", "Null observation_sequence", 4)
+			mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0053", "Null observation_sequence", 4)
 			return -1
 		end if
 	CASE "assessment"
 		if isnull(lstr_new_attachment.problem_id) then
-			mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0043", "Null problem_id", 4)
+			mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0058", "Null problem_id", 4)
 			return -1
 		end if
 	CASE ELSE
-		mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0043", "Invalid attachment_object (" + ls_attachment_object + ")", 4)
+		mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0062", "Invalid attachment_object (" + ls_attachment_object + ")", 4)
 		return -1
 END CHOOSE
 
 ls_observation_id = get_attribute("observation_id")
 if isnull(ls_observation_id) then
-	mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0068", "No observation_id", 4)
+	mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0068", "No observation_id", 4)
 	return -1
 end if
 
@@ -134,7 +134,7 @@ if isnull(ls_comment_title) then
 	WHERE material_id = :ll_material_id;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "u_component_service_obs_attachment.xx_do_service.0087", "Material_id not found (" + string(ll_material_id) + ")", 4)
+		log.log(this, "u_component_service_obs_attachment.xx_do_service:0087", "Material_id not found (" + string(ll_material_id) + ")", 4)
 		return -1
 	end if
 	
@@ -148,7 +148,7 @@ WHERE material_id = :ll_material_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0068", "material_id not found (" + string(ll_material_id) + ")", 4)
+	mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0101", "material_id not found (" + string(ll_material_id) + ")", 4)
 	return -1
 end if
 
@@ -159,7 +159,7 @@ WHERE material_id = :ll_material_id
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_service_obs_attachment.xx_do_service.0068", "material_id not found (" + string(ll_material_id) + ")", 4)
+	mylog.log(this, "u_component_service_obs_attachment.xx_do_service:0112", "material_id not found (" + string(ll_material_id) + ")", 4)
 	return -1
 end if
 
@@ -177,7 +177,7 @@ setnull(lstr_new_attachment.attachment_text)
 
 ll_attachment_id = current_patient.attachments.new_attachment(lstr_new_attachment, lbl_attachment, ls_attachment_object)
 if ll_attachment_id <= 0 then
-	log.log(this, "u_component_service_obs_attachment.xx_do_service.0130", "Error creating attachment", 4)
+	log.log(this, "u_component_service_obs_attachment.xx_do_service:0130", "Error creating attachment", 4)
 	return -1
 end if
 

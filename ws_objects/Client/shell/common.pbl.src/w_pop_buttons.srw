@@ -218,13 +218,13 @@ for i = 1 to max_rows
 		button_object_count += 1
 		li_sts = openuserobject(picture_buttons[button_object_count], ((j - 1) * (button_width + spacing)) + spacing, button_top + ((i - 1) * row_x_increment) )
 		if li_sts < 0 then
-			log.log(this, "w_pop_buttons.create_buttons.0012", "Error creating button object", 4)
+			log.log(this, "w_pop_buttons.create_buttons:0012", "Error creating button object", 4)
 			return -1
 		end if
 		if button_popup.button_titles_used then
 			li_sts = openuserobject(titles[button_object_count], ((j - 1) * (button_width + spacing)) + spacing, button_top + button_height + title_gap + ((i - 1) * row_x_increment))
 			if li_sts < 0 then
-				log.log(this, "w_pop_buttons.create_buttons.0012", "Error creating button title object", 4)
+				log.log(this, "w_pop_buttons.create_buttons:0018", "Error creating button title object", 4)
 				return -1
 			end if
 			titles_used = true

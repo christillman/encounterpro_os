@@ -144,7 +144,7 @@ event open;call super::open;str_popup_return popup_return
 integer li_sts
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "w_rx_signature.open.0005", "No open encounter", 4)
+	log.log(this, "w_rx_signature:open", "No open encounter", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)
@@ -298,7 +298,7 @@ if f_is_external_source_available("Signature") then
 
 	li_sts = service_list.do_service(ls_service,lstra_attributes)
 	If li_sts <= 0 Then
-		log.log(this,"w_rx_signature.cb_sign.clicked.0031","Failed to get encounter signature",4)
+		log.log(this,"w_rx_signature.cb_sign.clicked:0031","Failed to get encounter signature",4)
 		pb_cancel.event clicked()
 		Return
 	End If

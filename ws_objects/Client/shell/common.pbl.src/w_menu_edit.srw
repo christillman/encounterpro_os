@@ -181,7 +181,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_menu_edit.open.0015", "menu_id not found (" + string(menu_id) + ")", 4)
+	log.log(this, "w_menu_edit:open", "menu_id not found (" + string(menu_id) + ")", 4)
 	close(this)
 	return
 end if

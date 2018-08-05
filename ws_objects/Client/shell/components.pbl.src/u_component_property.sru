@@ -46,24 +46,24 @@ string ls_property
 setnull(ls_property)
 
 if isnull(pl_property_id) then
-	mylog.log(this, "u_component_property.get_property.0010", "Null Property_id", 4)
+	mylog.log(this, "u_component_property.get_property:0010", "Null Property_id", 4)
 	return ls_property
 end if
 
 property = datalist.find_property(pl_property_id)
 if isnull(property.property_id) then
-	mylog.log(this, "u_component_property.get_property.0010", "Property not found (" + string(pl_property_id) + ")", 4)
+	mylog.log(this, "u_component_property.get_property:0016", "Property not found (" + string(pl_property_id) + ")", 4)
 	return ls_property
 end if
 
 if isnull(property.status) or property.status <> "OK" then
-	mylog.log(this, "u_component_property.get_property.0010", "Property Status not OK", 4)
+	mylog.log(this, "u_component_property.get_property:0021", "Property Status not OK", 4)
 	return ls_property
 end if
 
 li_sts = common_thread.get_adodb(adodb)
 if li_sts <= 0 then
-	mylog.log(this, "u_component_property.get_property.0010", "Unable to establish ADO Connection", 4)
+	mylog.log(this, "u_component_property.get_property:0027", "Unable to establish ADO Connection", 4)
 	return ls_property
 end if
 

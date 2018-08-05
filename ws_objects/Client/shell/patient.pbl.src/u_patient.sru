@@ -431,7 +431,7 @@ public function integer load_assessments ();long ll_assessment_count
 
 ll_assessment_count = assessments.retrieve(cpr_id)
 if ll_assessment_count < 0 then
-	log.log(this, "u_patient.load_assessments.0005", "Error loading assessments", 4)
+	log.log(this, "u_patient.load_assessments:0005", "Error loading assessments", 4)
 	return -1
 end if
 
@@ -472,7 +472,7 @@ public function integer load_treatments ();long ll_treatment_count
 
 ll_treatment_count = treatments.initialize(cpr_id)
 if ll_treatment_count < 0 then
-	log.log(this, "u_patient.load_assessments.0005", "Error loading treatments", 4)
+	log.log(this, "u_patient.load_treatments:0005", "Error loading treatments", 4)
 	return -1
 end if
 
@@ -486,7 +486,7 @@ integer li_sts
 
 ll_count = encounters.retrieve(cpr_id)
 if ll_count < 0 then
-	log.log(this, "u_patient.load_encounters.0006", "Error loading encounters", 4)
+	log.log(this, "u_patient.load_encounters:0006", "Error loading encounters", 4)
 	return -1
 end if
 
@@ -546,7 +546,7 @@ integer li_sts
 
 ll_attachment_count = attachments.retrieve(cpr_id)
 if ll_attachment_count < 0 then
-	log.log(this, "u_patient.load_assessments.0005", "Error loading attachments", 4)
+	log.log(this, "u_patient.load_attachments:0006", "Error loading attachments", 4)
 	return -1
 end if
 
@@ -574,7 +574,7 @@ display_only = false
 li_sts = load()
 
 if li_sts <= 0 then
-	log.log(this, "u_patient.load.0019", "Unable to load patient", 4)
+	log.log(this, "u_patient.load:0019", "Unable to load patient", 4)
 	return -1
 end if
 
@@ -820,7 +820,7 @@ setnull(ls_locked_by)
 
 li_sts = p_Patient.set_patient(cpr_id)
 if li_sts <= 0 then
-	log.log(this, "u_patient.load_patient.0021", "Invalid cpr_id (" + cpr_id + ")", 4)
+	log.log(this, "u_patient.load_patient:0021", "Invalid cpr_id (" + cpr_id + ")", 4)
 	return -1
 end if
 
@@ -901,7 +901,7 @@ else
 end if
 
 if isnull(attachment_server) or isnull(attachment_share) then
-	log.log(this, "u_patient.load_patient.0021", "Invalid Attachment Location (" + string(ll_attachment_location_id) + ")", 4)
+	log.log(this, "u_patient.load_patient:0102", "Invalid Attachment Location (" + string(ll_attachment_location_id) + ")", 4)
 	return -1
 end if
 
@@ -1026,7 +1026,7 @@ if not isnull(open_encounter) then
 	if li_sts < 0 then
 		return li_sts
 	elseif li_sts = 0 then
-		log.log(this, "u_patient.exit_office_old.0013", "Unable to close current encounter", 4)
+		log.log(this, "u_patient.exit_office_old:0013", "Unable to close current encounter", 4)
 		return 0
 	end if
 end if
@@ -1588,13 +1588,13 @@ setnull(ls_null)
 setnull(ll_null)
 
 if isnull(pstr_encounter.encounter_date) then
-	log.log(this, "u_patient.new_encounter.0038", "Null encounter date", 4)
+	log.log(this, "u_patient.new_encounter:0038", "Null encounter date", 4)
 	return -1
 end if
 
 lstr_stamp = f_get_stamp()
 if not lstr_stamp.create_encounters then
-	log.log(this, "u_patient.new_encounter.0038", "This installation is not properly licensed to create encounters", 4)
+	log.log(this, "u_patient.new_encounter:0044", "This installation is not properly licensed to create encounters", 4)
 	return 0
 end if
 
@@ -1703,7 +1703,7 @@ li_sts = current_patient.encounters.new_encounter(open_encounter)
 if li_sts < 0 then return -1
 
 if isnull(open_encounter.encounter_id) then
-	log.log(this, "u_patient.new_encounter.0038", "Error creating new encounter", 4)
+	log.log(this, "u_patient.new_encounter:0153", "Error creating new encounter", 4)
 	// Since we know we created this encounter object, we can destroy it here
 	DESTROY open_encounter
 	setnull(open_encounter)
@@ -1720,7 +1720,7 @@ display_only = false
 if pb_order_workplan then
 	li_sts = open_encounter.order_encounter_workplan()
 	if li_sts <= 0 then
-		log.log(this, "u_patient.new_encounter.0038", "Error ordering encounter workplan", 4)
+		log.log(this, "u_patient.new_encounter:0170", "Error ordering encounter workplan", 4)
 	end if
 end if
 

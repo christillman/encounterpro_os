@@ -45,7 +45,7 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject( "dw_fn_document_recipient_info")
 ll_count = luo_data.retrieve(ps_new_ordered_for, puo_document.cpr_id, puo_document.encounter_id)
 if ll_count <= 0 then
-	log.log(this, "u_component_route.xx_pick_address.0017", "Error getting document recipient info (" + ps_new_ordered_for + ")", 4)
+	log.log(this, "u_component_route.xx_pick_address:0017", "Error getting document recipient info (" + ps_new_ordered_for + ")", 4)
 	return -1
 end if
 
@@ -59,7 +59,7 @@ INTO :ls_communication_type, :ls_send_from
 FROM dbo.fn_document_route_information(:ps_new_dispatch_method);
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(this, "u_component_route.xx_pick_address.0017", "Invalid document_route (" + ps_new_dispatch_method + ")", 4)
+	log.log(this, "u_component_route.xx_pick_address:0031", "Invalid document_route (" + ps_new_dispatch_method + ")", 4)
 	return -1
 end if
 

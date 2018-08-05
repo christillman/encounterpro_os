@@ -47,21 +47,21 @@ popup.items[4] = string(pi_height)
 openwithparm(lw_window, popup, "w_render_cic_signature")
 
 if not fileexists(ls_tempfile) then
-	log.log(this, "u_component_attachment_signature_cic.xx_render.0023", "Error creating signature image", 4)
+	log.log(this, "u_component_attachment_signature_cic.xx_render:0023", "Error creating signature image", 4)
 	return -1
 end if
 
 luo_ImageControl = CREATE oleobject
 li_sts = luo_ImageControl.connecttonewobject("EncounterPRO.OS.ImageManipulation")
 if li_sts < 0 then
-	log.log(this, "u_component_attachment_signature_cic.xx_render.0030", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
+	log.log(this, "u_component_attachment_signature_cic.xx_render:0030", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
 	ps_file = ls_tempfile
 else
 	ps_file = f_temp_file(".bmp")
 	
 	li_sts = luo_ImageControl.ConvertTo1bppBmp(ls_tempfile, ps_file)
 	if li_sts <= 0 then
-		log.log(this, "u_component_attachment_signature_cic.xx_render.0030", "Error reducing bitmap", 3)
+		log.log(this, "u_component_attachment_signature_cic.xx_render:0037", "Error reducing bitmap", 3)
 		ps_file = ls_tempfile
 	end if
 	luo_ImageControl.disconnectobject()

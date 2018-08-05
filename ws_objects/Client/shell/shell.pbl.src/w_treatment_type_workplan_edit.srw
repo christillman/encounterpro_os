@@ -202,7 +202,7 @@ popup = message.powerobjectparm
 st_title.text = popup.title
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_treatment_type_workplan_edit.open.0008", "Invalid Parameters", 4)
+	log.log(this, "w_treatment_type_workplan_edit:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

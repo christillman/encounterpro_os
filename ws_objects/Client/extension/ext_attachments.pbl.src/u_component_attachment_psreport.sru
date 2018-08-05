@@ -34,7 +34,7 @@ TRY
 		ps_file = ls_temp_file
 	end if
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_psreport.xx_render.0012", "Error calling render (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_psreport.xx_render:0012", "Error calling render (" + lt_error.text + ")", 4)
 	li_sts = -1
 END TRY
 
@@ -52,7 +52,7 @@ openwithparm(lw_window, this, "w_attachment_psreport_display")
 TRY
 	li_sts = lw_window.print_datawindow()
 CATCH (throwable lt_error)
-	log.log(this, "u_component_attachment_psreport.xx_print.0008", "Error calling print_datawindow (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_attachment_psreport.xx_print:0008", "Error calling print_datawindow (" + lt_error.text + ")", 4)
 	li_sts = -1
 END TRY
 

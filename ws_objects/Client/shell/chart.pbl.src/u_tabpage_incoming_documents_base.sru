@@ -99,7 +99,7 @@ if isnull(ls_rendered_file) then
 	li_sts = attachments.attachment(luo_displayed_attachment, last_selected_attachment_id)
 	if li_sts <= 0 then
 		setnull(displayed_actual_file)
-		log.log(this, "u_tabpage_incoming_documents_base.select_image.0034", "Error getting attachment object", 3)
+		log.log(this, "u_tabpage_incoming_documents_base.select_image:0034", "Error getting attachment object", 3)
 	else
 		displayed_actual_file = luo_displayed_attachment.get_attachment()
 		dw_holding_list.object.attachment_file[pl_row] = displayed_actual_file
@@ -163,7 +163,7 @@ setnull(ls_null)
 lo_tiffdll = CREATE oleobject
 li_sts = lo_tiffdll.connecttonewobject("TiffDLL50vic.ClsTiffDLL50")
 if li_sts < 0 then
-	log.log(this, "u_tabpage_incoming_documents_base.append_selected.0021", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
+	log.log(this, "u_tabpage_incoming_documents_base.append_selected:0021", "Connection to RunTiffDLL failed (" + string(li_sts) + ")", 4)
 	return ls_null
 end if
 
@@ -180,14 +180,14 @@ DO WHILE ll_row > 0
 		
 		// Make sure it exists
 		if not fileexists(ls_temp_file) then
-			log.log(this, "u_tabpage_incoming_documents_base.append_selected.0021", "Temp file doesn't exist (" + ls_temp_file + ")", 4)
+			log.log(this, "u_tabpage_incoming_documents_base.append_selected:0038", "Temp file doesn't exist (" + ls_temp_file + ")", 4)
 		else
 			// If this is the first file to be appended, just use it as the appended file
 			if lb_first_file then
 				ls_append_file = f_temp_file("TIF")
 				li_sts = filecopy(ls_temp_file, ls_append_file, true)
 				if li_sts <= 0 then
-					log.log(this, "u_tabpage_incoming_documents_base.append_selected.0021", "Error copying tif file (" + ls_temp_file + ", " + ls_append_file + ")", 4)
+					log.log(this, "u_tabpage_incoming_documents_base.append_selected:0045", "Error copying tif file (" + ls_temp_file + ", " + ls_append_file + ")", 4)
 					return ls_null
 				end if
 				lb_first_file = false
@@ -204,11 +204,11 @@ DO WHILE ll_row > 0
 					
 					li_sts = lo_tiffdll.runtiffdll(ls_param)
 /*					if li_sts = 0 then
-						log.log(this, "u_tabpage_incoming_documents_base.append_selected.0021", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
+						log.log(this, "u_tabpage_incoming_documents_base.append_selected:0062", "RunTiffDLL returned zero.  Check tiffdll license (" + ls_param + ")", 4)
 						return ls_null
 					end if */
 					if li_sts < 0 then
-						log.log(this, "u_tabpage_incoming_documents_base.append_selected.0021", "RunTiffDLL failed (" + string(li_sts) + ", " + ls_param + ")", 4)
+						log.log(this, "u_tabpage_incoming_documents_base.append_selected:0066", "RunTiffDLL failed (" + string(li_sts) + ", " + ls_param + ")", 4)
 						return ls_null
 					end if
 				next
@@ -656,7 +656,7 @@ DO WHILE ll_row > 0
 		li_sts = attachments.attachment(luo_attachment, ll_attachment_id)
 		if li_sts <= 0 then
 			setnull(ls_file)
-			log.log(this, "u_tabpage_incoming_documents_base.select_image.0034", "Error getting attachment object", 3)
+			log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0126", "Error getting attachment object", 3)
 			return
 		else
 			ls_file = luo_attachment.get_attachment()
@@ -686,7 +686,7 @@ DO WHILE ll_row > 0
 			lstr_my_context.attachment_id = ll_attachment_id
 			li_sts = lo_xml_document.interpret(lstr_my_context, lstr_document_context)
 			if li_sts <= 0 then
-				log.log(this, "u_tabpage_incoming_documents_base.post_attachments.0156", "Error processing document", 4)
+				log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0156", "Error processing document", 4)
 				
 				SELECT count(*)
 				INTO :ll_count
@@ -750,7 +750,7 @@ DO WHILE ll_row > 0
 			elseif current_patient.cpr_id = ls_cpr_id then
 				// Already OK
 			else
-				log.log(this, "u_tabpage_incoming_documents_base.post_attachments.0220", "The current patient does not match the patient found for this XML document.", 4)
+				log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0220", "The current patient does not match the patient found for this XML document.", 4)
 				openwithparm(w_pop_message, "The current patient does not match the desired patient context for this attachment.  EncounterPRO is unable to process this attachment.")
 				return
 			end if
@@ -803,7 +803,7 @@ DO WHILE ll_row > 0
 		// Create the attachment
 		ll_attachment_id = current_patient.attachments.new_attachment(lstr_attachment, ls_file, lstr_attachment_context.context_object)
 		if ll_attachment_id <= 0 then
-			log.log(this, "u_tabpage_incoming_documents_base.post_attachments.0156", "Error posting document", 4)
+			log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0273", "Error posting document", 4)
 			openwithparm(w_pop_message, "An error occured while posting this document.  Please correct the error and post the document again, or contact EncounterPRO customer support for assistance.")
 			return
 		end if

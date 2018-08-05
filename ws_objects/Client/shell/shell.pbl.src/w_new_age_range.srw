@@ -171,7 +171,7 @@ event open;call super::open;str_popup		popup
 popup = Message.Powerobjectparm
 
 if popup.data_row_count <> 3 then
-	log.log(this,"w_new_age_range.open.0006","invalid parameters",3)
+	log.log(this,"w_new_age_range:open","invalid parameters",3)
 	return
 end if
 
@@ -680,7 +680,7 @@ If Len(age_range_description) > 0 and Not Isnull(age_range_category) Then
 	);
 
 	If not tf_check() then
-		log.log(this,"w_new_age_range.pb_done.clicked.0040","unable to create new age range",3)
+		log.log(this,"w_new_age_range.pb_done.clicked:0040","unable to create new age range",3)
 	End If
 End If
 Close(Parent)

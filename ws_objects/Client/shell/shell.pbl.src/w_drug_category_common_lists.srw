@@ -121,7 +121,7 @@ dw_drug_categories.settransobject(sqlca)
 dw_drug_categories.multiselect = true
 ll_rows = dw_drug_categories.retrieve()
 if ll_rows < 0 then
-	log.log(this, "w_drug_category_common_lists.open.0018", "Error getting drug categories", 4)
+	log.log(this, "w_drug_category_common_lists:open", "Error getting drug categories", 4)
 	close(this)
 	return
 end if
@@ -134,7 +134,7 @@ common_drug_category_list = CREATE u_ds_data
 common_drug_category_list.set_dataobject("dw_drug_drug_category_pick_list")
 ll_rows = common_drug_category_list.retrieve(drug_id)
 if ll_rows < 0 then
-	log.log(this, "w_drug_category_common_lists.open.0018", "Error getting common drug categories", 4)
+	log.log(this, "w_drug_category_common_lists:open", "Error getting common drug categories", 4)
 	close(this)
 	return
 end if

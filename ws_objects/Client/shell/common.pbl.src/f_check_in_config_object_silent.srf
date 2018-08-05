@@ -21,7 +21,7 @@ FROM c_Config_Object_Type
 WHERE config_object_type = :pstr_config_object.config_object_type;
 if not tf_check() then return -1
 if sqlca.sqlnrows = 0 then
-	log.log(po_null, "f_check_in_config_object_silent.0016", "Config object type not valid (" +pstr_config_object.config_object_type + ")", 4)
+	log.log(po_null, "f_check_in_config_object_silent:0016", "Config object type not valid (" +pstr_config_object.config_object_type + ")", 4)
 	return -1
 end if
 
@@ -31,7 +31,7 @@ setnull(lbl_objectdata)
 ll_sts =  sqlca.config_checkin(pstr_config_object.config_object_id, ps_version_description, lbl_objectdata, current_user.user_id)
 if not tf_check() then return -1
 if ll_sts < 0 then
-	log.log(po_null, "f_check_in_config_object_silent.0016", "Error checking in config object (" + string(ll_sts) + ")", 4)
+	log.log(po_null, "f_check_in_config_object_silent:0026", "Error checking in config object (" + string(ll_sts) + ")", 4)
 	return -1
 end if
 
@@ -48,14 +48,14 @@ CHOOSE CASE upper(ls_object_encoding_method)
 		
 		ll_sts = lo_config_object_manager.initialize_com()
 		if ll_sts <= 0 then
-			log.log(po_null, "f_check_in_config_object_silent.0016", "Error initializing COM object", 4)
+			log.log(po_null, "f_check_in_config_object_silent:0043", "Error initializing COM object", 4)
 			return -1
 		end if
 		
 		TRY
 			ls_config_object_data = lo_config_object_manager.GetConfigObjectXml(pstr_config_object.config_object_type, pstr_config_object.config_object_id)
 		CATCH (oleruntimeerror lt_error)
-			log.log(po_null, "f_check_in_config_object_silent.0050", "Error calling GetConfigObjectXml ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+			log.log(po_null, "f_check_in_config_object_silent:0050", "Error calling GetConfigObjectXml ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 			UPDATE c_Config_Object_Version
 			SET status = 'CheckedOut'
 			WHERE config_object_id = :pstr_config_object.config_object_id
@@ -75,7 +75,7 @@ CHOOSE CASE upper(ls_object_encoding_method)
 END CHOOSE
 
 if isnull(lbl_objectdata) then
-	log.log(po_null, "f_check_in_config_object_silent.0016", "No data returned from GetConfigObjectXml()", 4)
+	log.log(po_null, "f_check_in_config_object_silent:0070", "No data returned from GetConfigObjectXml()", 4)
 	UPDATE c_Config_Object_Version
 	SET status = 'CheckedOut'
 	WHERE config_object_id = :pstr_config_object.config_object_id
@@ -92,7 +92,7 @@ WHERE config_object_id = :pstr_config_object.config_object_id
 AND version = :pstr_config_object.installed_version;
 if not tf_check() then return -1
 if sqlca.sqlnrows <> 1 then
-	log.log(po_null, "f_check_in_config_object_silent.0016", "Version record not found (" + pstr_config_object.config_object_id + ", " + string(pstr_config_object.installed_version) + ")", 4)
+	log.log(po_null, "f_check_in_config_object_silent:0087", "Version record not found (" + pstr_config_object.config_object_id + ", " + string(pstr_config_object.installed_version) + ")", 4)
 	UPDATE c_Config_Object_Version
 	SET status = 'CheckedOut'
 	WHERE config_object_id = :pstr_config_object.config_object_id
@@ -104,7 +104,7 @@ end if
 // Refresh the config object structure
 ll_sts = f_get_config_object_info(pstr_config_object.config_object_id, pstr_config_object)
 if ll_sts <= 0 then
-	log.log(po_null, "f_check_in_config_object_silent.0016", "Error refreshing config object structure", 4)
+	log.log(po_null, "f_check_in_config_object_silent:0099", "Error refreshing config object structure", 4)
 	return -1
 end if
 

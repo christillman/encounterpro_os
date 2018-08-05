@@ -379,7 +379,7 @@ popup_return.items[1] = "ERROR"
 
 service = message.powerobjectparm
 if isnull(service.treatment) then
-	log.log(this, "w_svc_allergy_vial_creation.open.0018", "No treatment object", 4)
+	log.log(this, "w_svc_allergy_vial_creation:open", "No treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -387,7 +387,7 @@ end if
 
 luo_unit = unit_list.find_unit(service.treatment.dose_unit)
 if isnull(luo_unit) then
-	log.log(this, "w_svc_allergy_vial_creation.open.0018", "No dose unit", 4)
+	log.log(this, "w_svc_allergy_vial_creation:open", "No dose unit", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

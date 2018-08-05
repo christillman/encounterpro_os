@@ -214,7 +214,7 @@ ls_external_source = service.get_attribute("external_source")
 if isnull(ls_external_source) then
 	if cpr_mode = "SERVER" then
 		// If we're in server mode then an external source must be specified
-		log.log(this, "w_svc_external_source.do_source.0106", "Null external source", 4)
+		log.log(this, "w_svc_external_source.do_source:0106", "Null external source", 4)
 		closewithreturn(this, -1)
 		return
 	else
@@ -296,7 +296,7 @@ if li_sts <= 0 then
 	ls_temp += ') does not exist on this computer.'
 	if cpr_mode = "SERVER" then
 		// If we're in server mode then just return an error
-		log.log(this, "w_svc_external_source.do_source.0106", ls_temp, 4)
+		log.log(this, "w_svc_external_source.do_source:0188", ls_temp, 4)
 		closewithreturn(this, -1)
 		return
 	else
@@ -368,7 +368,7 @@ end if
 
 external_source = component_manager.get_component(ls_component_id, lstr_attributes)
 if isnull(external_source) then
-	log.log(this, "w_svc_external_source.do_source.0106", "error getting component (" + ls_component_id + ")", 4)
+	log.log(this, "w_svc_external_source.do_source:0260", "error getting component (" + ls_component_id + ")", 4)
 	closewithreturn(this, -1)
 	return
 end if
@@ -443,7 +443,7 @@ for i = 1 to external_source.observation_count
 			// Send the attachment
 			li_sts = external_source.send_attachment(lstr_attachment, ll_default_send_to_addressee)
 			if li_sts <= 0 then
-				log.log(this, "w_svc_external_source.do_source.0335", "Error sending attachment", 4)
+				log.log(this, "w_svc_external_source.do_source:0335", "Error sending attachment", 4)
 				closewithreturn(this, -1)
 				return
 			end if
@@ -740,7 +740,7 @@ for i = 1 to external_source.observation_count
 					end if
 				end if
 			else
-				log.log(this, "w_svc_external_source.do_source.0632", "Error creating attachment", 4)
+				log.log(this, "w_svc_external_source.do_source:0632", "Error creating attachment", 4)
 				// Tell the external source that we failed to process this item
 				external_source.set_processed( external_source.observations[i].external_item_id, -1)
 			end if
@@ -753,7 +753,7 @@ if lb_epie_sent then
 	// All attachments were sent successfully so now process the epiehandler instructions
 	li_sts = external_source.process_epiehandler(external_source.epiehandler_common, f_current_context())
 	if li_sts < 0 then
-		log.log(this, "w_svc_external_source.do_source.0645", "Error processing EpIEHandler instructions", 4)
+		log.log(this, "w_svc_external_source.do_source:0645", "Error processing EpIEHandler instructions", 4)
 		closewithreturn(this, -1)
 		return
 	end if

@@ -88,7 +88,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 3 then
-	log.log(this, "w_observation_narrative_phrase.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_observation_narrative_phrase:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

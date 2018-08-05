@@ -14,7 +14,7 @@ integer li_sts
 
 li_sts = f_get_config_object_info(ps_config_object_id, lstr_config_object)
 if li_sts <= 0 then
-	log.log(po_null, "f_config_object_upgrade_version.0009", "Error getting config object info (" + ps_config_object_id + ")", 4)
+	log.log(po_null, "f_config_object_upgrade_version:0009", "Error getting config object info (" + ps_config_object_id + ")", 4)
 	return -1
 end if
 
@@ -31,7 +31,7 @@ if popup_return.item <> "YES" then return 0
 
 li_sts = f_config_object_install(ps_config_object_id, ll_version)
 if li_sts < 0 then
-	log.log(po_null, "f_config_object_upgrade_version.0009", "Error installing config object version (" + ps_config_object_id + ", " + string(ll_version) + ")", 4)
+	log.log(po_null, "f_config_object_upgrade_version:0026", "Error installing config object version (" + ps_config_object_id + ", " + string(ll_version) + ")", 4)
 	return -1
 end if
 if li_sts = 0 then return 0

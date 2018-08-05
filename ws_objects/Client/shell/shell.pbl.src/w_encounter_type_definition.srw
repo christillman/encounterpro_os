@@ -140,7 +140,7 @@ FROM c_Encounter_Type
 WHERE encounter_type = :encounter_type;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_encounter_type_definition.load_encounter_type.0021", "encounter_type not found (" + encounter_type + ")", 4)
+	log.log(this, "w_encounter_type_definition.load_encounter_type:0021", "encounter_type not found (" + encounter_type + ")", 4)
 	return -1
 end if
 
@@ -321,7 +321,7 @@ popup = message.powerobjectparm
 dw_selection.settransobject(sqlca)
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_encounter_type_definition.open.0009", "Invalid parameters", 4)
+	log.log(this, "w_encounter_type_definition:open", "Invalid parameters", 4)
 	close(this)
 	return
 end if
@@ -329,14 +329,14 @@ end if
 encounter_type = popup.items[1]
 
 if isnull(encounter_type) then
-	log.log(this, "w_encounter_type_definition.open.0009", "Null encounter_type", 4)
+	log.log(this, "w_encounter_type_definition:open", "Null encounter_type", 4)
 	close(this)
 	return
 end if
 
 li_sts = load_encounter_type()
 if li_sts <= 0 then
-	log.log(this, "w_encounter_type_definition.open.0009", "Error loading encounter_type (" + encounter_type + ")", 4)
+	log.log(this, "w_encounter_type_definition:open", "Error loading encounter_type (" + encounter_type + ")", 4)
 	close(this)
 	return
 end if

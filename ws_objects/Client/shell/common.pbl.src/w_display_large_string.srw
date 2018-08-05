@@ -76,7 +76,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_display_large_string.open.0007", "Invalid Parameters", 4)
+	log.log(this, "w_display_large_string:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

@@ -557,7 +557,7 @@ public function integer save_attachment ();integer li_sts
 long ll_attachment_id
 
 if isnull(encounter_id) then
-	log.log(this, "u_str_encounter.save_attachment.0005", "ERROR! Cannot save attachment when encounter_id=null", 4)
+	log.log(this, "u_str_encounter.save_attachment:0005", "ERROR! Cannot save attachment when encounter_id=null", 4)
 	return -1
 end if
 
@@ -575,7 +575,7 @@ WHERE cpr_id = :current_patient.cpr_id
 AND	encounter_id = :encounter_id; 
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_str_encounter.save_attachment.0023", "Encounter not found", 4)
+	log.log(this, "u_str_encounter.save_attachment:0023", "Encounter not found", 4)
 	return -1
 end if
 
@@ -682,19 +682,19 @@ WHERE cpr_id = :current_patient.cpr_id
 AND treatment_id = :pl_treatment_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_str_encounter.do_treatment.0013", "Treatment not found (" + string(pl_treatment_id) + ")", 4)
+	log.log(this, "u_str_encounter.do_treatment:0013", "Treatment not found (" + string(pl_treatment_id) + ")", 4)
 	return -1
 end if
 
 ls_component_id = datalist.treatment_type_component(ls_treatment_type)
 if isnull(ls_component_id) then
-	log.log(this, "u_str_encounter.do_treatment.0013", "Null component_id (" + string(ls_treatment_type) + ")", 4)
+	log.log(this, "u_str_encounter.do_treatment:0019", "Null component_id (" + string(ls_treatment_type) + ")", 4)
 	return -1
 end if
 
 luo_treatment = component_manager.get_component(ls_component_id)
 if isnull(luo_treatment) then
-	log.log(this, "u_str_encounter.do_treatment.0013", "Error getting component (" + string(ls_component_id) + ")", 4)
+	log.log(this, "u_str_encounter.do_treatment:0025", "Error getting component (" + string(ls_component_id) + ")", 4)
 	return -1
 end if
 
@@ -776,7 +776,7 @@ if ll_patient_workplan_item_id <= 0 then return -1
 
 luo_service = service_list.get_service_component(ps_service)
 if isnull(luo_service) then
-	log.log(this, "u_str_encounter.do_service.0013", "Error getting service (" + ps_service + ")", 4)
+	log.log(this, "u_str_encounter.do_service:0013", "Error getting service (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -1015,7 +1015,7 @@ ls_filter += " and office_id='" + encounter_office_id + "'"
 luo_data.setfilter(ls_filter)
 li_sts = luo_data.filter()
 if li_sts <= 0 then
-	log.log(this, "u_str_encounter.room_menu.0043", "Error applying room filter (" + ls_filter + ")", 4)
+	log.log(this, "u_str_encounter.room_menu:0043", "Error applying room filter (" + ls_filter + ")", 4)
 	ls_room_id = ls_null
 	goto DONE
 end if
@@ -1186,7 +1186,7 @@ if encounter_status = "OPEN" then
 	if not isnull(ls_first_room_id) then
 		li_sts = change_room(ls_first_room_id)
 		if li_sts < 0 then
-			log.log(this, "u_str_encounter.order_encounter_workplan.0060", "Error changeing room (" + ls_first_room_id + ")", 4)
+			log.log(this, "u_str_encounter.order_encounter_workplan:0060", "Error changeing room (" + ls_first_room_id + ")", 4)
 		end if
 	end if
 end if

@@ -531,7 +531,7 @@ public function integer inactivate_user (string ps_user_id);u_user luo_user
 
 luo_user = find_user(ps_user_id)
 if isnull(luo_user) then
-	log.log(this, "u_component_security.inactivate_user.0005", "Invalid user_id (" + ps_user_id + ")", 4)
+	log.log(this, "u_component_security.inactivate_user:0005", "Invalid user_id (" + ps_user_id + ")", 4)
 	return -1
 end if
 
@@ -579,7 +579,7 @@ str_stamp lstr_stamp
 
 luo_user = find_user(ps_user_id)
 if isnull(luo_user) then
-	log.log(this, "u_component_security.activate_user.0011", "Invalid user_id (" + ps_user_id + ")", 4)
+	log.log(this, "u_component_security.activate_user:0011", "Invalid user_id (" + ps_user_id + ")", 4)
 	return -1
 end if
 
@@ -838,7 +838,7 @@ if isnull(users_refresh) or ldt_last_update > users_refresh then
 	users.set_dataobject("dw_data_user_list")
 //	li_sts = users.retrieve()
 //	if li_sts < 0 then
-//		log.log(this, "u_component_security.load_users.0037", "Error loading users table", 4)
+//		log.log(this, "u_component_security.load_users:0026", "Error loading users table", 4)
 //		return -1
 //	end if
 end if
@@ -849,7 +849,7 @@ if isnull(roles_refresh) or ldt_last_update > roles_refresh then
 	roles.set_dataobject("dw_data_role_list")
 	li_sts = roles.retrieve()
 	if li_sts < 0 then
-		log.log(this, "u_component_security.load_users.0037", "Error loading roles table", 4)
+		log.log(this, "u_component_security.load_users:0037", "Error loading roles table", 4)
 		return -1
 	end if
 end if
@@ -860,7 +860,7 @@ if isnull(user_roles_refresh) or ldt_last_update > user_roles_refresh then
 	user_roles.set_dataobject("dw_data_user_role_list")
 	li_sts = user_roles.retrieve()
 	if li_sts < 0 then
-		log.log(this, "u_component_security.load_users.0037", "Error loading user_roles table", 4)
+		log.log(this, "u_component_security.load_users:0048", "Error loading user_roles table", 4)
 		return -1
 	end if
 end if
@@ -871,7 +871,7 @@ if isnull(user_services_refresh) or ldt_last_update > user_services_refresh then
 	user_services.set_dataobject("dw_data_user_service_list")
 	li_sts = user_services.retrieve(office_id)
 	if li_sts < 0 then
-		log.log(this, "u_component_security.load_users.0037", "Error loading user_services table", 4)
+		log.log(this, "u_component_security.load_users:0059", "Error loading user_services table", 4)
 		return -1
 	end if
 end if
@@ -882,7 +882,7 @@ if isnull(user_privileges_refresh) or ldt_last_update > user_privileges_refresh 
 	user_privileges.set_dataobject("dw_data_user_privilege_list")
 	li_sts = user_privileges.retrieve(office_id)
 	if li_sts < 0 then
-		log.log(this, "u_component_security.load_users.0037", "Error loading user_privileges table", 4)
+		log.log(this, "u_component_security.load_users:0070", "Error loading user_privileges table", 4)
 		return -1
 	end if
 end if
@@ -894,7 +894,7 @@ if isnull(c_privilege_refresh) or ldt_last_update > c_privilege_refresh then
 	c_privilege.set_dataobject("dw_c_privilege")
 	li_sts = c_privilege.retrieve()
 	if li_sts < 0 then
-		log.log(this, "u_component_security.load_users.0037", "Error loading c_privilege table", 4)
+		log.log(this, "u_component_security.load_users:0082", "Error loading c_privilege table", 4)
 		return -1
 	end if
 end if
@@ -1111,13 +1111,13 @@ lb_found = false
 load_users()
 
 if isnull(pstr_user.user_id) then
-	log.log(this, "u_component_security.user_logon.0035", "Null user_id", 3)
+	log.log(this, "u_component_security.user_logon:0035", "Null user_id", 3)
 end if
 
 luo_user = find_user(pstr_user.user_id)
 
 if isnull(luo_user) then
-	log.log(this, "u_component_security.user_logon.0035", "Invalid user_id (" + pstr_user.user_id + ")", 3)
+	log.log(this, "u_component_security.user_logon:0041", "Invalid user_id (" + pstr_user.user_id + ")", 3)
 	return luo_user
 end if
 
@@ -1128,14 +1128,14 @@ WHERE user_id = :pstr_user.user_id;
 if not tf_check() then return luo_null
 
 if ls_user_status = "OK" then
-	log.log(this, "u_component_security.user_logon.0035", "User logging on (" + luo_user.user_full_name + ")", 2)
+	log.log(this, "u_component_security.user_logon:0052", "User logging on (" + luo_user.user_full_name + ")", 2)
 elseif ls_user_status = "NA" then
-	log.log(this, "u_component_security.user_logon.0035", "Inactive user attempting to log in (" + luo_user.user_full_name + ")", 3)
+	log.log(this, "u_component_security.user_logon:0054", "Inactive user attempting to log in (" + luo_user.user_full_name + ")", 3)
 	return luo_null
 elseif ls_user_status = "SYSTEM" then
-	log.log(this, "u_component_security.user_logon.0035", "System User logging on (" + luo_user.user_full_name + ")", 2)
+	log.log(this, "u_component_security.user_logon:0057", "System User logging on (" + luo_user.user_full_name + ")", 2)
 else
-	log.log(this, "u_component_security.user_logon.0035", "User attempting to log in with improper status (" + luo_user.user_full_name + ", " + ls_user_status + ")", 3)
+	log.log(this, "u_component_security.user_logon:0059", "User attempting to log in with improper status (" + luo_user.user_full_name + ", " + ls_user_status + ")", 3)
 	return luo_null
 end if
 
@@ -1160,7 +1160,7 @@ if ll_count > 0 then
 		
 		ls_other_computer = f_computer_description(ll_computer_id)
 		
-		log.log(this, "u_component_security.user_logon.0035", luo_user.user_full_name + " is already logged in at " &
+		log.log(this, "u_component_security.user_logon:0084", luo_user.user_full_name + " is already logged in at " &
 							+ ls_other_computer, 2)
 
 		if cpr_mode = "CLIENT" then
@@ -1547,7 +1547,7 @@ ls_response = ls_challenge
 // then it must really be the security system
 if ls_response = ls_challenge then return 1
 
-log.log(this, "u_component_security.initialize.0023", "Security System failed to provide a valid challenge response", 4)
+log.log(this, "u_component_security.initialize:0023", "Security System failed to provide a valid challenge response", 4)
 
 return -1
 
@@ -2192,7 +2192,7 @@ public function integer update_user_old (u_user puo_user);//////////////////////
 //else
 //	ll_row = find_user_row(puo_user.user_id)
 //	if ll_row <= 0 then
-//		log.log(this, "update_user()", "User not found (" + puo_user.user_id + ")", 4)
+//		log.log(this, "u_component_security.update_user_old:0029", "User not found (" + puo_user.user_id + ")", 4)
 //		return -1
 //	end if
 //end if
@@ -2369,7 +2369,7 @@ public function integer set_scribe_context (string ps_user_id);u_user luo_user
 
 luo_user = find_user(ps_user_id)
 if isnull(luo_user) then
-	log.log(this, "u_component_security.set_scribe_context.0005", "user not found (" + ps_user_id + ")", 4)
+	log.log(this, "u_component_security.set_scribe_context:0005", "user not found (" + ps_user_id + ")", 4)
 	return -1
 end if
 

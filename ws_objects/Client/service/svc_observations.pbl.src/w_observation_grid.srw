@@ -97,7 +97,7 @@ popup_return.item_count = 0
 service = message.powerobjectparm
 
 if isnull(service.treatment) then
-	log.log(this, "w_observation_grid.open.0026", "Null Treatment Object", 4)
+	log.log(this, "w_observation_grid:open", "Null Treatment Object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -107,14 +107,14 @@ st_title.text = service.treatment.treatment_description
 
 li_sts = dw_observation_grid.initialize(service)
 if li_sts <= 0 then
-	log.log(this, "w_observation_grid.open.0026", "Error initializing grid display", 4)
+	log.log(this, "w_observation_grid:open", "Error initializing grid display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = dw_observation_grid.load()
 if li_sts <= 0 then
-	log.log(this, "w_observation_grid.open.0026", "Error loading grid display", 4)
+	log.log(this, "w_observation_grid:open", "Error loading grid display", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

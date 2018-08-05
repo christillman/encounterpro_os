@@ -105,7 +105,7 @@ title = current_patient.id_line()
 
 observation_id = service.root_observation_id()
 if isnull(observation_id) then
-	log.log(this, "w_svc_history_yesno.open.0020", "No observation_id", 4)
+	log.log(this, "w_svc_history_yesno:open", "No observation_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -119,11 +119,11 @@ if isnull(ls_result_type) then ls_result_type = "PERFORM"
 
 li_sts = dw_observations.initialize(service)
 if li_sts = 0 then
-	log.log(this, "w_svc_history_yesno.open.0020", "No observations to display (" + observation_id + ")", 4)
+	log.log(this, "w_svc_history_yesno:open", "No observations to display (" + observation_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts < 0 then
-	log.log(this, "w_svc_history_yesno.open.0020", "Error initializing observations (" + observation_id + ")", 4)
+	log.log(this, "w_svc_history_yesno:open", "Error initializing observations (" + observation_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

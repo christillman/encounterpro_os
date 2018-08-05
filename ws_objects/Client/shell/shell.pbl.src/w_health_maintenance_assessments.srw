@@ -187,7 +187,7 @@ for i = 1 to lstr_assessments.assessment_count
 	AND p.assessment_type = t.assessment_type;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
-		log.log(this, "w_health_maintenance_assessments.add_assessment.0038", "assessment_type not found for assessment (" + lstr_assessments.assessments[i].assessment_id + ")", 4)
+		log.log(this, "w_health_maintenance_assessments.add_assessment:0038", "assessment_type not found for assessment (" + lstr_assessments.assessments[i].assessment_id + ")", 4)
 		return -1
 	end if
 	
@@ -223,7 +223,7 @@ integer li_sts
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 2 then
-	log.log(this, "w_health_maintenance_assessments.open.0007", "Invalid Parameters", 4)
+	log.log(this, "w_health_maintenance_assessments:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if

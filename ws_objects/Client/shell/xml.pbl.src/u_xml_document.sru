@@ -51,7 +51,7 @@ setnull(lstr_xml_class.xml_class)
 TRY
 	pbdom_root = XML_Document.GetRootElement()
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_xml_document.get_xml_class.0022", "Error - " + lo_error.text, 4)
+	log.log(this, "u_xml_document.get_xml_class:0022", "Error - " + lo_error.text, 4)
 	return lstr_xml_class
 END TRY
 
@@ -112,13 +112,13 @@ AND ISNULL(xml_schema, '<NULL>') = ISNULL(:ls_xml_schema, '<NULL>');
 if not tf_check() then return lstr_xml_class
 
 if isnull(ls_xml_class) then
-	log.log(this, "u_xml_document.get_xml_class.0022", "XML Class not found", 4)
+	log.log(this, "u_xml_document.get_xml_class:0083", "XML Class not found", 4)
 	return lstr_xml_class
 end if
 
 lstr_xml_class = datalist.get_xml_class(ls_xml_class)
 if isnull(lstr_xml_class.xml_class) then
-	log.log(this, "u_xml_document.get_xml_class.0022", "XML Class not valid (" + ls_xml_class + ")", 4)
+	log.log(this, "u_xml_document.get_xml_class:0089", "XML Class not valid (" + ls_xml_class + ")", 4)
 	return lstr_xml_class
 end if
 
@@ -149,7 +149,7 @@ else
 		TRY
 			ps_rendered = common_thread.eprolibnet4.TransformXML(xml_string, ls_xslt)
 		CATCH (throwable lo_error)
-			log.log(this, "u_xml_document.render.0023", "Error transforming xml file", 3)
+			log.log(this, "u_xml_document.render:0023", "Error transforming xml file", 3)
 			setnull(ps_rendered)
 		END TRY
 		
@@ -183,7 +183,7 @@ end if
 TRY
 	po_root.setdocument(xml_document)
 CATCH (throwable lo_error)
-	log.log(this, "u_xml_document.add_root.0018", "Error setting root (" + lo_error.text + ")", 4)
+	log.log(this, "u_xml_document.add_root:0018", "Error setting root (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -192,17 +192,17 @@ ls_file = f_temp_file("xml")
 TRY
 	lb_success = xml_document.savedocument(ls_file)
 	if not lb_success then
-		log.log(this, "u_xml_document.add_root.0018", "Error saving document", 4)
+		log.log(this, "u_xml_document.add_root:0027", "Error saving document", 4)
 		return -1
 	end if
 CATCH (throwable lo_error2)
-	log.log(this, "u_xml_document.add_root.0018", "Error saving document (" + lo_error2.text + ")", 4)
+	log.log(this, "u_xml_document.add_root:0031", "Error saving document (" + lo_error2.text + ")", 4)
 	return -1
 END TRY
 
 li_sts = log.file_read(ls_file, lbl_xml)
 if li_sts <= 0 then
-	log.log(this, "u_xml_document.add_root.0018", "Error reading document", 4)
+	log.log(this, "u_xml_document.add_root:0037", "Error reading document", 4)
 	return -1
 end if
 
@@ -211,7 +211,7 @@ xml_string = f_blob_to_string(lbl_xml)
 DO WHILE true
 	if isnull(xml_string) or xml_string = "" then
 		setnull(xml_string)
-		log.log(this, "u_xml_document.add_root.0018", "No XML String Generated", 4)
+		log.log(this, "u_xml_document.add_root:0046", "No XML String Generated", 4)
 		return -1
 	end if
 	if left(xml_string, 1) = "<" then exit
@@ -249,13 +249,13 @@ str_c_xml_class lstr_xml_class
 
 lstr_xml_class = get_xml_class()
 if isnull(lstr_xml_class.xml_class) then
-	log.log(this, "u_xml_document.interpret.0026", "Error finding xml class", 4)
+	log.log(this, "u_xml_document.interpret:0026", "Error finding xml class", 4)
 	return -1
 end if
 
 luo_handler = component_manager.get_component(lstr_xml_class.handler_component_id)
 if isnull(luo_handler) or not isvalid(luo_handler) then
-	log.log(this, "u_xml_document.interpret.0026", "Error creating xml handler class (" + lstr_xml_class.xml_handler_class + ")", 4)
+	log.log(this, "u_xml_document.interpret:0032", "Error creating xml handler class (" + lstr_xml_class.xml_handler_class + ")", 4)
 	return -1
 end if
 	
@@ -284,7 +284,7 @@ TRY
 	ll_count = UpperBound(lo_elem)
 	
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_xml_document.child_value.0015", "Error getting children - " + lo_error.text, 4)
+	log.log(this, "u_xml_document.child_value:0015", "Error getting children - " + lo_error.text, 4)
 	return ls_null
 END TRY
 
@@ -322,7 +322,7 @@ setnull(ls_null)
 TRY
 	lo_root = XML_Document.GetRootElement()
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_xml_document.get_value.0020", "Error getting root - " + lo_error.text, 4)
+	log.log(this, "u_xml_document.get_value:0020", "Error getting root - " + lo_error.text, 4)
 	return ls_null
 END TRY
 
@@ -349,11 +349,11 @@ if pos(ls_beginning, "<") > 0 and (pos(ps_xml, "</") > 0 or pos(ps_xml, "/>") > 
 	TRY
 		XML_Document = pbdombuilder_new.BuildFromString(ps_xml)
 	CATCH (throwable lo_error)
-		log.log(this, "u_xml_document.initialize.0019", "Error building XML object (" + lo_error.text + ")", 4)
+		log.log(this, "u_xml_document.initialize:0019", "Error building XML object (" + lo_error.text + ")", 4)
 		return -1
 	END TRY
 else
-	log.log(this, "u_xml_document.initialize.0019", "XML string does not look like XML", 4)
+	log.log(this, "u_xml_document.initialize:0023", "XML string does not look like XML", 4)
 	return -1
 end if
 
@@ -374,7 +374,7 @@ XML_Document = po_document
 // Now create the string version from the DOM version
 xml_string = f_xml_document_string(XML_Document)
 if isnull(xml_string) then
-	log.log(this, "u_xml_document.initialize.0013", "Error getting document string", 4)
+	log.log(this, "u_xml_document.initialize:0013", "Error getting document string", 4)
 	return -1
 end if
 

@@ -19,7 +19,7 @@ ls_com_class = "EPConfigObjects.ConfigObjectManager"
 
 li_sts = connecttonewobject(ls_com_class)
 if li_sts <> 0 then
-	log.log(this, "u_config_object_manager.initialize_com.0008", "Error connecting to com source (" + ls_com_class + ", " + string(li_sts) + ")", 4)
+	log.log(this, "u_config_object_manager.initialize_com:0008", "Error connecting to com source (" + ls_com_class + ", " + string(li_sts) + ")", 4)
 	return -1
 end if
 
@@ -43,7 +43,7 @@ TRY
 						sqlca.sys(sqlca.application_role))
 	end if
 CATCH (throwable lt_error)
-	log.log(this, "u_config_object_manager.initialize_com.0008", "Error calling Initialize (" + lt_error.text + ")", 4)
+	log.log(this, "u_config_object_manager.initialize_com:0032", "Error calling Initialize (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 

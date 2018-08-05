@@ -282,7 +282,7 @@ top_20_user_id = current_user.user_id
 top_20_code = top_20_specific_code
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "w_define_activity.open.0045", "Error loading pick list", 4)
+	log.log(this, "w_define_activity:open", "Error loading pick list", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -292,7 +292,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.common_list_id() //"!DEFAULT"
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "w_define_activity.open.0045", "Error loading pick list", 4)
+		log.log(this, "w_define_activity:open", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -304,7 +304,7 @@ if li_sts = 0 then
 	top_20_code = top_20_generic_code
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "w_define_activity.open.0045", "Error loading pick list", 4)
+		log.log(this, "w_define_activity:open", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if
@@ -315,7 +315,7 @@ if li_sts = 0 then
 	top_20_user_id = current_user.common_list_id() //"!DEFAULT"
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "w_define_activity.open.0045", "Error loading pick list", 4)
+		log.log(this, "w_define_activity:open", "Error loading pick list", 4)
 		closewithreturn(this, popup_return)
 		return
 	end if

@@ -828,7 +828,7 @@ end if
 //			//ll_objectid = object.ObjectInsertAsChar(0, ps_filename, -1, li_scale_x, li_scale_y, 0, 1)
 //	END CHOOSE
 //CATCH (oleruntimeerror lt_error)
-//	log.log(this, "add_image()", "Error Inserting Image (" + ps_filename + ")~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+//	log.log(this, "u_richtextedit.add_image:0105", "Error Inserting Image (" + ps_filename + ")~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 //END TRY
 
 if ll_objectid = 0 then
@@ -1647,7 +1647,7 @@ ll_ypos = long(f_attribute_find_attribute(pstr_attributes, "yposition"))
 ////												lbl_rendered_file)
 //		if li_sts <= 0 then
 ////			log_error("Error rendering document into image")
-//			log.log(this, "display_document()", "Error rendering document into image", 4)
+//			log.log(this, "u_richtextedit.add_document:0092", "Error rendering document into image", 4)
 //			return -1
 //		end if
 //		
@@ -1657,7 +1657,7 @@ ll_ypos = long(f_attribute_find_attribute(pstr_attributes, "yposition"))
 //		li_sts = log.file_write(lbl_rendered_file, ls_temp_file)
 //		if li_sts <= 0 then
 ////			log_error("Error saving rendered document")
-//			log.log(this, "display_document()", "Error saving rendered document", 4)
+//			log.log(this, "u_richtextedit.add_document:0102", "Error saving rendered document", 4)
 //			return -1
 //		end if
 //		

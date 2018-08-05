@@ -56,7 +56,7 @@ popup_return.items[1] = "ERROR"
 service = message.powerobjectparm
 
 if isnull(current_patient) then
-	log.log(this, "w_patient_data.open.0015", "No current patient", 4)
+	log.log(this, "w_patient_data:open", "No current patient", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

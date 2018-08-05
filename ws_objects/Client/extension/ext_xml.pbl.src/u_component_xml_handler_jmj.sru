@@ -86,12 +86,12 @@ TRY
 	lo_root.GetAttributes(ref pbdom_attribute_array[])
 	ll_root_attribute_count = UpperBound(pbdom_attribute_array)
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0031", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0031", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
 if isnull(ls_root) or lower(ls_root) <> "jmjdocument" then
-	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Error - Document root is not 'JMJDocument'", 4)
+	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0036", "Error - Document root is not 'JMJDocument'", 4)
 	return -1
 end if
 
@@ -120,7 +120,7 @@ for i = 1 to ll_count
 				if isnumber(ls_value) then
 					customer_id = long(ls_value)
 				else
-					log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Customer ID not numeric", 3)
+					log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0065", "Customer ID not numeric", 3)
 				end if
 			end if
 		CASE "ownerid"
@@ -129,7 +129,7 @@ for i = 1 to ll_count
 					owner_id = long(ls_value)
 					consultant_id = datalist.consultant_from_owner_id(owner_id)
 				else
-					log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Owner ID not numeric", 3)
+					log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0074", "Owner ID not numeric", 3)
 				end if
 			end if
 		CASE "actors"
@@ -149,18 +149,18 @@ for i = 1 to ll_count
 next
 
 if not isvalid(lo_actors) then
-	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Error - Document has no actors", 4)
+	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0094", "Error - Document has no actors", 4)
 	return -1
 else
 	li_sts = get_actors(lo_actors)
 	if li_sts < 0 then
-		log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Error - An error has occured while reading the actors", 4)
+		log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0099", "Error - An error has occured while reading the actors", 4)
 		return -1
 	end if
 end if
 
 if isnull(owner_id) then
-	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Error - Document has no OwnerID element", 4)
+	log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0105", "Error - Document has no OwnerID element", 4)
 	return -1
 end if
 
@@ -168,7 +168,7 @@ if isnull(customer_id) then
 	customer_id = sqlca.customer_id
 elseif customer_id <> sqlca.customer_id then
 	if cpr_mode = "SERVER" then
-		log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml.0036", "Data file customer_id doesn't match local database", 4)
+		log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0113", "Data file customer_id doesn't match local database", 4)
 		return -1
 	else
 		openwithparm(w_pop_yes_no, "This Data File is intended for customer # " + string(customer_id) + ", but the local database is customer # " + string(sqlca.customer_id) + ".  Are you sure you want to process this data file?")
@@ -188,7 +188,7 @@ if patientrecord_found then
 
 	li_sts = find_patient(lstr_patient, patientrecord.patienthandling.create_flag, patientrecord.patienthandling.create_ask, lb_new_object)
 	if li_sts <= 0 then
-		log.log(this,"u_component_xml_handler_jmj.xx_interpret_xml.0133","unable to find a patient record",4)
+		log.log(this,"u_component_xml_handler_jmj.xx_interpret_xml:0133","unable to find a patient record",4)
 		return -1
 	end if
 	
@@ -264,7 +264,7 @@ end if
 
 pstr_assessment_info.encounterpro_problem_id = find_assessment(lstr_assessment, pstr_assessment_info.assessmenthandling.create_flag , pstr_assessment_info.assessmenthandling.create_ask, lb_new_object)
 if isnull(pstr_assessment_info.encounterpro_problem_id) then 
-	log.log(this, "u_component_xml_handler_jmj.process_assessment.0043", "Unable to find or create assessment", 4)
+	log.log(this, "u_component_xml_handler_jmj.process_assessment:0043", "Unable to find or create assessment", 4)
 	return -1
 end if
 
@@ -427,7 +427,7 @@ end if
 
 // Make sure we have an encounter date
 if isnull(lstr_encounter.encounter_date) then
-	log.log(this, "u_component_xml_handler_jmj.process_encounter.0066", "Encounter must have an encounter date", 4)
+	log.log(this, "u_component_xml_handler_jmj.process_encounter:0066", "Encounter must have an encounter date", 4)
 	return -1
 end if
 
@@ -436,12 +436,12 @@ if lower(ls_purpose) = "check in" then
 	// Make sure the encounter date is valid
 	ld_encounter_date = date(lstr_encounter.encounter_date)
 	if ld_encounter_date > today() then
-		log.log(this, "u_component_xml_handler_jmj.process_encounter.0066", "Encounter date may not be in the future", 4)
+		log.log(this, "u_component_xml_handler_jmj.process_encounter:0075", "Encounter date may not be in the future", 4)
 		return -1
 	end if
 	if ld_encounter_date < today() then
 		if not datalist.get_preference_boolean( "Preferences", "ALLOW_PAST_ENCOUNTERS", false) then
-			log.log(this, "u_component_xml_handler_jmj.process_encounter.0066", "Encounter date may not be in the past", 3)
+			log.log(this, "u_component_xml_handler_jmj.process_encounter:0080", "Encounter date may not be in the past", 3)
 			// Do not leave this case for the to-be-posted screen
 			return 0
 		end if
@@ -460,7 +460,7 @@ if lower(ls_purpose) = "check in" then
 			end if
 		end if
 		if isnull(lstr_encounter.office_id) then
-			log.log(this, "u_component_xml_handler_jmj.process_encounter.0066", "Encounter Location must be mapped to an Office for check-in events", 4)
+			log.log(this, "u_component_xml_handler_jmj.process_encounter:0099", "Encounter Location must be mapped to an Office for check-in events", 4)
 			return -1
 		end if
 	end if
@@ -509,7 +509,7 @@ end if
 
 ll_encounter_id = find_encounter(lstr_encounter, pstr_encounter_info.encounterhandling.create_flag, pstr_encounter_info.encounterhandling.create_ask, lb_checkin, lb_new_object)
 if isnull(ll_encounter_id) then 
-	log.log(this, "u_component_xml_handler_jmj.process_encounter.0066", "Unable to find or create encounter", 4)
+	log.log(this, "u_component_xml_handler_jmj.process_encounter:0148", "Unable to find or create encounter", 4)
 	return -1
 end if
 
@@ -628,19 +628,19 @@ lstr_treatment.parent_treatment_id = parent_treatment_id
 
 // If we still don't have a treatment description then report an error
 if isnull(lstr_treatment.treatment_description) then
-	log.log(this,"u_component_xml_handler_jmj.process_treatment.0046","No treatment description provided in treatment block", 4)
+	log.log(this,"u_component_xml_handler_jmj.process_treatment:0046","No treatment description provided in treatment block", 4)
 	return -1
 end if
 
 // If we still don't have a begin_date then report an error
 if isnull(lstr_treatment.begin_date) then
-	log.log(this,"u_component_xml_handler_jmj.process_treatment.0046","No begin_date provided in treatment block", 4)
+	log.log(this,"u_component_xml_handler_jmj.process_treatment:0052","No begin_date provided in treatment block", 4)
 	return -1
 end if
 
 lstr_treatment.treatment_id = find_treatment(lstr_treatment, pstr_treatment_info.treatmenthandling.create_flag, pstr_treatment_info.treatmenthandling.create_ask, lb_new_object)
 if isnull(lstr_treatment.treatment_id) then
-	log.log(this,"u_component_xml_handler_jmj.process_treatment.0058","unable to find or create treatment",4)
+	log.log(this,"u_component_xml_handler_jmj.process_treatment:0058","unable to find or create treatment",4)
 	return -1
 end if
 
@@ -997,7 +997,7 @@ ls_description = popup_return.descriptions[1]
 li_sts = sqlca.jmj_set_office_actor(pstr_office.user_id, ls_office_id, current_scribe.user_id, ls_mapped_office_user_id)
 if not tf_check() then return -1
 if li_sts <= 0 then
-	log.log(this, "u_component_xml_handler_jmj.pick_office.0023", "Error setting office actor", 4)
+	log.log(this, "u_component_xml_handler_jmj.pick_office:0023", "Error setting office actor", 4)
 	return -1
 end if
 

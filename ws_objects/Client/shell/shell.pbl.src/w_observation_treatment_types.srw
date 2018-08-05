@@ -151,7 +151,7 @@ long ll_row
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_observation_treatment_types.open.0012", "Invalid Parameters", 4)
+	log.log(this, "w_observation_treatment_types:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -167,7 +167,7 @@ dw_treatment_types.settransobject(sqlca)
 
 ll_rows = dw_treatment_types.retrieve(observation_id)
 if ll_rows < 0 then
-	log.log(this, "w_observation_treatment_types.open.0012", "Error getting treatment types", 4)
+	log.log(this, "w_observation_treatment_types:open", "Error getting treatment types", 4)
 	close(this)
 	return
 end if

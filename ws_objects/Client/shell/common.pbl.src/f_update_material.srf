@@ -30,7 +30,7 @@ if len(pstr_material.material_object) > 0 then
 	setnull(pstr_material.url)
 else
 	if isnull(pstr_material.url) or trim(pstr_material.url) = "" then
-		log.log(po_null, "f_update_material.0025", "No material object or URL is present", 4)
+		log.log(po_null, "f_update_material:0025", "No material object or URL is present", 4)
 		return -1
 	end if
 	setnull(pstr_material.material_object)
@@ -65,12 +65,12 @@ if ll_new_material_id > 0 then
 		pstr_material = lstr_patient_material
 		return 1
 	else
-		log.log(po_null, "f_update_material.0025", "An error occured retrieving new material record", 4)
+		log.log(po_null, "f_update_material:0060", "An error occured retrieving new material record", 4)
 		sqlca.rollback_transaction( )
 		return -1
 	end if
 else
-	log.log(po_null, "f_update_material.0025", "An error occured creating new material record", 4)
+	log.log(po_null, "f_update_material:0065", "An error occured creating new material record", 4)
 	sqlca.rollback_transaction( )
 	return -1
 end if

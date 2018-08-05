@@ -125,7 +125,7 @@ long ll_row
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_observation_categories.open.0012", "Invalid Parameters", 4)
+	log.log(this, "w_observation_categories:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -145,7 +145,7 @@ dw_categories.settransobject(sqlca)
 dw_categories.multiselect = true
 ll_rows = dw_categories.retrieve(treatment_type)
 if ll_rows < 0 then
-	log.log(this, "w_observation_categories.open.0012", "Error getting all categories", 4)
+	log.log(this, "w_observation_categories:open", "Error getting all categories", 4)
 	close(this)
 	return
 end if
@@ -154,7 +154,7 @@ categories = CREATE u_ds_data
 categories.set_dataobject("dw_observation_observation_cat_list")
 ll_rows = categories.retrieve(observation_id, treatment_type)
 if ll_rows < 0 then
-	log.log(this, "w_observation_categories.open.0012", "Error getting observation categories", 4)
+	log.log(this, "w_observation_categories:open", "Error getting observation categories", 4)
 	close(this)
 	return
 end if

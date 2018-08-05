@@ -63,10 +63,10 @@ long ll_owner_id
 dw_workplans.settransobject(sqlca)
 ll_rows = dw_workplans.retrieve(id, sqlca.customer_id)
 if ll_rows < 0 then
-	log.log(this, "w_workplan_definition_display.initialize.0014", "Error retrieving workplans (" + id + ")", 4)
+	log.log(this, "w_workplan_definition_display.initialize:0014", "Error retrieving workplans (" + id + ")", 4)
 	return -1
 elseif ll_rows = 0 then	
-	log.log(this, "w_workplan_definition_display.initialize.0014", "No workplans found (" + id + ")", 4)
+	log.log(this, "w_workplan_definition_display.initialize:0017", "No workplans found (" + id + ")", 4)
 	return -1
 end if
 
@@ -144,7 +144,7 @@ long ll_workplan_id
 popup = message.powerobjectparm
 
 if popup.data_row_count < 1 then
-	log.log(this, "w_workplan_definition_display.initialize.0014", "Invalid Parameters", 4)
+	log.log(this, "w_workplan_definition_display:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -158,7 +158,7 @@ if isnumber(popup.items[1]) then
 	WHERE workplan_id = :ll_workplan_id;
 	if not tf_check() then close(this)
 	if sqlca.sqlcode = 100 then
-		log.log(this, "w_workplan_definition_display.initialize.0014", "Invalid workplan_id (" + popup.items[1] + ")", 4)
+		log.log(this, "w_workplan_definition_display:open", "Invalid workplan_id (" + popup.items[1] + ")", 4)
 		close(this)
 	end if
 else

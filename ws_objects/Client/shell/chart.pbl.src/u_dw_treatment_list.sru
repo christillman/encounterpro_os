@@ -101,7 +101,7 @@ If Isnull(ls_treatment_type) Then return 0
 
 luo_treatment = f_get_treatment_component(ls_treatment_type)
 If Isnull(luo_treatment) Then
-	log.log(this, "u_dw_treatment_list.add_new_treatment.0027", "Error getting treatment component (" + ls_treatment_type + ")", 4)
+	log.log(this, "u_dw_treatment_list.add_new_treatment:0027", "Error getting treatment component (" + ls_treatment_type + ")", 4)
 	return -1
 end if
 

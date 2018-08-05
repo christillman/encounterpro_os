@@ -82,7 +82,7 @@ long ll_row
 
 popup = message.powerobjectparm
 if popup.data_row_count < 0 or popup.data_row_count > 1 then
-	log.log(this, "w_pick_result_severity.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_pick_result_severity:open", "Invalid Parameters", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
@@ -91,12 +91,12 @@ end if
 dw_severity.settransobject(sqlca)
 li_sts = dw_severity.retrieve("RESULTSEVERITY")
 if li_sts < 0 then
-	log.log(this, "w_pick_result_severity.open.0009", "Error retrieving severities", 4)
+	log.log(this, "w_pick_result_severity:open", "Error retrieving severities", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts = 0 then
-	log.log(this, "w_pick_result_severity.open.0009", "No severities found", 4)
+	log.log(this, "w_pick_result_severity:open", "No severities found", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return

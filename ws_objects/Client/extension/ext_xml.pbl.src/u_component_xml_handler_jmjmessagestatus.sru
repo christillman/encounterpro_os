@@ -91,12 +91,12 @@ TRY
 	ll_count = UpperBound(lo_elem)
 	
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0076", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0076", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
 if isnull(ls_root) or lower(ls_root) <> "jmjmessagestatus" then
-	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "Error - Document root is not 'JMJMessageStatus'", 4)
+	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0081", "Error - Document root is not 'JMJMessageStatus'", 4)
 	return -1
 end if
 
@@ -127,7 +127,7 @@ for i = 1 to ll_count
 				if isnumber(ls_value) then
 					owner_id = long(ls_value)
 				else
-					log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "OwnerID not numeric", 3)
+					log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0112", "OwnerID not numeric", 3)
 				end if
 			end if
 		CASE "documenttype"
@@ -151,7 +151,7 @@ for i = 1 to ll_count
 				if isnumber(ls_value) then
 					ll_Severity = long(ls_value)
 				else
-					log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "Severity not numeric", 3)
+					log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0136", "Severity not numeric", 3)
 				end if
 			end if
 	END CHOOSE
@@ -163,7 +163,7 @@ if isvalid(lo_from_block) and not isnull(lo_from_block) then
 		lo_from_block.GetChildElements(ref lo_elem)
 		ll_count = UpperBound(lo_elem)
 	CATCH (pbdom_exception lo_error2)
-		log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0076", "Error - " + lo_error2.text, 4)
+		log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0148", "Error - " + lo_error2.text, 4)
 		return -1
 	END TRY
 
@@ -182,7 +182,7 @@ if isvalid(lo_from_block) and not isnull(lo_from_block) then
 						ll_from_addresseeid = long(ls_value)
 						ls_from_addressee_user_id = sqlca.fn_lookup_user_idvalue( customer_id, "AddresseeID", string(ll_from_addresseeid))
 					else
-						log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "From/AddresseeID not numeric", 3)
+						log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0167", "From/AddresseeID not numeric", 3)
 					end if
 				end if
 			CASE "description"
@@ -205,7 +205,7 @@ if isvalid(lo_to_block) and not isnull(lo_to_block) then
 		lo_to_block.GetChildElements(ref lo_elem)
 		ll_count = UpperBound(lo_elem)
 	CATCH (pbdom_exception lo_error3)
-		log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0076", "Error - " + lo_error3.text, 4)
+		log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0190", "Error - " + lo_error3.text, 4)
 		return -1
 	END TRY
 
@@ -224,7 +224,7 @@ if isvalid(lo_to_block) and not isnull(lo_to_block) then
 						ll_to_addresseeid = long(ls_value)
 						ls_to_addressee_user_id = sqlca.fn_lookup_user_idvalue( customer_id, "AddresseeID", string(ll_to_addresseeid))
 					else
-						log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "to/AddresseeID not numeric", 3)
+						log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0209", "to/AddresseeID not numeric", 3)
 					end if
 				end if
 			CASE "description"
@@ -243,7 +243,7 @@ end if
 
 
 if isnull(owner_id) then
-	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", "Error - Document has no OwnerID element", 4)
+	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0228", "Error - Document has no OwnerID element", 4)
 	return -1
 end if
 
@@ -287,7 +287,7 @@ if isnull(ll_patient_workplan_item_id) then
 	else
 		ll_loglevel = 2  // Informational
 	end if
-	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml.0081", ls_message, ll_loglevel)
+	log.log(this, "u_component_xml_handler_jmjmessagestatus.xx_interpret_xml:0272", ls_message, ll_loglevel)
 	document_context.context_object = "General"
 	return 1
 end if

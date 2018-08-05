@@ -138,7 +138,7 @@ dw_locations.settransobject(sqlca)
 
 ll_rows = dw_location_domains.retrieve()
 if ll_rows < 0 then
-	log.log(this, "w_pick_location_domain.open.0017", "Error getting location domains", 4)
+	log.log(this, "w_pick_location_domain:open", "Error getting location domains", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -294,7 +294,7 @@ for i = 1 to 99
 	ls_location_domain = left(ls_prefix, 12 - len(ls_suffix)) + ls_suffix
 next
 if i = 99 then
-	log.log(this, "w_pick_location_domain.cb_new_location_domain.clicked.0035", "Unable to generate unique key (" + ls_location_domain + ")", 4)
+	log.log(this, "w_pick_location_domain.cb_new_location_domain.clicked:0035", "Unable to generate unique key (" + ls_location_domain + ")", 4)
 	return
 end if
 

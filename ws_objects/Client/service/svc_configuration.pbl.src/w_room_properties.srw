@@ -213,14 +213,14 @@ event open;call super::open;string ls_room_id
 ls_room_id = message.stringparm
 
 if isnull(ls_room_id) then
-	log.log(this, "w_room_properties.open.0006", "NULL room_id", 4)
+	log.log(this, "w_room_properties:open", "NULL room_id", 4)
 	close(this)
 	return
 end if
 
 room = datalist.get_room(ls_room_id)
 if isnull(room.room_id) or trim(room.room_id) = "" then
-	log.log(this, "w_room_properties.open.0006", "Invalid room_id(" + ls_room_id + ")", 4)
+	log.log(this, "w_room_properties:open", "Invalid room_id(" + ls_room_id + ")", 4)
 	close(this)
 	return
 end if

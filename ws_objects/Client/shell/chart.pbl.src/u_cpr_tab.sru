@@ -70,7 +70,7 @@ end subroutine
 
 public function integer windowposchanging (long pl_x, long pl_y, long pl_width, long pl_height, long pl_flags);integer li_sts
 
-log.log(this, "u_cpr_tab.windowposchanging.0003", string(pl_x) + ", " + string(pl_y) + ", " + string(pl_width) + ", " + string(pl_height) + ", " + string(pl_flags), 2)
+log.log(this, "u_cpr_tab.windowposchanging:0003", string(pl_x) + ", " + string(pl_y) + ", " + string(pl_width) + ", " + string(pl_height) + ", " + string(pl_flags), 2)
 
 li_sts = 1
 
@@ -130,11 +130,11 @@ end subroutine
 
 public function integer initialize ();integer li_sts
 
-log.log(this, "u_cpr_tab.initialize.0003", "calling get_section_list()", 1)
+log.log(this, "u_cpr_tab.initialize:0003", "calling get_section_list()", 1)
 li_sts = get_section_list()
 if li_sts <= 0 then return li_sts
 
-log.log(this, "u_cpr_tab.initialize.0003", "calling open_section_pages()", 1)
+log.log(this, "u_cpr_tab.initialize:0007", "calling open_section_pages()", 1)
 li_sts = open_section_pages()
 if li_sts <= 0 then return li_sts
 
@@ -304,7 +304,7 @@ for i = 1 to section_count
 			ls_text = "EncounterPRO encountered an error opening a chart page ("
 			ls_text += section[i].page[1].page_class + ").  The following error message was returned:  "
 			ls_text += lt_error.text
-			log.log(this, "u_cpr_tab.open_section_pages.0015", ls_text, 4)
+			log.log(this, "u_cpr_tab.open_section_pages:0015", ls_text, 4)
 			chart_window.event POST load_error("EncounterPRO encountered an error opening the chart")
 			return -1
 		END TRY
@@ -328,7 +328,7 @@ for i = 1 to section_count
 		ls_text = "EncounterPRO encountered an error initializing a chart page ("
 		ls_text += section[i].page[1].page_class + ").  The following error message was returned:  "
 		ls_text += lt_error2.text
-		log.log(this, "u_cpr_tab.open_section_pages.0015", ls_text, 4)
+		log.log(this, "u_cpr_tab.open_section_pages:0039", ls_text, 4)
 		chart_window.event POST load_error("EncounterPRO encountered an error initializing the chart")
 		return -1
 	END TRY
@@ -336,7 +336,7 @@ for i = 1 to section_count
 	if isvalid(wait_window) then wait_window.bump_progress()
 next
 
-log.log(this, "u_cpr_tab.open_section_pages.0015", "Finished opening sections", 1)
+log.log(this, "u_cpr_tab.open_section_pages:0047", "Finished opening sections", 1)
 
 return 1
 

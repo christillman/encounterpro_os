@@ -85,11 +85,11 @@ get_attribute("use_supervisor_signature_stamp", lb_use_supervisor_signature_stam
 
 // Check for valid patient & enocunter
 If isnull(current_patient) Then
-	mylog.log(this, "u_component_report_prescription.xx_printreport.0074", "No patient context ", 4)
+	mylog.log(this, "u_component_report_prescription.xx_printreport:0074", "No patient context ", 4)
 	Return -1
 Elseif isnull(ll_encounter_id) Then
 	if isnull(current_patient.open_encounter_id) then
-		mylog.log(this, "u_component_report_prescription.xx_printreport.0074", "No encounter context ", 4)
+		mylog.log(this, "u_component_report_prescription.xx_printreport:0078", "No encounter context ", 4)
 		Return -1
 	else
 		ll_encounter_id = current_patient.open_encounter_id
@@ -269,7 +269,7 @@ For i = 1 To li_count
 			ls_signing_provider_npi = luo_ordered_by.npi
 			ls_signature_stamp = user_list.user_signature_stamp(luo_ordered_by.user_id)
 		else
-			log.log(this, "u_component_report_prescription.xx_printreport.0258", "the user (" + &
+			log.log(this, "u_component_report_prescription.xx_printreport:0258", "the user (" + &
 				luo_ordered_by.user_full_name + " is not authorized to write prescriptions and has no supervisor", 3)
 			continue
 		end if
@@ -296,7 +296,7 @@ For i = 1 To li_count
 	END IF
 
 	IF Isnull(luo_provider) THEN
-		mylog.log(this, "u_component_report_prescription.xx_printreport.0285", "No provider for prescription (" + &
+		mylog.log(this, "u_component_report_prescription.xx_printreport:0285", "No provider for prescription (" + &
 							current_patient.cpr_id + ", " + string(ll_encounter_id) + &
 							", " + luo_rx.drug_id + ")", 3)
 		CONTINUE
@@ -393,7 +393,7 @@ add_attribute("%SIGNING_PROVIDER_LICENSE_NPI%", ls_temp)
 If report_datastore.rowcount() > 0 Then
 	print_datastore()
 Else
-	mylog.log(this, "u_component_report_prescription.xx_printreport.0074", "No prescriptions for this encounter (" + &
+	mylog.log(this, "u_component_report_prescription.xx_printreport:0382", "No prescriptions for this encounter (" + &
 					current_patient.cpr_id + ", " + string(ll_encounter_id) + ")", 2)
 End if
 

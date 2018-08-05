@@ -333,12 +333,12 @@ setnull(ls_null)
 if trim(pstr_attachment.attachment_file_path) = "" then setnull(pstr_attachment.attachment_file_path)
 
 if isnull(pstr_attachment.attachment_file) or (trim(pstr_attachment.attachment_file) = "") then
-	log.log(this, "u_ds_attachments.attachment_file_path.0012", "No attachment file name", 4)
+	log.log(this, "u_ds_attachments.attachment_file_path:0012", "No attachment file name", 4)
 	return ls_null
 end if
 
 if isnull(pstr_attachment.extension) or (trim(pstr_attachment.extension) = "") then
-	log.log(this, "u_ds_attachments.attachment_file_path.0012", "No attachment file extension", 4)
+	log.log(this, "u_ds_attachments.attachment_file_path:0017", "No attachment file extension", 4)
 	return ls_null
 end if
 
@@ -377,7 +377,7 @@ if ll_row <= 0 then
 		set_dataobject("dw_p_attachment_single")
 		ll_count = retrieve(pl_attachment_id)
 		if ll_count <= 0 then
-			log.log(this, "u_ds_attachments.attachment.0023", "Error retrieving attachment (" + string(pl_attachment_id) + ")", 4)
+			log.log(this, "u_ds_attachments.attachment:0023", "Error retrieving attachment (" + string(pl_attachment_id) + ")", 4)
 			return -1
 		end if
 		ll_row = 1
@@ -400,7 +400,7 @@ if isnull(ls_component_id) then ls_component_id = "ATCH_GENERIC"
 
 puo_attachment = component_manager.get_component(ls_component_id)
 if isnull(puo_attachment) then
-	log.log(this, "u_ds_attachments.attachment.0023", "Unable to get component (" + ls_component_id + ")", 4)
+	log.log(this, "u_ds_attachments.attachment:0046", "Unable to get component (" + ls_component_id + ")", 4)
 	setnull(puo_attachment)
 	return -1
 end if
@@ -503,7 +503,7 @@ if f_string_modified(ls_cpr_id, pstr_attachment.cpr_id) then
 end if
 
 if isnull(pstr_attachment.attachment_id) or pstr_attachment.attachment_id <= 0 then
-	log.log(this, "u_ds_attachments.new_attachment_record.0065", "Unable to determine attachment_id", 4)
+	log.log(this, "u_ds_attachments.new_attachment_record:0065", "Unable to determine attachment_id", 4)
 	return -1
 end if
 
@@ -733,7 +733,7 @@ end if
 
 // One last check to make sure the file exists
 if not fileexists(ls_file) then
-	log.log(this, "u_ds_attachments.get_attachment.0028", "Error saving attachment to file (" + string(pl_attachment_id) + ", " + ls_file + ")", 4)
+	log.log(this, "u_ds_attachments.get_attachment:0028", "Error saving attachment to file (" + string(pl_attachment_id) + ", " + ls_file + ")", 4)
 	setnull(ls_file)
 	return ls_file
 end if
@@ -769,7 +769,7 @@ integer li_sts
 
 li_sts = attachment(luo_attachment, pl_attachment_id)
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.display_properties.0007", "Error getting attachment object", 4)
+	log.log(this, "u_ds_attachments.display_properties:0007", "Error getting attachment object", 4)
 	return
 end if
 openwithparm(w_attachment_properties, luo_attachment, f_active_window())
@@ -812,12 +812,12 @@ ls_file = get_attachment(pl_attachment_id)
 
 // If the file doesn't exist the skip it
 If isnull(ls_file) then
-	log.log(this, "u_ds_attachments.post_attachment.0026", "Null attachment file", 4)
+	log.log(this, "u_ds_attachments.post_attachment:0026", "Null attachment file", 4)
 	return
 end if
 
 if not fileexists(ls_file) then
-	log.log(this, "u_ds_attachments.post_attachment.0026", "Attachment file doesn't exist (" + ls_file + ")", 4)
+	log.log(this, "u_ds_attachments.post_attachment:0031", "Attachment file doesn't exist (" + ls_file + ")", 4)
 	return
 end if
 
@@ -883,7 +883,7 @@ li_sts = f_set_progress(current_patient.cpr_id, &
 								pl_attachment_id, &
 								ll_patient_workplan_item_id)
 if li_sts < 0 then
-	log.log(this, "u_ds_attachments.post_attachment.0026", "Error adding progress record", 4)
+	log.log(this, "u_ds_attachments.post_attachment:0097", "Error adding progress record", 4)
 	return
 end if
 
@@ -1052,7 +1052,7 @@ CHOOSE CASE buttons[button_pressed]
 	CASE "SAVEAS"
 		li_sts = attachment(luo_attachment, pl_attachment_id)
 		if li_sts <= 0 then
-			log.log(this, "u_ds_attachments.menu.0162", "Error getting attachment object", 4)
+			log.log(this, "u_ds_attachments.menu:0162", "Error getting attachment object", 4)
 			return
 		end if
 		luo_attachment.save_as()
@@ -1111,7 +1111,7 @@ string ls_filename
 
 // Make sure we have an extension
 if isnull(pstr_attachment.extension) or (trim(pstr_attachment.extension)) = "" then
-	log.log(this, "u_ds_attachments.generate_new_file_name.0007", "No attachment file extension", 4)
+	log.log(this, "u_ds_attachments.generate_new_file_name:0007", "No attachment file extension", 4)
 	return -1
 end if
 
@@ -1139,7 +1139,7 @@ if fileexists(ls_filespec) then
 	if i >= 1000 then
 		// If we couldn't find a unique file name the return error
 		pstr_attachment.attachment_file = ls_filename
-		log.log(this, "u_ds_attachments.generate_new_file_name.0007", "Duplicate File Name (" + pstr_attachment.attachment_file + ")", 4)
+		log.log(this, "u_ds_attachments.generate_new_file_name:0035", "Duplicate File Name (" + pstr_attachment.attachment_file + ")", 4)
 		return -1
 	end if
 end if
@@ -1157,13 +1157,13 @@ string ls_find
 long ll_row
 
 if isnull(ps_file) then
-	log.log(this, "u_ds_attachments.attachment_save_as.0009", "Null filename", 4)
+	log.log(this, "u_ds_attachments.attachment_save_as:0009", "Null filename", 4)
 	return -1
 end if
 
 li_sts = attachment_blob(pl_attachment_id, lbl_attachment)
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.attachment_save_as.0009", "Error getting attachment blob", 4)
+	log.log(this, "u_ds_attachments.attachment_save_as:0015", "Error getting attachment blob", 4)
 	return -1
 end if
 
@@ -1172,7 +1172,7 @@ if li_sts <= 0 then return -1
 
 // One last check to make sure the file exists
 if not fileexists(ps_file) then
-	log.log(this, "u_ds_attachments.attachment_save_as.0024", "Error saving attachment to file (" + string(pl_attachment_id) + ", " + ps_file + ")", 4)
+	log.log(this, "u_ds_attachments.attachment_save_as:0024", "Error saving attachment to file (" + string(pl_attachment_id) + ", " + ps_file + ")", 4)
 	return -1
 end if
 
@@ -1256,7 +1256,7 @@ if li_sts < 0 then return -1
 //		AND observation_sequence = :pstr_attachment.observation_sequence;
 //		if not tf_check() then return -1
 //		if sqlca.sqlcode = 100 then
-//			log.log(this, "u_ds_attachments.new_attachment_record.0065", "Invalid observation_sequence", 4)
+//			log.log(this, "u_ds_attachments.new_attachment_record:0074", "Invalid observation_sequence", 4)
 //			return -1
 //		end if
 //		
@@ -1326,7 +1326,7 @@ if pstr_attachment.storage_flag = "F" then
 	// Copy the file
 	li_sts = log.file_copy(ps_file, ls_filespec)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_attachments.new_attachment.0023", "Error copying attachment file", 4)
+		log.log(this, "u_ds_attachments.new_attachment:0023", "Error copying attachment file", 4)
 		return -1
 	end if
 else
@@ -1336,7 +1336,7 @@ else
 	// Get the file
 	li_sts = log.file_read(ps_file, lbl_attachment)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_attachments.new_attachment.0023", "Error reading attachment file (" + ps_file + ")", 4)
+		log.log(this, "u_ds_attachments.new_attachment:0033", "Error reading attachment file (" + ps_file + ")", 4)
 		return -1
 	end if
 end if
@@ -1377,7 +1377,7 @@ if pstr_attachment.storage_flag = "F" and eml <> "D" then
 	// Store the file
 	li_sts = log.file_write(pbl_attachment, ls_filespec)
 	if li_sts <= 0 then
-		log.log(this, "u_ds_attachments.new_attachment.0023", "Error writing attachment to disk", 4)
+		log.log(this, "u_ds_attachments.new_attachment:0020", "Error writing attachment to disk", 4)
 		return -1
 	end if
 else
@@ -1426,7 +1426,7 @@ f_attribute_add_attribute(lstr_attributes, "object_key", string(pl_object_key))
 
 ls_attachment_file = get_attachment(pl_attachment_id)
 if isnull(ls_attachment_file) then
-	log.log(this, "u_ds_attachments.ocr_attachment.0025", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.ocr_attachment:0025", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1463,13 +1463,13 @@ string ls_null
 setnull(ls_null)
 
 if isnull(pl_attachment_id) then
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "Null attachment_id", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0014", "Null attachment_id", 4)
 	return -1
 end if
 
 ll_row = get_attachment_row(pl_attachment_id)
 if ll_row <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "attachment_id not found (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0020", "attachment_id not found (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1480,7 +1480,7 @@ if upper(lstr_attachment.storage_flag) = "D" then return 1
 
 li_sts = attachment_blob(pl_attachment_id, lbl_attachment)
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0031", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1490,7 +1490,7 @@ sqlca.begin_transaction(this, "store_attachment_database()")
 li_sts = add_progress(pl_attachment_id, "UPDATE", ls_null, ll_attachment_progress_sequence)
 if li_sts <= 0 then
 	sqlca.rollback_transaction()
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0041", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1501,14 +1501,14 @@ WHERE attachment_id = :pl_attachment_id
 AND attachment_progress_sequence = :ll_attachment_progress_sequence;
 if not tf_check() then
 	sqlca.rollback_transaction()
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "Error saving attachment data to database (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0052", "Error saving attachment data to database (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
 li_sts = add_progress(pl_attachment_id, "storage_flag", "D")
 if li_sts <= 0 then
 	sqlca.rollback_transaction()
-	log.log(this, "u_ds_attachments.store_attachment_database.0014", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_database:0059", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1530,7 +1530,7 @@ string ls_status
 ls_find = "attachment_id=" + string(pl_attachment_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_ds_attachments.add_progress.0013", "Attachment record not found", 4)
+	log.log(this, "u_ds_attachments.add_progress:0013", "Attachment record not found", 4)
 	return -1
 end if
 
@@ -1579,7 +1579,7 @@ for i = 1 to ll_attachment_count
 	li_sts = store_attachment_database(lstra_attachments[i].attachment_id)
 	if li_sts < 0 then
 		f_please_wait_close(li_index)
-		log.log(this, "u_ds_attachments.move_all_attachments_to_database.0019", "Error moving attachment to database (" + string(lstra_attachments[i].attachment_id) + ")", 4)
+		log.log(this, "u_ds_attachments.move_all_attachments_to_database:0019", "Error moving attachment to database (" + string(lstra_attachments[i].attachment_id) + ")", 4)
 		return -1
 	end if
 	f_please_wait_progress_bar(li_index, i, ll_attachment_count)
@@ -1605,20 +1605,20 @@ string ls_file_path
 setnull(ls_null)
 
 if isnull(pl_attachment_id) then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "Null attachment_id", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0015", "Null attachment_id", 4)
 	return -1
 end if
 
 ll_row = get_attachment_row(pl_attachment_id)
 if ll_row <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "attachment_id not found (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0021", "attachment_id not found (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
 lstr_attachment = get_attachment_structure(ll_row)
 ls_file_path = attachment_file_path(lstr_attachment)
 if isnull(ls_file_path) then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "unable to determine file path (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0028", "unable to determine file path (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
@@ -1627,26 +1627,26 @@ if upper(lstr_attachment.storage_flag) = "F" then return 1
 
 // Check to see if the file already exists
 if fileexists(ls_file_path) then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "The destination file already exists (" + ls_file_path + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0037", "The destination file already exists (" + ls_file_path + ")", 4)
 	return -1
 end if
 
 li_sts = attachment_blob(pl_attachment_id, lbl_attachment)
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0043", "Error getting attachment file (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 
 // Store the file
 li_sts = log.file_write(lbl_attachment, ls_file_path)
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "Error writing attachment to disk (" + string(pl_attachment_id) + ", " + ls_file_path + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0050", "Error writing attachment to disk (" + string(pl_attachment_id) + ", " + ls_file_path + ")", 4)
 	return -1
 end if
 
 li_sts = add_progress(pl_attachment_id, "storage_flag", "F")
 if li_sts <= 0 then
-	log.log(this, "u_ds_attachments.store_attachment_file.0015", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
+	log.log(this, "u_ds_attachments.store_attachment_file:0056", "Error saving storage_flag progress (" + string(pl_attachment_id) + ")", 4)
 	return -1
 end if
 

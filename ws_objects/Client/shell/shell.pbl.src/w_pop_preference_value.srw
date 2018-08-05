@@ -44,7 +44,7 @@ popup = message.powerobjectparm
 popup_return.item_count = 0
 
 if popup.data_row_count <> 3 then
-	log.log(this, "w_pop_preference_value.open.0009", "Invalid Parameters", 4)
+	log.log(this, "w_pop_preference_value:open", "Invalid Parameters", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -59,12 +59,12 @@ FROM c_Preference
 WHERE preference_type = :preference_type
 AND preference_id = :preference_id;
 if not tf_check() then
-	log.log(this, "w_pop_preference_value.open.0009", "Error getting preference details", 4)
+	log.log(this, "w_pop_preference_value:open", "Error getting preference details", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_pop_preference_value.open.0009", "Preference not found (" + preference_type + ", " + preference_id + ")", 4)
+	log.log(this, "w_pop_preference_value:open", "Preference not found (" + preference_type + ", " + preference_id + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -77,7 +77,7 @@ WHERE preference_type = :preference_type
 AND user_id = :user_id
 AND preference_id = :preference_id;
 if not tf_check() then
-	log.log(this, "w_pop_preference_value.open.0009", "Error getting preference value", 4)
+	log.log(this, "w_pop_preference_value:open", "Error getting preference value", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

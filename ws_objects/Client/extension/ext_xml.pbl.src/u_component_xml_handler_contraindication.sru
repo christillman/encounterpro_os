@@ -42,12 +42,12 @@ TRY
 	ll_count = UpperBound(lo_elem)
 	
 CATCH (pbdom_exception lo_error)
-	log.log(this, "u_component_xml_handler_contraindication.xx_interpret_xml.0025", "Error - " + lo_error.text, 4)
+	log.log(this, "u_component_xml_handler_contraindication.xx_interpret_xml:0025", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
 if isnull(ls_root) or lower(ls_root) <> "jmjcontraindication" then
-	log.log(this, "u_component_xml_handler_contraindication.xx_interpret_xml.0030", "Error - Document root is not 'JMJContraindication'", 4)
+	log.log(this, "u_component_xml_handler_contraindication.xx_interpret_xml:0030", "Error - Document root is not 'JMJContraindication'", 4)
 	return -1
 end if
 

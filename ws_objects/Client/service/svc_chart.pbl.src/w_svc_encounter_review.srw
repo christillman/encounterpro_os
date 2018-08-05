@@ -68,7 +68,7 @@ service = message.powerobjectparm
 title = current_patient.id_line()
 
 if isnull(service.encounter_id) then
-	log.log(this, "w_svc_encounter_review.open.0017", "Null encounter_id", 4)
+	log.log(this, "w_svc_encounter_review:open", "Null encounter_id", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

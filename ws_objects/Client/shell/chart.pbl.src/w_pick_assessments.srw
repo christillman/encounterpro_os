@@ -277,7 +277,7 @@ If popup.data_row_count = 2 Then
 	multiselect = true
 	Setnull(ls_title)
 Else
-	log.log(this,"w_pick_assessments.open.0028","Invalid Parameters",4)
+	log.log(this,"w_pick_assessments:open","Invalid Parameters",4)
 	lstr_assessments.assessment_count = 0
 	closewithreturn(this, lstr_assessments)
 	return

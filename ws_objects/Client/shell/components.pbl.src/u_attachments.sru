@@ -317,7 +317,7 @@ If ll_row > 0 Then
 	ll_attachment_id = dw_attachments.object.attachment_id[ll_row]
 	li_sts = current_patient.attachments.attachment(luo_attachment, ll_attachment_id)
 	if li_sts <= 0 then
-		log.log(this, "u_attachments.display_properties.0010", "Error getting attachment object", 4)
+		log.log(this, "u_attachments.display_properties:0010", "Error getting attachment object", 4)
 		return
 	end if
 	openwithparm(w_attachment_properties, luo_attachment)
@@ -423,7 +423,7 @@ str_attributes lstra_attributes
 setnull(ll_encounter_id)
 
 If isnull(current_patient) Then
-	log.log(this,"u_attachments.pb_new_attachments.clicked.0012","Attachments can't be created without valid patient context",3)
+	log.log(this,"u_attachments.pb_new_attachments.clicked:0012","Attachments can't be created without valid patient context",3)
 	Return
 End If
 If Not isnull(current_patient.open_encounter) Then

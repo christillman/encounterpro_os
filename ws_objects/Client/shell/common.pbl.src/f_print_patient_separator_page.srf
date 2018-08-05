@@ -10,7 +10,7 @@ global subroutine f_print_patient_separator_page ();unsignedlong lul_printjob
 string ls_temp
 
 if isnull(current_patient) then
-	log.log(po_null, "f_print_patient_separator_page.0005", "No current patient", 4)
+	log.log(po_null, "f_print_patient_separator_page:0005", "No current patient", 4)
 	return
 end if
 

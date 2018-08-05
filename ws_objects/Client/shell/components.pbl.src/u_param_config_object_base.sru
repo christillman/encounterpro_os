@@ -84,7 +84,7 @@ FROM c_Config_Object_Type
 WHERE config_object_type = :config_object_type;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_param_config_object_base.x_initialize.0034", "Invalid config_object_type (" + config_object_type + ")", 4)
+	log.log(this, "u_param_config_object_base.x_initialize:0034", "Invalid config_object_type (" + config_object_type + ")", 4)
 	return -1
 end if
 

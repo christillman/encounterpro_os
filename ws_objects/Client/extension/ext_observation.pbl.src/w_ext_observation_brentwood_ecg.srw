@@ -169,7 +169,7 @@ if ll_sts <> 0 then
 	ls_msg += ", date of birth = '" + ls_date_of_birth + "'"
 	ls_msg += ", name = '" + ls_last_name + ", " + ls_first_name + " " + ls_middle_name + "'"
 	ls_msg += ", billing_id = '" + ls_billing_id + "'"
-	log.log(this, "w_ext_observation_brentwood_ecg.initialize.0051", ls_msg, 4)
+	log.log(this, "w_ext_observation_brentwood_ecg.initialize:0051", ls_msg, 4)
 	return -1
 end if
 
@@ -193,7 +193,7 @@ ole_ecg.object.SetSerialPort(ll_comport - 1)
 
 ll_sts = ole_ecg.object.StartECG(ls_password)
 if ll_sts <> 0 then
-	log.log(this, "w_ext_observation_brentwood_ecg.initialize.0051", "Error starting ecg object (" + string(ll_sts) + ")", 4)
+	log.log(this, "w_ext_observation_brentwood_ecg.initialize:0075", "Error starting ecg object (" + string(ll_sts) + ")", 4)
 	return -1
 end if
 

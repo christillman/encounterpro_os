@@ -48,14 +48,14 @@ if len(refill_event_type) > 0 then
 				openwithparm(w_pop_yes_no, ls_message)
 				popup_return = message.powerobjectparm
 				if popup_return.item <> "YES" then
-					log.log(this, "u_component_service_get_refills.xx_do_service.0032", "Error:  Refill Event Type  is ~"Order~" but user is not certified.", 3)
+					log.log(this, "u_component_service_get_refills.xx_do_service:0032", "Error:  Refill Event Type  is ~"Order~" but user is not certified.", 3)
 					return -1
 				end if
 				
 				refill_event_type = "Request"
 			end if
 		CASE ELSE
-			log.log(this, "u_component_service_get_refills.xx_do_service.0032", "Warning:  invalid Refill Event Type (" + refill_event_type + ").  EncounterPRO will infer the event type from the context.", 3)
+			log.log(this, "u_component_service_get_refills.xx_do_service:0039", "Warning:  invalid Refill Event Type (" + refill_event_type + ").  EncounterPRO will infer the event type from the context.", 3)
 			setnull(refill_event_type)
 	END CHOOSE
 end if
@@ -145,12 +145,12 @@ u_component_treatment luo_treatment
 // If the current treatment context is "RefillMedication" then call the edit service for the parent treatment
 if lower(treatment.treatment_type) = "refillmedication" then
 	if isnull(treatment.parent_treatment_id) then
-		log.log(this, "u_component_service_get_refills.check_completeness.0013", "refillmedication treatment must have a parent treatment", 4)
+		log.log(this, "u_component_service_get_refills.check_completeness:0013", "refillmedication treatment must have a parent treatment", 4)
 		return false
 	end if
 	li_sts = current_patient.treatments.treatment(luo_treatment, treatment.parent_treatment_id)
 	if li_sts <= 0 then
-		log.log(this, "u_component_service_get_refills.check_completeness.0013", "Error getting parent treatment (" + cpr_id + ", " + string(treatment.parent_treatment_id) + ")", 4)
+		log.log(this, "u_component_service_get_refills.check_completeness:0018", "Error getting parent treatment (" + cpr_id + ", " + string(treatment.parent_treatment_id) + ")", 4)
 		return false
 	end if
 else

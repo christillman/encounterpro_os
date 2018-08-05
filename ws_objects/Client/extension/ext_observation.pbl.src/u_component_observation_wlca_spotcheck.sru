@@ -34,7 +34,7 @@ end function
 private function integer connect_device ();
 
 if not isvalid(spotcheck_window) then
-	mylog.log(this, "u_component_observation_wlca_spotcheck.connect_device.0004", "No valid window", 4)
+	mylog.log(this, "u_component_observation_wlca_spotcheck.connect_device:0004", "No valid window", 4)
 	return -1
 end if
 

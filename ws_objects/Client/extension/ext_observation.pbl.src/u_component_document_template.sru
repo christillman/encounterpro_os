@@ -65,7 +65,7 @@ ls_encoding = get_attribute("output_file_encoding")
 TRY
 	set_document_context_objects()
 CATCH (exception le_error)
-	log.log(this, "u_component_document_template.xx_do_source.0043", "Error setting document clinical objects (" + le_error.text + ")" , 4)
+	log.log(this, "u_component_document_template.xx_do_source:0043", "Error setting document clinical objects (" + le_error.text + ")" , 4)
 	THROW le_error
 END TRY
 
@@ -81,7 +81,7 @@ TRY
 	end if
 	if li_sts = 0 then return 1  // No data so return success
 CATCH (exception le_error2)
-	log.log(this, "u_component_document_template.xx_do_source.0043", "Error resolving templates: " + le_error2.text, 4)
+	log.log(this, "u_component_document_template.xx_do_source:0059", "Error resolving templates: " + le_error2.text, 4)
 	THROW le_error2
 END TRY
 
@@ -121,7 +121,7 @@ CHOOSE CASE upper(ls_merge)
 		
 		li_sts = f_compress_documents(lstr_compressed_document_file, lstr_document_files)
 		if li_sts <= 0 then
-			log.log(this, "u_component_document_template.xx_do_source.0043", "Error merging documents with compression", 4)
+			log.log(this, "u_component_document_template.xx_do_source:0099", "Error merging documents with compression", 4)
 			return -1
 		end if
 		
@@ -152,7 +152,7 @@ if not isnull(ls_compression) and lower(ls_compression) <> "none" then
 	lstr_document_files.file[1] = lstr_output_document_file
 	li_sts = f_compress_documents(lstr_compressed_document_file, lstr_document_files)
 	if li_sts <= 0 then
-		log.log(this, "u_component_document_template.xx_do_source.0043", "Error compressing document", 4)
+		log.log(this, "u_component_document_template.xx_do_source:0130", "Error compressing document", 4)
 		return -1
 	end if
 	
@@ -397,7 +397,7 @@ get_attribute("add_cr_between_templates", lb_add_cr, true)
 // Get the field mappings
 ls_report_id = get_attribute("report_id")
 if isnull(ls_report_id) or len(ls_report_id) < 36 then
-	log.log(this, "u_component_document_template.scan_templates_and_resolve_fields.0035", "No report_id", 4)
+	log.log(this, "u_component_document_template.scan_templates_and_resolve_fields:0035", "No report_id", 4)
 	return -1
 end if
 f_attribute_add_attribute(lstr_attributes, "report_id", ls_report_id)
@@ -405,7 +405,7 @@ f_attribute_add_attribute(lstr_attributes, "report_id", ls_report_id)
 // We must have a document_patient_workplan_item_id attribute
 get_attribute("document_patient_workplan_item_id", ll_document_patient_workplan_item_id)
 if isnull(ll_document_patient_workplan_item_id) then
-	log.log(this, "u_component_document_template.scan_templates_and_resolve_fields.0035", "document_patient_workplan_item_id attribute not found", 4)
+	log.log(this, "u_component_document_template.scan_templates_and_resolve_fields:0043", "document_patient_workplan_item_id attribute not found", 4)
 	return -1
 end if
 f_attribute_add_attribute(lstr_attributes, "document_patient_workplan_item_id", string(ll_document_patient_workplan_item_id))
@@ -429,7 +429,7 @@ if ll_attribute_sequence > 0 then
 	ls_document_field_map = f_blob_to_string(lbl_field_map)
 	li_sts = f_get_document_elements_from_xml(ls_document_field_map, lstr_mapped_document_elements)
 	if li_sts < 0 then
-		log.log(this, "u_component_document_template.scan_templates_and_resolve_fields.0035", "Unable to read document element mappings", 4)
+		log.log(this, "u_component_document_template.scan_templates_and_resolve_fields:0067", "Unable to read document element mappings", 4)
 	end if
 end if
 

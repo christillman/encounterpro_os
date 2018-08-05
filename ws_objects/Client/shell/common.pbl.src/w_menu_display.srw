@@ -98,10 +98,10 @@ long ll_owner_id
 dw_versions.settransobject(sqlca)
 ll_rows = dw_versions.retrieve(id, sqlca.customer_id)
 if ll_rows < 0 then
-	log.log(this, "w_menu_display.initialize.0014", "Error retrieving workplans (" + id + ")", 4)
+	log.log(this, "w_menu_display.initialize:0014", "Error retrieving workplans (" + id + ")", 4)
 	return -1
 elseif ll_rows = 0 then	
-	log.log(this, "w_menu_display.initialize.0014", "No menus found (" + id + ")", 4)
+	log.log(this, "w_menu_display.initialize:0017", "No menus found (" + id + ")", 4)
 	return -1
 end if
 
@@ -214,7 +214,7 @@ str_popup popup
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_menu_display.open.0007", "Invalid Parameters", 4)
+	log.log(this, "w_menu_display:open", "Invalid Parameters", 4)
 	close(this)
 	return
 end if
@@ -224,7 +224,7 @@ allow_editing = f_string_to_boolean(popup.items[2])
 
 li_sts = initialize()
 if li_sts <= 0 then
-	log.log(this, "w_menu_display.open.0007", "Initialize failed", 4)
+	log.log(this, "w_menu_display:open", "Initialize failed", 4)
 	close(this)
 end if
 
@@ -778,7 +778,7 @@ FROM c_Menu
 WHERE menu_id = :ll_menu_id;
 if not tf_check() then return
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_menu_display.open.0007", "menu_id not found (" + string(ll_menu_id) + ")", 4)
+	log.log(this, "w_menu_display.dw_versions.selected:0038", "menu_id not found (" + string(ll_menu_id) + ")", 4)
 	return
 end if
 

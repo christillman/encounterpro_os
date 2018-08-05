@@ -237,7 +237,7 @@ end if
 
 li_sts = user_list.get_user(ps_user_id, lstr_user)
 if li_sts <= 0 then
-	log.log(this, "w_pick_user.select_user.0077", "user not found (" + ps_user_id + ")", 4)
+	log.log(this, "w_pick_user.select_user:0077", "user not found (" + ps_user_id + ")", 4)
 	return
 end if
 

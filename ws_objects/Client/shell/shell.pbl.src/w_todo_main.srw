@@ -72,7 +72,7 @@ li_role_count = user_list.roles_assigned_to_user(current_user.user_id, lstra_rol
 for i = 1 to li_role_count
 	luo_tabpage = tab_todo.open_page("u_tabpage_todo_lists", false)
 	if isnull(luo_tabpage) then
-		log.log(this, "w_todo_main.open.0027", "Error opening role-todo-items tab page", 4)
+		log.log(this, "w_todo_main:open", "Error opening role-todo-items tab page", 4)
 		continue
 	end if
 	
@@ -91,7 +91,7 @@ if f_string_to_boolean(datalist.get_preference("PREFERENCES", "todo_show_subordi
 		// Open a page for each subordinate
 		luo_tabpage = tab_todo.open_page("u_tabpage_todo_lists", false)
 		if isnull(luo_tabpage) then
-			log.log(this, "w_todo_main.open.0027", "Error opening subordinate-todo-items tab page", 4)
+			log.log(this, "w_todo_main:open", "Error opening subordinate-todo-items tab page", 4)
 			continue
 		end if
 		
@@ -107,7 +107,7 @@ if current_user.check_privilege("See Other Users Todo") then
 	// Open a page for other users
 	luo_tabpage = tab_todo.open_page("u_tabpage_todo_lists", false)
 	if isnull(luo_tabpage) then
-		log.log(this, "w_todo_main.open.0027", "Error opening role-todo-items tab page", 4)
+		log.log(this, "w_todo_main:open", "Error opening role-todo-items tab page", 4)
 	end if
 	
 	luo_tabpage.tag = "OTHER"

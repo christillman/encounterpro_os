@@ -43,7 +43,7 @@ ll_controlled_warning_percent = long(f_attribute_find_attribute(pstr_attributes,
 if isnull(ls_maintenance_rule_type) then ls_maintenance_rule_type = "Rule"
 
 if isnull(ls_description) then
-	log.log(po_null, "f_new_hm_patient_class.0038", "Error: No description", 4)
+	log.log(po_null, "f_new_hm_patient_class:0038", "Error: No description", 4)
 	return ls_null
 end if
 
@@ -98,7 +98,7 @@ FROM dbo.c_Maintenance_Patient_Class
 WHERE maintenance_rule_id = :ll_maintenance_rule_id;
 if not tf_check() then return ls_null
 if sqlca.sqlnrows <> 1 then
-	log.log(po_null, "f_new_hm_patient_class.0038", "Error saving new patient class", 4)
+	log.log(po_null, "f_new_hm_patient_class:0093", "Error saving new patient class", 4)
 	return ls_null
 end if
 

@@ -36,13 +36,13 @@ u_ds_data	lds_posting_history
 
 ls_posting_service = get_attribute("posting_service")
 If isnull(ls_posting_service) then
-	mylog.log(this, "u_component_service_repost_service.xx_do_service.0025", "posting service is null", 4)
+	mylog.log(this, "u_component_service_repost_service.xx_do_service:0025", "posting service is null", 4)
 	return -1
 End If
 
 ls_ordered_for = get_attribute("ordered_for")
 If isnull(ls_ordered_for) then
-	mylog.log(this, "u_component_service_repost_service.xx_do_service.0025", "ordered for is null", 4)
+	mylog.log(this, "u_component_service_repost_service.xx_do_service:0031", "ordered for is null", 4)
 	return -1
 End If
 

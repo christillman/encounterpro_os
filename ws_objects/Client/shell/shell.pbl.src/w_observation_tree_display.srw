@@ -76,7 +76,7 @@ integer li_sts
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_observation_tree_display.open.0008", "Invalid Parameters", 4)
+	log.log(this, "w_observation_tree_display:open", "Invalid Parameters", 4)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)
 	return

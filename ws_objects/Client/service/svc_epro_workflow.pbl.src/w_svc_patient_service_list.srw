@@ -129,7 +129,7 @@ for i = 1 to ll_count
 
 	luo_service = service_list.get_service_component(ll_patient_workplan_item_id)
  	If isnull(luo_service) Then
-		log.log(This, "w_svc_patient_service_list.do_services.0030", "Error Getting Service (" + string(ll_patient_workplan_item_id) + ")", 4)
+		log.log(This, "w_svc_patient_service_list.do_services:0030", "Error Getting Service (" + string(ll_patient_workplan_item_id) + ")", 4)
 		Return -1
 	End If
 
@@ -232,7 +232,7 @@ paint_menu(ll_menu_id)
 
 li_sts = load_services()
 if li_sts <= 0 then
-	log.log(this, "w_svc_patient_service_list.open.0032", "Error loading service", 4)
+	log.log(this, "w_svc_patient_service_list:open", "Error loading service", 4)
 	closewithreturn(this, popup_return)
 	return
 elseif li_sts = 1 then

@@ -70,25 +70,25 @@ SSCalibrate = CREATE oleobject
 
 li_sts = ssresults.connecttonewobject("SSCOMServer.SSResults")
 if li_sts < 0 then
-	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize.0015", "Error connecting to SSCOMServer.SSResults (" + string(li_sts) + ")", 4)
+	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize:0015", "Error connecting to SSCOMServer.SSResults (" + string(li_sts) + ")", 4)
 	return -1
 end if
 
 li_sts = SSWho.connecttonewobject("SSCOMServer.SSWho")
 if li_sts < 0 then
-	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize.0015", "Error connecting to SSCOMServer.SSWho (" + string(li_sts) + ")", 4)
+	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize:0021", "Error connecting to SSCOMServer.SSWho (" + string(li_sts) + ")", 4)
 	return -1
 end if
 
 li_sts = SSDisconnect.connecttonewobject("SSCOMServer.SSDisconnect")
 if li_sts < 0 then
-	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize.0015", "Error connecting to SSCOMServer.SSDisconnect (" + string(li_sts) + ")", 4)
+	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize:0027", "Error connecting to SSCOMServer.SSDisconnect (" + string(li_sts) + ")", 4)
 	return -1
 end if
 
 li_sts = SSCalibrate.connecttonewobject("SSCOMServer.SSCalibrate")
 if li_sts < 0 then
-	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize.0015", "Error connecting to SSCOMServer.SSCalibrate (" + string(li_sts) + ")", 4)
+	mylog.log(this, "u_component_observation_wlca_suresight.xx_initialize:0033", "Error connecting to SSCOMServer.SSCalibrate (" + string(li_sts) + ")", 4)
 	return -1
 end if
 

@@ -95,7 +95,7 @@ end subroutine
 
 public function integer initialize (u_component_service puo_service);service = puo_service
 if isnull(service.treatment) then
-	log.log(this, "u_standard_exams.initialize.0003", "No treatment object", 4)
+	log.log(this, "u_standard_exams.initialize:0003", "No treatment object", 4)
 	return -1
 end if
 
@@ -103,7 +103,7 @@ treatment = service.treatment
 
 root_observation_id = service.root_observation_id()
 if isnull(root_observation_id) then
-	log.log(this, "u_standard_exams.initialize.0003", "No root observation_id", 4)
+	log.log(this, "u_standard_exams.initialize:0011", "No root observation_id", 4)
 	return -1
 end if
 
@@ -198,7 +198,7 @@ if mode = "USER" then
 	dw_exams.settransobject(sqlca)
 	li_sts = dw_exams.retrieve(root_observation_id, current_patient.cpr_id, treatment.treatment_type, current_user.user_id)
 	if li_sts < 0 then
-		log.log(this, "u_standard_exams.display_exams.0012", "Error loading exam selections", 4)
+		log.log(this, "u_standard_exams.display_exams:0012", "Error loading exam selections", 4)
 		return -1
 	end if
 else
@@ -206,7 +206,7 @@ else
 	dw_exams.settransobject(sqlca)
 	li_sts = dw_exams.retrieve(root_observation_id)
 	if li_sts < 0 then
-		log.log(this, "u_standard_exams.display_exams.0012", "Error loading exam selections", 4)
+		log.log(this, "u_standard_exams.display_exams:0020", "Error loading exam selections", 4)
 		return -1
 	end if
 end if

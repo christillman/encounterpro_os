@@ -22,7 +22,7 @@ str_attributes lstr_attributes
 
 
 if debug_mode then
-	log.log(this, "u_component_service_dotnet.xx_initialize.0006", "Debug Mode", 2)
+	log.log(this, "u_component_service_dotnet.xx_initialize:0006", "Debug Mode", 2)
 end if
 
 // Get the XML document for the component attributes
@@ -41,7 +41,7 @@ protected function integer xx_shutdown ();
 TRY
 	com_wrapper.disconnectobject( )
 CATCH (throwable lt_error)
-	log.log(this, "u_component_service_dotnet.xx_initialize.0006", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_service_dotnet.xx_shutdown:0005", "Error disconnecting ConnectClass (" + lt_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -94,7 +94,7 @@ li_sts = lo_xml.create_xml(patient_workplan_item_id, &
 									lo_document)
 ls_xml_data = lo_document.xml_string
 if isnull(ls_xml_data) then
-	log.log(this, "u_component_service_dotnet.xx_initialize.0006", "Error getting xml data", 4)
+	log.log(this, "u_component_service_dotnet.xx_do_service:0041", "Error getting xml data", 4)
 	return -1
 end if
 
@@ -102,7 +102,7 @@ end if
 TRY
 	ls_results_xml = com_wrapper.DoService(ls_xml_data)
 CATCH (throwable lt_error)
-	log.log(this, "u_component_service_dotnet.xx_initialize.0006", "Error calling com source (" + lt_error.text + ")", 4)
+	log.log(this, "u_component_service_dotnet.xx_do_service:0049", "Error calling com source (" + lt_error.text + ")", 4)
 	dotnet_create_test_case()
 	return -1
 END TRY
@@ -122,20 +122,20 @@ if len(ls_xslt) > 0 then
 	TRY
 		ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
 	CATCH (throwable lt_error2)
-		log.log(this, "u_component_service_dotnet.xx_initialize.0006", "Error calling com source (" + lt_error2.text + ")", 4)
+		log.log(this, "u_component_service_dotnet.xx_do_service:0069", "Error calling com source (" + lt_error2.text + ")", 4)
 		return -1
 	END TRY
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else
-		log.log(this, "u_component_service_dotnet.xx_do_service.0075", "Error transforming xml", 3)
+		log.log(this, "u_component_service_dotnet.xx_do_service:0075", "Error transforming xml", 3)
 	end if
 end if
 
 // We have XML returned
 //li_sts = read_data(ls_results_xml, "")
 //if li_sts < 0 then
-//	log.log(this, "u_component_service_dotnet.xx_do_service.0075", "Error reading xml documents", 4)
+//	log.log(this, "u_component_service_dotnet.xx_do_service:0082", "Error reading xml documents", 4)
 //	return -1
 //end if
 

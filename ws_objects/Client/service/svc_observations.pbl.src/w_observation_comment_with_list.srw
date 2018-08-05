@@ -393,7 +393,7 @@ string ls_control
 
 service = message.powerobjectparm
 if isnull(service.treatment) then
-	log.log(this, "w_observation_comment_with_list.open.0014", "Invalid treatment object", 4)
+	log.log(this, "w_observation_comment_with_list:open", "Invalid treatment object", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)
@@ -439,7 +439,7 @@ setnull(top_20_user_id)
 
 li_sts = load_pick_list()
 if li_sts < 0 then
-	log.log(this, "w_observation_comment_with_list.open.0014", "Error loading pick list", 4)
+	log.log(this, "w_observation_comment_with_list:open", "Error loading pick list", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)
@@ -453,7 +453,7 @@ if li_sts = 0 then
 	
 	li_sts = load_pick_list()
 	if li_sts < 0 then
-		log.log(this, "w_observation_comment_with_list.open.0014", "Error loading pick list", 4)
+		log.log(this, "w_observation_comment_with_list:open", "Error loading pick list", 4)
 		popup_return.item_count = 1
 		popup_return.items[1] = "ERROR"
 		closewithreturn(this, popup_return)
@@ -496,7 +496,7 @@ st_comment_count.text = string(displayed_comment) + " of " + string(displayed_co
 st_comment_count.text += "  -  " + ls_temp
 
 if displayed_comment <= 0 then
-	log.log(this, "w_observation_comment_with_list.open.0014", "Nothing to display", 3)
+	log.log(this, "w_observation_comment_with_list:open", "Nothing to display", 3)
 	close(this)
 	return
 elseif displayed_comment = 1 then
@@ -848,7 +848,7 @@ integer li_sts
 
 li_sts = save_comment()
 if li_sts < 0 then
-	log.log(this, "w_observation_comment_with_list.cb_done.clicked.0006", "Error saving comment", 4)
+	log.log(this, "w_observation_comment_with_list.cb_done.clicked:0006", "Error saving comment", 4)
 	return
 end if
 
@@ -881,7 +881,7 @@ integer li_sts
 
 li_sts = save_comment()
 if li_sts < 0 then
-	log.log(this, "w_observation_comment_with_list.cb_done.clicked.0006", "Error saving comment", 4)
+	log.log(this, "w_observation_comment_with_list.cb_beback.clicked:0006", "Error saving comment", 4)
 	return
 end if
 

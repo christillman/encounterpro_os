@@ -274,7 +274,7 @@ string ls_default_dispense_unit
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_drug_package.open.0014", "Invalid Parameter", 4)
+	log.log(this, "w_drug_package:open", "Invalid Parameter", 4)
 	close(this)
 	return
 end if
@@ -283,13 +283,13 @@ drug_id = popup.items[1]
 package_id = popup.items[2]
 
 if isnull(drug_id) then
-	log.log(this, "w_drug_package.open.0014", "Null Drug ID", 4)
+	log.log(this, "w_drug_package:open", "Null Drug ID", 4)
 	close(this)
 	return
 end if
 
 if isnull(package_id) then
-	log.log(this, "w_drug_package.open.0014", "Null Package ID", 4)
+	log.log(this, "w_drug_package:open", "Null Package ID", 4)
 	close(this)
 	return
 end if
@@ -312,7 +312,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this, "w_drug_package.open.0014", "Drug pakcage not found (" + drug_id + ", " + package_id + ")", 4)
+	log.log(this, "w_drug_package:open", "Drug pakcage not found (" + drug_id + ", " + package_id + ")", 4)
 	close(this)
 	return
 end if

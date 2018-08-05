@@ -29,7 +29,7 @@ string ls_copyable
 
 li_sts = f_get_xml_document(ps_object_xml, lxml_doc)
 if li_sts <= 0 then
-	log.log(po_null, "f_config_object_import_xml.0024", "Error:  Object data is not valid XML", 4)
+	log.log(po_null, "f_config_object_import_xml:0024", "Error:  Object data is not valid XML", 4)
 	return -1
 end if
 
@@ -51,13 +51,13 @@ TRY
 	lo_root.GetAttributes(ref pbdom_attribute_array[])
 	ll_attribute_count = UpperBound(pbdom_attribute_array)
 CATCH (pbdom_exception lo_error)
-	log.log(po_null, "f_config_object_import_xml.0046", "Error - " + lo_error.text, 4)
+	log.log(po_null, "f_config_object_import_xml:0046", "Error - " + lo_error.text, 4)
 	return -1
 END TRY
 
 
 if lower(ls_root) <> "epconfigobjects" then
-	log.log(po_null, "f_config_object_import_xml.0024", "Error:  Root element tag is not ~"EPConfigObjects~"", 4)
+	log.log(po_null, "f_config_object_import_xml:0052", "Error:  Root element tag is not ~"EPConfigObjects~"", 4)
 	return -1
 end if
 
@@ -191,17 +191,17 @@ next
 
 // If we get here we should have a config_object_id and a version number
 if isnull(lstr_version.config_object_id) then
-	log.log(po_null, "f_config_object_import_xml.0024", "Error:  config_object_id not found", 4)
+	log.log(po_null, "f_config_object_import_xml:0186", "Error:  config_object_id not found", 4)
 	return -1
 end if
 
 if isnull(lstr_version.version) then
-	log.log(po_null, "f_config_object_import_xml.0024", "Error:  version not found", 4)
+	log.log(po_null, "f_config_object_import_xml:0191", "Error:  version not found", 4)
 	return -1
 end if
 
 if isnull(lstr_version.owner_id) then
-	log.log(po_null, "f_config_object_import_xml.0024", "Error:  owner_id not found", 4)
+	log.log(po_null, "f_config_object_import_xml:0196", "Error:  owner_id not found", 4)
 	return -1
 end if
 
