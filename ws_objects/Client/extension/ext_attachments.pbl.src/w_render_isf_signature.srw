@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_render_isf_signature.srw
+$PBExportHeader$w_render_isf_signature.srw
 forward
 global type w_render_isf_signature from w_window_base
 end type
@@ -73,14 +73,14 @@ If li_sts <= 0 Then Return -1
 
 li_sts = ip_ink.loadink(lbl_attachment)
 if li_sts < 1 then
-	log.log(this, "w_render_isf_signature.post_open.0018", "Error loading ink", 4)
+	log.log(this, "w_render_isf_signature:post", "Error loading ink", 4)
 	closewithreturn(this, "ERROR")
 end if
 
 ls_file = f_temp_file("gif")
 li_sts = ip_ink.saveink(ls_file, GIFFormat!)
 if li_sts < 1 then
-	log.log(this, "w_render_isf_signature.post_open.0018", "Error saving ink to file", 4)
+	log.log(this, "w_render_isf_signature:post", "Error saving ink to file", 4)
 	closewithreturn(this, "ERROR")
 end if
 

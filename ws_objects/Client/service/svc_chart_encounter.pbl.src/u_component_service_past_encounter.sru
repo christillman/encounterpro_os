@@ -1,4 +1,4 @@
-﻿$PBExportHeader$u_component_service_past_encounter.sru
+$PBExportHeader$u_component_service_past_encounter.sru
 forward
 global type u_component_service_past_encounter from u_component_service
 end type
@@ -42,7 +42,7 @@ ll_encounter_id = current_patient.new_encounter(office_id, &
 																current_scribe.user_id, &
 																false)
 if ll_encounter_id <= 0 then
-	mylog.log(this, "u_component_service_past_encounter.xx_do_service.0031", "Error creating new encounter", 4)
+	mylog.log(this, "u_component_service_past_encounter.xx_do_service:0031", "Error creating new encounter", 4)
 	return 2
 end if
 

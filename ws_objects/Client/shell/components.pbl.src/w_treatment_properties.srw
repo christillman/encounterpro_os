@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_treatment_properties.srw
+$PBExportHeader$w_treatment_properties.srw
 forward
 global type w_treatment_properties from w_window_base
 end type
@@ -271,14 +271,14 @@ popup = Message.powerobjectparm
 treatment = popup.objectparm
 
 if isnull(treatment) or not isvalid(treatment) then
-	log.log(this, "w_treatment_properties.open.0009", "Invalid Treatment", 4)
+	log.log(this, "w_treatment_properties:open", "Invalid Treatment", 4)
 	close(this)
 	return
 end if
 
 li_sts = load_properties()
 if li_sts < 0 then
-	log.log(this, "w_treatment_properties.open.0009", "Error loading properties", 4)
+	log.log(this, "w_treatment_properties:open", "Error loading properties", 4)
 	close(this)
 	return
 end if

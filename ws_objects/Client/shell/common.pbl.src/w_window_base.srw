@@ -1,4 +1,4 @@
-ï»¿$PBExportHeader$w_window_base.srw
+$PBExportHeader$w_window_base.srw
 forward
 global type w_window_base from window
 end type
@@ -314,7 +314,7 @@ else
 			titles[button_count].text = ps_title
 			titles[button_count].backcolor = color_background
 		else
-			log.log(this, "w_window_base.add_button.0043", "Error opening object for button (" + ps_title + ")", 4)
+			log.log(this, "w_window_base.add_button:0043", "Error opening object for button (" + ps_title + ")", 4)
 		end if
 	else
 		button_count += 1
@@ -429,15 +429,15 @@ li_H = UnitsToPixels( this.Height, YUnitsToPixels! )
 
 ll_DC = GetWindowDC( Handle( lw_this ) )
 if ll_DC = 0 or isnull(ll_DC) then
-	log.log(this, "w_window_base.window_to_clipboard.0021", "Error creating window device context", 4 )
+	log.log(this, "w_window_base.window_to_clipboard:0021", "Error creating window device context", 4 )
 	RETURN -1
 end if
 
-//This returns a pointer to an object that has details about the current screen setupâ€”such as the number of colorsâ€”but this isn't really important to know because the next function call is used to create your own device context. It just makes a new one that is the same as the current one:
+//This returns a pointer to an object that has details about the current screen setup—such as the number of colors—but this isn't really important to know because the next function call is used to create your own device context. It just makes a new one that is the same as the current one:
 
 ll_DestDC = CreateCompatibleDC( ll_DC )
 if ll_DestDC = 0 or isnull(ll_DestDC) then
-	log.log(this, "w_window_base.window_to_clipboard.0021", "Error creating compatible device context", 4 )
+	log.log(this, "w_window_base.window_to_clipboard:0029", "Error creating compatible device context", 4 )
 	ReleaseDC( Handle(lw_this), ll_DC )
 	RETURN -1
 end if
@@ -448,7 +448,7 @@ end if
 
 ll_BMP = CreateCompatibleBitmap( ll_DC, li_W, li_H )
 if ll_BMP = 0 or isnull(ll_BMP) then
-	log.log(this, "w_window_base.window_to_clipboard.0021", "Error creating bitmap", 4 )
+	log.log(this, "w_window_base.window_to_clipboard:0040", "Error creating bitmap", 4 )
 	DeleteDC( ll_DestDC )
 	ReleaseDC( Handle(lw_this), ll_DC )
 	RETURN -1
@@ -469,7 +469,7 @@ IF lb_rc THEN
 	SetClipBoardData( 2, ll_BMP )
 	CloseClipBoard()
 ELSE
-	log.log(this, "w_window_base.window_to_clipboard.0021", "Error Opening ClipBoard", 4 )
+	log.log(this, "w_window_base.window_to_clipboard:0061", "Error Opening ClipBoard", 4 )
 	DeleteObject( ll_BMP )
 	DeleteDC( ll_DestDC )
 	ReleaseDC( Handle(lw_this), ll_DC )

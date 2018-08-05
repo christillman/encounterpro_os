@@ -1,4 +1,4 @@
-﻿$PBExportHeader$u_component_xml_handler_script.sru
+$PBExportHeader$u_component_xml_handler_script.sru
 forward
 global type u_component_xml_handler_script from u_component_xml_handler_base
 end type
@@ -253,7 +253,7 @@ current_element = po_current_element
 // Get the display script commands
 li_sts = datalist.display_script(pl_display_script_id,lstr_display_script)
 if li_sts <= 0 then
-	log.log(this, "u_component_xml_handler_script.interpret_element_from_script.0045", "Error getting display_script structure", 4)
+	log.log(this, "u_component_xml_handler_script.interpret_element_from_script:0045", "Error getting display_script structure", 4)
 	return -1
 end if
 

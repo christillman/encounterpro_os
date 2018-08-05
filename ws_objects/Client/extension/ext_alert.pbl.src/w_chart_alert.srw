@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_chart_alert.srw
+$PBExportHeader$w_chart_alert.srw
 forward
 global type w_chart_alert from w_window_base
 end type
@@ -199,7 +199,7 @@ CHOOSE CASE alert_mode
 		end if
 		cb_new_alert.visible = false
 	CASE ELSE
-		log.log(this, "w_chart_alert.open.0045", "Invalid alert mode (" + alert_mode + ")", 4)
+		log.log(this, "w_chart_alert:open", "Invalid alert mode (" + alert_mode + ")", 4)
 		close(this)
 		return
 END CHOOSE

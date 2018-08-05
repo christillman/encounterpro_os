@@ -1,0 +1,38 @@
+﻿$PBExportHeader$f_split.srf
+global type f_split from function_object
+end type
+
+forward prototypes
+global subroutine f_split (string ps_string, string ps_separator, ref string ps_strings[])
+end prototypes
+
+global subroutine f_split (string ps_string, string ps_separator, ref string ps_strings[]);integer li_pos, li_sep_len, li_string_count
+string ls_strings[]
+string ls_source
+
+ls_source = ps_string
+ls_strings[1] = ls_source
+
+if isnull(ps_string) or isnull(ps_separator) then	
+	return
+end if
+
+li_sep_len = len(ps_separator)
+li_pos = pos(ls_source, ps_separator)
+
+li_string_count = 1
+
+do while li_pos > 0 
+	ls_strings[li_string_count] = left(ls_source, li_pos - 1)
+	ls_source = right(ls_source, len(ls_source) - li_pos - li_sep_len + 1)
+	li_pos = pos(ls_source, ps_separator)
+	li_string_count++
+loop
+
+ls_strings[li_string_count] = ls_source
+ps_strings = ls_strings
+
+return
+
+end subroutine
+

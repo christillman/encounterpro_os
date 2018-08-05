@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_treatment_vs_results.srw
+$PBExportHeader$w_treatment_vs_results.srw
 forward
 global type w_treatment_vs_results from w_window_base
 end type
@@ -70,7 +70,7 @@ str_popup_return popup_return
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 2 then
-	log.log(this, "w_treatment_vs_results.open.0007", "Invalid Arguments", 4)
+	log.log(this, "w_treatment_vs_results:open", "Invalid Arguments", 4)
 	close(this)
 	return
 end if

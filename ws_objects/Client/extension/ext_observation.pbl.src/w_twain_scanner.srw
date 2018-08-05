@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_twain_scanner.srw
+$PBExportHeader$w_twain_scanner.srw
 forward
 global type w_twain_scanner from w_window_base
 end type
@@ -183,7 +183,7 @@ component = message.powerobjectparm
 
 ls_external_source = component.get_attribute("external_source")
 if isnull(ls_external_source) then
-	log.log(this, "w_twain_scanner.open.0007", "External source not found", 4)
+	log.log(this, "w_twain_scanner:open", "External source not found", 4)
 	return -1
 end if
 

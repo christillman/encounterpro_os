@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_trt_pick_procedures.srw
+$PBExportHeader$w_trt_pick_procedures.srw
 forward
 global type w_trt_pick_procedures from w_window_base
 end type
@@ -143,7 +143,7 @@ str_popup  			popup
 
 popup = message.powerobjectparm
 If popup.data_row_count <> 2 Then
-	log.log(this,"w_trt_pick_procedures.open.0016","Invalid parameters",4)
+	log.log(this,"w_trt_pick_procedures:open","Invalid parameters",4)
 	cb_cancel.event clicked()
 	Return
 End If

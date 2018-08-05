@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_svc_rx_refill_request.srw
+$PBExportHeader$w_svc_rx_refill_request.srw
 forward
 global type w_svc_rx_refill_request from w_window_base
 end type
@@ -318,7 +318,7 @@ service_list.do_service(lstr_service)
 // Check to see if ordered med was modified
 li_sts = current_patient.treatments.treatment(lstr_med, ordered_treatment.treatment_id)
 if li_sts <= 0 then 
-	log.log(this, "w_svc_rx_refill_request.modify_parent_med.0014", "Error finding modified treatment (" + string(ordered_treatment.treatment_id) + ")", 4)
+	log.log(this, "w_svc_rx_refill_request.modify_parent_med:0014", "Error finding modified treatment (" + string(ordered_treatment.treatment_id) + ")", 4)
 	return -1
 end if
 
@@ -333,7 +333,7 @@ if lower(lstr_med.treatment_status) = "modified" then
 	AND original_treatment_id = :ordered_treatment.treatment_id;
 	if not tf_check() then return -1
 	if isnull(new_rx_treatment_id) then
-		log.log(this, "w_svc_rx_refill_request.modify_parent_med.0014", "Error finding new treatment (" + string(ordered_treatment.treatment_id) + ")", 4)
+		log.log(this, "w_svc_rx_refill_request.modify_parent_med:0029", "Error finding new treatment (" + string(ordered_treatment.treatment_id) + ")", 4)
 		return -1
 	end if
 
@@ -375,7 +375,7 @@ f_attribute_add_attribute(lstr_pre_attributes, "begin_date", string(datetime(tod
 
 luo_treatment = f_get_treatment_component(ls_treatment_type)
 If Isnull(luo_treatment) Then
-	log.log(this, "w_svc_rx_refill_request.change_parent_med.0032", "Unable to get treatment component (" + ls_treatment_type + ")", 4)
+	log.log(this, "w_svc_rx_refill_request.change_parent_med:0032", "Unable to get treatment component (" + ls_treatment_type + ")", 4)
 	return -1
 end if
 
@@ -509,7 +509,7 @@ public function integer order_rx_document (long pl_treatment_id);str_service_inf
 integer li_sts
 
 if isnull(pl_treatment_id) or pl_treatment_id <= 0 then
-	log.log(this, "w_svc_rx_refill_request.order_rx_document.0005", "No treatment for newrx message", 4)
+	log.log(this, "w_svc_rx_refill_request.order_rx_document:0005", "No treatment for newrx message", 4)
 	return -1
 end if
 
@@ -535,7 +535,7 @@ string ls_document_route
 string ls_purpose
 
 if isnull(pl_treatment_id) or pl_treatment_id <= 0 then
-	log.log(this, "w_svc_rx_refill_request.send_new_treatment.0010", "No treatment for newrx message", 4)
+	log.log(this, "w_svc_rx_refill_request.send_new_treatment:0010", "No treatment for newrx message", 4)
 	return -1
 end if
 
@@ -751,7 +751,7 @@ service = message.powerobjectparm
 
 
 if isnull(service.treatment) then
-	log.log(this, "w_svc_rx_refill_request.open.0015", "Null treatment object", 4)
+	log.log(this, "w_svc_rx_refill_request:open", "Null treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -767,20 +767,20 @@ end if
 
 li_sts = current_patient.treatments.treatment(refill_treatment, service.treatment_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_rx_refill_request.open.0015", "Error getting refill treatment data", 4)
+	log.log(this, "w_svc_rx_refill_request:open", "Error getting refill treatment data", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 if isnull(refill_treatment.parent_treatment_id) then
-	log.log(this, "w_svc_rx_refill_request.open.0015", "Refill treatment is not a child treatment", 4)
+	log.log(this, "w_svc_rx_refill_request:open", "Refill treatment is not a child treatment", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = current_patient.treatments.treatment(ordered_treatment, refill_treatment.parent_treatment_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_rx_refill_request.open.0015", "Error getting ordered treatment data", 4)
+	log.log(this, "w_svc_rx_refill_request:open", "Error getting ordered treatment data", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

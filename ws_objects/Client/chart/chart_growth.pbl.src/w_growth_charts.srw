@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_growth_charts.srw
+$PBExportHeader$w_growth_charts.srw
 forward
 global type w_growth_charts from w_window_base
 end type
@@ -319,13 +319,13 @@ if isnull(le_saveastype) then
 	
 	li_sts = common_thread.eprolibnet4.SaveClipboardToFile(growth_chart_settings.return_file_path)
 	if li_sts <= 0 then
-		log.log(this, "w_growth_charts.save_graph_to_file.0071", "Error converting graph image to file", 4)
+		log.log(this, "w_growth_charts.save_graph_to_file:0071", "Error converting graph image to file", 4)
 		setnull(growth_chart_settings.return_file_path)
 	end if
 else
 	li_sts = gr_growth.SaveAs(growth_chart_settings.return_file_path, le_saveastype, true)
 	if li_sts <= 0 then
-		log.log(this, "w_growth_charts.save_graph_to_file.0071", "Error saving graph image to file", 4)
+		log.log(this, "w_growth_charts.save_graph_to_file:0077", "Error saving graph image to file", 4)
 		setnull(growth_chart_settings.return_file_path)
 	end if
 end if
@@ -557,7 +557,7 @@ li_sts = save_graph_to_file()
 if li_sts > 0 and fileexists(growth_chart_settings.return_file_path) then
 	growth_chart_settings.graph_title = gr_growth.title
 else
-	log.log(this, "w_growth_charts.save_graph_to_file.0071", "Error saving graph image to file", 4)
+	log.log(this, "w_growth_charts:post", "Error saving graph image to file", 4)
 	setnull(growth_chart_settings.return_file_path)
 end if
 
@@ -711,7 +711,7 @@ if len(growth_chart_settings.return_file_type) > 0 then
 		growth_chart_settings.return_file_path = ls_filepath
 		growth_chart_settings.graph_title = gr_growth.title
 	else
-		log.log(this, "w_growth_charts.save_graph_to_file.0071", "Error saving graph image to file", 4)
+		log.log(this, "w_growth_charts.cb_ok.clicked:0014", "Error saving graph image to file", 4)
 		setnull(growth_chart_settings.return_file_path)
 		if growth_chart_settings.show_user_interface then
 			openwithparm(w_pop_message, "An error occured saving the image file")

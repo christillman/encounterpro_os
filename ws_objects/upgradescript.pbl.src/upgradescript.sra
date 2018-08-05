@@ -10,6 +10,9 @@ global error error
 global message message
 end forward
 
+global variables
+
+end variables
 global type upgradescript from application
 string appname = "upgradescript"
 end type
@@ -38,9 +41,13 @@ end on
 
 event open;
 script_producer sp
+line_number_updater lnu
+
+lnu = CREATE line_number_updater
+lnu.update_line_numbers()
 
 sp = CREATE script_producer
-sp.go()
+//sp.go()
 
 
 

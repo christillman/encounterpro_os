@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_do_material.srw
+$PBExportHeader$w_do_material.srw
 forward
 global type w_do_material from w_window_base
 end type
@@ -240,7 +240,7 @@ integer result
 
 result = ole_1.Activate(OffSite!)
 If result < 0 Then
-	log.log(this,"w_do_material.ole_1.clicked.0014","Ole Error: "+String(result)+". Unable to "+&
+	log.log(this,"w_do_material.ole_1.clicked:0014","Ole Error: "+String(result)+". Unable to "+&
 					"open file ",4)
 End If
 end event

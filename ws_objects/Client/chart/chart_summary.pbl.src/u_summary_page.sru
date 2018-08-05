@@ -1,4 +1,4 @@
-﻿$PBExportHeader$u_summary_page.sru
+$PBExportHeader$u_summary_page.sru
 forward
 global type u_summary_page from u_cpr_page_base
 end type
@@ -216,7 +216,7 @@ setnull(ls_null)
 
 li_sts = drugdb.get_drug_package(puo_med.drug_id, puo_med.package_id, lstr_drug, lstr_package, lstr_drug_package)
 if li_sts <= 0 then
-	log.log(this, "u_summary_page.med_sig.0023", "error getting drug/package definition", 4)
+	log.log(this, "u_summary_page.med_sig:0023", "error getting drug/package definition", 4)
 	return ls_null
 end if
 

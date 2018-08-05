@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_followup_reorder.srw
+$PBExportHeader$w_followup_reorder.srw
 forward
 global type w_followup_reorder from w_window_base
 end type
@@ -345,7 +345,7 @@ sqlca.sp_get_treatment_followup_workplan(service.cpr_id, &
 If Not tf_check() then Return -1
 
 if isnull(ll_patient_workplan_id) then
-	log.log(this, "w_followup_reorder.order_followup.0063", "Null patient_workplan_id returned from sp_get_treatment_followup_workplan", 4)
+	log.log(this, "w_followup_reorder.order_followup:0063", "Null patient_workplan_id returned from sp_get_treatment_followup_workplan", 4)
 	return -1
 end if
 
@@ -373,12 +373,12 @@ DO WHILE ll_row > 0
 	
 
 	if isnull(ll_patient_workplan_item_id) then
-		log.log(this, "w_followup_reorder.order_followup.0063", "Null patient_workplan_item_id returned from sp_set_treatment_followup_workplan_item", 4)
+		log.log(this, "w_followup_reorder.order_followup:0091", "Null patient_workplan_item_id returned from sp_set_treatment_followup_workplan_item", 4)
 		return -1
 	end if
 
 	if isnull(ll_new_treatment_id) then
-		log.log(this, "w_followup_reorder.order_followup.0063", "Null treatment_id returned from sp_set_treatment_followup_workplan_item", 4)
+		log.log(this, "w_followup_reorder.order_followup:0096", "Null treatment_id returned from sp_set_treatment_followup_workplan_item", 4)
 		return -1
 	end if
 
@@ -448,7 +448,7 @@ popup_return.item_count = 0
 service = Message.powerobjectparm
 
 If isnull(service.treatment) Then
-	log.log(this,"w_followup_reorder.open.0023","No Treatment Object",4)
+	log.log(this,"w_followup_reorder:open","No Treatment Object",4)
 	closewithreturn(this, popup_return)
 	Return
 end if

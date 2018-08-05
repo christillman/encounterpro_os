@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_report_configure_and_test.srw
+$PBExportHeader$w_report_configure_and_test.srw
 forward
 global type w_report_configure_and_test from w_window_base
 end type
@@ -132,7 +132,7 @@ end if
 // reflects any recent config changes
 report_document = report.document_component()
 if isnull(report_document) then
-	log.log(this, "w_report_configure_and_test.refresh.0024", "error getting component (" + report.report_id + ")", 4)
+	log.log(this, "w_report_configure_and_test.refresh:0024", "error getting component (" + report.report_id + ")", 4)
 	return -1
 end if
 
@@ -325,7 +325,7 @@ ls_component_id = "RPT_RTF"
 
 luo_report = component_manager.get_component(ls_component_id)
 If Isnull(luo_report) Then
-	log.log(This, "w_report_configure_and_test.run_rtf_report.0012", "Error getting report component (" + ls_component_id + ")", 4)
+	log.log(This, "w_report_configure_and_test.run_rtf_report:0012", "Error getting report component (" + ls_component_id + ")", 4)
 	Return -1
 End If
 
@@ -506,7 +506,7 @@ document_elements_available = false
 
 li_sts = report_document.get_document_elements(document_elements)
 if li_sts < 0 then
-	log.log(this, "w_report_configure_and_test.refresh.0024", "Error configuring document component (" + report.report_id + ")", 4)
+	log.log(this, "w_report_configure_and_test.get_document_elements:0007", "Error configuring document component (" + report.report_id + ")", 4)
 	return -1
 end if
 
@@ -527,7 +527,7 @@ wp_item_document = puo_document
 
 ls_report_id = puo_document.get_attribute("report_id")
 if isnull(ls_report_id) then
-	log.log(this, "w_report_configure_and_test.initialize_from_document.0010", "Null report_id", 4)
+	log.log(this, "w_report_configure_and_test.initialize_from_document:0010", "Null report_id", 4)
 	Return -1
 end if
 
@@ -542,13 +542,13 @@ If Not tf_check() Then Return -1
 
 // If any component defined for selected report then
 If Isnull(ls_component_id) Then
-	log.log(this, "w_report_configure_and_test.initialize_from_document.0010", "Null component_id (" + ls_report_id + ")", 4)
+	log.log(this, "w_report_configure_and_test.initialize_from_document:0025", "Null component_id (" + ls_report_id + ")", 4)
 	Return -1
 end if
 
 report = component_manager.get_component(ls_component_id, lstr_attributes)
 If Isnull(report) Then
-	log.log(This, "w_report_configure_and_test.initialize_from_document.0031", "Error getting report component (" + &
+	log.log(This, "w_report_configure_and_test.initialize_from_document:0031", "Error getting report component (" + &
 				ls_component_id + ")", 4)
 	Return -1
 End If
@@ -950,7 +950,7 @@ CHOOSE CASE lower(ls_classname)
 	CASE "u_component_wp_item_document"
 		li_sts = initialize_from_document(message.powerobjectparm)
 		if li_sts < 0 then
-			log.log(this, "w_report_configure_and_test.open.0023", "Error initializing from document", 4)
+			log.log(this, "w_report_configure_and_test:open", "Error initializing from document", 4)
 			close(this)
 			return
 		end if
@@ -958,7 +958,7 @@ CHOOSE CASE lower(ls_classname)
 		cb_document_properties.visible = true
 		cb_report_runtime.visible = true
 	CASE ELSE
-		log.log(this, "w_report_configure_and_test.open.0023", "Invalid caller class (" + ls_classname + ")", 4)
+		log.log(this, "w_report_configure_and_test:open", "Invalid caller class (" + ls_classname + ")", 4)
 		close(this)
 		return
 END CHOOSE
@@ -1252,7 +1252,7 @@ event clicked;integer li_sts
 
 li_sts = report_document.configure_document()
 if li_sts < 0 then
-	log.log(this, "w_report_configure_and_test.refresh.0024", "Error configuring document component (" + report.report_id + ")", 4)
+	log.log(this, "w_report_configure_and_test.cb_configure_document.clicked:0005", "Error configuring document component (" + report.report_id + ")", 4)
 	return -1
 end if
 

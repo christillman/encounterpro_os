@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_route_web_upload.srw
+$PBExportHeader$w_route_web_upload.srw
 forward
 global type w_route_web_upload from w_window_base
 end type
@@ -119,7 +119,7 @@ document = message.powerobjectparm
 
 li_sts = document.get_document(lstr_file)
 if li_sts <= 0 then
-	log.log(this, "w_route_web_upload.open.0009", "Error getting document file (" + string(document.patient_workplan_item_id) + ")", 4)
+	log.log(this, "w_route_web_upload:open", "Error getting document file (" + string(document.patient_workplan_item_id) + ")", 4)
 	close(this)
 	return
 end if
@@ -128,7 +128,7 @@ end if
 if lower(lstr_file.filetype) = "zip" then
 	li_sts = f_uncompress_documents(lstr_file, document_files, filepath)
 	if li_sts < 0 then
-		log.log(this, "w_route_web_upload.open.0009", "Error uncompressing document file (" + string(document.patient_workplan_item_id) + ")", 4)
+		log.log(this, "w_route_web_upload:open", "Error uncompressing document file (" + string(document.patient_workplan_item_id) + ")", 4)
 		close(this)
 		return
 	end if
@@ -136,14 +136,14 @@ else
 	filepath = temp_path + "\" + f_new_guid()
 	li_sts = createdirectory(filepath)
 	if li_sts <= 0 then
-		log.log(this, "w_route_web_upload.open.0009", "Error creating temp directory (" + filepath + ")", 4)
+		log.log(this, "w_route_web_upload:open", "Error creating temp directory (" + filepath + ")", 4)
 		close(this)
 		return
 	end if
 	
 	li_sts = log.file_write(lstr_file.filedata, filepath + "\" + lstr_file.filename + "." + lstr_file.filetype)
 	if li_sts < 0 then
-		log.log(this, "w_route_web_upload.open.0009", "Error writing document file (" + string(document.patient_workplan_item_id) + ")", 4)
+		log.log(this, "w_route_web_upload:open", "Error writing document file (" + string(document.patient_workplan_item_id) + ")", 4)
 		close(this)
 		return
 	end if

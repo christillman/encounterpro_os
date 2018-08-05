@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_logon.srw
+$PBExportHeader$w_logon.srw
 forward
 global type w_logon from w_window_base
 end type
@@ -170,7 +170,7 @@ public function integer get_patients_old ();//str_popup popup
 //	current_patient = luo_patient
 //	li_sts = current_patient.lock_patient()
 //	if li_sts <= 0 then
-//		log.log(this, "do_service", "Unable to lock patient", 4)
+//		log.log(this, "w_logon.get_patients_old:0040", "Unable to lock patient", 4)
 //		setnull(current_patient)
 //		continue
 //	end if

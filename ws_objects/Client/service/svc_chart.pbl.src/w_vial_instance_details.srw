@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_vial_instance_details.srw
+$PBExportHeader$w_vial_instance_details.srw
 forward
 global type w_vial_instance_details from w_window_base
 end type
@@ -80,7 +80,7 @@ Else
 	FROM c_Drug_Maker
 	WHERE maker_id = :maker_id;
 	If Not tf_check() Then
-		log.log(This, "w_vial_instance_details.post_open.0019", "Error getting maker information", 4)
+		log.log(This, "w_vial_instance_details:post", "Error getting maker information", 4)
 		close(This)
 		return
 	End If

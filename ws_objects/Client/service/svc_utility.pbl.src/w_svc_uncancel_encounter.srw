@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_svc_uncancel_encounter.srw
+$PBExportHeader$w_svc_uncancel_encounter.srw
 forward
 global type w_svc_uncancel_encounter from w_window_base
 end type
@@ -66,7 +66,7 @@ string ls_find
 service = message.powerobjectparm
 
 if isnull(current_patient) then
-	log.log(this, "w_svc_uncancel_encounter.open.0011", "No patient context", 4)
+	log.log(this, "w_svc_uncancel_encounter:open", "No patient context", 4)
 	return -1
 end if
 

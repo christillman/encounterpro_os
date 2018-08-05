@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_svc_compose_message.srw
+$PBExportHeader$w_svc_compose_message.srw
 forward
 global type w_svc_compose_message from w_window_base
 end type
@@ -295,7 +295,7 @@ u_component_treatment	luo_treatment
 setnull(luo_treatment)
 luo_service = service_list.get_service_component(ps_service)
 if isnull(luo_service) then
-	log.log(this, "w_svc_compose_message.order_service.0008", "Error getting service component (" + ps_service + ")", 4)
+	log.log(this, "w_svc_compose_message.order_service:0008", "Error getting service component (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -307,7 +307,7 @@ end if
 
 ll_patient_workplan_item_id = luo_service.order_service(ps_cpr_id, pl_encounter_id, ps_ordered_for, pi_step_number, priority, ps_description, pstr_attributes)
 if ll_patient_workplan_item_id <= 0 then
-	log.log(this, "w_svc_compose_message.order_service.0008", "Error ordering service (" + ps_service + ")", 4)
+	log.log(this, "w_svc_compose_message.order_service:0020", "Error ordering service (" + ps_service + ")", 4)
 	return -1
 end if
 
@@ -638,7 +638,7 @@ else
 	CHOOSE CASE lower(message_object)
 //		CASE "observation"
 //			if isnull(service.observation_sequence) then
-//				log.log(this, "w_svc_compose_message.open.0122", "Null observation_sequence", 4)
+//				log.log(this, "w_svc_compose_message:open", "Null observation_sequence", 4)
 //				closewithreturn(this, popup_return)
 //				return
 //			end if
@@ -646,7 +646,7 @@ else
 //			message_attributes.attribute[2].value = string(service.observation_sequence)
 		CASE "treatment"
 			if isnull(service.treatment) then
-				log.log(this, "w_svc_compose_message.open.0122", "Null treatment_id", 4)
+				log.log(this, "w_svc_compose_message:open", "Null treatment_id", 4)
 				closewithreturn(this, popup_return)
 				return
 			end if
@@ -657,7 +657,7 @@ else
 			message_object_key = service.treatment_id
 		CASE "assessment"
 			if isnull(service.problem_id) then
-				log.log(this, "w_svc_compose_message.open.0122", "Null problem_id", 4)
+				log.log(this, "w_svc_compose_message:open", "Null problem_id", 4)
 				closewithreturn(this, popup_return)
 				return
 			end if
@@ -668,7 +668,7 @@ else
 			message_object_key = service.problem_id
 		CASE "encounter"
 			if isnull(service.encounter_id) then
-				log.log(this, "w_svc_compose_message.open.0122", "Null encounter_id", 4)
+				log.log(this, "w_svc_compose_message:open", "Null encounter_id", 4)
 				closewithreturn(this, popup_return)
 				return
 			end if
@@ -686,7 +686,7 @@ else
 			st_item.text = current_patient.attachments.description(service.attachment_id)
 			message_object_key = service.attachment_id
 		CASE ELSE
-			log.log(this, "w_svc_compose_message.open.0122", "Invalid message_object (" + message_object + ")", 4)
+			log.log(this, "w_svc_compose_message:open", "Invalid message_object (" + message_object + ")", 4)
 			closewithreturn(this, popup_return)
 			return
 	END CHOOSE

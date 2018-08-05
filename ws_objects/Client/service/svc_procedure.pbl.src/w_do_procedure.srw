@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_do_procedure.srw
+$PBExportHeader$w_do_procedure.srw
 forward
 global type w_do_procedure from w_window_base
 end type
@@ -89,7 +89,7 @@ service = Message.powerobjectparm
 
 // Make sure we have a treatment
 if isnull(service.treatment) then
-	log.log(this, "w_do_procedure.open.0013", "No treatment object", 4)
+	log.log(this, "w_do_procedure:open", "No treatment object", 4)
 	closewithreturn(this, popup_return)
 	return
 end if

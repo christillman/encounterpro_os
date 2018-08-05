@@ -1,4 +1,4 @@
-﻿$PBExportHeader$w_referral.srw
+$PBExportHeader$w_referral.srw
 forward
 global type w_referral from w_window_base
 end type
@@ -348,7 +348,7 @@ popup_return.item_count = 0
 service = Message.powerobjectparm
 
 If isnull(service.treatment) Then
-	log.log(this,"w_referral.open.0021","No Treatment Object",4)
+	log.log(this,"w_referral:open","No Treatment Object",4)
 	closewithreturn(this, popup_return)
 	Return
 end if
