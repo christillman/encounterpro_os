@@ -48,7 +48,6 @@ end forward
 
 global type w_svc_documents from w_window_base
 integer height = 1864
-boolean controlmenu = false
 windowtype windowtype = response!
 boolean clientedge = true
 string button_type = "COMMAND"
@@ -397,7 +396,7 @@ DO WHILE true
 		CASE "created"
 			luo_document.document_create()
 		CASE "sent"
-			openwithparm(w_pop_yes_no, "This document has already been sent.  It is not reccomended that you re-create the document unless you intend to re-send it.  Are you sure you wish to recreate this document?")
+			openwithparm(w_pop_yes_no, "This document has already been sent.  It is not recommended that you re-create the document unless you intend to re-send it.  Are you sure you wish to re-create this document?")
 			popup_return = message.powerobjectparm
 			if popup_return.item <> "YES" then continue
 			
