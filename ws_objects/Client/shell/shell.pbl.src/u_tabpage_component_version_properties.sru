@@ -346,7 +346,7 @@ end if
 
 ll_new_normal_version = component_version.version
 if isnull(ll_new_normal_version) or ll_new_normal_version <= 0 then
-	ls_message = "Are you sure you want to use the default version for the component " + ls_component_description + "?  This is not reccomended."
+	ls_message = "Are you sure you want to use the default version for the component " + ls_component_description + "?  This is not recommended."
 	setnull(ll_new_normal_version)
 	ls_operation = "Version Downgraded"
 elseif ll_new_normal_version = ll_normal_version then
