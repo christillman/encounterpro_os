@@ -47,7 +47,6 @@ private function long find_role_row (string ps_role_id)
 public function string user_initial (string ps_user_id)
 public function string role_description (string ps_role_id)
 public function string role_name (string ps_role_id)
-public function string gen_unique_key (u_user puo_user)
 public function u_user pick_user ()
 public function long role_color (string ps_role_id)
 public function integer all_users (ref str_user pstra_users[])
@@ -107,7 +106,6 @@ public function integer set_user_progress (string ps_user_id, string ps_progress
 public function string is_user_service_grant (string ps_user_id, string ps_service)
 public function u_user set_admin_user (string ps_admin_user_id)
 public function boolean is_actor_class (string ps_user_id, string ps_actor_class)
-public function integer update_user_old (u_user puo_user)
 public function boolean user_may_take_over_encounter (string ps_user_id, string ps_encounter_owner_user_id)
 public function boolean is_user_privileged (string ps_user_id, string ps_privilege_id, boolean pb_include_superusers)
 public function integer set_scribe_context (string ps_user_id)
@@ -316,34 +314,6 @@ if isnull(ll_role_row) then return ""
 
 return roles.object.role_name[ll_role_row]
 
-
-end function
-
-public function string gen_unique_key (u_user puo_user);string ls_user_id
-integer i
-integer li_count
-string ls_null
-
-setnull(ls_null)
-
-ls_user_id = office_id + f_gen_key_string(puo_user.user_full_name, 16)
-
-if isnull(ls_user_id) then ls_user_id = office_id
-
-for i = 1 to 9999
-	SELECT count(*)
-	INTO :li_count
-	FROM c_User
-	WHERE user_id = :ls_user_id;
-	if not tf_check() then return ls_null
-	
-	if li_count = 0 then return ls_user_id
-
-	ls_user_id = left(ls_user_id, 20) + string(i)
-next
-
-return ls_null
-	
 
 end function
 
@@ -2161,117 +2131,6 @@ if upper(ls_actor_class) = upper(ps_actor_class) then return true
 
 return false
 
-
-end function
-
-public function integer update_user_old (u_user puo_user);/////////////////////////////////////////////////////////////////////////////////
-//
-//	Function: add_user
-//
-// Arguments: 
-//
-//	Return: Integer
-//
-//	Description: adds each user into u_user[].
-//
-// Created On:																Created On:
-//
-// Modified By:Sumathi Chinnasamy									Modified On:08/24/99
-/////////////////////////////////////////////////////////////////////////////////
-//long ll_row
-//integer li_sts
-//long i
-//
-//if isnull(puo_user) then return 0
-//
-//if isnull(puo_user.user_id) then
-//	// If the user_id is null then assume a new user
-//	puo_user.user_id = gen_unique_key(puo_user)
-//	ll_row = users.insertrow(0)
-//	users.object.user_id[ll_row] = puo_user.user_id
-//else
-//	ll_row = find_user_row(puo_user.user_id)
-//	if ll_row <= 0 then
-//		log.log(this, "u_component_security.update_user_old:0029", "User not found (" + puo_user.user_id + ")", 4)
-//		return -1
-//	end if
-//end if
-//
-//
-//users.object.office_id[ll_row] = puo_user.primary_office_id
-//users.object.first_name[ll_row] = puo_user.first_name
-//users.object.middle_name[ll_row] = puo_user.middle_name
-//users.object.last_name[ll_row] = puo_user.last_name
-//users.object.degree[ll_row] = puo_user.degree
-//users.object.name_prefix[ll_row] = puo_user.name_prefix
-//users.object.name_suffix[ll_row] = puo_user.name_suffix
-//users.object.dea_number[ll_row] = puo_user.dea_number
-//users.object.license_number[ll_row] = puo_user.license_number
-//users.object.certification_number[ll_row] = puo_user.certification_number
-//users.object.certified[ll_row] = puo_user.certified
-//users.object.npi[ll_row] = puo_user.npi
-//users.object.upin[ll_row] = puo_user.upin
-//// clinical_access_flag
-//
-//
-//users.object.specialty_id[ll_row] = puo_user.specialty_id
-//users.object.user_full_name[ll_row] = puo_user.user_full_name
-//users.object.user_short_name[ll_row] = puo_user.user_short_name
-//users.object.color[ll_row] = puo_user.color
-//users.object.user_initial[ll_row] = puo_user.user_initial
-//users.object.supervisor_user_id[ll_row] = puo_user.supervisor_user_id
-//users.object.billing_id[ll_row] = puo_user.billing_id
-//users.object.billing_code[ll_row] = puo_user.billing_code
-//users.object.activate_date[ll_row] = puo_user.activate_date
-//users.object.modified[ll_row] = puo_user.modified
-//users.object.modified_by[ll_row] = puo_user.modified_by
-//users.object.created[ll_row] = puo_user.created
-//users.object.created_by[ll_row] = puo_user.created_by
-//users.object.license_flag[ll_row] = puo_user.license_flag
-//users.object.email_address[ll_row] = puo_user.email_address
-//users.object.actor_class[ll_row] = puo_user.actor_class
-//users.object.actor_type[ll_row] = puo_user.actor_type
-//users.object.organization_contact[ll_row] = puo_user.organization_contact
-//users.object.organization_director[ll_row] = puo_user.organization_director
-//users.object.title[ll_row] = puo_user.title
-//users.object.information_system_type[ll_row] = puo_user.information_system_type
-//users.object.information_system_version[ll_row] = puo_user.information_system_version
-//
-//
-//
-//li_sts = users.update()
-//if li_sts < 0 then return -1
-//
-//for i = 1 to puo_user.address_count
-//	if puo_user.address[i].updated then
-//		sqlca.sp_new_actor_address( puo_user.address[i].actor_id, & 
-//											puo_user.address[i].description, & 
-//											puo_user.address[i].address_line_1, & 
-//											puo_user.address[i].address_line_2, & 
-//											puo_user.address[i].city, & 
-//											puo_user.address[i].state, & 
-//											puo_user.address[i].zip, & 
-//											puo_user.address[i].country, & 
-//											current_scribe.user_id)
-//		if not tf_check() then return -1
-//		puo_user.address[i].updated = false
-//	end if
-//next
-//
-//for i = 1 to puo_user.communication_count
-//	if puo_user.communication[i].updated then
-//		sqlca.sp_new_actor_communication( puo_user.communication[i].actor_id, & 
-//													puo_user.communication[i].communication_type, & 
-//													puo_user.communication[i].communication_value, & 
-//													puo_user.communication[i].note, & 
-//													current_scribe.user_id, & 
-//													puo_user.communication[i].communication_name)
-//		if not tf_check() then return -1
-//		puo_user.communication[i].updated = false
-//	end if
-//next
-//
-RETURN 1
 
 end function
 
