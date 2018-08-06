@@ -33,7 +33,6 @@ integer width = 2190
 integer height = 1532
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -379,7 +378,7 @@ long backcolor = 16777215
 borderstyle borderstyle = stylelowered!
 end type
 
-event other;integer li_len
+event modified;integer li_len
 
 if max_length > 0 then
 	li_len = len(text)

@@ -321,9 +321,6 @@ end type
 
 event clicked;str_popup popup
 str_popup_return popup_return
-//integer li_selected_flag
-//long ll_row
-//long ll_workplan_id
 string ls_description
 string ls_treatment_type
 string ls_base_treatment_type
@@ -333,6 +330,7 @@ integer li_sort_sequence
 string ls_bill_flag
 string ls_button
 string ls_icon
+u_ds_data dw_char_key
 
 popup.title = "Enter new Treatment Type description"
 
@@ -342,38 +340,15 @@ if popup_return.item_count <> 1 then return
 
 ls_description = popup_return.items[1]
 ls_base_treatment_type = f_gen_key_string(ls_description, 22)
-ls_treatment_type = ls_base_treatment_type
-i = 0
+dw_char_key = CREATE u_ds_data
+dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
+dw_char_key.retrieve("c_Treatment_Type", "treatment_type", ls_base_treatment_type)
 
-DO
-	SELECT count(*)
-	INTO :li_count
-	FROM c_treatment_type
-	WHERE treatment_type = :ls_treatment_type;
-	if not tf_check() then return
-	if li_count = 0 then exit
-	
-	i += 1
-	ls_treatment_type = ls_base_treatment_type + string(i)
-	
-LOOP WHILE i < 100
+ls_treatment_type = dw_char_key.object.new_key[1]
 
-if i >= 100 then
-	log.log(this, "w_config_treatment_types.cb_new_treatment_type.clicked:0041", "Unable to generate new treatment_type key (" + ls_description + ")", 4)
-	return
-end if
-
-SELECT max(sort_sequence) + 1
-INTO :li_sort_sequence
-FROM c_treatment_type
-WHERE treatment_type = :ls_treatment_type;
-if not tf_check() then return
-if isnull(li_sort_sequence) then li_sort_sequence = 1
-
-
+li_sort_sequence = 1
 ls_button = "button10.bmp"
 ls_icon = "button10.bmp"
-
 
 INSERT INTO c_treatment_type (
 	treatment_type,
@@ -397,7 +372,7 @@ popup.items[1] = ls_treatment_type
 openwithparm(w_treatment_type_definition, popup)
 popup_return = message.powerobjectparm
 
-//display_treatment_types()
+display_treatment_types()
 end event
 
 type cb_1 from commandbutton within w_config_treatment_types
@@ -438,7 +413,7 @@ long textcolor = 33554432
 borderstyle borderstyle = stylelowered!
 end type
 
-event other;string ls_filter
+event modified;string ls_filter
 
 ls_filter = trim(text)
 if ls_filter = "" then
@@ -448,7 +423,6 @@ else
 end if
 
 dw_treatment_types.filter()
-
 end event
 
 type st_1 from statictext within w_config_treatment_types

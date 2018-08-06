@@ -33,7 +33,6 @@ integer width = 2185
 integer height = 928
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -192,22 +191,6 @@ string facename = "Arial"
 long backcolor = 16777215
 borderstyle borderstyle = stylelowered!
 end type
-
-event other;integer li_len
-
-if max_length > 0 then
-	li_len = len(text)
-	
-	if li_len > max_length then
-		text = left(text, max_length)
-		beep(1)
-		selecttext(max_length, 0)
-	end if
-	
-	st_chars.text = string(len(text)) + " Characters"
-end if
-
-end event
 
 type st_max_length from statictext within w_pop_printer_edit
 integer x = 64

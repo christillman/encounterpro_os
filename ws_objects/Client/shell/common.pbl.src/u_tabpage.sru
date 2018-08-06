@@ -27,7 +27,6 @@ end variables
 forward prototypes
 public function integer initialize ()
 public subroutine refresh ()
-public function string get_build ()
 public function integer initialize (string ps_key)
 public subroutine refresh_tabtext ()
 public subroutine start_timer (double pdbl_interval)
@@ -46,30 +45,6 @@ end function
 
 public subroutine refresh ();
 end subroutine
-
-public function string get_build ();string ls_version
-string ls_build
-string ls_build_version ,ls_null
-
-setnull(ls_null)
-
-SELECT domain_item_description
-INTO :ls_version
-FROM c_Domain
-WHERE domain_item = 'version';
-if not tf_check() then return ls_null
-
-SELECT domain_item_description
-INTO :ls_build
-FROM c_Domain
-WHERE domain_item = 'build';
-if not tf_check() then return ls_null
-
-ls_build_version = trim(ls_version)+"."+trim(ls_build)
-
-Return ls_build_version
-
-end function
 
 public function integer initialize (string ps_key);
 

@@ -24,7 +24,6 @@ end forward
 
 global type w_treatment_type_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -189,6 +188,8 @@ end event
 type pb_1 from u_pb_help_button within w_treatment_type_definition
 integer x = 2656
 integer y = 24
+integer width = 256
+integer height = 128
 integer taborder = 30
 boolean bringtotop = true
 end type

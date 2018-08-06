@@ -45,6 +45,8 @@ end if
 
 ls_key = left(ls_word1, li_word1length) + left(ls_word2, li_wordlength) + left(ls_word3, li_wordlength)
 
+
+
 return ls_key
 
 

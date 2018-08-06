@@ -30,7 +30,6 @@ end forward
 
 global type w_role_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -108,6 +107,7 @@ integer li_count
 string ls_provider_id
 integer li_sts
 string ls_status
+u_ds_data dw_char_key
 
 if isnull(sle_role_name.text) or trim(sle_role_name.text) = "" then
 	openwithparm(w_pop_message, "An error occured saving role.  Please cancel and try again.")
@@ -126,19 +126,13 @@ else
 end if
 
 if isnull(role_id) then
-ls_role_base = "!" + f_gen_key_string(sle_role_name.text, 9)
-	role_id = ls_role_base
-	for i = 1 to 99
-		SELECT count(*)
-		INTO :li_count
-		FROM c_role
-		WHERE role_id = :role_id;
-		if not tf_check() then return -1
-		
-		if li_count = 0 then exit
-	
-		role_id = ls_role_base + string(i)
-	next
+	ls_role_base = "!" + f_gen_key_string(sle_role_name.text, 9)
+
+	dw_char_key = CREATE u_ds_data
+	dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
+	dw_char_key.retrieve("c_Role", "role_id", ls_role_base)
+
+	role_id = dw_char_key.object.new_key[1]
 	
 	INSERT INTO c_Role (
 		role_id,

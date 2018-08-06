@@ -25,9 +25,8 @@ u_tabpage pages[]
 integer page_count
 
 u_component_service service
-
+boolean ib_initialized
 end variables
-
 forward prototypes
 public subroutine resize_tabs (integer pi_width, integer pi_height)
 public function integer close_pages ()
@@ -78,6 +77,8 @@ for i = 1 to page_count
 	luo_tab.parent_tab = this
 	luo_tab.initialize()
 next
+
+ib_initialized = true
 
 return 1
 
@@ -152,6 +153,7 @@ for i = 1 to page_count
 	luo_tab.parent_tab = this
 	luo_tab.initialize(ps_key)
 next
+ib_initialized = true
 
 return 1
 
@@ -167,7 +169,9 @@ event selectionchanged;u_tabpage luo_page
 
 if page_count >= newindex and newindex > 0 then
 	luo_page = pages[newindex]
-	luo_page.refresh()
+	if ib_initialized then
+		luo_page.refresh()
+	end if
 end if
 
 end event

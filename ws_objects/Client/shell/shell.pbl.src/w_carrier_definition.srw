@@ -50,7 +50,6 @@ end forward
 
 global type w_carrier_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -460,6 +459,8 @@ end type
 type pb_done from u_picture_button within w_carrier_definition
 integer x = 2569
 integer y = 1532
+integer width = 256
+integer height = 224
 integer taborder = 0
 boolean default = true
 string picturename = "button26.bmp"
@@ -472,6 +473,7 @@ string ls_description
 string ls_authority_id
 integer i
 integer li_count
+u_ds_data dw_char_key
 
 if isnull(authority_id) then
 	ls_description = sle_name.text
@@ -488,20 +490,12 @@ if isnull(authority_id) then
 		return
 	end if
 	ls_authority_id = f_gen_key_string(ls_description, 22)
-	authority_id = ls_authority_id
-	for i = 0 to 99
-		SELECT count(*)
-		INTO :li_count
-		FROM c_authority
-		WHERE authority_id = :authority_id;
-		if not tf_check() then return
-		if li_count = 0 then exit
-		authority_id = ls_authority_id + string(i)
-	next
-	if i >= 99 then
-		log.log(this, "w_carrier_definition.pb_done.clicked:0034", "Error generating new authority id (" + ls_description + ")", 4)
-		return
-	end if
+		
+	dw_char_key = CREATE u_ds_data
+	dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
+	dw_char_key.retrieve("c_Authority", "authority_id", ls_authority_id)
+
+	authority_id = dw_char_key.object.new_key[1]
 	
 	INSERT INTO c_Authority (
 		authority_id,
@@ -551,6 +545,8 @@ end event
 type pb_cancel from u_picture_button within w_carrier_definition
 integer x = 119
 integer y = 1532
+integer width = 256
+integer height = 224
 integer taborder = 0
 boolean bringtotop = true
 boolean cancel = true

@@ -454,7 +454,7 @@ long backcolor = 16777215
 borderstyle borderstyle = stylelowered!
 end type
 
-event other;integer li_len
+event modified;integer li_len
 
 if max_length > 0 then
 	li_len = len(text)

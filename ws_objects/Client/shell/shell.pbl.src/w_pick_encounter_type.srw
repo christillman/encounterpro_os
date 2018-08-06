@@ -482,6 +482,8 @@ string ls_bill_flag
 string ls_button
 string ls_icon
 
+u_ds_data dw_char_key
+
 popup.title = "Enter new Encounter Type description"
 
 openwithparm(w_pop_prompt_string, popup)
@@ -490,34 +492,12 @@ if popup_return.item_count <> 1 then return
 
 ls_description = popup_return.items[1]
 ls_base_encounter_type = f_gen_key_string(ls_description, 22)
-ls_encounter_type = ls_base_encounter_type
-i = 0
+dw_char_key = CREATE u_ds_data
+dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
+dw_char_key.retrieve("c_Encounter_Type", "encounter_type", ls_base_encounter_type)
 
-DO
-	SELECT count(*)
-	INTO :li_count
-	FROM c_Encounter_Type
-	WHERE encounter_type = :ls_encounter_type;
-	if not tf_check() then return
-	if li_count = 0 then exit
-	
-	i += 1
-	ls_encounter_type = ls_base_encounter_type + string(i)
-	
-LOOP WHILE i < 100
-
-if i >= 100 then
-	log.log(this, "w_pick_encounter_type.cb_new_encounter_type.clicked:0041", "Unable to generate new encounter_type key (" + ls_description + ")", 4)
-	return
-end if
-
-SELECT max(sort_order) + 1
-INTO :li_sort_sequence
-FROM c_Encounter_Type
-WHERE encounter_type = :ls_encounter_type;
-if not tf_check() then return
-if isnull(li_sort_sequence) then li_sort_sequence = 1
-
+ls_encounter_type = dw_char_key.object.new_key[1]
+li_sort_sequence = 1
 
 CHOOSE CASE dw_encounter_types.indirect_flag
 	CASE "D"
