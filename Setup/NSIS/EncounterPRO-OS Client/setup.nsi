@@ -45,6 +45,9 @@
   ;*** To change PB Runtime version, modify following line ***
   !define SRC_PBR   '${SOURCE_ROOT}\3rd Party Software\Appeon PB Runtime\${PBRuntime_VERSION}'
 
+  ; Installing the help file
+  !define COMMONFILES_TARGET "EncounterPRO-OS"
+
 ; ------------------------------------------
 ; Variables
 
@@ -164,33 +167,7 @@
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\msvcp80.dll" "$SYSDIR\msvcp80.dll" "$SYSDIR"
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
-        
-
-        SetOutPath $INSTDIR
-        ; PBSNC170.DLL is now included in the Runtime Packager
-        ; StrCmp $Bitness 32 sqlncli32 sqlncli64
-        
-        ; sqlncli32:
-        ; SetDetailsPrint both
-        ; DetailPrint "Installing Microsoft SQL Native Client..."
-        ; SetDetailsPrint textonly
-        ; File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli.msi'
-        ; nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli.msi" /passive /norestart'
-        ; Delete "$INSTDIR\sqlncli.msi"
-        ; SetDetailsPrint both
-        ; goto sqlnclidone
-        
-        ; sqlncli64:
-        ; DetailPrint "Installing Microsoft SQL Native Client (x64)..."
-        ; SetDetailsPrint textonly
-        ; File '${SOURCE_ROOT}\3rd Party Software\Microsoft SQL Native Client\${SQL_Native_Client_Version}\sqlncli_x64.msi'
-        ; nsExec::Exec 'msiexec /i "$INSTDIR\sqlncli_x64.msi" /passive /norestart'
-        ; Delete "$INSTDIR\sqlncli_x64.msi"
-        ; SetDetailsPrint both
-        ; goto sqlnclidone
-        
-        ;sqlnclidone:
-          
+                  
       ; Install PB Runtime
       SetOutPath $INSTDIR
       DetailPrint "Installing Powerbuilder Runtime Files..."
@@ -229,15 +206,21 @@
         SetDetailsPrint both
     SectionEnd
     
+    Section '-Help File' SecHelp
+        SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}"
+        SetDetailsPrint both
+        DetailPrint "Installing EncounterPro-OS Help..."
+        SetOverwrite on
+        SetDetailsPrint textonly
+        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
+    SectionEnd
+
     Section '-Mod Level Script' SecML
         Delete "$INSTDIR\*.mdlvl"
         SetOutPath '$INSTDIR'
         SetDetailsPrint both
         DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
-        SetOverwrite on
         SetDetailsPrint textonly
-        ; For 7.0.1.0 only
-        File "${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\201\*.mdlvl"
         File "${SRC_Mod_Level}\*.mdlvl"
     SectionEnd
 
