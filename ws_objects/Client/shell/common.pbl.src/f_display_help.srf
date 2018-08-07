@@ -25,8 +25,12 @@ str_help_article lstr_article
 
 lstr_article = f_display_help_article(ps_help_context, ps_which_help)
 
-IF NOT IsValid(datalist) THEN return
-ls_help_home_url = datalist.get_preference("SYSTEM", "Help Home URL", "http://solutioncenter.encounterpro.net:8080/selfservice/portal?page=default.psml")
+IF NOT IsValid(datalist) THEN 
+	Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
+	return
+END IF
+
+ls_help_home_url = datalist.get_preference("SYSTEM", "Help Home URL", "")
 
 
 lb_new_map = false
@@ -157,7 +161,7 @@ ls_helpcreatewebsite = datalist.get_preference("SYSTEM", "Help Edit URL", "https
 // While we test the system
 //ls_host = datalist.get_preference("SYSTEM", "Help Host", "wss-vm:101")
 // After the provider portal is published
-ls_host = datalist.get_preference("SYSTEM", "Help Host", "solutioncenter.encounterpro.net:8080")
+ls_host = datalist.get_preference("SYSTEM", "Help Host", "localhost")
 
 
 // Substitute in the article name
@@ -174,8 +178,9 @@ ls_helpURL = f_string_substitute(ls_helpURL, "%host%", ls_host)
 lstr_article.article = f_string_substitute(lstr_article.article, " ", "%20")
 ls_helpURL = f_string_substitute(ls_helpURL, "%article%", lstr_article.article)
 
-f_open_browser(ls_helpURL)
-
+// f_open_browser(ls_helpURL)
+// Use offline help file; will work on context sensitivity later
+Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 
 end subroutine
 
