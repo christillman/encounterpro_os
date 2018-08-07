@@ -34,3 +34,4 @@ Client/*.pbd
 Client/*.pbx
 Client/*.exe
 Client/*.bak
+Help/_errorlog.txt
