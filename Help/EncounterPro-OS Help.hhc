@@ -16,16 +16,8 @@
           </OBJECT>
       <UL>
          <LI><OBJECT type="text/sitemap">
-               <param name="Name" value="Knowledge-Paks Online">
-               <param name="Local" value="040823912484325.html">
-             </OBJECT>
-         <LI><OBJECT type="text/sitemap">
                <param name="Name" value="EncounterPRO Open Source Project Help">
                <param name="Local" value="index.html">
-             </OBJECT>
-         <LI><OBJECT type="text/sitemap">
-               <param name="Name" value="Screen: Configuration List.">
-               <param name="Local" value="screen_config_list.html">
              </OBJECT>
          <LI><OBJECT type="text/sitemap">
                <param name="Name" value="Configuring encounterPRO v5">
@@ -383,6 +375,10 @@
                   <param name="Name" value="Preferences">
                 </OBJECT>
             <UL>
+				<LI><OBJECT type="text/sitemap">
+					   <param name="Name" value="Knowledge-Paks Online">
+					   <param name="Local" value="Configuring encounterPRO v5/Preferences/040823912484325.html">
+					</OBJECT>
                <LI><OBJECT type="text/sitemap">
                      <param name="Name" value="How to: Default the Task List to Show All Items.">
                      <param name="Local" value="Configuring encounterPRO v5/Preferences/040818310573409.html">

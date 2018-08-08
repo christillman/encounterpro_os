@@ -2546,7 +2546,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Knowledge-Paks Online">
-		<param name="Local" value="040823912484325.html">
+		<param name="Local" value="Configuring encounterPRO v5/Preferences/040823912484325.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Lab Interface ? Local Transport - File / TCP">
@@ -3131,10 +3131,6 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Screen: Compose Task">
 		<param name="Local" value="Using encounterPRO v5/Communication Tools/Tasks/040823912112415.html">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Screen: Configuration List.">
-		<param name="Local" value="screen_config_list.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Screen: Configuration List.">
