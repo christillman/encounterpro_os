@@ -119,8 +119,6 @@ long COLOR_EPRO_BLUE = rgb(192,192,255)
 ///////////////////////////////////////////////////
 // Preferences
 
-integer logon_timeout
-integer refresh_timer
 integer db_reconnect_retries=10
 
 boolean auto_patient_select = false

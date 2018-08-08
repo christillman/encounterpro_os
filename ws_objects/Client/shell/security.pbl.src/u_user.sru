@@ -453,8 +453,6 @@ unit_preference = original_unit_preference
 
 date_format_string = datalist.get_preference("PREFERENCES", "date_format_string", "[shortdate]")
 
-refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
-
 encounter_gravityprompt = datalist.get_preference("PREFERENCES", "encounter_gravityprompt", "The information in this encounter record is accurate to the best of my knowledge")
 
 COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_EPRO_BLUE)

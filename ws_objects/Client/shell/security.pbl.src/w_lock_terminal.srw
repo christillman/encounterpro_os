@@ -49,6 +49,7 @@ event open;call super::open;integer i, li_row
 string ls_temp
 integer li_sts
 long ll_x
+integer li_refresh_timer
 
 if isnull(current_scribe) then
 	log.log(this, "w_lock_terminal:open", "The terminal lock window should only be opened when a user is logged in", 3)
@@ -59,7 +60,8 @@ st_build_number.text = "Version  " + f_app_version()
 
 bringtotop = true
 
-timer(refresh_timer, this)
+li_refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
+timer(li_refresh_timer, this)
 
 // Move stuff around
 p_logo.x = (width - p_logo.width) / 2
@@ -83,6 +85,8 @@ w_main.uo_help_bar.uf_set_clock()
 // See if the database is OK
 li_sts = f_check_system_status()
 if li_sts <= 0 then
+	MessageBox("Closing down", "w_lock_terminal was disconnected")
+	DebugBreak()
 	gnv_app.event close()
 end if
 

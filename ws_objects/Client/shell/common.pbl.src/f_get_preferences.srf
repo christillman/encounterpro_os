@@ -77,10 +77,6 @@ time_format_string = datalist.get_preference("PREFERENCES", "time_format_string"
 
 followup_specialty = datalist.get_preference("PREFERENCES", "followup_specialty", "FOLLOWUP")
 
-logon_timeout = datalist.get_preference_int("PREFERENCES", "logon_timeout", 15)
-
-refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
-
 rx_gravityprompt = datalist.get_preference("PREFERENCES", "rx_gravityprompt", "I hereby prescribe these medications")
 
 vaccine_gravityprompt = datalist.get_preference("PREFERENCES", "vaccine_gravityprompt", "I hereby authorize these vaccines to be administered")

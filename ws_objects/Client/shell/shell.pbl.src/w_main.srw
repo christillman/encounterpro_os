@@ -186,6 +186,7 @@ str_popup popup
 string ls_temp
 environment env
 string ls_status
+integer li_refresh_timer
 
 li_sts = GetEnvironment(env)
 if env.numberofcolors > 1 and env.numberofcolors < 65000 then
@@ -270,7 +271,8 @@ tab_main.initialize()
 
 if isvalid(w_splash) then close(w_splash)
 
-timer(refresh_timer)
+li_refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
+timer(li_refresh_timer)
 
 refresh()
 

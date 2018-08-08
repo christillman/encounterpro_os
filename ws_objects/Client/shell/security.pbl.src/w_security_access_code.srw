@@ -99,6 +99,7 @@ end subroutine
 
 event open;str_popup popup
 string ls_temp
+integer li_logon_timeout
 
 access_id = ""
 st_asterisks.text = ""
@@ -139,7 +140,8 @@ if not isnull(main_window) and isvalid(main_window) then
 	y = main_window.y + (main_window.height - height) / 2
 end if
 
-timer(logon_timeout, this)
+li_logon_timeout = datalist.get_preference_int("PREFERENCES", "logon_timeout", 15)
+timer(li_logon_timeout, this)
 
 end event
 
@@ -287,6 +289,8 @@ end event
 type pb_cancel from u_picture_button within w_security_access_code
 integer x = 64
 integer y = 952
+integer width = 256
+integer height = 224
 integer taborder = 10
 boolean cancel = true
 string picturename = "button11.bmp"
