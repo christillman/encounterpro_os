@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Patients checking in with wrong encounter type" />
+    <meta name="TITLE" content="Problem: Patients checking in with wrong encounter type" />
+    <meta name="DESCRIPTION" content="Ask practice to call patient checks-in wrong encounter type." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10605 - Troubleshooting - Patients Checking In with Wrong Encounter Type" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Patients checking in with wrong encounter type</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Hotfixes</div>
+<hr />
+<h2>Problem: Patients checking in with wrong encounter type</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+ <p> 
+The encounter type to appointment type link can be broken in number of places. If check-in person is using correct encounter type, and encounter type is mapped correctly in the table, and the encounter type is associated with the correct workplan, then there is one or more of the check-in people using the wrong apt. type. Ask the practice to call immediately the next time a patient checks-in with the wrong encounter type.  </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+&nbsp; </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+There are a number of places where the encounter type to appointment type link can be broken. When one of these items is configured incorrectly, the patient may check in with the wrong encounter type or the encounter type may have the wrong workplan associated. </p>
+ 
+ 
+ <p> 
+Sometimes the user confuses the 'encounter type' with the workplan - the encounter type may be the correct one (Nurse Visit - Shots Only) but the workplan associated with the encounter is not what they want/expect. </p>
+ 
+ 
+ <p> 
+<STRONG>Workaround <br /> 
+</STRONG>The check-in person is using the wrong appointment type. <br /> 
+Let's start with this one - it's going to be difficult to track this down, but if the problem is intermittent, this is probably the cause. For example, if SOME well new visits check in as sick visits, but SOME well new visits check in as well new visits. Human error is the likely culprit. <br /> 
+1) Talk to the check-in person. Ask what apt. types they are using. <br /> 
+2) Ask them to check-in a patient with the apt. type that seems to be the problem. <br /> 
+3) Check the Waiting Room. what encounter type is shown? <br /> 
+4) Also, you can check the o_message_log table 'comments' field to see whether it reports the appointment code/text is not mapped for that patient#.  <br /> 
+5) If the PM interface is an&nbsp; HL7 interface, then look in x_encounterpro_arrived table in the appointment_reason column to see what appointment code/text came through for that patient#. </p>
+ 
+ 
+ <p> 
+<STRONG>The appointment type in the PM is mapped to the wrong encounter type in Epro.</STRONG> </p>
+ 
+ 
+ <p> 
+1) Go to 'Configuration', click 'Practice Management'. Select 'Appointment' at the bottom of the screen. <br /> 
+2) The appointment types from the PM are shown with the corresponding mapped' encounter types. There is also a New flag. On this screen E = New; N = No. <br /> 
+In most cases, the apt. type is a 2- or 3- digit code. You will need to contact the Office Manager to get a list of the appointment types used in their PM. The check-in person usually knows the Alpha or abbreviated name of the apt. You need the numeric code that corresponds to that name. <br /> 
+3) If you do not see the apt. type in the list, go to the tables. In some versions, the list shown isn't 100% accurate. (If you try to add a mapping, it looks like it didn't work, but it's there in the tables.) Open 'b_appointment' type and look for the apt. type. <br /> 
+4) Be sure to set the New flag properly - this influences billing. </p>
+ 
+ 
+ <p> 
+<STRONG>The appointment type in the PM is NOT mapped to any encounter type in Epro. <br /> 
+</STRONG>If the apt. type is NOT mapped to an encounter type, then the system will check the patient in for the default encounter type, generally EST Pt Office Visit. </p>
+ 
+ 
+ <p> 
+If you do not see the apt. type from the PM in the table b_appointment_type, you need to add it. You can add it directly in the table or from Epro Configuration, then&nbsp;Practice Management. Be sure to set the New flag properly. <br /> 
+The encounter type in Epro is using the wrong workplan. </p>
+ 
+ 
+ <p> 
+If the apt. type is mapped to the correct encounter type, check that the encounter type is attached to the correct/expected workplan. </p>
+ 
+ 
+ <p> 
+1) Go to 'Configuration', then 'Encounter Types'. <br /> 
+2) Locate the Encounter Type and select 'Edit'. Note the encounter workplan (s). <br /> 
+3) Go to 'Configuration', then 'Workplans'. Locate the encounter workplan and select 'Edit workplan'. Review the workplan. Generally, you can tell from the name of the workplan if they are getting the wrong workplan. For example, if the encounter type is some sort of Nurse visit, the workplan should have 'Nurse' in the name. It should not be using the same workplan as your sick or well visits. <br /> 
+4) If the Encounter type is using the wrong workplan, determine which workplan is correct (might need a trainer's help here). Go back to 'Configuration', 'Encounter Types' and locate the offending encounter type. <br /> 
+5) Remove the incorrect workplan(s), then add the new, correct workplan (s). </p>
+ 
+ 
+ <p> 
+<FONT size=4>Resolution <br /> 
+</FONT>If you have checked that the check-in person is using the correct encounter type <br /> 
+AND The encounter type is mapped correctly in the b_appointment_type table <br /> 
+AND the encounter type is associated with the correct workplan <br /> 
+THEN... it would seem that there is one or more of the check-in people using the wrong apt. type. Ask the practice to call immediately the next time a patient checks-in with the wrong encounter type so that you can check what apt type was used in the PM, what showed up in the o_message_log table under comments and/or x_encounterpro_arrived table under appointment_reason. </p>
+ 
+ 
+ <p> 
+Article created on 11/3/2006 by beth.copenhaver </p>
+ 
+ 
+ <p> 
+Article last updated on 11/3/2006 by beth.copenhaver </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Patients, Well visits, and Nurse only visits are checking in as Sick.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040828009501535</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 11/18/2008 04:49:31 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

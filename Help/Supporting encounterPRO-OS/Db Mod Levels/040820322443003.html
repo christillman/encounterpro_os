@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Set Security Fails" />
+    <meta name="TITLE" content="Problem: Set Security Fails" />
+    <meta name="DESCRIPTION" content="This solution describes a workaround to be used when Set Security fails with a SQL error." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 Set Security Fails Database Objects" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Set Security Fails</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Db Mod Levels</div>
+<hr />
+<h2>Problem: Set Security Fails</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+This error is caused by permission scripts existing in the customer database for objects that do not exist yet in the customer database. This can happen when the database has not yet been updated to the latest Database or Reports version.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+This has been determined to be a problem with the encounterPRO Server Set Security button. It has been reported as dev issue # 5267.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+Workaround: <br /> 
+1) First, make sure 'Check Now' completes successfully. <br /> 
+2) Then, upgrade the Database and Reports systems to their latest versions, and click the 'Set Security' button again. <br /> 
+3) If the 'Check Now' and upgrades worked but 'Set Security' still fails, then go to the 'Utilites' tab and find the 'Permissions CPRSystem' script. <br /> 
+4) Use the 'Save As' button to save the script to a sql file and run the script in Query Analyzer. It will still report errors but it should set the permissions for all the db objects that exist, so encounterPRO should be fully operational.  </p>
+ 
+  <p> 
+Symptoms: <br /> 
+Set security fails with a SQL Error. The problem occurs with both 'Set Security Standard' and 'Set Security App Role'. The SQL erro includes the phrase 'Invalid object name...'.  <br /> 
+<STRONG>EXAMPLE: </STRONG> <br /> 
+4.05.33.7 (7/27/2004) >>> u_sqlca - (execute_script()) Error Executing SQL Statement:   <br /> 
+/*     jmjrpt_lab_results_pending.PRC*/   <br /> 
+GRANT  EXECUTE ON [dbo].[jmjrpt_lab_results_pending] to [cprsystem]   <br /> 
+SQL ERROR = (208) SQLSTATE = 42S02   <br /> 
+Microsoft OLE DB Provider for SQL Server   <br /> 
+Invalid object name 'dbo.jmjrpt_lab_results_pending'. 4.05.33.7 (7/27/2004) >>> u_sqlca - (bootstrap_database_scripts()) scripts update not found. <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: If 'Check Now' fails, see Problem: Check Now Fails and Check Remote Server Fails (original KB article 10616.)</I></FONT> </p>
+ 
+  <p> 
+Article created on 11/15/2004 by Mark.Copenhaver </p>
+ 
+  <p> 
+Article last updated on 6/11/2008 by Tamara.Cotton</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820322443003</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 06:41:17 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

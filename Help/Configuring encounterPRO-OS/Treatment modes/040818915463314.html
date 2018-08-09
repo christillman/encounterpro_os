@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Concept: Treatment Modes" />
+    <meta name="TITLE" content="Concept: Treatment Modes" />
+    <meta name="DESCRIPTION" content="This solution defines and describes available treatment modes in encounterPRO." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Treatment Mode Concept Default Send Refer" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Concept: Treatment Modes</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Treatment modes</div>
+<hr />
+<h2>Concept: Treatment Modes</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>Description 
+ 
+<LI class=bullets1>Available Treatment Modes 
+ 
+<LI class=bullets1>Want to Learn More?  <UL>
+ 
+<LI class=bullets1>Related Solutions 
+ 
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL>  <p> 
+<FONT size=4>Description</FONT> <br /> 
+To understand what a treatment mode is, we must first understand what a treatment workplan is.&nbsp; A treatment workplan is a defined set of workplan steps that control the behavior of a treatment.&nbsp;  <br /> 
+A treatment mode attaches a treatment workplan to a specific treatment to make it behave according to the treatment workplan steps.  <br /> 
+ </p>
+ 
+  <p> 
+Why Do We Use Treatment Modes? <br /> 
+In encounterPRO, each treatment type is associated with a treatment type default workplan.&nbsp; This treatment type default workplan controls the behavior of all treatments within a treatment type, unless a treatment mode dictates otherwise for a specific treatment. <br /> 
+Treatment modes are used whenever there is a need to deviate from the treatment type default workplan. For example: </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>The practice may need certain treatments to behave differently from other treatments within a treatment type. The urinalysis and rapid strep lab tests may be performed in-house, while all other lab specimens are sent out. 
+ 
+<LI class=bullets1>An office location may need certain treatments to behave differently than they do in other office locations. One office location may have the equipment to perform x-rays on site, while the other locations need to send the patients out to a radiology consultant. 
+ 
+<LI class=bullets1>An individual may need certain treatments to behave differently than they do for others in the office or in the practice.</LI></UL>  <p> 
+Setting the Default Treatment Mode <br /> 
+When you set a default treatment mode, the treatment behaves the same way for all users. For example, if your practice sends all patients out for lab work, you should set the default treatment mode for all labs and tests to Ongoing Send or Refer Out. Default treatment modes are set on the Treatment Type Configuration screen. <br /> 
+ </p>
+ 
+  <p> 
+Selecting a Treatment Mode On the Fly <br /> 
+While in an encounter-context the treatment mode can be changed for a specific treatment or for a specific instance of a treatment.  <br /> 
+ <br /> 
+If there are a few labs that are performed in the office, you should set the default treatment mode for all labs to something like Ongoing Send or Refer out. Then, from an encounter-context (probably a test patient), select those labs that are performed in-house. After you select the labs, you can change the treatment mode for that specific treatment&nbsp;-- setting either a default for that particular treatment or just for that specific instance of the treatment. See&nbsp;<A href="../../Using encounterPRO-OS/Treatments/040818615510875.html">How to: Set the Default Treatment Mode for a Specific Treatment</A>&nbsp;for detailed instructions on selecting treatment modes. <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=4>Available Treatment Modes <br /> 
+</FONT>Treatment modes with "Enc" (encounter) included in the description are used for labs and tests which will be closed at the end of the encounter. Treatment modes with "Ong" (ongoing) included in the description are used for labs and tests which will remain open after the encounter, as they will appear on the Outstanding Labs and Tests screen or Outstanding Other Treatments screen and must be manually closed. <br /> 
+ <br /> 
+A treatment mode must be configured as one of the options for a specific treatment type in order to be available for use with treatments of that type. The table below lists some of the common treatment types and the treatments modes that are available for that type. <br /> 
+ </p>
+ 
+  <p> 
+<FONT size=3>Labs</FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><STRONG>Enc Coll and Perform</STRONG>&nbsp;-- used for in house labs that will be both collected and performed during the encounter. 
+ 
+<LI class=bullets1><STRONG>Enc Coll Perform Rev</STRONG>&nbsp;-- used for in house labs that will be both collected and performed during the encounter. A Lab Review service bar appears to allow the provider to quickly review all labs ordered during the encounter. 
+ 
+<LI class=bullets1><STRONG>Enc STAT Coll Perf Rev</STRONG>&nbsp;-- used for in house labs that will be both collected and performed during the encounter. A Lab Review service bar appears to allow the provider to quickly review all labs ordered during the encounter. 
+ 
+<LI class=bullets1><STRONG>Ong Coll Perform Later</STRONG>&nbsp;-- used for in-house labs that will be collected during the encounter, but the lab remains open to allow results to be entered later. 
+ 
+<LI class=bullets1><STRONG>Ong Send or Refer Out</STRONG>&nbsp;-- used for treatments that will be sent to an outside lab or referred outside the office. This lab will remain open after the end of the encounter. 
+ 
+<LI class=bullets1><STRONG>Ong Send or Refer Int</STRONG> (for practices with Lab Integration) used for treatments that will be sent to an outside lab or referred outside the office. This lab will remain open after the end of the encounter.</LI></UL>  <p> 
+<FONT size=3>Tests</FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><STRONG>Enc Dashboard Now</STRONG>&nbsp;-- used for tests for which you want a dashboard screen to appear immediately after ordering the test. 
+ 
+<LI class=bullets1><STRONG>Enc Drill Down</STRONG>&nbsp;-- used for tests for which you want a service bar to be created when the test is ordered. The results screen will appear in the drill down format. 
+ 
+<LI class=bullets1><STRONG>Enc Drilldown by Prov</STRONG>&nbsp;-- used for tests for which a drill down screen is ordered for the provider after ordering the test. 
+ 
+<LI class=bullets1><STRONG>Enc Timed Grid Now</STRONG> - used for tests for which a timed grid screen appears immediately after ordering the test. 
+ 
+<LI class=bullets1><STRONG>Enc Vitals Format</STRONG> - used for tests for which a service bar appeasr when the test is ordered. The results screen will appear in the vitals format. 
+ 
+<LI class=bullets1><STRONG>Ong Dashboard (Consent)</STRONG> - used for tests for which a dashboard screen with a patient consent form appears immediately after ordering the test. This test will remain open after the end of the encounter. 
+ 
+<LI class=bullets1><STRONG>Ong Drilldown</STRONG> - used for tests for which a drilldown screen appears immediately after ordering the test. This test will remain open after the end of the encounter. 
+ 
+<LI class=bullets1><STRONG>PPD</STRONG>&nbsp;-- used for the PPD skin test.</LI></UL>  <p> 
+<FONT size=3>In-house Drugs</FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><STRONG>Administer Now</STRONG>&nbsp;-- used for in house drugs for which the administration screen appears immediately after ordering the drug. 
+ 
+<LI class=bullets1><STRONG>Dilating Drops</STRONG>&nbsp;-- used for dilating drops. 
+ 
+<LI class=bullets1><STRONG>With Reaction Check</STRONG>-- used for in house drugs for which a reaction check is performed after a specified time period.</LI></UL>  <p> 
+<FONT size=3>Prescription Medications</FONT> <br /> 
+ </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><STRONG>Medication (Consent)</STRONG>&nbsp;-- used for medications ordered for which you want a prescription to print. 
+ 
+<LI class=bullets1><STRONG>Medication No Print</STRONG>&nbsp;-- used when a prescription should not print. 
+ 
+<LI class=bullets1><STRONG>Medication Print Last</STRONG>&nbsp;-- used for prescription medications ordered for which the prescription should be printed as the last prescription (when multiple prescriptions will be printed). 
+ 
+<LI class=bullets1><STRONG>Medication Print Now</STRONG>&nbsp;-- used for prescription medications ordered for which a prescription should print immediately. 
+ 
+<LI class=bullets1><STRONG>OTC No Print</STRONG>&nbsp;-- used for over the counter medications ordered, but a prescription should not print. 
+ 
+<LI class=bullets1><STRONG>OTC Print Last</STRONG>&nbsp;-- used for over the counter medications ordered for which a prescription should be printed as the last prescription (when multiple prescriptions will be printed).</LI></UL>  <p> 
+<FONT size=3>Procedures</FONT> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1><STRONG>Close Now</STRONG>&nbsp;-- used for procedures that should close automatically as soon as they are ordered. 
+ 
+<LI class=bullets1><STRONG>Enc Dashboard</STRONG>&nbsp;-- used for procedures for which a service bar is created when ordered. The results screen appears as a dashboard screen. 
+ 
+<LI class=bullets1><STRONG>Enc Procedure Now</STRONG> -- used for procedures for which a dashboard screen appears immediately after ordering the procedure. 
+ 
+<LI class=bullets1><STRONG>Nurse Enc Procedure</STRONG>&nbsp;-- used for procedures performed by the nurse during the encounter. 
+ 
+<LI class=bullets1><STRONG>Ong Dashboard</STRONG> -- used for procedures for which a service bar is created when ordered. This procedure will remain open after the end of the encounter. 
+ 
+<LI class=bullets1><STRONG>Ong Refer Out</STRONG> -- used for procedures for which the patient will be referred to an outside consultant. This test will remain open after the end of the encounter.</LI></UL>  <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions <br /> 
+</FONT><U><A href="../../Configuring encounterPRO-OS/Treatment types/040823912502618.html" target="_blank">Screen: Treatment Type Definition</A> <br /> 
+<A href="../../Using encounterPRO-OS/Assessments/040817917362734.html">How to: Order Assessments and Treatments</A> <br /> 
+<U><A href="../../Using encounterPRO-OS/Treatments/040818615510875.html">How to: Set the Default Treatment Mode for a Specific Treatment</A> <br /> 
+</U> </p>
+ 
+</U>  <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT><U>User Configuration Level 1 <br /> 
+Providers <br /> 
+</U>&nbsp; </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040818915463314</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>

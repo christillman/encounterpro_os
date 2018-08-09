@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Restart encounterPRO Services" />
+    <meta name="TITLE" content="How to: Restart encounterPRO Services" />
+    <meta name="DESCRIPTION" content="Instructions for restarting encounterPRO services." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Restart Services Problem Printing Integration Checking In Checkout" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Restart encounterPRO Services</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations</div>
+<hr />
+<h2>How to: Restart encounterPRO Services</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT face=Arial size=2>In this solution...</FONT> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1><FONT face=Arial size=2>Purpose </FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Before You Begin </FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Steps </FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Want to Learn More? </FONT></LI> 
+<UL> 
+<LI class=bullets1><FONT face=Arial size=2>Related Solutions </FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Related Education Opportunities</FONT></LI></UL></UL> 
+ <p> 
+<FONT face=Arial><FONT size=4>Purpose</FONT> <br /> 
+<FONT size=2>Many clients may call in and have some of the following issues: </FONT></FONT> </p>
+ 
+<FONT face=Arial size=2> 
+<UL> 
+<LI class=bullets1>Patient demographics not coming over from their PMS. </LI> 
+<LI class=bullets1>Patients are not checking in from the PMS.</LI> 
+<LI class=bullets1>EncounterPRO is not sending billing data to their PMS. </LI> 
+<LI class=bullets1>Printers are not working. </LI></UL> 
+<P class=bullets1>Restarting the EncounterPRO Services is the easiest resolution to these common issues. <br /> 
+</FONT><FONT face=Arial><FONT size=2> <br /> 
+</FONT><FONT size=4>Symptoms </FONT></FONT> </p>
+ 
+ 
+<UL> 
+<LI class=bullets1><FONT face=Arial size=2>New patients are not appearing in the encounterPRO database</FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Patients are not checking in, not showing up in the Waiting Room</FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Billing for patients in the Checkout Room is not posting in the PMS</FONT></LI> 
+<LI class=bullets1><FONT face=Arial size=2>Prescriptions are not automatically printing</FONT></LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT face=Arial size=4>Steps</FONT> </p>
+ 
+<FONT face=Arial size=2> 
+<OL> 
+<LI class=numbers1>Open the 'JMJ Tools' folder on the server desktop and double-click the Services icon.  
+<LI class=numbers1>Scroll down to EncounterPro services and select this line item. <br /> 
+(A practice may not have the 'EncounterPRO Service' but rather have several EncounterPRO services) See screen below:  <br /> 
+ <br /> 
+ <img src="images/090081020132412.jpg" alt="Screen: &quot;EncounterPRO Services&quot;" /> <br /> 
+ <br /> 
+There is a service for each type of integration. The services are as follows:  <br /> 
+ 
+<UL> 
+<LI class=bullets1>Check In - EncounterPROScheduling and EncounterPROTransportIn  
+<LI class=bullets1>Check Out - EncounterPROBilling and EncounterPROTransportOut  
+<LI class=bullets1>Automatic Printing - EncounterPROReport </LI></UL> <br /> 
+(vs2 sites only: Cannot Create encounters; not enough licenses - Restart the EncounterPROLicense service)  <br /> 
+ <br /> 
+Please note if a practice has both the 'EncounterPRO Service' and the individual services, please verify that the 'EncounterPRO Service' is running (Status = Status and Startup Type = Automatic) and the individual services are listed as 'disabled' (as shown in the diagram below). The status and startup types can be changed by right clicking on the service name and selecting Properties.  <br /> 
+ <br /> 
+ <img src="images/090081020132658.jpg" alt="Screen: &quot;EncounterPRO Services - Restart&quot;" /> <br /> 
+ <br /> 
+Support is in the process of migrating services and a practice should either be running the 'EncounterPRO Service' or the individual services. <STRONG><FONT color=#ff0000>Never should both the 'EncounterPRO Service' and the individual services be in the 'Started' status.  <br /> 
+</FONT></STRONG> 
+<LI class=numbers1>If the services have stopped, click the start button; if the services appear to be running, click stop and then start the services.  <br /> 
+(<STRONG>Never click Restart</STRONG> - restart will duplicate threads and practice may experience duplicate check ins and or duplicate billing - if this is the problem, see&nbsp; <a href="../Servers/040820016251616.html" target="_blank">Screen: Problem: Duplicate Services with encounterPRO Service</a> and update issue # 25449)  
+<LI class=numbers1>This should clear up the majority of issues that are related to billing, patient data transfers, and printing. </LI></OL></FONT> 
+ <p> 
+<FONT face=Arial size=2>Article #10568 - Restarting EncounterPRO Services</FONT> </p>
+ 
+ 
+ <p> 
+<FONT face=Arial size=2>Article created on 6/23/2006 by Harry.Callier</FONT> </p>
+ 
+ 
+ <p> 
+<FONT face=Arial size=2>Article last updated on 7/6/2006 by Tamara.Cotton</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040829413310299</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/20/2008 01:36:24 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Change the Owner/Office ID of a Practice" />
+    <meta name="TITLE" content="How to: Change the Owner/Office ID of a Practice" />
+    <meta name="DESCRIPTION" content="Information about the script to update the owner_id" />
+    <meta name="PROBLEM_TYPE" content="Template Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Change Owner Office ID Script" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Change the Owner/Office ID of a Practice</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Table modifications</div>
+<hr />
+<h2>How to: Change the Owner/Office ID of a Practice</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution Title:
+</td>
+<td class="sectionContent">
+How to: Change the Owner/Office ID of a Practice<br />
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Overview:
+</td>
+<td class="sectionContent">
+ <p> 
+There is a script called <FONT face="Courier New">Update owner_id.sql</FONT> that can be run when you need to change the owner/office id of a practice. </p>
+ 
+ 
+ <p> 
+Information About the Script </p>
+ 
+ 
+ <p> 
+This script should be run <STRONG>after hours</STRONG> because it will perform a table&nbsp;scan of the affected tables. <br /> 
+ <br /> 
+ </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>Replace the <STRONG>xxx</STRONG> here with the owner_id we're changing FROM (i.e. the WRONG customer_id) SET @ll_from_customer_id = xxx </LI> 
+<LI class=bullets1>Replace the <STRONG>yyy</STRONG> here with the owner_id we're changing TO (i.e. the CORRECT customer_id) SET @ll_to_customer_id = yyy</LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Keywords:
+</td>
+<td class="sectionContent">
+Change Owner Office ID Script<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040907110000318</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 03/12/2009 10:00:02 AM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

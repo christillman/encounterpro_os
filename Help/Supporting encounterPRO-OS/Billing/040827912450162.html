@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Re-Post charges from checkout cancels all the requests" />
+    <meta name="TITLE" content="Re-Post charges from checkout cancels all the requests" />
+    <meta name="DESCRIPTION" content="Recheck in patient and then exit encounter." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10267 - Re-Posting charges from checkout cancels all the requests" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Re-Post charges from checkout cancels all the requests</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Billing</div>
+<hr />
+<h2>Re-Post charges from checkout cancels all the requests</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+ <p> 
+'Canceled' Status <br /> 
+There are 3 possible reasons for this: <br /> 
+1) The encounter is not billable  <br /> 
+2) The user selected 'hold'&nbsp; billing option. This causes the encounter set to 'non-billable' until they approve the billing.  <br /> 
+3) User suspended the billing.  <br /> 
+4) Billing component is not set for that encounter office in c_office table. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+To unsuspend billing, for 'Canceled' Status, recheck in patient and then exit encounter and it will prompt you to unsuspend the bill. Select 'Yes' to unsuspend bill and re-post the encounter. If the status is completed most of the times a valid bill must be generated and send out. In case they completed the todo item [the popup will ask again whether they want to release the bill now or cancel] and didn't allow the billing to go, then it will never sent the bill and always 'complete' the service with all the re-post requests.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+Clicking on 'retry posting' completes the request but not generating a bill. </p>
+ 
+  <p> 
+'Canceled' Status <br /> 
+To unsuspend billing: <br /> 
+1) Recheck in patient and then exit encounter and it will prompt you to unsuspend the bill. <br /> 
+2) If you select 'Yes' it will unsuspend the bill. <br /> 
+3) You will then have to re-post the encounter. </p>
+ 
+  <p> 
+'Completed' Status <br /> 
+If the status is completed most of the times a valid bill must be generated and send out. If it didn't then there is ONLY ONE possible reason for that. The encounter owner must have chosen 'suspend the bill' [find a encounter progress record send_billing_suspended ='T'] and there must be an item on his/her todo box to complete the chart. In case they completed the todo item [the popup will ask again whether they want to release the bill now or cancel] and didn't allow the billing to go, then it will never sent the bill and always 'complete' the service with all the re-post requests. </p>
+ 
+  <p> 
+Affected Products <br /> 
+<STRONG>Product</STRONG> PM Integration <br /> 
+<STRONG>Version&nbsp;</STRONG> All Versions <br /> 
+ <br /> 
+Article created on 5/9/2005 by jmj\sumathi </p>
+ 
+  <p> 
+Article last updated on 4/6/2006 by david.strube </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Clicking on retry posting cancels the request even if the encounter is valid with billable items<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827912450162</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

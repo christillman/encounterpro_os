@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How Billing Information is Accumulated in encounterPRO v4 and v5" />
+    <meta name="TITLE" content="How Billing Information is Accumulated in encounterPRO v4 and v5" />
+    <meta name="DESCRIPTION" content="This solution explains the details of how encounterPRO accumulates billing information in versions 4 and 5. (Billing Algorithm)" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Billing Algorithm Accumulate" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How Billing Information is Accumulated in encounterPRO v4 and v5</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Billing</div>
+<hr />
+<h2>How Billing Information is Accumulated in encounterPRO v4 and v5</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+This document describes the algorithm used to accumulate billing information during an encounter.&nbsp; The algorithm consists of a set of rules.&nbsp; Each rule represents an event which may occur during the course of an encounter.&nbsp; The items underneath each numbered rule represent the cases and/or logic of how the billing records are affected. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT face=sans-serif size=2><FONT size=4>Definitions</FONT> <br /> 
+There are two kinds of billing records.&nbsp; The <STRONG><EM>assessment-billing records</EM></STRONG> determine the ICD codes associated with the encounter. The assessment-billing records usually represents an assessment or diagnosis made or addressed during the encounter, but may not have an associated diagnosis, as in the case of immunizations.&nbsp; Encounters must have at least one assessment-billing record in order to bill.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>The <STRONG><EM>charge record</EM></STRONG> represents an actual billable item/event/service that occurred during the encounter.&nbsp; The charge records will ultimately determine the CPT codes that will be associated with the encounter.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>encounterPRO also keeps track of the relationships between the assessment-billing records and the charge records.&nbsp; The billing algorithm below explains how these associations are created.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>Each assessment-billing record and each charge record has a 'bill_flag' property.&nbsp; The bill_flag property in these records will always be set to either 'Y' (Yes&nbsp;- Do Bill) or 'N' (No&nbsp;- Do Not Bill).&nbsp; The billing algorithm explains where the default values come from.&nbsp; The user is able to manually change the bill_flag for any record so the default value may not be the final value when the billing is generated and exported to a billing system.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>Some of the billing rules depend on whether the encounter is classified as a Sick Encounter or a Well Encounter.&nbsp; A <EM><STRONG>Well Encounter</STRONG></EM> is defined as an encounter in which an assessment is created where the bill_flag is 'Y' and the assessment_type is 'Well'.&nbsp; A <EM><STRONG>Sick Encounter</STRONG></EM> is defined as any encounter that A) has an associated assessment where the bill_flag is 'Y' and the assessment_type is not 'Well' or 'Vaccine', or B) does not have an assessment created where the bill_flag is 'Y' and the assessment_type is 'Well'.&nbsp; An encounter may be considered both a Well Encounter and a Sick Encounter at the same time.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>The <EM><STRONG>Primary Treatment Charge</STRONG></EM> is the charge associated with a treatment where the procedure_id of the charge matches p_Treatment_Item.procedure_id.</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>The <EM><STRONG>Primary Payer Authority</STRONG></EM> for a patient is the first payer authority associated with the patient (i.e. the record from p_Patient_Authority where authority_type = 'PAYOR' and authority_sequence = 1).</FONT> </p>
+ 
+  <p> 
+<FONT face=sans-serif size=2>The <EM><STRONG>well_encounter_flag</STRONG></EM> is a flag in the c_Assessment_Type table and the c_Procedure table.&nbsp; This flag indicates whether or not the assessment type or the procedure charge (respectively) is generally associated with a well visit.&nbsp; It does not restrict any charge from being associated with any assessment, but it affects the default assignment of the one to the other for billing purposes.&nbsp; The possible values for the flag are: <br /> 
+ </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>'Y' : This assessment or charge is generally associated with well encounters 
+ 
+<LI class=bullets1>'N' : This assessment or charge is generally not associated with well encounters 
+ 
+<LI class=bullets1>'A' : This assessment or charge may be associated with any encounter</LI></UL>  <p> 
+The column is nullable for backward compatibility and a null value is treated as identical with 'A'. <br /> 
+&nbsp; <br /> 
+<FONT size=4>Billing Algorithm</FONT></FONT> </p>
+ 
+<FONT face=sans-serif size=2> <OL> <LI class=numbers1>New Assessment  <br /> 
+ <OL type=a> <LI class=numbers1>Create a new assessment-billing record. </LI></OL> <LI>Touch Assessment  <br /> 
+ <OL type=a> <LI class=numbers1>Create a new assessment-billing record (if it doesn't already exist) </LI></OL> <LI>Close Assessment  <br /> 
+ <OL type=a> <LI class=numbers1>Create a new assessment-billing record (if it doesn't already exist)  <LI class=numbers1>Set the bill_flag to what the user selected on the Close Assessment dialog box (bill_flag = 'N' if assessment closed automatically) </LI></OL> <P class=numbers1> </p>
+ 
+ <LI>Cancel Assessment  <br /> 
+ <OL type=a> <LI class=numbers1>Sets bill_flag for that assessment to 'N' and disassociates assessment from any charges </LI></OL>  <p> 
+ </p>
+ 
+ <LI class=numbers1>New Treatment  <br /> 
+ <OL type=a> <LI class=numbers1>Copy the bill_procedure, bill_observation_collect, bill_observation_perform, bill_children_collect, and bill_children_perform flags from c_Treatment_Type.  <LI class=numbers1>After all assessments are associated with treatment, add associated charges  <br /> 
+ <OL type=i> <LI class=numbers1>If the treatment has a procedure_id and bill_procedure = 1, then add a treatment charge record for the procedure_id  <LI class=numbers1>If the treatment's bill_observation_collect = 1 and the treatment has an observation_id and the associated observation has a collection_procedure_id, then add a treatment charge for the collection_procedure_id.  <LI class=numbers1>If the treatment's bill_observation_perform = 1 and the treatment has an observation_id and the associated observation has a perform_procedure_id, then add a treatment charge for the perform _procedure_id.  <LI class=numbers1>For each new procedure_id billed, perform logic under 'Add Treatment Charge' section. </LI></OL> <br /> 
+</LI></OL> <LI>Touch Treatment  <br /> 
+ <OL type=a> <LI class=numbers1>Create a new assessment-billing record (if it doesn't already exist) for each associated assessment  <br /> 
+</LI></OL> <LI class=numbers1>Close Treatment  <br /> 
+ <OL type=a> <LI class=numbers1>No effect  <br /> 
+</LI></OL> <LI class=numbers1>Cancel Treatment  <br /> 
+ <OL type=a> <LI class=numbers1>Cancel associated charges  <LI class=numbers1><FONT color=#ff00ff>Set bill_flag = 'N' for any assessment-billing records that are associated with charges for this treatment and not associated with any diagnosis <br /> 
+</FONT></LI></OL> <LI class=numbers1>Associate Treatment With Assessment  <br /> 
+ <OL type=a> <LI class=numbers1>New assessment-billing record  <LI class=numbers1>Associate all treatment charges with newly associated assessment.  <br /> 
+</LI></OL> <LI class=numbers1>Add Treatment Charge  <br /> 
+ <OL type=a> <LI class=numbers1>Based on the c_Procedure.default_bill_flag, find or create a charge record as follows: <br /> 
+ <OL type=i> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00' color=#000000>If c_Procedure.default_bill_flag = '1', then:  <br /> 
+</FONT> <OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00' color=#000000>If there are no existing charge records in this encounter for the same procedure_id, then create a new charge record and set the bill_flag to 'Y' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00' color=#000000>If there is already an existing charge in this encounter for this procedure_id, then do not create a new charge record and do not use an existing charge record. The new charge is discarded.  <br /> 
+</FONT></LI></OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If c_Procedure.default_bill_flag = '2', then:  <br /> 
+</FONT> <OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If there are no existing records in this encounter for the same procedure_id, then create a new charge record and set the bill_flag to 'X'. (This will cause the charge to not bill and not be visible from any billing review screen.) </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If there are no existing records in this encounter for the same procedure_id where the bill_flag = 'Y', then create a new charge record and set the bill_flag = 'Y' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If there is already an existing charge record in this encounter for the same procedure_id where the bill_flag = 'Y', then accumulate the units from the new charge into the existing charge record and use it as the charge record for the new charge  <br /> 
+</FONT></LI></OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #ffff00'>If c_Procedure.default_bill_flag = 'A', then:  <br /> 
+</FONT> <OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #ffff00'>If there are no existing charge records in this encounter for the same procedure_id AND treatment_id where the bill_flag = 'A', then create a new charge record with this procedure_id and treatment_id and set the bill_flag = 'A' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #ffff00'>If there is already an existing charge record in this encounter for the same procedure_id AND treatment_id where the bill_flag = 'A', then accumulate the units from this charge into the existing charge record </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #ffff00'>If there are no existing charge records in this encounter for the same procedure_id and NULL treatment_id where the bill_flag = 'Y', then create a new charge record with this procedure_id and NULL treatment_id and set the bill_flag = 'Y' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #ffff00'>Sum all of the units from all the charge records with this procedure_id, non-null treatment_id and bill_flag = 'A'. Set the unit field to this sum of the record with this procedure_id, NULL treatment_id, and bill_flag = 'Y'.  <br /> 
+</FONT></LI></OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If c_Procedure.default_bill_flag = 'Y', then:  <br /> 
+</FONT> <OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If there are no existing charge records in this encounter for the same treatment and the same procedure_id, then create a new charge record with the bill_flag set to 'Y' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If there is already an existing charge record in this encounter for the same treatment and the same procedure_id, then use it as the charge record for the new charge and set its bill_flag to 'Y' </FONT></LI></OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If c_Procedure.default_bill_flag = 'N', then:  <br /> 
+</FONT> <OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If there are no existing charge records in this encounter for the same treatment and the same procedure_id, then create a new charge record and set the bill_flag to'N' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ff00'>If there is already an existing charge record in this encounter for the same treatment and the same procedure_id, then use it as the charge record for the new charge. Do not change the bill_flag of the existing charge record. </FONT></LI></OL></LI></OL> <br /> 
+ <LI class=numbers1>If there is an existing charge record for a different treatment and the same procedure_id create a new charge record create a new assessment-billing record (if it doesn't already exist) for each assessment associated with this treatment  <LI class=numbers1>If this is not the primary treatment charge and this treatment has a primary treatment charge, then associate this charge with each assessment-billing record that is associated with the primary treatment charge  <LI class=numbers1>If this is the primary treatment charge, or there is no primary treatment charge, associate this charge with each assessment-billing record where the bill_flag = 'Y' and the assessment is associated with this treatment  <LI class=numbers1>If no billed assessment-billing records from (b) or (c) are associated with this charge, then associate this charge with each assessment-billing record which represents an actual diagnosis, where the bill_flag = 'Y', <FONT style='BACKGROUND-COLOR: #00ffff'>and where the c_Assessment_Type.well_encounter_flag for the existing assessment-billing record matches c_Procedure.well_encounter_flag for this charge. An 'A' in either field always matches. </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff'>If this is the primary treatment charge, and there are Extra Charges listed in c_Procedure_Extra_Charge for this procedure_id where the order_flag = 'Auto', then order each extra charge as another charge for this treatment. </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff'>If the Primary Payer Authority has a bill_procedure_assessment flag = 'Y' and the c_Procedure.bill_assessment_id is not null, then see if the new charge is already associated with an assessment-billing record with the same assessment_id as c_Procedure.bill_assessment_id. If no such assessment-billing record exists, then do the following: <br /> 
+</FONT> <OL type=i> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff'>Create a new assessment-billing record and associate it with the new charge. The assessment_id comes from c_Procedure.bill_assessment_id, the bill_flag comes from c_assessment_type.default_bill_flag i</FONT>  <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff'>Disassociate the new charge from all assessments where the c_Assessment_Type.well_encounter_flag for the existing assessment-billing record does not match the c_Assessment_Type.well_encounter_flag for the new assessment-billing record. </FONT></LI></OL></LI></OL> <br /> 
+ <LI class=numbers1>Add Observation Result <br /> 
+ <OL type=a> <LI class=numbers1>If the result_type is 'COLLECT' and the associated observation has a collection_procedure_id, then add a treatment charge for the collection_procedure_id.  <LI class=numbers1>If the result_type is 'PERFORM' and the associated observation has a perform_procedure_id, then add a treatment charge for the perform _procedure_id. </LI></OL> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>Add Non-Treatment Charge  <br /> 
+</FONT> <OL type=a> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If the encounter is a Well Encounter and the c_Procedure.well_encounter_flag = 'Y', then associate the charge with all assessment-billing records where the c_Assessment_Type. well_encounter_flag = 'Y' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If the encounter is a Sick Encounter and the c_Procedure.well_encounter_flag = 'Y' or 'A', then associate the charge with all assessment-billing records where the c_Assessment_Type. well_encounter_flag ='N' </FONT> <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If the charge is not associated with any assessment-billing records from (a) or (b) above, then associate the charge with each assessment-billing record in the encounter.  <br /> 
+</FONT></LI></OL> <LI>Add assessment-billing record  <OL type=a> <LI class=numbers1>The bill_flag comes from c_assessment_type.default_bill_flag.  <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If assessment is billed and the assessment_type is 'WELL' and there are charges associated with other assessment-billing records where the well_encounter_flag = 'Y' and not associated with any assessment-billing records where the assessment_type = 'WELL', then associate such charges with this new assessment-billing record. </FONT> <LI class=numbers1>If assessment is billed and there are billed charges not associated with an assessment-billing record, then associate them with this assessment-billing record.  <LI class=numbers1><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>If there are any non-treatment charges where the procedure_type is 'Primary' or 'Secondary', then disassociate each such charge from all assessment-billing records and apply the logic in Rule 12 to re-associate each such charge.</FONT></LI></OL></FONT><FONT face=sans-serif size=2> <br /> 
+ <OL></OL><FONT size=4>Color Legend</FONT> <br /> 
+<FONT style='BACKGROUND-COLOR: #00ff00'>Hotfix # 71 <br /> 
+</FONT><FONT style='BACKGROUND-COLOR: #00ffff' color=#000000>Mod Level 127 <br /> 
+</FONT><FONT style='BACKGROUND-COLOR: #ffff00'>Hotfix # 248 <br /> 
+</FONT></FONT> <OL></OL>  <p> 
+<FONT face=sans-serif size=4>Source: <br /> 
+</FONT><FONT face=sans-serif size=2>The original document can be found at: </p>
+ 
+  <p> 
+<A href='https://www.jmjtech.com/intranet/Products/EncounterPRO%20v4/Technical%20Documentation/Billing%20Algorithm%20v4.doc'>https://www.jmjtech.com/intranet/Products/EncounterPRO%20v4/Technical%20Documentation/Billing%20Algorithm%20v4.doc</A> </p>
+ 
+</FONT> <OL></OL></LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040819714581694</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:03 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

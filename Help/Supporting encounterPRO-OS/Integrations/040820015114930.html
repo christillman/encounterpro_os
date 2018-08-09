@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Patients Checking in with Wrong New/Established Flag" />
+    <meta name="TITLE" content="Problem: Patients Checking in with Wrong New/Established Flag" />
+    <meta name="DESCRIPTION" content="This solution explains what to do when patients are checking in with the wrong New or Established primary visit code or the wrong New or Established encounter type." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10610 New Established Patient Wrong Visit Type Encounter" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Patients Checking in with Wrong New/Established Flag</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations</div>
+<hr />
+<h2>Problem: Patients Checking in with Wrong New/Established Flag</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+<OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<OL> <LI class=numbers1>In b_appointment_type, make sure that the new_flag is set to 'Y' for NEW patient encounter types and to 'N' for ESTABLISHED patient encounter types. 'E' is not an accepted value in this table. </LI> <LI class=numbers1>In b_appointment type, make sure that each appointment_type is properly mapped to the correct encounter_type and that there exists both a NEW and an ESTABLISHED appointment type in the billing system in any situation where the patient might be new or established. For example, the practice may never allow new patients to have a flu shot visit so in that case, there need only be an Established Patient flu shot visit appointment type in the billing system. However, if the practice sees both new and established patients for Sick Office Visits, there needs to be both a NEW patient sick visit appointment type and an ESTABLISHED patient sick visit appointment type set up in the billing system. </LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTES:  <br /> 
+To trouble-shoot this issue, ask for a patient/encounter example.&nbsp; If the billing system uses the x_encounterpro_arrived table, find the appointment_reason value and the new_flag value for that patient's encounter.&nbsp; The appointment_reason corresponds to appointment_type in b_appointment_type.&nbsp; The encounter_type value corresponds to the encounter_type in b_appointment_type.&nbsp;&nbsp; The new_flag corresponds to new_flag in b_appointment_type.&nbsp;  <br /> 
+The x_encounterpro_arrived table pinpoints the precise mapping that is at issue in the encounter complained of by the customer.&nbsp;  <br /> 
+ <br /> 
+For example, you may see in the x_encounterpro_arrived table that the patient has been checked into the billing system and into EncounterPRO with a New Patient visit type but that the new_flag is set to 'N' indicating that the patient has been checked in as an established patient.&nbsp; In this instance, the likely cause of the problem is that the new_flag has been improperly set to 'N' in the b_appointment type table and needs to be set to 'Y.'&nbsp;  <br /> 
+Another example is that a customer may complain that established patients are coming into encounterpro with new patient encounter types.&nbsp; You may see in the x_encounterpro_arrived table that a patient has been checked into the billing system with an appointment_reason of '15' and an encounter_type of 'WELLNEW and a new_flag of 'Y.'&nbsp; If you ask the practice what '15' means in their billing system, they might tell you either that it is an Established Patient Well Visit or that it is a Well Visit and they don't distinguish between new and established patients in their billing system.&nbsp; In this instance there is an incorrect or incomplete mapping of appointment_type (Established Patient Well Visit) to encounter_type (New Patient Well Visit) with a new_flag of 'Y.'&nbsp; There needs to be an Established Patient Well Visit appointment_type that is mapped to a well visit encounter type with a new_flag of 'N' and a New Patient Well Visit appointment type that is mapped to a well visit encounter type with a new_flag of 'Y.'  </p>
+ 
+  <p> 
+The corollary to the example above is that a customer complains that new patients are coming into Encounterpro with established patient encounter types.&nbsp; You may see in the x_encounterpro_arrived table that a patient has been checked into the billing system with an appointment_reason of '16' and an encounter_type of 'WELL' and a new_flag of 'N.'&nbsp; If you ask the practice what '16' means in their billing system, they might tell you either that it is an New Patient Well Visit.&nbsp; In this instance there is an incorrect mapping of appointment_type (New Patient Well Visit) to encounter_type (Established Patient Well Visit) with a new_flag of 'N.'&nbsp; Again, there needs to be an Established Patient Well Visit appointment_type that is mapped to a well visit encounter type with a new_flag of 'N' and a New Patient Well Visit appointment type that is mapped to a well visit encounter type with a new_flag of 'Y.'&nbsp; </I></FONT> <br /> 
+ <br /> 
+<FONT size=3>Source</FONT> <br /> 
+Original KB article: Article #10610 - New Patients Coming into EncounterPRO from Billing System as Established/ Established Patients Coming in as New <br /> 
+Article created on 12/5/2006 by kathleen.st.john <br /> 
+Article last updated on 12/5/2006 by kathleen.st.john <br /> 
+&nbsp; </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820015114930</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:02 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

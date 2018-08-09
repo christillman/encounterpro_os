@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Prevent EP modifiers from billing automatically" />
+    <meta name="TITLE" content="Prevent EP modifiers from billing automatically" />
+    <meta name="DESCRIPTION" content="Add qzq to authority id in c_procedure_coding." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10445 - How to stop EP modifiers from billing automatically in Version 4.0" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Prevent EP modifiers from billing automatically</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Billing</div>
+<hr />
+<h2>Prevent EP modifiers from billing automatically</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+Automatic billing of EP modifiers occurs when records have been inserted in the c_procedure_coding table.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Add the letters 'qzq' (or another combination of improbable letters) to the authority id in c_procedure_coding. We need an interface so that the customer can set up billing rules for certain insurance companies and procedures.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+Scripts were run against customer databases in the Fall of 2005. The purpose of the script was to automatically bill an EP modifier if certain procedures were ordered for Medicaid patients. The scripts that were run identified which authority ids had an authority category of 'Medicaid' in c_authority. </p>
+ 
+  <p> 
+For each authority_id with an authority_category of 'Medicaid', the scripts added records in c_procedure_coding for CPT codes 99395, 99394, 99393, 99392, 99391, 99385, 99384, 99383, 99382, 99381, 99173, 99172, 96110, 92556, 92555, 92553, 92552, 92551, 90748, 90747, 90746, 90744, 90743, 90740, 90734, 90733, 90732, 90723, 90721, 90720, 90718, 90716, 90715, 90714, 90713, 90712, 90710, 90707, 90706, 90705, 90704, 90703, 90702, 90701, 90700, 90698, 90680, 90675, 90669, 90660, 90658, 90657, 90656, 90655, 90648, 90647, 90646, 90645, 90636, 90634, 90633, 90632, 90586, 90585, 90472, 90471, 90378, 90371, 86850, 86585, 86580, 83655. </p>
+ 
+  <p> 
+Workaround <br /> 
+Add the letters 'qzq' (or another combination of improbable letters) to the authority id in c_procedure_coding. To add the letters to every record you can run the following sequel query. Deleting these records is also an option but is not as easily reversed if the customer changes his mind as to some or all of the cpt codes and/or authority ids. </p>
+ 
+  <p> 
+UPDATE c_procedure_coding <br /> 
+SET authority_id = authority_id + 'qzq' <br /> 
+WHERE </p>
+ 
+  <p> 
+cpt_code IN ('99395', '99394', '99393', '99392', '99391', '99385', '99384', '99383', '99382', '99381', '99173', '99172', '96110', '92556', '92555', '92553', '92552', '92551', '90748', '90747', '90746', '90744', '90743', '90740', '90734', '90733', '90732', '90723', '90721', '90720', '90718', '90716', '90715', '90714', '90713', '90712', '90710', '90707', '90706', '90705', '90704', '90703, '90702', '90701', '90700', '90698', '90680', '90675', '90669', '90660', '90658', '90657', '90656', '90655', '90648', '90647', '90646', '90645', '90636', '90634', '90633', '90632', '90586', '90585', '90472', '90471', '90378', '90371', '86850', '86585', '86580', '83655') </p>
+ 
+  <p> 
+AND modifier = 'EP' <br /> 
+GO </p>
+ 
+  <p> 
+Resolution <br /> 
+We need an interface so that the customer can set up billing rules for certain insurance companies and procedures.   </p>
+ 
+  <p> 
+Article created on 1/19/2006 by Kathleen </p>
+ 
+  <p> 
+Article last updated on 1/19/2006 by Kathleen </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+EP modifier bills automatically when procedures selected for patients with insurance companies.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827805544382</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

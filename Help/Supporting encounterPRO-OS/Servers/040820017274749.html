@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Error: Unable to Start Transport Out Service - Type Mismatch Accessing External Object Property" />
+    <meta name="TITLE" content="Error: Unable to Start Transport Out Service - Type Mismatch Accessing External Object Property" />
+    <meta name="DESCRIPTION" content="This solution explains why the type mismatch error appears while starting the transport out service." />
+    <meta name="PROBLEM_TYPE" content="Error Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10179 Transport Service Mismatch External Object Error" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Error: Unable to Start Transport Out Service - Type Mismatch Accessing External Object Property</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Servers</div>
+<hr />
+<h2>Error: Unable to Start Transport Out Service - Type Mismatch Accessing External Object Property</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Error Message:
+</td>
+<td class="sectionContent">
+Error in timer ding function (Type mismatch accessing external object property value at line 291 in function chrg of object u component outgoing filecopy hl7.)
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+ <p> 
+Mostly this error shows up if the following attribute is left NULL. <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Fill in a valid facility id value to fix this error and restart the transport out.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+The above mentioned issue is no longer valid from Install Bundle 5.1.5 because it does not care about 'FacilityID' attribute for 'TRN_OUT_FILECOPY_HL7'. <br /> 
+ <br /> 
+<FONT size=3>Affected Products <br /> 
+</FONT>Product&nbsp;Version <br /> 
+PM Integration&nbsp;All Versions </p>
+ 
+  <p> 
+<FONT size=3>Source <br /> 
+</FONT>Original KB article: Article #10179 - Unable to start transport out service - ERROR: Type mimatch accessing external object property <br /> 
+Article created on 2/14/2005 by Sumathi Asok <br /> 
+Article last updated on 1/30/2006 by sumathi.asok <br /> 
+&nbsp; </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820017274749</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:02 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

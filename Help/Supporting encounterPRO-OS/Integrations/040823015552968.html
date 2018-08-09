@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Troubleshooting Lab Integration: Incorrect sender displayed for Task" />
+    <meta name="TITLE" content="Troubleshooting Lab Integration: Incorrect sender displayed for Task" />
+    <meta name="DESCRIPTION" content="This solution explains how to ensure that the correct sender's name appears for the Tasks dispatched for lab result review Tasks." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10641 Preparation and configuration for a lab interface Incorrect Sender Task" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Troubleshooting Lab Integration: Incorrect sender displayed for Task</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations</div>
+<hr />
+<h2>Troubleshooting Lab Integration: Incorrect sender displayed for Task</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+Not Applicable
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Right click on lab dashboard and click 'edit dashboard'. Scroll down and find 'Treatment services' and highlight it. Click inside 'Command Attributes' box and change the service field to 'EPRO Todo Item'. Click 'next' four times then 'finish. Click 'ok' and 'finish'.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+After sending an 'InBox ToDo' from a lab dashboard, the message may appear as follows near the bottom of dashboard: </p>
+ 
+  <p> 
+From: Support Physician 9876 To: Support Physician 9876 Dispatched: 5/22/2007 16:08:40 Status: Completed 5/22/2007 16:09:22 </p>
+ 
+  <p> 
+Subject: Send Todo Item  <br /> 
+*Notice it reads from 'support' to 'support'. </p>
+ 
+  <p> 
+To fix: <br /> 
+1) Right click on lab dashboard and click 'edit dashboard' (with local copy active). <br /> 
+2) Then scroll down the command menu to the left and find 'Treatment services' (should be first one listed, there may be two) and highlight it. <br /> 
+3) Then left click inside the 'Command Attributes' box and change the service field to 'EPRO Todo Item'. <br /> 
+4) Click 'next' four times then finally 'finish. <br /> 
+5) Click 'ok' and then 'finish' again. It will automatically change all messages to appear as follows: </p>
+ 
+  <p> 
+From: Support Physician 9876 To: Amber G. Moore, R.N. Dispatched: 5/22/2007 16:09:21 Status: Dispatched </p>
+ 
+  <p> 
+<img src="images/content_tip.gif" width="18" border="0"><I><FONT color=#0000ff>TIP: All steps mentioned in Lab Dashboard Issues section work for any dashboards but you must perform steps for each of the dashboards. ie X-Ray dashboard, lab dashboard etc.</FONT></I> <br /> 
+ <br /> 
+Article created on 5/23/2007 by adam.zangara </p>
+ 
+  <p> 
+Article last updated on 4/9/2008 by Adam.Zangara</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+After sending an 'InBox ToDo' from a lab dashboard, the message may appear near the bottom of dashboard.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040823015552968</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:46 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

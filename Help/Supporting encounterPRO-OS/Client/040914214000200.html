@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Prescriptions from Document Manager Printing Too Large" />
+    <meta name="TITLE" content="Problem: Prescriptions from Document Manager Printing Too Large" />
+    <meta name="DESCRIPTION" content="" />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="RATip Problem Printing PDF Too Large Big Prescriptions Document Manager Foxit Reader e-RX eRX e-Prescribing" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Prescriptions from Document Manager Printing Too Large</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Client</div>
+<hr />
+<h2>Problem: Prescriptions from Document Manager Printing Too Large</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+Attached is an example of the PDF documents that EncounterPRO will send to the rx-designated printer when the user wishes to print a prescription rather than send it electronically. </p>
+ 
+ 
+ <p> 
+This is a standard PDF documents with a page size of 4.25' x 5.5' and is intended to be printed on quarter sheet paper (standard 8.5' x 11' cut into quarters). </p>
+ 
+ 
+ <p> 
+Most printers will attempt to resize the document to fit the paper in the tray.  Since the printer is usually not expecting quarter sheets, a common problem is that the printer attempts to resize our document to fit a whole sheet. </p>
+ 
+ 
+ <p> 
+The resolution depends on the printer model and driver versions, but falls into two categories: </p>
+ 
+ 
+ <p> 
+1)      Configure the printer to know the correct size of the paper that is actually in the tray </p>
+ 
+ 
+ <p> 
+2)      Configure the printer to take it's paper size settings from the document being printed </p>
+ 
+ 
+ <p> 
+We have had success with the first on HP printers and with the second on Ricoh printers, however each printer is different and drivers are being updated frequently so if there is a problem then the resolution for any specific printer needs to be determined on site by the customer's IT support. </p>
+ 
+ 
+ <p> 
+If the correct settings for printing the quarter sheet prescriptions makes the printer unsuitable for printing other documents and the customer wishes to use that printer for other documents, then the solution is to create two virtual printers both pointing to the same physical printer. </p>
+ 
+ 
+ <p> 
+EncounterPRO ships with the free version of Foxit Reader which is used to silently print PDF files from EncounterPRO Server.  No windows shell settings are changed so it will not interfere with the customers' choice for PDF viewer.  We currently ship with version 2.3 but that is subject to change.  More information about Foxit Reader can be obtained from their web site here:  <A href='http://www.foxitsoftware.com/'>http://www.foxitsoftware.com/</A> </p>
+ 
+ 
+ <p> 
+  </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<A href='https://content.rightanswers.com/onlinekm50/scripts/uploadedfiles/090090522135930.pdf' target=_blank>Big PDF Example File</A>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040914214000200</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 05/22/2009 03:38:16 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

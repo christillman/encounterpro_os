@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Create In-office Prescription Medications" />
+    <meta name="TITLE" content="How to: Create In-office Prescription Medications" />
+    <meta name="DESCRIPTION" content="Instructions for configuring in-office prescription meds." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="ss" />
+	<meta name="KEYWORDS" content="Configure Add In-office Inoffice Prescription Medications RX Drug" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Create In-office Prescription Medications</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Prescription medications</div>
+<hr />
+<h2>How to: Create In-office Prescription Medications</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+In this solution<STRONG>...</STRONG> <br /> 
+ 
+<UL> 
+<LI class=bullets1>Purpose  
+<LI class=bullets1>Before You Begin  
+<LI class=bullets1>Steps  
+<LI class=bullets1>Want to Learn More?  
+<UL> 
+<LI class=bullets1>Related Solutions  
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL><FONT size=4>Purpose</FONT> <br /> 
+In-office medications are configured similarly to prescription medications. In addition, you need to set up the drug makers and HCPCS codes used for billing information. <br /> 
+There are several phases to adding a new in-office medication: <br /> 
+ 
+<OL> 
+<LI class=numbers1>Set up drug properties  
+<LI class=numbers1>Create drug packages (at least one package is required) 
+<LI class=numbers1>Select administration rules (at least one administration rule is required) 
+<LI class=numbers1>Determine drug categories (for searching)  
+<LI class=numbers1>Select the Specialties that will use this drug  
+<LI class=numbers1>Select the HCPCS codes that can be used with this drug (if you want to bill for the drug administered, a HCPCS code is required) 
+<LI class=numbers1>Select the makers that manufacture this drug (all makers of the drug which might be used by your practice must be entered) 
+<LI class=numbers1>Save the new drug and add to the short list, if desired</LI></OL> 
+ <p> 
+<FONT size=4>Before You Begin <br /> 
+</FONT>Before you add a new in office medication to the database, you should perform a thorough search of the database to confirm that it does not already exist. Search the drugs for your specialty as well as All Specialties to be sure the drug is not already in the database. </p>
+ 
+ 
+ <p> 
+If the HCPCS procedure code needed&nbsp;are not available when you are configuring the medication, you will need to add those procedure codes on the Procedure Configuration screen. See  <a href="../Procedures/040817619411837.html" target="_blank">Screen: How to: Add a New Procedure</a>. <br /> 
+ </p>
+ 
+ 
+ <p> 
+ <br /> 
+&nbsp; </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif> 
+ <p> 
+<FONT size=2>Steps <br /> 
+Follow the steps below: <br /> 
+<EM><FONT color=#6600ff>To Add a New In Office Drug:</FONT></EM></FONT> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT size=2>From the Configuration List, select Drugs. The Drug Configuration screen appears. </FONT> 
+<LI class=numbers1><FONT size=2>Select the New Drug button. A list appears with the different types of drugs you can configure. </FONT> 
+<LI class=numbers1><FONT size=2>Select Single Drug. A window appears to allow you to enter the drug name. </FONT> 
+<LI class=numbers1><FONT size=2>Enter the Trade name for the drug and select OK. (This is a required field.)</FONT> 
+<LI class=numbers1><FONT size=2>Enter the Generic name for the drug and select OK. (This is a required field. If the generic name is not known, enter the trade name in this field.)</FONT> 
+<LI class=numbers1><FONT size=2>The controlled substance determination screen will appear. If the new drug is a controlled substance, select Yes. Otherwise, select No. The Single Drug Definition screen appears. </FONT> 
+<LI class=numbers1><FONT size=2>Select the Default Duration bar and select the number and unit for the duration. This number will default to the Duration field of the prescription and will be used to calculate the Total Dispense Amount.</FONT> 
+<LI class=numbers1><FONT size=2>If you want to associate reference materials with this drug for either the patient or provider, select the bar for that level and select the reference material. </FONT> 
+<LI class=numbers1><FONT size=2>Enter the information for the Maximum Calculated Dose. Enter the Amount and Unit. The Maximum Calculated Dose is the maximum daily dose that the system will calculate when the dosage is being figured by the patient's weight.</FONT></LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff size=2>To Configure the In Office Drug Packages:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT size=2>From the Single Drug Definition screen, select the Packages tab. </FONT> 
+<LI class=numbers1><FONT size=2>Select Add Package. The Select Dosage Form list appears. </FONT> 
+<LI class=numbers1><FONT size=2>Select the dosage form you want to use for this drug. (The forms with ** are used for compound drugs). The Select Package screen appears. This screen lists the many packages of this form that have been created previously. </FONT> 
+<LI class=numbers1><FONT size=2>Use the Up and Down buttons to scroll through the list of packages. (The list is in alphabetic order, not numeric order.) </FONT> 
+<LI class=numbers1><FONT size=2>If the required form/dosage package appears on the list, select it, then select OK. <br /> 
+ <br /> 
+If the required form/dosage package does not appear on the list, select the New Package button. Enter the dosage and strength. Select the administer method. The Package Description is automatically generated. Edit the description, if needed, then select OK.  <br /> 
+ <br /> 
+The Package screen appears.  <br /> 
+</FONT> 
+<LI class=numbers1><FONT size=2>You must enter a default dispense amount. This is the amount that defaults on the drug prescribing screen. </FONT> 
+<LI class=numbers1><FONT size=2>You must enter at least one dispense choice. Select the gray box for Dispense Choices. </FONT> 
+<LI class=numbers1><FONT size=2>Select Add Dispense. A list of drug forms appears. </FONT> 
+<LI class=numbers1><FONT size=2>Select the form from the list. (This does not have to be the same form as the drug package. For example, the drug package can be ampoules and the dispense choice can be a box.) </FONT> 
+<LI class=numbers1><FONT size=2>Repeat steps 8 and 9 to add multiple dispense choices. These choices will appear in a drop-down list for the Total Dispense Amount on the drug prescribing screen. </FONT> 
+<LI class=numbers1><FONT size=2>Select OK. The Single Drug Definition screen reappears. </FONT> 
+<LI class=numbers1><FONT size=2>Repeat steps 2&nbsp;- 11 to add additional packages for this drug.</FONT></LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff size=2>To Configure the Administration Rules:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT size=2>From the Single Drug Definition screen, select the Administration tab. </FONT> 
+<LI class=numbers1><FONT size=2>Select Add Administration. A list of administration rules appears.  <br /> 
+Note: You must add an administration rule that is compatible for each drug package previously added. </FONT> 
+<LI class=numbers1><FONT size=2>Select the appropriate rule (DOSE, etc.). The Administration screen for the new drug appears. </FONT> 
+<LI class=numbers1><FONT size=2>Enter the remaining information needed for the administration rule: <br /> 
+</FONT> 
+<UL> 
+<LI class=bullets1><FONT size=2>Enter the Amount. Select the Unit. (The administration unit for the Administration Rule and Package must be the same to be compatible.) </FONT> 
+<LI class=bullets1><FONT size=2>Indicate whether the amount is to be multiplied by the patient's weight. </FONT> 
+<LI class=bullets1><FONT size=2>Accept the generated description or edit the description to meet your needs  <br /> 
+</FONT></LI></UL> 
+<LI class=numbers1><FONT size=2>Select OK. The Drug Configuration screen reappears with the administration rule displayed in the Administration block. </FONT> 
+<LI class=numbers1><FONT size=2>Repeat steps 2 through 5 until all Administration Rules needed for this drug have been entered.</FONT></LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff size=2>To Select the Categories and Specialties for this In Office Drug:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1><FONT size=2>From the Single Drug Definition screen, select the Categories tab. </FONT> 
+<LI class=numbers1><FONT size=2>Select Add Category. A list of drug categories appears. Drug Categories are used to help users search for the required drug. </FONT> 
+<LI class=numbers1><FONT size=2>Select all categories that apply to this drug, and then select OK. The Drug Configuration screen reappears. The Categories tab will show the categories selected. </FONT> 
+<LI class=numbers1><FONT size=2>Select the Specialties tab. The specialty of the current user should already appear on the list of specialties. You should add this drug to all the specialties in your office, to make searching for the drug easier. </FONT> 
+<LI class=numbers1><FONT size=2>Select Add Specialty. A list of specialties appears. </FONT> 
+<LI class=numbers1><FONT size=2>Select all specialties for which you want the drug to appear then select OK. The Specialty tab shows the specialties selected.</FONT></LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff size=2>To Select The HCPCS Codes for this Drug: <br /> 
+</FONT></EM></FONT><FONT face=Tahoma size=2>All HCPCS codes that you wish to be able to select when administering the medication must be selected on the HCPCS tab. There is no way to manually enter the HCPCS code on the medication adminstration screen.</FONT> </p>
+ 
+<FONT face=sans-serif size=2> 
+<OL> 
+<LI class=numbers1>From the Single Drug Definition screen, select the HCPCS tab.  
+<LI class=numbers1>Select the Add HCPCS button. The Select HCPCS Procedure screen appears.  
+<LI class=numbers1>Select the desired HCPCS code from the short list or use the search options to locate the HCPCS code. HCPCS codes generally have the drug name and a number of units of the drug. The HCPCS for New In Office Drug screen appears.  
+<LI class=numbers1>Enter the Amount and select the Unit that will be administered when you want to bill the selected HCPCS procedure.  
+<LI class=numbers1>Select OK. The HCPCS procedure appears on the list of HCPCS Procedures.  
+<LI class=numbers1>Repeat steps 2- 5 to add additional HCPCS procedures for this drug. Each HCPCS procedure that you select will be available to the clinical staff when they administer the medication. Only those HCPCS procedures that appear here will be available for use when documenting the medication administration.</LI></OL> 
+ <p> 
+<FONT color=#6600ff><EM>To Select The Makers for this Drug: <br /> 
+</EM></FONT><FONT face=Tahoma color=#000000>All manufacturers&nbsp;that you wish to be able to select when administering the medication must be selected on the Makers tab. There is no way to manually enter the Maker on the medication adminstration screen.</FONT> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Single Drug Definition screen, select the Makers tab.  
+<LI class=numbers1>Select the Add Maker button. A list of drug makers appears..  
+<LI class=numbers1>Select the desired Maker from the list. You can select multiple makers, if needed.  
+<LI class=numbers1>Select OK. The Drug Definition screen reappears with the makers selected listed. Only those drug makers that appear here will be available for use when documenting the medication administration.</LI></OL> 
+ <p> 
+<EM><FONT color=#6600ff>To Complete the Drug Configuration:</FONT></EM> </p>
+ 
+ 
+<OL> 
+<LI class=numbers1>From the Single Drug Definition screen, select the Properties tab. Review the information you entered and complete any fields left blank.  
+<LI class=numbers1>Select OK. The new drug is added to the master drug list and to the drug lists for the specialties selected in step 6. The Drug Configuration screen appears with the new drug listed on the left.  
+<LI class=numbers1>If you want to add this drug to your short list, select the icon to the right of the description.  
+<LI class=numbers1>Select the Common or Personal Short list button to add the new drug to that list. Select Finished to return to the Configuration List.</LI></OL> 
+ <p> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions <br /> 
+</FONT><U> <a href="040823912403347.html" target="_blank">Screen: Screen: Configure Simple Prescription Medications</a> <br /> 
+ <a href="040817713294497.html" target="_blank">Screen: How to: Add a New Simple Drug</a> <br /> 
+ <a href="040818219202157.html" target="_blank">Screen: How to: Create In-office Prescription Medications</a> <br /> 
+ <a href="040818215465996.html" target="_blank">Screen: How to: Modify a Simple Prescription Medication</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Treatments/Prescription%20medications/040818215380750.html" target="_blank">Screen: How to: Search for a Prescription Medication.</a> <br /> 
+ <a href="040818216114198.html" target="_blank">Screen: How to: Remove a Prescription Medication from the Database</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Treatments/In-office%20medications/040818214371583.html" target="_blank">Screen: How to: Order In Office Medications</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Treatments/In-office%20medications/040818219064325.html" target="_blank">Screen: How to: Document Administration of In-office Prescription Medications.</a> <br /> 
+</U><FONT size=3> <br /> 
+Related Education Opportunities <br /> 
+</FONT><U>User Configuration Level 1&nbsp; <br /> 
+</U> </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040818219202157</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 01/07/2009 12:23:39 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

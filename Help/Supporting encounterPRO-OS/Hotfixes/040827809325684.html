@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure and use the Chart Export Service" />
+    <meta name="TITLE" content="How to: Configure and use the Chart Export Service" />
+    <meta name="DESCRIPTION" content="Install and configure Chart Export and then run it." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10237 - Configuring and using the Chart Export service Display Script" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure and use the Chart Export Service</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Hotfixes</div>
+<hr />
+<h2>How to: Configure and use the Chart Export Service</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Build 34 introduces a new service for exporting an entire chart into a set of files. The contents of the files is controlled by service attributes and display scripts. In addition, the attachments can be included in the export. Install and configure Chart Export. Run Chart Export. When the Chart Export service is performed, a screen is displayed showing which reports will be run for the patient, which encounter report will be run for each encounter, and whether to export all of the attachments.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+Build 34 introduces a new service for exporting an entire chart into a set of files. The contents of the files is controlled by service attributes and display scripts. In addition, the attachments can be included in the export. </p>
+ 
+  <p> 
+Resolution </p>
+ 
+  <p> 
+1) Installing Chart Export <br /> 
+  a) The Chart Export database objects will be installed automatically with Mod Level 127. <br /> 
+  b) They can also be added to Mod Level 126 by running Hotfix 129. <br /> 
+2) Configuring Chart Export <br /> 
+The Chart Export service has the following configuration parameters: </p>
+ 
+  <p> 
+ <TABLE style='BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff' cellSpacing=0 cellPadding=0 border=0 alignment=''> <TBODY> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> Attribute</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>Default</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>Meaning </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> default_path</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>c:\temp\PatientCharts</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>Root directory where files will be placed. A subdirectory matching the patient's billing id will be created and all files will be placed in the subdirectory. </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> patient_reports</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>None </TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>Comma delimited list of display script ids to run against the patient. The output of each display script is saved into a separate file. </TD></TR> <TR> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'> encounter_report</TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>None </TD> <TD style='BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid'>Single display script id to perform for each encounter in the patient chart.  The output for each encounter is saved into a separate file, with the encounter date appended to the file name. </TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+  a) The Chart Export service can perform multiple reports for the patient and a single report for each encounter. Examples of patient reports might be a problem list, an immunization history, a PFSH summary, etc. <br /> 
+  b) If no display script id is specified for the patient_reports attribute, then no patient level reports will be produced. Likewise, if no display script is specified for the encounter_report attribute, then no encounter reports are produced. <br /> 
+  c) As with any service attributes, the attributes can be specified in the o_Service_Attributes table (recommended in this case), or overridden in the menu or workplan item configuration. <br /> 
+  d) The Chart Export service is a patient-level service and can be added to any menu or workplan item which has a patient context.  It is recommended that the Chart Export service be added to the menu at the bottom of the Patient Demographics screen. <br /> 
+3) Running Chart Export <br /> 
+  a) When the Chart Export service is performed, a screen is displayed showing which reports will be run for the patient, which encounter report will be run for each encounter, and whether to export all of the attachments. <br /> 
+  b) All reports and attachments default to 'Yes' meaning to produce them. The user may change any report or the attachments to 'No' meaning to exclude it from the export. <br /> 
+  c) The name of the reports comes from the name of the Display Scripts specified in the service attributes. The Display Script name is also used to name the file that is created for each report. <br /> 
+  d) Each report file is saved and an RTF file in the subdirectory created from the patient billing id. <br /> 
+  e) If the attachments are included in the export, then another subdirectory is created under the billing-id subdirectory called 'Attachments'. <br /> 
+  f) Then under the 'Attachments' subdirectory another subdirectory is created for each folder in the patient chart which contains attachments. <br /> 
+  g) Any attachments which are not in any folder in the patient chart will be stored in a subdirectory called 'No Folder'. The attachments are saved in whatever form they were originally imported. <br /> 
+ <br /> 
+Article created on 4/5/2005 by jmj\mark </p>
+ 
+  <p> 
+Article last updated on 9/5/2006 by mark </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827809325684</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:29:07 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

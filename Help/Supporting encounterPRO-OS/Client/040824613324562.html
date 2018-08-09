@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Table Modification: Configure the Vaccine Consent Statement directly in the tables" />
+    <meta name="TITLE" content="Table Modification: Configure the Vaccine Consent Statement directly in the tables" />
+    <meta name="DESCRIPTION" content="How to modify the vaccine consent signature statement in the tables." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Change Modify Preference Configuration Vaccine Consent Statement Preference 10636" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Table Modification: Configure the Vaccine Consent Statement directly in the tables</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Client</div>
+<hr />
+<h2>Table Modification: Configure the Vaccine Consent Statement directly in the tables</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+First, review Solution # 040823718241845, 'How to: Configure the Vaccine Consent Statement'.  If you are unable to update the statement using the interface, you may do so directly in the tables.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<p> You can add a preference directly to the table 'p_preferences' (Unfortunately, it is currently limited to 255 characters.) :   <br /> 
+  <br /> 
+Preference_type = ?PREFERENCES?   <br /> 
+Preference_id = ?Vaccine Consent Statement?  <br /> 
+</p>   <br /> 
+  <br /> 
+<p> You can display additional text (1,024 characters) by going directly into the tables.  Add the following information into 'o_Service_Attribute'   <br /> 
+</p><ul><li> service = VACCINE_SIGNATURE </li><li> attribute = Vaccine Consent Statement </li><li> value = TYPE YOUR TEXT HERE! </li></ul><p></p> <br /> 
+ <br /> 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: In config 19, mod level 137 the following logic is introduced:  Added logic to look for 'Vaccine Consent Statement' service attribute before preference.  If attribute exists (up to 1024 characters) then it is used.  If attribute does not exist, then preference is used. <br /> 
+</I></FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040824613324562</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 09/02/08 02:06:58 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

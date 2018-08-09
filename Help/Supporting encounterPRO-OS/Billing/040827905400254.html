@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Get a copy of the billing file that was exported to the PM System" />
+    <meta name="TITLE" content="How to: Get a copy of the billing file that was exported to the PM System" />
+    <meta name="DESCRIPTION" content="HL7-look in registry, non-HL7 - c_component_attribute table." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10313 How to get a copy of the billing file that was sent out to the PM System" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Get a copy of the billing file that was exported to the PM System</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Billing</div>
+<hr />
+<h2>How to: Get a copy of the billing file that was exported to the PM System</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+EncounterPRO will never send a partial bill. It sends complete billable items listed in the EncounterPRO billing screen. Find a path where EncounterPRO saved a copy of all the bills. If you know the patient# and discharge date then look up the path and find a message written for that date time or do a search by patient#. For HL7 systems, look in windows registry to find a path where it's saving copy all the bills. For non-HL7 systems, find a path in c_component_attribute table by looking at the attribute value for 'hold_bills_directory'. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+EncounterPRO will never send a partial bill. It sends complete billable items listed in the EncounterPRO billing screen. Find a path where EncounterPRO saved a copy of all the bills. If you know the patient# and discharge date then look up the path and find a message written for that date time or do a search by patient#. </p>
+ 
+  <p> 
+HL7 systems  <br /> 
+Look in windows registry (In 'Hkey_Local_Machine', select 'Software', click 'AHC', select 'Transport' and click 'EPROHOLDMESSAGES') to find a path where it's saving copy all the bills. </p>
+ 
+  <p> 
+To save a copy of bills , set the value for 'hold_outgoing' attribute in c_component_attribute table to 'TRUE' to turn it ON or 'FALSE' to turn it OFF. If the row does not exist in c_component_attribute, add it. </p>
+ 
+  <p> 
+dbo_c_Component_Attribute </p>
+ 
+  <p> 
+ <TABLE style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 border=0 alignment=""> <TBODY> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;component_id</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute_sequence&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">value&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;TRN_OUT_FILECOPY_HL7</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">1000086&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_outgoing&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRUE&nbsp;</TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+Non-HL7 systems <br /> 
+Find a path in c_component_attribute table by looking at the attribute value for 'hold_bills_directory'. </p>
+ 
+  <p> 
+To save a copy of bills , set the value for 'hold_outgoing' attribute in c_component_attribute table to 'Y' to turn it ON or 'N' to turn it OFF. If the rows do not exist in c_component_attribute, add them. </p>
+ 
+  <p> 
+c_Component_Attribute </p>
+ 
+  <p> 
+ <TABLE style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 border=0 alignment=""> <TBODY> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;component_id</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute_sequence&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">value&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_OUT_FILECOPY</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">1000047&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_bills&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">Y&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_OUT_FILECOPY&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">1000048&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_bills_directory&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">c:\jmj\pmshare\holdbills&nbsp;</TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+Affected Products <br /> 
+<STRONG>Product&nbsp;&nbsp;</STRONG>PM Integration <br /> 
+<STRONG>Version</STRONG> &nbsp;All Versions <br /> 
+ <br /> 
+Article created on 6/27/2005 by jmj\david.strube </p>
+ 
+  <p> 
+Article last updated on 6/7/2006 by david.strube </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040827905400254</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

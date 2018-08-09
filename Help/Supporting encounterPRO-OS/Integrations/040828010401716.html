@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Patients not checking in through PM Integration" />
+    <meta name="TITLE" content="Patients not checking in through PM Integration" />
+    <meta name="DESCRIPTION" content="There are different for HL7 and Non-HL7 integrations." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10003183 Article #10174 - Patients not checking in thru PM Integration" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Patients not checking in through PM Integration</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations</div>
+<hr />
+<h2>Patients not checking in through PM Integration</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+1) Facility id is invalid&nbsp;- get a list of facility id's from PM system and map them in c_office. <br /> 
+2) Check in date is invalid. <br /> 
+3) Check in message is not sent from PM system - notify the practice or talk to their PM support. <br /> 
+4) Encounter already exists. <br /> 
+5) File type (*.txt, *.hl7, etc) is not what is expected by the EncounterPRO Service. <br /> 
+6) Dlls need to be re-registered. <br /> 
+7) The AHC entry 'EPROSERVER' is also used by our export (TRN OUT) service.&nbsp;- To fix this make sure the c_component_attribute entries for 'TRN_OUT_FILECOPY_HL7' is referencing 'EPROSENDER' instead of 'EPROSERVER'. If not change them and restart the service that should take care of the sporadic check in problems. <br /> 
+8) Patient is set to 'Inactive' in EncounterPRO.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+For HL7 integrations,&nbsp;check whether EncounterPROTransportIn and EncounterPROscheduler is running.&nbsp;Stop transport in and find a shared path in windows registry.&nbsp;Find an arrival record in x_encounterpro_arrived table. For Non-HL7 systems,&nbsp;check whether EncounterPROTransportIn and EncounterPROMsgHandler and EncounterPROscheduler are running.&nbsp;Stop transport in and find a shared path in o_Message_Subscription table. Now ask the customer to check in a patient. Find an arrival record in x_encounterpro_arrived table. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+For HL7 integrations <br /> 
+1)&nbsp;Check whether EncounterPROTransportIn and EncounterPROscheduler is running. <br /> 
+2)&nbsp;Stop the transport in and find a shared path in windows registry. <br /> 
+&nbsp; a) Under&nbsp; 'Hkey_Local_Machine' select 'Software', click 'AHC' and select 'Transport-EproServer'. <br /> 
+&nbsp; b) Now ask the customer to check in a patient.&nbsp; <br /> 
+3)&nbsp;If you do see the message dropped into a folder then, there are only three possible reasons for our system to reject a check in message.&nbsp;The date of service is old or future date or&nbsp; the facility code is not mapped in our system. This applies to only multi-office practices or the patient is set to inactive in encoutnerpro. <br /> 
+4)&nbsp;If all the above looks good then you should find an arrival record in x_encounterpro_arrived table. </p>
+ 
+  <p> 
+For Non-HL7 systems <br /> 
+1)&nbsp;Check whether EncounterPROTransportIn and EncounterPROMsgHandler and EncounterPROscheduler are running. <br /> 
+2)&nbsp;Stop the transport in and find a shared path in o_Message_Subscription table. Now ask the customer to check in a patient. <br /> 
+3)&nbsp;If you do see the message dropped into a folder then, there are only two possible reasons for our system to reject a check in message. The date of service is old or future date or&nbsp;the facility code is not mapped in our system. This applies to only multi-office. <br /> 
+4)&nbsp;If all the above looks good then you should find an arrival record in x_encounterpro_arrived table.&nbsp;&nbsp; <br /> 
+5)&nbsp;To save a copy of JMJ&nbsp; imported messages then set the following attributes and make sure that folder exists. <br /> 
+&nbsp; <br /> 
+c_Component_Attribute </p>
+ 
+  <p> 
+ <TABLE style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 border=0 alignment=""> <TBODY> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;component_id</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute_sequence&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">value&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_IN_FILECOPY&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">62&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_incoming&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">YES&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_IN_FILECOPY&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">63&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_incoming_directory&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">C:\JMJ\PMSHARE\HOLDIN&nbsp;</TD></TR></TBODY></TABLE> <br /> 
+6)&nbsp;To save a copy of JMJ exported messages then set the following attributes and make sure that folder exists. </p>
+ 
+  <p> 
+c_Component_Attribute </p>
+ 
+  <p> 
+ <TABLE style="BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; BORDER-BOTTOM: #000000 1px solid; BORDER-COLLAPSE: separate; BACKGROUND-COLOR: #ffffff" cellSpacing=0 cellPadding=0 border=0 alignment=""> <TBODY> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">&nbsp;component_id</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute_sequence&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">attribute&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">value&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_OUT_FILECOPY&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">62&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_outgoing&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">N&nbsp;</TD></TR> <TR> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">TRN_OUT_FILECOPY&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">63&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">hold_outgoing_directory&nbsp;</TD> <TD style="BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 5px; BORDER-BOTTOM: #000000 1px solid">C:\JMJ\PMSHARE\HOLDBILLS&nbsp;</TD></TR></TBODY></TABLE> </p>
+ 
+  <p> 
+7) To save a copy of JMJ exported messages then set the following attributes and make sure that folder exists. <br /> 
+ <br /> 
+Affected Products <br /> 
+<STRONG>Product&nbsp;</STRONG>PM Integration <br /> 
+<STRONG>Version&nbsp;</STRONG>All Versions <br /> 
+ <br /> 
+Article created on 2/10/2005 by David.Strube </p>
+ 
+  <p> 
+Article last updated on 2/8/2006 by david.strube </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Patients will check-in in the PM system, but wont show up in EncounterPRO.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040828010401716</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/06/2008 02:36:06 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

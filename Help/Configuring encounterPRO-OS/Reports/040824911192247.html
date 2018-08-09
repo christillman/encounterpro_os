@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Determine which signature is printed on a prescription" />
+    <meta name="TITLE" content="How to: Determine which signature is printed on a prescription" />
+    <meta name="DESCRIPTION" content="The built-in EncounterPRO prescription report will automatically print a signature on a prescription.  When one physician orders a med but someone else edits it or refills it or signs for it, the decision on which signature to display may not be clear.  This article describes how EncounterPRO decides which signature to print." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="signature prescription rx supervisor certified" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Determine which signature is printed on a prescription</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Reports</div>
+<hr />
+<h2>How to: Determine which signature is printed on a prescription</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+EncounterPRO first determines the effective ordered-by provider using the following logic: </p>
+ 
+  <p> 
+1) The last provider to order a refill will be the ordered_by provider.   <br /> 
+2) If no refills have been ordered then the last provider to sign for the prescription will be the ordered_by provider. <br /> 
+3) If no one has signed for the prescription then the provider who originally ordered the prescription will be the ordered_by provider. </p>
+ 
+  <p> 
+Once the ordered-by provider has been determined, then the following logic is used to determine which signature to display: </p>
+ 
+  <p> 
+The ordered-by provider's signature is used if any of the following are true <br /> 
+1) the ordered-by provider does not have a supervisor and is certified <br /> 
+2) the ordered-by provider has a supervisor and the use_supervisor_signature_stamp is false </p>
+ 
+  <p> 
+If the ordered-by provider has a supervisor then the supervisor's signature is used if either of the following are true: <br /> 
+1) the ordered-by provider is not certified <br /> 
+2) the ordered-by provider is certified and the use_supervisor_signature_stamp is true <br /> 
+ </p>
+ 
+  <p> 
+Finally, if an actual signature is available from the prescription, then the actual signature is used.  Otherwise, the appropriate signature stamp is used.  Note that whether or not a signature stamp is available or used is subject to two preferences, namely rx_use_signature_stamp and rx_always_use_signature_stamp. </p>
+ 
+  <p> 
+Other attributes controlling signature printing: </p>
+ 
+ <UL>
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>print_signature_for_controlled_substance </p>
+ 
+ <UL>
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><?xml:namespace prefix = o ns = 'urn:schemas-microsoft-com:office:office' /><o:p>'N' = Do not print the signature if the drug's controlled_substance_flag = 'Y'.</o:p> </p>
+ 
+
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><o:p>'Y' = Print signature regardless of controlled_substance_flag</o:p> </p>
+ 
+
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>Default is 'N' </p>
+ 
+</LI></UL>
+ 
+<LI class=bullets1>generic_signature  <UL>
+ 
+<LI class=bullets1><o:p>If this prescription has two signature lines at the bottom, then the generic_signature attribute controls which side to print the signature on.</o:p> 
+ 
+<LI class=bullets1>'L' = Print the signature on the left side for generic-allowed and the right side for brand-name-required 
+ 
+<LI class=bullets1>'R' = Print the signature on the right side for generic-allowed and the left side for brand-name-required. 
+ 
+<LI class=bullets1>Default is 'L'</LI></UL>
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>use_supervisor_signature_stamp </p>
+ 
+ <UL>
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>Controls whether to use signature stamp of the physician's extender who wrote the prescription or their supervisor. </p>
+ 
+
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>'Y' = Use the supervisor's signature stamp </p>
+ 
+
+ 
+<LI class=bullets1> <P class=MsoNormal style='MARGIN: 0in 0in 0pt'>'N' = Use the extender's signature stamp <o:p></o:p> </p>
+ 
+<o:p></o:p></LI></UL></LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040824911192247</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/15/2008 02:05:30 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

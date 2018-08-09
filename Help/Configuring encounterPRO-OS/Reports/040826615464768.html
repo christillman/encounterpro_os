@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Change which report is called by the sigma button" />
+    <meta name="TITLE" content="How to: Change which report is called by the sigma button" />
+    <meta name="DESCRIPTION" content="How to set the report that display for the Sigma button" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Change Report Sigma Button Patient Chart SOAP Encounter Summary" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Change which report is called by the sigma button</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Reports</div>
+<hr />
+<h2>How to: Change which report is called by the sigma button</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+<P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><FONT face=Calibri>From Mark: 'The sigma button on the patient chart looks for a chart page attribute called 'summary_menu_id'.  If it finds it displays that menu with the auto-singleton behavior.<?xml:namespace prefix = o ns = 'urn:schemas-microsoft-com:office:office' /><o:p></o:p></FONT></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><o:p><FONT face=Calibri> </FONT></o:p></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><FONT face=Calibri>If no summary_menu_id chart page attribute exists, then EncounterPRO attempts to display the encounter summary report defined by the preference_id 'summary_report_id'.  <FONT color=#000000>In Configuration>Preferences>User Favorite Preferences (maximize the screen to see this bar)>RPT - Encounter Summary Report. Set at the Global level.</FONT></FONT></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><o:p><FONT face=Calibri> </FONT></o:p></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><FONT face=Calibri>If no such preference is found then EncounterPRO will attempt to display the following report_id:  '{330C8DB2-A65C-46C1-A58B-72CE6C5B7DC9}' Report description=Encounter SOAP Note'</FONT></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='COLOR: #1f497d'><o:p><FONT face=Calibri> </FONT></o:p></SPAN> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+ <p> 
+In version 2, you had to set the Sigma button in the tables. This meant that all charts had the same attributes, the same report. </p>
+ 
+  <p> 
+In version 4, you had to set the Sigma button in the preferences. You could set this preference at various levels. </p>
+ 
+  <p> 
+In version 5, you can now set the Sigma button from the patient chart and set it for that specific chart. </p>
+ 
+  <p> 
+<STRONG>Steps</STRONG> </p>
+ 
+<FONT face=Calibri> <OL> <LI class=numbers1>Turn on Config mode - before you display the chart.  <LI class=numbers1>Display a patient chart. When the chart displays, there is a small Configure Tab button in the upper left above the Encounters list. <LI class=numbers1>Select the Next button. The parameters screen lets you select a Summary Button Menu. <LI class=numbers1>Select the menu you want to use. If the menu has just the one button for the encounter report, the menu itself will not appear - the report will automatically appear. <br /> 
+ <img src="images/090090327133033.jpg" alt="Screen: 'Chart Configuration'" /> <LI class=numbers1>Select Next. The next screen allows you to select an Encounter Summary Report. This is in here for compatibility purposes. You should not use this parameter in version 5. <LI class=numbers1>Select Finished.</LI></OL></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040826615464768</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 06:50:01 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

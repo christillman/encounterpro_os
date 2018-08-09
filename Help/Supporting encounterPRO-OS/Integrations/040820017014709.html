@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Problem: Duplicate GRITS Eligibility Codes" />
+    <meta name="TITLE" content="Problem: Duplicate GRITS Eligibility Codes" />
+    <meta name="DESCRIPTION" content="This article explains what to do if there are two or more instances of GRITS Vaccine Eligibility." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="GRITS Eligibility Code Vaccine 10356 Georgia Immunization Registry Report General" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Problem: Duplicate GRITS Eligibility Codes</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations</div>
+<hr />
+<h2>Problem: Duplicate GRITS Eligibility Codes</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+ <p> 
+This observation was entered twice. Once while running the config scripts for setting up this observation, and once manually by someone trying to set these observations up thru the epro interface. These two times were not necessarily in that order. <br /> 
+ <br /> 
+Symptoms <br /> 
+Going to Config, Reports, General or Encounter, selecting the GRITS report, Default, in the first screen selecting the Vaccine Eligibility bar, searching by Description for all non-specialty observations where name contains GRITS, you find two or more results. <br /> 
+<STRONG>Example: <br /> 
+ </STRONG> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT color=#ff0000>Don't create duplicate GRITS Eligibility codes!</FONT> </p>
+ 
+<OL><LI class=numbers1>In c_observation, find out the observation ids of these two observations. Start by filtering for description like 'GRITS*'. Let's call them obsX and obsY.</LI><LI class=numbers1>With the observation ids in step 1, go to c_observation_tree and find the children observation ids. With these, find which child of obsX matches with which child of obsY. Let's say obsX.child1=obsY.child1, obsX.child2=obsY.child2 and so on. </LI><LI class=numbers1>In c_report_definition, get the report_ids of the two GRITS reports. Let's call them Rid1 and Rid2.</LI><LI class=numbers1>Go to c_Workplan and filter for wokplan_ids where description like 'Vaccine for GRITS*'. Let's call them WP1, WP2, etc.</LI><LI class=numbers1>In c_Workplan_Item_attribute, filter for the wokplan_ids from step 4. 1. Where attribute=observation_id, the most commonly used value will be the observation_id we'll keep. Let's say it's obsX.</LI><LI class=numbers1>Run the query in Notes below after replacing all the values at the top of the query .</LI><LI class=numbers1>In c_observation, set obsY to NA.</LI></OL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> <p> 
+--Replace the follow with correct values before running: <br /> 
+-- #obsX# <br /> 
+-- #obsY# <br /> 
+-- #WP1# <br /> 
+-- #WP2# <br /> 
+-- #WP3# <br /> 
+-- #Rid1# <br /> 
+-- #Rid2# <br /> 
+-- #obsXChild1# <br /> 
+-- #obsXChild2# <br /> 
+-- #obsXChild3# <br /> 
+-- #obsXChild4# <br /> 
+-- #obsXChild5# <br /> 
+-- #obsXChild6# <br /> 
+-- #obsYChild1# <br /> 
+-- #obsYChild2# <br /> 
+-- #obsYChild3# <br /> 
+-- #obsYChild4# <br /> 
+-- #obsYChild5# <br /> 
+-- #obsYChild6# </p>
+ 
+ <p> 
+UPDATE c_workplan_Item_Attribute <br /> 
+SET value='#obsX#' <br /> 
+WHERE value='#obsY#' and (workplan_id=#WP1# or workplan_id=#WP2# or workplan_id=#WP3#) </p>
+ 
+ <p> 
+UPDATE c_report_attribute <br /> 
+SET value='#obsX#' <br /> 
+WHERE attribute='PROGKEY_ELIG' and (report_id='#Rid1#' or report_id='#Rid2#') </p>
+ 
+ <p> 
+UPDATE p_treatment_item <br /> 
+SET observation_id='#obsX#' <br /> 
+WHERE observation_id='#obsY#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsX#' <br /> 
+WHERE observation_id='#obsY#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild1#' <br /> 
+WHERE observation_id='#obsYChild1#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild2#' <br /> 
+WHERE observation_id='#obsYChild2#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild3#' <br /> 
+WHERE observation_id='#obsYChild3#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild4#' <br /> 
+WHERE observation_id='#obsYChild4#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild5#' <br /> 
+WHERE observation_id='#obsYChild5#' </p>
+ 
+ <p> 
+UPDATE p_observation_result <br /> 
+SET observation_id='#obsXChild6#' <br /> 
+WHERE observation_id='#obsYChild6#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsX#' <br /> 
+WHERE observation_id='#obsY#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild1#' <br /> 
+WHERE observation_id='#obsYChild1#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild2#' <br /> 
+WHERE observation_id='#obsYChild2#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild3#' <br /> 
+WHERE observation_id='#obsYChild3#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild4#' <br /> 
+WHERE observation_id='#obsYChild4#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild5#' <br /> 
+WHERE observation_id='#obsYChild5#' </p>
+ 
+ <p> 
+UPDATE p_observation <br /> 
+SET observation_id='#obsXChild6#' <br /> 
+WHERE observation_id='#obsYChild6#' <br /> 
+ <br /> 
+<FONT size=3>Source <br /> 
+</FONT>Original KB article: Article #10356 - Duplicate GRITS Eligibility Codes <br /> 
+Article created on 8/24/2005 by jmj\david.strube <br /> 
+Article last updated on 5/22/2006 by david.strube  <br /> 
+ </p>
+ 
+</FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820017014709</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 05:17:49 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Error: A Recent Back-up Is Missing or Cannot Be Found" />
+    <meta name="TITLE" content="Error: A Recent Back-up Is Missing or Cannot Be Found" />
+    <meta name="DESCRIPTION" content="This solution discusses the error message ?recent back-up missing? and what actions can be taken to correct the problem." />
+    <meta name="PROBLEM_TYPE" content="Error Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="10248 Recent Backup Missing Error Not Found" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Error: A Recent Back-up Is Missing or Cannot Be Found</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Undecided</div>
+<hr />
+<h2>Error: A Recent Back-up Is Missing or Cannot Be Found</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Error Message:
+</td>
+<td class="sectionContent">
+A recent back-up is missing or cannot be found
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+ <p> 
+Each time users log in they receive the message ?A recent back-up is missing or cannot be found? <br /> 
+Users get this message normally when EncounterPro does not detect a recent DB back-up.  <br /> 
+ <br /> 
+The job ?Epro Back-up? failed to run/complete successfully. There are several things that can cause this job to fail. The most common causes are not enough space for SQL to store the back up log on the target drive or the back up job was interrupted. <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Ensure that EPRO DB Back-up Job is properly scheduled, and that the target drive has sufficient space to allow for log creation and storage. <br />
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> <OL> <LI class=numbers1>The back up job can be restarted by opening Enterprise Manager (SQL), expand the following:  <br /> 
+ <UL>
+ 
+<LI class=bullets1>Microsoft SQL Servers 
+ 
+<LI class=bullets1>SQL Server Group 
+ 
+<LI class=bullets1>(Local) (Windows NT)  <UL>
+ 
+<LI class=bullets1>Management 
+ 
+<LI class=bullets1>SQL Server Agent (Note: ensure that Server is connected 'Green Arrow') 
+ 
+<LI class=bullets1>Click 'Jobs' 
+ 
+<LI class=bullets1>Jobs will be displayed to the right  <br /> 
+</LI></UL></LI></UL> <LI class=numbers1>Right click on the 'EPRO DB Backup' job and select 'View Job History'. This will display a history of the jobs activity i.e., when it last ran and the status (Succeeded/Failed).  <LI class=numbers1>At this point, if the job indicates that it failed to complete on its most recent attempt: Restart the job by right clicking on it again and selecting 'Restart Job'.  <LI class=numbers1>Refresh the job and the 'last run' column should change to something like 'running or in-progress'.  <LI class=numbers1>Depending on the size of the DB it may take up to an hour for the EncountrerPro to stop displaying the missing Back-up message (until the back-up job completes).  <LI class=numbers1>Exit Enterprise Manager.</LI></OL>  <p> 
+ <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp; If the EPRO DB Back-up indicates that it successfully completed as scheduled but the missing Back-up message is still displayed refer to KB Article #10215 <br /> 
+If the EPRO DB Backup Fails to successfully complete check the Event Viewer for errors and take appropriate steps to correct the conditions causing the errors, then repeat steps listed above.</I></FONT> <br /> 
+ <br /> 
+<FONT size=3>Source <br /> 
+</FONT>Original KB article: Article #10248 - Recent Back-up Missing <br /> 
+Article created on 4/13/2005 by jeffrey.handy <br /> 
+&nbsp;</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040820015251588</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 10/01/2008 03:20:02 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

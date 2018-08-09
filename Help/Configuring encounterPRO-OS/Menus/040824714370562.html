@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Configure a Report to Display the Print Menu or Send Directly to the Printer" />
+    <meta name="TITLE" content="How to: Configure a Report to Display the Print Menu or Send Directly to the Printer" />
+    <meta name="DESCRIPTION" content="Instructions for how to configure a report button to print." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Document Manager Report Button Configure Print Dashboard Workplan Display Script" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Configure a Report to Display the Print Menu or Send Directly to the Printer</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" align=left alt="EncounterPRO Open Source Project" /><A HREF="javascript:javascript:history.go(-1)"><img src="images/back.png" border="0" align=right align=bottom alt="Previous Page" /></a><a href="index.html"><img src="images/home.png" border="0" align=right align=bottom alt="Home Page" /></a><br /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Menus</div>
+<hr />
+<h2>How to: Configure a Report to Display the Print Menu or Send Directly to the Printer</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+In this solution<STRONG>...</STRONG> </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>Purpose 
+ 
+<LI class=bullets1>Before You Begin 
+ 
+<LI class=bullets1>Steps 
+ 
+<LI class=bullets1>Want to Learn More?  <UL>
+ 
+<LI class=bullets1>Related Solutions 
+ 
+<LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL>  <p> 
+<FONT size=4>Purpose</FONT> </p>
+ 
+  <p> 
+Whether or not a report is routed to the printer or sent to Document Manager is determined by how the report is ordered.  When Document Manager is 'turned on' the default for all EPRO Report services is to send documents to Document Manager rather than directly to a printer. If the practice would like to set up certain reports to use the simple printer option, that can be accomplished as well. </p>
+ 
+ <P class=bullets1>Reports can be ordered using several methods and the configuration of the specific method used determines if the report will be output to the printer or use Document Manager. The most common methods include: </p>
+ 
+ <UL>
+ 
+<LI class=bullets1>a button on a menu 
+ 
+<LI class=bullets1>a button on the bottom of a dashboard 
+ 
+<LI class=bullets1>a hotspot on the top of a dashboard 
+ 
+<LI class=bullets1>a workplan item</LI></UL>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+<FONT size=4>Steps <br /> 
+</FONT>Follow these steps: <br /> 
+<EM><FONT color=#6600ff>To change a button on a menu to display the print menu or send directly to the printer:</FONT></EM> </p>
+ 
+ <OL> <LI class=numbers1>Turn on Config mode. (See How to: Turn on Configuration Mode.)  <LI class=numbers1>Navigate to the screen displaying the menu you want to change. Notice the small text next to the menu buttons, this is the system name of the menu.  <LI class=numbers1>Select the small text with the name of the menu to access the menu configuration screen. All menus have a JMJ Version that you cannot edit. If you want to change a menu, you must first create a local copy.  <LI class=numbers1>Select the Create Local Copy button.   <p> 
+<FONT color=#00cc00><img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE: If you later decide that you want to revert to the JMJ Version, select the Local Copy and select Inactivate, then select the JMJ Version and select Activate.</FONT> </FONT></I> </p>
+ 
+ <LI class=numbers1>If you already have a Local Copy, be sure that bar is highlighted (darkened), then select the Edit Menu button. The Menu Properties screen appears.  <LI class=numbers1>Select New. A selection box appears for you to choose the type of button function.  <LI class=numbers1>EncounterPRO reports are a service, select Service. A list of service types appears.  <LI class=numbers1>Select the context for the report: <br /> 
+ <UL>
+ 
+<LI class=bullets1>General 
+ 
+<LI class=bullets1>Patient 
+ 
+<LI class=bullets1>Encounter 
+ 
+<LI class=bullets1>Treatment</LI></UL> <br /> 
+A list of services for the level chosen appears. <br /> 
+ <LI class=numbers1>Select the EPRO Report service.  <LI class=numbers1>If there are further parameters to define for this service a screen appears to allow you to enter the desired parameters. Select Finish. The Menu Item Properties screen reappears.  <LI class=numbers1>Select Report Only, then Next.  <LI class=numbers1>Enter a destination, if desired: SCREEN or PRINTER. Select Next.  <LI class=numbers1>Enter a printer id or leave the Printer parameter blank to use the default printer. Select Next.  <LI class=numbers1>Select the report, then select Next.  <LI class=numbers1>Select Next three times until the Print/Send Now parameter appears. If you want the document to automatically print to the selected or default printer, select Yes. If you want to be able to choose the printer, leave the parameter as No.  <LI class=numbers1>Select Next until all remaining parameters have been bypassed. Select Finished. The Menu Item Properties screen reappears.  <LI class=numbers1>At this point, you may want to change the Button Title (this appears on the menu) to indicate the report name and that it will go to the printer. For example, Take Home-Prt. When done making changes, select Finished. Your new button appears as the last button on the menu.  <LI class=numbers1>To reorder the buttons on the menu, select the button, then select the Move button. Use the arrow buttons to move the button into the desired position. When finished moving buttons, select OK, then Finished. The screen reappears with the new button.</LI></OL> <P class=numbers1><STRONG>Changing the Button Icons</STRONG> </p>
+ 
+  <p> 
+With the Menu Properties displayed, select the button for which you want to change the icon (picture).  <br /> 
+ </p>
+ 
+ <OL> <LI class=numbers1>Select the Edit button. The Menu Item Properties screen appears.  <LI class=numbers1>Type the filename for the new button icon in the Button field.  <LI class=numbers1>Select Finished. The Menu Properties screen reappears. A small thumbnail version of the new button icon appears.  <LI class=numbers1>Select OK, then Finished to return to the original screen. The new button icon is displayed. </LI></OL>  <p> 
+  <p> 
+ <br /> 
+<FONT color=#0000ff><img src="images/content_tip.gif" width="18" border="0"><I>TIP: You need to know the exact system filename of the button icon. If there is another menu that uses the icon you want to use, display the Menu Properties of that menu, then select the bar for the button with the icon you desire and select Edit. The button filename is displayed in the Button field. </p>
+ 
+</I></FONT>  <p> 
+ </p>
+ 
+<EM><FONT color=#0000ff></FONT></EM>  <p> 
+<EM><FONT color=#6600ff>To add a Print option to the Display script:</FONT></EM> <br /> 
+<STRONG>Adding a Print option</STRONG> <br /> 
+ </p>
+ 
+ <OL> <LI class=numbers1>Turn on Config mode. (See How to: Turn on Configuration Mode.)  <LI class=numbers1>Display the treatment dashboard, right click to view the display script. <STRONG>Note the name of this Display Script!</STRONG> You will need it in a future step.  <LI class=numbers1>If needed, create the local copy of the display script, then select Edit Display Script.  <LI class=numbers1>Add the following commands (lines) to the display script where you want the print button to appear: <br /> 
+ <br /> 
+ <OL type=a> <LI class=numbers1>Highlight the first 'print' command in the list and select 'Insert New Command'. This places the new command above the highlighted one.  <LI class=numbers1>Select 'General' at the top of the next screen. Select 'print' from the list. A menu will appear prompting you to enter the text you want to appear. Everything within the white typing area will appear on the screen.  <LI class=numbers1>For the 'Print' command, you will need to add a 'Quick View' menu. If there is not an appropriate 'Quick View' menu already available, you can create one. (This step is needed so that you can attach the 'Display Scrip' command to the 'menu' button.)  <LI class=numbers1>Copy one of the 'Quick View' menus (pick one that just has 1 button, preferably for a report). Give the new menu a descriptive name (you will need to remember this name!).  <LI class=numbers1>The menu config screen appears. Delete any buttons that already exist. Add 'New' button -- this will be a 'Service > Patient >EPRO Report'. When you configure the report button, do <STRONG>not</STRONG> select a report from the reports list. Keep selecting 'Next' until you get to the 'Select Generic RTF report ID' and select 'RTF Report'. Select 'Next' and then select the 'Display Script'. This is the Display script for the dashboard screen (from step 1). </LI></OL></LI></OL> <P class=numbers1><STRONG>Display script </STRONG> </p>
+ 
+ <OL> <LI class=numbers1>Select 'Next' and save the menu. You will return to the 'Select Menu' screen -- select the new 'Quick View' Menu you created in steps c and d. Continue to select 'Next' and 'Finished' until you are back at the display script edit screen.   <LI class=numbers1>Add a new command after your new print command. Select 'General', then 'Space'. Add 5 spaces, then select 'OK'. Select 'Finished' to return to the dashboard display.  <LI class=numbers1>Refresh the dashboard (you may have to close it and re-open it). Select the link and preview the report.</LI></OL>  <p> 
+ <br /> 
+<EM><FONT color=#6600ff>To add a Print button to the bottom of a treatment dashboard:</FONT></EM> </p>
+ 
+ <OL> <LI class=numbers1>Select to Configuration from the Office View. The Configuration List appears.  <LI class=numbers1>Select Treatment Type. The Select Treatment Type screen appears.  <LI class=numbers1>Select the treatment type that corresponds to the treatment dashboard that you want to add the button to, for example, Referral. The Treatment Type Definition screen appears.  <LI class=numbers1>Select the Services tab, then select Add Service.  <LI class=numbers1>Select EPRO Report from the list of services. The new service is added to the bottom of the list of services for this treatment type.  <LI class=numbers1>Select the EPRO Report from the list of services then select Edit Service  <LI class=numbers1>Change the Visible Before Workplan Completes flag to 'Yes'.  <LI class=numbers1>Change the Button Title to reflect that this report will go to the printer. For example, Referral-Print.  <LI class=numbers1>Change the Button bitmap to button_printer.bmp.  <LI class=numbers1>Select OK.  <LI class=numbers1>Select the EPRO Report service again and select Configure Service.  <LI class=numbers1>Select Report Only, then Next.  <LI class=numbers1>Enter a destination, if desired: SCREEN or PRINTER. Select Next.  <LI class=numbers1>Enter a printer id or leave the Printer parameter blank to use the default printer. Select Next.  <LI class=numbers1>Select the report that you want to print, then select Next.  <LI class=numbers1>Select Next three times until the Print/Send Now parameter appears. If you want the document to automatically print to the selected or default printer, select Yes. If you want to be able to choose the printer, leave the parameter as No.  <LI class=numbers1>Select Next until all remaining parameters have been bypassed. Select Finished.  <LI class=numbers1>If you want to reorder the buttons on the dashboard, select the EPRO Report service and select Move. Move the new button to the desired location and select OK.  <LI class=numbers1>Select OK to save the changes to the treatment type.  <LI class=numbers1>Select Finished to return to the Configuration list.</LI></OL> <P class=numbers1><EM><FONT color=#6600ff>To configure a workplan step to send a report to the printer:</FONT></EM> </p>
+ 
+ <OL> <LI class=numbers1>Select to Configuration from the Office View. The Configuration List appears.  <LI class=numbers1>Select Workplan, the Workplan Configuration screen appears.  <LI class=numbers1>Select the workplan you want to configure and select Edit from the menu. The Workplan Definition screen appears.  <LI class=numbers1>Select the step of the workplan that creates the report and select Edit Step from the menu.  <LI class=numbers1>Select the EPRO report service step, then select Configure Service from the menu.  <LI class=numbers1>Select Report Only, then Next.  <LI class=numbers1>Enter a destination, if desired: SCREEN or PRINTER. Select Next.  <LI class=numbers1>Enter a printer id or leave the Printer parameter blank to use the default printer. Select Next.  <LI class=numbers1>Select the report, then select Next.  <LI class=numbers1>Select Next three times until the Print/Send Now parameter appears. If you want the document to automatically print to the selected or default printer, select Yes. If you want to be able to choose the printer, leave the parameter as No.  <LI class=numbers1>Select Next until all remaining parameters have been bypassed. The Workplan Step Definition screen reappears.  <LI class=numbers1>Select OK to save the changes. The Workplan Definition screen reappears.  <LI class=numbers1>Select OK twice to return to the Configuration List.</LI></OL>  <p> 
+ <br /> 
+<FONT size=4>Want to Learn More? <br /> 
+</FONT><FONT size=3>Related Solutions</FONT> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Reports/040823316223868.html" target="_blank"> Concept: Document Manager</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Reports/Document%20Manager/040823320254297.html" target="_blank"> Screen: Document Manager</a> <br /> 
+ <a href="../../Using%20encounterPRO%20v5/Reports/Document%20Manager/040823320370682.html" target="_blank"> How to: Print or Send a Document Using Document Manager</a> </p>
+ 
+  <p> 
+<FONT size=3>Related Education Opportunities <br /> 
+</FONT>User Configuration Level 2  </p>
+ 
+</FONT></I></FONT>
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040824714370562</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:28:12 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

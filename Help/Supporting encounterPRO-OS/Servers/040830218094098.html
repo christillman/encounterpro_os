@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to:  Install Support for Datawindow PDF Output" />
+    <meta name="TITLE" content="How to:  Install Support for Datawindow PDF Output" />
+    <meta name="DESCRIPTION" content="" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Document Management Datawindow PDF Support GhostScript" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to:  Install Support for Datawindow PDF Output</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Servers</div>
+<hr />
+<h2>How to:  Install Support for Datawindow PDF Output</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+When the Document Manager is used to send or print reports, EncounterPRO needs to create a file that will get sent or printed.  This file is saved as a permanent record of what was sent. </p>
+ 
+  <p> 
+Most report types, such as RTF or PDF, automatically have a file format that is appropriate for saving a permanent copy of the report.  The Datawindow report type, which is used for the traditional EncounterPRO Prescription report, does not have a native file format.  The solution for Datawindow reports is to install a tool called a PDF Distiller which EncounterPRO will use to convert the Datawindow report output into a PDF document for permanent storage. </p>
+ 
+  <p> 
+In addition to the PDF Distiller, EncounterPRO also needs a PostScript printer driver to create documents from datawindow reports. <br /> 
+ </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<P class=MsoListParagraphCxSpFirst style='MARGIN: 0in 0in 0pt 0.25in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif?; mso-fareast-font-family: Arial?><SPAN style='mso-list: Ignore'>1.<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>    </SPAN></SPAN></SPAN><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>Download the latest production version of GhostScript:<?xml:namespace prefix = o ns = 'urn:schemas-microsoft-com:office:office' /><o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??><o:p> </o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>The installation programs can be found on the FTP Site here:<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>EP_Upgrades/Production/Components/GhostScript<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??><o:p> </o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>For 32-bit systems, use a version labeled '-32bit'.<SPAN style='mso-spacerun: yes'>  </SPAN>For 64 bit systems, use a version labeled '-64bit'.<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??><o:p> </o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.25in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif?; mso-fareast-font-family: Arial?><SPAN style='mso-list: Ignore'>2.<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>    </SPAN></SPAN></SPAN><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>Run the GhostScript installation program from a privileged windows account (e.g. a local administrator)<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-list: l0 level2 lfo1; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif?; mso-fareast-font-family: Arial?><SPAN style='mso-list: Ignore'>a.<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>    </SPAN></SPAN></SPAN><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>The installation directory can be redirected as desired<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoListParagraphCxSpLast style='MARGIN: 0in 0in 10pt 0.75in; TEXT-INDENT: -0.25in; mso-list: l0 level2 lfo1; mso-add-space: auto'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif?; mso-fareast-font-family: Arial?><SPAN style='mso-list: Ignore'>b.<SPAN style='FONT-WEIGHT: normal; FONT-SIZE: 7pt; LINE-HEIGHT: normal; FONT-STYLE: normal; FONT-VARIANT: normal' Times New Roman??>    </SPAN></SPAN></SPAN><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??>Shortcuts and Asian TrueType fonts are not needed<o:p></o:p></SPAN> </p>
+ 
+ <P class=MsoNormal style='MARGIN: 0in 0in 0pt'><SPAN style='FONT-FAMILY: ' Arial?,?sans-serif??><o:p> </o:p></SPAN> </p>
+ 
+<SPAN style='FONT-FAMILY: ' Arial?,?sans-serif?; mso-fareast-font-family: Arial?><SPAN style='mso-list: Ignore'> <P class=MsoListParagraphCxSpFirst style='MARGIN: 0in 0in 0pt 0.25in; TEXT-INDENT: -0.25in; mso-add-space: auto'>3.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>Create a PostScript printer profile<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>a.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>Go to 'Printers and Faxes' and click the 'Add a printer' button on the left side.<SPAN style='mso-spacerun: yes'>  </SPAN>This will bring up the Add Printer Wizard.<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>b.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Local or Network Printer' page, select 'Local printer attached to this computer'.<SPAN style='mso-spacerun: yes'>  </SPAN>UNCHECK 'Automatically detect and install my Plug and Play printer'<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>c.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Select a Printer Port' page, select the radio button 'Use the following port' and in the drop-down list select 'File: (Print to File)'<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>d.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Install Printer Software' page, click 'Have Disk…' </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>e.<SPAN style='mso-tab-count: 1'>   </SPAN>On the 'Install From Disk' screen, enter the following (or browse to where the Sybase Datawindow PS driver is): </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'><SPAN style='mso-tab-count: 2'>            </SPAN>C:\Program Files\Common Files\JMJTech Common\Sybase Datawindow PS </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>f.<SPAN style='mso-tab-count: 1'>    </SPAN>Back on the 'Install Printer Software' page, select 'Acrobat Distiller' and click 'Next' </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>e.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Use Existing Driver' page (if it shows up), select 'Keep existing driver'.<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>f.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>     </SPAN></SPAN>On the 'Name Your Printer' page, replace whatever is in the Printer name box with <STRONG>EXACTLY</STRONG> <STRONG>THIS NAME:</STRONG> <SPAN style='COLOR: #000099'>Sybase Datawindow PS</SPAN>.  Select 'No' under 'Do you want to use this printer as the default printer?'.<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>g.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Printer Sharing' page, select 'Do not share this printer'<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 0pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>h.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>    </SPAN></SPAN>On the 'Print Test Page' page, select 'No'.<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpMiddle style='MARGIN: 0in 0in 10pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>i.<SPAN style='FONT-SIZE: 7pt'><SPAN Times New Roman??>      </SPAN></SPAN>On the Completing the Add Printer Wizard page, click 'Finished'. </p>
+ 
+ <P class=MsoListParagraphCxSpLast style='MARGIN: 0in 0in 10pt 0.75in; TEXT-INDENT: -0.25in; mso-add-space: auto'>j.<SPAN style='mso-tab-count: 1'>    </SPAN>If a warning appears about the Printers software having not passed Windows Logo testing, click 'Continue Anyway'<o:p></o:p> </p>
+ 
+ <P class=MsoListParagraphCxSpFirst style='MARGIN: 0in 0in 0pt 0.25in; TEXT-INDENT: -0.25in; mso-list: l0 level1 lfo1; mso-add-space: auto'></SPAN></SPAN></SPAN> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040830218094098</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 06:35:24 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

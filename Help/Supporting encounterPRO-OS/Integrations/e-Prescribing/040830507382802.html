@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Concept:  Activate Document Management for E-Prescribing" />
+    <meta name="TITLE" content="Concept:  Activate Document Management for E-Prescribing" />
+    <meta name="DESCRIPTION" content="" />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="Document Management E-Rx Activate Document Manager e-Prescribing Script Deactivate Turn off Unset RX Report Size Set Report Size" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Concept:  Activate Document Management for E-Prescribing</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Integrations &gt; e-Prescribing</div>
+<hr />
+<h2>Concept:  Activate Document Management for E-Prescribing</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+ <p> 
+<FONT size=5><STRONG><FONT size=4>Activate Document Management</FONT></STRONG></FONT> </p>
+ 
+ 
+ <p> 
+Document Management is an enhancement to general reporting which allows the EncounterPRO users to automatically persist the report as a permanent document in the patient's chart, and allows for the separation of the act of ordering the document from the act of choosing the recipient of the document. </p>
+ 
+ 
+ <p> 
+When an EncounterPRO installation begins to use E-Prescribing, it is important that all of the workflows which create the actual physical prescription are updated to use document management.&nbsp; The Prescription Report can be run from a menu or from a workplan, and since many EncounterPRO installations have customized configurations, the process to switch them all from traditional reporting to document management must be scripted as a set of criteria. </p>
+ 
+ 
+ <p> 
+To accomplish this, the 'Activate Document Management' utility script in the DB Maintenance program will change the EPRO Report service to use the Order Document attribute for all TREATMENT menu items and workplan items EXCEPT where: </p>
+ 
+ 
+<UL> 
+<LI class=bullets1>The service is ordered for Destination = SCREEN  
+<LI class=bullets1>The service does not have a specific report (user pick)  
+<LI class=bullets1>The workplan is attached to a Treatment Mode</LI></UL> 
+<P class=bullets1>Note that the utility script will preserve any previous setting for the Order Document&nbsp; attribute, unless the service is specifically for the standard EncounterPRO Drug Prescription report or any report in the Drug Prescription report category.&nbsp; This is done in an attempt to preserve any&nbsp;custom configuration that may already be in place redirecting specific reports to Document Management. </p>
+ 
+ 
+<P class=bullets1>&nbsp; </p>
+ 
+ 
+ <p> 
+<FONT size=5><STRONG><FONT size=4>Deactivate Document Management</FONT></STRONG></FONT> </p>
+ 
+ 
+ <p> 
+If, for any reason, the Document Management for E-Prescribing needs to be turned off after it has been turned on, there is a utility script in the DB Maintenance program called 'Deactivate Document Management'.&nbsp; This script will remove the Order Document attribute for all TREATMENT menu items and workplan items that satisfy the same criteria as the Activate Document Management script. <br /> 
+ </p>
+ 
+ 
+ <p> 
+Note that if there were any custom configurations already be in place redirecting specific reports to Document Management, the Deactivate Document Management script will remove them because it cannot tell the difference between a pre-existing Order Document attribute and one that was added by the Activate Document Management script. </p>
+ 
+ 
+ <p> 
+<FONT color=#0000cc size=4>Setting the Report Size for e-RX</FONT> </p>
+ 
+ 
+<P class=MsoNormal><B>Set Rx Report Size</B> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN-LEFT: 0.5in">This script will save the datawindow formatting commands in c_Report_Attribute and o_Report_Attribute and replace them with the proper formatting attributes for a PDF document 4.25" wide and 5.5" tall. </p>
+ 
+ 
+<P class=MsoNormal><B>UNSET Rx Report Size</B> </p>
+ 
+ 
+<P class=MsoNormal style="MARGIN-LEFT: 0.5in">This script will delete the PDF formatting attributes and restore the attributes that were saved by the "Set Rx Report Size" script. </p>
+ 
+ 
+<P class=MsoNormal>The purpose of these new scripts is to separate the activate/deactivate operation from the report settings.&nbsp; This way someone can test the Rx report prior to activation by running the "Set Rx Report Size" script, then testing the rx report printing, and then running the "UNSET Rx Report Size" script to restore the non-PDF settings.&nbsp; Note that this should not be done while the users are actively printing prescriptions the old fashioned way, because setting the PDF attributes may mess up the rx when printed directly from the report service. </p>
+ 
+ 
+<P class=MsoNormal>This Set/Unset strategy is only needed for the client 5.1.11.&nbsp; Beginning with client 5.1.12, the PDF settings for the Rx report will automatically be set when the report is sent to the document manager so the testing can be done anytime, even while the users are still printing prescriptions the old fashioned way. </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040830507382802</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 05/19/2009 10:40:22 AM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>
