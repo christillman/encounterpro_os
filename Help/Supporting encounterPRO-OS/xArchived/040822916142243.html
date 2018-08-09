@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="How to: Add a Print button to Treatment Dashboard screens" />
+    <meta name="TITLE" content="How to: Add a Print button to Treatment Dashboard screens" />
+    <meta name="DESCRIPTION" content="This solution gives instructions for adding a print option to a treatment dashboard screen." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10607 Add A Print Button To Treatment Dashboard Screens Display Script" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>How to: Add a Print button to Treatment Dashboard screens</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; xArchived</div>
+<hr />
+<h2>How to: Add a Print button to Treatment Dashboard screens</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Some treatment dashboard screens already have buttons. If you run across one that doesn't have one, there are 2 options. Add a link to the display script for that dashboard. See instructions below. Alternatively, add a Service to the Treatment Type so that you get a button at the bottom of the screen. This is covered in another KB article. See Article #10033 - Adding Print button to Rx Dashboard.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+Adding a Print option to the Display script: <br /> 
+ <img src="images/content_screen.gif" border="0" width="18">&nbsp;<a href="images/090080816155351.jpg" target="_blank"> Ading a Print option</a> <br /> 
+1) Display the treatment dashboard, right click to view the display script. Note the name of this Display Script! You will need it in a future step. If needed, create the local copy of the display script, then click 'Edit Display Script'. <br /> 
+2) Add the following commands (lines) to the display script where you want the print button to appear.  <br /> 
+  a) Highlight the first 'print' command in the list and select 'Insert New Command'. This places the new command above the highlighted one.   <br /> 
+  b) Select 'General' at the top of the next screen. Select 'print' from the list. A menu will appear prompting you to enter the text you want to appear. Everything within the white typing area will appear on the screen. <br /> 
+  c) For the 'Print' command, you will need to add a 'Quick View' menu. If there is not an appropriate 'Quick View' menu already available, you can create one. (This step is needed so that you can attach the 'Display Script' command to the 'menu' button.) <br /> 
+  d) Copy one of the 'Quick View' menus (pick one that just has 1 button, preferably for a report). Give the new menu a descriptive name (you will need to remember this name!). <br /> 
+  e) The menu config screen appears. Delete any buttons that already exist. Add  'New' button -- this will be a 'Service > Patient >EncounterPRO Report'. When you configure the report button, do not select a report from the reports list. Keep selecting 'Next' until you get to the 'Select Generic RTF report ID' and select 'RTF Report'. Select 'Next' and then select the 'Display Script'. This is the Display script for the dashboard screen (from step 1). <br /> 
+ <img src="images/content_screen.gif" border="0" width="18">&nbsp;<a href="images/090080816160523.jpg" target="_blank"> Display script</a> <br /> 
+3) Select 'Next' and save the menu. You will return to the 'Select Menu' screen -- select the new 'Quick View' menu you created in steps c and d. Continue to select 'Next' and 'Finished' until you are back at the display script edit screen. <br /> 
+4) Add a new command after your new print command. Select 'General', then 'Space'. Add 5 spaces, then select 'OK'. Select 'Finished' to return to the dashboard display. <br /> 
+5) Refresh the dashboard (you may have to close it and re-open it). Select the link and preview the report. </p>
+ 
+  <p> 
+Article created on 11/3/2006 by beth.copenhaver </p>
+ 
+  <p> 
+Article last updated on 11/3/2006 by beth.copenhaver</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822916142243</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 12/29/2009 04:30:43 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

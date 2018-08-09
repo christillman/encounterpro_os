@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Settings and Configurations in CMA" />
+    <meta name="TITLE" content="Settings and Configurations in CMA" />
+    <meta name="DESCRIPTION" content="This solution gives step-by-step instructions for configuring the workplan needed for a lab integration." />
+    <meta name="PROBLEM_TYPE" content="How To Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10641 Preparation and configuration for a lab interface Settings CMA Preference EpIE" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Settings and Configurations in CMA</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; xArchived</div>
+<hr />
+<h2>Settings and Configurations in CMA</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+Enable Addressee in CMA. Set up EPRO to accept messages from CMA (EPIE). Map Production CSID's in CMA (EPIE).
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2> 
+ <p> 
+<STRONG>Enabling Addressee in CMA</STRONG> <br /> 
+If the 'Enable Addressee' box is not checked under the practice profile in CMA, follow these steps to enable it. <br /> 
+&nbsp; <br /> 
+1) From the customer page, find the box titled 'Customer Users (0)' and click the 'Next' button under 'Add User Account to Owner'. <br /> 
+2) Now click 'Next' with the 'Create New User Account' box checked. <br /> 
+3) Click 'Next' with the 'Enable EpIE for User' box checked. <br /> 
+4) Confirm the four digits shown at the end of user name match the 'owner id' located inside box titled 'Customer Information' near top. Enter password as $!Epro&amp;&amp;* in each corresponding field.&nbsp;  <br /> 
+5)&nbsp;Now change the email address to username@jmjtech.com. (ie. epie2123@jmjtech.com.), click create user. <br /> 
+6) Finally, scroll up and check the 'Enable Addressee' box. <br /> 
+7) Now perform steps located below in: Setting up EPRO to accept messages from CMA (EPIE). </p>
+ 
+ 
+ <p> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp;All user names and email addresses will include 'epie' and then the four digit owner id number.</I></FONT> <br /> 
+&nbsp; <br /> 
+<STRONG>Setting up EPRO to accept messages from CMA (EPIE)</STRONG> <br /> 
+The following steps 'turn on' EPRO to accept messages from CMA (EPIE). <br /> 
+&nbsp; <br /> 
+1)&nbsp;Confirm 'Enable Addressee' box is checked for practice in CMA. (See Enabling Addressee in CMA above)  <br /> 
+2)&nbsp;While logged into EncounterPRO at practice site go to 'Configuration' then 'Preferences'.  <br /> 
+3)&nbsp;Highlight 'EpIE Preferences' under 'Preference Type' to the top right and make sure the 'Global' button at the bottom is highlighted.  <br /> 
+4)&nbsp;Under 'Preference' boxes (in the middle) locate 'Epie User' and click on box.  <br /> 
+5)&nbsp;Enter the user name (ie. epie2323) in white box that will pop up and click finish. A box will appear on the side of 'Epie User' showing only the user name you entered.&nbsp;If anything else appears, reenter epie user name and/or retrace all steps completed prior. <br /> 
+6)&nbsp;Scroll up to find 'Epie Password' and enter the exact same password you entered in step 4 under 'Enabling Addressee' in CMA above and click finish.&nbsp;<STRONG>Hint</STRONG>: Password should be $!Epro&amp;&amp;*. A box will appear on the side of 'Epie Password' which should read, 'DAD55E776C13940A5F0FD3E01D052BA3'. If not, reenter password. </p>
+ 
+ 
+ <p> 
+<STRONG>Mapping Production CSID's in CMA (EPIE)</STRONG> <br /> 
+<img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp;You must have the correct Production CSID that was sent to you from the lab company before proceeding.&nbsp;DO NOT GUESS!!!</I></FONT> <br /> 
+&nbsp; <br /> 
+1)&nbsp;Click 'EpIE Dashboard' located in the left menu bar under 'Interface Partner Mgmt' in CMA. <br /> 
+2) Scroll down to bottom of page to find the 'Unknown Recipient Message List'. (If there is nothing there no test results have been sent yet by lab company.) <br /> 
+3) In that list, look under 'SenderRecipientID' to find the same ID number that exactly matches the CSID number sent to you from the lab company and click the 'MAP' button located to the right of the sender recipient ID.&nbsp;**If unsure or do not see the ID number int he list, do not proceed and contact lab company to confirm.** <br /> 
+4) Once you click 'MAP', a new window will pop. <br /> 
+5) Seek for the practice you are mapping the CSID number to and then click 'Select' located to the right of the customer name.&nbsp;A pop up asking if you are sure will appear and if you are, click 'Yes'. <br /> 
+6) The mapping is complete.&nbsp;If there are other tests with same CSID they should automatically map to the Customer ID. </p>
+ 
+ 
+ <p> 
+Article created on 5/23/2007 by adam.zangara </p>
+ 
+ 
+ <p> 
+Article last updated on 4/9/2008 by Adam.Zangara</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822820521520</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 01/15/2009 06:30:12 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

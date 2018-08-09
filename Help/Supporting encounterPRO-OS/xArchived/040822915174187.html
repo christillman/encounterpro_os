@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="PROBLEM" content="Lab results posted to wrong lab" />
+    <meta name="TITLE" content="Lab results posted to wrong lab" />
+    <meta name="DESCRIPTION" content="This solution gives instructions for correcting a problem with lab results posting to the wrong lab." />
+    <meta name="PROBLEM_TYPE" content="Problem Solution" />
+    <meta name="AUDIENCE" content="sa" />
+	<meta name="KEYWORDS" content="ephr10002952 10289 Lab Results Posted To Wrong Lab" />
+    <link rel="stylesheet" type="text/css" href="images/common.css" />
+    
+    <title>Lab results posted to wrong lab</title>
+</head>
+
+<script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
+
+<body>
+    <img src="images/logo.gif" border="0" alt="RightAnswers, Inc" /><br />
+    <br />
+    <hr />
+    
+    <!-- Begin Solution -->
+
+	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; xArchived</div>
+<hr />
+<h2>Lab results posted to wrong lab</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<tr>
+<td class="sectionLabel">
+Cause:
+</td>
+<td class="sectionContent">
+EncounterPRO uses a mapping table to find the appropriate lab order for a given set of lab results. In the case of LabCorp, the mapping is between the LabCorp Catalog Number and the EncounterPRO Observation ID. When EncounterPRO cannot find the appropriate lab order for a set of lab results, the user is prompted to select the lab order from the list of labs ordered for that patient. When the user picks a lab, then a mapping is established so that in the future the same kind of lab results will automatically find the same kind of lab order. If a user accidentally picks the wrong lab order however, a mapping is established to the wrong kind of lab order so that in the future the lab results might get automatically posted to the wrong lab if the incorrectly mapped lab and the correct lab are ordered for a patient at the same time.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Solution:
+</td>
+<td class="sectionContent">
+This is Dev Issue # 5924 and is scheduled to be resolved in EncounterPRO version 4.05.35.
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Details:
+</td>
+<td class="sectionContent">
+<FONT face=sans-serif size=2>  <p> 
+The Lab Integration (e.g. LabCorp) transfers lab results to the customer site in XML files and applies those XML files to the customer database. The lab results will be automatically posted into the patient charts if they can be matched up with the correct lab order. If the lab order cannot be found then the results will be put on the To-Be-Posted list to await user intervention. </p>
+ 
+  <p> 
+Workaround <br /> 
+The workaround is to remove the mapping from c_XML_Code. This will cause the next set of results for that kind of lab to go to the To-Be-Posted screen where the user will have the opportunity to pick the correct lab. </p>
+ 
+  <p> 
+To remove all mappings for a given kind of lab order, first find the observation_id for that lab order. This can be found by querying the c_Observation table or by looking in the p_Treatment_Item record for a lab that received incorrect lab results. Once you have the observation_id, run the following script, substituting the actual observation_id for &lt;observation_id&gt;: <br /> 
+DELETE <br /> 
+FROM c_XML_Code <br /> 
+WHERE code_domain = 'LabCorpCatalog' <br /> 
+AND epro_domain = 'observation_id' <br /> 
+AND epro_id = '&lt;observation_id&gt;' <br /> 
+GO </p>
+ 
+  <p> 
+Article created on 5/25/2005 by jmj\mark</FONT> </p>
+
+</td>
+</tr>
+<tr>
+<td class="sectionLabel">
+Symptoms:
+</td>
+<td class="sectionContent">
+Sometimes a set of lab result gets automatically posted but to the wrong lab.  The user will notice the results on the treatment dashboard of the wrong lab, while the correct lab appears to not have any result entered.<br />
+
+</td>
+</tr>
+</table>
+<br />
+<hr />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+<b>ID:</b> 040822915174187</td>
+<td style="text-align: right;">
+<b>Last Modified:</b> 08/23/08 06:22:46 PM</td>
+</tr>
+</table>
+
+    
+    <!-- End Solution -->
+	<br />
+	<hr style="height: 5px" />
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+       
+		
+</body>
+</html>

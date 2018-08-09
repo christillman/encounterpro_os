@@ -274,51 +274,51 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Billing for Providers">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011341113.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011341113.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Billing Specialist">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011384661.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011384661.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Clinical Staff">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011281561.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011281561.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: encounterPRO Administrator">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911016224493.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911016224493.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: encounterPRO Basics">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011240851.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011240851.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: e-Records Manager">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011260254.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011260254.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Front Desk Administration">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011410724.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011410724.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Introduction to encounterPRO version 5">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011213661.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011213661.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Practice Manager">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011363871.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011363871.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Pre-Implementation Configuration">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011454916.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011454916.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Providers">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011303242.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011303242.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Course Description: Referral Coordinator">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040911011434960.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040911011434960.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Customer database has the wrong customer id">
@@ -326,7 +326,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Database Config Releases">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040907109540035.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040907109540035.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="encounterPRO and PMS System Grid">
@@ -350,11 +350,11 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="encounterPRO University - Course Access Keys (INTERNAL ONLY)">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040911109384082.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040911109384082.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="encounterPRO University Course Catalog">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040902114472308.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040902114472308.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="EncounterPRO-Mysis interface issues">
@@ -370,7 +370,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Error: A Recent Back-up Is Missing or Cannot Be Found">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820015251588.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820015251588.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Error: Cannot Insert the Value Null (Insert Fails)">
@@ -478,11 +478,11 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="EULA April 1, 2002">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/images/TermsofService.htm">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/images/TermsofService.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="EULA April 1, 2002">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/images/TermsofService.htm">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/images/TermsofService.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="EULA April 1, 2002">
@@ -790,7 +790,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="FAQ's on lab interface">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822913325271.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822913325271.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="FAQs: e-Prescribing With ePRO and SureScripts">
@@ -830,7 +830,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to Find Release Notes">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040908414544035.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040908414544035.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: (UNOFFICIALLY) Reopen assessments / diagnoses">
@@ -890,7 +890,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Add a Print button to Treatment Dashboard screens">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822916142243.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822916142243.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Add a Secondary Visit Charge to the Pick List">
@@ -994,7 +994,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Change a folder name">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822821101929.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822821101929.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Change a Preference">
@@ -1010,7 +1010,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Change Office Information">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820015143217.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820015143217.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Change Office Locations.">
@@ -1074,7 +1074,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Check if the indexes are present on an individual table">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822606404886.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822606404886.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Check Out Patients">
@@ -1082,7 +1082,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Check scanner outside encounterPRO">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822900141069.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822900141069.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Clean a Dirty Treatment Room">
@@ -1130,7 +1130,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure a Spirometer interface">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822619594398.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822619594398.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure a Workstation to Scan">
@@ -1158,7 +1158,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure PHINMS (Public Health Information Network Messaging System)">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040828010545205.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040828010545205.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure Prescription Dispense Amounts">
@@ -1174,7 +1174,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure Primetime HPI">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822621585323.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822621585323.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure Result Ranges">
@@ -1190,15 +1190,15 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure Treatment folder workplans to display a dashboard">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822822080676.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822822080676.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configure Treatment Folders for Multiple Treatment Types">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822821242992.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822821242992.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configuring the Daily Lab Results Report">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822721175780.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822721175780.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Configuring the Lab Integration Workplan">
@@ -1254,7 +1254,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Create a Reviewed button for Lab Dashboard">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040823012353598.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040823012353598.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Create a Standard Exam.">
@@ -1282,7 +1282,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Default the name of a lab company to appear automatically in the 'Collect or Refer Out' menu">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822914270035.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822914270035.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Default the SOAP screen to New Only">
@@ -1306,7 +1306,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Disable the Reviewed time or date from the Treatment Dashboard">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040823014342930.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040823014342930.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Dispatch a Workplan">
@@ -1490,7 +1490,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Find EHRI Forms">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040824611431151.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040824611431151.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Fix a Bad Immunization Location Domain">
@@ -1558,7 +1558,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Instruct the encounterPRO Users in the Lab Integration">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822722155241.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822722155241.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Interrupt and Resume an Encounter">
@@ -1586,7 +1586,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Make changes to the Prescription">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040823000110946.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040823000110946.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Manage Electronic Refill Requests.">
@@ -1598,7 +1598,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Manage Prescription Report Printer and Paper">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822607222871.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822607222871.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Manage Tasks.">
@@ -1810,7 +1810,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Remove Confidentiality From an Object">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040829411254363.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040829411254363.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Remove the sick/well waiting room">
@@ -1870,7 +1870,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Run a trace for SQL 2005">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820323465634.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820323465634.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Run a trace in SQL 2000">
@@ -1890,7 +1890,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Schedule and Conduct an Intercall Meeting">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040830312363357.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040830312363357.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Schedule Follow-ups and Referrals">
@@ -1934,7 +1934,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Set Decimal Numbers to Display a Leading Zero">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820017071330.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820017071330.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Set Defaults for Drilldown Observations.">
@@ -2010,7 +2010,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Set up a New Office">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040828013443628.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040828013443628.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Set up a Ricoh Printer for Prescriptions">
@@ -2038,27 +2038,27 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Shrink scanned attachments in encounterPRO">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040827806481133.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040827806481133.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Sort items on the office and room views">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040828010071411.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040828010071411.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Sort Secondary Encounter Visit Codes">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820014483399.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820014483399.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Store attachments inside the database vs file structures">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822823082752.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822823082752.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Suppress the Create Encounter Screen for a Specific Treatment Room Check-in">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040823217185242.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040823217185242.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Take Out Top Tab - Fixing Flow Tab Display">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040820014522612.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040820014522612.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Take Over an Encounter">
@@ -2066,7 +2066,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Testing the Lab Interface">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822722112198.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822722112198.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Track and Manage Lab Results - Lab Integration.">
@@ -2110,7 +2110,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Unmap and Cancel Labs">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822807211903.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822807211903.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Update a Patient's Treatment Plan.">
@@ -2118,7 +2118,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Update a siblings phone number from its guardian record in Medical Manager">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040828010480358.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040828010480358.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="How to: Update a Treatment List">
@@ -2322,7 +2322,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Knowledge-Paks On Site Navigation">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/index.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/index.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Knowledge-Paks On Site Navigation">
@@ -2338,7 +2338,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Knowledge-Paks On Site Navigation">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/index.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/index.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Knowledge-Paks On Site Navigation">
@@ -2538,7 +2538,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Lab results posted to wrong lab">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822915174187.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822915174187.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="List of encounterPRO Preferences">
@@ -2622,7 +2622,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Problem: Users at Practice Have Different SOAP Screen Views">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040907114510410.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040907114510410.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Release Notes for Version 5.2">
@@ -2638,7 +2638,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Resolving discrepancies between Vaccine View Details and Immunization Maker report">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040836518054415.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040836518054415.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="RightAnswers, Inc.">
@@ -2886,7 +2886,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="RightAnswers, Inc.">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/images/Copyright.htm">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/images/Copyright.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="RightAnswers, Inc.">
@@ -2910,7 +2910,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="RightAnswers, Inc.">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/images/Copyright.htm">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/images/Copyright.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="RightAnswers, Inc.">
@@ -3022,7 +3022,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Scanning Guidelines - black and white vs. grayscale">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822911273403.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822911273403.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Screen: Allergies">
@@ -3406,7 +3406,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Settings and Configurations in CMA">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040822820521520.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040822820521520.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="sp_rebuild_constraints fails">
@@ -3446,7 +3446,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Triage Protocol: Prescriptions Not Printing">
-		<param name="Local" value="Supporting encounterPRO-OS/Undecided/040832316232930.html">
+		<param name="Local" value="Supporting encounterPRO-OS/xArchived/040832316232930.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Triage Protocol: Prescriptions Printing With Wrong Format/Information">
@@ -3514,7 +3514,7 @@
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Troubleshooting: encounterPRO Locks Up or Freezes">
-		<param name="Local" value="Using encounterPRO-OS/AA- Undecided/040936413504597.html">
+		<param name="Local" value="Using encounterPRO-OS/xArchived/040936413504597.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Troubleshooting: e-Prescribing With SureScripts">
