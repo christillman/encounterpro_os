@@ -19,7 +19,6 @@ contraindication_external_source = datalist.get_preference("PREFERENCES", "contr
 bill_test_collection = datalist.get_preference_boolean("PREFERENCES", "bill_test_collection", false)
 auto_patient_select = datalist.get_preference_boolean("PREFERENCES", "auto_patient_select", false)
 auto_room_select = datalist.get_preference_boolean("PREFERENCES", "auto_room_select", false)
-computer_secure = datalist.get_preference_boolean("PREFERENCES", "computer_secure", false)
 rx_use_signature_stamp = datalist.get_preference_boolean("PREFERENCES", "rx_use_signature_stamp", false)
 
 ls_temp = datalist.get_preference("SYSTEM", "idle_logoff")

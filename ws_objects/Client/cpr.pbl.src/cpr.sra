@@ -27,7 +27,6 @@ string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
 
 cpr gnv_app
-boolean shutting_down = false
 
 string registry_key
 string ini_file
@@ -123,7 +122,6 @@ integer db_reconnect_retries=10
 
 boolean auto_patient_select = false
 boolean auto_room_select = false
-boolean computer_secure
 boolean rx_use_signature_stamp = false
 boolean bill_test_collection
 
@@ -254,6 +252,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -392,33 +391,33 @@ CHOOSE CASE ls_parm
 		common_thread.default_database = ls_parm
 END CHOOSE
 
-
 open(w_main)
-
 
 end event
 
-event close;shutting_down = true
-
+event close;
 if trace_mode then f_stop_tracing()
 
 If not isnull(current_user) Then
-	current_user.logoff()
+	current_user.logoff(true)
 End If
-
-if isvalid(component_manager) and not isnull(component_manager) then
-	DESTROY component_manager
-end if
 
 if isvalid(log) and not isnull(log) then
 	log.shutdown()
-	DESTROY log
 end if
 
 if not isnull(common_thread) and isvalid(common_thread) then
 	common_thread.shutdown()
-	DESTROY common_thread
 end if
+
+if isvalid(w_main) and not isnull(w_main) then
+	close(w_main)
+end if
+
+SetNull(datalist)
+SetNull(windows_api)
+sqlca.dbdisconnect()
+SetNull(sqlca)
 
 
 end event
@@ -451,7 +450,7 @@ lw_active_window = f_active_window()
 ls_window_class = lw_active_window.classname()
 
 if isnull(current_service) and not isnull(current_scribe) and lower(ls_window_class) = "w_main" then
-	current_scribe.logoff()
+	current_scribe.logoff(false)
 elseif lower(ls_window_class) = "w_logon" then
 	return
 elseif lower(ls_window_class) = "w_lock_terminal" then
