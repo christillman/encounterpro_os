@@ -450,7 +450,7 @@ end type
 event clicked;Integer		li_return,li_errnum
 String		ls_errnum, ls_restorefile
 String		ls_filepath,ls_file,ls_backupfile
-String		ls_backup_build,ls_current_build
+String		ls_backup_build
 String		ls_servername,ls_database,ls_dbms
 String		ls_computername
 String		ls_message
@@ -515,17 +515,6 @@ If restore_row > 0 Then
 	ls_backupfile = dw_available.object.backup_filename[restore_row]
 	ls_filepath = dw_available.object.location[restore_row]
 	ls_backup_build = dw_available.object.build[restore_row]
-	ls_current_build = get_build()
-	
-	If ls_backup_build <> ls_current_build Then
-		ls_message = "Backup build ("+ls_backup_build+") and current database build ("+ls_current_build+") do not match. Go ahead?"
-		Openwithparm(w_pop_yes_no, ls_message)
-		popup_return = message.powerobjectparm
-		If popup_return.item <> "YES" then 
-			destroy ole_sqlserver
-			return 1
-		End If
-	End If
 
 	ls_file = ls_filepath +"\"+ ls_backupfile
 
