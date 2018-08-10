@@ -247,7 +247,7 @@ destroy(this.st_dbms_title)
 destroy(this.st_dbms)
 end on
 
-event open;st_version.text = "Version  " + f_app_version()
+event open;st_version.text = f_app_version()
 
 dbkey = registry_key + "\Database"
 

@@ -40,12 +40,13 @@ if pb_edit or isnull(lstr_article.article) then
 		if pb_edit then
 			return
 		else
-			openwithparm(w_pop_yes_no, "This context does not have a help article defined.  Would you like to see the Solutiion Center Home Page?")
+			openwithparm(w_pop_yes_no, "This context does not have a help article defined.  Would you like to open the Help Contents?")
 			popup_return = message.powerobjectparm
 			if popup_return.item <> "YES" then return
 			
 			// Solution Center Home Page
-			f_open_browser(ls_help_home_url)
+			//f_open_browser(ls_help_home_url)
+			Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 			return
 		end if
 	end if
@@ -75,12 +76,13 @@ if pb_edit or isnull(lstr_article.article) then
 		openwithparm(w_pop_yes_no, ls_question)
 		popup_return = message.powerobjectparm
 		if popup_return.item <> "YES" then
-			openwithparm(w_pop_yes_no, "Would you like to see the Solutiion Center Home Page?")
+			openwithparm(w_pop_yes_no, "Would you like to open the Help Contents?")
 			popup_return = message.powerobjectparm
 			if popup_return.item <> "YES" then return
 			
 			// Solution Center Home Page
-			f_open_browser(ls_help_home_url)
+			//f_open_browser(ls_help_home_url)
+			Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 			return
 		end if
 		

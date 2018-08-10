@@ -19,7 +19,7 @@ string ls_description
 if cpr_mode <> "SERVER" then
 	// Issue the startup message
 	ls_message = "Session started on " + log.get_computername() + " @ " + string(datetime(today(), now()), "[shortdate] [time]")
-	ls_message += ",  Version " + f_app_version()
+	ls_message += ", " + f_app_version()
 	log.log(po_null, "f_initialize_common:0015", ls_message, 2)
 end if
 

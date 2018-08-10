@@ -74,12 +74,14 @@ if real(ls_sqlversion) < real(my_sql_version) then
 			ls_message += " and the correct EncounterPRO installation program does not appear to be available."
 			ls_message += "  Please contact your system administrator."
 			openwithparm(w_pop_message, ls_message)
-			close(w_logon)
+			return -1
+			// close(w_logon)
 		end if
 	else
 		log.log(po_null, "f_check_version:0072", "Database Version Mismatch (" + database_version + ", " + string(sqlca.db_script_database_version) + ")", 5)
 	end if
-	close(w_logon)
+	return -1
+	// close(w_logon)
 end if	
 
 CHOOSE CASE cpr_mode
@@ -112,7 +114,7 @@ CHOOSE CASE cpr_mode
 				openwithparm(w_pop_message, ls_message)
 			end if
 			
-			gnv_app.event close()
+			// gnv_app.event close()
 			return -1
 		end if
 	CASE "SERVER"
@@ -122,7 +124,7 @@ CHOOSE CASE cpr_mode
 			ls_message += " or higher.  This database is only at modification level " + string(sqlca.modification_level)
 			ls_message += ".  Please contact your system administrator or JMJ Technical Support for assistance."
 			log.log(po_null, "f_check_version:0116", ls_message, 5)
-			gnv_app.event close()
+			// gnv_app.event close()
 			return -1
 		end if
 	CASE ELSE

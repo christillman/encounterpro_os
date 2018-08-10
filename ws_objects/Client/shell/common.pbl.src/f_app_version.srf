@@ -36,11 +36,11 @@ string ls_product
 ls_compinfo = program_directory + "\EPCompInfo.ini"
 
 if upper(cpr_mode) = "CLIENT" then
-	ls_product = "Client"
+	ls_product = "PB Client"
 elseif upper(cpr_mode) = "ISSUES" then
 	ls_product = "Issues"
 elseif upper(cpr_mode) = "SERVER" or upper(cpr_mode) = "DBMAINT" then
-	ls_product = "Server"
+	ls_product = "PB Server"
 end if
 
 ls_ProductVersion = profilestring(ls_compinfo, ls_product, "ProductVersion", "")
@@ -48,10 +48,9 @@ ls_ProductVersion = profilestring(ls_compinfo, ls_product, "ProductVersion", "")
 // If we couldn't determine the Client or Server version, then just show the
 // PowerBuilder version from the application object
 if isnull(ls_ProductVersion) or trim(ls_ProductVersion) = "" then
-	ls_ProductVersion = string(major_release) + "." &
+	ls_ProductVersion = ls_product + " " + string(major_release) + "." &
 							+ database_version + "." &
-							+ build + " (" + string(compile_date, "[shortdate]") + ")" &
-							+ " <" + ls_product + " PB Code>"
+							+ build + " (" + string(compile_date, "[shortdate]") + ")"
 end if
 
 return ls_ProductVersion

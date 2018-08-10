@@ -234,7 +234,7 @@ destroy(this.st_dbms_title)
 destroy(this.st_dbms)
 end on
 
-event open;st_version.text = "Version  " + f_app_version()
+event open;st_version.text = f_app_version()
 
 dbkey = registry_key + "\Database"
 
@@ -279,8 +279,8 @@ end event
 type pb_1 from u_pb_help_button within w_pop_which_database
 integer x = 2025
 integer y = 1304
-integer width = 247
-integer height = 120
+integer width = 256
+integer height = 128
 integer taborder = 50
 end type
 

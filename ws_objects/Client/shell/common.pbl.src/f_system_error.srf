@@ -19,7 +19,7 @@ IF NOT IsNull(log) AND IsValid(log) THEN
 	log.log(po_null, "f_system_error:0011", ls_msg, 4)
 ELSE
 	Clipboard(ls_msg)
-	DebugBreak()
+	//DebugBreak()
 END IF
 
 end subroutine

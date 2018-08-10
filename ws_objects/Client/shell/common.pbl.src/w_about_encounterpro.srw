@@ -29,7 +29,6 @@ integer width = 3451
 integer height = 2100
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -87,7 +86,7 @@ destroy(this.phl_agpl)
 destroy(this.phl_logo)
 end on
 
-event open;call super::open;st_build_number.text = "Version  " + f_app_version()
+event open;call super::open;st_build_number.text = f_app_version()
 
 
 phl_logo.x = (width - phl_logo.width) / 2
@@ -111,8 +110,6 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_about_encounterpro
 integer x = 2688
 integer y = 136
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_about_encounterpro
