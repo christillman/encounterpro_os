@@ -307,7 +307,7 @@ event close;
 if isvalid(w_image_objects) then close(w_image_objects)
 
 If not isnull(current_user) Then
-	current_user.logoff()
+	current_user.logoff(true)
 End If
 
 end event
