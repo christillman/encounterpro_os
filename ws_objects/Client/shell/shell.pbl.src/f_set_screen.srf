@@ -18,12 +18,6 @@ if main_window.windowstate = Minimized! then return
 
 if not isnull(current_scribe) then current_scribe.check_logon()
 
-if not computer_secure and isnull(current_scribe) then
-	setnull(viewed_room)
-	open(w_logon, w_main)
-	return
-end if
-
 if isnull(viewed_room) then
 	if isnull(current_scribe) or just_logged_on then
 		w_main.tab_main.set_tab(default_group_id)
