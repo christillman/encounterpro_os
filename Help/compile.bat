@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\HTML Help Workshop\hhc" "EncounterPro-OS Help.hhp" > C:\Users\tofft\EncounterPro\Help-compile.log

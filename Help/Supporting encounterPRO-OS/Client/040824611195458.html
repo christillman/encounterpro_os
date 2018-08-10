@@ -21,7 +21,7 @@
     
     <!-- Begin Solution -->
 
-	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Client</div>
+	<div class="solutionPath"><b>Solution Path:</b> Supporting EncounterPRO-OS &gt; Client</div>
 <hr />
 <h2>Problem: Address2 Field Populated with City Name</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
 <tr>
@@ -51,8 +51,7 @@ Upgrade the practice to EP server version 6.x.x or higher. This will resolve the
  <br /> 
 However the fix is not retroactive and in order to affect the repair for existing records the following script(s) must be run to move the city name from the ?Address2? field to its proper location.</p></font> <br /> 
 <b><u>This first query will Check that the data in address line 2 is the city field: </b></u> <p> 
-<FONT face='Courier New'>select billing_id,address_line_1,address_line_2,city from p_patient where address_line_2 is not null <br /> 
-</FONT> </p>
+<FONT face='Courier New'>select billing_id,address_line_1,address_line_2,city from p_patient where address_line_2 is not null <br /> </FONT> </p>
  
 <b><u>This query will remove city from address line 2 and place it in the city field:</b></u> <br /> 
  </p>
@@ -88,7 +87,7 @@ Symptoms:
     <!-- End Solution -->
 	<br />
 	<hr style="height: 5px" />
-	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2018 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work">Additional Instruction</a></div> 
        
 		
 </body>

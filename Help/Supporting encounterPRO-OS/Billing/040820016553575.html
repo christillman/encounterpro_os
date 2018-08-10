@@ -21,7 +21,7 @@
     
     <!-- Begin Solution -->
 
-	<div class="solutionPath"><b>Solution Path:</b> Supporting encounterPRO-OS &gt; Billing</div>
+	<div class="solutionPath"><b>Solution Path:</b> Supporting EncounterPRO-OS &gt; Billing</div>
 <hr />
 <h2>How to: Cancel All Billing Requests for a Date Range</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
 <tr>
@@ -29,8 +29,7 @@
 Solution:
 </td>
 <td class="sectionContent">
-Billing interface has never been turned on or had problems and stopped working. For any of these cases, always <FONT color=#ff0000>CANCEL ALL THE PREVIOUS BILLS BEFORE STARTING THE BILLING INTERFACE <br /> 
-</FONT>
+Billing interface has never been turned on or had problems and stopped working. For any of these cases, always <FONT color=#ff0000>CANCEL ALL THE PREVIOUS BILLS BEFORE STARTING THE BILLING INTERFACE <br /> </FONT>
 </td>
 </tr>
 <tr>
@@ -41,26 +40,43 @@ Details:
 <FONT face=sans-serif size=2>  <p> 
 <EM><FONT color=#ff0000>IMPORTANT:  RUN THE QUERY DURING THE PRACTICE'S OFF-HOURS </FONT></EM> <br /> 
  <br /> 
-<FONT size=3>VERSION 2 <br /> 
-</FONT>How to cancel queued billing requests for a given date range: </p>
+<FONT size=3>VERSION 2 <br /> </FONT>How to cancel queued billing requests for a given date range: </p>
+ 
+ <OL> <LI class=numbers1>Run the below query  <br />
+<pre>
+Update p_Patient_Encounter set billing_posted='Y' 
+where encounter_date &lt; [enter the date in single quotes] 
+and bill_flag = 'Y' 
+and billing_posted = 'N'
+</pre>   <br /> 
+Example: to cancel all the bills prior to '6/30/2005' then it'll be something like 
+<pre>where encounter_date &lt; '6/30/2005' 
+</pre>
+</LI> 
+<LI class=numbers1>Set EncounterPROBilling and EncounterPROTransportOut Status to OK in o_server_component </LI> 
+
+<LI class=numbers1>Restart EncounterPROBilling and EncounterPRO TransportOut Services</LI></OL>  <p> 
+ <br /> 
+<FONT size=3>VERSION 4 and VERSION 5 <br /> </FONT>How to cancel queued billing requests for a given date range: </p>
  
  <OL> <LI class=numbers1>Run the below query  <br /> 
-Update p_Patient_Encounter set billing_posted='Y' where encounter_date < [enter the date in single quotes] and bill_flag = 'Y' and billing_posted = 'N'  <br /> 
-Example: to cancel all the bills prior to '6/30/2005' then it'll be something like where encounter_date < '6/30/2005' </LI> <LI class=numbers1>Set EncounterPROBilling and EncounterPROTransportOut Status to OK in o_server_component </LI> <LI class=numbers1>Restart EncounterPROBilling and EncounterPRO TransportOut Services</LI></OL>  <p> 
+<pre>
+Update p_Patient_WP_Item set status = 'CANCELLED' 
+WHERE dispatch_date &lt; [enter the date in single quotes] 
+AND ordered_service in ('SENDBILLING','RETRYPOSTING') 
+AND status in ('DISPATCHED','STARTED') 
+</pre> <br /> 
+Example: to cancel all the bills prior to '6/30/2005' then it'll be something like 
+<pre>
+where dispatch_date &lt; '6/30/2005' 
+</pre>
+</LI> <LI class=numbers1>Set EncounterPROBilling and EncounterPROTransportOut Status to OK in o_server_component </LI> 
+<LI class=numbers1>Restart EncounterPROService Services (or EncounterPROBilling and EncounterPRO TransportOut)</LI></OL>  <p> 
  <br /> 
-<FONT size=3>VERSION 4 and VERSION 5 <br /> 
-</FONT>How to cancel queued billing requests for a given date range: </p>
- 
- <OL> <LI class=numbers1>Run the below query  <br /> 
-Update p_Patient_WP_Item set status = 'CANCELLED' WHERE dispatch_date < [enter the date in single quotes] AND ordered_service in ('SENDBILLING','RETRYPOSTING') AND status in ('DISPATCHED','STARTED')  <br /> 
-Example: to cancel all the bills prior to '6/30/2005' then it'll be something like where dispatch_date < '6/30/2005' </LI> <LI class=numbers1>Set EncounterPROBilling and EncounterPROTransportOut Status to OK in o_server_component </LI> <LI class=numbers1>Restart EncounterPROService Services (or EncounterPROBilling and EncounterPRO TransportOut)</LI></OL>  <p> 
- <br /> 
-<FONT size=3>Affected Products <br /> 
-</FONT>Product PM Integration <br /> 
+<FONT size=3>Affected Products <br /> </FONT>Product PM Integration <br /> 
 Version All Versions <br /> 
  <br /> 
-<FONT size=3>Source <br /> 
-</FONT>Original KB article: Article #10320 - Turn on Billing Interface OR How to cancel all the billing requests for a given date range <br /> 
+<FONT size=3>Source <br /> </FONT>Original KB article: Article #10320 - Turn on Billing Interface OR How to cancel all the billing requests for a given date range <br /> 
 Article created on 6/30/2005 by jmj\sumathi.asok <br /> 
 Article last updated on 5/23/2006 by david.strube <br /> 
  </FONT> </p>
@@ -91,7 +107,7 @@ Symptoms:
     <!-- End Solution -->
 	<br />
 	<hr style="height: 5px" />
-	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2018 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work">Additional Instruction</a></div> 
        
 		
 </body>

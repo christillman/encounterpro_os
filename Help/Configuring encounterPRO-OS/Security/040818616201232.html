@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta name="PROBLEM" content="Concept: encounterPRO Security" />
-    <meta name="TITLE" content="Concept: encounterPRO Security" />
-    <meta name="DESCRIPTION" content="This solution defines and explains the security scheme in encounterPRO." />
+    <meta name="PROBLEM" content="Concept: EncounterPRO Security" />
+    <meta name="TITLE" content="Concept: EncounterPRO Security" />
+    <meta name="DESCRIPTION" content="This solution defines and explains the security scheme in EncounterPRO." />
     <meta name="PROBLEM_TYPE" content="How To Solution" />
     <meta name="AUDIENCE" content="ss" />
-	<meta name="KEYWORDS" content="Security encounterPRO Authorize Priviledges Configure Customize" />
+	<meta name="KEYWORDS" content="Security EncounterPRO Authorize Priviledges Configure Customize" />
     <link rel="stylesheet" type="text/css" href="images/common.css" />
     
-    <title>Concept: encounterPRO Security</title>
+    <title>Concept: EncounterPRO Security</title>
 </head>
 
 <script type="text/javascript">function popup(image, width, height) { window.open(image, 'popup', 'width=' + width + ',height=' + height + ',scrollbars=yes'); }</script>
@@ -21,9 +21,9 @@
     
     <!-- Begin Solution -->
 
-	<div class="solutionPath"><b>Solution Path:</b> Configuring encounterPRO-OS &gt; Security</div>
+	<div class="solutionPath"><b>Solution Path:</b> Configuring EncounterPRO-OS &gt; Security</div>
 <hr />
-<h2>Concept: encounterPRO Security</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
+<h2>Concept: EncounterPRO Security</h2><table cellpadding="5" cellspacing="0" border="0" class="solutionTable">
 <tr>
 <td class="sectionLabel">
 Solution:
@@ -41,7 +41,7 @@ In this solution<STRONG>...</STRONG> <br />
 <LI class=bullets1>Related Solutions 
  
 <LI class=bullets1>Related Education Opportunities</LI></UL></LI></UL><FONT size=4>Description</FONT> <br /> 
-There are several levels in the encounterPRO security model. Settings at each level can influence which tasks a user can view or perform.  <br /> 
+There are several levels in the EncounterPRO security model. Settings at each level can influence which tasks a user can view or perform.  <br /> 
  <img src="images/090080704162306.jpg" alt="Screen: Inline Image" /> <br /> 
 Each level as you go down the pyramid is more specific about which functions are granted or restricted. <br />
 </td>
@@ -53,11 +53,8 @@ Details:
 <td class="sectionContent">
 <FONT face=sans-serif size=2> 
  <p> 
-<FONT size=4>Levels of Security <br /> 
-</FONT>The first level of security is logging into the encounterPRO system. <br /> 
-<FONT size=3>User profile <br /> 
-</FONT><EM><FONT color=#6600ff>Special Permissions <br /> 
-</FONT></EM>Another area in the user profile sets the general permissions granted to that user. There are Special Privileges such as: </p>
+<FONT size=4>Levels of Security <br /> </FONT>The first level of security is logging into the EncounterPRO system. <br /> 
+<FONT size=3>User profile <br /> </FONT><EM><FONT color=#6600ff>Special Permissions <br /> </FONT></EM>Another area in the user profile sets the general permissions granted to that user. There are Special Privileges such as: </p>
  
  
 <UL> 
@@ -66,8 +63,7 @@ Details:
 <LI class=bullets1><STRONG>All privileges and access to all services (Super User)</STRONG> -- If a user is designated a 'Super User' then any other restrictions selected under Permissions and Authorize Services are ignored.</LI></UL> 
  <p> 
  <br /> 
-<EM><FONT color=#6600ff>EncounterPRO Privileges <br /> 
-</FONT></EM>A second set of permissions that can further refine the user's access and abilities to perform certain tasks includes: <br /> 
+<EM><FONT color=#6600ff>EncounterPRO Privileges <br /> </FONT></EM>A second set of permissions that can further refine the user's access and abilities to perform certain tasks includes: <br /> 
  </p>
  
  
@@ -76,20 +72,20 @@ Details:
 <LI class=bullets1>May edit common standard exams&nbsp;-- all users can edit their personal standard exams, it may be desirable to restrict the number of users who can edit the common exams.  
 <LI class=bullets1>May edit common treatment lists -- all users can edit their personal treatment lists, it may be desirable to restrict the number of users who can edit the common treatment lists.  
 <LI class=bullets1>May set or modify computer preferences&nbsp;-- computer-level preferences affect all users who log in to that specific workstation.  
-<LI class=bullets1>May use encounterPRO in Configuration Mode&nbsp;-- only users who have been instructed in configuration features should be allowed to use Configuration Mode.  
+<LI class=bullets1>May use EncounterPRO in Configuration Mode&nbsp;-- only users who have been instructed in configuration features should be allowed to use Configuration Mode.  
 <LI class=bullets1>May edit procedure charges -- this permission allows a user to change the charges, CPT codes or other billing information for procedures in the database.  
 <LI class=bullets1>May edit common short lists -- all users can edit their personal short lists, it may be desirable to restrict the number of users who can edit the common short lists.  
 <LI class=bullets1>May edit the visit level and coding for any encounter -- the encounter owner and encounter owner's supervisor can edit the visit level and billing for their encounters, if a billing specialist needs to be able to adjust the billing for an encounter, they need to be granted this privilege.  
-<LI class=bullets1>May set or modify global preferences&nbsp;-- global preferences affect every user of the encounterPRO system in your practice. This privilege must be restricted to only those users who have been instructed in encounterPRO configuration.  
+<LI class=bullets1>May set or modify global preferences&nbsp;-- global preferences affect every user of the EncounterPRO system in your practice. This privilege must be restricted to only those users who have been instructed in EncounterPRO configuration.  
 <LI class=bullets1>May scribe for other users&nbsp;-- this permission allows a user to document in the patient chart under the user ID of another user, usually a provider.  
 <LI class=bullets1>May see the Task List for any user -- if this permission is set to Yes, the user will have an 'Other' tab on the Task list. When the Other tab is selected, he/she can select a user from the practice and view or manage that user's My Task list.  
 <LI class=bullets1>May take over any encounter&nbsp;-- Providers can already take over encounters from another provider, this permission allows other clinical staff to be able to take over an encounter from a provider.  
-<LI class=bullets1>May set or modify preferences for other users -- this permission should be granted only to those users who have been instructed in encounterPRO configuration. <br /> 
+<LI class=bullets1>May set or modify preferences for other users -- this permission should be granted only to those users who have been instructed in EncounterPRO configuration. <br /> 
  <br /> 
 All the user profile permissions are initially defaulted to No.</LI></UL> 
  <p> 
 <FONT size=3>Authorize Services</FONT>  <br /> 
-The Authorize Services level of security allows the Super User or EHR Product Support to restrict or grant access to explicit encounterPRO features on a user by user or role by role basis.&nbsp; There is a default security for each service that can be either: </p>
+The Authorize Services level of security allows the Super User or EHR Product Support to restrict or grant access to explicit EncounterPRO features on a user by user or role by role basis.&nbsp; There is a default security for each service that can be either: </p>
  
  
 <UL> 
@@ -99,8 +95,7 @@ The Authorize Services level of security allows the Super User or EHR Product Su
  <br /> 
 <img src="images/content_note.gif" width="18" border="0"><FONT color=#009900><I>NOTE:&nbsp;Users with the Special Permission of 'All privileges and access to all services' are considered Super Users and are always granted access to all services in the Authorize Services lists. You do not have to explicitly grant a Super User access to a service with 'Don't Allow' security.</I></FONT> <br /> 
  <br /> 
-<EM><FONT color=#6600ff>Service Types <br /> 
-</FONT></EM>The items on the Authorize Services list are at the most granular level. They are divided up by service type: </p>
+<EM><FONT color=#6600ff>Service Types <br /> </FONT></EM>The items on the Authorize Services list are at the most granular level. They are divided up by service type: </p>
  
  
 <UL> 
@@ -112,30 +107,25 @@ The Authorize Services level of security allows the Super User or EHR Product Su
 <LI class=bullets1><STRONG>Observation</STRONG>&nbsp;-- tasks that can be performed specific to an observation, such as adding a comment, sending a task related to this observation, etc.  
 <LI class=bullets1><STRONG>Attachment</STRONG>&nbsp;-- tasks that can be performed on attachments, such as creating a message or task related to this attachment, creating a document, etc.</LI></UL> 
  <p> 
-<FONT size=4>How To Customize Security for Your Practice <br /> 
-</FONT>It is best to take a few minutes in the early stages of implementation to discuss with the EHR Implementation Coordinators the make-up of your staff and get a general idea of what permissions you want to grant to which users and if there are specific areas that you want to further restrict access. <br /> 
+<FONT size=4>How To Customize Security for Your Practice <br /> </FONT>It is best to take a few minutes in the early stages of implementation to discuss with the EHR Implementation Coordinators the make-up of your staff and get a general idea of what permissions you want to grant to which users and if there are specific areas that you want to further restrict access. <br /> 
  <br /> 
 Each practice should have at least one user designated as the Super User. This person will need to attend additional instruction to be able to perform those tasks restricted to the Super Users.  <br /> 
  <br /> 
-As the practice progresses in using encounterPRO, there may be periodic needs to re-visit the security layout and make changes. Again, your EHR representative can assist you in making those decisions and coordinate educational opportunities. </p>
+As the practice progresses in using EncounterPRO, there may be periodic needs to re-visit the security layout and make changes. Again, your EHR representative can assist you in making those decisions and coordinate educational opportunities. </p>
  
  
  <p> 
-<FONT size=4>Want to Learn More? <br /> 
-</FONT><FONT size=3>Related Solutions <br /> 
-</FONT><U><A href="../../Using encounterPRO-OS/Workflow/040818916051928.html">Concept: Services</A> <br /> 
-<A href="../../Using encounterPRO-OS/Security/encounterPRO Users/040818215190375.html">How to: Change Your Passcode</A> <br /> 
+<FONT size=4>Want to Learn More? <br /> </FONT><FONT size=3>Related Solutions <br /> </FONT><U><A href="../../Using EncounterPRO-OS/Workflow/040818916051928.html">Concept: Services</A> <br /> 
+<A href="../../Using EncounterPRO-OS/Security/EncounterPRO Users/040818215190375.html">How to: Change Your Passcode</A> <br /> 
 <A href="040819709424513.html">How to: Grant and Restrict User Priviledges</A> <br /> 
 </U> </p>
  
  
  <p> 
-<FONT size=3>Related Education Opportunities <br /> 
-</FONT><U> <a href="../../Using%20encounterPRO-OS/xArchived/040911011454916.html" target="_blank"> Pre-Implementation Configuration</a> <br /> 
- <a href="../../Using%20encounterPRO-OS/xArchived/040911016224493.html" target="_blank"> encounterPRO Administrator</a> <br /> 
+<FONT size=3>Related Education Opportunities <br /> </FONT><U> <a href="../../Using%20EncounterPRO-OS/xArchived/040911011454916.html"> Pre-Implementation Configuration</a> <br /> 
+ <a href="../../Using%20EncounterPRO-OS/xArchived/040911016224493.html"> EncounterPRO Administrator</a> <br /> 
 </U>&nbsp; </p>
- 
-</FONT>
+ </FONT>
 </td>
 </tr>
 <tr>
@@ -162,7 +152,7 @@ Symptoms:
     <!-- End Solution -->
 	<br />
 	<hr style="height: 5px" />
-	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2010 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work" target="_blank">Additional Instruction</a></div> 
+	<div class="subtext"><img src="images/CC3_logo.png" hspace=3 px/>Copyright &#0169 2008-2018 by the EncounterPRO Open Source Project. You may distribute it and/or modify it under the terms of the Creative Commons Attribution License, version 3.0 or later. All trademarks within this guide belong to their legitimate owners. Please attribute the EncounterPRO Open Source Project as the creator of this work. Please include this URL for the Work: encounterpro.org <br /> <a href=http://www.librarycopyright.net/wiki/index.php?title="How_to_attribute_a_Creative_Commons_licensed_work">Additional Instruction</a></div> 
        
 		
 </body>
