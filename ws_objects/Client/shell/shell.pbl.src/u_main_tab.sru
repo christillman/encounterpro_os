@@ -199,9 +199,9 @@ if isnull(current_user) then
 	return
 end if
 
-current_user.logoff()
+current_user.logoff(false)
 
-f_set_screen()
+f_logon()
 
 end subroutine
 
@@ -252,12 +252,6 @@ for i = 1 to page_count
 		END CHOOSE
 	end if
 next
-
-if isnull(current_user) then
-	f_set_screen()
-elseif not current_user.sticky_logon then
-	f_set_screen()
-end if
 
 end subroutine
 
@@ -406,8 +400,6 @@ if not lb_default_group_found then default_group_id = groups[1].group_id
 open_page(luo_room_tab, 1, "", "ROOM")
 //luo_room_tab.visible = false
 
-visible = true
-
 patient_tabs_visible = datalist.get_preference_boolean( "SECURITY", "Show Patient Tabs If No Clinical Access" , true)
 
 patient_service = datalist.get_preference("PREFERENCES", "patient_data_service")
@@ -431,8 +423,7 @@ tabpage_other_office_services.initialize()
 tabpage_config.initialize()
 tabpage_utility.initialize()
 
-f_set_screen()
-
+visible = true
 
 
 
@@ -656,6 +647,8 @@ if not visible then return 1
 // there isn't any user or service context, so clear it.
 f_clear_context()
 
+if isnull(current_user) then return 1
+
 if newindex = 1 then
 	if first_one then
 		first_one = false
@@ -676,19 +669,7 @@ if oldindex > 0 then
 end if
 
 CHOOSE CASE pages[newindex].tag
-	CASE "INCOMING"
-		f_user_logon()
-		if isnull(current_user) then return 1
-	CASE "DOCUMENTS"
-		f_user_logon()
-		if isnull(current_user) then return 1
-	CASE "HM"
-		f_user_logon()
-		if isnull(current_user) then return 1
-	CASE "CHARTS"
-		f_user_logon()
-		if isnull(current_user) then return 1
-	CASE "MESSAGES"
+	CASE "INCOMING", "DOCUMENTS", "HM", "CHARTS", "MESSAGES", "UTILITY", "REPORTS"
 		f_user_logon()
 		if isnull(current_user) then return 1
 	CASE "TASKS"
@@ -702,26 +683,18 @@ CHOOSE CASE pages[newindex].tag
 		if isnull(current_user) then return 1
 		open(w_todo_main)
 		return 1
-	CASE "UTILITY"
-		f_user_logon()
-		if isnull(current_user) then return 1
-//		openwithparm(w_prefs_main,"Utility")
-//		return 1
-	CASE "REPORTS"
-		f_user_logon()
-		if isnull(current_user) then return 1
 	CASE "CONFIG"
 		f_user_logon()
 		if isnull(current_user) then return 1
 		
 		luo_config_tab = pages[newindex]
 		luo_config_tab.reselect_menu()
-//		openwithparm(w_prefs_main,"Config")
-//		return 1
 	CASE "LOGOFF"
 		logoff()
 		return 1
 END CHOOSE
+
+return 0
 
 end event
 
