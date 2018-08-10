@@ -28,6 +28,12 @@ lstr_nodes.node[lstr_nodes.node_count].key = "CONFIG_SPECIALTIES_CONS"
 lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
 
 lstr_nodes.node_count += 1
+lstr_nodes.node[lstr_nodes.node_count].label = "Countries"
+lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
+lstr_nodes.node[lstr_nodes.node_count].key = "Config_Country"
+lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
+
+lstr_nodes.node_count += 1
 lstr_nodes.node[lstr_nodes.node_count].label = "Diagnoses"
 lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
 lstr_nodes.node[lstr_nodes.node_count].key = "CONFIG_ASSESSMENTS"
@@ -37,6 +43,19 @@ lstr_nodes.node_count += 1
 lstr_nodes.node[lstr_nodes.node_count].label = "Drugs"
 lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
 lstr_nodes.node[lstr_nodes.node_count].key = "CONFIG_DRUGS"
+lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
+
+lstr_nodes.node_count += 1
+lstr_nodes.node[lstr_nodes.node_count].label = "ID Documents"
+lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
+//                                           the space here is purposeful
+lstr_nodes.node[lstr_nodes.node_count].key = "Config_ID Document"
+lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
+
+lstr_nodes.node_count += 1
+lstr_nodes.node[lstr_nodes.node_count].label = "Localities"
+lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
+lstr_nodes.node[lstr_nodes.node_count].key = "Config_Locality"
 lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
 
 lstr_nodes.node_count += 1
