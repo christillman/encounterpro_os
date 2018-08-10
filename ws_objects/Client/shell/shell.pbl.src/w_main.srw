@@ -11,11 +11,12 @@ end type
 end forward
 
 global type w_main from w_window_base
-integer height = 1920
+integer height = 1916
 boolean controlmenu = true
 boolean resizable = false
 event refresh ( )
 event windowposchanging pbm_windowposchanging
+event shutdown ( )
 uo_help_bar uo_help_bar
 tab_main tab_main
 end type
@@ -46,6 +47,16 @@ event windowposchanging;if not initializing and newwidth > 0 and newheight > 0 t
 	save_window_state(xpos, ypos, newwidth, newheight)
 end if
 
+
+end event
+
+event shutdown();
+
+if IsValid(w_logon) then
+	close(w_logon)
+end if
+
+close(this)
 
 end event
 
@@ -167,7 +178,8 @@ destroy(this.uo_help_bar)
 destroy(this.tab_main)
 end on
 
-event open;call super::open;original_height = height
+event open;call super::open;
+original_height = height
 original_width = width
 
 main_window = this
@@ -177,6 +189,8 @@ uo_help_bar.uf_init(this,true)
 doing_service = false
 
 postevent("post_open")
+
+
 
 end event
 
@@ -267,9 +281,9 @@ end if
 
 viewed_room = current_room
 
-tab_main.initialize()
-
 if isvalid(w_splash) then close(w_splash)
+
+tab_main.initialize()
 
 li_refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
 timer(li_refresh_timer)
@@ -284,7 +298,6 @@ SELECT count(*)
 INTO :component_manager.mod_count
 FROM p_Patient;
 if not tf_check() then component_manager.mod_count = 1000
-
 
 lstr_stamp = f_get_stamp()
 
@@ -314,6 +327,8 @@ end if
 
 initializing = false
 
+f_logon()
+
 end event
 
 event timer;uo_help_bar.uf_set_clock()
@@ -326,7 +341,7 @@ event close;
 if isvalid(w_image_objects) then close(w_image_objects)
 
 If not isnull(current_user) Then
-	current_user.logoff()
+	current_user.logoff(true)
 End If
 
 
@@ -353,7 +368,14 @@ uo_help_bar.uf_resized()
 tab_main.resize(newwidth, uo_help_bar.y)
 
 if not initializing and isnull(current_service) then
-	f_set_screen()
+	if isnull(viewed_room) then
+		if isnull(current_scribe) or just_logged_on then
+			w_main.tab_main.set_tab(default_group_id)
+		end if
+		just_logged_on = false
+	else
+		w_main.tab_main.set_tab_room(viewed_room)
+	end if
 end if
 
 
@@ -370,19 +392,20 @@ end if
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_main
-integer x = 2857
-integer y = 0
+boolean visible = true
+integer y = 36
 integer taborder = 0
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_main
+integer height = 64
 end type
 
 type uo_help_bar from u_help_bar within w_main
 event keydown pbm_keydown
-integer y = 1740
+integer y = 1768
 integer width = 2930
-integer height = 96
+integer height = 68
 end type
 
 on uo_help_bar.destroy
