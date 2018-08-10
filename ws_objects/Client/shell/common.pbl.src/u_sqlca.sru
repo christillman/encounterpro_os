@@ -3010,7 +3010,6 @@ string ls_null
 ls_return = ps_phone
 // Avoid automatic American phone formatting 
 if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
-
 	setnull(ls_null)
 	
 	SELECT dbo.fn_pretty_phone(:ps_phone)
