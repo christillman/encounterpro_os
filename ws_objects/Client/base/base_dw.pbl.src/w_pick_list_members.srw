@@ -10,11 +10,11 @@ type st_member_list_title from statictext within w_pick_list_members
 end type
 type st_title from statictext within w_pick_list_members
 end type
-type cb_new_location_domain from commandbutton within w_pick_list_members
+type cb_new_list_member from commandbutton within w_pick_list_members
 end type
-type dw_location_domains from u_dw_pick_list within w_pick_list_members
+type dw_list_members from u_dw_pick_list within w_pick_list_members
 end type
-type dw_locations from u_dw_pick_list within w_pick_list_members
+type dw_selected from u_dw_pick_list within w_pick_list_members
 end type
 type st_selected_title from statictext within w_pick_list_members
 end type
@@ -40,9 +40,9 @@ pb_cancel pb_cancel
 pb_done pb_done
 st_member_list_title st_member_list_title
 st_title st_title
-cb_new_location_domain cb_new_location_domain
-dw_location_domains dw_location_domains
-dw_locations dw_locations
+cb_new_list_member cb_new_list_member
+dw_list_members dw_list_members
+dw_selected dw_selected
 st_selected_title st_selected_title
 pb_help pb_help
 pb_up pb_up
@@ -54,11 +54,71 @@ global w_pick_list_members w_pick_list_members
 
 type variables
 
-string location_domain
-
-
+string is_list_id, is_list_description
 
 end variables
+
+forward prototypes
+public function integer add_list_member ()
+end prototypes
+
+public function integer add_list_member ();
+str_popup popup
+str_popup_return popup_return
+string ls_description
+long ll_row
+integer li_sts
+integer i
+string ls_list_item_id
+string ls_suffix
+string ls_prefix
+integer li_count
+u_ds_data dw_char_key
+
+popup.title = "Enter New " + is_list_id + " Description"
+popup.item = ""
+openwithparm(w_pop_prompt_string, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count < 1 then return -1
+
+ls_description = popup_return.items[1]
+
+ls_prefix = f_gen_key_string(ls_description, 12)
+
+dw_char_key = CREATE u_ds_data
+dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
+dw_char_key.retrieve("c_List_Item", "list_item_id", ls_prefix)
+
+ls_list_item_id = dw_char_key.object.new_key[1]
+
+ll_row = dw_list_members.insertrow(0)
+dw_list_members.object.list_id[ll_row] = is_list_id
+dw_list_members.object.list_item_id[ll_row] = ls_list_item_id
+dw_list_members.object.list_item[ll_row] = ls_description
+dw_list_members.object.status[ll_row] = "Active"
+
+ll_row = dw_selected.insertrow(0)
+dw_selected.object.list_id[ll_row] = is_list_id
+dw_selected.object.list_item_id[ll_row] = ls_list_item_id
+dw_selected.object.list_item[ll_row] = ls_description
+dw_selected.object.status[ll_row] = "Active"
+
+dw_list_members.scrolltorow(ll_row)
+// up & dn buttons
+dw_list_members.recalc_page(st_page.text)
+if dw_list_members.last_page < 2 then
+	pb_down.visible = false
+	pb_up.visible = false
+else
+	pb_down.visible = true
+	pb_up.visible = true
+	pb_up.enabled = true
+	pb_down.enabled = true
+end if
+pb_done.enabled = true
+
+RETURN 0
+end function
 
 on w_pick_list_members.create
 int iCurrent
@@ -67,9 +127,9 @@ this.pb_cancel=create pb_cancel
 this.pb_done=create pb_done
 this.st_member_list_title=create st_member_list_title
 this.st_title=create st_title
-this.cb_new_location_domain=create cb_new_location_domain
-this.dw_location_domains=create dw_location_domains
-this.dw_locations=create dw_locations
+this.cb_new_list_member=create cb_new_list_member
+this.dw_list_members=create dw_list_members
+this.dw_selected=create dw_selected
 this.st_selected_title=create st_selected_title
 this.pb_help=create pb_help
 this.pb_up=create pb_up
@@ -81,9 +141,9 @@ this.Control[iCurrent+1]=this.pb_cancel
 this.Control[iCurrent+2]=this.pb_done
 this.Control[iCurrent+3]=this.st_member_list_title
 this.Control[iCurrent+4]=this.st_title
-this.Control[iCurrent+5]=this.cb_new_location_domain
-this.Control[iCurrent+6]=this.dw_location_domains
-this.Control[iCurrent+7]=this.dw_locations
+this.Control[iCurrent+5]=this.cb_new_list_member
+this.Control[iCurrent+6]=this.dw_list_members
+this.Control[iCurrent+7]=this.dw_selected
 this.Control[iCurrent+8]=this.st_selected_title
 this.Control[iCurrent+9]=this.pb_help
 this.Control[iCurrent+10]=this.pb_up
@@ -98,9 +158,9 @@ destroy(this.pb_cancel)
 destroy(this.pb_done)
 destroy(this.st_member_list_title)
 destroy(this.st_title)
-destroy(this.cb_new_location_domain)
-destroy(this.dw_location_domains)
-destroy(this.dw_locations)
+destroy(this.cb_new_list_member)
+destroy(this.dw_list_members)
+destroy(this.dw_selected)
 destroy(this.st_selected_title)
 destroy(this.pb_help)
 destroy(this.pb_up)
@@ -111,37 +171,47 @@ end on
 
 event open;call super::open;str_popup_return popup_return
 integer li_sts
-string ls_location_domain
 long ll_rows
-string ls_find
+string ls_find, ls_service_name, ls_service_description
 long ll_row
+u_component_service luo_service
 
 popup_return.item_count = 0
 
-ls_location_domain = message.stringparm
+luo_service = message.powerobjectparm
+ls_service_name = luo_service.service
+ls_service_description = luo_service.description
 
-dw_location_domains.settransobject(sqlca)
-dw_locations.settransobject(sqlca)
+// The service name is "Config_" + list_id
+if left(ls_service_name, 7) = "Config_" then
+	is_list_id = Mid(ls_service_name, 8)
+else
+	is_list_id = ls_service_name
+end if
+if left(ls_service_description, 10) = "Configure " then
+	is_list_description = Mid(ls_service_description, 11)
+else
+	is_list_description = ls_service_description
+end if
 
-ll_rows = dw_location_domains.retrieve()
+st_title.text = "Select Active " + is_list_description
+st_member_list_title.text = "All " + is_list_description
+st_selected_title.text = "Selected " + is_list_description
+
+dw_list_members.settransobject(sqlca)
+dw_selected.settransobject(sqlca)
+
+ll_rows = dw_list_members.retrieve(is_list_id)
 if ll_rows < 0 then
-	log.log(this, "w_pick_location_domain:open", "Error getting location domains", 4)
+	log.log(this, "w_pick_list_members:open", "Error getting list members", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
-if not isnull(ls_location_domain) then
-	ls_find = "location_domain='" + ls_location_domain + "'"
-	ll_row = dw_location_domains.find(ls_find, 1, ll_rows)
-	if ll_row > 0 then
-		dw_location_domains.object.selected_flag[ll_row] = 1
-		dw_location_domains.scrolltorow(ll_row)
-		dw_location_domains.event trigger selected(ll_row)
-	end if
-end if
+ll_rows = dw_selected.retrieve(is_list_id)
 
 pb_done.enabled = false
-dw_location_domains.set_page(1, pb_up, pb_down, st_page)
+dw_list_members.set_page(1, pb_up, pb_down, st_page)
 
 
 end event
@@ -163,7 +233,8 @@ string picturename = "button11.bmp"
 string disabledname = "b_push11.bmp"
 end type
 
-event clicked;call super::clicked;str_popup_return popup_return
+event clicked;call super::clicked;
+str_popup_return popup_return
 
 popup_return.item_count = 0
 
@@ -181,24 +252,24 @@ string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
 end type
 
-event clicked;call super::clicked;str_popup_return popup_return
-long ll_row
+event clicked;call super::clicked;
+dw_list_members.Update()
+tf_check()
 
-ll_row = dw_location_domains.get_selected_row()
-if ll_row <= 0 then return
 
-popup_return.item_count = 1
-popup_return.items[1] = dw_location_domains.object.location_domain[ll_row]
-popup_return.descriptions[1] = dw_location_domains.object.description[ll_row]
+str_popup_return popup_return
+
+popup_return.item_count = 0
 
 closewithreturn(parent, popup_return)
+
 
 end event
 
 type st_member_list_title from statictext within w_pick_list_members
-integer x = 315
+integer x = 407
 integer y = 184
-integer width = 1070
+integer width = 960
 integer height = 84
 boolean bringtotop = true
 integer textsize = -10
@@ -216,6 +287,7 @@ boolean focusrectangle = false
 end type
 
 type st_title from statictext within w_pick_list_members
+integer y = 40
 integer width = 2930
 integer height = 136
 boolean bringtotop = true
@@ -233,7 +305,7 @@ alignment alignment = center!
 boolean focusrectangle = false
 end type
 
-type cb_new_location_domain from commandbutton within w_pick_list_members
+type cb_new_list_member from commandbutton within w_pick_list_members
 integer x = 1673
 integer y = 1640
 integer width = 631
@@ -249,136 +321,95 @@ string facename = "Arial"
 string text = "New List Member"
 end type
 
-event clicked;str_popup popup
-str_popup_return popup_return
-string ls_description
-long ll_row
-integer li_sts
-integer i
-string ls_location_domain
-string ls_suffix
-string ls_prefix
-integer li_count
-
-popup.title = "Enter New List Member Description"
-popup.item = ""
-openwithparm(w_pop_prompt_string, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_count < 1 then return
-
-ls_description = popup_return.items[1]
-
-ll_row = dw_location_domains.insertrow(0)
-ls_prefix = f_gen_key_string(ls_description, 12)
-ls_location_domain = ls_prefix
-// Now make sure the new key is unique
-for i = 1 to 99
-	SELECT count(*)
-	INTO :li_count
-	FROM c_Location_Domain
-	WHERE location_domain = :ls_location_domain;
-	if not tf_check() then return
-	if li_count = 0 then exit
-	ls_suffix = string(i)
-	ls_location_domain = left(ls_prefix, 12 - len(ls_suffix)) + ls_suffix
-next
-if i = 99 then
-	log.log(this, "w_pick_location_domain.cb_new_location_domain.clicked:0035", "Unable to generate unique key (" + ls_location_domain + ")", 4)
-	return
-end if
-
-dw_location_domains.object.location_domain[ll_row] = ls_location_domain
-dw_location_domains.object.description[ll_row] = ls_description
-
-li_sts = dw_location_domains.update()
-if li_sts < 0 then return
-
-dw_location_domains.clear_selected()
-dw_location_domains.object.selected_flag[ll_row] = 1
-dw_location_domains.scrolltorow(ll_row)
-// up & dn buttons
-dw_location_domains.recalc_page(st_page.text)
-if dw_location_domains.last_page < 2 then
-	pb_down.visible = false
-	pb_up.visible = false
-else
-	pb_down.visible = true
-	pb_up.visible = true
-	pb_up.enabled = true
-	pb_down.enabled = true
-end if
-pb_done.enabled = true
-
-
-popup.data_row_count = 1
-popup.items[1] = string(ls_location_domain)
-openwithparm(w_location_domain_edit, popup)
-
-
-dw_locations.retrieve(ls_location_domain)
-
-
+event clicked;
+add_list_member()
 end event
 
-type dw_location_domains from u_dw_pick_list within w_pick_list_members
-integer x = 347
+type dw_list_members from u_dw_pick_list within w_pick_list_members
+integer x = 306
 integer y = 268
-integer width = 1161
+integer width = 1175
 integer height = 1364
 integer taborder = 30
 boolean bringtotop = true
-string dataobject = "dw_location_domain_list"
-boolean border = false
+string dataobject = "dw_list_items"
+boolean vscrollbar = true
+boolean resizable = true
 boolean livescroll = false
+borderstyle borderstyle = styleraised!
 end type
 
-event selected;call super::selected;location_domain = dw_location_domains.object.location_domain[selected_row]
+event selected;call super::selected;
+string ls_list_item_id, ls_find
+long ll_row
 
-dw_locations.retrieve(location_domain)
+ls_list_item_id = object.list_item_id[selected_row]
+
+ls_find = "list_item_id ='" + ls_list_item_id + "'"
+if dw_selected.Find(ls_find, 1, dw_selected.rowcount()) > 0 then
+	return
+end if
+
+ll_row = dw_selected.insertrow(0)
+dw_selected.object.list_item_id[ll_row] = ls_list_item_id
+dw_selected.object.list_item[ll_row] = object.list_item[selected_row]
+
+// We will save changes to this dw when done
+object.status[selected_row] = 'Active'
+
+pb_done.enabled = true
+end event
+
+event retrieveend;call super::retrieveend;
+object.list_item.width = width - 260
+
+end event
+
+type dw_selected from u_dw_pick_list within w_pick_list_members
+integer x = 1609
+integer y = 588
+integer width = 1175
+integer height = 904
+integer taborder = 20
+boolean bringtotop = true
+string dataobject = "dw_list_items_active"
+boolean vscrollbar = true
+boolean resizable = true
+boolean livescroll = false
+borderstyle borderstyle = stylelowered!
+end type
+
+event selected;call super::selected;
+string ls_list_item_id, ls_find
+long ll_row
+
+ls_list_item_id = object.list_item_id[selected_row]
+
+ls_find = "list_item_id ='" + ls_list_item_id + "'"
+ll_row = dw_list_members.Find(ls_find, 1, dw_list_members.rowcount())
+
+if ll_row = 0 then
+	MessageBox("Rows out of sync", "List item " + object.list_item[selected_row])
+	return
+end if
+
+dw_list_members.object.status[ll_row] = 'OK'
+
+DeleteRow(selected_row)
 
 pb_done.enabled = true
 
 end event
 
-event unselected;call super::unselected;
-pb_done.enabled = false
-dw_locations.reset()
-dw_locations.settransobject(sqlca)
+event retrieveend;call super::retrieveend;
+object.list_item.width = width - 260
 
-end event
-
-type dw_locations from u_dw_pick_list within w_pick_list_members
-integer x = 1797
-integer y = 688
-integer width = 955
-integer height = 828
-integer taborder = 20
-boolean bringtotop = true
-string dataobject = "dw_location_display_list_small"
-boolean hscrollbar = true
-borderstyle borderstyle = styleraised!
-end type
-
-event clicked;call super::clicked;str_popup popup
-string ls_location_domain
-long ll_row
-
-ll_row = dw_location_domains.get_selected_row()
-if ll_row <= 0 then return
-
-ls_location_domain = dw_location_domains.object.location_domain[ll_row]
-
-popup.data_row_count = 1
-popup.items[1] = string(ls_location_domain)
-openwithparm(w_location_domain_edit, popup)
-
-retrieve(ls_location_domain)
 
 end event
 
 type st_selected_title from statictext within w_pick_list_members
-integer x = 1797
-integer y = 608
+integer x = 1682
+integer y = 488
 integer width = 955
 integer height = 76
 boolean bringtotop = true
@@ -397,31 +428,32 @@ boolean focusrectangle = false
 end type
 
 type pb_help from u_pb_help_button within w_pick_list_members
-integer x = 2661
-integer y = 16
-integer width = 256
+integer x = 2629
+integer y = 196
+integer width = 169
 integer height = 128
 integer taborder = 20
 boolean bringtotop = true
+boolean originalsize = false
 end type
 
 type pb_up from u_picture_button within w_pick_list_members
-boolean visible = false
 integer x = 1509
 integer y = 272
 integer width = 146
 integer height = 124
 integer taborder = 11
 boolean bringtotop = true
+boolean originalsize = false
 string picturename = "icon_up.bmp"
 string disabledname = "icon_upx.bmp"
 end type
 
 event clicked;call super::clicked;integer li_page
 
-li_page = dw_location_domains.current_page
+li_page = dw_list_members.current_page
 
-dw_location_domains.set_page(li_page - 1, st_page.text)
+dw_list_members.set_page(li_page - 1, st_page.text)
 
 if li_page <= 2 then enabled = false
 pb_down.enabled = true
@@ -429,7 +461,6 @@ pb_down.enabled = true
 end event
 
 type pb_down from u_picture_button within w_pick_list_members
-boolean visible = false
 integer x = 1509
 integer y = 396
 integer width = 137
@@ -444,10 +475,10 @@ end type
 event clicked;integer li_page
 integer li_last_page
 
-li_page = dw_location_domains.current_page
-li_last_page = dw_location_domains.last_page
+li_page = dw_list_members.current_page
+li_last_page = dw_list_members.last_page
 
-dw_location_domains.set_page(li_page + 1, st_page.text)
+dw_list_members.set_page(li_page + 1, st_page.text)
 
 if li_page >= li_last_page - 1 then enabled = false
 pb_up.enabled = true
