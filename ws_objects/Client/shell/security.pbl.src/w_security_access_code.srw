@@ -100,6 +100,7 @@ end subroutine
 event open;str_popup popup
 string ls_temp
 integer li_logon_timeout
+boolean lb_computer_secure
 
 access_id = ""
 st_asterisks.text = ""
@@ -110,6 +111,9 @@ mode = popup.item
 st_prompt.text = popup.title
 
 ls_temp = f_get_global_preference("PREFERENCES", "variable_password_length")
+lb_computer_secure = datalist.get_preference_boolean("PREFERENCES", "computer_secure", false) 
+li_logon_timeout = datalist.get_preference_int("PREFERENCES", "logon_timeout", 15)
+
 if lower(left(ls_temp, 1)) = "t" then
 	variable_password_length = true
 	password_length = 0
@@ -126,7 +130,7 @@ if not variable_password_length then
 	cb_done.visible = false
 end if
 
-if mode = "NOLOGON" or computer_secure = false then
+if mode = "NOLOGON" or lb_computer_secure = false then
 	st_sticky_title.visible = false
 	st_sticky.visible = false
 	height -= 188
@@ -134,13 +138,11 @@ end if
 
 sticky_logon = false
 
-
 if not isnull(main_window) and isvalid(main_window) then
 	x = main_window.x + (main_window.width - width) / 2
 	y = main_window.y + (main_window.height - height) / 2
 end if
 
-li_logon_timeout = datalist.get_preference_int("PREFERENCES", "logon_timeout", 15)
 timer(li_logon_timeout, this)
 
 end event

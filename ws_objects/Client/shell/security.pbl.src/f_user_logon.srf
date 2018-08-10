@@ -58,11 +58,10 @@ if isnull(current_scribe) then
 	
 	// If this is EncounterPRO, then set the visible screen
 	if isvalid(w_main) then
-//		w_main.tab_main.logonoff_refresh()
-		if isnull(current_user) then
-			f_set_screen()
-		elseif not current_user.sticky_logon then
-			f_set_screen()
+		if NOT isnull(current_user) then
+			if not current_user.sticky_logon AND NOT isnull(viewed_room) then
+				w_main.tab_main.set_tab_room(viewed_room)
+			end if
 		end if
 	end if
 

@@ -56,7 +56,7 @@ if isnull(current_scribe) then
 	close(this)
 end if
 
-st_build_number.text = "Version  " + f_app_version()
+st_build_number.text = f_app_version()
 
 bringtotop = true
 

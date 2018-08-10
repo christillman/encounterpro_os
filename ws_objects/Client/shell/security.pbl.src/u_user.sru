@@ -103,7 +103,6 @@ public function boolean check_privilege (string ps_privilege_id)
 public function boolean check_service (string ps_service)
 public function string common_list_id ()
 public subroutine complete_service ()
-public subroutine logoff ()
 public function integer check_logon ()
 public subroutine get_preferences ()
 public function integer change_office (string ps_new_office_id)
@@ -121,6 +120,7 @@ public function integer update_address (integer pi_address_index)
 public function integer update_communication (integer pi_comm_index)
 public function integer set_communication_value (string ps_communication_type, string ps_communication_name, string ps_communication_value)
 public function string get_communication_value (string ps_communication_type, string ps_communication_name)
+public subroutine logoff (boolean pb_shutting_down)
 end prototypes
 
 public function integer check_drug (string ps_drug_id, string ps_package_id);integer li_sort_order
@@ -271,7 +271,7 @@ str_popup popup
 
 
 if left(user_id, 8) = "Patient " then
-	logoff()
+	logoff(false)
 	return
 elseif isnull(sticky_logon) then
 	return
@@ -288,75 +288,11 @@ elseif not sticky_logon then
 		if li_choice = 2 then sticky_logon = true
 	end if
 	
-	if not sticky_logon then logoff()
+	if not sticky_logon then logoff(false)
 	return
 end if
 
 if isvalid(w_main) then w_main.tab_main.refresh()
-
-end subroutine
-
-public subroutine logoff ();string ls_services_waiting
-
- DECLARE lsp_primary_service_check PROCEDURE FOR dbo.sp_primary_service_check  
-         @ps_room_id = :viewed_room.room_id,   
-         @ps_user_id = :user_id,   
-         @ps_services_waiting = :ls_services_waiting OUT ;
-
- DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
-         @ps_user_id = :user_id,
-			@pl_computer_id = :computer_id;
-
-
-log.log(this, "u_user.logoff:0013", "User " + user_short_name + " logging off...", 2)
-// Force this message to the o_log table
-if log.dbloglevel > 2 then
-	log.log_db(this, "u_user.logoff:0016", "User " + user_short_name + " logging off...", 2)
-end if
-
-// Set the display log level back to the computer/global value
-log.displayloglevel = datalist.get_preference_int("SYSTEM", "display_log_level", 5)
-
-if isnull(current_user) then
-	log.log(this, "u_user.logoff:0023", "current_user is null", 3)
-elseif current_user.user_id <> user_id then
-	log.log(this, "u_user.logoff:0025", "current_user is " + current_user.user_short_name, 3)
-end if
-
-EXECUTE lsp_user_logoff;
-if not tf_check() then return
-
-setnull(current_user)
-setnull(current_scribe)
-setnull(current_patient)
-
-sticky_logon = false
-
-if isvalid(w_main) and not shutting_down then
-	w_main.tab_main.logonoff_refresh()
-
-	if left(user_id, 8) = "Patient " then
-		user_id = "!PATIENT"
-		viewed_room = current_room
-	else
-		if not isnull(viewed_room) then
-	//		EXECUTE lsp_primary_service_check;
-	//		if not tf_check() then return
-	//	
-	//		FETCH lsp_primary_service_check INTO :ls_services_waiting;
-	//		if not tf_check() then return
-	//	
-	//		CLOSE lsp_primary_service_check;
-	//	
-	//		if ls_services_waiting <> "Y" then viewed_room = current_room
-		else
-			viewed_room = current_room
-		end if
-	end if
-	
-	f_set_screen()
-end if
-
 
 end subroutine
 
@@ -387,7 +323,7 @@ if ll_count = 0 then
 	log.log(this, "u_user.check_logon:0025", "User '" + user_full_name + "' is not logged in at computer # " + string(computer_id), 3)
 	
 	// If we're not working on a service, then log the user out
-	if isnull(current_service) then logoff()
+	if isnull(current_service) then logoff(false)
 end if
 
 
@@ -395,7 +331,7 @@ li_sts = f_check_system_status()
 if li_sts <= 0 then
 	// If we're not working on a service, then shut down
 	if isnull(current_service) then
-		logoff()
+		logoff(true)
 	end if
 	return -1
 end if
@@ -761,6 +697,70 @@ return communication[ll_index].communication_value
 
 
 end function
+
+public subroutine logoff (boolean pb_shutting_down);string ls_services_waiting
+
+ DECLARE lsp_primary_service_check PROCEDURE FOR dbo.sp_primary_service_check  
+         @ps_room_id = :viewed_room.room_id,   
+         @ps_user_id = :user_id,   
+         @ps_services_waiting = :ls_services_waiting OUT ;
+
+ DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
+         @ps_user_id = :user_id,
+			@pl_computer_id = :computer_id;
+
+
+log.log(this, "u_user.logoff:0013", "User " + user_short_name + " logging off...", 2)
+// Force this message to the o_log table
+if log.dbloglevel > 2 then
+	log.log_db(this, "u_user.logoff:0016", "User " + user_short_name + " logging off...", 2)
+end if
+
+// Set the display log level back to the computer/global value
+log.displayloglevel = datalist.get_preference_int("SYSTEM", "display_log_level", 5)
+
+if isnull(current_user) then
+	log.log(this, "u_user.logoff:0023", "current_user is null", 3)
+elseif current_user.user_id <> user_id then
+	log.log(this, "u_user.logoff:0025", "current_user is " + current_user.user_short_name, 3)
+end if
+
+EXECUTE lsp_user_logoff;
+if not tf_check() then return
+
+setnull(current_user)
+setnull(current_scribe)
+setnull(current_patient)
+
+sticky_logon = false
+
+if isvalid(w_main) and not pb_shutting_down then
+	w_main.tab_main.logonoff_refresh()
+
+	if left(user_id, 8) = "Patient " then
+		user_id = "!PATIENT"
+		viewed_room = current_room
+	else
+		if not isnull(viewed_room) then
+	//		EXECUTE lsp_primary_service_check;
+	//		if not tf_check() then return
+	//	
+	//		FETCH lsp_primary_service_check INTO :ls_services_waiting;
+	//		if not tf_check() then return
+	//	
+	//		CLOSE lsp_primary_service_check;
+	//	
+	//		if ls_services_waiting <> "Y" then viewed_room = current_room
+		else
+			viewed_room = current_room
+		end if
+	end if
+	
+	f_set_screen()
+end if
+
+
+end subroutine
 
 on u_user.create
 call super::create
