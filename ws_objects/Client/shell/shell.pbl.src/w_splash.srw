@@ -20,7 +20,6 @@ integer height = 1480
 boolean enabled = false
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -58,7 +57,7 @@ destroy(this.st_copyright)
 destroy(this.p_agpl)
 end on
 
-event open;call super::open;st_build_number.text = "Version  " + f_app_version()
+event open;call super::open;st_build_number.text = f_app_version()
 
 
 p_logo.x = (width - p_logo.width) / 2
@@ -70,18 +69,16 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_splash
 integer x = 2688
 integer y = 136
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_splash
 end type
 
 type st_build_number from statictext within w_splash
-integer x = 731
-integer y = 460
-integer width = 1262
-integer height = 72
+integer x = 1413
+integer y = 612
+integer width = 553
+integer height = 68
 integer textsize = -8
 integer weight = 400
 fontpitch fontpitch = variable!
@@ -106,9 +103,9 @@ boolean focusrectangle = false
 end type
 
 type st_copyright from statictext within w_splash
-integer x = 325
-integer y = 620
-integer width = 2135
+integer x = 987
+integer y = 700
+integer width = 1426
 integer height = 76
 boolean bringtotop = true
 integer textsize = -10
@@ -118,7 +115,7 @@ fontfamily fontfamily = roman!
 string facename = "Times New Roman"
 long backcolor = 33538240
 boolean enabled = false
-string text = "Copyright 2010 The EncounterPRO Foundation, Inc."
+string text = "Copyright 2010-2018 The EncounterPRO Foundation, Inc."
 alignment alignment = center!
 boolean focusrectangle = false
 end type
