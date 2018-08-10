@@ -229,7 +229,7 @@ event post_click;string ls_room_id
 
 ls_room_id = object.room_id[lastrow]
 viewed_room = room_list.find_room(ls_room_id)
-f_set_screen()
+w_main.tab_main.set_tab_room(viewed_room)
 
 
 end event
@@ -246,7 +246,7 @@ event post_click;string ls_room_id
 
 ls_room_id = object.room_id[lastrow]
 viewed_room = room_list.find_room(ls_room_id)
-f_set_screen()
+w_main.tab_main.set_tab_room(viewed_room)
 
 
 end event
