@@ -30,6 +30,9 @@ CREATE TABLE icd9_gem (
 )
 GO
 
+
+GRANT SELECT ON [dbo].[icd10cm_codes_2018] TO CPRSYSTEM
+
 IF NOT EXISTS (SELECT 1 FROM sys.columns c join sys.tables t on t.object_id = c.object_id 
 	WHERE t.name = 'c_ICD_Updates' and c.name = 'icd10_code') 
 	 BEGIN ALTER TABLE c_ICD_Updates add icd10_code varchar(10) END
