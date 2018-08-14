@@ -9,9 +9,9 @@ end prototypes
 global function integer f_update_patient (ref str_patient pstr_patient);long ll_temp
 integer li_sts, i, j
 boolean lb_p_exists
-long ll_null
 datetime ldt_null
 string ls_null
+long ll_null
 
 setnull(ldt_null)
 setnull(ll_null)
@@ -22,129 +22,57 @@ if isnull(pstr_patient.cpr_id) or pstr_patient.cpr_id = "" then
 	return -1
 end if
 
+li_sts = f_set_patient_object_progress(pstr_patient.cpr_id, &
+							"Patient", &
+							ll_null, &
+							"Modify", &
+							"patient_status", &
+							pstr_patient.patient_status, &
+							ldt_null, &
+							ll_null, &
+							ll_null, &
+							ll_null, &
+							ll_null, &
+							ls_null, &
+							current_user.user_id, &
+							true)
+
+
 // A NULL in the passed in patient structure indicates no change.  That means that this procedure is not capable
-// changeing a non-null value to a null.
+// changing a non-null value to a null.
 
-if not isnull(pstr_patient.race) then
-	f_modify_patient(pstr_patient.cpr_id, "race", pstr_patient.race)
-end if
-
-if not isnull(pstr_patient.date_of_birth) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_birth", string(pstr_patient.date_of_birth))
-end if
-
-if not isnull(pstr_patient.time_of_birth) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "time_of_birth", string(pstr_patient.time_of_birth))
-end if
-
-if not isnull(pstr_patient.sex) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "sex", pstr_patient.sex)
-end if
-
-if not isnull(pstr_patient.phone_number) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "phone_number", pstr_patient.phone_number)
-end if
-
-if not isnull(pstr_patient.primary_language) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "primary_language", pstr_patient.primary_language)
-end if
-
-if not isnull(pstr_patient.marital_status) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "marital_status", pstr_patient.marital_status)
-end if
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "race", string(pstr_patient.race))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_birth", string(pstr_patient.date_of_birth))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "time_of_birth", string(pstr_patient.time_of_birth))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "sex", pstr_patient.sex)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "phone_number", pstr_patient.phone_number)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "primary_language", pstr_patient.primary_language)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "marital_status", pstr_patient.marital_status)
 
 // Msc don't update the billing_id through this method.  Interfaces and users must use other means of setting the billing_id
-//if not isnull(pstr_patient.billing_id) then
 //	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "billing_id", pstr_patient.billing_id)
-//end if
-//
-//if not isnull(pstr_patient.patient_id) then
-//	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "patient_id", string(pstr_patient.patient_id))
-//end if
 
-if not isnull(pstr_patient.first_name) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "first_name", pstr_patient.first_name)
-end if
-
-if not isnull(pstr_patient.last_name) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "last_name", pstr_patient.last_name)
-end if
-
-if not isnull(pstr_patient.degree) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "degree", pstr_patient.degree)
-end if
-
-if not isnull(pstr_patient.name_prefix) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "name_prefix", pstr_patient.name_prefix)
-end if
-
-if not isnull(pstr_patient.middle_name) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "middle_name", pstr_patient.middle_name)
-end if
-
-if not isnull(pstr_patient.name_suffix) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "name_suffix", pstr_patient.name_suffix)
-end if
-
-if not isnull(pstr_patient.primary_provider_id) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "primary_provider_id", pstr_patient.primary_provider_id)
-end if
-
-if not isnull(pstr_patient.secondary_provider_id) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "secondary_provider_id", pstr_patient.secondary_provider_id)
-end if
-
-if not isnull(pstr_patient.ssn) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "ssn", pstr_patient.ssn)
-end if
-
-if not isnull(pstr_patient.date_of_conception) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_conception", string(pstr_patient.date_of_conception))
-end if
-
-if not isnull(pstr_patient.referring_provider_id) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "referring_provider_id", pstr_patient.referring_provider_id)
-end if
-
-if not isnull(pstr_patient.email_address) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "email_address", pstr_patient.email_address)
-end if
-
-if not isnull(pstr_patient.nickname) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "nickname", pstr_patient.nickname)
-end if
-
-if not isnull(pstr_patient.maiden_name) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "maiden_name", pstr_patient.maiden_name)
-end if
-
-if not isnull(pstr_patient.address_line_1) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "address_line_1", pstr_patient.address_line_1)
-end if
-
-if not isnull(pstr_patient.address_line_2) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "address_line_2", pstr_patient.address_line_2)
-end if
-
-if not isnull(pstr_patient.city) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "city", pstr_patient.city)
-end if
-
-if not isnull(pstr_patient.state) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "state", pstr_patient.state)
-end if
-
-if not isnull(pstr_patient.zip) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "zip", pstr_patient.zip)
-end if
-
-if not isnull(pstr_patient.country) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "country", pstr_patient.country)
-end if
-
-if not isnull(pstr_patient.patient_status) then
-	datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "patient_status", pstr_patient.patient_status)
-end if
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "first_name", pstr_patient.first_name)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "last_name", pstr_patient.last_name)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "degree", pstr_patient.degree)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "name_prefix", pstr_patient.name_prefix)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "middle_name", pstr_patient.middle_name)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "name_suffix", pstr_patient.name_suffix)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "primary_provider_id", pstr_patient.primary_provider_id)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "secondary_provider_id", pstr_patient.secondary_provider_id)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "ssn", pstr_patient.ssn)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_conception", string(pstr_patient.date_of_conception))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "referring_provider_id", pstr_patient.referring_provider_id)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "email_address", pstr_patient.email_address)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "nickname", pstr_patient.nickname)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "maiden_name", pstr_patient.maiden_name)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "address_line_1", pstr_patient.address_line_1)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "address_line_2", pstr_patient.address_line_2)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "city", pstr_patient.city)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "state", pstr_patient.state)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "zip", pstr_patient.zip)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "country", pstr_patient.country)
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "patient_status", pstr_patient.patient_status)
 
 for i = 1 to pstr_patient.communications.communication_count
 	sqlca.sp_new_patient_communication(pstr_patient.cpr_id, &
@@ -155,6 +83,8 @@ for i = 1 to pstr_patient.communications.communication_count
 												pstr_patient.communications.communication[i].communication_name)
 	if not tf_check() then return -1
 next
+
+f_update_patient_list_items(pstr_patient.cpr_id, pstr_patient.list_item)
 
 return 1
 
