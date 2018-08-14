@@ -2,17 +2,25 @@
 forward
 global type u_tabpage_patient_data from u_tabpage
 end type
-type st_issuer from statictext within u_tabpage_patient_data
+type st_ssn_t from statictext within u_tabpage_patient_data
 end type
-type st_issuer_title from statictext within u_tabpage_patient_data
+type em_ssn from editmask within u_tabpage_patient_data
 end type
-type st_id_document_title from statictext within u_tabpage_patient_data
+type sle_id_number from singlelineedit within u_tabpage_patient_data
+end type
+type st_id_number_t from statictext within u_tabpage_patient_data
+end type
+type st_country_t from statictext within u_tabpage_patient_data
+end type
+type st_country from statictext within u_tabpage_patient_data
 end type
 type st_id_document from statictext within u_tabpage_patient_data
 end type
-type st_id_number from statictext within u_tabpage_patient_data
+type st_id_document_t from statictext within u_tabpage_patient_data
 end type
-type st_id_number_title from statictext within u_tabpage_patient_data
+type st_sex from statictext within u_tabpage_patient_data
+end type
+type st_sex_t from statictext within u_tabpage_patient_data
 end type
 type cb_make_test from commandbutton within u_tabpage_patient_data
 end type
@@ -32,7 +40,7 @@ type st_time_of_birth from statictext within u_tabpage_patient_data
 end type
 type sle_nickname from singlelineedit within u_tabpage_patient_data
 end type
-type st_3 from statictext within u_tabpage_patient_data
+type st_nickname_t from statictext within u_tabpage_patient_data
 end type
 type st_patient_name from statictext within u_tabpage_patient_data
 end type
@@ -52,21 +60,17 @@ type st_cpr_id from statictext within u_tabpage_patient_data
 end type
 type st_primary_provider from u_st_primary_provider within u_tabpage_patient_data
 end type
-type st_4 from statictext within u_tabpage_patient_data
+type st_patient_name_t from statictext within u_tabpage_patient_data
 end type
 type st_birthdate from statictext within u_tabpage_patient_data
 end type
 type st_age_title from statictext within u_tabpage_patient_data
 end type
-type st_5 from statictext within u_tabpage_patient_data
-end type
-type uo_cb_sex from u_cb_sex_toggle within u_tabpage_patient_data
+type st_billing_id_t from statictext within u_tabpage_patient_data
 end type
 type st_phone_num_title from statictext within u_tabpage_patient_data
 end type
 type sle_phone_number from singlelineedit within u_tabpage_patient_data
-end type
-type st_sex from statictext within u_tabpage_patient_data
 end type
 type st_primary_provider_title from statictext within u_tabpage_patient_data
 end type
@@ -90,12 +94,16 @@ global type u_tabpage_patient_data from u_tabpage
 integer width = 2875
 integer height = 1268
 string text = "none"
-st_issuer st_issuer
-st_issuer_title st_issuer_title
-st_id_document_title st_id_document_title
+st_ssn_t st_ssn_t
+em_ssn em_ssn
+sle_id_number sle_id_number
+st_id_number_t st_id_number_t
+st_country_t st_country_t
+st_country st_country
 st_id_document st_id_document
-st_id_number st_id_number
-st_id_number_title st_id_number_title
+st_id_document_t st_id_document_t
+st_sex st_sex
+st_sex_t st_sex_t
 cb_make_test cb_make_test
 st_test_patient st_test_patient
 st_maiden_name_title st_maiden_name_title
@@ -105,7 +113,7 @@ st_referring_provider_title st_referring_provider_title
 st_birth_time_title st_birth_time_title
 st_time_of_birth st_time_of_birth
 sle_nickname sle_nickname
-st_3 st_3
+st_nickname_t st_nickname_t
 st_patient_name st_patient_name
 st_date_of_birth st_date_of_birth
 cb_change_billing_id cb_change_billing_id
@@ -115,14 +123,12 @@ st_patient_status st_patient_status
 st_patient_status_t st_patient_status_t
 st_cpr_id st_cpr_id
 st_primary_provider st_primary_provider
-st_4 st_4
+st_patient_name_t st_patient_name_t
 st_birthdate st_birthdate
 st_age_title st_age_title
-st_5 st_5
-uo_cb_sex uo_cb_sex
+st_billing_id_t st_billing_id_t
 st_phone_num_title st_phone_num_title
 sle_phone_number sle_phone_number
-st_sex st_sex
 st_primary_provider_title st_primary_provider_title
 st_office st_office
 st_office_title st_office_title
@@ -136,9 +142,7 @@ global u_tabpage_patient_data u_tabpage_patient_data
 
 type variables
 
-string ssn_mask_usa = "###-##-####"
-string ssn_mask
-
+w_patient_data w_container
 end variables
 
 forward prototypes
@@ -146,10 +150,13 @@ public function integer initialize ()
 public subroutine refresh ()
 public function integer show_patient (string ps_cpr_id)
 public subroutine display_portrait ()
+public subroutine highlight_st (statictext pwo_control, boolean pb_on)
+public subroutine highlight_sle (singlelineedit pwo_control, boolean pb_on)
 end prototypes
 
 public function integer initialize ();integer li_sts
 string ls_temp
+string ls_empty = ""
 
 if isnull(current_patient) then
 	log.log(this, "u_tabpage_patient_data.initialize:0014", "No current patient", 4)
@@ -166,10 +173,12 @@ end function
 
 public subroutine refresh ();show_patient(current_patient.cpr_id)
 
+
 end subroutine
 
 public function integer show_patient (string ps_cpr_id);string ls_temp
 u_user luo_user
+string ls_empty = ""
 
 st_patient_name.text = current_patient.name()
 st_billing_id.text 		= current_patient.billing_id
@@ -184,7 +193,7 @@ if current_patient.weeks_premature > 0 then
 end if
 
 st_cpr_id.text = ps_cpr_id
-uo_cb_sex.set_sex(current_patient.sex)
+st_sex.text = current_patient.sex
 sle_phone_number.text = current_patient.phone_number
 st_primary_provider.initialize(current_patient.primary_provider_id)
 st_race.text = current_patient.race
@@ -224,6 +233,39 @@ else
 	cb_make_test.visible = false
 end if
 
+// Avoid Americanisms 
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
+	// Hmmm, ssn never WAS populated
+	sle_nickname.text = current_patient.nickname
+	sle_maiden_name.text = current_patient.maiden_name
+	st_race.text = current_patient.race
+		
+	st_id_document.visible = false
+	sle_id_number.visible = false
+	st_country.visible = false
+	st_id_document_t.visible = false
+	st_id_number_t.visible = false
+	st_country_t.visible = false
+
+else
+	// some day may have a case statement for locale?
+	// Hide the U.S. fields
+	em_ssn.visible = false
+	sle_nickname.visible = false
+	sle_maiden_name.visible = false
+	st_race.visible = false
+	
+	st_ssn_t.visible = false
+	st_nickname_t.visible = false
+	st_maiden_name_title.visible = false
+	st_race_title.visible = false
+
+	st_id_document.text = ""
+	sle_id_number.text = ""
+	w_container.get_patient_list_item("Id Document", st_id_document.text, sle_id_number.text)
+	st_country.text = ""
+	w_container.get_patient_list_item("Country", st_country.text, ls_empty)
+end if
 
 display_portrait()
 
@@ -258,15 +300,39 @@ end if
 
 end subroutine
 
+public subroutine highlight_st (statictext pwo_control, boolean pb_on);
+IF pb_on THEN
+	pwo_control.backcolor = COLOR_LIGHT_YELLOW
+ELSE
+	IF NOT f_is_empty_string(pwo_control.text) THEN
+		pwo_control.backcolor = COLOR_LIGHT_GREY
+	END IF
+END IF
+end subroutine
+
+public subroutine highlight_sle (singlelineedit pwo_control, boolean pb_on);
+IF pb_on THEN
+	pwo_control.backcolor = COLOR_LIGHT_YELLOW
+ELSE
+	IF NOT f_is_empty_string(pwo_control.text) THEN
+		pwo_control.backcolor = COLOR_WHITE
+	END IF
+END IF
+end subroutine
+
 on u_tabpage_patient_data.create
 int iCurrent
 call super::create
-this.st_issuer=create st_issuer
-this.st_issuer_title=create st_issuer_title
-this.st_id_document_title=create st_id_document_title
+this.st_ssn_t=create st_ssn_t
+this.em_ssn=create em_ssn
+this.sle_id_number=create sle_id_number
+this.st_id_number_t=create st_id_number_t
+this.st_country_t=create st_country_t
+this.st_country=create st_country
 this.st_id_document=create st_id_document
-this.st_id_number=create st_id_number
-this.st_id_number_title=create st_id_number_title
+this.st_id_document_t=create st_id_document_t
+this.st_sex=create st_sex
+this.st_sex_t=create st_sex_t
 this.cb_make_test=create cb_make_test
 this.st_test_patient=create st_test_patient
 this.st_maiden_name_title=create st_maiden_name_title
@@ -276,7 +342,7 @@ this.st_referring_provider_title=create st_referring_provider_title
 this.st_birth_time_title=create st_birth_time_title
 this.st_time_of_birth=create st_time_of_birth
 this.sle_nickname=create sle_nickname
-this.st_3=create st_3
+this.st_nickname_t=create st_nickname_t
 this.st_patient_name=create st_patient_name
 this.st_date_of_birth=create st_date_of_birth
 this.cb_change_billing_id=create cb_change_billing_id
@@ -286,14 +352,12 @@ this.st_patient_status=create st_patient_status
 this.st_patient_status_t=create st_patient_status_t
 this.st_cpr_id=create st_cpr_id
 this.st_primary_provider=create st_primary_provider
-this.st_4=create st_4
+this.st_patient_name_t=create st_patient_name_t
 this.st_birthdate=create st_birthdate
 this.st_age_title=create st_age_title
-this.st_5=create st_5
-this.uo_cb_sex=create uo_cb_sex
+this.st_billing_id_t=create st_billing_id_t
 this.st_phone_num_title=create st_phone_num_title
 this.sle_phone_number=create sle_phone_number
-this.st_sex=create st_sex
 this.st_primary_provider_title=create st_primary_provider_title
 this.st_office=create st_office
 this.st_office_title=create st_office_title
@@ -303,57 +367,63 @@ this.st_portrait=create st_portrait
 this.st_age=create st_age
 this.st_referring_provider=create st_referring_provider
 iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.st_issuer
-this.Control[iCurrent+2]=this.st_issuer_title
-this.Control[iCurrent+3]=this.st_id_document_title
-this.Control[iCurrent+4]=this.st_id_document
-this.Control[iCurrent+5]=this.st_id_number
-this.Control[iCurrent+6]=this.st_id_number_title
-this.Control[iCurrent+7]=this.cb_make_test
-this.Control[iCurrent+8]=this.st_test_patient
-this.Control[iCurrent+9]=this.st_maiden_name_title
-this.Control[iCurrent+10]=this.sle_maiden_name
-this.Control[iCurrent+11]=this.cb_clear_referring_provider
-this.Control[iCurrent+12]=this.st_referring_provider_title
-this.Control[iCurrent+13]=this.st_birth_time_title
-this.Control[iCurrent+14]=this.st_time_of_birth
-this.Control[iCurrent+15]=this.sle_nickname
-this.Control[iCurrent+16]=this.st_3
-this.Control[iCurrent+17]=this.st_patient_name
-this.Control[iCurrent+18]=this.st_date_of_birth
-this.Control[iCurrent+19]=this.cb_change_billing_id
-this.Control[iCurrent+20]=this.st_race
-this.Control[iCurrent+21]=this.st_race_title
-this.Control[iCurrent+22]=this.st_patient_status
-this.Control[iCurrent+23]=this.st_patient_status_t
-this.Control[iCurrent+24]=this.st_cpr_id
-this.Control[iCurrent+25]=this.st_primary_provider
-this.Control[iCurrent+26]=this.st_4
-this.Control[iCurrent+27]=this.st_birthdate
-this.Control[iCurrent+28]=this.st_age_title
-this.Control[iCurrent+29]=this.st_5
-this.Control[iCurrent+30]=this.uo_cb_sex
-this.Control[iCurrent+31]=this.st_phone_num_title
-this.Control[iCurrent+32]=this.sle_phone_number
-this.Control[iCurrent+33]=this.st_sex
-this.Control[iCurrent+34]=this.st_primary_provider_title
-this.Control[iCurrent+35]=this.st_office
-this.Control[iCurrent+36]=this.st_office_title
-this.Control[iCurrent+37]=this.st_billing_id
-this.Control[iCurrent+38]=this.uo_picture
-this.Control[iCurrent+39]=this.st_portrait
-this.Control[iCurrent+40]=this.st_age
-this.Control[iCurrent+41]=this.st_referring_provider
+this.Control[iCurrent+1]=this.st_ssn_t
+this.Control[iCurrent+2]=this.em_ssn
+this.Control[iCurrent+3]=this.sle_id_number
+this.Control[iCurrent+4]=this.st_id_number_t
+this.Control[iCurrent+5]=this.st_country_t
+this.Control[iCurrent+6]=this.st_country
+this.Control[iCurrent+7]=this.st_id_document
+this.Control[iCurrent+8]=this.st_id_document_t
+this.Control[iCurrent+9]=this.st_sex
+this.Control[iCurrent+10]=this.st_sex_t
+this.Control[iCurrent+11]=this.cb_make_test
+this.Control[iCurrent+12]=this.st_test_patient
+this.Control[iCurrent+13]=this.st_maiden_name_title
+this.Control[iCurrent+14]=this.sle_maiden_name
+this.Control[iCurrent+15]=this.cb_clear_referring_provider
+this.Control[iCurrent+16]=this.st_referring_provider_title
+this.Control[iCurrent+17]=this.st_birth_time_title
+this.Control[iCurrent+18]=this.st_time_of_birth
+this.Control[iCurrent+19]=this.sle_nickname
+this.Control[iCurrent+20]=this.st_nickname_t
+this.Control[iCurrent+21]=this.st_patient_name
+this.Control[iCurrent+22]=this.st_date_of_birth
+this.Control[iCurrent+23]=this.cb_change_billing_id
+this.Control[iCurrent+24]=this.st_race
+this.Control[iCurrent+25]=this.st_race_title
+this.Control[iCurrent+26]=this.st_patient_status
+this.Control[iCurrent+27]=this.st_patient_status_t
+this.Control[iCurrent+28]=this.st_cpr_id
+this.Control[iCurrent+29]=this.st_primary_provider
+this.Control[iCurrent+30]=this.st_patient_name_t
+this.Control[iCurrent+31]=this.st_birthdate
+this.Control[iCurrent+32]=this.st_age_title
+this.Control[iCurrent+33]=this.st_billing_id_t
+this.Control[iCurrent+34]=this.st_phone_num_title
+this.Control[iCurrent+35]=this.sle_phone_number
+this.Control[iCurrent+36]=this.st_primary_provider_title
+this.Control[iCurrent+37]=this.st_office
+this.Control[iCurrent+38]=this.st_office_title
+this.Control[iCurrent+39]=this.st_billing_id
+this.Control[iCurrent+40]=this.uo_picture
+this.Control[iCurrent+41]=this.st_portrait
+this.Control[iCurrent+42]=this.st_age
+this.Control[iCurrent+43]=this.st_referring_provider
 end on
 
 on u_tabpage_patient_data.destroy
 call super::destroy
-destroy(this.st_issuer)
-destroy(this.st_issuer_title)
-destroy(this.st_id_document_title)
+destroy(this.st_ssn_t)
+destroy(this.em_ssn)
+destroy(this.sle_id_number)
+destroy(this.st_id_number_t)
+destroy(this.st_country_t)
+destroy(this.st_country)
 destroy(this.st_id_document)
-destroy(this.st_id_number)
-destroy(this.st_id_number_title)
+destroy(this.st_id_document_t)
+destroy(this.st_sex)
+destroy(this.st_sex_t)
 destroy(this.cb_make_test)
 destroy(this.st_test_patient)
 destroy(this.st_maiden_name_title)
@@ -363,7 +433,7 @@ destroy(this.st_referring_provider_title)
 destroy(this.st_birth_time_title)
 destroy(this.st_time_of_birth)
 destroy(this.sle_nickname)
-destroy(this.st_3)
+destroy(this.st_nickname_t)
 destroy(this.st_patient_name)
 destroy(this.st_date_of_birth)
 destroy(this.cb_change_billing_id)
@@ -373,14 +443,12 @@ destroy(this.st_patient_status)
 destroy(this.st_patient_status_t)
 destroy(this.st_cpr_id)
 destroy(this.st_primary_provider)
-destroy(this.st_4)
+destroy(this.st_patient_name_t)
 destroy(this.st_birthdate)
 destroy(this.st_age_title)
-destroy(this.st_5)
-destroy(this.uo_cb_sex)
+destroy(this.st_billing_id_t)
 destroy(this.st_phone_num_title)
 destroy(this.sle_phone_number)
-destroy(this.st_sex)
 destroy(this.st_primary_provider_title)
 destroy(this.st_office)
 destroy(this.st_office_title)
@@ -391,12 +459,123 @@ destroy(this.st_age)
 destroy(this.st_referring_provider)
 end on
 
-type st_issuer from statictext within u_tabpage_patient_data
+type st_ssn_t from statictext within u_tabpage_patient_data
+integer x = 2057
+integer y = 836
+integer width = 151
+integer height = 72
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "SSN"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type em_ssn from editmask within u_tabpage_patient_data
 integer x = 2249
-integer y = 572
-integer width = 562
+integer y = 820
+integer width = 558
 integer height = 108
-integer taborder = 130
+integer taborder = 110
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+borderstyle borderstyle = stylelowered!
+maskdatatype maskdatatype = stringmask!
+string mask = "###-##-####"
+end type
+
+event modified;current_patient.ssn = text
+
+end event
+
+type sle_id_number from singlelineedit within u_tabpage_patient_data
+integer x = 594
+integer y = 576
+integer width = 768
+integer height = 108
+integer taborder = 110
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+integer limit = 100
+borderstyle borderstyle = stylelowered!
+end type
+
+event modified;
+integer li_rc
+
+if f_is_empty_string(st_id_document.text) then
+	openwithparm(w_pop_message, "The id document type must be selected before you may enter the document number")
+end if
+
+li_rc = w_container.set_patient_list_item("Id Document", st_id_document.text, text)
+highlight_sle(this, false)
+if li_rc < 0 then
+	log.log(this, "w_edit_patient_data.st_id_number.modified:0006", "Error setting document number", 4)
+end if
+
+end event
+
+type st_id_number_t from statictext within u_tabpage_patient_data
+integer x = 219
+integer y = 592
+integer width = 343
+integer height = 76
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "ID Number"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type st_country_t from statictext within u_tabpage_patient_data
+integer x = 1495
+integer y = 588
+integer width = 457
+integer height = 80
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Issuing Country"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type st_country from statictext within u_tabpage_patient_data
+integer x = 2043
+integer y = 576
+integer width = 768
+integer height = 104
+integer taborder = 150
+boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -411,51 +590,38 @@ borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;open(w_pop_premature)
-refresh()
+event clicked;
+str_popup popup
+str_popup_return popup_return
+u_user luo_user
+integer li_rc
+string ls_empty = ""
+
+popup.dataobject = "dw_list_items_active"
+popup.datacolumn = 3
+popup.displaycolumn = 3
+popup.argument_count = 1
+popup.argument[1] = "Country"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return
+
+li_rc = w_container.set_patient_list_item("Country", popup_return.items[1], ls_empty)
+if li_rc < 0 then
+	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
+end if
+text = popup_return.items[1]
+highlight_st(this, false)
 
 end event
 
-type st_issuer_title from statictext within u_tabpage_patient_data
-integer x = 2039
-integer y = 596
-integer width = 174
-integer height = 60
-integer textsize = -10
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 33538240
-boolean enabled = false
-string text = "Issuer"
-alignment alignment = right!
-boolean focusrectangle = false
-end type
-
-type st_id_document_title from statictext within u_tabpage_patient_data
-integer x = 169
-integer y = 592
-integer width = 384
-integer height = 72
-integer textsize = -10
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 33538240
-boolean enabled = false
-string text = "ID Document"
-alignment alignment = right!
-boolean focusrectangle = false
-end type
-
 type st_id_document from statictext within u_tabpage_patient_data
 integer x = 594
-integer y = 576
-integer width = 443
+integer y = 452
+integer width = 681
 integer height = 104
-integer taborder = 110
+integer taborder = 140
+boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -473,29 +639,53 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 u_user luo_user
+integer li_rc
+string ls_empty = ""
 
-popup.dataobject = "dw_domain_notranslate_list"
-popup.datacolumn = 2
-popup.displaycolumn = 2
+popup.dataobject = "dw_list_items_active"
+popup.datacolumn = 3
+popup.displaycolumn = 3
 popup.argument_count = 1
-popup.argument[1] = "ID_DOCUMENT"
+popup.argument[1] = "Id Document"
 openwithparm(w_pop_pick, popup)
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
-if f_string_modified(current_patient.race, popup_return.items[1]) then
-	current_patient.modify_patient("race", popup_return.items[1])
-	text = current_patient.race
+li_rc = w_container.set_patient_list_item("Id Document", popup_return.items[1], ls_empty)
+if li_rc < 0 then
+	log.log(this, "w_edit_patient_data.st_id_document.clicked:0019", "Error setting document id type", 4)
 end if
-
+// Edited document type, clear out document number
+sle_id_number.text = ""
+text = popup_return.items[1]
+highlight_st(this, false)
 end event
 
-type st_id_number from statictext within u_tabpage_patient_data
-integer x = 1399
-integer y = 576
-integer width = 581
+type st_id_document_t from statictext within u_tabpage_patient_data
+integer x = 133
+integer y = 464
+integer width = 430
+integer height = 80
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Id Document"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type st_sex from statictext within u_tabpage_patient_data
+integer x = 594
+integer y = 332
+integer width = 443
 integer height = 104
-integer taborder = 100
+integer taborder = 80
+boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -503,39 +693,28 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 16777215
+long backcolor = 67108864
 alignment alignment = center!
 boolean border = true
-borderstyle borderstyle = StyleLowered!
+borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;time lt_time_of_birth
-string ls_text
-str_popup popup
-str_popup_return popup_return
-
-popup.title = "Enter Patient's Birth Time"
-popup.item = string(current_patient.time_of_birth)
-
-openwithparm(w_pop_prompt_time, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_count < 1 then return
-
-lt_time_of_birth = time(popup_return.items[1])
-
-if (lt_time_of_birth <> current_patient.time_of_birth) or isnull(current_patient.time_of_birth) then
-	text = popup_return.items[1]
-	current_patient.modify_patient("time_of_birth", text)
+event clicked;
+if text = "Male" then
+	text = "Female"
+	current_patient.sex = "F"
+else
+	text = "Male"
+	current_patient.sex = "M"
 end if
-
-
+highlight_st(this, false)
 end event
 
-type st_id_number_title from statictext within u_tabpage_patient_data
-integer x = 1056
-integer y = 592
-integer width = 320
+type st_sex_t from statictext within u_tabpage_patient_data
+integer x = 389
+integer y = 348
+integer width = 174
 integer height = 72
 integer textsize = -10
 integer weight = 700
@@ -544,7 +723,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "ID Number"
+string text = "Sex"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -601,9 +780,9 @@ boolean focusrectangle = false
 end type
 
 type st_maiden_name_title from statictext within u_tabpage_patient_data
-integer x = 1189
-integer y = 348
-integer width = 453
+integer x = 160
+integer y = 468
+integer width = 402
 integer height = 72
 integer textsize = -10
 integer weight = 700
@@ -618,9 +797,9 @@ boolean focusrectangle = false
 end type
 
 type sle_maiden_name from singlelineedit within u_tabpage_patient_data
-integer x = 1669
-integer y = 332
-integer width = 494
+integer x = 594
+integer y = 452
+integer width = 526
 integer height = 108
 integer taborder = 20
 integer textsize = -9
@@ -667,7 +846,7 @@ visible = false
 end event
 
 type st_referring_provider_title from statictext within u_tabpage_patient_data
-integer x = 5
+integer x = 14
 integer y = 1104
 integer width = 549
 integer height = 72
@@ -743,9 +922,9 @@ end if
 end event
 
 type sle_nickname from singlelineedit within u_tabpage_patient_data
-integer x = 590
-integer y = 332
-integer width = 526
+integer x = 1618
+integer y = 452
+integer width = 544
 integer height = 108
 integer taborder = 10
 integer textsize = -9
@@ -765,9 +944,9 @@ end if
 
 end event
 
-type st_3 from statictext within u_tabpage_patient_data
-integer x = 23
-integer y = 348
+type st_nickname_t from statictext within u_tabpage_patient_data
+integer x = 1061
+integer y = 468
 integer width = 526
 integer height = 72
 integer textsize = -10
@@ -783,7 +962,7 @@ boolean focusrectangle = false
 end type
 
 type st_patient_name from statictext within u_tabpage_patient_data
-integer x = 590
+integer x = 594
 integer y = 208
 integer width = 1573
 integer height = 104
@@ -941,9 +1120,9 @@ end if
 end event
 
 type st_race from statictext within u_tabpage_patient_data
-integer x = 1669
-integer y = 460
-integer width = 494
+integer x = 1618
+integer y = 336
+integer width = 544
 integer height = 100
 integer taborder = 120
 integer textsize = -10
@@ -981,8 +1160,8 @@ end if
 end event
 
 type st_race_title from statictext within u_tabpage_patient_data
-integer x = 1458
-integer y = 472
+integer x = 1413
+integer y = 348
 integer width = 174
 integer height = 72
 integer textsize = -10
@@ -998,9 +1177,9 @@ boolean focusrectangle = false
 end type
 
 type st_patient_status from statictext within u_tabpage_patient_data
-integer x = 1623
+integer x = 1618
 integer y = 76
-integer width = 549
+integer width = 544
 integer height = 104
 integer taborder = 170
 integer textsize = -9
@@ -1089,8 +1268,8 @@ end if
 
 end event
 
-type st_4 from statictext within u_tabpage_patient_data
-integer x = 27
+type st_patient_name_t from statictext within u_tabpage_patient_data
+integer x = 37
 integer y = 224
 integer width = 526
 integer height = 72
@@ -1107,7 +1286,7 @@ boolean focusrectangle = false
 end type
 
 type st_birthdate from statictext within u_tabpage_patient_data
-integer x = 279
+integer x = 288
 integer y = 720
 integer width = 274
 integer height = 72
@@ -1140,8 +1319,8 @@ alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type st_5 from statictext within u_tabpage_patient_data
-integer x = 251
+type st_billing_id_t from statictext within u_tabpage_patient_data
+integer x = 261
 integer y = 92
 integer width = 302
 integer height = 72
@@ -1157,21 +1336,8 @@ alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type uo_cb_sex from u_cb_sex_toggle within u_tabpage_patient_data
-integer x = 590
-integer y = 452
-integer taborder = 90
-end type
-
-event clicked;call super::clicked;if f_string_modified(current_patient.sex, sex) then
-	current_patient.modify_patient("sex", sex)
-	set_sex(current_patient.sex)
-end if
-
-end event
-
 type st_phone_num_title from statictext within u_tabpage_patient_data
-integer x = 27
+integer x = 37
 integer y = 840
 integer width = 526
 integer height = 72
@@ -1210,25 +1376,8 @@ end if
 
 end event
 
-type st_sex from statictext within u_tabpage_patient_data
-integer x = 379
-integer y = 468
-integer width = 174
-integer height = 72
-integer textsize = -10
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 33538240
-boolean enabled = false
-string text = "Sex"
-alignment alignment = right!
-boolean focusrectangle = false
-end type
-
 type st_primary_provider_title from statictext within u_tabpage_patient_data
-integer x = 27
+integer x = 37
 integer y = 972
 integer width = 526
 integer height = 72
@@ -1303,7 +1452,7 @@ boolean focusrectangle = false
 end type
 
 type st_billing_id from statictext within u_tabpage_patient_data
-integer x = 590
+integer x = 594
 integer y = 76
 integer width = 805
 integer height = 104
@@ -1315,7 +1464,6 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 67108864
-string text = "none"
 boolean border = true
 boolean focusrectangle = false
 end type
