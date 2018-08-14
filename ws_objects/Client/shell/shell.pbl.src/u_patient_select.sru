@@ -105,7 +105,7 @@ end event
 
 public function integer search_patients ();integer li_sts
 long ll_check
-
+string ls_id_document, ls_country
 
 ll_check = sqlca.jmj_patient_search2(current_user.user_id, &
 												uo_search_criteria.billing_id, &
@@ -117,6 +117,9 @@ ll_check = sqlca.jmj_patient_search2(current_user.user_id, &
 												uo_search_criteria.employer, &
 												uo_search_criteria.employeeid, &
 												uo_search_criteria.patient_status, &
+												uo_search_criteria.id_document, &
+												uo_search_criteria.country, &
+												uo_search_criteria.document_number, &
 												1)
 if not tf_check() then return -1
 
@@ -143,7 +146,10 @@ else
 											uo_search_criteria.phone_number, &
 											uo_search_criteria.employer, &
 											uo_search_criteria.employeeid, &
-											uo_search_criteria.patient_status )
+											uo_search_criteria.patient_status, &
+											uo_search_criteria.id_document, &
+											uo_search_criteria.country, &
+											uo_search_criteria.document_number )
 	
 	if il_current_page <= 0 then il_current_page = 1
 	dw_patients.set_page(il_current_page, pb_up, pb_down, st_page)
