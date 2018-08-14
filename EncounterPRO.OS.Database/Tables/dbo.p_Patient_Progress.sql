@@ -78,8 +78,7 @@ CREATE TABLE [dbo].[p_Patient_Progress] (
 		[risk_level]                    [int] NULL,
 		[current_flag]                  [char](1) NOT NULL,
 		[created]                       [datetime] NULL,
-		[created_by]                    [varchar](24) NOT NULL,
-		[id]                            [uniqueidentifier] NOT NULL
+		[created_by]                    [varchar](24) NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Patient_Progress]
@@ -100,11 +99,6 @@ ALTER TABLE [dbo].[p_Patient_Progress]
 	ADD
 	CONSTRAINT [DF__p_Patient__progr__377107A9]
 	DEFAULT (getdate()) FOR [progress_date_time]
-GO
-ALTER TABLE [dbo].[p_Patient_Progress]
-	ADD
-	CONSTRAINT [DF__p_Patient_Pr__id__3959501B]
-	DEFAULT (newid()) FOR [id]
 GO
 ALTER TABLE [dbo].[p_Patient_Progress]
 	ADD
