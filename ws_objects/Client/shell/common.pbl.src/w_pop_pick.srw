@@ -32,7 +32,6 @@ integer width = 2030
 integer height = 1716
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -412,7 +411,6 @@ else
 		dw_pick.insertrow(0)
 		dw_pick.setitem(i,1,popup.items[i])
 		if popup.use_background_color then dw_pick.setitem(i,"color",popup.background_color[i])
-		// By Sumathi Chinnasamy On 10/18/99
 		If Upperbound(popup.preselected_items) >= i Then
 			// set the selected_flag to select the row
 			If popup.preselected_items[i] Then dw_pick.object.selected_flag[i] = 1
@@ -504,8 +502,6 @@ destroy(this.cb_cancel)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_pop_pick
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pop_pick
