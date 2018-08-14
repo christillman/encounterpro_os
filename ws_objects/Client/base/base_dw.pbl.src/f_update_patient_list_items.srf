@@ -1,0 +1,60 @@
+﻿$PBExportHeader$f_update_patient_list_items.srf
+global type f_update_patient_list_items from function_object
+end type
+
+forward prototypes
+global function integer f_update_patient_list_items (string ps_cpr_id, ref str_p_patient_list_item pstr_list_item[])
+end prototypes
+
+global function integer f_update_patient_list_items (string ps_cpr_id, ref str_p_patient_list_item pstr_list_item[]);
+integer i
+
+for i = 1 to UpperBound(pstr_list_item)
+	CHOOSE CASE pstr_list_item[i].list_id
+		CASE ""
+			// skip it
+		CASE "Id Document"
+			// single value lists; patient data required
+			DELETE FROM p_patient_list_item 
+			WHERE cpr_id = :ps_cpr_id
+			AND list_id = :pstr_list_item[i].list_id;
+			
+			IF pstr_list_item[i].list_item_patient_data <> "" THEN
+				INSERT INTO p_patient_list_item (cpr_id, list_id, list_item, list_item_patient_data)
+				VALUES (:ps_cpr_id, 
+						:pstr_list_item[i].list_id, 
+						:pstr_list_item[i].list_item,
+						:pstr_list_item[i].list_item_patient_data );
+			END IF
+					
+		CASE "Country"
+			// single value lists; the last one will win
+			DELETE FROM p_patient_list_item 
+			WHERE cpr_id = :ps_cpr_id
+			AND list_id = :pstr_list_item[i].list_id;
+			
+			INSERT INTO p_patient_list_item (cpr_id, list_id, list_item, list_item_patient_data)
+			VALUES (:ps_cpr_id, 
+					:pstr_list_item[i].list_id, 
+					:pstr_list_item[i].list_item,
+					:pstr_list_item[i].list_item_patient_data );
+			
+		CASE ELSE
+			// Multi value lists e.g. Locality
+			DELETE FROM p_patient_list_item 
+			WHERE cpr_id = :ps_cpr_id
+			AND list_id = :pstr_list_item[i].list_id
+			AND list_item = :pstr_list_item[i].list_item;
+			
+			INSERT INTO p_patient_list_item (cpr_id, list_id, list_item, list_item_patient_data)
+			VALUES (:ps_cpr_id, 
+					:pstr_list_item[i].list_id, 
+					:pstr_list_item[i].list_item,
+					:pstr_list_item[i].list_item_patient_data );
+	END CHOOSE
+	if not tf_check() then return -1
+next
+
+
+end function
+

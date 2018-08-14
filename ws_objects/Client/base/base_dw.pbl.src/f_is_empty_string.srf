@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_is_empty_string.srf
+global type f_is_empty_string from function_object
+end type
+
+forward prototypes
+global function boolean f_is_empty_string (string ps_string)
+end prototypes
+
+global function boolean f_is_empty_string (string ps_string);
+IF IsNull(ps_string) THEN return true
+
+IF Len(Trim(ps_string)) = 0 THEN return true
+
+return false
+end function
+
