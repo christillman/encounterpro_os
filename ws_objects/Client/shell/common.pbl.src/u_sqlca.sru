@@ -194,7 +194,7 @@ FUNCTION long jmj_order_document_from_material(string ps_cpr_id, long pl_encount
 
 FUNCTION long jmj_order_message_recipient(long pl_dispatched_patient_workplan_item_id, string ps_ordered_for, string ps_created_by, ref long pl_patient_workplan_item_id, string ps_dispatch_method) RPCFUNC ALIAS FOR "dbo.jmj_order_message_recipient"
 FUNCTION long jmj_owner_lookup(string ps_owner, string ps_description, string ps_owner_type, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_owner_lookup"
-FUNCTION long jmj_patient_search2(string ps_user_id, string ps_billing_id, string ps_last_name, string ps_first_name, string ps_ssn, datetime pdt_date_of_birth, string ps_phone_number, string ps_employer, string ps_employeeid, string ps_patient_status, long pl_count_only) RPCFUNC ALIAS FOR "dbo.jmj_patient_search2"
+FUNCTION long jmj_patient_search2(string ps_user_id, string ps_billing_id, string ps_last_name, string ps_first_name, string ps_ssn, datetime pdt_date_of_birth, string ps_phone_number, string ps_employer, string ps_employeeid, string ps_patient_status, string ps_id_document, string ps_country, string ps_document_number, long pl_count_only) RPCFUNC ALIAS FOR "dbo.jmj_patient_search2"
 FUNCTION long sp_Set_Attachment_Progress(string ps_cpr_id, long pl_attachment_id, long pl_patient_workplan_item_id, string ps_user_id, datetime pdt_progress_date_time, string ps_progress_type, string ps_progress, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_Set_Attachment_Progress"
 FUNCTION long jmj_reset_active_services() RPCFUNC ALIAS FOR "dbo.jmj_reset_active_services"
 FUNCTION long jmj_set_constraints() RPCFUNC ALIAS FOR "dbo.jmj_set_constraints"
@@ -692,7 +692,6 @@ FUNCTION long xml_set_default_mapping(long pl_owner_id, string ps_code_domain, s
 
 
 end prototypes
-
 type variables
 boolean transaction_open
 integer transaction_level
