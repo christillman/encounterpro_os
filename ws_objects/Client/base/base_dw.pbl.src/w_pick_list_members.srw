@@ -55,6 +55,7 @@ global w_pick_list_members w_pick_list_members
 type variables
 
 string is_list_id, is_list_description
+long il_drag_from_row
 
 end variables
 
@@ -202,8 +203,8 @@ dw_list_members.settransobject(sqlca)
 dw_selected.settransobject(sqlca)
 
 ll_rows = dw_list_members.retrieve(is_list_id)
-if ll_rows < 0 then
-	log.log(this, "w_pick_list_members:open", "Error getting list members", 4)
+if ll_rows <= 0 then
+	log.log(this, "w_pick_list_members.open:0035", "Error getting list members", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -253,6 +254,27 @@ string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;
+long ll_row, ll_edit_row
+integer li_inc
+string ls_find, ls_list_item
+
+// Reset all sort_sequence to 0 first
+FOR ll_row = 1 TO dw_list_members.rowcount()
+	dw_list_members.object.sort_sequence[ll_row] = 0
+NEXT
+
+// Renumber the selected ones
+li_inc = 0
+FOR ll_row = 1 TO dw_selected.rowcount()
+	li_inc = li_inc + 10
+	ls_list_item = dw_selected.object.list_item[ll_row]
+	
+	ls_find = "list_item ='" + ls_list_item + "'"
+	ll_edit_row = dw_list_members.Find(ls_find, 1, dw_list_members.rowcount())
+		
+	dw_list_members.object.sort_sequence[ll_edit_row] = li_inc
+NEXT
+
 dw_list_members.Update()
 tf_check()
 
@@ -340,18 +362,26 @@ borderstyle borderstyle = styleraised!
 end type
 
 event selected;call super::selected;
-string ls_list_item_id, ls_find
+string ls_list_item, ls_find
 long ll_row
 
-ls_list_item_id = object.list_item_id[selected_row]
+ls_list_item = object.list_item[selected_row]
 
-ls_find = "list_item_id ='" + ls_list_item_id + "'"
+ls_find = "list_item ='" + ls_list_item + "'"
 if dw_selected.Find(ls_find, 1, dw_selected.rowcount()) > 0 then
 	return
 end if
 
+if is_list_id = "Locality" then
+	// We only have six slots on the w_edit_patient window
+	if dw_selected.rowcount() >= 6 then
+		openwithparm(w_pop_message, "A maximum of six (6) locality types may be selected.")
+	end if
+	return
+end if
+
 ll_row = dw_selected.insertrow(0)
-dw_selected.object.list_item_id[ll_row] = ls_list_item_id
+dw_selected.object.list_item[ll_row] = ls_list_item
 dw_selected.object.list_item[ll_row] = object.list_item[selected_row]
 
 // We will save changes to this dw when done
@@ -380,12 +410,12 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event selected;call super::selected;
-string ls_list_item_id, ls_find
+string ls_list_item, ls_find
 long ll_row
 
-ls_list_item_id = object.list_item_id[selected_row]
+ls_list_item = object.list_item[selected_row]
 
-ls_find = "list_item_id ='" + ls_list_item_id + "'"
+ls_find = "list_item ='" + ls_list_item + "'"
 ll_row = dw_list_members.Find(ls_find, 1, dw_list_members.rowcount())
 
 if ll_row = 0 then
