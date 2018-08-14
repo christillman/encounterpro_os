@@ -55,10 +55,8 @@ global w_pick_list_members w_pick_list_members
 type variables
 
 string is_list_id, is_list_description
-long il_drag_from_row
 
 end variables
-
 forward prototypes
 public function integer add_list_member ()
 end prototypes
