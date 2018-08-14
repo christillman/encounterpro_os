@@ -701,6 +701,11 @@ boolean focusrectangle = false
 end type
 
 event clicked;
+if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
+	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's sex.")
+	return
+end if
+
 if text = "Male" then
 	text = "Female"
 	current_patient.sex = "F"
@@ -983,6 +988,11 @@ end type
 
 event clicked;str_patient_alias lstr_alias
 
+if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
+	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's name. To create a new patient, use the New Patient button on the Charts tab.")
+	return
+end if
+
 lstr_alias.cpr_id = current_patient.cpr_id
 lstr_alias.alias_type = 'Primary'
 
@@ -1016,6 +1026,11 @@ end type
 
 event clicked;date ld_date_of_birth
 string ls_text
+
+if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
+	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's birthdate.")
+	return
+end if
 
 ld_date_of_birth = current_patient.date_of_birth
 
@@ -1468,9 +1483,14 @@ boolean border = true
 boolean focusrectangle = false
 end type
 
+event clicked;
+OpenWithParm(w_pop_message, "The Billing Id is not editable here.")
+
+end event
+
 type uo_picture from u_picture_display within u_tabpage_patient_data
-integer x = 2226
-integer y = 16
+integer x = 2217
+integer y = 72
 integer width = 581
 integer height = 452
 boolean border = true
@@ -1493,8 +1513,8 @@ display_portrait()
 end event
 
 type st_portrait from statictext within u_tabpage_patient_data
-integer x = 2226
-integer y = 20
+integer x = 2217
+integer y = 76
 integer width = 581
 integer height = 452
 integer textsize = -12
