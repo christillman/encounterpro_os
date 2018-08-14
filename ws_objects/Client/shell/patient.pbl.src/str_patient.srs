@@ -44,6 +44,7 @@ global type str_patient from structure
 	string		attachment_server
 	string		attachment_share
 	str_patient_communications		communications
+	str_p_patient_list_item		list_item[]
 	boolean		test_patient
 end type
 

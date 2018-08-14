@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_p_patient_list_item.srs
+global type str_p_patient_list_item from structure
+	string		cpr_id
+	string		list_id
+	string		list_item
+	string		list_item_patient_data
+end type
+

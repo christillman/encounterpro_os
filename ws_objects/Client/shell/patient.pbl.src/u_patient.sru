@@ -92,29 +92,22 @@ long patient_workplan_id
 date gaa_date_of_birth
 long weeks_premature
 
-// Assessment objects and variables
 string assessment_bitmap = "icon018.bmp"
 u_ds_assessment assessments
-
-// Treatment objects and variables
 u_ds_treatment_item treatments
-
-// Attachment objects and variables
 u_ds_attachments attachments
-
 u_ds_data p_Patient_Authority
-
 u_ds_data p_Object_Security
+u_ds_patient p_Patient
+u_ds_data progress
 
 boolean display_only
 
 string context_object = "Patient"
 
-u_ds_patient p_Patient
-
-u_ds_data progress
-
 str_access_control_list access_control_list
+
+str_p_patient_list_item list_item[]
 
 boolean test_patient
 
@@ -923,6 +916,8 @@ else
 	lb_default_grant = true
 end if
 access_control_list = get_access_control_list("Patient", 0, lb_default_grant)
+
+f_load_patient_list_items(cpr_id, list_item)
 
 return 1
 
