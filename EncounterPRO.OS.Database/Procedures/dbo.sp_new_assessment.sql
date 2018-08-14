@@ -179,11 +179,7 @@ ELSE
 	
 	SET @ls_key = @ls_key + '^'
 	
-	SET @ll_key_suffix = 0
-	WHILE exists(select 1 from c_Assessment_Definition where assessment_id = @ls_key + CAST(@ll_key_suffix AS varchar(6)))
-		SET @ll_key_suffix = @ll_key_suffix + 1
-
-	SET @ls_assessment_id = @ls_key + CAST(@ll_key_suffix AS varchar(6))
+	EXECUTE sp_get_char_key 'c_Assessment', 'assessment_id', @ls_key, @ls_assessment_id OUTPUT
 
 	INSERT INTO c_Assessment_Definition (
 		assessment_id,
