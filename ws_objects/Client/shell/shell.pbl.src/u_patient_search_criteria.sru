@@ -354,8 +354,8 @@ integer li_rc
 string ls_empty = ""
 
 popup.dataobject = "dw_list_items_active"
-popup.datacolumn = 3
-popup.displaycolumn = 3
+popup.datacolumn = 2
+popup.displaycolumn = 2
 popup.argument_count = 1
 popup.add_blank_row = true
 popup.argument[1] = "Id Document"
@@ -401,8 +401,8 @@ integer li_rc
 string ls_empty = ""
 
 popup.dataobject = "dw_list_items_active"
-popup.datacolumn = 3
-popup.displaycolumn = 3
+popup.datacolumn = 2
+popup.displaycolumn = 2
 popup.argument_count = 1
 popup.add_blank_row = true
 popup.argument[1] = "Country"
