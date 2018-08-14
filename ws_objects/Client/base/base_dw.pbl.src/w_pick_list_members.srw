@@ -57,6 +57,7 @@ type variables
 string is_list_id, is_list_description
 
 end variables
+
 forward prototypes
 public function integer add_list_member ()
 end prototypes
@@ -82,23 +83,13 @@ if popup_return.item_count < 1 then return -1
 
 ls_description = popup_return.items[1]
 
-ls_prefix = f_gen_key_string(ls_description, 12)
-
-dw_char_key = CREATE u_ds_data
-dw_char_key.set_dataobject("dw_sp_get_char_key_resultset")
-dw_char_key.retrieve("c_List_Item", "list_item_id", ls_prefix)
-
-ls_list_item_id = dw_char_key.object.new_key[1]
-
 ll_row = dw_list_members.insertrow(0)
 dw_list_members.object.list_id[ll_row] = is_list_id
-dw_list_members.object.list_item_id[ll_row] = ls_list_item_id
 dw_list_members.object.list_item[ll_row] = ls_description
 dw_list_members.object.status[ll_row] = "Active"
 
 ll_row = dw_selected.insertrow(0)
 dw_selected.object.list_id[ll_row] = is_list_id
-dw_selected.object.list_item_id[ll_row] = ls_list_item_id
 dw_selected.object.list_item[ll_row] = ls_description
 dw_selected.object.status[ll_row] = "Active"
 
