@@ -76,6 +76,9 @@ CREATE   PROCEDURE jmj_patient_search2
 	@ps_employer varchar(40) = NULL,
 	@ps_employeeid varchar(24) = NULL,
 	@ps_patient_status varchar(24) = NULL,
+	@ps_id_document varchar(24) = NULL,
+	@ps_country varchar(24) = NULL,
+	@ps_document_number varchar(24) = NULL,
 	@pl_count_only int = 0
 )
 AS
@@ -110,6 +113,12 @@ IF ISNULL( @ps_billing_id, '' ) = ''
 
 IF ISNULL( @ps_ssn, '' ) = ''
 	SET @ps_ssn = '%'
+
+IF ISNULL( @ps_document_number, '' ) = ''
+	SET @ps_document_number = '%'
+
+IF ISNULL( @ps_country, '' ) = ''
+	SET @ps_country = '%'
 
 IF ISNULL( @ps_last_name, '' ) = ''
 	SET @ps_last_name = '%'
@@ -227,6 +236,44 @@ BEGIN
 		p.office_id
 	FROM p_Patient p WITH (NOLOCK)
 	WHERE p.ssn like @ps_ssn
+	
+	SET @ll_rows = @@ROWCOUNT
+	
+	IF @ll_rows = 2000
+		BEGIN
+		DELETE FROM @patients
+		SET @ll_rows = 0
+		SET @ll_return = -1
+		END
+END
+
+IF @ps_document_number <> '%' AND @ll_rows = 0
+BEGIN
+	INSERT INTO @patients (
+		[cpr_id] ,
+		[alias_type] ,
+		[first_name] ,
+		[last_name] ,
+		[middle_name] ,
+		[name_prefix] ,
+		[name_suffix] ,
+		[degree],
+		[office_id] )
+	SELECT TOP 2000
+		p.cpr_id ,
+		'Primary' ,
+		p.first_name ,
+		p.last_name ,
+		p.middle_name ,
+		p.name_prefix ,
+		p.name_suffix ,
+		p.degree ,
+		p.office_id
+	FROM p_Patient p WITH (NOLOCK)
+	JOIN p_Patient_List_Item li ON p.cpr_id = li.cpr_id
+	WHERE li.list_id = 'ID Document'
+	AND li.list_item = @ps_id_document
+	AND li.list_item_patient_data like @ps_document_number
 	
 	SET @ll_rows = @@ROWCOUNT
 	
@@ -442,6 +489,43 @@ BEGIN
 		ON a.cpr_id = p.cpr_id
 	WHERE a.first_name like @ps_first_name
 	AND a.current_flag = 'Y'
+	
+	SET @ll_rows = @@ROWCOUNT
+	
+	IF @ll_rows = 2000
+		BEGIN
+		DELETE FROM @patients
+		SET @ll_rows = 0
+		SET @ll_return = -1
+		END
+END
+
+IF @ps_country <> '%' AND @ll_rows = 0
+BEGIN
+	INSERT INTO @patients (
+		[cpr_id] ,
+		[alias_type] ,
+		[first_name] ,
+		[last_name] ,
+		[middle_name] ,
+		[name_prefix] ,
+		[name_suffix] ,
+		[degree],
+		[office_id] )
+	SELECT TOP 2000
+		p.cpr_id ,
+		'Primary' ,
+		p.first_name ,
+		p.last_name ,
+		p.middle_name ,
+		p.name_prefix ,
+		p.name_suffix ,
+		p.degree ,
+		p.office_id
+	FROM p_Patient p WITH (NOLOCK)
+	JOIN p_Patient_List_Item li ON p.cpr_id = li.cpr_id
+	WHERE li.list_id = 'Country'
+	AND li.list_item = @ps_country
 	
 	SET @ll_rows = @@ROWCOUNT
 	
