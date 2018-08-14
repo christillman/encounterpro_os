@@ -256,6 +256,8 @@ end function
 public function integer modify_property (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_property, string ps_new_value);integer li_sts
 u_ds_clinical_data_cache luo_data
 
+if isnull(ps_new_value) then return 0
+
 // Get the current value of this property
 li_sts = get_data(ps_cpr_id, ps_context_object, pl_object_key, luo_data)
 if li_sts < 0 then return -1
