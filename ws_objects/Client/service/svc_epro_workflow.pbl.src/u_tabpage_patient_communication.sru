@@ -99,6 +99,7 @@ public subroutine update_value (long pl_row, string ps_new_value)
 public subroutine set_all_locality_visibility (boolean pb_visible)
 public subroutine highlight_sle (singlelineedit pwo_control, boolean pb_on)
 public subroutine get_localities ()
+public subroutine refresh ()
 end prototypes
 
 public function integer initialize ();integer li_sts
@@ -117,11 +118,6 @@ end if
 // Avoid Americanisms 
 if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
 	set_all_locality_visibility(false)
-
-	sle_state.text = current_patient.state
-	sle_address_2.text = current_patient.address_line_2
-	sle_city.text = current_patient.city
-	sle_zip.text = current_patient.zip
 
 else
 	// some day may have a case statement for locale?
@@ -244,6 +240,86 @@ FOR li_locality_index = 1 TO li_locality_count
 		END IF
 	NEXT
 NEXT
+
+
+end subroutine
+
+public subroutine refresh ();u_ds_data luo_types
+u_ds_data luo_names
+u_ds_data luo_progress
+long ll_name_count
+long ll_type_count
+long i, j
+long ll_null
+string ls_communication_type
+string ls_communication_name
+string ls_progress_type
+long ll_row
+long ll_progress_count
+string ls_communication_value
+string ls_find
+
+
+setnull(ll_null)
+
+st_title.width = width
+
+dw_communication.x = (width - dw_communication.width) / 2
+dw_communication.height = height - dw_communication.y - 100
+
+
+sle_address_1.text = current_patient.address_line_1
+sle_address_2.text = current_patient.address_line_2
+sle_city.text = current_patient.city
+sle_zip.text = current_patient.zip
+sle_state.text = current_patient.state
+
+
+luo_types = CREATE u_ds_data
+luo_names = CREATE u_ds_data
+luo_progress = CREATE u_ds_data
+luo_types.set_dataobject("dw_domain_notranslate_list")
+luo_names.set_dataobject("dw_domain_notranslate_list")
+luo_progress.set_dataobject("dw_p_Patient_Progress")
+
+ll_type_count = luo_types.retrieve("Communication Type")
+
+dw_communication.reset()
+
+for i = 1 to ll_type_count
+	ls_communication_type = luo_types.object.domain_item[i]
+	ls_progress_type = wordcap("Communication " + ls_communication_type)
+	ll_name_count = luo_names.retrieve(ls_progress_type)
+	for j = 1 to ll_name_count
+		ls_communication_name = luo_names.object.domain_item[j]
+		ll_row = dw_communication.insertrow(0)
+		dw_communication.object.communication_type[ll_row] = wordcap(ls_communication_type)
+		dw_communication.object.progress_type[ll_row] = ls_progress_type
+		dw_communication.object.communication_name[ll_row] = wordcap(ls_communication_name)
+	next
+	ll_progress_count = luo_progress.retrieve(current_patient.cpr_id, ls_progress_type)
+	for j = 1 to ll_progress_count
+		ls_communication_name = luo_progress.object.progress_key[j]
+		ls_communication_value = luo_progress.object.progress[j]
+		ls_find = "progress_type='" + ls_progress_type + "' and communication_name='" + ls_communication_name + "'"
+		ll_row = dw_communication.find(ls_find, 1, dw_communication.rowcount())
+		if ll_row > 0 then
+			dw_communication.object.communication_value[ll_row] = ls_communication_value
+		else
+			ll_row = dw_communication.insertrow(0)
+			dw_communication.object.communication_type[ll_row] = wordcap(ls_communication_type)
+			dw_communication.object.progress_type[ll_row] = ls_progress_type
+			dw_communication.object.communication_name[ll_row] = wordcap(ls_communication_name)
+			dw_communication.object.communication_value[ll_row] = ls_communication_value
+		end if
+	next
+next
+
+
+DESTROY luo_types
+DESTROY luo_names
+
+dw_communication.setfocus()
 
 
 end subroutine
