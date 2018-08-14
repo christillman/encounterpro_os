@@ -129,6 +129,8 @@ else
 	pstr_patient.test_patient = true
 end if
 
+f_load_patient_list_items(ps_cpr_id, pstr_patient.list_item)
+
 return 1
 
 
