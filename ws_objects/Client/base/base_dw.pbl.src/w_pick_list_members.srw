@@ -75,6 +75,14 @@ string ls_prefix
 integer li_count
 u_ds_data dw_char_key
 
+if is_list_id = "Locality" then
+	// We only have six slots on the w_edit_patient window
+	if dw_selected.rowcount() >= 6 then
+		openwithparm(w_pop_message, "A maximum of six (6) locality types may be selected. In order to add a new one, please remove one of the selected items.")
+		return -1
+	end if
+end if
+
 popup.title = "Enter New " + is_list_id + " Description"
 popup.item = ""
 openwithparm(w_pop_prompt_string, popup)
@@ -365,8 +373,8 @@ if is_list_id = "Locality" then
 	// We only have six slots on the w_edit_patient window
 	if dw_selected.rowcount() >= 6 then
 		openwithparm(w_pop_message, "A maximum of six (6) locality types may be selected.")
+		return
 	end if
-	return
 end if
 
 ll_row = dw_selected.insertrow(0)
