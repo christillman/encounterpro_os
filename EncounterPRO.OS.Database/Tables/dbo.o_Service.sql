@@ -174,6 +174,10 @@ ALTER TABLE [dbo].[o_Service]
 	CONSTRAINT [DF__o_Service__visib__6D823440]
 	DEFAULT ('Y') FOR [visible_flag]
 GO
+ALTER TABLE [dbo].[o_Service]
+	ADD CONSTRAINT [DF__o_Service__id]
+	DEFAULT (newid()) FOR [id]
+GO
 GRANT DELETE
 	ON [dbo].[o_Service]
 	TO [cprsystem]
