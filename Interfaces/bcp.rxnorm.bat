@@ -6,11 +6,11 @@ REM The server designation, this one is a local SQL SERVER Express
 REM I access through Windows user permisson
 SET MSSQLSERVER=DESKTOP-GU15HUD\ENCOUNTERPRO
 
-SET IMPORT_FILE_PATH=E:\EncounterPro\RXNORM\RxNorm_full_06042018\prescribe\rrf
+SET IMPORT_FILE_PATH=C:\Users\tofft\EncounterPro\RXNORM\RxNorm_full_06042018\prescribe\rrf
 
 SET UTILITY_PATH=C:\Users\tofft\source\repos\RRF2TabDel\RRF2TabDel\bin\Debug
 
-SET SCRIPT_PATH=E:\EncounterPro\encounter_pro_os\Interfaces
+SET SCRIPT_PATH=C:\Users\tofft\EncounterPro\encounter_pro_os\Interfaces
 
 REM Execute the table setup script. 
 sqlcmd -i "%SCRIPT_PATH%\create_rxnorm_tables.sql" -S %MSSQLSERVER% -d interfaces -E
