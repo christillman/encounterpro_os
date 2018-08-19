@@ -6,7 +6,7 @@ GO
 CREATE PROCEDURE build_generic_equivalents AS BEGIN
 
 DECLARE @bn_rxcui varchar(10), @last_bn_rxcui varchar(10)
-DECLARE @ingredient_name varchar(500), @generic_equiv varchar(4000)
+DECLARE @ingredient_name varchar(500), @generic_equiv varchar(900)
 DECLARE @trial_count int, @trial_length int
 
 -- Build generic equivalent relations of brand name multi ingredient drugs
@@ -15,7 +15,7 @@ DECLARE build_generic CURSOR FOR
 	FROM c_Drug_Brand_Ingredient bi
 	JOIN c_Drug_Brand b ON b.brand_name_rxcui = bi.brand_name_rxcui
 	JOIN c_Drug_Generic g ON g.generic_rxcui = bi.generic_rxcui_ingredient
-	WHERE b.is_single_ingredient IS NULL
+	WHERE b.is_single_ingredient = 0
 	AND b.generic_rxcui IS NULL
 	ORDER BY bi.brand_name_rxcui, g.generic_name 
 
@@ -26,14 +26,14 @@ OPEN build_generic
 FETCH NEXT FROM build_generic INTO @bn_rxcui, @ingredient_name
 WHILE @@FETCH_STATUS = 0  
 	BEGIN
-		IF @bn_rxcui != @last_bn_rxcui ANd @last_bn_rxcui != ''
+		IF @bn_rxcui != @last_bn_rxcui AND @last_bn_rxcui != ''
 			BEGIN
 				UPDATE c_Drug_Brand 
 				SET generic_rxcui = g.generic_rxcui
 				FROM c_Drug_Generic g
 				JOIN c_Drug_Brand b ON b.brand_name_rxcui = @last_bn_rxcui
 				WHERE g.generic_name = @generic_equiv
-				AND g.is_single_ingredient IS NULL
+				AND g.is_single_ingredient = 0
 
 				SET @trial_count = @@ROWCOUNT
 
@@ -51,7 +51,7 @@ WHILE @@FETCH_STATUS = 0
 							SELECT @trial_count = count(*) 
 							FROM c_Drug_Generic
 							WHERE generic_name LIKE LEFT(@generic_equiv,@trial_length) + '%'
-							AND is_single_ingredient IS NULL
+							AND is_single_ingredient = 0
 							END
 
 						IF @trial_count = 1
@@ -60,15 +60,15 @@ WHILE @@FETCH_STATUS = 0
 							FROM c_Drug_Generic g
 							JOIN c_Drug_Brand b ON b.brand_name_rxcui = @last_bn_rxcui
 							WHERE g.generic_name LIKE LEFT(@generic_equiv,@trial_length)
-							AND g.is_single_ingredient IS NULL
+							AND g.is_single_ingredient = 0
 
 					END
 
 				IF @trial_count = 0
 					BEGIN
 						-- Add a new generic; these will have to be cleaned up once in a while
-						INSERT INTO c_Drug_Generic (generic_rxcui, generic_name)
-						VALUES ('G' + @last_bn_rxcui, @generic_equiv)
+						INSERT INTO c_Drug_Generic (generic_rxcui, generic_name, is_single_ingredient)
+						VALUES ('G' + @last_bn_rxcui, @generic_equiv, 0)
 
 						UPDATE c_Drug_Brand 
 						SET generic_rxcui = 'G' + @last_bn_rxcui
@@ -93,13 +93,17 @@ SET generic_rxcui = g.generic_rxcui
 FROM c_Drug_Generic g
 JOIN c_Drug_Brand b ON b.brand_name_rxcui = @bn_rxcui
 WHERE g.generic_name = @generic_equiv
-AND g.is_single_ingredient IS NULL
+AND g.is_single_ingredient = 0
 
 IF @@ROWCOUNT = 0
 	BEGIN
 		-- Add a new generic
-		INSERT INTO c_Drug_Generic (generic_rxcui, generic_name)
-		VALUES ('N' + @bn_rxcui, @generic_equiv)
+		INSERT INTO c_Drug_Generic (generic_rxcui, generic_name, is_single_ingredient)
+		VALUES ('G' + @bn_rxcui, @generic_equiv, 0)
+
+		UPDATE c_Drug_Brand 
+		SET generic_rxcui = 'G' + @bn_rxcui
+		WHERE brand_name_rxcui = @bn_rxcui
 	END
 
 CLOSE build_generic  
