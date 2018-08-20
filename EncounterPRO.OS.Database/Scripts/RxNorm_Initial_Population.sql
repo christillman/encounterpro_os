@@ -1,30 +1,105 @@
 ﻿
+-- All generic ingredients
+-- Assume these can all be prescribed as single drugs
+INSERT INTO c_Drug_Generic (generic_name, 
+				generic_rxcui, 
+				is_single_ingredient, 
+				mesh_definition,
+				scope_note,
+				mesh_source)
+SELECT [str], c.RXCUI, 1, 
+	(SELECT min(sd.ATV) FROM interfaces..rxnsat_full sd
+		WHERE sd.RXCUI = c.RXCUI AND sd.ATN = 'MESH_DEFINITION'),
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c.RXCUI AND ss.ATN = 'SRC')
+FROM interfaces..rxnconso c
+WHERE c.tty IN ('IN', 'PIN')
+AND c.SAB = 'RXNORM'
+AND NOT EXISTS (SELECT 1
+		FROM interfaces..rxnsat_full s
+		WHERE s.RXCUI = c.RXCUI AND atn = 'RXN_OBSOLETED' )
+-- 6688
+
+INSERT INTO c_Drug_Generic (generic_name, 
+				generic_rxcui, 
+				is_single_ingredient, 
+				mesh_definition,
+				scope_note,
+				mesh_source)
+SELECT [str], c.RXCUI, 1, 
+	(SELECT min(sd.ATV) FROM interfaces..rxnsat_full sd
+		WHERE sd.RXCUI = c.RXCUI AND sd.ATN = 'MESH_DEFINITION'),
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c.RXCUI AND ss.ATN = 'SRC')
+FROM interfaces..rxnconso c
+WHERE c.tty IN ('IN', 'PIN')
+AND c.SAB = 'RXNORM'
+-- these specific ingredients have been marked obsolete
+-- but are actually used in non-obsolete drugs
+AND c.RXCUI IN ('37255','314718','237099','353110',
+			'34323','9671','602811','267366','114202')
+AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g WHERE g.generic_rxcui = c.RXCUI)
+-- 9
+
+INSERT INTO c_Drug_Generic_Ingredient (generic_rxcui, generic_rxcui_ingredient)  
+SELECT generic_rxcui, generic_rxcui
+FROM c_Drug_Generic g
+-- 6697
+
+-- All generic multiple ingredient drugs
+INSERT INTO c_Drug_Generic (generic_name, 
+				generic_rxcui, 
+				is_single_ingredient, 
+				mesh_definition,
+				scope_note,
+				mesh_source)
+SELECT CASE WHEN LEN([str]) <= 900 THEN [str] ELSE LEFT([str],897) + '...' END, 
+	c.RXCUI, 0, 
+	(SELECT min(sd.ATV) FROM interfaces..rxnsat_full sd
+		WHERE sd.RXCUI = c.RXCUI AND sd.ATN = 'MESH_DEFINITION'),
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c.RXCUI AND ss.ATN = 'SRC')
+FROM interfaces..rxnconso c
+WHERE c.tty IN ('MIN')
+AND c.SAB = 'RXNORM'
+AND NOT EXISTS (SELECT 1
+	FROM interfaces..rxnsat_full s
+	WHERE s.RXCUI = c.RXCUI AND atn = 'RXN_OBSOLETED' )
+-- 1167
+
+-- All brand name ingredients
 INSERT INTO c_Drug_Brand_Ingredient (brand_name_rxcui, generic_rxcui_ingredient)
-SELECT r.RXCUI2 , r.RXCUI1
+SELECT r.RXCUI2, r.RXCUI1
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
-WHERE c.tty = 'BN' AND c.SAB = 'RXNORM'
+WHERE c.tty = 'BN' 
+AND c.SAB = 'RXNORM'
+AND c1.TTY IN ('IN', 'PIN')
 AND c1.SAB = 'RXNORM'
 AND r.rela = 'tradename_of'
-AND c1.TTY = 'TMSY' -- Prefer Tall Man synonym if available
 AND c1.RXAUI != '10271063' -- Avoid duplicate Cyclosporine A synonym for Cyclosporine
--- 473
+AND NOT EXISTS (SELECT 1
+	FROM interfaces..rxnsat_full s
+	WHERE s.RXCUI = c.RXCUI AND atn = 'RXN_OBSOLETED' )
+-- 6886
 
-INSERT INTO c_Drug_Brand_Ingredient (brand_name_rxcui, generic_rxcui_ingredient)
-SELECT c.RXCUI, c1.RXCUI
-FROM interfaces..rxnconso c
-JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
-JOIN interfaces..rxnconso c1 ON c1.RXCUI = r.RXCUI1
-WHERE r.rela = 'tradename_of'
-AND c.tty = 'BN' AND c.SAB = 'RXNORM'
-AND c1.SAB = 'RXNORM'
-AND c1.TTY = 'IN' 
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Brand_Ingredient b2 WHERE b2.brand_name_rxcui = r.RXCUI2)
--- 6541
-
-INSERT INTO c_Drug_Brand (brand_name, brand_name_rxcui, is_single_ingredient)
-SELECT c.[str], c.RXCUI, 1
+INSERT INTO c_Drug_Brand (brand_name,
+				brand_name_rxcui, 
+				is_single_ingredient, 
+				scope_note,
+				mesh_source)
+SELECT c.[str], c.RXCUI, 1, 
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c.RXCUI AND ss.ATN = 'SRC')
 FROM interfaces..rxnconso c
 WHERE c.RXCUI IN (SELECT brand_name_rxcui 
 				FROM c_Drug_Brand_Ingredient
@@ -32,36 +107,19 @@ WHERE c.RXCUI IN (SELECT brand_name_rxcui
 				HAVING COUNT(*) = 1)
 AND c.tty = 'BN' AND c.SAB = 'RXNORM'
 ORDER BY c.[str]
--- 3319
-
--- Generic equivalents of brand name drug ingredients
-INSERT INTO c_Drug_Generic (generic_name, generic_rxcui, is_single_ingredient)
-SELECT [str], RXCUI, 1
-FROM interfaces..rxnconso c
-WHERE RXCUI IN (SELECT generic_rxcui_ingredient FROM c_Drug_Brand_Ingredient)
-AND c.tty = 'TMSY'
-AND c.RXAUI != '10271063' -- Avoid duplicate Cyclosporine A synonym for Cyclosporine
--- 98
-
-INSERT INTO c_Drug_Generic (generic_name, generic_rxcui, is_single_ingredient)
-SELECT [str], RXCUI, 1
-FROM interfaces..rxnconso c
-WHERE RXCUI IN (SELECT generic_rxcui_ingredient FROM c_Drug_Brand_Ingredient)
-AND c.tty = 'IN'
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g2 WHERE g2.generic_rxcui = RXCUI)
--- 1630
-
--- Assume these can all be prescribed as single drugs
-INSERT INTO c_Drug_Generic_Ingredient (generic_rxcui, generic_rxcui_ingredient)  
-SELECT generic_rxcui, generic_rxcui
-FROM c_Drug_Generic g
-WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Generic_Ingredient g2 
-		WHERE g2.generic_rxcui = g.generic_rxcui)
--- 1728
+-- 2999
 
 -- Multiple ingredient brand drugs
-INSERT INTO c_Drug_Brand (brand_name, brand_name_rxcui)
-SELECT c.[str], c.RXCUI
+INSERT INTO c_Drug_Brand (brand_name,
+				brand_name_rxcui, 
+				is_single_ingredient, 
+				scope_note,
+				mesh_source)
+SELECT c.[str], c.RXCUI, 0, 
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c.RXCUI AND ss.ATN = 'SRC')
 FROM interfaces..rxnconso c
 WHERE c.RXCUI IN (SELECT brand_name_rxcui 
 				FROM c_Drug_Brand_Ingredient
@@ -69,7 +127,7 @@ WHERE c.RXCUI IN (SELECT brand_name_rxcui
 				HAVING COUNT(*) > 1)
 AND c.tty = 'BN' AND c.SAB = 'RXNORM'
 ORDER BY c.[str]
--- 1071
+-- 1188
 
 INSERT INTO c_Drug_Generic_Ingredient (generic_rxcui, generic_rxcui_ingredient) 
 SELECT c1.RXCUI, c.RXCUI
@@ -81,136 +139,156 @@ AND c.SAB = 'RXNORM'
 AND c1.SAB = 'RXNORM'
 AND c1.TTY = 'MIN' -- Multiple ingredient generics
 and c.TTY IN ('IN','PIN')
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic_Ingredient g2 WHERE g2.generic_rxcui = r.RXCUI1)
--- 3677
-
-INSERT INTO c_Drug_Generic (generic_name, generic_rxcui)
-SELECT c.[str], c.RXCUI
-FROM interfaces..rxnconso c
-WHERE c.RXCUI IN (SELECT generic_rxcui FROM c_Drug_Generic_Ingredient)
-AND c.TTY = 'TMSY'
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g2 WHERE g2.generic_rxcui = c.RXCUI)
--- 118
-
-INSERT INTO c_Drug_Generic (generic_name, generic_rxcui)
-SELECT c.[str], c.RXCUI
-FROM interfaces..rxnconso c
-WHERE c.RXCUI IN (SELECT generic_rxcui FROM c_Drug_Generic_Ingredient)
-AND c.TTY = 'MIN'
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g2 WHERE g2.generic_rxcui = c.RXCUI)
-and LEN(c.[str]) <= 500 -- 2 don't fit
--- 1047
-
-INSERT INTO c_Drug_Generic (generic_name, generic_rxcui)
-SELECT LEFT(c.[str],497) + '...', c.RXCUI
-FROM interfaces..rxnconso c
-WHERE c.RXCUI IN (SELECT generic_rxcui FROM c_Drug_Generic_Ingredient)
-AND c.TTY = 'MIN'
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g2 WHERE g2.generic_rxcui = c.RXCUI)
-and LEN(c.[str]) > 500 -- 2 don't fit
+AND NOT EXISTS (SELECT 1
+	FROM interfaces..rxnsat_full s
+	WHERE s.RXCUI = c.RXCUI AND atn = 'RXN_OBSOLETED' )
+-- 3586
 
 -- Single ingredient brand names generic equivalent
-UPDATE c_Drug_Brand
+UPDATE b
 	SET generic_rxcui = bi.generic_rxcui_ingredient
-	FROM c_Drug_Brand 
-	JOIN c_Drug_Brand_Ingredient bi ON c_Drug_Brand.brand_name_rxcui = bi.brand_name_rxcui
+	FROM c_Drug_Brand b
+	JOIN c_Drug_Brand_Ingredient bi ON b.brand_name_rxcui = bi.brand_name_rxcui
 	WHERE is_single_ingredient = 1
--- 3319
+-- 2999
 
--- Fill in the 2 that don't fit in 500 chars
-UPDATE c_Drug_Brand SET generic_rxcui = 1008785 WHERE brand_name_rxcui = 287523
-UPDATE c_Drug_Brand SET generic_rxcui = 1008803 WHERE brand_name_rxcui = 901641
+-- Fill in the 2 that don't fit in 900 chars so won't match in build_generic_equivalents
+UPDATE c_Drug_Brand SET generic_rxcui = '1008785' WHERE brand_name_rxcui = '287523'
+UPDATE c_Drug_Brand SET generic_rxcui = '1008803' WHERE brand_name_rxcui = '901641'
 
 EXEC build_generic_equivalents
 
 -- Not listed as MIN multiple-ingredient generic equivalent in RXNORM
 -- Maybe having to do with relating to both IN and PIN?
--- SELECT brand_name_rxcui, brand_name FROM c_Drug_Brand where generic_rxcui is null
 -- 84815	Adderall
 -- 1927611	Mydayis
 
-INSERT INTO c_Drug_Generic (generic_rxcui, generic_name) 
-SELECT 'G' + brand_name_rxcui, 'Amphetamine / Dextroamphetamine'
-FROM c_Drug_Brand
-WHERE brand_name_rxcui = '84815' AND generic_rxcui is null
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic
-					WHERE generic_rxcui = 'G' + brand_name_rxcui)
--- 1
+-- Update to Tall Man synonym where available
+UPDATE g
+SET generic_name = [STR]
+FROM c_Drug_Generic g
+JOIN interfaces..rxnconso c ON c.RXCUI = g.generic_rxcui AND c.TTY = 'TMSY'
+-- 322
 
-UPDATE c_Drug_Brand
-SET generic_rxcui = 'G' + brand_name_rxcui
-WHERE brand_name_rxcui = '84815' AND generic_rxcui is null
--- 1
+UPDATE b
+SET brand_name = [STR] 
+FROM c_Drug_Brand b
+JOIN interfaces..rxnconso c ON c.RXCUI = b.brand_name_rxcui AND c.TTY = 'TMSY'
+-- 37
 
--- same ingredients
-UPDATE c_Drug_Brand
-SET generic_rxcui = 'G84815' 
-WHERE brand_name_rxcui = '1927611' AND generic_rxcui is null
--- 1
+UPDATE b
+SET dea_class = a2.ATV
+from interfaces.dbo.RXNCONSO c3
+join interfaces.dbo.RXNSAT a2 ON a2.RXCUI = c3.RXCUI
+join interfaces.dbo.RXNREL r2 ON r2.RXCUI2 = c3.RXCUI
+join interfaces.dbo.RXNCONSO c2 ON r2.RXCUI1 = c2.RXCUI
+join c_Drug_Brand b on b.brand_name_rxcui = c2.rxcui
+where a2.SAB = 'MTHSPL' and a2.ATN = 'DCSA' 
+and c3.SAB = 'RXNORM' and c3.TTY IN ('SBD')
+and r2.SAB = 'RXNORM' 
+and c2.SAB = 'RXNORM'
+and c2.TTY IN ('BN') 
+-- 169
 
-UPDATE c_Drug_Brand set drug_id = NULL where drug_id is not null
--- 4390
-UPDATE c_Drug_Generic set drug_id = NULL where drug_id is not null
--- 2898
+UPDATE g
+SET dea_class = a2.ATV
+from interfaces.dbo.RXNCONSO c3
+join interfaces.dbo.RXNSAT a2 ON a2.RXCUI = c3.RXCUI
+join interfaces.dbo.RXNREL r2 ON r2.RXCUI2 = c3.RXCUI
+join interfaces.dbo.RXNCONSO c2 ON r2.RXCUI1 = c2.RXCUI
+join c_Drug_Generic g on g.generic_rxcui = c2.rxcui
+where a2.SAB = 'MTHSPL' and a2.ATN = 'DCSA' 
+and c3.SAB = 'RXNORM' and c3.TTY IN ('SCD')
+and r2.SAB = 'RXNORM' 
+and c2.SAB = 'RXNORM'
+and c2.TTY IN ('MIN') 
+-- 44
+
+-- UPDATE c_Drug_Brand set drug_id = NULL where drug_id is not null
+-- UPDATE c_Drug_Generic set drug_id = NULL where drug_id is not null
 
 -- Now, relate these to the existing drug structure
 
--- Update existing generic_name to match where brand name matches
+-- Eliminate obsoleted brands per RXNORM
+UPDATE d
+SET d.drug_type = 'OBSOLETE', status = 'OBS'
+FROM interfaces..rxnconso_FULL c
+JOIN c_Drug_Definition d on d.common_name = c.[STR] 
+WHERE c.tty = 'BN'
+AND c.SAB = 'RXNORM'
+AND EXISTS (SELECT 1 FROM interfaces..rxnsat_full s 
+			WHERE s.rxcui = c.rxcui
+			AND s.SAB = 'RXNORM'
+			AND s.atn = 'RXN_OBSOLETED')
+
+-- Eliminate obsoleted brands (brand name entered in generic_name) per RXNORM
+UPDATE d
+SET d.drug_type = 'OBSOLETE', status = 'OBS' 
+FROM interfaces..rxnconso_FULL c
+JOIN c_Drug_Definition d on d.generic_name = c.[STR] 
+WHERE c.tty = 'BN'
+AND c.SAB = 'RXNORM'
+AND d.status = 'OK'
+AND EXISTS (SELECT 1 FROM interfaces..rxnsat_full s 
+			WHERE s.rxcui = c.rxcui
+			AND s.SAB = 'RXNORM'
+			AND s.atn = 'RXN_OBSOLETED')
+-- 2
+
+-- Update existing generic_name to match where brand name matches (capture TMSY)
 UPDATE c_Drug_Definition
-SET generic_name = g.generic_name
+SET generic_name = CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END
 FROM c_Drug_Definition dd
 JOIN c_Drug_Brand b ON b.brand_name = dd.common_name
 JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
-WHERE dd.generic_name != g.generic_name
--- 83
+WHERE dd.status = 'OK'
+-- 727
+
+-- Update existing generic_name to match where generic name matches (capture TMSY)
+UPDATE c_Drug_Definition
+SET generic_name = CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END
+FROM c_Drug_Definition dd
+JOIN c_Drug_Generic g ON g.generic_name = dd.generic_name
+WHERE dd.status = 'OK'
+-- 
 
 -- Exact generic_name matches to existing table
-UPDATE c_Drug_Brand 
+UPDATE b 
 SET drug_id = dd.drug_id
 FROM c_Drug_Definition dd
 JOIN c_Drug_Brand b ON b.brand_name = dd.common_name
 JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
 WHERE b.drug_id is null
+AND dd.status = 'OK'
 AND dd.generic_name = g.generic_name
--- 766
-
-UPDATE g
-SET drug_id = b.drug_id
-FROM c_Drug_Brand b
-JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
-WHERE g.drug_id is null AND b.drug_id IS NOT NULL
--- 604
-
+-- 727
 
 UPDATE g
 SET drug_id = dd.drug_id
 FROM c_Drug_Definition dd
 JOIN c_Drug_Generic g ON g.generic_name = dd.generic_name
-WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Generic g WHERE g.drug_id = dd.drug_id)
+WHERE g.drug_id IS NULL
 AND dd.common_name = dd.generic_name
--- 167
-
-INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT 'RXNG' + generic_rxcui, left(generic_name,77) + '...' , generic_name
-FROM c_Drug_Generic
-WHERE drug_id IS NULL
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Definition d WHERE d.drug_id = 'RXNG' + c_Drug_Generic.generic_rxcui)
--- 2254
+AND dd.status = 'OK'
+-- 223
 
 UPDATE c_Drug_Generic 
 SET drug_id = 'RXNG' + generic_rxcui
 WHERE drug_id IS NULL
--- 2254
-
-INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT 'RXNB' + brand_name_rxcui, brand_name, generic_name
-FROM c_Drug_Brand b
-JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
-WHERE b.drug_id IS NULL
-AND NOT EXISTS (SELECT 1 FROM c_Drug_Definition d WHERE d.drug_id = 'RXNB' + b.brand_name_rxcui)
--- 3624
+-- 7648
 
 UPDATE c_Drug_Brand
 SET drug_id = 'RXNB' + brand_name_rxcui
 WHERE drug_id IS NULL
--- 3624
+-- 3460
+
+/*
+SET PATH_TO_BCP="C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\bcp.exe"
+SET MSSQLSERVER=DESKTOP-GU15HUD\ENCOUNTERPRO
+
+%PATH_TO_BCP% c_Drug_Brand out c_Drug_Brand.txt -S %MSSQLSERVER% -d EncounterPro_OS -T -c
+%PATH_TO_BCP% c_Drug_Brand_Ingredient out c_Drug_Brand_Ingredient.txt -S %MSSQLSERVER% -d EncounterPro_OS -T -c
+%PATH_TO_BCP% c_Drug_Generic out c_Drug_Generic.txt -S %MSSQLSERVER% -d EncounterPro_OS -T -c
+%PATH_TO_BCP% c_Drug_Generic_Ingredient out c_Drug_Generic_Ingredient.txt -S %MSSQLSERVER% -d EncounterPro_OS -T -c
+
+*/
