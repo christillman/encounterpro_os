@@ -38,7 +38,8 @@ f_get_preferences()
 
 // Check the versions
 if f_check_version() < 0 then
-	return -1
+	// After an upgrade, we don't want an error message but rather a nice quiet exit
+	return 0
 end if
 
 // Instantiate Global Objects

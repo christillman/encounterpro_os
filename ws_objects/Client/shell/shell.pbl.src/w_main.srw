@@ -231,6 +231,8 @@ if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
 		log.log(this, "w_main:post", "Error initializing objects", 5)
 	end if
+end if
+if li_sts <= 0 then
 	close(this)
 	return
 end if
