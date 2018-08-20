@@ -92,6 +92,7 @@ global w_svc_config_database w_svc_config_database
 type prototypes
 
 end prototypes
+
 type variables
 u_sqlca dbo_connection
 boolean display_only = true

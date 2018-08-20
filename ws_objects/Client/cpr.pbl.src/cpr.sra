@@ -252,7 +252,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown

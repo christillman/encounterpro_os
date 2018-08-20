@@ -26,6 +26,7 @@ string ls_compinfo
 string ls_common_files
 unsignedlong ll_ppidl
 boolean lb_sts
+string ls_filename
 
 li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
 																windows_api.shell32.CSIDL_COMMONFILES , &
@@ -95,12 +96,12 @@ CHOOSE CASE cpr_mode
 			ls_message += "."
 			
 			if sqlca.is_dbo_user then
-				if sqlca.upgrade_material_id() > 0 then
-					ls_message += "~r~n~r~nThe upgrade material (EncounterPRO.OS Schema-" + string(sqlca.modification_level + 1)
+				if sqlca.upgrade_material_id(ls_filename) > 0 then
+					ls_message += "~r~n~r~nThe upgrade material (" + ls_filename
 					ls_message += ".mdlvl file) has already been located, so you can use the Upgrade Now button to configure the database."
 				else
-					ls_message += "~r~n~r~nThe upgrade material (EncounterPRO.OS Schema-" + string(sqlca.modification_level + 1)
-					ls_message += ".mdlvl file) has not been located, so you will need to use the Load Schema File button before upgrading."
+					ls_message += "~r~n~r~nThe upgrade (.mdlvl file) for Mod Level " + string(sqlca.modification_level + 1)
+					ls_message += " has not been located, so you will need to use the Load Schema File button before upgrading."
 				end if
 				log.log(po_null, "f_check_version:0095", ls_message, 2)
 				ls_message += " Do you wish to configure the database now?"

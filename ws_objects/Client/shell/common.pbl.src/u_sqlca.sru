@@ -692,6 +692,7 @@ FUNCTION long xml_set_default_mapping(long pl_owner_id, string ps_code_domain, s
 
 
 end prototypes
+
 type variables
 boolean transaction_open
 integer transaction_level
@@ -836,9 +837,9 @@ public function string temp_proc_name ()
 private subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
 private subroutine execute_sql_script (string ps_string, ref str_sql_script_status pstr_status)
 public function integer upgrade_database ()
-public function long load_schema_file (string ps_rootpath, long pl_modification_level)
-public function long upgrade_material_id ()
 public function string who_called (powerobject po_caller_object)
+public function long upgrade_material_id (ref string as_filename)
+public function long load_schema_file (string ps_rootpath, long pl_modification_level, ref string as_filename)
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -3718,7 +3719,7 @@ str_sql_script_status lstr_sql_script_status
 
 ll_modification_level = modification_level + 1
 
-ll_material_id = upgrade_material_id()
+ll_material_id = upgrade_material_id(ls_script)
 if ll_material_id < 0 then
 	// Messages already logged
 	return -1
@@ -3797,7 +3798,51 @@ return 1
 
 end function
 
-public function long load_schema_file (string ps_rootpath, long pl_modification_level);string ls_left
+public function string who_called (powerobject po_caller_object);string ls_who
+
+if not isvalid(po_caller_object) then
+	ls_who = "UNKNOWN CALLER"
+elseif isnull(po_caller_object) then
+	ls_who = "NULL CALLER"
+else
+	ls_who = po_caller_object.classname()
+end if
+
+return ls_who
+end function
+
+public function long upgrade_material_id (ref string as_filename);long ll_modification_level
+long ll_material_id
+
+ll_modification_level = modification_level + 1
+
+SELECT MAX(material_id)
+INTO :ll_material_id
+FROM dbo.c_Patient_material
+WHERE status = 'ML'
+AND version = :ll_modification_level;
+if not tf_check() then return -1
+
+// If no material was found try loading the schema for this mod level
+if ll_material_id = 0 or isnull(ll_material_id) then
+	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
+	ll_material_id = load_schema_file(program_directory, ll_modification_level, as_filename)
+	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
+	end if
+	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level, as_filename)
+	end if
+	if ll_material_id <= 0 then
+		log.log(this, "u_sqlca.upgrade_material_id:0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+		return -1
+	end if
+end if
+
+return ll_material_id
+end function
+
+public function long load_schema_file (string ps_rootpath, long pl_modification_level, ref string as_filename);string ls_left
 string ls_right
 string ls_id
 string ls_url
@@ -3931,56 +3976,13 @@ for i = 1 to ll_file_count
 	USING this;
 	if not check() then return -1
 
+	as_filename = lstr_filepath.filename
 	return ll_material_id
 next
 	
 return 0
 
 
-end function
-
-public function long upgrade_material_id ();long ll_modification_level
-long ll_material_id
-
-ll_modification_level = modification_level + 1
-
-SELECT MAX(material_id)
-INTO :ll_material_id
-FROM dbo.c_Patient_material
-WHERE status = 'ML'
-AND version = :ll_modification_level;
-if not tf_check() then return -1
-
-// If no material was found try loading the schema for this mod level
-if ll_material_id = 0 or isnull(ll_material_id) then
-	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
-	ll_material_id = load_schema_file(program_directory, ll_modification_level)
-	if ll_material_id <= 0 then
-		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level)
-	end if
-	if ll_material_id <= 0 then
-		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level)
-	end if
-	if ll_material_id <= 0 then
-		log.log(this, "u_sqlca.upgrade_material_id:0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
-		return -1
-	end if
-end if
-
-return ll_material_id
-end function
-
-public function string who_called (powerobject po_caller_object);string ls_who
-
-if not isvalid(po_caller_object) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_caller_object) then
-	ls_who = "NULL CALLER"
-else
-	ls_who = po_caller_object.classname()
-end if
-
-return ls_who
 end function
 
 event constructor;

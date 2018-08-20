@@ -76,7 +76,7 @@ end type
 
 type st_build_number from statictext within w_splash
 integer x = 1413
-integer y = 612
+integer y = 700
 integer width = 553
 integer height = 68
 integer textsize = -8
@@ -104,7 +104,7 @@ end type
 
 type st_copyright from statictext within w_splash
 integer x = 987
-integer y = 700
+integer y = 788
 integer width = 1426
 integer height = 76
 boolean bringtotop = true
