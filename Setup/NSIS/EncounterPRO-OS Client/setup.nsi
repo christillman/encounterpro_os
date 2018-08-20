@@ -213,6 +213,7 @@
         SetOverwrite on
         SetDetailsPrint textonly
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
+        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
 
     Section '-Mod Level Script' SecML
