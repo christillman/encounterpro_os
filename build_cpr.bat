@@ -4,6 +4,7 @@ REM e.g.    >build_cpr.bat 7.0.0.1
 set build_folder=C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%1
 
 echo "Building version ----> %1 <---- in %cd%\Client ?"
+echo "Assuming this version and mod level are entered in cpr.sra?"
 pause
 
 pbc170.exe /f /d "%cd%\Client\cpr.pbt" /o "%build_folder%\EncounterPRO.OS.Client.exe" /r "%cd%\Client\encounterpro.os.pbr" /w n /m n /x 32 /p "EncounterPRO-OS" /cp "EncounterPRO Foundation, Inc" /de "Electronic Medical Record System" /cr "(c) 2018 EncounterPRO Foundation Inc." /v "%1" /fv "%1"
