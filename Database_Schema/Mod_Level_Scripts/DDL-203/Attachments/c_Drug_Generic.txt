@@ -1,0 +1,2897 @@
+Diamox	1	167	acetaZOLAMIDE
+Xanax	1	596	ALPRAZolam
+RXNG632	1	632	mitoMYcin
+Amiloride	1	644	aMILoride
+RXNG1251	1	1251	azaCITIDine
+Azathioprine	1	1256	azaTHIOprine
+Buspirone	1	1827	busPIRone
+Carbatrol1	1	2002	carBAMazepine
+RXNG2187	1	2187	cefoTEtan
+RXNG2189	1	2189	cefOXitin
+RXNG2191	1	2191	cefTAZidime
+Librax	1	2356	chlordiazePOXIDE
+RXNG2555	1	2555	CISplatin
+RXNG2596	1	2596	clomiPHENE
+Anafranil	1	2597	clomiPRAMINE
+CLONI	1	2598	clonazePAM
+Catapres	1	2599	cloNIDine
+Clozaril	1	2626	cloZAPine
+RXNG3007	1	3007	cycloSERINE
+Neoral	1	3008	cycloSPORINE
+RXNG3100	1	3100	DACTINomycin
+Dilaudid	1	3423	HYDROmorphone
+Dramamine	1	3444	dimenhyDRINATE
+Diphenhydramine	1	3498	diphenhydrAMINE
+RXNG3639	1	3639	DOXOrubicin
+RXNG3966	1	3966	ePHEDrine
+Adrenalin	1	3992	EPINEPHrine
+Actiq	1	4337	fentaNYL
+Prozac	1	4493	FLUoxetine
+Glyburide	1	4815	glyBURIDE
+Glucotrol	1	4821	glipiZIDE
+Brontex	1	5032	guaiFENesin
+RXNG5470	1	5470	hydrALAZINE
+Lortab	1	5489	HYDROcodone
+Hydroxyzine	1	5553	hydrOXYzine
+RXNG5650	1	5650	IDArubicin
+Amnesteem	1	6064	ISOtretinoin
+Lorazepam	1	6470	LORazepam
+DepoProvera	1	6691	medroxyPROGESTERone
+Metformin	1	6809	metFORMIN
+DepoMedrol	1	6902	methylPREDNISolone
+Android	1	6904	methylTESTOSTERone
+Metronidazole	1	6922	metroNIDAZOLE
+Nicardipine	1	7396	niCARdipine
+Nifedipine	1	7417	NIFEdipine
+Nimotop	1	7426	niMODipine
+Oxycodone	1	7804	oxyCODONE
+RXNG8004	1	8004	PENTobarbital
+Phenobarbital	1	8134	PHENobarbital
+Prednisolone	1	8638	prednisoLONE
+PRED	1	8640	predniSONE
+RXNG9068	1	9068	quiNIDine
+RXNG9071	1	9071	quiNINE
+Azulfidine2	1	9524	sulfaSALAzine
+SILVADENE	1	9793	silver sulfADIAZINE
+Tolinase	1	10633	TOLAZamide
+Ultracet	1	10689	traMADol
+Trazodone	1	10737	traZODone
+RXNG11202	1	11202	vinCRIStine
+Amlodipine	1	17767	amLODIPine
+RXNG22299	1	22299	DAPTOmycin
+Lamictal	1	28439	lamoTRIgine
+Gabitril	1	31914	tiaGABine
+Trileptal	1	32624	OXcarbazepine
+Paxil	1	32937	PARoxetine
+Risperdal	1	35636	risperiDONE
+Imitrex	1	37418	SUMAtriptan
+Guanfacine	1	40114	guanFACINE
+Wellbutrin	1	42347	buPROPion
+Luvox	1	42355	fluvoxaMINE
+RXNG42955	1	42955	levOCARNitine
+Seroquel	1	51272	QUEtiapine
+RXNG56946	1	56946	PACLitaxel
+Zanaflex	1	57258	tiZANidine
+Zyprexa	1	61381	OLANZapine
+Lamivudine	1	68244	lamiVUDine
+RXNG68446	1	68446	PEMEtrexed
+Requip	1	72302	rOPINIRole
+RXNG72625	1	72625	DULoxetine
+RXNG72962	1	72962	DOCEtaxel
+Valtrex	1	73645	valACYclovir
+981^23	1	89013	ARIPiprazole
+Keppra	1	114477	levETIRAcetam
+Acifex	1	114979	RABEprazole
+RXNG121191	1	121191	riTUXimab
+Zomig	1	135775	ZOLMitriptan
+RXNG191831	1	191831	inFLIXimab
+RXNG214468	1	214468	DAUNOrubicin Liposomal
+RXNG214525	1	214525	DOXOrubicin liposome
+Valcyte	1	275891	valGANciclovir
+RXNG357977	1	357977	SUNItinib
+RXNG495881	1	495881	SORAfenib
+RXNG593411	1	593411	sitaGLIPtin
+RXNG662019	1	662019	PRALAtrexate
+RXNG805452	1	805452	romiPLOStim
+RXNG877510	1	877510	romiDEPsin
+RXNG1304991	1	1304991	vinCRIStine liposome
+RXNG1673265	1	1673265	ARIPiprazole lauroxil
+RXNG44	1	44	Mesna
+RXNG73	1	73	Docosahexaenoate
+RXNG94	1	94	5-Hydroxytryptophan
+Amicar	1	99	6-Aminocaproic Acid
+RXNG103	1	103	mercaptopurine
+RXNG110	1	110	Oxyquinoline
+Acebutolol	1	149	Acebutolol
+Acetaminophen	1	161	Acetaminophen
+RXNG164	1	164	Acetate
+RXNG168	1	168	Acetic Acid
+RXNG194	1	194	Acetylcholine
+RXNG197	1	197	Acetylcysteine
+RXNG272	1	272	Activated Charcoal
+Acyclovir1	1	281	Acyclovir
+Adenosine	1	296	Adenosine
+RXNG376	1	376	Corticotropin
+RXNG426	1	426	Alanine
+RXNG430	1	430	Albendazole
+AlbuterolSyrup	1	435	Albuterol
+RXNG448	1	448	Ethanol
+RXNG480	1	480	Alfentanil
+RXNG508	1	508	Allantoin
+Allopurinol1	1	519	Allopurinol
+RXNG535	1	535	alpha 1-Antitrypsin
+Vaniqa	1	569	Eflornithine
+Caverject	1	598	Alprostadil
+RXNG612	1	612	Aluminum Hydroxide
+Amantadine	1	620	Amantadine
+RXNG683	1	683	Aminolevulinic Acid
+Amiodarone	1	703	Amiodarone
+Elavil	1	704	Amitriptyline
+RXNG719	1	719	Amobarbital
+AMOX	1	723	Amoxicillin
+RXNG725	1	725	Amphetamine
+Ampicillin	1	733	Ampicillin
+RXNG743	1	743	Amylases
+Drithocreme	1	873	Anthralin
+RXNG1009	1	1009	Antithrombin III
+RXNG1043	1	1043	Apomorphine
+RXNG1091	1	1091	Arginine
+VitaminC	1	1151	Ascorbic Acid
+Bufferin	1	1191	Aspirin
+Atenolol	1	1202	Atenolol
+IsoptoAtropine	1	1223	Atropine
+Ridaura	1	1227	Auranofin
+Azactam	1	1272	Aztreonam
+RXNG1291	1	1291	Bacitracin
+Baclofen	1	1292	Baclofen
+Beconase	1	1347	Beclomethasone
+RXNG1369	1	1369	Bendroflumethiazide
+RXNG1378	1	1378	Benzalkonium
+RXNG1390	1	1390	Benzethonium
+Hurricaine	1	1399	Benzocaine
+RXNG1418	1	1418	Benzoyl Peroxide
+Didrex	1	1422	Benzphetamine
+Cogentin	1	1424	Benztropine
+RXNG1426	1	1426	Benzyl Alcohol
+RXNG1512	1	1512	Betaine
+CelestoneSoluspan1	1	1514	Betamethasone
+Betaxolol	1	1520	Betaxolol
+RXNG1588	1	1588	Biotin
+Bisacodyl	1	1596	Bisacodyl
+RXNG1705	1	1705	Boron
+RXNG1712	1	1712	Botulinum Toxin Type A
+Parlodel	1	1760	Bromocriptine
+RXNG1767	1	1767	Brompheniramine
+Bumex	1	1808	Bumetanide
+Betagan	1	1813	Levobunolol
+RXNG1815	1	1815	Bupivacaine
+RXNG1819	1	1819	Buprenorphine
+RXNG1828	1	1828	Busulfan
+Caffeine	1	1886	Caffeine
+RXNG1889	1	1889	Calcifediol
+Rocaltrol	1	1894	Calcitriol
+CalciumCarbonate	1	1897	Calcium Carbonate
+RXNG1901	1	1901	Calcium Chloride
+CalciumGluconate	1	1908	Calcium Gluconate
+RXNG1909	1	1909	Calcium Glycerophosphate
+RXNG1919	1	1919	calcium phosphate
+RXNG1925	1	1925	Calcium Sulfate
+RXNG1952	1	1952	Camphor
+Zostrix	1	1992	Capsaicin
+IsoptoCarbachol	1	1999	Carbachol
+RXNG2019	1	2019	Carbidopa
+RXNG2023	1	2023	Carbocysteine
+RXNG2051	1	2051	Carboprost
+RXNG2062	1	2062	Carboxymethylcellulose
+Soma	1	2101	Carisoprodol
+RXNG2105	1	2105	Carmustine
+Ocupress	1	2116	Carteolol
+RXNG2129	1	2129	Castor Oil
+Cefotaxime	1	2186	Cefotaxime
+Cefuroxime	1	2194	Cefuroxime
+RXNG2221	1	2221	Cellulose
+Cephalexin	1	2231	Cephalexin
+RXNG2286	1	2286	Cetylpyridinium
+Leukeran	1	2346	Chlorambucil
+Chloramphenicol	1	2348	Chloramphenicol
+Clorazepate	1	2353	clorazepate
+RXNG2354	1	2354	chlorcyclizine
+RXNG2358	1	2358	Chlorhexidine
+RXNG2382	1	2382	Proguanil
+RXNG2388	1	2388	Chlorophyll
+RXNG2393	1	2393	Chloroquine
+Chlorothiazide	1	2396	Chlorothiazide
+RXNG2400	1	2400	Chlorpheniramine
+Thalitone	1	2409	Chlorthalidone
+ParafonForteDSC	1	2410	Chlorzoxazone
+RXNG2418	1	2418	Cholecalciferol
+RXNG2427	1	2427	Cholera Vaccine
+Questran	1	2447	Cholestyramine Resin
+RXNG2473	1	2473	Chondroitin Sulfates
+RXNG2540	1	2540	Cilastatin
+Cimetidine	1	2541	Cimetidine
+Ciloxan	1	2551	Ciprofloxacin
+Celexa	1	2556	Citalopram
+TAVIST	1	2578	Clemastine
+CLINDA	1	2582	Clindamycin
+Clobetasol	1	2590	Clobetasol
+Clotrimazole	1	2623	Clotrimazole
+RXNG2635	1	2635	Coal Tar
+Cocaine	1	2653	Cocaine
+Codeine	1	2670	Codeine
+Colchicine	1	2683	Colchicine
+Colestid	1	2685	Colestipol
+RXNG2709	1	2709	Colistin
+RXNG2839	1	2839	Copper Gluconate
+RXNG2977	1	2977	Cyclizine
+Cyclopentolate	1	3001	Cyclopentolate
+RXNG3022	1	3022	Cysteamine
+RXNG3024	1	3024	Cysteine
+Dantrium	1	3105	Dantrolene
+Dapsone	1	3108	Dapsone
+RXNG3131	1	3131	Deferoxamine
+RXNG3143	1	3143	prasterone
+RXNG3154	1	3154	Demeclocycline
+Norpramin	1	3247	Desipramine
+DDAVP	1	3251	desmopressin
+DesOwen	1	3254	Desonide
+Topicort	1	3255	Desoximetasone
+Decadron	1	3264	Dexamethasone
+RXNG3274	1	3274	Dextran 70
+DEXEDRINE	1	3288	Dextroamphetamine
+Delsymdextromethor	1	3289	Dextromethorphan
+Diazepam	1	3322	Diazepam
+RXNG3327	1	3327	Diazoxide
+Nupercainal	1	3339	Dibucaine
+RXNG3353	1	3353	Dichlorphenamide
+Cataflam	1	3355	Diclofenac
+Bentyl	1	3361	Dicyclomine
+Didanosine	1	3364	Didanosine
+Tenuate	1	3389	Diethylpropion
+Digoxin	1	3407	Digoxin
+Migranal	1	3418	Dihydroergotamine
+RXNG3430	1	3430	Dihydroxyacetone
+RXNG3435	1	3435	Iodoquinol
+Diltiazem	1	3443	Diltiazem
+RXNG3445	1	3445	Dimercaprol
+Succimer	1	3446	Succimer
+RXNG3455	1	3455	Dimethyl Sulfoxide
+RXNG3478	1	3478	Dinoprostone
+RXNG3489	1	3489	Diosmin
+RXNG3500	1	3500	Diphenoxylate
+Persantine	1	3521	Dipyridamole
+Disopyramide	1	3541	Disopyramide
+Antabuse	1	3554	Disulfiram
+RXNG3637	1	3637	Doxapram
+Doxepin	1	3638	Doxepin
+Doryx	1	3640	Doxycycline
+RXNG3642	1	3642	Doxylamine
+RXNG3743	1	3743	Econazole
+RXNG3752	1	3752	Edrophonium
+Enalapril	1	3827	Enalapril
+RXNG3995	1	3995	Epirubicin
+RXNG4018	1	4018	Ergocalciferol
+RXNG4025	1	4025	Ergotamine
+Erythromycin	1	4053	Erythromycin
+Alora	1	4083	Estradiol
+RXNG4089	1	4089	Estramustine
+PREMARIN	1	4099	Estrogens, Conjugated (USP)
+Myambutol	1	4110	Ethambutol
+RXNG4124	1	4124	Ethinyl Estradiol
+RXNG4126	1	4126	Amifostine
+RXNG4127	1	4127	Ethionamide
+Zarontin	1	4135	Ethosuximide
+RXNG4136	1	4136	Ethotoin
+RXNG4177	1	4177	Etomidate
+RXNG4179	1	4179	Etoposide
+RXNG4249	1	4249	factor IX
+RXNG4254	1	4254	factor VII
+RXNG4256	1	4256	Factor VIIa
+RXNG4257	1	4257	Factor VIII
+RXNG4262	1	4262	factor X
+RXNG4271	1	4271	factor XIII
+PEPCID	1	4278	Famotidine
+Felodipine	1	4316	Felodipine
+Nalfon	1	4331	Fenoprofen
+RXNG4385	1	4385	Fibrinogen
+Flecainide	1	4441	Flecainide
+Fluconazole	1	4450	Fluconazole
+Ancobon	1	4451	Flucytosine
+Fluocinonide	1	4462	Fluocinonide
+Flarex	1	4491	Fluorometholone
+Carac	1	4492	Fluorouracil
+Halotestin	1	4494	Fluoxymesterone
+Cordran	1	4500	Flurandrenolide
+Ansaid	1	4502	Flurbiprofen
+RXNG4511	1	4511	Folic Acid
+RXNG4530	1	4530	Formaldehyde
+RXNG4537	1	4537	formic acid
+Monurol	1	4550	Fosfomycin
+RXNG4570	1	4570	Fructose
+Furosemide	1	4603	Furosemide
+RXNG4637	1	4637	Galantamine
+Cytovene	1	4678	Ganciclovir
+Gemfibrozil	1	4719	Gemfibrozil
+Glucagon	1	4832	Glucagon
+RXNG4845	1	4845	Glucosamine
+RXNG4850	1	4850	Glucose
+RXNG4885	1	4885	Glutamine
+RXNG4910	1	4910	Glycerin
+Minitran	1	4917	Nitroglycerin
+RXNG4919	1	4919	Glycine
+Robinul	1	4955	Glycopyrrolate
+RXNG4986	1	4986	Chorionic Gonadotropin
+RXNG5011	1	5011	Gramicidin
+Griseofulvin	1	5021	Griseofulvin
+RXNG5031	1	5031	Guaiacol
+Halog	1	5084	Halcinonide
+Haldol	1	5093	Haloperidol
+RXNG5175	1	5175	Hemin
+RXNG5224	1	5224	heparin
+RXNG5281	1	5281	Hesperidin
+RXNG5296	1	5296	Altretamine
+RXNG5321	1	5321	Hexylresorcinol
+RXNG5333	1	5333	Histamine
+RXNG5340	1	5340	Histidine
+RXNG5464	1	5464	Hyaluronidase
+Microzide	1	5487	Hydrochlorothiazide
+HYDRO	1	5492	Hydrocortisone
+RXNG5495	1	5495	Hydroflumethiazide
+RXNG5496	1	5496	Hydrofluoric Acid
+RXNG5499	1	5499	Hydrogen Peroxide
+Lustra	1	5509	hydroquinone
+RXNG5514	1	5514	Hydroxocobalamin
+Plaquenil	1	5521	Hydroxychloroquine
+RXNG5531	1	5531	Hetastarch
+RXNG5542	1	5542	17-alpha-Hydroxyprogesterone
+Hydrea	1	5552	hydroxyurea
+Ibuprofen	1	5640	Ibuprofen
+RXNG5657	1	5657	Ifosfamide
+RXNG5666	1	5666	Immunoglobulin G
+RXNG5690	1	5690	Imipenem
+Imipramine	1	5691	Imipramine
+Indocin	1	5781	Indomethacin
+RXNG5833	1	5833	Inositol
+Interferonalfa2b	1	5880	Interferon Alfa-2b
+Actimmune	1	5882	Interferon gamma-1b
+RXNG5924	1	5924	Inulin
+RXNG5942	1	5942	Clioquinol
+RXNG5992	1	5992	Iron-Dextran Complex
+Marplan	1	6011	Isocarboxazid
+RXNG6026	1	6026	Isoflurane
+RXNG6033	1	6033	Isoleucine
+Isoniazid	1	6038	isoniazid
+Isuprel	1	6054	Isoproterenol
+Ismo	1	6057	Isosorbide
+Isosorbidedinitrate	1	6058	Isosorbide Dinitrate
+RXNG6069	1	6069	Ivermectin
+RXNG6102	1	6102	Kaolin
+RXNG6130	1	6130	Ketamine
+Ketoconazole1	1	6135	Ketoconazole
+Zaditor	1	6146	Ketotifen
+Labetalol	1	6185	Labetalol
+RXNG6205	1	6205	Lactobacillus acidophilus
+Lactulose	1	6218	Lactulose
+RXNG6227	1	6227	Lanolin
+RXNG6308	1	6308	Leucine
+Mirena	1	6373	Levonorgestrel
+RXNG6375	1	6375	Levodopa
+RXNG6383	1	6383	Luteinizing Hormone
+Lidoderm	1	6387	Lidocaine
+RXNG6398	1	6398	Lincomycin
+RXNG6406	1	6406	Lipase
+RXNG6459	1	6459	Liver Extract
+RXNG6466	1	6466	Lomustine
+Loperamide	1	6468	Loperamide
+Lovastatin	1	6472	Lovastatin
+RXNG6475	1	6475	Loxapine
+RXNG6536	1	6536	Lysine
+Sulfamylon	1	6572	Mafenide
+RXNG6579	1	6579	Magnesium Chloride
+RXNG6581	1	6581	Magnesium Hydroxide
+RXNG6582	1	6582	Magnesium Oxide
+RXNG6585	1	6585	Magnesium Sulfate
+Ovide	1	6606	Malathion
+RXNG6628	1	6628	Mannitol
+Mebendazole	1	6672	Mebendazole
+RXNG6673	1	6673	Mecamylamine
+RXNG6674	1	6674	Mechlorethamine
+ANTIVERT	1	6676	Meclizine
+Megace	1	6703	Megestrol
+Melatonin	1	6711	Melatonin
+Alkeran	1	6718	Melphalan
+RXNG6719	1	6719	Memantine
+RXNG6750	1	6750	Menthol
+Demerol	1	6754	Meperidine
+RXNG6759	1	6759	Mepivacaine
+RXNG6760	1	6760	Meprobamate
+RXNG6765	1	6765	tiopronin
+Dolophine	1	6813	Methadone
+Desoxyn	1	6816	Methamphetamine
+Neptazane	1	6826	Methazolamide
+RXNG6832	1	6832	Methenamine
+Tapazole	1	6835	Methimazole
+RXNG6837	1	6837	Methionine
+Robaxin	1	6845	Methocarbamol
+RXNG6847	1	6847	Methohexital
+Rheumatrex	1	6851	Methotrexate
+RXNG6854	1	6854	Methoxsalen
+Citrucel	1	6873	Methylcellulose
+RXNG6878	1	6878	Methylene blue
+Methergine	1	6883	Methylergonovine
+Concerta	1	6901	Methylphenidate
+Metoclopramide	1	6915	Metoclopramide
+Metolazone	1	6916	Metolazone
+Lopressor	1	6918	Metoprolol
+RXNG6923	1	6923	Metyrapone
+Miconazole	1	6932	Miconazole
+RXNG6963	1	6963	Midodrine
+Mifeprex	1	6964	Mifepristone
+RXNG6972	1	6972	Mineral Oil
+Minocycline	1	6980	Minocycline
+Minoxidil	1	6984	Minoxidil
+RXNG7004	1	7004	Mitotane
+Moban	1	7019	Molindone
+Kadian	1	7052	Morphine
+RXNG7145	1	7145	Mycophenolic Acid
+Atrovent	1	7213	Ipratropium
+Nadolol	1	7226	Nadolol
+Narcan	1	7242	Naloxone
+Revia	1	7243	Naltrexone
+RXNG7247	1	7247	Naphazoline
+Naproxen	1	7258	Naproxen
+Natacyn	1	7268	Natamycin
+RXNG7299	1	7299	Neomycin
+RXNG7315	1	7315	Neostigmine
+Niacin	1	7393	Niacin
+RXNG7405	1	7405	Niacinamide
+Habitrol	1	7407	Nicotine
+Nisoldipine	1	7435	Nisoldipine
+RXNG7442	1	7442	Nitric Oxide
+Nitrofurantoin	1	7454	Nitrofurantoin
+RXNG7456	1	7456	Nitrogen
+RXNG7476	1	7476	Nitroprusside
+RXNG7512	1	7512	Norepinephrine
+Aygestin	1	7514	Norethindrone
+Pamelor	1	7531	Nortriptyline
+NYSTAT	1	7597	Nystatin
+RXNG7617	1	7617	Octreotide
+Ofloxacin	1	7623	Ofloxacin
+Prilosec	1	7646	Omeprazole
+RXNG7779	1	7779	Oxandrolone
+Oxygen	1	7806	Oxygen
+Neosynephrine12Hour	1	7812	Oxymetazoline
+RXNG7813	1	7813	Oxymetholone
+RXNG7814	1	7814	Oxymorphone
+RXNG7821	1	7821	Oxytetracycline
+RXNG7824	1	7824	Oxytocin
+RXNG7833	1	7833	aminosalicylic acid
+RXNG7839	1	7839	p-Hydroxyamphetamine
+RXNG7891	1	7891	Pantothenic Acid
+RXNG7892	1	7892	Papain
+Levatol	1	7973	Penbutolol
+Cuprimine	1	7975	Penicillamine
+BicillinLA	1	7980	Penicillin G
+RXNG7994	1	7994	Pentamidine
+RXNG8001	1	8001	Pentazocine
+RXNG8011	1	8011	Pentostatin
+RXNG8031	1	8031	Endopeptidases
+Permax	1	8047	Pergolide
+Aquaphor	1	8091	Petrolatum
+PYRIDIUM	1	8120	Phenazopyridine
+Nardil	1	8123	Phenelzine
+RXNG8132	1	8132	Pheniramine
+Phenoxybenzamine	1	8149	Phenoxybenzamine
+AdipexP	1	8152	Phentermine
+RXNG8153	1	8153	Phentolamine
+RXNG8156	1	8156	Phenylalanine
+NeoSynephrine	1	8163	Phenylephrine
+Phenytoin1	1	8183	Phenytoin
+RXNG8259	1	8259	Phosphoric acid
+Mephyton	1	8308	Vitamin K 1
+RXNG8310	1	8310	Phytosterols
+Pilocar	1	8328	Pilocarpine
+RXNG8331	1	8331	Pimozide
+Pindolol	1	8332	Pindolol
+RXNG8339	1	8339	Piperacillin
+RXNG8345	1	8345	Piperonyl Butoxide
+Feldene	1	8356	Piroxicam
+RXNG8410	1	8410	alteplase
+RXNG8462	1	8462	podophyllin
+Condylox	1	8463	podofilox
+RXNG8513	1	8513	polyethylene glycol 300
+RXNG8514	1	8514	Polyethylene Glycol 400
+RXNG8516	1	8516	Polyethylene Glycols
+RXNG8536	1	8536	Polymyxin B
+RXNG8560	1	8560	Polysorbate 80
+RXNG8565	1	8565	Polythiazide
+RXNG8570	1	8570	Polyvinyl Alcohol
+Potassiumchloride	1	8591	Potassium Chloride
+RXNG8597	1	8597	Potassium Iodide
+RXNG8610	1	8610	Povidone
+Betadine	1	8611	Povidone-Iodine
+RXNG8628	1	8628	Praziquantel
+Prazosin	1	8629	Prazosin
+RXNG8686	1	8686	Prilocaine
+Primidone	1	8691	Primidone
+RXNG8702	1	8702	Procarbazine
+TriCor	1	8703	Fenofibrate
+Compazine	1	8704	Prochlorperazine
+Progesterone	1	8727	Progesterone
+RXNG8737	1	8737	Proline
+Promethazine	1	8745	Promethazine
+Propafenone	1	8754	Propafenone
+RXNG8761	1	8761	Propantheline
+RXNG8782	1	8782	Propofol
+Inderal	1	8787	Propranolol
+RXNG8792	1	8792	propylhexedrine
+RXNG8814	1	8814	Epoprostenol
+RXNG8834	1	8834	Protein C
+Sudafed	1	8896	Pseudoephedrine
+Konsyl	1	8928	Psyllium
+RXNG8948	1	8948	Purified Protein Derivative of Tuberculin
+RXNG8984	1	8984	Pyrantel
+Pyrazinamide	1	8987	Pyrazinamide
+RXNG8991	1	8991	Pyrethrins
+RXNG9000	1	9000	Pyridostigmine
+RXNG9009	1	9009	Pyrilamine
+Pyrimethamine	1	9010	Pyrimethamine
+Ranitidine	1	9143	Ranitidine
+Reserpine	1	9260	Reserpine
+Rebetol	1	9344	Ribavirin
+RXNG9346	1	9346	Riboflavin
+Rifadin	1	9384	Rifampin
+Rimantadine	1	9386	Rimantadine
+RXNG9518	1	9518	salicylamide
+Duofilm	1	9525	Salicylic Acid
+TransdermScop	1	9601	Scopolamine
+RXNG9624	1	9624	Secobarbital
+Eldepryl	1	9639	Selegiline
+RXNG9640	1	9640	Selenite
+RXNG9671	1	9671	Serine
+SilverNitrate	1	9789	Silver Nitrate
+Simethicone	1	9796	Simethicone
+RXNG9800	1	9800	Sincalide
+Muro128	1	9863	Sodium Chloride
+RXNG9873	1	9873	Sodium Fluoride
+RXNG9884	1	9884	Sodium Iodide
+RXNG9899	1	9899	Sodium Oxybate
+RXNG9913	1	9913	Sodium Tetradecyl Sulfate
+Sotalol	1	9947	Sotalol
+RXNG9949	1	9949	Soybean Oil
+Spironolactone	1	9997	Spironolactone
+RXNG10030	1	10030	Stannous Fluoride
+RXNG10046	1	10046	Starch
+RXNG10114	1	10114	Streptozocin
+RXNG10154	1	10154	Succinylcholine
+Carafate	1	10156	Sucralfate
+RXNG10167	1	10167	Sulbactam
+Bleph10	1	10169	Sulfacetamide
+RXNG10179	1	10179	Sulfamethizole
+Sulfamethoxazole	1	10180	Sulfamethoxazole
+RXNG10184	1	10184	Sulfanilamide
+RXNG10223	1	10223	Sulfur
+RXNG10231	1	10231	Sulfuric acid
+RXNG10255	1	10255	Suprofen
+RXNG10323	1	10323	Talc
+Nolvadex	1	10324	Tamoxifen
+RXNG10328	1	10328	Tannic Acid
+RXNG10337	1	10337	Taurine
+Restoril	1	10355	Temazepam
+Androderm	1	10379	Testosterone
+RXNG10390	1	10390	Tetrabenazine
+RXNG10391	1	10391	Tetracaine
+Tetracycline	1	10395	Tetracycline
+Marinol1	1	10402	Tetrahydrocannabinol
+RXNG10432	1	10432	Thalidomide
+Theophylline	1	10438	Theophylline
+RXNG10454	1	10454	Thiamine
+RXNG10473	1	10473	Thiotepa
+RXNG10485	1	10485	Thioguanine
+RXNG10524	1	10524	Threonine
+RXNG10528	1	10528	Thrombin
+RXNG10553	1	10553	Thymol
+ArmourThyroid	1	10572	thyroid (USP)
+Levothroid	1	10582	levothyroxine
+Ticlopidine	1	10594	Ticlopidine
+Betimol	1	10600	Timolol
+RXNG10612	1	10612	Tinidazole
+TOBREX	1	10627	Tobramycin
+Tinactin	1	10637	Tolnaftate
+RXNG10691	1	10691	Tranexamic Acid
+Parnate	1	10734	Tranylcypromine
+Avita	1	10753	Tretinoin
+Triamcinolone	1	10759	Triamcinolone
+Triamterene	1	10763	Triamterene
+Halcion	1	10767	Triazolam
+RXNG10798	1	10798	Trientine
+Trifluridine	1	10803	Trifluridine
+Cytomel	1	10814	liothyronine
+Optipranolol	1	10824	Metipranolol
+RXNG10827	1	10827	Trimethadione
+Trimethoprim	1	10829	Trimethoprim
+Surmontil	1	10834	Trimipramine
+RXNG10849	1	10849	Triprolidine
+Mydriacyl	1	10869	Tropicamide
+RXNG10890	1	10890	TRYPSIN
+RXNG10898	1	10898	Tryptophan
+RXNG10938	1	10938	Turpentine
+RXNG10962	1	10962	Tyrosine
+Carmol1	1	11002	Urea
+RXNG11115	1	11115	Valine
+Vancocin	1	11124	Vancomycin
+RXNG11149	1	11149	Vasopressin (USP)
+Calan	1	11170	Verapamil
+AquasolA	1	11246	Vitamin A
+Nascobal	1	11248	Vitamin B 12
+VitaminD	1	11253	Vitamin D
+VitaminE	1	11256	Vitamin E
+VitaminK	1	11258	Vitamin K
+RXNG11274	1	11274	von Willebrand factor
+Coumadin	1	11289	Warfarin
+RXNG11295	1	11295	Water
+RXNG11359	1	11359	Lutein
+RXNG11377	1	11377	Xylitol
+Zidovudine	1	11413	Zidovudine
+ZincOxide	1	11423	Zinc Oxide
+RXNG11476	1	11476	tiludronic acid
+RXNG11516	1	11516	Doxercalciferol
+RXNG11645	1	11645	deferiprone
+RXNG12574	1	12574	gemcitabine
+RXNG14584	1	14584	Etonogestrel
+Iopidine	1	14845	apraclonidine
+RXNG14851	1	14851	Vigabatrin
+RXNG14997	1	14997	4-cresyl acetate
+RXNG15226	1	15226	fomepizole
+RXNG15657	1	15657	decitabine
+Remeron	1	15996	Mirtazapine
+RXNG16521	1	16521	adefovir
+Precose	1	16681	Acarbose
+RXNG16728	1	16728	acetohydroxamic acid
+Soriatane	1	16818	Acitretin
+Prevacid	1	17128	lansoprazole
+RXNG17300	1	17300	alfuzosin
+RXNG17621	1	17621	aluminum sulfate
+RXNG18330	1	18330	arsenic trioxide
+RXNG18343	1	18343	artemether
+Astelin	1	18603	azelastine
+ZITHROMAX	1	18631	Azithromycin
+RXNG18747	1	18747	balsalazide
+Benazepril	1	18867	benazepril
+Tessalon	1	18993	benzonatate
+RXNG19143	1	19143	Beta Carotene
+Urecholine	1	19257	Bethanechol
+PeptoBismol	1	19478	bismuth subsalicylate
+Bisoprolol	1	19484	Bisoprolol
+Cefprozil	1	19552	cefprozil
+RXNG19666	1	19666	Nesiritide
+RXNG19737	1	19737	bromfenac
+PulmicortRespules	1	19831	Budesonide
+RXNG19860	1	19860	butalbital
+RXNG19861	1	19861	butamben
+Gynazole1	1	19884	butoconazole
+RXNG19959	1	19959	acrivastine
+RXNG20012	1	20012	cadexomer iodine
+Fibercon	1	20063	calcium polycarbophil
+RXNG20217	1	20217	carbetapentane
+RXNG20220	1	20220	carbinoxamine
+Carvedilol	1	20352	carvedilol
+RXNG20481	1	20481	cefepime
+CEDAX	1	20492	ceftibuten
+Zyrtec	1	20610	Cetirizine
+RXNG20859	1	20859	chloroprocaine
+RXNG20877	1	20877	chloroxylenol
+RXNG21009	1	21009	chromic chloride
+Loprox	1	21090	ciclopirox
+Pletal	1	21107	cilostazol
+RXNG21116	1	21116	Eucalyptol
+RXNG21183	1	21183	Citric Acid
+Clarithromycin	1	21212	Clarithromycin
+RXNG21241	1	21241	clobazam
+RXNG21249	1	21249	clocortolone
+RXNG21254	1	21254	chlophedianol
+RXNG21389	1	21389	cocoa butter
+RXNG21406	1	21406	coenzyme Q10
+RXNG21579	1	21579	Copper Sulfate
+Eurax	1	21766	crotamiton
+RXNG21837	1	21837	Cupric oxide
+RXNG21842	1	21842	cuprous oxide
+FLEX	1	21949	cyclobenzaprine
+RXNG22178	1	22178	cytomegalovirus immune globulin
+RXNG22396	1	22396	deflazacort
+RXNG22696	1	22696	dexbrompheniramine
+RXNG22697	1	22697	dexchlorpheniramine
+RXNG22701	1	22701	dexpanthenol
+RXNG22892	1	22892	dichloralphenazone
+RXNG23024	1	23024	difenoxin
+RXNG23043	1	23043	difluprednate
+RXNG23066	1	23066	Dihematoporphyrin Ether
+RXNG23088	1	23088	dihydrocodeine
+RXNG23247	1	23247	methylsulfonylmethane
+RXNG23744	1	23744	dyclonine
+RXNG24460	1	24460	ethanolamine oleate
+Lodine1	1	24605	Etodolac
+Felbatol	1	24812	felbamate
+RXNG24853	1	24853	Fenoldopam
+RXNG24902	1	24902	prussian blue insoluble
+RXNG24909	1	24909	iron sucrose
+RXNG24912	1	24912	ferric subsulfate solution
+RXNG24913	1	24913	ferric sulfate
+Hemocyte	1	24941	Ferrous fumarate
+Fergon	1	24942	ferrous gluconate
+ferroussulfate	1	24947	ferrous sulfate
+Propecia	1	25025	Finasteride
+Cefixime	1	25033	Cefixime
+Omnicef	1	25037	cefdinir
+Flunisolide	1	25120	flunisolide
+Capex	1	25126	fluocinolone
+RXNG25138	1	25138	Fluorescein
+Foradil	1	25255	formoterol
+RXNG25357	1	25357	follitropin beta
+Neurontin	1	25480	gabapentin
+Amaryl	1	25789	glimepiride
+CalciumGlubionate	1	25806	calcium glubionate
+RXNG25842	1	25842	Gluconolactone
+Zofran	1	26225	Ondansetron
+RXNG26237	1	26237	Granisetron
+RXNG26744	1	26744	hepatitis B immune globulin
+RXNG27084	1	27084	homatropine
+RXNG27100	1	27100	omacetaxine mepesuccinate
+Arava	1	27169	leflunomide
+Lacrisert	1	27291	hydroxypropylcellulose
+RXNG27334	1	27334	hypromellose
+RXNG27340	1	27340	desflurane
+RXNG27825	1	27825	iron succinyl milk protein complex
+RXNG27946	1	27946	isometheptene
+Itraconazole	1	28031	Itraconazole
+Emadine	1	28144	emedastine
+Livostin	1	28627	levocabastine
+Synarel	1	28656	Nafarelin
+Maxaquin	1	28872	lomefloxacin
+Alavert	1	28889	Loratadine
+Lisinopril	1	29046	Lisinopril
+RXNG29151	1	29151	magaldrate
+RXNG29155	1	29155	magnesium carbonate
+RXNG29170	1	29170	magnesium trisilicate
+RXNG29209	1	29209	malic acid
+RXNG29268	1	29268	manganese sulfate
+Dovonex	1	29365	calcipotriene
+RXNG29421	1	29421	mecobalamin
+RXNG29439	1	29439	medrysone
+RXNG29501	1	29501	meningococcal group A polysaccharide
+RXNG29503	1	29503	meningococcal group C polysaccharide
+RXNG29561	1	29561	meropenem
+RXNG29787	1	29787	methyl salicylate
+RXNG29899	1	29899	methylnaltrexone
+RXNG29900	1	29900	methylnicotinate
+RXNG29998	1	29998	ocriplasmin
+Glyset	1	30009	miglitol
+RXNG30077	1	30077	mivacurium
+Provigil	1	30125	modafinil
+Moexipril	1	30131	moexipril
+RXNG31435	1	31435	valrubicin
+RXNG31447	1	31447	nabilone
+Naftin	1	31476	naftifine
+RXNG31555	1	31555	nebivolol
+Alocril	1	31563	Nedocromil
+Nilandron	1	31805	nilutamide
+RXNG31819	1	31819	nitazoxanide
+Dipentum	1	32385	olsalazine
+RXNG32592	1	32592	oxaliplatin
+Dapro	1	32613	oxaprozin
+Oxistat	1	32638	oxiconazole
+Ditropan	1	32675	oxybutynin
+RXNG32680	1	32680	oxychlorosene
+RXNG32863	1	32863	pantethine
+RXNG32915	1	32915	Teriparatide
+Clopidogrel	1	32968	clopidogrel
+RXNG32987	1	32987	pectin
+Permethrin	1	33199	Permethrin
+RXNG33219	1	33219	Peruvian balsam
+RXNG33272	1	33272	phendimetrazine
+RXNG33290	1	33290	phenol
+RXNG33408	1	33408	phenyltoloxamine
+RXNG33562	1	33562	Foscarnet
+RXNG33688	1	33688	picosulfate sodium
+Actos1	1	33738	pioglitazone
+Ogen	1	33747	estropipate
+RXNG33835	1	33835	plasma protein fraction
+RXNG34132	1	34132	pegaspargase
+RXNG34296	1	34296	potassium bicarbonate
+RXNG34316	1	34316	potassium nitrate
+RXNG34322	1	34322	potassium phosphate
+RXNG34323	1	34323	potassium sulfate
+RXNG34345	1	34345	pralidoxime
+Proctofoam	1	34347	pramoxine
+Dermatop	1	34369	prednicarbate
+RXNG34693	1	34693	Propylene glycol
+RXNG34822	1	34822	Protein S
+RXNG34905	1	34905	proparacaine
+Doral	1	35185	quazepam
+Quinapril	1	35208	quinapril
+Ramipril	1	35296	Ramipril
+RXNG35302	1	35302	Sirolimus
+RXNG35382	1	35382	resorcinol
+Micrhogam	1	35465	Rho(D) Immune Globulin
+Priftin	1	35617	rifapentine
+RXNG35619	1	35619	rifaximin
+RXNG35623	1	35623	Riluzole
+RXNG35780	1	35780	ropivacaine
+Acular	1	35827	Ketorolac
+RXNG35829	1	35829	ranolazine
+Disalcid	1	36108	Salsalate
+Serevent	1	36117	salmeterol
+Miacalcin	1	36118	salmon calcitonin
+RXNG36122	1	36122	phenyl salicylate
+RXNG36314	1	36314	secnidazole
+RXNG36344	1	36344	Selenious Acid
+SeleniumSulfide	1	36345	selenium sulfide
+RXNG36387	1	36387	sennosides, USP
+RXNG36435	1	36435	sertaconazole
+Zoloft	1	36437	Sertraline
+RXNG36453	1	36453	sevoflurane
+Meridia	1	36514	sibutramine
+Zocor	1	36567	Simvastatin
+RXNG36676	1	36676	Sodium Bicarbonate
+RXNG36679	1	36679	sodium bisulfite
+RXNG36696	1	36696	sodium metabisulfite
+RXNG36709	1	36709	sodium phosphate
+RXNG36717	1	36717	sodium selenate
+RXNG36721	1	36721	sodium sulfate
+RXNG36726	1	36726	sodium thiosulfate
+RXNG37255	1	37255	Succinic Acid
+RXNG37317	1	37317	sulbutiamine
+Exelderm	1	37319	sulconazole
+RXNG37617	1	37617	tazobactam
+RXNG37776	1	37776	temozolomide
+Lamisil	1	37801	terbinafine
+Terazol3	1	37806	terconazole
+Xenical	1	37925	orlistat
+VISINE	1	37935	tetrahydrozoline
+Vagistat1	1	38298	tioconazole
+Strattera	1	38400	atomoxetine
+Topamax	1	38404	topiramate
+Fareston	1	38409	Toremifene
+Torsemide	1	38413	torsemide
+Trandolapril	1	38454	trandolapril
+TIGAN	1	38685	trimethobenzamide
+RXNG38782	1	38782	Triptorelin
+RXNG38866	1	38866	trolamine salicylate
+RXNG39085	1	39085	ubiquinol
+RXNG39385	1	39385	varicella-zoster immune globulin
+RXNG39541	1	39541	vinorelbine
+RXNG39684	1	39684	epinastine
+Effexor	1	39786	venlafaxine
+RXNG39918	1	39918	zeaxanthin
+RXNG39937	1	39937	zinc chloride
+RXNG39952	1	39952	zinc pyrithione
+RXNG39954	1	39954	Zinc Sulfate
+Ambien	1	39993	zolpidem
+Zonegran	1	39998	zonisamide
+RXNG40138	1	40138	Iloprost
+VALPROATE	1	40254	Valproate
+Zyflo	1	40575	zileuton
+Protonix	1	40790	pantoprazole
+Cutivate	1	41126	fluticasone
+Lescol	1	41127	fluvastatin
+Ultravate	1	41208	halobetasol
+RXNG41289	1	41289	ibutilide
+Lactaid	1	41397	Lactase
+Mobic	1	41493	meloxicam
+Protopic	1	42316	Tacrolimus
+Axid	1	42319	Nizatidine
+Cytotec	1	42331	Misoprostol
+LithiumCarbonate	1	42351	Lithium Carbonate
+Mupirocin1	1	42372	Mupirocin
+Lupron	1	42375	Leuprolide
+Prevachol	1	42463	Pravastatin
+RXNG42543	1	42543	Aspartate
+RXNG42588	1	42588	Chenodeoxycholate
+Crolom	1	42612	Cromolyn
+RXNG42627	1	42627	Deoxycholate
+RXNG42736	1	42736	Dexrazoxane
+VitaminB6	1	42954	Vitamin B6
+Xalatan	1	43611	latanoprost
+RXNG44151	1	44151	clofarabine
+RXNG44281	1	44281	cevimeline
+Fosamax	1	46041	Alendronate
+Drysol	1	46241	aluminum chloride
+RXNG46967	1	46967	beractant
+Mentax	1	47461	butenafine
+RXNG47613	1	47613	Calcium Citrate
+RXNG47628	1	47628	tricalcium phosphate
+Debrox	1	47686	carbamide peroxide
+Celontin	1	47858	methsuximide
+RXNG48203	1	48203	Clavulanate
+RXNG48937	1	48937	Dexmedetomidine
+Tikosyn	1	49247	dofetilide
+Doxazosin	1	49276	Doxazosin
+RXNG49737	1	49737	esmolol
+Fosinopril	1	50166	Fosinopril
+Zoladex1	1	50610	Goserelin
+RXNG50975	1	50975	histrelin
+NovoLog	1	51428	Insulin, Aspart, Human
+RXNG51499	1	51499	irinotecan
+Alomide	1	52151	Lodoxamide
+Cozaar	1	52175	Losartan
+Alrex	1	52177	loteprednol etabonate
+RXNG52356	1	52356	magnesium citrate
+RXNG52358	1	52358	MAGNESIUM GLUCONATE
+RXNG52364	1	52364	Magnesium Salicylate
+Asacol	1	52582	mesalamine
+Nevirapine	1	53654	Nevirapine
+GynolII	1	53750	Nonoxynol-9
+RXNG54365	1	54365	pamabrom
+Aceon	1	54552	Perindopril
+RXNG54987	1	54987	Potassium Acetate
+UrocitK	1	54993	potassium citrate
+RXNG55018	1	55018	Dibasic potassium phosphate
+Mycobutin	1	55672	Rifabutin
+Vexol	1	55681	rimexolone
+RXNG56443	1	56443	Sodium Acetate
+RXNG56466	1	56466	sodium citrate
+RXNG56476	1	56476	Sodium gluconate
+RXNG56512	1	56512	Sodium polystyrene sulfonate
+RXNG56513	1	56513	Sodium propionate
+RXNG57308	1	57308	Topotecan
+RXNG58295	1	58295	Zinc Acetate
+RXNG58939	1	58939	COLLAGENASE
+Skelaxin	1	59078	metaxalone
+RXNG59087	1	59087	Eucalyptus oil
+RXNG59308	1	59308	CHROMIUM PICOLINATE
+Stavudine	1	59763	Stavudine
+RXNG59768	1	59768	pegademase bovine
+Denavir	1	59839	penciclovir
+Aldara	1	59943	imiquimod
+Trusopt	1	60207	dorzolamide
+Mepron	1	60212	Atovaquone
+Differin	1	60223	adapalene
+Comtan	1	60307	entacapone
+RXNG60548	1	60548	exenatide
+RXNG60819	1	60819	bivalirudin
+Genotropin	1	61148	Somatropin
+RXNG61805	1	61805	nitisinone
+Edecrin	1	62349	Ethacrynate
+Hyalgan	1	62372	hyaluronate
+RXNG62400	1	62400	pantothenate
+Actigall	1	62427	Ursodeoxycholate
+RXNG66887	1	66887	Racepinephrine
+Enoxaparin	1	67108	Enoxaparin
+Dalteparin	1	67109	Dalteparin
+Anzemet	1	68091	Dolasetron
+RXNG68092	1	68092	lanreotide
+Famciclovir	1	68099	famciclovir
+RXNG68139	1	68139	Rocuronium
+RXNG68147	1	68147	cetrorelix
+RXNG68149	1	68149	mycophenolate mofetil
+Neupogen	1	68442	Filgrastim
+RXNG68503	1	68503	ziconotide
+RXNG69036	1	69036	rufinamide
+RXNG69120	1	69120	tiotropium
+RXNG69634	1	69634	sargramostim
+Innohep	1	69646	tinzaparin
+Relenza	1	69722	Zanamivir
+Valsartan	1	69749	valsartan
+RXNG70223	1	70223	Aldesleukin
+RXNG70561	1	70561	palonosetron
+RXNG70589	1	70589	Benzoate
+RXNG70602	1	70602	Glutamate
+RXNG70603	1	70603	glycolate
+RXNG70619	1	70619	phenylacetate
+Evista	1	72143	Raloxifene
+RXNG72236	1	72236	fosphenytoin
+RXNG72257	1	72257	interferon beta-1b
+RXNG72435	1	72435	anakinra
+Tasmar	1	72937	tolcapone
+Femara	1	72965	letrozole
+RXNG73032	1	73032	remifentanil
+Prandin	1	73044	repaglinide
+Actonel	1	73056	Risedronate
+RXNG73137	1	73137	tirofiban
+RXNG73178	1	73178	iloperidone
+Telmisartan	1	73494	telmisartan
+RXNG73689	1	73689	febuxostat
+RXNG73710	1	73710	paricalcitol
+Sonata	1	74667	zaleplon
+RXNG75207	1	75207	bosentan
+RXNG75635	1	75635	eptifibatide
+Interferonbeta1a	1	75917	Interferon beta-1a
+RXNG76469	1	76469	BCG, Live, Connaught Strain
+RXNG76895	1	76895	Reteplase
+Flomax	1	77492	tamsulosin
+RXNG77655	1	77655	zoledronic acid
+RXNG78903	1	78903	Capreomycin
+RXNG81647	1	81647	phenylbutyrate
+Panretin	1	81864	alitretinoin
+COLACE	1	82003	Docusate
+Levaquin	1	82122	Levofloxacin
+RXNG82242	1	82242	chlorophyllin copper complex
+RXNG82819	1	82819	acamprosate
+Casodex	1	83008	bicalutamide
+RXNG83171	1	83171	Cidofovir
+Lipitor	1	83367	atorvastatin
+Invirase	1	83395	Saquinavir
+Teveten	1	83515	eprosartan
+Spectracef	1	83682	cefditoren
+Delavirdine	1	83816	Delavirdine
+Avapro	1	83818	irbesartan
+RXNG83929	1	83929	abciximab
+Avage	1	83947	tazarotene
+Avandia	1	84108	rosiglitazone
+Arimidex	1	84857	anastrozole
+RXNG84959	1	84959	imiglucerase
+RXNG85248	1	85248	alosetron
+Ritonavir	1	85762	Ritonavir
+Humalog	1	86009	Insulin Lispro
+Allegra	1	87636	fexofenadine
+Maxalt	1	88014	rizatriptan
+Singulair	1	88249	montelukast
+Phospholineiodide	1	89778	Echothiophate
+RXNG89785	1	89785	Methscopolamine
+Tucks	1	89821	Witch Hazel
+Imogam	1	89886	rabies immune globulin, human
+Psorcon	1	91311	Diflorasone
+RXNG91472	1	91472	Shark liver oil
+RXNG91601	1	91601	Lymphocyte immune globulin
+RXNG100213	1	100213	Bifidobacterium Infantis
+RXNG105669	1	105669	Polysaccharide iron complex
+RXNG105694	1	105694	Epoetin Alfa
+RXNG106212	1	106212	Calamine
+RXNG107044	1	107044	Rabbit anti-human T-lymphocyte globulin
+RXNG107770	1	107770	Mepenzolate
+Aclovate	1	108088	Alclometasone
+981^21	1	108118	Mometasone
+Amlactincream	1	114202	Lactate
+Crixivan	1	114289	Indinavir
+RXNG114934	1	114934	desirudin
+Zafirlukast	1	114970	zafirlukast
+Regranex	1	115238	Becaplermin
+RXNG115264	1	115264	Ibandronate
+Trovan	1	115552	trovafloxacin
+Geodon	1	115698	ziprasidone
+RXNG117055	1	117055	alemtuzumab
+RXNG118886	1	118886	Verteporfin
+Detrol	1	119565	tolterodine
+RXNG119771	1	119771	doripenem
+RXNG120608	1	120608	peginterferon alfa-2a
+RXNG121243	1	121243	voriconazole
+RXNG125929	1	125929	Bilberry extract
+RXNG125933	1	125933	Cranberry preparation
+RXNG132889	1	132889	Levonordefrin
+RXNG134404	1	134404	Urofollitropin
+Nelfinavir	1	134527	Nelfinavir
+RXNG134547	1	134547	bendamustine
+RXNG134568	1	134568	bentoquatam
+Alphagan	1	134615	brimonidine
+RXNG134748	1	134748	rasagiline
+RXNG135313	1	135313	isopropyl unoprostone
+Patanol	1	135391	olopatadine
+Aricept	1	135447	donepezil
+RXNG136198	1	136198	darifenacin
+Viagra	1	136411	sildenafil
+RXNG138099	1	138099	gemifloxacin
+Avelox	1	139462	moxifloxacin
+RXNG139825	1	139825	insulin detemir
+RXNG139896	1	139896	enfuvirtide
+RXNG139953	1	139953	Pramlintide
+RXNG139994	1	139994	Oprelvekin
+RXNG140108	1	140108	Caspofungin
+RXNG140480	1	140480	icodextrin
+Celebrex	1	140587	celecoxib
+Amerge	1	141366	naratriptan
+Welchol	1	141626	colesevelam
+RXNG141704	1	141704	everolimus
+RXNG142131	1	142131	Magnesium Aspartate
+RXNG142407	1	142407	Calcium ascorbate
+Levbid	1	153970	Hyoscyamine
+RXNG155002	1	155002	Aminolevulinate
+Elmiron	1	155046	Pentosan Polysulfate
+RXNG155155	1	155155	Poloxamer 407
+Exelon	1	183379	rivastigmine
+RXNG187832	1	187832	pregabalin
+RXNG190353	1	190353	Daclizumab
+RXNG190376	1	190376	linezolid
+Abacavir	1	190521	abacavir
+RXNG190548	1	190548	tipranavir
+Xeloda	1	194000	capecitabine
+SynagisEPRO	1	194279	palivizumab
+RXNG194337	1	194337	Vorinostat
+Azopt	1	194881	brinzolamide
+Efavirenz	1	195085	efavirenz
+RXNG195088	1	195088	lopinavir
+RXNG196102	1	196102	basiliximab
+RXNG196319	1	196319	Palifermin
+RXNG196342	1	196342	SAMARIUM Sm153
+RXNG203223	1	203223	digoxin antibodies Fab fragments
+Phoslo	1	214342	calcium acetate
+Atacand	1	214354	candesartan
+Menest	1	214549	Estrogens, Esterified (USP)
+Enbrel	1	214555	Etanercept
+Copaxone	1	214582	Glatiramer
+RXNG214688	1	214688	Magnesium lactate
+RXNG214817	1	214817	Sacrosidase
+Renagel	1	214824	sevelamer
+RXNG215648	1	215648	compound benzoin tincture (USP)
+Yocon	1	220982	yohimbine
+RXNG221050	1	221050	BCG, Live, Tice Strain
+RXNG221082	1	221082	Colloidal oatmeal
+Miralax	1	221147	POLYETHYLENE GLYCOL 3350
+RXNG223779	1	223779	Potassium bitartrate
+RXNG224905	1	224905	trastuzumab
+RXNG227518	1	227518	Follicle Stimulating Hormone
+RXNG228476	1	228476	gatifloxacin
+RXNG228783	1	228783	frovatriptan
+RXNG228790	1	228790	Dutasteride
+RXNG229367	1	229367	quinupristin
+RXNG229369	1	229369	dalfopristin
+RXNG231049	1	231049	eletriptan
+RXNG232539	1	232539	calfactant
+RXNG233272	1	233272	bexarotene
+RXNG233603	1	233603	clevidipine
+RXNG233698	1	233698	dronedarone
+RXNG234416	1	234416	lanthanum carbonate
+RXNG235496	1	235496	Sodium Phosphate, Monobasic
+RXNG235996	1	235996	Erwinia asparaginase
+RXNG236381	1	236381	Poractant alfa
+RXNG236594	1	236594	amphotericin B liposomal
+RXNG236614	1	236614	BUTCHER'S BROOM Preparation
+RXNG236718	1	236718	SULFONATED PHENOL
+RXNG236719	1	236719	Sodium Phosphate, Dibasic
+RXNG236782	1	236782	Saccharomyces boulardii
+RXNG236797	1	236797	Alpha Hydroxy Acids
+RXNG236911	1	236911	ZINC CITRATE
+RXNG237058	1	237058	THONZONIUM
+RXNG237099	1	237099	alpha Tocopherol
+RXNG237108	1	237108	Sodium Acetate Trihydrate
+RXNG237159	1	237159	Levalbuterol
+Cenestin	1	253166	synthetic conjugated estrogens, A
+RXNG253174	1	253174	Hepatitis A Vaccine, Inactivated
+HumulinR	1	253182	Regular Insulin, Human
+RXNG253337	1	253337	bevacizumab
+RXNG253453	1	253453	peginterferon alfa-2b
+Ponstel	1	257844	Mefenamate
+RXNG258494	1	258494	exemestane
+RXNG259276	1	259276	pine bark extract
+RXNG259280	1	259280	Tenecteplase
+RXNG259351	1	259351	ALPHA-D-GALACTOSIDASE ENZYME
+Tamiflu	1	260101	Oseltamivir
+RXNG261435	1	261435	Sodium ferric gluconate complex
+Icar	1	262150	Iron Carbonyl
+RXNG263034	1	263034	panitumumab
+RXNG265647	1	265647	Garlic preparation
+RXNG266604	1	266604	Metyrosine
+RXNG267366	1	267366	Sodium Ascorbate
+RXNG273888	1	273888	calcium threonate
+Starlix	1	274332	nateglinide
+RXNG274403	1	274403	mecasermin
+RXNG274771	1	274771	nelarabine
+Lantus	1	274783	Insulin Glargine
+RXNG274786	1	274786	telithromycin
+Omnaris	1	274964	ciclesonide
+Clarinex	1	275635	desloratadine
+RXNG276237	1	276237	emtricitabine
+RXNG278739	1	278739	pegvisomant
+Axert	1	279645	almotriptan
+RXNG282357	1	282357	fulvestrant
+RXNG282388	1	282388	imatinib
+RXNG282446	1	282446	posaconazole
+Nexium	1	283742	Esomeprazole
+Travatan	1	283809	travoprost
+Lumigan	1	283810	bimatoprost
+RXNG283821	1	283821	Rasburicase
+RXNG283838	1	283838	darbepoetin alfa
+RXNG284110	1	284110	FE HEME POLYPEPTIDE
+Synvisc	1	284637	HYLAN G-F 20
+RXNG285148	1	285148	Bifidobacterium bifidum
+RXNG285155	1	285155	Kelp preparation
+RXNG285156	1	285156	Lactobacillus reuteri
+RXNG285241	1	285241	Ginger extract
+RXNG298665	1	298665	nepafenac
+RXNG298869	1	298869	eplerenone
+RXNG299081	1	299081	spinosad
+RXNG300195	1	300195	tenofovir disoproxil
+RXNG301542	1	301542	rosuvastatin
+RXNG302285	1	302285	conivaptan
+RXNG302379	1	302379	omalizumab
+RXNG304962	1	304962	arformoterol
+RXNG306266	1	306266	entecavir
+RXNG306674	1	306674	vardenafil
+RXNG314504	1	314504	ANTI-INHIBITOR COAGULANT COMPLEX
+RXNG314583	1	314583	D-BIOTIN
+RXNG314684	1	314684	Insulin, Protamine Lispro, Human
+RXNG314718	1	314718	magnesium acetate
+RXNG314724	1	314724	MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUP W-135
+RXNG314725	1	314725	MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUP Y
+RXNG314881	1	314881	Undecylenate
+RXNG317825	1	317825	Horse Chestnut Preparation
+RXNG318341	1	318341	cetuximab
+RXNG319864	1	319864	Cisatracurium
+RXNG321064	1	321064	olmesartan
+RXNG321208	1	321208	fondaparinux
+Elidel	1	321952	Pimecrolimus
+Lexapro	1	321988	Escitalopram
+RXNG322167	1	322167	Solifenacin
+RXNG324072	1	324072	dimethicone
+RXNG325526	1	325526	Ginseng Preparation
+RXNG325642	1	325642	ertapenem
+RXNG325646	1	325646	aliskiren
+RXNG325887	1	325887	micafungin
+RXNG326374	1	326374	norelgestromin
+RXNG327361	1	327361	adalimumab
+RXNG328134	1	328134	gefitinib
+RXNG337068	1	337068	methyl 5-aminolevulinate
+RXNG337523	1	337523	ixabepilone
+RXNG337525	1	337525	erlotinib
+RXNG337623	1	337623	Dornase Alfa
+RXNG338036	1	338036	pegfilgrastim
+RXNG338817	1	338817	agalsidase beta
+RXNG341018	1	341018	anidulafungin
+RXNG341248	1	341248	ezetimibe
+RXNG342369	1	342369	lenalidomide
+RXNG343047	1	343047	Atazanavir
+RXNG343048	1	343048	Treprostinil
+RXNG349948	1	349948	SARRACENIA PURPUREA preparation
+Focalin	1	352372	dexmethylphenidate
+RXNG352385	1	352385	Insulin, Aspart Protamine, Human
+RXNG353110	1	353110	fibrinolysis inhibitor
+RXNG354770	1	354770	natalizumab
+981^2	1	356887	levocetirizine
+Emend	1	358255	aprepitant
+RXNG358257	1	358257	tolvaptan
+RXNG358258	1	358258	bortezomib
+RXNG358262	1	358262	fosamprenavir
+RXNG358263	1	358263	tadalafil
+RXNG358274	1	358274	ambrisentan
+RXNG384455	1	384455	tigecycline
+RXNG386938	1	386938	Follitropin Alfa
+RXNG392509	1	392509	Laronidase
+RXNG400008	1	400008	Insulin, Glulisine, Human
+RXNG401713	1	401713	Carglumic acid
+RXNG402316	1	402316	Miglustat
+RXNG404774	1	404774	Anthrax Vaccine Adsorbed
+RXNG407990	1	407990	cinacalcet
+RXNG460132	1	460132	darunavir
+RXNG461016	1	461016	Eszopiclone
+RXNG473387	1	473387	ferumoxytol
+RXNG473837	1	473837	telavancin
+RXNG474128	1	474128	telbivudine
+RXNG475230	1	475230	degarelix
+RXNG475342	1	475342	dasatinib
+RXNG475968	1	475968	liraglutide
+RXNG475969	1	475969	etravirine
+RXNG476786	1	476786	Aloe Polysaccharide
+RXNG477468	1	477468	Morphine Liposomal
+RXNG477631	1	477631	butabarbital
+RXNG480167	1	480167	lapatinib
+RXNG480639	1	480639	alvimopan
+RXNG484348	1	484348	Omega-3 Acid Ethyl Esters (USP)
+RXNG486895	1	486895	magnesium amino acid chelate
+RXNG498509	1	498509	pegaptanib
+RXNG544488	1	544488	Botulism Immune Globulin IV Human
+RXNG577312	1	577312	Mineral Oil, Light
+RXNG578033	1	578033	galsulfase
+RXNG588250	1	588250	milnacipran
+RXNG591622	1	591622	varenicline
+RXNG591781	1	591781	eculizumab
+Abreva	1	594680	docosanol
+RXNG595060	1	595060	ranibizumab
+RXNG596205	1	596205	ramelteon
+Agrylin	1	596724	anagrelide
+RXNG597392	1	597392	Human vaccinia immune globulin
+RXNG602811	1	602811	Lactobacillus rhamnosus GG
+RXNG606396	1	606396	Human Secretin
+RXNG612865	1	612865	tocilizumab
+RXNG612937	1	612937	Interferon Alfa-n3
+RXNG613391	1	613391	prasugrel
+RXNG614373	1	614373	deferasirox
+RXNG614391	1	614391	abatacept
+RXNG616739	1	616739	Rotigotine
+RXNG618060	1	618060	Thioctate
+Azelex	1	618278	Azelate
+RXNG618365	1	618365	synthetic conjugated estrogens, B
+RXNG618564	1	618564	Trichloroacetate
+RXNG618597	1	618597	Eicosapentaenoate
+Potaba	1	618974	4-Aminobenzoate
+RXNG619693	1	619693	peramivir
+RXNG620216	1	620216	maraviroc
+RXNG623033	1	623033	lubiprostone
+RXNG623400	1	623400	lacosamide
+RXNG629565	1	629565	alglucosidase alfa
+RXNG637366	1	637366	WHEAT DEXTRIN
+RXNG641465	1	641465	armodafinil
+981^6	1	642274	retapamulin
+RXNG644101	1	644101	idursulfase
+RXNG644718	1	644718	Ferrous Asparto Glycinate
+RXNG657797	1	657797	temsirolimus
+RXNG658708	1	658708	ecallantide
+RXNG662281	1	662281	nilotinib
+RXNG679314	1	679314	paliperidone
+RXNG684879	1	684879	pyridoxine
+RXNG692863	1	692863	iodine povacrylex
+Vyvanse	1	700810	Lisdexamfetamine
+RXNG709271	1	709271	certolizumab pegol
+RXNG711942	1	711942	eltrombopag
+RXNG712566	1	712566	ofatumumab
+RXNG714438	1	714438	pazopanib
+RXNG719872	1	719872	raltegravir
+RXNG720825	1	720825	silodosin
+RXNG729596	1	729596	Methoxy polyethylene glycol-epoetin beta
+RXNG733003	1	733003	Plerixafor
+RXNG734064	1	734064	Desvenlafaxine
+Mirapex	1	746741	Pramipexole
+RXNG753340	1	753340	Sapropterin
+RXNG753346	1	753346	Sinecatechins
+RXNG762595	1	762595	Typhoid Vaccine Live Ty21a
+RXNG762817	1	762817	Rubella Virus Vaccine Live (Wistar RA 27-3 Strain)
+RXNG763096	1	763096	poliovirus vaccine inactivated, type 1 (Mahoney)
+RXNG763098	1	763098	poliovirus vaccine inactivated, type 2 (MEF-1)
+RXNG763100	1	763100	poliovirus vaccine inactivated, type 3 (Saukett)
+RXNG763450	1	763450	rilonacept
+RXNG784649	1	784649	Asenapine
+RXNG787390	1	787390	tapentadol
+RXNG797195	1	797195	fesoterodine
+RXNG797541	1	797541	Isopropyl Alcohol
+RXNG797629	1	797629	Neisseria meningitidis serogroup A capsular polysaccharide diphtheria toxoid protein conjugate vaccine
+RXNG797631	1	797631	Neisseria meningitidis serogroup C capsular polysaccharide diphtheria toxoid protein conjugate vaccine
+RXNG797633	1	797633	Neisseria meningitidis serogroup W-135 capsular polysaccharide diphtheria toxoid protein conjugate vaccine
+RXNG797635	1	797635	Neisseria meningitidis serogroup Y capsular polysaccharide diphtheria toxoid protein conjugate vaccine
+RXNG797752	1	797752	Hepatitis B Surface Antigen Vaccine
+RXNG798220	1	798220	Streptococcus pneumoniae serotype 14 capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798222	1	798222	Streptococcus pneumoniae serotype 18C capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798224	1	798224	Streptococcus pneumoniae serotype 19F capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798226	1	798226	Streptococcus pneumoniae serotype 23F capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798228	1	798228	Streptococcus pneumoniae serotype 4 capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798230	1	798230	Streptococcus pneumoniae serotype 6B capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798232	1	798232	Streptococcus pneumoniae serotype 9V capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG798262	1	798262	L1 protein, Human papillomavirus type 11 Vaccine
+RXNG798264	1	798264	L1 protein, Human papillomavirus type 16 Vaccine
+RXNG798266	1	798266	L1 protein, Human papillomavirus type 18 Vaccine
+RXNG798268	1	798268	L1 protein, Human papillomavirus type 6 Vaccine
+RXNG798279	1	798279	Haemophilus influenzae type b, capsular polysaccharide inactivated tetanus toxoid conjugate vaccine
+RXNG798286	1	798286	Human-Bovine Reassortant Rotavirus Strain G1 Vaccine
+RXNG798288	1	798288	Human-Bovine Reassortant Rotavirus Strain G2 Vaccine
+RXNG798290	1	798290	Human-Bovine Reassortant Rotavirus Strain G3 Vaccine
+RXNG798292	1	798292	Human-Bovine Reassortant Rotavirus Strain G4 Vaccine
+RXNG798294	1	798294	Human-Bovine Reassortant Rotavirus Strain P1A[8] Vaccine
+RXNG798302	1	798302	acellular pertussis vaccine, inactivated
+RXNG798304	1	798304	diphtheria toxoid vaccine, inactivated
+RXNG798306	1	798306	tetanus toxoid vaccine, inactivated
+RXNG798361	1	798361	Hepatitis A Vaccine (Inactivated) Strain HM175
+RXNG798372	1	798372	Mumps Virus Vaccine Live, Jeryl Lynn Strain
+RXNG798444	1	798444	Haemophilus influenzae b (Ross strain) capsular polysaccharide Meningococcal Protein Conjugate Vaccine
+RXNG802755	1	802755	liver stomach concentrate
+RXNG804179	1	804179	Measles Virus Vaccine Live, Enders' attenuated Edmonston strain
+RXNG804187	1	804187	Yellow-Fever Virus Vaccine, 17D-204 strain
+RXNG805573	1	805573	Rotavirus Vaccine, Live Attenuated, G1P[8] Human 89-12 strain
+RXNG807219	1	807219	Typhoid Vi Polysaccharide Vaccine, S typhi Ty2 strain
+RXNG816346	1	816346	dexlansoprazole
+RXNG819300	1	819300	golimumab
+981^13	1	819911	besifloxacin
+RXNG828529	1	828529	Albumin Human, USP
+RXNG830457	1	830457	rabies virus vaccine flury-lep strain
+RXNG830464	1	830464	rabies virus vaccine wistar strain PM-1503-3M (Human), Inactivated
+RXNG831503	1	831503	fibrinogen concentrate (human)
+RXNG833079	1	833079	smallpox vaccine live vaccinia virus
+RXNG845525	1	845525	Japanese encephalitis virus vaccine, inactivated
+RXNG847083	1	847083	ustekinumab
+RXNG847728	1	847728	lumefantrine
+RXNG851878	1	851878	orchard grass pollen extract
+RXNG851898	1	851898	sweet vernal grass pollen extract
+RXNG851994	1	851994	Timothy grass pollen extract
+RXNG852819	1	852819	perennial rye grass pollen extract
+RXNG852834	1	852834	Kentucky bluegrass pollen extract
+RXNG853491	1	853491	canakinumab
+RXNG854930	1	854930	pneumococcal capsular polysaccharide type 1 vaccine
+RXNG854932	1	854932	pneumococcal capsular polysaccharide type 10A vaccine
+RXNG854934	1	854934	pneumococcal capsular polysaccharide type 11A vaccine
+RXNG854936	1	854936	pneumococcal capsular polysaccharide type 12F vaccine
+RXNG854938	1	854938	pneumococcal capsular polysaccharide type 14 vaccine
+RXNG854940	1	854940	pneumococcal capsular polysaccharide type 15B vaccine
+RXNG854942	1	854942	pneumococcal capsular polysaccharide type 17F vaccine
+RXNG854944	1	854944	pneumococcal capsular polysaccharide type 18C vaccine
+RXNG854946	1	854946	pneumococcal capsular polysaccharide type 19A vaccine
+RXNG854948	1	854948	pneumococcal capsular polysaccharide type 19F vaccine
+RXNG854950	1	854950	pneumococcal capsular polysaccharide type 2 vaccine
+RXNG854952	1	854952	pneumococcal capsular polysaccharide type 20 vaccine
+RXNG854954	1	854954	pneumococcal capsular polysaccharide type 22F vaccine
+RXNG854956	1	854956	pneumococcal capsular polysaccharide type 23F vaccine
+RXNG854958	1	854958	pneumococcal capsular polysaccharide type 3 vaccine
+RXNG854960	1	854960	pneumococcal capsular polysaccharide type 33F vaccine
+RXNG854962	1	854962	pneumococcal capsular polysaccharide type 4 vaccine
+RXNG854964	1	854964	pneumococcal capsular polysaccharide type 5 vaccine
+RXNG854966	1	854966	pneumococcal capsular polysaccharide type 6B vaccine
+RXNG854968	1	854968	pneumococcal capsular polysaccharide type 7F vaccine
+RXNG854970	1	854970	pneumococcal capsular polysaccharide type 8 vaccine
+RXNG854972	1	854972	pneumococcal capsular polysaccharide type 9N vaccine
+RXNG854974	1	854974	pneumococcal capsular polysaccharide type 9V vaccine
+RXNG857974	1	857974	saxagliptin
+RXNG860178	1	860178	rimabotulinumtoxinB
+RXNG861634	1	861634	pitavastatin
+RXNG863035	1	863035	bepotastine
+RXNG877015	1	877015	levoleucovorin
+RXNG885183	1	885183	Agkistrodon piscivorus antivenin
+RXNG885185	1	885185	Crotalus adamanteus antivenin
+RXNG885187	1	885187	Crotalus atrox antivenin
+RXNG885189	1	885189	Crotalus scutulatus antivenin
+RXNG896135	1	896135	short ragweed pollen extract
+RXNG897018	1	897018	dalfampridine
+RXNG898492	1	898492	collagenase Clostridium histolyticum
+RXNG901505	1	901505	Neisseria meningitidis serogroup A oligosaccharide diphtheria CRM197 protein conjugate vaccine
+RXNG901507	1	901507	Neisseria meningitidis serogroup C oligosaccharide diphtheria CRM197 protein conjugate vaccine
+RXNG901509	1	901509	Neisseria meningitidis serogroup W-135 oligosaccharide diphtheria CRM197 protein conjugate vaccine
+RXNG901511	1	901511	Neisseria meningitidis serogroup Y oligosaccharide diphtheria CRM197 protein conjugate vaccine
+RXNG901620	1	901620	Streptococcus pneumoniae serotype 1 capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901624	1	901624	Streptococcus pneumoniae serotype 19A capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901628	1	901628	Streptococcus pneumoniae serotype 3 capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901631	1	901631	Streptococcus pneumoniae serotype 5 capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901633	1	901633	Streptococcus pneumoniae serotype 6A capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901636	1	901636	Streptococcus pneumoniae serotype 7F capsular antigen diphtheria CRM197 protein conjugate vaccine
+RXNG901805	1	901805	velaglucerase alfa
+RXNG968170	1	968170	polidocanol
+RXNG968804	1	968804	Cytarabine liposome
+RXNG974779	1	974779	obinutuzumab
+RXNG978673	1	978673	heme iron polypeptide
+RXNG993449	1	993449	denosumab
+RXNG996051	1	996051	cabazitaxel
+RXNG997261	1	997261	sipuleucel-T
+RXNG997602	1	997602	Citicoline
+RXNG1000082	1	1000082	alcaftadine
+RXNG1005921	1	1005921	ulipristal
+RXNG1011650	1	1011650	Pegloticase
+RXNG1012892	1	1012892	fingolimod
+RXNG1037042	1	1037042	dabigatran etexilate
+RXNG1039062	1	1039062	cornstarch
+RXNG1040004	1	1040004	ceftaroline fosamil
+RXNG1040028	1	1040028	lurasidone
+RXNG1044584	1	1044584	tesamorelin
+RXNG1045453	1	1045453	eribulin
+RXNG1086769	1	1086769	vilazodone
+RXNG1091643	1	1091643	azilsartan
+RXNG1091836	1	1091836	Roflumilast
+RXNG1092437	1	1092437	belimumab
+RXNG1094833	1	1094833	ipilimumab
+RXNG1098413	1	1098413	Vandetanib
+RXNG1100072	1	1100072	abiraterone
+RXNG1100699	1	1100699	Linagliptin
+RXNG1102129	1	1102129	boceprevir
+RXNG1102188	1	1102188	ferrous bisglycinate
+RXNG1102270	1	1102270	Rilpivirine
+RXNG1111103	1	1111103	fidaxomicin
+RXNG1112973	1	1112973	belatacept
+RXNG1112990	1	1112990	ezogabine
+RXNG1114195	1	1114195	rivaroxaban
+RXNG1114326	1	1114326	indacaterol
+RXNG1116632	1	1116632	Ticagrelor
+RXNG1116977	1	1116977	American house dust mite extract
+RXNG1116979	1	1116979	European house dust mite extract
+RXNG1119986	1	1119986	Centruroides (scorpion) Immune F(ab')2 (equine)
+RXNG1147220	1	1147220	Vemurafenib
+RXNG1147320	1	1147320	brentuximab vedotin
+RXNG1148138	1	1148138	icatibant
+RXNG1148495	1	1148495	crizotinib
+RXNG1150094	1	1150094	Bifidobacterium lactis
+RXNG1150096	1	1150096	Bifidobacterium longum
+RXNG1191504	1	1191504	Bupivacaine liposome
+RXNG1193326	1	1193326	ruxolitinib
+RXNG1232150	1	1232150	aflibercept
+RXNG1242127	1	1242127	glucarpidase
+RXNG1242806	1	1242806	ingenol mebutate
+RXNG1242987	1	1242987	vismodegib
+RXNG1242999	1	1242999	axitinib
+RXNG1243041	1	1243041	ivacaftor
+RXNG1244607	1	1244607	tafluprost
+RXNG1291301	1	1291301	avanafil
+RXNG1291609	1	1291609	taliglucerase alfa
+RXNG1292422	1	1292422	Varicella-Zoster Virus Vaccine Live (Oka-Merck) strain
+RXNG1293254	1	1293254	lucinactant
+RXNG1294580	1	1294580	Gemtuzumab ozogamicin
+RXNG1298944	1	1298944	pertuzumab
+RXNG1300701	1	1300701	lorcaserin
+RXNG1300786	1	1300786	mirabegron
+RXNG1302966	1	1302966	carfilzomib
+RXNG1303098	1	1303098	aclidinium
+RXNG1304974	1	1304974	icosapent ethyl
+RXNG1306284	1	1306284	cobicistat
+RXNG1306286	1	1306286	elvitegravir
+RXNG1307298	1	1307298	enzalutamide
+RXNG1307404	1	1307404	linaclotide
+RXNG1307619	1	1307619	bosutinib
+RXNG1309250	1	1309250	olive oil
+RXNG1310520	1	1310520	teriflunomide
+RXNG1311089	1	1311089	defibrotide
+RXNG1312397	1	1312397	regorafenib
+RXNG1316105	1	1316105	Human herpesvirus 1
+RXNG1356552	1	1356552	perampanel
+RXNG1357536	1	1357536	tofacitinib
+RXNG1360721	1	1360721	thonzylamine
+RXNG1362927	1	1362927	dodecyl sulfate
+RXNG1363268	1	1363268	cabozantinib
+RXNG1363352	1	1363352	hydroxyethyl starch 130-0.4
+RXNG1364105	1	1364105	pasireotide
+RXNG1364347	1	1364347	ponatinib
+RXNG1364430	1	1364430	apixaban
+RXNG1364449	1	1364449	crofelemer
+RXNG1364468	1	1364468	teduglutide
+RXNG1364479	1	1364479	lomitapide
+RXNG1364504	1	1364504	bedaquiline
+RXNG1367839	1	1367839	mipomersen
+RXNG1368001	1	1368001	alogliptin
+RXNG1368950	1	1368950	Edetate Calcium
+RXNG1369713	1	1369713	pomalidomide
+RXNG1370971	1	1370971	Ospemifene
+RXNG1371041	1	1371041	ado-trastuzumab emtansine
+RXNG1373458	1	1373458	canagliflozin
+RXNG1373478	1	1373478	dimethyl fumarate
+RXNG1423803	1	1423803	GLYCERYL PHOSPHATE
+RXNG1424174	1	1424174	RADIUM CHLORIDE RA-223
+RXNG1424884	1	1424884	vilanterol
+RXNG1424911	1	1424911	dabrafenib
+RXNG1425099	1	1425099	trametinib
+RXNG1427222	1	1427222	Parathyroid Hormone
+RXNG1430438	1	1430438	Afatinib
+RXNG1433212	1	1433212	levomilnacipran
+RXNG1433693	1	1433693	ferric carboxymaltose
+RXNG1433868	1	1433868	dolutegravir
+RXNG1439816	1	1439816	riociguat
+RXNG1440051	1	1440051	Lixisenatide
+RXNG1440856	1	1440856	Cholic Acid
+RXNG1441386	1	1441386	bazedoxifene
+RXNG1441688	1	1441688	Prothrombin
+RXNG1442132	1	1442132	Macitentan
+RXNG1442981	1	1442981	Ibrutinib
+RXNG1455099	1	1455099	vortioxetine
+RXNG1482502	1	1482502	eslicarbazepine
+RXNG1482680	1	1482680	luliconazole
+RXNG1482790	1	1482790	simeprevir
+RXNG1483317	1	1483317	Hypochlorite
+RXNG1484283	1	1484283	sucroferric oxyhydroxide
+RXNG1484911	1	1484911	sofosbuvir
+RXNG1487514	1	1487514	umeclidinium
+RXNG1488564	1	1488564	dapagliflozin
+RXNG1489913	1	1489913	Droxidopa
+RXNG1489914	1	1489914	ELOSULFASE ALFA
+RXNG1490468	1	1490468	tasimelteon
+RXNG1491625	1	1491625	metreleptin
+RXNG1492727	1	1492727	apremilast
+RXNG1494066	1	1494066	miltefosine
+RXNG1534763	1	1534763	albiglutide
+RXNG1534772	1	1534772	Lutetium
+RXNG1535218	1	1535218	siltuximab
+RXNG1535457	1	1535457	ceritinib
+RXNG1535922	1	1535922	ramucirumab
+RXNG1535944	1	1535944	coagulation factor IX recombinant immunoglobulin G1 fusion protein
+RXNG1537034	1	1537034	vorapaxar
+RXNG1538097	1	1538097	vedolizumab
+RXNG1539239	1	1539239	dalbavancin
+RXNG1539753	1	1539753	efinaconazole
+RXNG1540825	1	1540825	tedizolid
+RXNG1543095	1	1543095	efmoroctocog alfa
+RXNG1543173	1	1543173	tavaborole
+RXNG1543543	1	1543543	belinostat
+RXNG1544460	1	1544460	idelalisib
+RXNG1545653	1	1545653	empagliflozin
+RXNG1546059	1	1546059	olodaterol
+RXNG1546168	1	1546168	peginterferon beta-1a
+RXNG1547099	1	1547099	suvorexant
+RXNG1547220	1	1547220	eliglustat
+RXNG1547545	1	1547545	pembrolizumab
+RXNG1547611	1	1547611	oritavancin
+RXNG1549330	1	1549330	Coccidioides immitis spherule
+RXNG1551291	1	1551291	dulaglutide
+RXNG1551777	1	1551777	naloxegol
+RXNG1552337	1	1552337	netupitant
+RXNG1591922	1	1591922	ledipasvir
+RXNG1592254	1	1592254	pirfenidone
+RXNG1592737	1	1592737	nintedanib
+RXNG1593128	1	1593128	meningococcal group B vaccine
+RXNG1594675	1	1594675	ferric citrate
+Gentamycin	1	1596450	Gentamicin
+RXNG1596930	1	1596930	L1 protein, Human papillomavirus type 31 Vaccine
+RXNG1596931	1	1596931	L1 protein, Human papillomavirus type 33 Vaccine
+RXNG1596932	1	1596932	L1 protein, Human papillomavirus type 45 Vaccine
+RXNG1596933	1	1596933	L1 protein, Human papillomavirus type 52 Vaccine
+RXNG1596934	1	1596934	L1 protein, Human papillomavirus type 58 Vaccine
+RXNG1597258	1	1597258	blinatumomab
+RXNG1597371	1	1597371	ombitasvir
+RXNG1597373	1	1597373	paritaprevir
+RXNG1597582	1	1597582	olaparib
+RXNG1597609	1	1597609	ceftolozane
+RXNG1597876	1	1597876	nivolumab
+RXNG1598641	1	1598641	finafloxacin
+RXNG1599538	1	1599538	edoxaban
+RXNG1599788	1	1599788	secukinumab
+RXNG1599832	1	1599832	C1 esterase inhibitor
+RXNG1601374	1	1601374	palbociclib
+RXNG1603296	1	1603296	lenvatinib
+RXNG1603350	1	1603350	panobinostat
+HumulinN	1	1605101	insulin, isophane
+RXNG1606218	1	1606218	daclatasvir
+RXNG1606274	1	1606274	dinutuximab
+RXNG1607976	1	1607976	ferric pyrophosphate
+RXNG1608322	1	1608322	isavuconazonium
+RXNG1649480	1	1649480	ivabradine
+RXNG1652071	1	1652071	Omega-3 carboxylic acids
+RXNG1653781	1	1653781	eluxadoline
+RXNG1655922	1	1655922	lumacaftor
+RXNG1656052	1	1656052	cangrelor
+RXNG1656328	1	1656328	sacubitril
+RXNG1657128	1	1657128	influenza A virus (H1N1) antigen
+RXNG1657131	1	1657131	influenza A virus (H3N2) antigen
+RXNG1657134	1	1657134	influenza B virus antigen
+RXNG1658314	1	1658314	brexpiprazole
+RXNG1659152	1	1659152	alirocumab
+RXNG1659191	1	1659191	sonidegib
+RXNG1665222	1	1665222	uridine triacetate
+RXNG1665496	1	1665496	rolapitant
+RXNG1665509	1	1665509	flibanserin
+RXNG1665684	1	1665684	evolocumab
+RXNG1667655	1	1667655	cariprazine
+RXNG1670007	1	1670007	insulin degludec
+RXNG1670304	1	1670304	tipiracil
+RXNG1670383	1	1670383	factor IX complex
+RXNG1716191	1	1716191	idarucizumab
+RXNG1716203	1	1716203	patiromer
+RXNG1716278	1	1716278	trabectedin
+RXNG1719768	1	1719768	irinotecan liposomal
+RXNG1720259	1	1720259	asfotase alfa
+RXNG1720597	1	1720597	mepolizumab
+RXNG1721560	1	1721560	osimertinib
+RXNG1721603	1	1721603	tenofovir alafenamide
+RXNG1721947	1	1721947	daratumumab
+RXNG1722336	1	1722336	Anthrax immune globulin
+RXNG1722365	1	1722365	Cobimetinib
+RXNG1723735	1	1723735	ixazomib
+RXNG1723738	1	1723738	necitumumab
+RXNG1726104	1	1726104	elotuzumab
+RXNG1726975	1	1726975	sebelipase alfa
+RXNG1726988	1	1726988	Sugammadex
+RXNG1727455	1	1727455	alectinib
+RXNG1727875	1	1727875	Tetanus immune globulin
+RXNG1729002	1	1729002	selexipag
+RXNG1731031	1	1731031	lesinurad
+RXNG1731071	1	1731071	fosaprepitant
+RXNG1734628	1	1734628	elbasvir
+RXNG1734630	1	1734630	grazoprevir
+RXNG1739745	1	1739745	Brivaracetam
+RXNG1745099	1	1745099	ixekizumab
+RXNG1746889	1	1746889	reslizumab
+RXNG1746906	1	1746906	Obiltoxaximab
+RXNG1747556	1	1747556	venetoclax
+RXNG1791685	1	1791685	pimavanserin
+RXNG1792776	1	1792776	atezolizumab
+RXNG1798288	1	1798288	obeticholic acid
+RXNG1799206	1	1799206	velpatasvir
+RXNG1801820	1	1801820	lifitegrast
+RXNG1810569	1	1810569	eteplirsen
+RXNG1812589	1	1812589	vonicog alfa
+RXNG1855048	1	1855048	bezlotoxumab
+RXNG1855735	1	1855735	olaratumab
+RXNG1862579	1	1862579	rucaparib
+RXNG1863556	1	1863556	nusinersen
+RXNG1865953	1	1865953	crisaborole
+RXNG1872251	1	1872251	brodalumab
+RXNG1872441	1	1872441	telotristat ethyl
+RXNG1873752	1	1873752	plecanatide
+RXNG1873916	1	1873916	ribociclib
+RXNG1875534	1	1875534	avelumab
+RXNG1876119	1	1876119	etelcalcetide
+RXNG1876366	1	1876366	ocrelizumab
+RXNG1876376	1	1876376	dupilumab
+RXNG1876597	1	1876597	naldemedine
+RXNG1876905	1	1876905	deutetrabenazine
+RXNG1918219	1	1918219	valbenazine
+RXNG1918231	1	1918231	niraparib
+RXNG1919083	1	1919083	midostaurin
+RXNG1919503	1	1919503	durvalumab
+RXNG1921069	1	1921069	abaloparatide
+RXNG1921217	1	1921217	brigatinib
+RXNG1921877	1	1921877	edaravone
+RXNG1922437	1	1922437	cerliponase
+RXNG1922448	1	1922448	safinamide
+RXNG1923319	1	1923319	sarilumab
+RXNG1925821	1	1925821	riboflavin 5'-phosphate
+RXNG1927663	1	1927663	delafloxacin
+RXNG1927851	1	1927851	betrixaban
+RXNG1928588	1	1928588	guselkumab
+RXNG1939323	1	1939323	voxilaprevir
+RXNG1940332	1	1940332	enasidenib
+RXNG1940635	1	1940635	glecaprevir
+RXNG1940636	1	1940636	pibrentasvir
+RXNG1940643	1	1940643	neratinib
+RXNG1942950	1	1942950	inotuzumab ozogamicin
+RXNG1945077	1	1945077	copanlisib
+RXNG1945213	1	1945213	Vaborbactam
+RXNG1946825	1	1946825	abemaciclib
+RXNG1986438	1	1986438	tisagenlecleucel
+RXNG1986808	1	1986808	acalabrutinib
+RXNG1986821	1	1986821	Varicella zoster virus glycoprotein E
+RXNG1987398	1	1987398	Axicabtagene ciloleucel
+RXNG1988390	1	1988390	Latanoprostene Bunod
+RXNG1988648	1	1988648	letermovir
+RXNG1989100	1	1989100	benralizumab
+RXNG1989794	1	1989794	emicizumab
+RXNG1989819	1	1989819	Vestronidase alfa
+RXNG1991302	1	1991302	semaglutide
+RXNG1992672	1	1992672	ertugliflozin
+RXNG1992864	1	1992864	netarsudil
+RXNG1994739	1	1994739	ozenoxacin
+RXNG1995537	1	1995537	voretigene neparvovec
+RXNG1999003	1	1999003	angiotensin II
+RXNG1999574	1	1999574	apalutamide
+RXNG1999660	1	1999660	bictegravir
+RXNG2001352	1	2001352	benzhydrocodone
+RXNG2001759	1	2001759	amphotericin B lipid complex
+RXNG2043283	1	2043283	ibalizumab
+RXNG2043855	1	2043855	burosumab
+RXNG2044896	1	2044896	fostamatinib
+RXNG2045114	1	2045114	andexanet alfa
+RXNG2045613	1	2045613	erenumab
+RXNG107602		107602	EPINEPHrine / Lidocaine
+RXNG107606		107606	Bupivacaine / EPINEPHrine
+RXNG113588		113588	Erythromycin / sulfiSOXAZOLE
+RXNG214181		214181	Acetaminophen / diphenhydrAMINE
+RXNG214182		214182	Acetaminophen / HYDROcodone
+RXNG214183		214183	Acetaminophen / oxyCODONE
+RXNG214212		214212	aMILoride / Hydrochlorothiazide
+RXNG214220		214220	Amitriptyline / chlordiazePOXIDE
+RXNG214223		214223	amLODIPine / benazepril
+RXNG214256		214256	Aspirin / oxyCODONE
+RXNG214392		214392	Chlorpheniramine / HYDROcodone
+RXNG214406		214406	Chlorpheniramine / guaiFENesin / Phenylephrine
+RXNG214418		214418	Chlorthalidone / cloNIDine
+RXNG214442		214442	Codeine / guaiFENesin
+RXNG214488		214488	Dextromethorphan / guaiFENesin
+RXNG214494		214494	Dextromethorphan / guaiFENesin / Phenylephrine
+RXNG214495		214495	Dextromethorphan / guaiFENesin / Pseudoephedrine
+RXNG214512		214512	diphenhydrAMINE / Pseudoephedrine
+RXNG214528		214528	Dyphylline / guaiFENesin
+RXNG214538		214538	ePHEDrine / guaiFENesin
+RXNG214547		214547	EPINEPHrine / Prilocaine
+RXNG214594		214594	guaiFENesin / HYDROcodone
+RXNG214597		214597	guaiFENesin / Phenylephrine
+RXNG214599		214599	guaiFENesin / Pseudoephedrine
+RXNG214604		214604	guaiFENesin / HYDROcodone / Pseudoephedrine
+RXNG214614		214614	homatropine / HYDROcodone
+RXNG214616		214616	hydrALAZINE / Hydrochlorothiazide / Reserpine
+RXNG214627		214627	HYDROcodone / Ibuprofen
+RXNG214631		214631	HYDROcodone / Pseudoephedrine
+RXNG214671		214671	lamiVUDine / Zidovudine
+RXNG215451		215451	Aspirin / oxyCODONE Hydrochloride / oxyCODONE terephthalate
+RXNG284620		284620	abacavir / lamiVUDine / Zidovudine
+RXNG284622		284622	Articaine / EPINEPHrine
+RXNG284629		284629	carbetapentane / guaiFENesin / Phenylephrine
+Glucovance		285129	glyBURIDE / metFORMIN
+RXNG352362		352362	Acetaminophen / traMADol
+RXNG352381		352381	glipiZIDE / metFORMIN
+RXNG404773		404773	amLODIPine / atorvastatin
+RXNG466489		466489	Codeine / guaiFENesin / Pseudoephedrine
+RXNG466513		466513	carbetapentane / Chlorpheniramine / ePHEDrine / Phenylephrine
+RXNG466514		466514	Chlorpheniramine / HYDROcodone / Pseudoephedrine
+RXNG466522		466522	diphenhydrAMINE / Zinc acetate
+RXNG484259		484259	Ibuprofen / oxyCODONE
+RXNG591533		591533	sulfADIAZINE / Trimethoprim
+RXNG605496		605496	carbetapentane / guaiFENesin
+RXNG606096		606096	Acetaminophen / guaiFENesin
+RXNG607999		607999	metFORMIN / pioglitazone
+RXNG608424		608424	hydrALAZINE / Isosorbide Dinitrate
+RXNG611247		611247	FLUoxetine / OLANZapine
+RXNG611854		611854	chlordiazePOXIDE / clidinium
+RXNG614348		614348	metFORMIN / rosiglitazone
+RXNG614534		614534	abacavir / lamiVUDine
+RXNG631158		631158	Acetaminophen / guaiFENesin / Phenylephrine
+RXNG644895		644895	diphenhydrAMINE / Ibuprofen
+RXNG668797		668797	diphenhydrAMINE / Magnesium Salicylate
+RXNG669119		669119	Aspirin / diphenhydrAMINE
+RXNG689325		689325	Gentamicin / prednisoLONE
+RXNG689606		689606	Atropine / Hyoscyamine / PHENobarbital / Scopolamine
+RXNG689776		689776	Acetaminophen / Dextromethorphan / guaiFENesin / Phenylephrine
+RXNG689778		689778	Acetaminophen / Dextromethorphan / guaiFENesin / Pseudoephedrine
+RXNG689785		689785	Acetaminophen / diphenhydrAMINE / Phenylephrine
+RXNG689786		689786	Acetaminophen / diphenhydrAMINE / Pseudoephedrine
+RXNG690082		690082	Codeine / guaiFENesin / Phenylephrine
+RXNG690161		690161	prednisoLONE / Sulfacetamide
+RXNG690691		690691	diphenhydrAMINE / Hydrocortisone
+RXNG690693		690693	diphenhydrAMINE / Phenylephrine
+RXNG690837		690837	Calamine / diphenhydrAMINE
+RXNG690847		690847	diphenhydrAMINE / Tripelennamine
+RXNG729455		729455	amLODIPine / valsartan
+RXNG729717		729717	metFORMIN / sitaGLIPtin
+RXNG797426		797426	Naproxen / SUMAtriptan
+RXNG802646		802646	metFORMIN / repaglinide
+RXNG802683		802683	chlophedianol / guaiFENesin / Pseudoephedrine
+RXNG813187		813187	Caffeine / dimenhyDRINATE / Ergotamine
+RXNG817502		817502	diphenhydrAMINE / resorcinol
+RXNG818281		818281	diphenhydrAMINE / Menthol
+RXNG818351		818351	aMILoride / Furosemide
+RXNG820172		820172	Ammonium Chloride / diphenhydrAMINE / sodium citrate
+RXNG852897		852897	amLODIPine / Hydrochlorothiazide / valsartan
+RXNG901212		901212	amLODIPine / telmisartan
+RXNG1006917		1006917	Estrogens, Conjugated (USP) / medroxyPROGESTERone
+RXNG1006930		1006930	coenzyme Q10 / levOCARNitine
+RXNG1007269		1007269	Acetaminophen / guaiFENesin / Pseudoephedrine
+RXNG1007348		1007348	Estrogens, Esterified (USP) / methylTESTOSTERone
+RXNG1007769		1007769	bismuth subcitrate / metroNIDAZOLE / Tetracycline
+RXNG1008227		1008227	coenzyme Q10 / levOCARNitine / Vitamin E
+RXNG1008252		1008252	Acetaminophen / Dextromethorphan / diphenhydrAMINE
+RXNG1008383		1008383	Benzethonium / diphenhydrAMINE / Zinc acetate
+RXNG1008705		1008705	diphenhydrAMINE / pramoxine
+RXNG1008789		1008789	efavirenz / lamiVUDine / tenofovir disoproxil
+RXNG1008801		1008801	amLODIPine / Hydrochlorothiazide / olmesartan
+RXNG1008802		1008802	Acetaminophen / Dextromethorphan / diphenhydrAMINE / Phenylephrine
+RXNG1009015		1009015	amLODIPine / olmesartan
+RXNG1033889		1033889	amLODIPine / Perindopril
+RXNG1040053		1040053	Dextromethorphan / quiNIDine
+RXNG1043562		1043562	metFORMIN / saxagliptin
+RXNG1048074		1048074	chlophedianol / guaiFENesin / Phenylephrine
+RXNG1050797		1050797	aliskiren / amLODIPine / Hydrochlorothiazide
+RXNG1053719		1053719	chlophedianol / guaiFENesin
+RXNG1088442		1088442	6-O-palmitoylascorbic acid / alpha Tocopherol / coenzyme Q10 / levOCARNitine
+RXNG1243019		1243019	Linagliptin / metFORMIN
+RXNG1298466		1298466	Benzyl Alcohol / Calamine / diphenhydrAMINE
+RXNG1368384		1368384	alogliptin / metFORMIN
+RXNG1369401		1369401	Cholecalciferol / levOCARNitine
+RXNG1420991		1420991	Allantoin / diphenhydrAMINE
+RXNG1486436		1486436	dapagliflozin / metFORMIN
+RXNG1545149		1545149	canagliflozin / metFORMIN
+RXNG1546887		1546887	abacavir / dolutegravir / lamiVUDine
+RXNG1550956		1550956	diphenhydrAMINE / Naproxen
+RXNG1551467		1551467	buPROPion / Naltrexone
+RXNG1593109		1593109	Acetaminophen / Aspirin / diphenhydrAMINE
+RXNG1598388		1598388	lamiVUDine / tenofovir disoproxil
+RXNG1603839		1603839	avibactam / cefTAZidime
+RXNG1664314		1664314	empagliflozin / metFORMIN
+RXNG1927884		1927884	Hyaluronidase / riTUXimab
+RXNG1942742		1942742	Cytarabine liposome / DAUNOrubicin Liposomal
+RXNG1992684		1992684	ertugliflozin / metFORMIN
+RXNG1992825		1992825	ertugliflozin / sitaGLIPtin
+BACTRIM		10831	Sulfamethoxazole / Trimethoprim
+Gaviscon		17384	Aluminum Hydroxide / magnesium carbonate
+Augmentin250pediatri		19711	Amoxicillin / Clavulanate
+RXNG20032		20032	Benzoate / Caffeine
+RXNG34482		34482	Cilastatin / Imipenem
+RXNG37075		37075	Ethinyl Estradiol / Norgestrel
+RXNG74169		74169	Piperacillin / tazobactam
+RXNG91198		91198	Citric Acid / sodium citrate
+Rid		91299	Piperonyl Butoxide / Pyrethrins
+RXNG97016		97016	Vitamin A / Vitamin D
+RXNG103990		103990	Carbidopa / Levodopa
+Rifamate		106876	isoniazid / Rifampin
+LOTRISONE		106928	Betamethasone / Clotrimazole
+Epifoam		106955	Hydrocortisone / pramoxine
+RXNG106960		106960	Chloramphenicol / Hydrocortisone
+RXNG106964		106964	Hydrocortisone / Lidocaine
+RXNG106967		106967	Hydrocortisone / Miconazole
+RXNG106986		106986	Hydrocortisone / Oxytetracycline
+RXNG106987		106987	Clioquinol / Hydrocortisone
+RXNG107011		107011	Nystatin / Triamcinolone
+RXNG108038		108038	Acetaminophen / Caffeine
+RXNG108190		108190	Glucose / Sodium Chloride
+RXNG135095		135095	Aspirin / Codeine
+RXNG135098		135098	dalfopristin / quinupristin
+Tenoretic100		151195	Atenolol / Chlorthalidone
+RXNG154643		154643	Mestranol / Norethindrone
+EMLA		166283	Lidocaine / Prilocaine
+Esgic		214130	Acetaminophen / butalbital / Caffeine
+RXNG214137		214137	Acetaminophen / Caffeine / Pyrilamine
+RXNG214153		214153	Acetaminophen / dichloralphenazone / isometheptene
+RXNG214156		214156	Acetaminophen / pamabrom / Pyrilamine
+Fiorinal		214159	Aspirin / butalbital / Caffeine
+RXNG214160		214160	Aspirin / butalbital / Caffeine / Codeine
+Phrenilin		214178	Acetaminophen / butalbital
+RXNG214179		214179	Acetaminophen / Chlorpheniramine
+RXNG214180		214180	Acetaminophen / Dextromethorphan
+RXNG214184		214184	Acetaminophen / pamabrom
+RXNG214186		214186	Acetaminophen / Phenylephrine
+RXNG214187		214187	Acetaminophen / Pseudoephedrine
+SemprexD		214196	acrivastine / Pseudoephedrine
+Combivent1		214199	Albuterol / Ipratropium
+RXNG214248		214248	Ascorbic Acid / ferrous sulfate
+Anacin		214250	Aspirin / Caffeine
+RXNG214251		214251	Aspirin / Carisoprodol
+RXNG214254		214254	Aspirin / Meprobamate
+RXNG214258		214258	Aspirin / phenyltoloxamine
+RXNG214261		214261	Atropine / difenoxin
+RXNG214262		214262	Atropine / Edrophonium
+LotensinHCT10125		214287	benazepril / Hydrochlorothiazide
+Corzide405		214288	Bendroflumethiazide / Nadolol
+RXNG214298		214298	Benzocaine / Dextromethorphan
+RXNG214299		214299	Benzocaine / Docusate
+Ziac10mg625mg		214317	Bisoprolol / Hydrochlorothiazide
+RXNG214324		214324	Brompheniramine / Phenylephrine
+RXNG214326		214326	Brompheniramine / Pseudoephedrine
+Cafergot		214336	Caffeine / Ergotamine
+RXNG214344		214344	calcium acetate / magnesium carbonate
+RXNG214346		214346	Calcium Carbonate / magnesium carbonate
+RXNG214347		214347	Calcium Carbonate / Magnesium Hydroxide
+RXNG214349		214349	Calcium Carbonate / Sodium Fluoride
+RXNG214357		214357	Captopril / Hydrochlorothiazide
+RXNG214390		214390	Chlorpheniramine / Dextromethorphan
+RXNG214393		214393	Chlorpheniramine / Phenylephrine
+RXNG214394		214394	Chlorpheniramine / Phenylpropanolamine
+Deconamine		214395	Chlorpheniramine / Pseudoephedrine
+RXNG214416		214416	Chlorpheniramine / Phenylephrine / Pyrilamine
+RXNG214427		214427	Citric Acid / potassium citrate
+RXNG214444		214444	Codeine / Promethazine
+Nucofed		214445	Codeine / Pseudoephedrine
+RXNG214449		214449	Codeine / Phenylephrine / Promethazine
+RXNG214450		214450	Codeine / Phenylephrine / Pyrilamine
+RXNG214451		214451	Codeine / Pseudoephedrine / Triprolidine
+RXNG214452		214452	Colchicine / Probenecid
+RXNG214491		214491	Dextromethorphan / Promethazine
+RXNG214492		214492	Dextromethorphan / Pseudoephedrine
+RXNG214496		214496	Dextromethorphan / Phenylephrine / Pyrilamine
+Arthrotec		214502	Diclofenac / Misoprostol
+RXNG214519		214519	Docusate / Ferrous fumarate
+Vaseretic1025		214536	Enalapril / Hydrochlorothiazide
+Combipatch		214551	Estradiol / Norethindrone
+RXNG214557		214557	Ethinyl Estradiol / ethynodiol
+RXNG214558		214558	Ethinyl Estradiol / Levonorgestrel
+RXNG214559		214559	Ethinyl Estradiol / norgestimate
+AllegraD		214565	fexofenadine / Pseudoephedrine
+Avalide150125mg		214617	Hydrochlorothiazide / irbesartan
+Prinzide10125		214618	Hydrochlorothiazide / Lisinopril
+Hyzaar10025		214619	Hydrochlorothiazide / Losartan
+RXNG214620		214620	Hydrochlorothiazide / Methyldopa
+LopressorHCT10025		214621	Hydrochlorothiazide / Metoprolol
+Uniretic751251		214622	Hydrochlorothiazide / moexipril
+RXNG214623		214623	Hydrochlorothiazide / Propranolol
+DiovanHCT160mg125		214626	Hydrochlorothiazide / valsartan
+RXNG214652		214652	Ibuprofen / Pseudoephedrine
+Rifater		214662	isoniazid / Pyrazinamide / Rifampin
+RXNG214681		214681	Loperamide / Simethicone
+RXNG214682		214682	Loratadine / Pseudoephedrine
+RXNG214685		214685	magaldrate / Simethicone
+RXNG214689		214689	Magnesium Salicylate / phenyltoloxamine
+RXNG214691		214691	Mannitol / Sorbitol
+RXNG214699		214699	Meperidine / Promethazine
+RXNG214721		214721	Naloxone / Pentazocine
+RXNG214769		214769	Phenylephrine / Promethazine
+Minizide1		214787	Polythiazide / Prazosin
+RXNG214788		214788	Polythiazide / Reserpine
+RXNG214792		214792	Potassium Chloride / Sodium Chloride
+RXNG214807		214807	Pseudoephedrine / Triprolidine
+Tarka1240		214866	trandolapril / Verapamil
+RXNG215597		215597	Belladonna Alkaloids / Opium
+RXNG215830		215830	Calcium Carbonate / Vitamin D
+RXNG215831		215831	Calcium Citrate / Vitamin D
+RXNG215858		215858	Camphor / phenol
+Maxitrol		216525	Dexamethasone / Neomycin / Polymyxin B
+RXNG216544		216544	Glucose / Potassium Chloride
+RXNG216554		216554	Glucose / Potassium Chloride / Sodium Chloride
+Vytone		217626	Hydrocortisone / Iodoquinol
+CORTI		217627	Hydrocortisone / Neomycin / Polymyxin B
+RXNG219228		219228	Acetaminophen / phenyltoloxamine
+POLYTRIM		219314	Polymyxin B / Trimethoprim
+RXNG226623		226623	Factor VIII / von Willebrand factor
+Aggrenox		226716	Aspirin / Dipyridamole
+RXNG226976		226976	Lidocaine / Phenylephrine
+Dyazide		258337	Hydrochlorothiazide / Triamterene
+RXNG261414		261414	Estradiol / norgestimate
+RXNG261415		261415	Fosinopril / Hydrochlorothiazide
+Accuretic10125		261417	Hydrochlorothiazide / quinapril
+RXNG261432		261432	Phenylephrine / Pyrilamine
+RXNG282427		282427	Amitriptyline / Perphenazine
+RXNG282448		282448	artemether / lumefantrine
+Malarone		284623	Atovaquone / Proguanil
+AtacandHCT		284628	candesartan / Hydrochlorothiazide
+RXNG284635		284635	fluticasone / salmeterol
+RXNG284636		284636	Hydrochlorothiazide / telmisartan
+Kaletra		284640	lopinavir / Ritonavir
+RXNG284641		284641	Naproxen / Pseudoephedrine
+RXNG314705		314705	Lanolin / Petrolatum
+RXNG314726		314726	Menthol / phenol
+RXNG321650		321650	Iodine / Potassium Iodide
+Aldactazide		324042	Hydrochlorothiazide / Spironolactone
+RXNG324044		324044	Desogestrel / Ethinyl Estradiol
+RXNG352364		352364	Buprenorphine / Naloxone
+ZyrtecD		352367	Cetirizine / Pseudoephedrine
+RXNG352370		352370	dexchlorpheniramine / Pseudoephedrine
+RXNG352375		352375	eprosartan / Hydrochlorothiazide
+Nuvaring		352376	Ethinyl Estradiol / Etonogestrel
+OrthoEvra		352377	Ethinyl Estradiol / norelgestromin
+RXNG384410		384410	Ethinyl Estradiol / Norethindrone
+981^8		389132	Budesonide / formoterol
+RXNG389190		389190	Fibrinogen / Thrombin
+RXNG392454		392454	Benzoyl Peroxide / Hydrocortisone
+RXNG392483		392483	Benzoyl Peroxide / Sulfur
+RXNG392512		392512	Clopamide / Pindolol
+Benzamycin		392556	Benzoyl Peroxide / Erythromycin
+RXNG392564		392564	Acebutolol / Hydrochlorothiazide
+RXNG400674		400674	dexbrompheniramine / Pseudoephedrine
+RXNG404783		404783	carbetapentane / Pseudoephedrine
+RXNG404786		404786	Carbidopa / entacapone / Levodopa
+RXNG404788		404788	Chlorpheniramine / dihydrocodeine / Phenylephrine
+RXNG404789		404789	Chlorpheniramine / Ibuprofen / Pseudoephedrine
+RXNG465370		465370	Atropine / pralidoxime
+RXNG465397		465397	Ciprofloxacin / Dexamethasone
+Thyrolar		465675	levothyroxine / liothyronine
+RXNG465680		465680	fluocinolone / hydroquinone / Tretinoin
+RXNG465711		465711	Ciprofloxacin / Hydrocortisone
+RXNG466426		466426	Benzocaine / Menthol
+RXNG466427		466427	Benzocaine / resorcinol
+RXNG466431		466431	Chlorpheniramine / Dextromethorphan / Pseudoephedrine
+RXNG466457		466457	Fluorescein / proparacaine
+RXNG466459		466459	Glucosamine / methylsulfonylmethane
+RXNG466470		466470	Iodine / methyl salicylate
+RXNG466479		466479	Neomycin / Polymyxin B / pramoxine
+RXNG466482		466482	Papain / Urea
+RXNG466486		466486	Dextromethorphan / Phenylephrine
+RXNG466496		466496	Coal Tar / Salicylic Acid / Sulfur
+RXNG466508		466508	Starch / Zinc Oxide
+RXNG466517		466517	Acetaminophen / dexbrompheniramine / Pseudoephedrine
+RXNG466524		466524	Acetaminophen / Dextromethorphan / Doxylamine / Pseudoephedrine
+RXNG466530		466530	Acetic Acid / Hydrocortisone
+RXNG466537		466537	Menthol / methyl salicylate
+RXNG466540		466540	Bacitracin / Neomycin / Polymyxin B / pramoxine
+RXNG466541		466541	Neomycin / Polymyxin B
+RXNG466542		466542	NITROFURANTOIN, MACROCRYSTALS / Nitrofurantoin, Monohydrate
+RXNG466549		466549	Aspirin / Caffeine / Orphenadrine
+RXNG466553		466553	penicillin G benzathine / penicillin G procaine
+RXNG466563		466563	Polyethylene Glycols / Propylene glycol
+RXNG466565		466565	pramoxine / Zinc Oxide
+RXNG466568		466568	Chlorpheniramine / Codeine / Pseudoephedrine
+RXNG466569		466569	Acetaminophen / Dextromethorphan / Pseudoephedrine
+RXNG466584		466584	Acetaminophen / Aspirin / Caffeine
+RXNG466588		466588	Aluminum Hydroxide / Magnesium Hydroxide / Simethicone
+RXNG466593		466593	Benzocaine / phenol
+RXNG466594		466594	Benzocaine / Triclosan
+RXNG466600		466600	Camphor / Menthol
+RXNG484139		484139	Chlorhexidine / Isopropyl Alcohol
+RXNG484211		484211	ezetimibe / Simvastatin
+RXNG496653		496653	Salicylic Acid / Sulfur
+Lomotil		594040	Atropine / Diphenoxylate
+RXNG596050		596050	Choline / Magnesium Salicylate
+RXNG597142		597142	brimonidine / Timolol
+OpconA		597159	Naphazoline / Pheniramine
+RXNG597501		597501	desloratadine / Pseudoephedrine
+RXNG605998		605998	Chlorpheniramine / Codeine
+RXNG606253		606253	glimepiride / rosiglitazone
+RXNG608343		608343	Calcium Carbonate / Cholecalciferol
+RXNG608349		608349	calcium phosphate / Cholecalciferol
+RXNG608568		608568	Lidocaine / Tetracaine
+RXNG608838		608838	drospirenone / Estradiol
+RXNG608868		608868	Ethinyl Estradiol / Gestodene
+RXNG617772		617772	Acetaminophen / Pheniramine / Phenylephrine
+RXNG617777		617777	Omeprazole / Sodium Bicarbonate
+RXNG619749		619749	Benserazide / Levodopa
+RXNG636648		636648	Potassium bitartrate / Sodium Bicarbonate
+RXNG644513		644513	Sodium Bicarbonate / Sodium Chloride
+RXNG645045		645045	Calamine / Zinc Oxide
+RXNG645048		645048	Calcium Carbonate / Simethicone
+RXNG645114		645114	Miconazole / Petrolatum / Zinc Oxide
+RXNG645168		645168	Magnesium Hydroxide / Omeprazole / Sodium Bicarbonate
+RXNG645247		645247	Dextromethorphan / Menthol
+Polysporin		645555	Bacitracin / Polymyxin B
+Benzaclin		646781	Benzoyl Peroxide / Clindamycin
+RXNG647235		647235	glimepiride / pioglitazone
+Cosopt		662263	dorzolamide / Timolol
+RXNG687078		687078	Acetaminophen / Aspirin
+RXNG687096		687096	Benzocaine / chloroxylenol
+RXNG687144		687144	Clindamycin / Tretinoin
+RXNG687198		687198	Aluminum Hydroxide / magnesium trisilicate
+BionTears		687306	Dextran 70 / hypromellose
+RXNG687333		687333	Estradiol / Levonorgestrel
+RXNG687351		687351	fluocinolone / Neomycin
+FMLS		689304	Fluorometholone / Sulfacetamide
+RXNG689313		689313	Fructose / Glucose / Phosphoric acid
+CortaneB		689371	chloroxylenol / Hydrocortisone / pramoxine
+RXNG689380		689380	Chlorpheniramine / Codeine / Phenylephrine
+RXNG689389		689389	Chlorpheniramine / Dextromethorphan / Phenylephrine
+RXNG689436		689436	Glycerin / Propylene glycol
+RXNG689441		689441	Glycerin / Sodium Chloride
+RXNG689453		689453	Guaiacol / methyl salicylate
+RXNG689466		689466	Oxytetracycline / Phenazopyridine / Sulfamethizole
+RXNG689467		689467	Oxytetracycline / Polymyxin B
+RXNG689494		689494	Ascorbic Acid / Hesperidin
+SynalgosDC		689512	Aspirin / Caffeine / dihydrocodeine
+RXNG689519		689519	Aspirin / Caffeine / salicylamide
+RXNG689522		689522	Aspirin / Carisoprodol / Codeine
+AlkaSeltzer		689524	Aspirin / Citric Acid / Sodium Bicarbonate
+RXNG689554		689554	Acetaminophen / Aspirin / Caffeine / salicylamide
+RXNG689561		689561	Acetaminophen / butalbital / Caffeine / Codeine
+RXNG689569		689569	Acetaminophen / Caffeine / dihydrocodeine
+RXNG689572		689572	Acetaminophen / Caffeine / isometheptene
+RXNG689579		689579	Acetaminophen / Chlorpheniramine / Codeine / Phenylephrine
+RXNG689580		689580	Acetaminophen / Chlorpheniramine / Dextromethorphan / Phenylephrine
+RXNG689582		689582	Acetaminophen / Chlorpheniramine / Dextromethorphan / Pseudoephedrine
+RXNG689583		689583	Acetaminophen / Chlorpheniramine / Phenylephrine
+RXNG689623		689623	Bacitracin / Hydrocortisone / Neomycin / Polymyxin B
+RXNG689638		689638	Chlorpheniramine / Phenylephrine / phenyltoloxamine
+RXNG689704		689704	Hexachlorophene / Hydrocortisone / Menthol
+RXNG689741		689741	Pheniramine / Phenylpropanolamine / phenyltoloxamine / Pyrilamine
+RXNG689755		689755	Phenylephrine / Scopolamine
+RXNG689765		689765	Acetaminophen / Chlorpheniramine / Pseudoephedrine
+RXNG689799		689799	Acetaminophen / phenyltoloxamine / salicylamide
+RXNG689841		689841	Citric Acid / potassium citrate / sodium citrate
+RXNG689878		689878	Coal Tar / Menthol
+RXNG689881		689881	Coal Tar / Salicylic Acid
+RXNG689953		689953	Polyethylene Glycol 400 / Propylene glycol
+Hypotears		689954	Polyethylene Glycols / Polyvinyl Alcohol
+RXNG689958		689958	Polyvinyl Alcohol / Povidone
+RXNG690018		690018	Allantoin / Camphor / phenol
+RXNG690077		690077	Benzalkonium / Lidocaine
+RXNG690101		690101	Codeine / Pyrilamine
+RXNG690105		690105	Colistin / Hydrocortisone / Neomycin / THONZONIUM
+RXNG690133		690133	hypromellose / Naphazoline
+RXNG690204		690204	Acetic Acid / Oxyquinoline
+RXNG690247		690247	Benzocaine / butamben / Tetracaine
+RXNG690296		690296	Cresol / Formaldehyde
+RXNG690312		690312	Cyclopentolate / Phenylephrine
+RXNG690329		690329	resorcinol / Sulfur
+RXNG690337		690337	Salicylic Acid / sodium thiosulfate
+RXNG690419		690419	Betamethasone / calcipotriene
+RXNG690466		690466	dexchlorpheniramine / Dextromethorphan / Pseudoephedrine
+RXNG690610		690610	bismuth subsalicylate / Calcium Carbonate
+RXNG690637		690637	boric acid / Zinc Oxide
+RXNG690642		690642	brilliant green / Gentian Violet / Proflavine
+RXNG690647		690647	Brompheniramine / Codeine / Phenylephrine
+Plexion		690740	Sulfacetamide / Sulfur
+RXNG690767		690767	tetrahydrozoline / Zinc Sulfate
+RXNG690808		690808	Brompheniramine / Dextromethorphan / Pseudoephedrine
+RXNG690841		690841	Calamine / phenol / Zinc Oxide
+RXNG691005		691005	Calcium Carbonate / Famotidine / Magnesium Hydroxide
+RXNG691008		691008	Calcium Carbonate / Glycine
+RXNG691015		691015	Calcium Carbonate / Magnesium Hydroxide / Simethicone
+RXNG691122		691122	Menthol / pramoxine
+RXNG691137		691137	Methacholine / methyl salicylate
+RXNG691178		691178	Camphor / Eucalyptus oil / Menthol
+RXNG691188		691188	Camphor / Menthol / methyl salicylate
+RXNG691201		691201	Cantharidin / podophyllin / Salicylic Acid
+RXNG691286		691286	Mineral Oil / Petrolatum
+RXNG691339		691339	Amylases / Papain
+Granulex		691366	Castor Oil / Peruvian balsam / TRYPSIN
+RXNG691432		691432	Naphazoline / Phenylephrine / Pyrilamine
+RXNG692572		692572	Bacitracin / Neomycin / Polymyxin B
+RXNG692792		692792	Follicle Stimulating Hormone / Luteinizing Hormone
+RXNG692794		692794	Gramicidin / Neomycin / Polymyxin B
+RXNG692796		692796	Helium / Oxygen
+RXNG692830		692830	Hydrofluoric Acid / Phosphoric acid / Sodium Fluoride
+RXNG692831		692831	Hydrofluoric Acid / Sodium Fluoride
+RXNG692969		692969	Carbon Dioxide / Nitrogen
+RXNG692970		692970	Carbon Dioxide / Oxygen
+RXNG694012		694012	Undecylenic Acid / Zinc undecylenate
+RXNG700826		700826	Levonordefrin / Mepivacaine
+RXNG705033		705033	Niacin / Riboflavin / Thiamine
+RXNG705034		705034	Nitrogen / Oxygen
+Domeboro		705058	aluminum sulfate / calcium acetate
+RXNG705258		705258	Acetaminophen / Dextromethorphan / Doxylamine
+RXNG705259		705259	Acetaminophen / Dextromethorphan / Phenylephrine
+RXNG710957		710957	Beta Carotene / Vitamin A
+RXNG712584		712584	aldioxa / chloroxylenol
+RXNG725123		725123	Carboxymethylcellulose / Glycerin
+RXNG728498		728498	dexchlorpheniramine / Phenylephrine
+RXNG729490		729490	Calcium Carbonate / Magnesium Chloride
+RXNG729513		729513	Citric Acid / Gluconolactone / magnesium carbonate
+RXNG729750		729750	coenzyme Q10 / Vitamin E
+RXNG745526		745526	chlorophyllin copper complex / Papain / Urea
+RXNG794809		794809	Menthol / Zinc Oxide
+RXNG797431		797431	Menthol / Petrolatum / pramoxine
+RXNG802519		802519	aliskiren / Hydrochlorothiazide
+RXNG802546		802546	Codeine / dexchlorpheniramine / Phenylephrine
+RXNG804304		804304	Calamine / pramoxine
+RXNG812232		812232	Pilocarpine / Timolol
+RXNG812243		812243	Acetaminophen / Caffeine / Magnesium Salicylate
+RXNG814483		814483	Acetaminophen / Chlorpheniramine / Codeine / Pseudoephedrine
+RXNG814770		814770	Benzocaine / Tetracaine
+RXNG815062		815062	Magnesium Aspartate / Potassium Aspartate
+RXNG815166		815166	Dextromethorphan / Doxylamine
+Colyte		815276	POLYETHYLENE GLYCOL 3350 / Potassium Chloride / Sodium Bicarbonate / Sodium Chloride / sodium sulfate
+NuLytely		815308	POLYETHYLENE GLYCOL 3350 / Potassium Chloride / Sodium Bicarbonate / Sodium Chloride
+RXNG815449		815449	dexbrompheniramine / Phenylephrine
+RXNG815844		815844	chlorcyclizine / Pseudoephedrine
+RXNG816726		816726	Insulin Lispro / Insulin, Protamine Lispro, Human
+RXNG817496		817496	Hydrochlorothiazide / olmesartan
+RXNG817579		817579	Acetaminophen / Codeine
+RXNG817588		817588	Cilazapril / Hydrochlorothiazide
+RXNG817886		817886	Sodium Phosphate, Dibasic / Sodium Phosphate, Monobasic
+RXNG817911		817911	Acetaminophen / Caffeine / Phenylephrine
+RXNG817958		817958	Aspirin / Calcium Carbonate
+RXNG818422		818422	Brompheniramine / Codeine / Pseudoephedrine
+RXNG818496		818496	Aspirin / Chlorpheniramine / Phenylephrine
+RXNG818771		818771	Citric Acid / potassium bicarbonate / Sodium Bicarbonate
+RXNG818931		818931	Dextromethorphan / Pseudoephedrine / Triprolidine
+RXNG819910		819910	Acetaminophen / Caffeine / Chlorpheniramine / Phenylephrine
+RXNG820299		820299	Citric Acid / Sodium Bicarbonate
+RXNG820354		820354	Acetaminophen / Pyrilamine
+RXNG820463		820463	Acetaminophen / Melatonin
+RXNG821119		821119	Calcium Carbonate / Magnesium Oxide
+RXNG822929		822929	Amphetamine aspartate / Amphetamine Sulfate / Dextroamphetamine saccharate / Dextroamphetamine Sulfate
+RXNG823181		823181	Brompheniramine / Codeine
+RXNG827172		827172	dexchlorpheniramine / Dextromethorphan / Phenylephrine
+RXNG840781		840781	drospirenone / Ethinyl Estradiol
+RXNG845639		845639	dimethicone / Zinc Oxide
+RXNG858027		858027	Glycerin / Naphazoline
+RXNG859393		859393	adapalene / Benzoyl Peroxide
+RXNG866331		866331	Morphine / Naltrexone
+RXNG880374		880374	chlophedianol / Pseudoephedrine
+TobraDex		883815	Dexamethasone / Tobramycin
+RXNG903986		903986	Hyoscyamine / phenyltoloxamine
+RXNG978140		978140	dimethicone / Menthol
+RXNG994202		994202	Esomeprazole / Naproxen
+RXNG994203		994203	dienogest / Estradiol
+RXNG1001434		1001434	Caffeine / Magnesium Salicylate
+RXNG1001472		1001472	Dutasteride / tamsulosin
+RXNG1002293		1002293	formoterol / Mometasone
+RXNG1006886		1006886	Phenylephrine / Zinc Oxide
+RXNG1006887		1006887	Acetaminophen / Doxylamine / Phenylephrine
+RXNG1006889		1006889	dimethicone / Menthol / pramoxine
+RXNG1006898		1006898	Cerebral Phospholipids / Docosahexaenoate
+RXNG1006902		1006902	Betaine / Glutamate / Pepsin A
+RXNG1006911		1006911	Benzoate / Salicylic Acid
+RXNG1006913		1006913	Biotin / dicalcium phosphate
+RXNG1006915		1006915	poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett)
+RXNG1006916		1006916	Benzocaine / Isopropyl Alcohol
+RXNG1006920		1006920	Miconazole / Zinc Oxide
+RXNG1006931		1006931	Boron / Calcium Carbonate
+RXNG1006934		1006934	HAWTHORN BERRY / HAWTHORN BERRY EXTRACT
+RXNG1006941		1006941	glycolate / Lactate
+RXNG1006942		1006942	Glutamine / Tyrosine
+RXNG1006997		1006997	Benzocaine / Salicylic Acid
+RXNG1007028		1007028	Alanine / Arginine / Aspartate / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Taurine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1007038		1007038	African Pygeum Extract / Stinging Nettle Extract
+RXNG1007039		1007039	Betamethasone / Betamethasone acetate
+RXNG1007044		1007044	Poloxamer 407 / Simethicone
+RXNG1007046		1007046	Calcium Chloride / Glucose / Lactate / Magnesium Chloride / Sodium Chloride
+RXNG1007054		1007054	Allantoin / Camphor / Menthol
+RXNG1007057		1007057	Lysine / Proline
+RXNG1007062		1007062	Ginkgo biloba extract / Glutamine
+RXNG1007064		1007064	Glycerin / hypromellose / Polyethylene Glycol 400
+RXNG1007068		1007068	Calcium Carbonate / Cholecalciferol / Magnesium Oxide
+RXNG1007073		1007073	Docosahexaenoate / Eicosapentaenoate / Vitamin E
+RXNG1007075		1007075	Bean Pod Extract / Green Tea Extract
+RXNG1007087		1007087	Ascorbic Acid / Beta Carotene / cuprous oxide / Lutein / sodium selenate / Vitamin E / Zinc Oxide
+RXNG1007091		1007091	pecan pollen extract / white hickory pollen extract
+RXNG1007092		1007092	Psyllium / sennosides, USP
+RXNG1007098		1007098	Ascorbic Acid / Ferrous fumarate / Folic Acid / liver stomach concentrate / Vitamin B 12
+RXNG1007107		1007107	meningococcal group A polysaccharide / meningococcal group C polysaccharide
+RXNG1007119		1007119	Acetaminophen / Chlorpheniramine / Dextromethorphan / Phenylpropanolamine
+RXNG1007121		1007121	Cholecalciferol / Vitamin A
+RXNG1007122		1007122	Capsaicin / Menthol
+RXNG1007128		1007128	Alanine / Glutamate / Glycine
+RXNG1007136		1007136	Passiflora incarnata extract / valerian root extract
+RXNG1007137		1007137	Bee pollen / Korean ginseng preparation / royal jelly
+RXNG1007138		1007138	Phenylephrine / Shark liver oil
+RXNG1007154		1007154	Echinacea Preparation / GOLDEN SEAL ROOT EXTRACT
+RXNG1007173		1007173	Folic Acid / Intrinsic factor / Vitamin B 12
+RXNG1007182		1007182	Vitamin A / Vitamin E
+RXNG1007184		1007184	Insulin, Aspart Protamine, Human / Insulin, Aspart, Human
+RXNG1007215		1007215	sheep sorrel pollen extract / yellow dock pollen extract
+RXNG1007244		1007244	Talc / Zinc Oxide
+RXNG1007247		1007247	chloroxylenol / Undecylenate
+RXNG1007249		1007249	fructooligosaccharide / Lactobacillus acidophilus
+RXNG1007251		1007251	Copper Sulfate / Ferrous fumarate / Folic Acid / Magnesium Sulfate / manganese sulfate / Niacinamide / Pantothenic Acid / pyridoxine / Riboflavin / Sodium Ascorbate / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1007252		1007252	Calcium ascorbate / calcium threonate / Ferrous Asparto Glycinate / liver stomach concentrate / Succinic Acid / Vitamin B 12
+RXNG1007254		1007254	dexpanthenol / Niacinamide / Riboflavin / Thiamine / Vitamin B6
+RXNG1007262		1007262	Bisacodyl / Docusate
+RXNG1007265		1007265	Nitric Oxide / Nitrogen
+RXNG1007266		1007266	Lactate / pramoxine
+RXNG1007268		1007268	Fenugreek seed preparation / Legume preparation
+RXNG1007270		1007270	Inositol / Niacin
+RXNG1007273		1007273	Activated Charcoal / Calcium Carbonate
+RXNG1007276		1007276	calcium phosphate / Melatonin
+RXNG1007282		1007282	Cyclamate / Saccharin
+RXNG1007284		1007284	Kelp preparation / Vitamin A
+RXNG1007285		1007285	Ergocalciferol / Vitamin A
+RXNG1007290		1007290	acellular pertussis vaccine, inactivated / diphtheria toxoid vaccine, inactivated / poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett) / tetanus toxoid vaccine, inactivated
+RXNG1007296		1007296	Histamine / Menthol
+RXNG1007299		1007299	GLYCERYL MONOLAURATE / Olive Leaf Extract
+RXNG1007300		1007300	Allantoin / Benzocaine / dimethicone / Petrolatum
+RXNG1007312		1007312	Benzocaine / Glycerin
+RXNG1007313		1007313	Alanine / Arginine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Magnesium Chloride / Methionine / Phenylalanine / Potassium Chloride / Proline / Serine / Sodium Chloride / Sodium Phosphate, Dibasic / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1007314		1007314	Alanine / Arginine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Magnesium Chloride / Methionine / Phenylalanine / Potassium Chloride / Proline / Serine / Sodium Chloride / sodium phosphate / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1007316		1007316	dexpanthenol / Magnesium Sulfate / manganese sulfate / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1007318		1007318	Menthol / selenium sulfide
+RXNG1007320		1007320	Ascorbic Acid / Biotin / Folic Acid / Niacin / pantothenate / pyridoxine / Riboflavin / Thiamine / Vitamin B 12
+RXNG1007321		1007321	Lombard poplar pollen extract / white poplar pollen extract
+RXNG1007322		1007322	Benzocaine / Cetylpyridinium / Menthol / zinc chloride
+RXNG1007329		1007329	Ibuprofen / Phenylephrine
+RXNG1007338		1007338	Glucose / Lactate / Magnesium Chloride / Potassium Chloride / potassium phosphate / Sodium Chloride
+RXNG1007343		1007343	Fluorometholone / Neomycin
+RXNG1007347		1007347	chloroxylenol / pramoxine / Zinc Acetate
+RXNG1007352		1007352	Bromelains / Papain
+RXNG1007355		1007355	Calcium Carbonate / monofluorophosphate
+RXNG1007357		1007357	pramoxine / Zinc Acetate
+RXNG1007358		1007358	Glycerin / hypromellose / Naphazoline
+RXNG1007360		1007360	Hydrochlorothiazide / Pindolol
+RXNG1007374		1007374	Hyoscyamine / Methenamine / Methylene blue / phenyl salicylate / Sodium Phosphate, Monobasic
+RXNG1007375		1007375	Menthol / methyl salicylate / methylnicotinate
+RXNG1007378		1007378	Calcium Carbonate / Cholecalciferol / Vitamin K 1
+RXNG1007389		1007389	Echinacea Preparation / Golden seal root
+RXNG1007403		1007403	Calcium Chloride / Glucose / Potassium Chloride / Sodium Chloride
+RXNG1007413		1007413	Sodium Fluoride / Xylitol
+RXNG1007485		1007485	Alanine / Arginine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1007486		1007486	Calcium ascorbate / calcium threonate / Ferrous Asparto Glycinate / Ferrous fumarate / Folic Acid / Succinic Acid / Vitamin B 12
+RXNG1007495		1007495	Red Clover Preparation / Soybean preparation / Vitamin E
+RXNG1007496		1007496	Apple pectin / Lactobacillus acidophilus
+RXNG1007497		1007497	Garlic preparation / Ginkgo biloba extract / Ginseng Preparation
+RXNG1007501		1007501	Allantoin / pramoxine
+RXNG1007503		1007503	Acetate / Cysteine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / sodium bisulfite / Sodium Chloride / Threonine / Tryptophan / Valine
+RXNG1007512		1007512	Calcium Citrate / Ergocalciferol
+RXNG1007519		1007519	Calcium ascorbate / Ferrous Asparto Glycinate / Polysaccharide iron complex / Succinic Acid
+RXNG1007523		1007523	Alanine / Arginine / Calcium Chloride / Dibasic potassium phosphate / Glucose / Glycine / Histidine / Isoleucine / Leucine / Lysine / Magnesium Chloride / Methionine / Phenylalanine / Proline / Serine / Sodium Acetate Trihydrate / Sodium Chloride / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1007524		1007524	Ascorbic Acid / Biotin / Ferrous fumarate / Folic Acid / mecobalamin / Niacinamide / pantothenate / pyridoxine / Riboflavin / Thiamine
+RXNG1007526		1007526	Glucose / Lactate / Magnesium Chloride / Potassium Chloride / potassium phosphate / Sodium Phosphate, Monobasic
+RXNG1007530		1007530	Calcium Chloride / Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride / sodium citrate
+RXNG1007532		1007532	Petrolatum / resorcinol
+RXNG1007534		1007534	Measles Virus Vaccine Live, Enders' attenuated Edmonston strain / Mumps Virus Vaccine Live, Jeryl Lynn Strain / Rubella Virus Vaccine Live (Wistar RA 27-3 Strain)
+RXNG1007535		1007535	hyaluronate / Urea
+RXNG1007537		1007537	Chondroitin Sulfates / Glucosamine / methylsulfonylmethane
+RXNG1007538		1007538	Calcium Chloride / Glucose / Lactate / Potassium Chloride / Sodium Chloride
+RXNG1007540		1007540	Glycerin / Naphazoline / Zinc Sulfate
+RXNG1007544		1007544	Ascorbic Acid / POLYETHYLENE GLYCOL 3350 / Potassium Chloride / Sodium Ascorbate / Sodium Chloride / sodium sulfate
+RXNG1007545		1007545	acellular pertussis vaccine, inactivated / diphtheria toxoid vaccine, inactivated / Hepatitis B Surface Antigen Vaccine / poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett) / tetanus toxoid vaccine, inactivated
+RXNG1007548		1007548	FE HEME POLYPEPTIDE / Polysaccharide iron complex
+RXNG1007552		1007552	Aloe Polysaccharide / Iodoquinol
+RXNG1007553		1007553	Benzocaine / Calamine / Camphor
+RXNG1007555		1007555	Ascorbic Acid / Cholecalciferol / Sodium Fluoride / Vitamin A
+RXNG1007556		1007556	Haemophilus influenzae b (Ross strain) capsular polysaccharide Meningococcal Protein Conjugate Vaccine / Hepatitis B Surface Antigen Vaccine
+RXNG1007560		1007560	Alendronate / Cholecalciferol
+RXNG1007570		1007570	dimethicone / Miconazole / Zinc Oxide
+RXNG1007573		1007573	Folic Acid / Vitamin B 12
+RXNG1007587		1007587	Acetaminophen / Chlorpheniramine / Dextromethorphan
+RXNG1007588		1007588	Evening primrose oil / gamma-Linolenate
+RXNG1007589		1007589	diphtheria toxoid vaccine, inactivated / tetanus toxoid vaccine, inactivated
+RXNG1007591		1007591	CHROMIUM PICOLINATE / Vitamin B6
+RXNG1007595		1007595	Lanolin / Petrolatum / Zinc Oxide
+RXNG1007598		1007598	Echinacea Preparation / Goldenseal extract
+RXNG1007600		1007600	Folic Acid / Polysaccharide iron complex / Vitamin B 12
+RXNG1007605		1007605	Phenylephrine / Polyvinyl Alcohol
+RXNG1007607		1007607	Magnesium Hydroxide / malic acid
+RXNG1007611		1007611	Bacitracin / Lidocaine / Neomycin / Polymyxin B
+RXNG1007612		1007612	Calcium Chloride / Potassium Chloride / Sodium Chloride
+RXNG1007618		1007618	Camphor / Capsaicin / Menthol
+RXNG1007629		1007629	Garlic preparation / Parsley extract
+RXNG1007630		1007630	calcium phosphate / magnesium carbonate / Potassium Chloride
+RXNG1007637		1007637	Phenylephrine / Witch Hazel
+RXNG1007638		1007638	Camphor / Capsicum extract / methyl salicylate
+RXNG1007640		1007640	Human-Bovine Reassortant Rotavirus Strain G1 Vaccine / Human-Bovine Reassortant Rotavirus Strain G2 Vaccine / Human-Bovine Reassortant Rotavirus Strain G3 Vaccine / Human-Bovine Reassortant Rotavirus Strain G4 Vaccine / Human-Bovine Reassortant Rotavirus Strain P1A[8] Vaccine
+RXNG1007645		1007645	Calcium Chloride / Fibrinogen / fibrinolysis inhibitor / Thrombin
+RXNG1007646		1007646	Phenylephrine / Triprolidine
+RXNG1007654		1007654	Acetaminophen / Magnesium Salicylate
+RXNG1007660		1007660	dog hair extract / dog skin extract
+RXNG1007721		1007721	Calcium Chloride / Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride
+RXNG1007728		1007728	Ascorbic Acid / D-BIOTIN / Folic Acid / Niacinamide / pantothenate / pyridoxine / Riboflavin / Thiamine / Vitamin B 12
+RXNG1007733		1007733	Mineral Oil / Mineral Oil, Light
+RXNG1007734		1007734	Ascorbic Acid / Cranberry preparation
+RXNG1007735		1007735	Camphor / Menthol / methyl salicylate / Turpentine
+RXNG1007736		1007736	Amylases / Endopeptidases / Papain / papaya extract
+RXNG1007737		1007737	Lecithin / Vitamin A / Vitamin E
+RXNG1007738		1007738	Lutein / Vitamin E / zeaxanthin
+RXNG1007739		1007739	Camphor / Menthol / Petrolatum / phenol
+RXNG1007740		1007740	Lactobacillus acidophilus / pectin
+RXNG1007747		1007747	Dibasic potassium phosphate / Glucose / Sodium Acetate / Sodium Chloride
+RXNG1007748		1007748	Magnesium Chloride / Potassium Chloride / potassium phosphate / Sodium Acetate / Sodium Chloride / Sodium gluconate / Sodium Phosphate, Dibasic
+RXNG1007749		1007749	Dibasic potassium phosphate / Glucose / Magnesium Chloride / Potassium Chloride / Sodium Acetate
+RXNG1007750		1007750	Glycerin / hypromellose / Polyethylene Glycol 400 / tetrahydrozoline / Zinc Sulfate
+RXNG1007752		1007752	coenzyme Q10 / Thioctate / Vitamin E
+RXNG1007756		1007756	Glycerin / hypromellose / Polyethylene Glycol 400 / tetrahydrozoline
+RXNG1007758		1007758	Bacillus coagulans / Lactobacillus acidophilus
+RXNG1007761		1007761	efavirenz / emtricitabine / tenofovir disoproxil
+RXNG1007763		1007763	Calcium Carbonate / Cholecalciferol / Soybean preparation
+RXNG1007767		1007767	Atropine / Chlorpheniramine / Hyoscyamine / Pseudoephedrine / Scopolamine
+RXNG1007771		1007771	Ascorbic Acid / Chondroitin Sulfates / Glucosamine
+RXNG1007772		1007772	Ascorbic Acid / Biotin / Folic Acid / mecobalamin / Niacinamide / pantothenate / pyridoxine / Riboflavin / Thiamine
+RXNG1007774		1007774	CALCIUM STEARATE / Cholecalciferol
+RXNG1007775		1007775	Calcium Carbonate / Magnesium Oxide / Zinc Gluconate
+RXNG1007776		1007776	Dibasic potassium phosphate / Glucose / Lactate / Magnesium Chloride / Potassium Chloride / Sodium Chloride / Sodium Phosphate, Monobasic
+RXNG1007778		1007778	Biotin / Calcium Carbonate
+RXNG1007795		1007795	Ascorbic Acid / ferrous sulfate / Niacin / Riboflavin / Thiamine / Vitamin A / Vitamin B6 / Vitamin D / Vitamin E
+RXNG1007798		1007798	Mineral Oil / Petrolatum / Phenylephrine
+RXNG1007802		1007802	Dextran 70 / Glycerin / hypromellose
+RXNG1007803		1007803	Methenamine / Salicylic Acid
+RXNG1007804		1007804	Acyclovir / Hydrocortisone
+RXNG1007805		1007805	Mineral Oil / pramoxine / Zinc Oxide
+IcarCPlus		1007807	Ascorbic Acid / Folic Acid / Iron Carbonyl / Vitamin B 12
+RXNG1007808		1007808	Ivermectin / Pyrantel
+RXNG1007809		1007809	Magnesium Sulfate / potassium sulfate / sodium sulfate
+RXNG1007810		1007810	dodecyl sulfate / Oxyquinoline
+RXNG1007820		1007820	Amylases / Endopeptidases / Lipase
+RXNG1007825		1007825	Belladonna Alkaloids / Chlorpheniramine / Pseudoephedrine
+RXNG1007828		1007828	Benzocaine / zinc chloride
+RXNG1007829		1007829	Echinacea purpurea extract / GOLDEN SEAL EXTRACT
+RXNG1007835		1007835	Calcium Citrate / Cholecalciferol
+RXNG1007839		1007839	Chlorobutanol / Tannic Acid
+RXNG1007843		1007843	Choline / Inositol
+RXNG1007889		1007889	pumpkin seed oil / Saw palmetto extract / Zinc Gluconate
+RXNG1007892		1007892	Methenamine / Sodium Phosphate, Monobasic
+RXNG1007896		1007896	Ascorbic Acid / Magnesium Sulfate / Vitamin E / Zinc Sulfate
+RXNG1007899		1007899	Arginine / Calcium Carbonate / Maca preparation
+RXNG1007900		1007900	Benzyl Alcohol / pramoxine
+RXNG1007902		1007902	cornstarch / Kaolin / Zinc Oxide
+RXNG1007905		1007905	SULFONATED PHENOL / Sulfuric acid
+RXNG1007906		1007906	CIDER VINEGAR / Kelp preparation / Lecithin / Vitamin B6
+RXNG1007924		1007924	Capsaicin / methylnicotinate
+RXNG1007946		1007946	Ascorbic Acid / Docusate / Folic Acid / Iron Carbonyl / Vitamin B 12
+RXNG1007986		1007986	beta Sitosterol / campesterol / Stigmasterol
+RXNG1007987		1007987	black currant oil / Vitamin E
+RXNG1007990		1007990	Allantoin / Camphor / Menthol / phenol
+RXNG1007991		1007991	Biotin / Cysteine / Silicon Dioxide
+RXNG1007993		1007993	Ascorbic Acid / BUTCHER'S BROOM Preparation / Hesperidin
+RXNG1007994		1007994	Glucose / Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride / Sodium gluconate
+RXNG1007995		1007995	Calcium Chloride / Glucose / Lactate / Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride
+RXNG1007997		1007997	Biotin / CHROMIUM PICOLINATE
+RXNG1008001		1008001	Glucose / magnesium acetate / Potassium Acetate / Sodium Chloride
+RXNG1008007		1008007	dimethicone / pramoxine
+RXNG1008009		1008009	Ascorbic Acid / Iron Carbonyl
+RXNG1008010		1008010	potassium phosphate / Sodium Phosphate, Dibasic / Sodium Phosphate, Monobasic
+RXNG1008013		1008013	Magnesium malate / malic acid / Vitamin B6
+RXNG1008020		1008020	Benzocaine / pectin
+RXNG1008022		1008022	Benzocaine / Menthol / methyl salicylate
+RXNG1008034		1008034	Neisseria meningitidis serogroup A capsular polysaccharide diphtheria toxoid protein conjugate vaccine / Neisseria meningitidis serogroup C capsular polysaccharide diphtheria toxoid protein conjugate vaccine / Neisseria meningitidis serogroup W-135 capsular polysaccharide diphtheria toxoid protein conjugate vaccine / Neisseria meningitidis serogroup Y capsular polysaccharide diphtheria toxoid protein conjugate vaccine
+RXNG1008035		1008035	Calcium Citrate / Cholecalciferol / magnesium citrate
+RXNG1008038		1008038	Cranberry preparation / Evening primrose extract / gamma-Linolenate / linoleate
+RXNG1008039		1008039	Ascorbic Acid / ferrous bisglycinate / Polysaccharide iron complex
+RXNG1008040		1008040	Benzocaine / Dextromethorphan / Glycerin
+RXNG1008044		1008044	Benzocaine / compound benzoin tincture (USP)
+RXNG1008050		1008050	Menthol / methyl salicylate / tourmaline
+RXNG1008051		1008051	Caffeine / Riboflavin / Thiamine / Vitamin B 12 / Vitamin B6
+RXNG1008056		1008056	Calcium Carbonate / Magnesium Oxide / valerian root extract / Valine
+RXNG1008057		1008057	Fructose / Glucose / sodium citrate
+RXNG1008064		1008064	Folic Acid / Vitamin B 12 / Vitamin B6
+RXNG1008065		1008065	ferrous sulfate / Folic Acid
+RXNG1008070		1008070	Capsaicin / Turpentine
+RXNG1008075		1008075	Benzethonium / Benzocaine
+RXNG1008090		1008090	Ferrous fumarate / Polysaccharide iron complex
+RXNG1008091		1008091	Ascorbic Acid / hyaluronate
+RXNG1008092		1008092	Brompheniramine / Dextromethorphan / Phenylephrine
+RXNG1008093		1008093	Carboxymethylcellulose / hypromellose
+RXNG1008098		1008098	Doxylamine / Pseudoephedrine
+RXNG1008099		1008099	bovine cartilage extract / Shark cartilage extract
+RXNG1008100		1008100	Ascorbic Acid / Vitamin E
+RXNG1008101		1008101	p-Hydroxyamphetamine / Tropicamide
+RXNG1008103		1008103	Betaxolol / Pilocarpine
+RXNG1008104		1008104	Allantoin / dyclonine
+RXNG1008119		1008119	Capsaicin / Menthol / methylnicotinate
+RXNG1008134		1008134	Echinacea purpurea extract / Goldenseal extract
+RXNG1008145		1008145	emtricitabine / tenofovir disoproxil
+RXNG1008146		1008146	Garlic preparation / Inositol / policosanol
+RXNG1008150		1008150	Benzyl Alcohol / Camphor / Menthol
+RXNG1008151		1008151	Ascorbic Acid / Ferrous fumarate / Folic Acid / Intrinsic factor / Vitamin B 12
+RXNG1008160		1008160	guinea pig hair extract / Guinea pig skin extract
+RXNG1008162		1008162	domestic cow hair extract / domestic cow skin extract
+RXNG1008214		1008214	Cholecalciferol / Sodium Fluoride
+RXNG1008224		1008224	Dibasic potassium phosphate / potassium phosphate
+RXNG1008228		1008228	Magnesium Sulfate / Potassium Chloride / potassium phosphate / Sodium Chloride / sodium phosphate
+RXNG1008230		1008230	Alanine / Arginine / Aspartate / Cysteine / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Taurine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008237		1008237	Calcium Carbonate / prasterone
+RXNG1008248		1008248	Ginkgo biloba extract / prasterone
+RXNG1008254		1008254	Alanine / Arginine / Glucose / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008262		1008262	Acetaminophen / Doxylamine / salicylamide
+RXNG1008264		1008264	Calcium Carbonate / Ergocalciferol
+RXNG1008268		1008268	Black Pepper Preparation / Echinacea Preparation
+RXNG1008273		1008273	Alanine / Arginine / Aspartate / Cysteine / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Sodium Acetate / Sodium Chloride / sodium metabisulfite / Taurine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008274		1008274	Isopropyl Alcohol / Povidone-Iodine
+RXNG1008277		1008277	Benzalkonium / pramoxine
+RXNG1008279		1008279	cobamamide / Vitamin B 12
+RXNG1008282		1008282	Docosahexaenoate / Eicosapentaenoate / Folic Acid / Phytosterols / Vitamin B 12 / Vitamin B6
+RXNG1008283		1008283	Calcium Chloride / Lactate / Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride
+RXNG1008285		1008285	Glycerin / hypromellose / Propylene glycol
+RXNG1008286		1008286	Glycerin / phenol
+RXNG1008292		1008292	Berberine / Cholecalciferol / Hops extract / Vitamin K
+RXNG1008301		1008301	hard maple pollen extract / red maple pollen extract / silver maple pollen extract
+RXNG1008303		1008303	cyclobenzaprine / Magnesium Oxide
+RXNG1008304		1008304	Ascorbic Acid / Beta Carotene / cuprous oxide / Vitamin E / Zinc Oxide
+RXNG1008309		1008309	Mineral Oil / Petrolatum / Phenylephrine / Shark liver oil
+RXNG1008317		1008317	Camphor / Menthol / methyl salicylate / Thymol
+RXNG1008338		1008338	Capsaicin / Lidocaine
+RXNG1008340		1008340	Docusate / sennosides, USP
+RXNG1008343		1008343	Lactate / Urea
+RXNG1008349		1008349	dexbrompheniramine / Dextromethorphan / Phenylephrine
+RXNG1008350		1008350	Melatonin / pyridoxine
+RXNG1008375		1008375	Benzethonium / Lidocaine
+RXNG1008376		1008376	Camphor / Petrolatum
+RXNG1008377		1008377	Calcium Chloride / Lactate / Potassium Chloride / Sodium Chloride
+RXNG1008379		1008379	Lecithin / Phosphatidylethanolamines / Phosphatidylinositols
+RXNG1008381		1008381	CHROMIUM PICOLINATE / Gamboge
+RXNG1008386		1008386	Ascorbic Acid / ferrous sulfate / Folic Acid
+RXNG1008389		1008389	alpha Tocopherol / Ascorbic Acid / Docosahexaenoate / Eicosapentaenoate / Ferrous fumarate / Folic Acid / pyridoxine / tricalcium phosphate
+RXNG1008395		1008395	meningococcal group A polysaccharide / meningococcal group C polysaccharide / MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUP W-135 / MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUP Y
+RXNG1008456		1008456	horse hair extract / horse skin extract
+RXNG1008462		1008462	Dibucaine / Phenylbutazone
+RXNG1008467		1008467	Cranberry preparation / Milk thistle extract
+RXNG1008468		1008468	Ascorbic Acid / Calcium Sulfate / Cholecalciferol / Copper Sulfate / Ferrous fumarate / Folic Acid / Kelp preparation / Magnesium Oxide / Magnesium Sulfate / Niacinamide / potassium sulfate / pyridoxine / Riboflavin / Vitamin A / Vitamin B 12 / Zinc Sulfate
+RXNG1008473		1008473	Phenylephrine / pramoxine
+RXNG1008479		1008479	African Pygeum Extract / Bearberry preparation / pumpkin seed oil / Saw palmetto extract
+RXNG1008483		1008483	aluminum potassium sulfate / phenol
+RXNG1008487		1008487	Citrus Pectin extract / Lactobacillus acidophilus
+RXNG1008491		1008491	Isopropyl Alcohol / methyl salicylate
+RXNG1008495		1008495	Neisseria meningitidis serogroup A oligosaccharide diphtheria CRM197 protein conjugate vaccine / Neisseria meningitidis serogroup C oligosaccharide diphtheria CRM197 protein conjugate vaccine / Neisseria meningitidis serogroup W-135 oligosaccharide diphtheria CRM197 protein conjugate vaccine / Neisseria meningitidis serogroup Y oligosaccharide diphtheria CRM197 protein conjugate vaccine
+RXNG1008501		1008501	insulin, isophane / Regular Insulin, Human
+RXNG1008507		1008507	Agkistrodon piscivorus antivenin / Crotalus adamanteus antivenin / Crotalus atrox antivenin / Crotalus scutulatus antivenin
+RXNG1008512		1008512	dimethicone / Petrolatum
+RXNG1008515		1008515	Calcium Carbonate / Folic Acid / pyridoxine / Vitamin B 12
+RXNG1008516		1008516	iodine povacrylex / Isopropyl Alcohol
+RXNG1008528		1008528	borage oil / gamma-Linolenate
+RXNG1008533		1008533	coenzyme Q10 / red yeast rice
+RXNG1008535		1008535	Glycerin / Petrolatum / Phenylephrine / pramoxine
+RXNG1008539		1008539	chlophedianol / dexbrompheniramine / Phenylephrine
+RXNG1008540		1008540	Ascorbic Acid / Niacin / Riboflavin / Thiamine / Vitamin A / Vitamin B 12 / Vitamin B6 / Vitamin D / Vitamin E
+RXNG1008548		1008548	Allantoin / Benzocaine / Camphor / Petrolatum
+RXNG1008550		1008550	Brompheniramine / chlophedianol / Pseudoephedrine
+RXNG1008559		1008559	Ferrous fumarate / Folic Acid
+RXNG1008565		1008565	Lactate / Salicylic Acid
+RXNG1008567		1008567	Chondroitin Sulfates / Glucosamine
+RXNG1008570		1008570	glycolate / Pyruvate
+RXNG1008571		1008571	Polyvinyl Alcohol / Povidone / tetrahydrozoline
+RXNG1008576		1008576	Acetylcarnitine / Thioctate
+RXNG1008578		1008578	Glucose / Lactate / Potassium Chloride / potassium phosphate / Sodium Chloride
+RXNG1008584		1008584	Melatonin / Vitamin B6
+RXNG1008585		1008585	Ferrous fumarate / Folic Acid / Polysaccharide iron complex
+RXNG1008586		1008586	Anthralin / Salicylic Acid
+RXNG1008587		1008587	chlorophyllin / Thymol
+AminoCerv		1008591	Cysteine / Inositol / Methionine / Sodium propionate / Urea
+RXNG1008608		1008608	Arginine / Ginkgo biloba extract / yohimbine
+RXNG1008611		1008611	Garlic preparation / Soybean Lecithin
+RXNG1008617		1008617	Pancreatin / potassium bicarbonate / Sodium Bicarbonate
+RXNG1008621		1008621	potassium nitrate / Sodium Fluoride
+RXNG1008623		1008623	Calcium Carbonate / Folic Acid / Vitamin B Complex
+RXNG1008626		1008626	Docosahexaenoate / Eicosapentaenoate / Omega-3 Acid Ethyl Esters (USP)
+RXNG1008627		1008627	Helium / Nitrogen / Oxygen
+RXNG1008634		1008634	Lutein / zeaxanthin
+RXNG1008636		1008636	Folic Acid / pyridoxine / Vitamin B 12
+RXNG1008639		1008639	Naphazoline / polyethylene glycol 300
+RXNG1008643		1008643	Betaine / Pepsin A
+RXNG1008699		1008699	Magnesium Chloride / Potassium Chloride / Sodium Acetate / Sodium Chloride / Sodium gluconate
+RXNG1008701		1008701	Acetaminophen / Dextromethorphan / Doxylamine / Phenylephrine
+RXNG1008703		1008703	magnesium acetate / Potassium Acetate / Sodium Chloride
+RXNG1008708		1008708	pumpkin seed oil / Saw palmetto extract
+RXNG1008710		1008710	Lactase / Lactobacillus acidophilus
+RXNG1008714		1008714	cocoa butter / Shark liver oil
+RXNG1008715		1008715	cocoa butter / Phenylephrine / Shark liver oil
+RXNG1008717		1008717	Alanine / Arginine / Cysteine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Phosphoric acid / Proline / Serine / Threonine / Tryptophan / Valine
+RXNG1008718		1008718	Docosahexaenoate / Eicosapentaenoate
+RXNG1008721		1008721	Acetaminophen / Magnesium Salicylate / pamabrom
+RXNG1008728		1008728	Allantoin / Benzocaine / Camphor / dimethicone / Petrolatum
+RXNG1008730		1008730	Ox bile extract / Pancreatin
+RXNG1008746		1008746	Salicylic Acid / Undecylenate
+RXNG1008749		1008749	Calcium Carbonate / Magnesium Oxide / Zinc Sulfate
+RXNG1008755		1008755	Alanine / Arginine / Cysteine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Threonine / Tryptophan / Valine
+RXNG1008760		1008760	Benzalkonium / Menthol
+RXNG1008763		1008763	chlophedianol / dexchlorpheniramine / Pseudoephedrine
+RXNG1008768		1008768	Cholecalciferol / Vitamin K 2
+RXNG1008769		1008769	Benzoyl Peroxide / Salicylic Acid
+RXNG1008771		1008771	Alanine / Arginine / calcium acetate / Cysteine / Glycerin / Glycine / Histidine / Isoleucine / Leucine / Lysine / magnesium acetate / Methionine / Phenylalanine / Phosphoric acid / Potassium Chloride / Proline / Serine / Sodium Acetate / Sodium Chloride / Threonine / Tryptophan / Valine
+RXNG1008781		1008781	5-Hydroxytryptophan / Vitamin B6
+RXNG1008782		1008782	Alanine / Arginine / Aspartate / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Magnesium Chloride / Methionine / Phenylalanine / Potassium Chloride / Proline / Serine / Sodium Chloride / Sodium Phosphate, Dibasic / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008783		1008783	Ascorbic Acid / Ferrous fumarate / Folic Acid / Niacinamide / Polysaccharide iron complex
+RXNG1008787		1008787	Benzocaine / Capsaicin / Menthol / methyl salicylate
+RXNG1008788		1008788	Benzoate / Hyoscyamine / Methenamine / Methylene blue / phenyl salicylate
+RXNG1008791		1008791	Aspirin / Caffeine / magnesium carbonate / Magnesium Salicylate
+RXNG1008792		1008792	Cholecalciferol / soy protein isolate
+RXNG1008796		1008796	giant ragweed pollen extract / western ragweed pollen extract
+RXNG1008799		1008799	Ascorbic Acid / Biotin / Folic Acid / mecobalamin / Niacinamide / pantothenate / pyridoxine / Riboflavin / Thiamine / ZINC CITRATE
+RXNG1008804		1008804	green ash pollen extract / white ash pollen extract
+RXNG1008806		1008806	lodgepole pine pollen extract / yellow pine pollen extract
+RXNG1008811		1008811	Benzoate / phenylacetate
+RXNG1008813		1008813	Dextran 70 / Polyethylene Glycol 400 / Povidone / tetrahydrozoline
+RXNG1008817		1008817	Ascorbic Acid / Echinacea Preparation
+RXNG1008818		1008818	Lidocaine / Menthol
+RXNG1008819		1008819	Capsaicin / trolamine salicylate
+RXNG1008821		1008821	Castor Oil / Peruvian balsam
+RXNG1008824		1008824	Ascorbic Acid / Ferrous fumarate / Folic Acid / Vitamin B 12
+RXNG1008837		1008837	Hepatitis A Vaccine (Inactivated) Strain HM175 / Hepatitis B Surface Antigen Vaccine
+RXNG1008838		1008838	Green Tea Extract / GREEN TEA LEAF EXTRACT
+RXNG1008848		1008848	Capsaicin / Menthol / methyl salicylate
+RXNG1008849		1008849	Salicylic Acid / Urea
+RXNG1008866		1008866	Acetaminophen / pamabrom / Vitamin B6
+RXNG1008892		1008892	Chondroitin Sulfates / hyaluronate
+RXNG1008898		1008898	Polyethylene Glycol 400 / tetrahydrozoline
+RXNG1008903		1008903	Ascorbic Acid / Vitamin A / Vitamin D
+RXNG1008905		1008905	chromic chloride / Copper Sulfate / manganese sulfate / Zinc Sulfate
+RXNG1008933		1008933	acellular pertussis vaccine, inactivated / diphtheria toxoid vaccine, inactivated / Haemophilus influenzae type b, capsular polysaccharide inactivated tetanus toxoid conjugate vaccine / poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett) / tetanus toxoid vaccine, inactivated
+RXNG1008963		1008963	Ascorbic Acid / Polysaccharide iron complex
+RXNG1008968		1008968	Benzethonium / dyclonine
+RXNG1008982		1008982	Alanine / Arginine / Aspartate / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008987		1008987	Alanine / Arginine / Glycine / Histidine / Isoleucine / Leucine / Lysine / magnesium acetate / Methionine / Phenylalanine / Phosphoric acid / Potassium Acetate / Proline / Serine / Sodium Chloride / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1008995		1008995	Camphor / Eucalyptus oil / methyl salicylate
+RXNG1009016		1009016	Hops extract / valerian root extract
+RXNG1009020		1009020	Calcium Carbonate / Calcium Gluconate / Vitamin D
+RXNG1009028		1009028	Ascorbic Acid / hydroquinone
+RXNG1009030		1009030	Camphor / Capsicum extract / Menthol
+RXNG1009033		1009033	Calcium Carbonate / Folic Acid / magnesium carbonate
+RXNG1009042		1009042	Beta Carotene / Bilberry extract
+RXNG1009047		1009047	Evening primrose extract / gamma-Linolenate / linoleate
+RXNG1009055		1009055	Saw Palmetto Fruit Extract / ZINC PICOLINATE
+RXNG1009058		1009058	Folic Acid / heme iron polypeptide / Polysaccharide iron complex / Vitamin B 12
+RXNG1009064		1009064	Diosmin / Hesperidin
+RXNG1009077		1009077	Petrolatum / Zinc Oxide
+RXNG1009086		1009086	Alanine / Arginine / Aspartate / Glutamate / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Proline / Serine / sodium metabisulfite / Threonine / Tryptophan / Tyrosine / Valine
+RXNG1009089		1009089	Benzalkonium / Benzocaine
+RXNG1009090		1009090	Benzalkonium / Benzocaine / zinc chloride
+RXNG1009100		1009100	Ascorbic Acid / cuprous oxide / Lutein / Vitamin E / Zinc Oxide
+RXNG1009110		1009110	Chlorhexidine / Ethanol
+RXNG1009113		1009113	potassium phosphate / Sodium Phosphate, Monobasic
+RXNG1009115		1009115	Ginseng Preparation / Vitamin B 12
+RXNG1009124		1009124	Ascorbic Acid / COLLAGEN, HYDROLYZED
+RXNG1009126		1009126	Anthraquinone glycoside / Salicylic Acid
+RXNG1009129		1009129	mecobalamin / Vitamin B 12
+RXNG1009141		1009141	Glucose / Magnesium Chloride / Potassium Chloride / potassium phosphate / Sodium Acetate / Sodium Chloride / Sodium gluconate / Sodium Phosphate, Dibasic
+RXNG1009142		1009142	loteprednol etabonate / Tobramycin
+RXNG1009143		1009143	Ubiquinone / Vitamin E
+Unasyn		1009148	Ampicillin / Sulbactam
+RXNG1009149		1009149	Aluminum Hydroxide / Magnesium Hydroxide
+RXNG1012123		1012123	chlorcyclizine / Codeine / Pseudoephedrine
+RXNG1013625		1013625	drospirenone / Ethinyl Estradiol / levomefolate
+RXNG1014426		1014426	Alanine / Arginine / Cysteine / Glycine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Phosphoric acid / Proline / Serine / sodium bisulfite / Threonine / Tryptophan / Valine
+RXNG1020419		1020419	Capsaicin / Lidocaine / Menthol / methyl salicylate
+RXNG1028612		1028612	pyridoxine / Thiamine / Vitamin B 12
+RXNG1041795		1041795	Cholecalciferol / Omega-3 Acid Ethyl Esters (USP)
+RXNG1043184		1043184	Ellagic Acid / Pomegranate Extract
+RXNG1043299		1043299	alpha Tocopherol / Ascorbic Acid / Cholecalciferol / Docosahexaenoate / Docusate / Ferrous fumarate / Folic Acid / pyridoxine / tricalcium phosphate
+RXNG1043468		1043468	Docosahexaenoate / Omega-3 Acid Ethyl Esters (USP)
+RXNG1043618		1043618	Eucalyptol / Menthol / methyl salicylate / Thymol
+RXNG1045531		1045531	Benzocaine / Dextromethorphan / Menthol
+RXNG1046697		1046697	Hexylresorcinol / Menthol
+RXNG1049136		1049136	cocoa butter / Zinc Oxide
+RXNG1050086		1050086	Camphor / Menthol / Petrolatum
+RXNG1050324		1050324	Hyoscyamine / Methenamine / Methylene blue / Sodium Phosphate, Monobasic
+RXNG1053102		1053102	Aspirin / Dextromethorphan / Phenylephrine
+RXNG1053120		1053120	Aspirin / Dextromethorphan / Doxylamine / Phenylephrine
+RXNG1053132		1053132	hypromellose / Naphazoline / Polysorbate 80 / Zinc Sulfate
+RXNG1087244		1087244	Calcium ascorbate / calcium threonate / Ferrous Asparto Glycinate / Folic Acid / Polysaccharide iron complex / Succinic Acid / Vitamin B 12
+RXNG1087280		1087280	Boron / Calcium Carbonate / Cholecalciferol / Folic Acid / Magnesium Oxide / pyridoxine / Vitamin B 12
+RXNG1087297		1087297	Ascorbic Acid / Ferrous fumarate / Folic Acid / Niacin / Polysaccharide iron complex
+RXNG1087405		1087405	Ascorbic Acid / Biotin / Copper Sulfate / Docusate / Folic Acid / Iron Carbonyl / Vitamin B 12 / Vitamin E
+RXNG1087558		1087558	Lutein / Omega-3 Acid Ethyl Esters (USP) / zeaxanthin
+RXNG1089112		1089112	Bacitracin / dimethicone / Zinc Oxide
+RXNG1090016		1090016	Ascorbic Acid / BUTCHER'S BROOM Preparation / Diosmin / Hesperidin
+RXNG1090823		1090823	Ascorbic Acid / Beta Carotene / Copper Sulfate / Selenite / Vitamin E / Zinc Oxide
+RXNG1090831		1090831	Ascorbic Acid / Beta Carotene / Copper Sulfate / Lutein / Selenite / Vitamin E / Zinc Oxide
+RXNG1090967		1090967	Ascorbic Acid / Cholecalciferol / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin A / Vitamin B 12 / Vitamin E
+RXNG1092391		1092391	Docosahexaenoate / Eicosapentaenoate / Omega-3 Acid Ethyl Esters (USP) / Vitamin E
+RXNG1094082		1094082	Arginine / Histidine / Isoleucine / Leucine / Lysine / Methionine / Phenylalanine / Threonine / Tryptophan / Valine
+RXNG1094114		1094114	Echinacea angustifolia root extract / Echinacea purpurea root extract
+RXNG1094140		1094140	Melatonin / Tryptophan
+RXNG1094155		1094155	redroot pigweed pollen extract / spiny pigweed pollen extract
+RXNG1094349		1094349	Dextromethorphan / Doxylamine / Pseudoephedrine
+RXNG1094890		1094890	Lidocaine / Menthol / methyl salicylate
+RXNG1095603		1095603	Ascorbic Acid / Biotin / Cholecalciferol / Folic Acid / Niacin / Pantothenic Acid / pyridoxine / Riboflavin / Thiamine / Vitamin B 12
+RXNG1098207		1098207	European rabbit hair extract / European rabbit skin extract
+RXNG1098254		1098254	eastern cottonwood pollen extract / plains cottonwood pollen extract
+RXNG1098264		1098264	red oak pollen extract / white oak pollen extract
+RXNG1098500		1098500	hog hair extract / hog skin extract
+RXNG1100065		1100065	Famotidine / Ibuprofen
+RXNG1100257		1100257	alpha Tocopherol / Ascorbic Acid / Calcium Citrate / Cholecalciferol / Cupric oxide / Docusate / Folic Acid / Iron Carbonyl / Niacinamide / Potassium Iodide / pyridoxine / Riboflavin / Thiamine / Zinc Oxide
+RXNG1100261		1100261	Ascorbic Acid / Calcium Citrate / Cholecalciferol / Folic Acid / Iron Carbonyl / pyridoxine
+RXNG1100741		1100741	Calcium Chloride / icodextrin / Lactate / Magnesium Chloride / Sodium Chloride
+RXNG1102195		1102195	Ascorbic Acid / Biotin / ferrous bisglycinate / Folic Acid / formic acid / Iron-Dextran Complex / Niacin / pantothenate / pyridoxine / Riboflavin / Thiamine / Vitamin B 12
+RXNG1102200		1102200	Ascorbic Acid / Biotin / Calcium Carbonate / Folic Acid / Niacin / pantothenate / pyridoxine / Riboflavin / Succinic Acid / Thiamine / Vitamin B 12
+RXNG1111064		1111064	Brompheniramine / chlophedianol / Phenylephrine
+RXNG1111420		1111420	Aspirin / Chlorpheniramine / Dextromethorphan / Phenylephrine
+RXNG1112481		1112481	Chondroitin Sulfates / Collagen / hyaluronate
+RXNG1114601		1114601	Ascorbic Acid / Calcium Carbonate / Cholecalciferol / Choline / Ferrous fumarate / Folic Acid / Niacin / Potassium Iodide / pyridoxine / Riboflavin / Thiamine / Vitamin B 12 / Vitamin E / Zinc Oxide
+RXNG1114846		1114846	Cholecalciferol / Chondroitin Sulfates / Glucosamine
+RXNG1114864		1114864	cocoa butter / Phenylephrine
+RXNG1115703		1115703	dyclonine / Glycerin
+RXNG1115788		1115788	Ascorbic Acid / Copper Gluconate / Docosahexaenoate / Eicosapentaenoate / Lutein / Vitamin E / zeaxanthin / Zinc Oxide
+RXNG1115799		1115799	magnesium citrate / Magnesium Oxide / potassium citrate / pyridoxine
+RXNG1115926		1115926	burweed marshelder pollen extract / rough marshelder pollen extract
+RXNG1115951		1115951	white sweet clover pollen extract / yellow sweet clover pollen extract
+RXNG1116982		1116982	American house dust mite extract / European house dust mite extract
+RXNG1117535		1117535	potassium nitrate / Silver Nitrate
+RXNG1119568		1119568	Ascorbic Acid / Cholecalciferol / cuprous oxide / Folic Acid / Magnesium Oxide / Niacin / Polysaccharide iron complex / Potassium Iodide / pyridoxine / Riboflavin / Thiamine / Vitamin A / Vitamin B 12 / Vitamin E / Zinc Oxide
+RXNG1125499		1125499	Calcium Carbonate / Cholecalciferol / Magnesium Oxide / Zinc Oxide
+RXNG1144134		1144134	Bilberry extract / Vitamin A / Vitamin E
+RXNG1144760		1144760	Betaine / Folic Acid / mecobalamin / pyridoxine
+RXNG1145109		1145109	Azelate / Cupric oxide / Folic Acid / Niacinamide / pyridoxine / Zinc Oxide
+RXNG1145801		1145801	emtricitabine / Rilpivirine / tenofovir disoproxil
+RXNG1146773		1146773	Menthol / Petrolatum
+RXNG1150092		1150092	CHROMIUM PICOLINATE / Inulin
+RXNG1150100		1150100	Bifidobacterium lactis / Bifidobacterium longum / Lactobacillus acidophilus
+RXNG1150152		1150152	Quercetin / resveratrol
+RXNG1150171		1150171	Ascorbic Acid / Calcium Carbonate
+RXNG1190048		1190048	chlorcyclizine / Phenylephrine
+RXNG1190579		1190579	Codeine / dexbrompheniramine / Pseudoephedrine
+RXNG1190599		1190599	dexbrompheniramine / Dextromethorphan / Pseudoephedrine
+RXNG1190930		1190930	Acetaminophen / dexbrompheniramine
+RXNG1191209		1191209	dog hair extract / short ragweed pollen extract
+RXNG1191375		1191375	Aloe Polysaccharide / Hydrocortisone / Iodoquinol
+RXNG1192515		1192515	Benzethonium / Benzocaine / Menthol
+RXNG1192684		1192684	chlophedianol / Phenylephrine / Pyrilamine
+RXNG1192753		1192753	Bermuda grass pollen extract / Timothy grass pollen extract
+RXNG1192792		1192792	European house dust mite extract / white oak pollen extract
+RXNG1192832		1192832	Cat Hair Extract / dog hair extract
+RXNG1193036		1193036	Cholecalciferol / Folic Acid / Omega-3 Acid Ethyl Esters (USP) / Phytosterols / pyridoxine / Vitamin B 12
+RXNG1193101		1193101	Folic Acid / Omega-3 Acid Ethyl Esters (USP) / Phytosterols / pyridoxine / Vitamin B 12
+RXNG1232660		1232660	Bermuda grass smut extract / Johnson grass smut extract
+RXNG1234471		1234471	Ascorbic Acid / Cholecalciferol / Niacin / Riboflavin / Sodium Fluoride / Thiamine / Vitamin A / Vitamin B 12 / Vitamin B6 / Vitamin E
+RXNG1235143		1235143	azilsartan / Chlorthalidone
+RXNG1235388		1235388	Ascorbic Acid / Folic Acid / Niacin / Riboflavin / Sodium Fluoride / Thiamine / Vitamin A / Vitamin B 12 / Vitamin B6 / Vitamin D / Vitamin E
+RXNG1236450		1236450	chlophedianol / chlorcyclizine
+RXNG1236648		1236648	Bifidobacterium bifidum / Bifidobacterium longum
+RXNG1241470		1241470	Carboxymethylcellulose / Glycerin / Polysorbate 80
+RXNG1241763		1241763	Bifidobacterium bifidum / Bifidobacterium lactis / Lactobacillus acidophilus / Lactobacillus casei rhamnosus
+Nicomide		1241795	Cupric oxide / Folic Acid / Niacinamide / Zinc Oxide
+RXNG1241828		1241828	Acetaminophen / Phenylephrine / Pyrilamine
+RXNG1241895		1241895	Niacin / Pantothenic Acid / Riboflavin / Thiamine / Vitamin B 12 / Vitamin B6
+RXNG1244007		1244007	Ascorbic Acid / Cholecalciferol / ferrous sulfate / Sodium Fluoride / Vitamin A
+RXNG1244924		1244924	Calcium Carbonate / Cholecalciferol / Vitamin K
+RXNG1245705		1245705	chlophedianol / Chlorpheniramine / Phenylephrine
+RXNG1248141		1248141	Ascorbic Acid / Beta Carotene / Calcium Carbonate / Cholecalciferol / Cupric oxide / Docusate / Folic Acid / Iron Carbonyl / Magnesium Oxide / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin B 12 / Vitamin E / Zinc Oxide
+RXNG1248594		1248594	dog hair extract / European house dust mite extract
+RXNG1248604		1248604	giant ragweed pollen extract / short ragweed pollen extract
+RXNG1249116		1249116	Calamine / Menthol / Petrolatum / Zinc Oxide
+RXNG1250990		1250990	Propionic acid / Undecylenate
+RXNG1291430		1291430	Docosaenoic Acid / Eicosapentaenoate
+RXNG1291859		1291859	azelastine / fluticasone
+RXNG1292029		1292029	Cholecalciferol / Docosahexaenoate / Eicosapentaenoate
+RXNG1292333		1292333	Folic Acid / Inositol
+RXNG1292439		1292439	Measles Virus Vaccine Live, Enders' attenuated Edmonston strain / Mumps Virus Vaccine Live, Jeryl Lynn Strain / Rubella Virus Vaccine Live (Wistar RA 27-3 Strain) / Varicella-Zoster Virus Vaccine Live (Oka-Merck) strain
+RXNG1292748		1292748	Docosahexaenoate / Eicosapentaenoate / Phytosterols
+RXNG1292760		1292760	Docosahexaenoate / Lutein / Vitamin E
+RXNG1293032		1293032	Lactobacillus acidophilus / Lactobacillus bulgaricus
+RXNG1293412		1293412	5-Hydroxytryptophan / Magnesium Oxide / Melatonin / Tryptophan / Vitamin B6
+RXNG1293735		1293735	chromic chloride / Copper Sulfate / manganese sulfate / Selenious Acid / Zinc Sulfate
+RXNG1294638		1294638	common paper wasp venom protein / Metricus paper wasp venom protein / northern paper wasp venom protein / red paper wasp venom protein
+RXNG1298205		1298205	Apple Cider Vinegar / Calcium Carbonate
+RXNG1299989		1299989	American elm pollen extract / Siberian elm pollen extract
+RXNG1300188		1300188	Bordetella pertussis filamentous hemagglutinin vaccine, inactivated / Bordetella pertussis fimbriae 2/3 vaccine, inactivated / Bordetella pertussis pertactin vaccine, inactivated / Bordetella pertussis toxoid vaccine, inactivated / diphtheria toxoid vaccine, inactivated / tetanus toxoid vaccine, inactivated
+RXNG1300367		1300367	Bordetella pertussis filamentous hemagglutinin vaccine, inactivated / Bordetella pertussis pertactin vaccine, inactivated / Bordetella pertussis toxoid vaccine, inactivated / diphtheria toxoid vaccine, inactivated / tetanus toxoid vaccine, inactivated
+RXNG1300887		1300887	Camphor / phenol / Tannic Acid / Zinc Oxide
+RXNG1302463		1302463	Inulin / Lactobacillus rhamnosus GG
+RXNG1302471		1302471	Lactobacillus reuteri / Lactobacillus rhamnosus GG
+RXNG1302826		1302826	Phentermine / topiramate
+RXNG1303726		1303726	Bacitracin / pramoxine
+RXNG1304093		1304093	Citric Acid / Magnesium Oxide / picosulfate sodium
+Natafort		1304496	alpha Tocopherol / Ascorbic Acid / Cholecalciferol / Folic Acid / Iron Carbonyl / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin B 12
+RXNG1304558		1304558	alpha Tocopherol / Ascorbic Acid / Biotin / Cholecalciferol / dexpanthenol / Folic Acid / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin A / Vitamin B 12 / Vitamin K 1
+RXNG1305199		1305199	alpha Tocopherol / Ascorbic Acid / Biotin / dexpanthenol / Ergocalciferol / Folic Acid / Niacinamide / pyridoxine / Riboflavin / Thiamine / Vitamin A / Vitamin B 12 / Vitamin K 1
+RXNG1306291		1306291	cobicistat / elvitegravir / emtricitabine / tenofovir disoproxil
+RXNG1310502		1310502	Chlorpheniramine / Ibuprofen / Phenylephrine
+RXNG1312979		1312979	Cholecalciferol / Polysaccharide iron complex
+RXNG1313834		1313834	Ascorbic Acid / Bacillus coagulans / Cranberry preparation
+RXNG1313924		1313924	alpha Tocopherol / Ascorbic Acid / Beta Carotene / Calcium Carbonate / Cholecalciferol / Docusate / Ferrous fumarate / Folic Acid / Niacinamide / pantothenate / pyridoxine / Riboflavin / Thiamine / Vitamin B 12 / Zinc Oxide
+RXNG1313956		1313956	CHROMIUM PICOLINATE / Cinnamon Bark
+RXNG1314653		1314653	Copper Sulfate / Ferrous fumarate / Folic Acid / Magnesium Sulfate / manganese sulfate / Niacinamide / pantothenate / pyridoxine / Riboflavin / Sodium Ascorbate / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1314665		1314665	Ascorbic Acid / Biotin / Copper Sulfate / Ferrous fumarate / Folic Acid / Magnesium Sulfate / manganese sulfate / Niacin / pantothenate / Polysaccharide iron complex / pyridoxine / Riboflavin / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1314678		1314678	Copper Sulfate / Ferrous fumarate / Folic Acid / manganese sulfate / Niacinamide / pantothenate / Polysaccharide iron complex / pyridoxine / Riboflavin / Sodium Ascorbate / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1314785		1314785	Copper Sulfate / Ferrous fumarate / Folic Acid / Magnesium Sulfate / manganese sulfate / Niacinamide / pantothenate / Polysaccharide iron complex / pyridoxine / Riboflavin / Sodium Ascorbate / Thiamine / Vitamin B 12 / Zinc Sulfate
+RXNG1358169		1358169	CHROMIUM, CHELATED / MANGANESE GLUCONATE / ZINC CITRATE
+RXNG1358981		1358981	Camphor / dimethicone / Menthol / phenol
+RXNG1360726		1360726	Phenylephrine / thonzylamine
+RXNG1362703		1362703	Benzocaine / Cetylpyridinium / Menthol
+RXNG1362811		1362811	Betaine / Bromelains / Pancreatin / Papain / Pepsin A
+RXNG1366142		1366142	Cholecalciferol / Vitamin E
+RXNG1368402		1368402	alogliptin / pioglitazone
+RXNG1368916		1368916	gamma-Aminobutyrate / Melatonin / valerian root extract
+RXNG1372474		1372474	Amylases / Betaine / Ox bile extract / Pancreatin / Papain / Pepsin A
+RXNG1372577		1372577	Evening primrose oil / linoleate
+RXNG1373248		1373248	Calamine / Menthol / Zinc Oxide
+RXNG1374850		1374850	Benzalkonium / Camphor
+RXNG1375947		1375947	Doxylamine / pyridoxine
+RXNG1375959		1375959	Cholecalciferol / Glucose
+RXNG1376005		1376005	Folic Acid / Succinic Acid
+RXNG1421450		1421450	brimonidine / brinzolamide
+RXNG1422085		1422085	atorvastatin / ezetimibe
+RXNG1423306		1423306	Dextromethorphan / Pyrilamine
+RXNG1424888		1424888	fluticasone / vilanterol
+RXNG1426286		1426286	Amylases / Bromelains / Papain / papaya extract
+RXNG1426693		1426693	Chondroitin Sulfates / Glucosamine / hyaluronate / methylsulfonylmethane
+RXNG1427391		1427391	Dextromethorphan / Phenylephrine / thonzylamine
+RXNG1428137		1428137	chlophedianol / thonzylamine
+RXNG1428952		1428952	Alpha Hydroxy Acids / Urea
+RXNG1429359		1429359	chlophedianol / Pyrilamine
+RXNG1430892		1430892	Fenofibrate / Simvastatin
+RXNG1430990		1430990	donepezil / Memantine
+RXNG1432985		1432985	Cholecalciferol / Inulin
+RXNG1435256		1435256	Benzocaine / Camphor / phenol
+RXNG1437910		1437910	Haemophilus influenzae type b, capsular polysaccharide inactivated tetanus toxoid conjugate vaccine / meningococcal group C polysaccharide / MENINGOCOCCAL POLYSACCHARIDE VACCINE GROUP Y
+RXNG1441375		1441375	chlophedianol / dexbrompheniramine / Pseudoephedrine
+RXNG1441382		1441382	Bacillus coagulans / Inulin
+RXNG1441391		1441391	bazedoxifene / Estrogens, Conjugated (USP)
+RXNG1441397		1441397	Ascorbic Acid / Collagen
+RXNG1441830		1441830	Doxylamine / Phenylephrine
+RXNG1484957		1484957	factor IX / factor VII / factor X / Protein C / Protein S / Prothrombin
+RXNG1487518		1487518	umeclidinium / vilanterol
+RXNG1490716		1490716	coenzyme Q10 / Glycine / Isoleucine
+RXNG1492051		1492051	Dextromethorphan / Phenylephrine / Triprolidine
+RXNG1494183		1494183	ALPHA-D-GALACTOSIDASE ENZYME / Lactase
+RXNG1540229		1540229	Ketorolac / Phenylephrine
+RXNG1540662		1540662	Allantoin / Lidocaine / Petrolatum
+RXNG1543728		1543728	Amylases / Bacillus coagulans / Endopeptidases / Lipase
+RXNG1547444		1547444	calcium acetate / magnesium acetate / Potassium Acetate / Potassium Chloride / Sodium Acetate / Sodium gluconate
+RXNG1547458		1547458	Calcium Chloride / Magnesium Chloride / Potassium Acetate / Sodium Acetate / Sodium Chloride
+RXNG1550699		1550699	Kentucky bluegrass pollen extract / orchard grass pollen extract / perennial rye grass pollen extract / sweet vernal grass pollen extract / Timothy grass pollen extract
+RXNG1551285		1551285	chlophedianol / dexbrompheniramine
+RXNG1552342		1552342	netupitant / palonosetron
+RXNG1591942		1591942	ledipasvir / sofosbuvir
+RXNG1593134		1593134	Neisseria meningitidis serogroup B recombinant LP2086 A05 protein variant antigen / Neisseria meningitidis serogroup B recombinant LP2086 B01 protein variant antigen
+RXNG1593618		1593618	Acetaminophen / chlophedianol / Pyrilamine
+RXNG1593743		1593743	Cholecalciferol / Folic Acid
+RXNG1594955		1594955	Capsaicin / Lidocaine / Menthol
+RXNG1595630		1595630	Acetaminophen / Brompheniramine
+RXNG1595783		1595783	Benzocaine / Capsaicin / Lidocaine / methyl salicylate
+RXNG1597093		1597093	L1 protein, Human papillomavirus type 11 Vaccine / L1 protein, Human papillomavirus type 16 Vaccine / L1 protein, Human papillomavirus type 18 Vaccine / L1 protein, Human papillomavirus type 31 Vaccine / L1 protein, Human papillomavirus type 33 Vaccine / L1 protein, Human papillomavirus type 45 Vaccine / L1 protein, Human papillomavirus type 52 Vaccine / L1 protein, Human papillomavirus type 58 Vaccine / L1 protein, Human papillomavirus type 6 Vaccine
+RXNG1597378		1597378	ombitasvir / paritaprevir / Ritonavir
+RXNG1597614		1597614	ceftolozane / tazobactam
+RXNG1598380		1598380	cobicistat / darunavir
+RXNG1598392		1598392	empagliflozin / Linagliptin
+RXNG1599656		1599656	Magnesium Oxide / pyridoxine
+RXNG1600259		1600259	dasabuvir / ombitasvir / paritaprevir / Ritonavir
+RXNG1600381		1600381	Diclofenac / Fluorouracil
+RXNG1601401		1601401	meningococcal group B vaccine / Neisseria meningitidis serogroup B recombinant FHBP fusion protein antigen / Neisseria meningitidis serogroup B recombinant NHBA fusion protein antigen / Neisseria meningitidis serogroup B strain NZ98/254 outer membrane vesicle
+RXNG1601653		1601653	Atazanavir / cobicistat
+RXNG1602012		1602012	Glycerin / Lidocaine
+RXNG1604563		1604563	Folic Acid / Lactobacillus casei
+RXNG1605106		1605106	Dextromethorphan / Lidocaine / trolamine salicylate
+RXNG1605120		1605120	Capsaicin / Chondroitin Sulfates / Glucosamine / Lidocaine
+RXNG1605382		1605382	Cholecalciferol / Lactobacillus reuteri
+RXNG1607802		1607802	Bordetella pertussis filamentous hemagglutinin vaccine, inactivated / Bordetella pertussis fimbriae 2/3 vaccine, inactivated / Bordetella pertussis pertactin vaccine, inactivated / Bordetella pertussis toxoid vaccine, inactivated / diphtheria toxoid vaccine, inactivated / poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett) / tetanus toxoid vaccine, inactivated
+RXNG1649006		1649006	Capsaicin / methyl salicylate
+RXNG1650280		1650280	hyaluronate / mecobalamin
+RXNG1651331		1651331	Hydrocortisone / Tretinoin
+RXNG1651569		1651569	Betamethasone / hydroquinone / Tretinoin
+RXNG1651593		1651593	Allantoin / Petrolatum
+RXNG1653939		1653939	levocetirizine / Loratadine
+RXNG1655048		1655048	fibrinogen concentrate (human) / Thrombin
+RXNG1655927		1655927	ivacaftor / lumacaftor
+RXNG1656332		1656332	Capsaicin / Histamine / Menthol
+RXNG1656339		1656339	sacubitril / valsartan
+RXNG1657138		1657138	influenza A virus (H1N1) antigen / influenza A virus (H3N2) antigen / influenza B virus antigen
+RXNG1657333		1657333	influenza A virus A/California/7/2009 (H1N1) antigen / influenza A virus A/Switzerland/9715293/2013 (H3N2) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1657884		1657884	Bordetella pertussis filamentous hemagglutinin vaccine, inactivated / Bordetella pertussis pertactin vaccine, inactivated / Bordetella pertussis toxoid vaccine, inactivated / diphtheria toxoid vaccine, inactivated / poliovirus vaccine inactivated, type 1 (Mahoney) / poliovirus vaccine inactivated, type 2 (MEF-1) / poliovirus vaccine inactivated, type 3 (Saukett) / tetanus toxoid vaccine, inactivated
+RXNG1658460		1658460	olodaterol / tiotropium
+RXNG1658679		1658679	malic acid / Xylitol
+RXNG1661318		1661318	Codeine / Phenylephrine / Triprolidine
+RXNG1670310		1670310	tipiracil / Trifluridine
+RXNG1673046		1673046	Eugenol / Guaiacol
+RXNG1720001		1720001	Glycerin / Petrolatum / Phenylephrine / Shark liver oil
+RXNG1721575		1721575	Glycopyrrolate / indacaterol
+RXNG1721612		1721612	cobicistat / elvitegravir / emtricitabine / tenofovir alafenamide
+RXNG1722718		1722718	BOTULINUM NEUROTOXIN A IMMUNE FAB2 / BOTULINUM NEUROTOXIN B IMMUNE FAB2 / BOTULINUM NEUROTOXIN C IMMUNE FAB2 / BOTULINUM NEUROTOXIN D IMMUNE FAB2 / BOTULINUM NEUROTOXIN E IMMUNE FAB2 / BOTULINUM NEUROTOXIN F IMMUNE FAB2 / BOTULINUM NEUROTOXIN G IMMUNE FAB2
+RXNG1726659		1726659	Glycerin / hypromellose / Phenylephrine
+RXNG1727491		1727491	emtricitabine / tenofovir alafenamide
+RXNG1727492		1727492	emtricitabine / Rilpivirine / tenofovir alafenamide
+RXNG1727493		1727493	insulin degludec / liraglutide
+RXNG1727500		1727500	dapagliflozin / saxagliptin
+RXNG1734635		1734635	elbasvir / grazoprevir
+RXNG1740244		1740244	Benzalkonium / Benzocaine / Camphor
+RXNG1741416		1741416	Cholecalciferol / menatetrenone
+RXNG1789538		1789538	Cholecalciferol / tricalcium phosphate
+RXNG1790638		1790638	formoterol / Glycopyrrolate
+RXNG1792385		1792385	Ciprofloxacin / fluocinolone
+RXNG1794433		1794433	influenza A virus A/California/7/2009 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1798267		1798267	Camphor / Lidocaine / methyl salicylate
+RXNG1798280		1798280	nebivolol / valsartan
+RXNG1798480		1798480	Calamine / pramoxine / Zinc Oxide
+RXNG1799108		1799108	influenza A virus A/Christchurch/16/2010 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1799211		1799211	sofosbuvir / velpatasvir
+RXNG1801605		1801605	influenza A virus A/Brisbane/10/2010 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza B virus B/Hong Kong/259/2010 antigen / influenza B virus B/Utah/9/2014 antigen
+RXNG1801823		1801823	influenza A virus A/Bolivia/559/2013 (H1N1) antigen / influenza A virus A/New Caledonia/71/2014 (H3N2) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1809049		1809049	Oxymetazoline / Tetracaine
+RXNG1811630		1811630	Aspirin / Omeprazole
+RXNG1813401		1813401	Cat dander extract / cat skin extract
+RXNG1856684		1856684	common wasp venom protein / eastern yellow jacket venom protein / German wasp venom protein / southern yellow jacket venom protein / western yellow jacket venom protein
+RXNG1856688		1856688	bald-faced hornet venom protein / common wasp venom protein / eastern yellow jacket venom protein / German wasp venom protein / southern yellow jacket venom protein / western yellow jacket venom protein / yellow hornet venom protein
+RXNG1858994		1858994	Insulin Glargine / Lixisenatide
+RXNG1874901		1874901	Ascorbic Acid / resveratrol
+RXNG1928301		1928301	influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza A virus A/Singapore/GP1908/2015 (H1N1) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1928311		1928311	influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza A virus A/Michigan/45/2015 (H1N1) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1928531		1928531	influenza A virus A/Singapore/GP1908/2015 (H1N1) antigen / influenza A virus A/Singapore/GP2050/2015 (H3N2) antigen / influenza B virus B/Hong Kong/259/2010 antigen / influenza B virus B/Utah/9/2014 antigen
+RXNG1939328		1939328	sofosbuvir / velpatasvir / voxilaprevir
+RXNG1940702		1940702	glecaprevir / pibrentasvir
+RXNG1942160		1942160	influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza A virus A/Singapore/GP1908/2015 (H1N1) antigen / influenza B virus B/Brisbane/46/2015 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1944778		1944778	Allopurinol / lesinurad
+RXNG1944962		1944962	alpha Tocopherol / Ascorbic Acid / Cholecalciferol / doconexent / Docusate / Ferrous fumarate / Folic Acid / pyridoxine / tricalcium phosphate
+RXNG1945038		1945038	fluticasone / umeclidinium / vilanterol
+RXNG1945123		1945123	Melatonin / Threonine
+RXNG1945211		1945211	5-Hydroxytryptophan / Melatonin
+RXNG1945217		1945217	meropenem / Vaborbactam
+RXNG1946475		1946475	Lanolin / Menthol / Petrolatum / Zinc Oxide
+RXNG1946968		1946968	influenza A virus A/New Caledonia/71/2014 (H3N2) antigen / influenza A virus A/Slovenia/2903/2015 (H1N1) antigen / influenza B virus B/Brisbane/60/2008 antigen / influenza B virus B/Phuket/3073/2013 antigen
+RXNG1986372		1986372	olive oil / Soybean Oil
+RXNG1987016		1987016	Capsaicin / Lidocaine / trolamine salicylate
+RXNG1989499		1989499	dolutegravir / Rilpivirine
+RXNG1994310		1994310	insulin degludec / Insulin, Aspart, Human
+RXNG1996259		1996259	bictegravir / emtricitabine / tenofovir alafenamide
+RXNG1996267		1996267	ivacaftor / tezacaftor
+RXNG1996814		1996814	orchard grass pollen extract / Timothy grass pollen extract
+RXNG2001357		2001357	Acetaminophen / benzhydrocodone
+RXNG2001485		2001485	Niacin / pantethine
+RXNG2043694		2043694	Bifidobacterium animalis / Lactobacillus acidophilus
+RXNG2045232		2045232	POLYETHYLENE GLYCOL 3350 / Potassium Chloride / Sodium Chloride / sodium sulfate
+RXNG2045242		2045242	Ascorbic Acid / POLYETHYLENE GLYCOL 3350 / Potassium Chloride / Sodium Ascorbate / Sodium Chloride
+RXNG1008785		1008785	pneumococcal capsular polysaccharide type 1 vaccine / pneumococcal capsular polysaccharide type 10A vaccine / pneumococcal capsular polysaccharide type 11A vaccine / pneumococcal capsular polysaccharide type 12F vaccine / pneumococcal capsular polysaccharide type 14 vaccine / pneumococcal capsular polysaccharide type 15B vaccine / pneumococcal capsular polysaccharide type 17F vaccine / pneumococcal capsular polysaccharide type 18C vaccine / pneumococcal capsular polysaccharide type 19A vaccin...
+RXNG1008803		1008803	Streptococcus pneumoniae serotype 1 capsular antigen diphtheria CRM197 protein conjugate vaccine / Streptococcus pneumoniae serotype 14 capsular antigen diphtheria CRM197 protein conjugate vaccine / Streptococcus pneumoniae serotype 18C capsular antigen diphtheria CRM197 protein conjugate vaccine / Streptococcus pneumoniae serotype 19A capsular antigen diphtheria CRM197 protein conjugate vaccine / Streptococcus pneumoniae serotype 19F capsular antigen diphtheria CRM197 protein conjugate vacci...
+RXNGG224903		G224903	acellular pertussis vaccine, inactivated / diphtheria toxoid vaccine, inactivated / tetanus toxoid vaccine, inactivated
+Adderall5		G84815	Amphetamine / Dextroamphetamine
