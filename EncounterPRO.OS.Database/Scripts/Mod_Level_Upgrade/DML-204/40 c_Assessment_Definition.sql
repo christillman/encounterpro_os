@@ -34,8 +34,7 @@ where assessment_id in (
 'DEMO309',
 'DEMO9632',
 'DEMO4281',
-'DEMO4778',
-
+'DEMO4778'
 )
 
 

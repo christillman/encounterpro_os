@@ -147,31 +147,36 @@ UPDATE c_Database_Column
 SET column_length = 500, column_datatype = 'varchar', column_definition = '[varchar](500)', modification_level = 203
 WHERE tablename = 'c_Assessment_Definition' AND columnname = 'long_description'
 
--- Columns added in 6.2.2, but we reverted to 6.1.1
-DELETE FROM c_Database_Column
-WHERE tablename = 'c_Component_Type' AND columnname = 'plugin_type'
-
-DELETE FROM c_Database_Column
-WHERE tablename = 'c_Config_Object' AND columnname = 'installed_local_key'
-
 -- Changes for Mod 203
 DELETE FROM [c_Database_Column]
-WHERE tablename = 'c_Reccomended_Observation'
+WHERE tablename IN ('c_Drug_Brand', 'c_Reccomended_Observation')
 DELETE FROM [c_Database_Table]
-WHERE tablename = 'c_Reccomended_Observation'
+WHERE tablename IN ('c_Drug_Brand', 'c_Reccomended_Observation')
 
 exec [add_c_database_table] 'c_List_Item'
 exec [add_c_database_table] 'c_Patient_List_Item'
+
+UPDATE c_Database_Column
+SET column_length = 80, modification_level = 203
+WHERE tablename = 'p_Patient' AND columnname = 'address_line_1'
 
 DELETE FROM [c_Database_Column]
 WHERE tablename = 'p_Patient_Progress' AND columnname = 'id'
 
 UPDATE c_Database_Column
 SET default_constraint = 1, 
-	default_constraint_name = 'DF__o_Service__id'
-	default_constraint_text = '(newid())', modification_level = 203
+	default_constraint_name = 'DF__o_Service__id',
+	default_constraint_text = '(newid())', 
+	modification_level = 203
 WHERE tablename = 'o_Service' AND columnname = 'id'
 
+UPDATE c_Database_Column
+SET column_length = 500, column_definition = '[varchar](500)', modification_level = 203
+WHERE tablename = 'c_Drug_Definition' AND columnname = 'generic_name'
+
+UPDATE c_Database_Column
+SET column_length = 80, column_definition = '[varchar](80)', modification_level = 203
+WHERE tablename = 'c_Drug_Definition' AND columnname = 'common_name'
 
 
 UPDATE c_Database_Status   set modification_level = 203, last_scripts_update = getdate() where 1 = 1

@@ -7,7 +7,6 @@ and exists (select 1
 		and d2.icd10_code = d.icd10_code
 		and d2.assessment_category_id = 'Z')
 
-
 DELETE FROM c_Assessment_Definition d
 WHERE assessment_category_id = 'RPERI' 
 and exists (select 1 
@@ -37,10 +36,14 @@ WHERE assessment_id = '0^11954'
 
 DELETE FROM c_Common_Assessment WHERE assessment_id = '0^11954'
 
-
 UPDATE c_Assessment_Definition 
 SET description = replace(description,'small pox','Smallpox')
 WHERE description like 'small pox%'
 
+-- cleanup
+DELETE FROM c_Assessment_Definition WHERE assessment_id = '0^11772'
+
+DELETE from c_Assessment_Definition
+where icd_9_code = 'copy'
 
 
