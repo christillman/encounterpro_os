@@ -25,7 +25,6 @@ end forward
 global type w_observation_grid from w_window_base
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -402,14 +401,14 @@ event clicked;datetime ldt_stop_time
 if text = "Start" then
 	text = "Stop"
 	start_time = datetime(today(), now())
-	service.add_workplan_item_attribute("start_time", string(start_time, "[shortdate] [time]"))
+	service.add_workplan_item_attribute("start_time", string(start_time, db_datetime_format))
 	st_time.visible = true
 	st_time.text = "00:00:00"
 	timer(1)
 else
 	text = "Start"
 	ldt_stop_time = datetime(today(), now())
-	service.add_workplan_item_attribute("stop_time", string(ldt_stop_time, "[shortdate] [time]"))
+	service.add_workplan_item_attribute("stop_time", string(ldt_stop_time, db_datetime_format))
 	st_time.visible = FALSE
 	timer(0)
 end if

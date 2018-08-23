@@ -33,17 +33,11 @@ end type
 end forward
 
 global type w_pick_qualifiers from w_window_base
-int X=0
-int Y=0
-int Width=2926
-int Height=1832
-WindowType WindowType=response!
-boolean TitleBar=false
-long BackColor=33538240
-boolean ControlMenu=false
-boolean MinBox=false
-boolean MaxBox=false
-boolean Resizable=false
+boolean titlebar = false
+boolean minbox = false
+boolean maxbox = false
+boolean resizable = false
+windowtype windowtype = response!
 pb_cancel pb_cancel
 pb_done pb_done
 st_title st_title
@@ -279,7 +273,6 @@ long ll_row
 string ls_find
 date ld_date
 
-
 ld_date = date(encounter_date)
 
 // Second, find the record
@@ -496,14 +489,22 @@ st_onset.text = f_pretty_amount_unit(onset_amount, onset_unit)
 
 end event
 
+type pb_epro_help from w_window_base`pb_epro_help within w_pick_qualifiers
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pick_qualifiers
+end type
+
 type pb_cancel from u_picture_button within w_pick_qualifiers
-int X=87
-int Y=1556
-int TabOrder=60
-boolean Visible=false
-string PictureName="button11.bmp"
-string DisabledName="b_push11.bmp"
-boolean Cancel=true
+boolean visible = false
+integer x = 87
+integer y = 1556
+integer width = 256
+integer height = 224
+integer taborder = 60
+boolean cancel = true
+string picturename = "button11.bmp"
+string disabledname = "b_push11.bmp"
 end type
 
 event clicked;call super::clicked;str_popup_return popup_return
@@ -515,12 +516,14 @@ closewithreturn(parent, popup_return)
 end event
 
 type pb_done from u_picture_button within w_pick_qualifiers
-int X=2569
-int Y=1556
-int TabOrder=10
-boolean BringToTop=true
-string PictureName="button26.bmp"
-string DisabledName="b_push26.bmp"
+integer x = 2569
+integer y = 1556
+integer width = 256
+integer height = 224
+integer taborder = 10
+boolean bringtotop = true
+string picturename = "button26.bmp"
+string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;selected_qualifiers.setfilter("")
@@ -531,87 +534,86 @@ close(parent)
 end event
 
 type st_title from statictext within w_pick_qualifiers
-int Width=2921
-int Height=108
-boolean Enabled=false
-boolean BringToTop=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-16
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer width = 2921
+integer height = 108
+boolean bringtotop = true
+integer textsize = -16
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
 type st_no_qualifiers from statictext within w_pick_qualifiers
-int X=421
-int Y=444
-int Width=2053
-int Height=184
-boolean Enabled=false
-boolean BringToTop=true
-string Text="No Qualifiers For This Observation"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-18
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 421
+integer y = 444
+integer width = 2053
+integer height = 184
+boolean bringtotop = true
+integer textsize = -18
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "No Qualifiers For This Observation"
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
 type ln_1 from line within w_pick_qualifiers
-boolean Enabled=false
-int BeginX=128
-int BeginY=1520
-int EndX=2811
-int EndY=1520
-int LineThickness=4
-long LineColor=33554432
+long linecolor = 33554432
+integer linethickness = 4
+integer beginx = 128
+integer beginy = 1520
+integer endx = 2811
+integer endy = 1520
 end type
 
 type st_unit from statictext within w_pick_qualifiers
-int X=731
-int Y=1664
-int Width=366
-int Height=88
-boolean Enabled=false
-boolean BringToTop=true
-string Text="none"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 731
+integer y = 1664
+integer width = 366
+integer height = 88
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "none"
+boolean focusrectangle = false
 end type
 
 type sle_amount from singlelineedit within w_pick_qualifiers
-int X=119
-int Y=1644
-int Width=416
-int Height=108
-int TabOrder=40
-boolean BringToTop=true
-BorderStyle BorderStyle=StyleLowered!
-boolean AutoHScroll=false
-long TextColor=33554432
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 119
+integer y = 1644
+integer width = 416
+integer height = 108
+integer taborder = 40
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+boolean autohscroll = false
+borderstyle borderstyle = stylelowered!
 end type
 
 event modified;real lr_amount
@@ -627,19 +629,19 @@ save_result_amount()
 end event
 
 type cb_amount from commandbutton within w_pick_qualifiers
-int X=562
-int Y=1648
-int Width=155
-int Height=108
-int TabOrder=50
-boolean BringToTop=true
-string Text=". . ."
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 562
+integer y = 1648
+integer width = 155
+integer height = 108
+integer taborder = 50
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = ". . ."
 end type
 
 event clicked;str_popup popup
@@ -658,42 +660,42 @@ end if
 end event
 
 type st_amount_title from statictext within w_pick_qualifiers
-int X=123
-int Y=1576
-int Width=434
-int Height=68
-boolean Enabled=false
-boolean BringToTop=true
-string Text="Result Amount"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 123
+integer y = 1576
+integer width = 434
+integer height = 68
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Result Amount"
+boolean focusrectangle = false
 end type
 
 type st_onset from statictext within w_pick_qualifiers
-int X=1243
-int Y=1656
-int Width=581
-int Height=100
-boolean BringToTop=true
-boolean Border=true
-BorderStyle BorderStyle=StyleRaised!
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=67108864
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 1243
+integer y = 1656
+integer width = 581
+integer height = 100
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
 end type
 
 event clicked;str_popup popup
@@ -720,38 +722,38 @@ return
 end event
 
 type st_onset_title from statictext within w_pick_qualifiers
-int X=1253
-int Y=1588
-int Width=434
-int Height=68
-boolean Enabled=false
-boolean BringToTop=true
-string Text="Onset"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 1253
+integer y = 1588
+integer width = 434
+integer height = 68
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Onset"
+boolean focusrectangle = false
 end type
 
 type cb_clear_qualifiers from commandbutton within w_pick_qualifiers
-int X=2075
-int Y=1548
-int Width=233
-int Height=100
-int TabOrder=30
-boolean BringToTop=true
-string Text="Clear"
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 2075
+integer y = 1548
+integer width = 233
+integer height = 100
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Clear"
 end type
 
 event clicked;integer i
@@ -765,19 +767,19 @@ next
 end event
 
 type cb_toggle_domains from commandbutton within w_pick_qualifiers
-int X=123
-int Y=1400
-int Width=2683
-int Height=108
-int TabOrder=20
-boolean BringToTop=true
-string Text="none"
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 123
+integer y = 1400
+integer width = 2683
+integer height = 108
+integer taborder = 20
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "none"
 end type
 
 event clicked;domain_group += 1
@@ -788,9 +790,11 @@ display_qualifier_domains()
 end event
 
 type pb_1 from u_pb_help_button within w_pick_qualifiers
-int X=2075
-int Y=1680
-int TabOrder=20
-boolean BringToTop=true
+integer x = 2075
+integer y = 1680
+integer width = 256
+integer height = 128
+integer taborder = 20
+boolean bringtotop = true
 end type
 

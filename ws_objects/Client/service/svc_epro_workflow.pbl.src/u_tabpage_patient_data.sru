@@ -1038,7 +1038,7 @@ ls_text = f_select_date(ld_date_of_birth, "Date of Birth")
 if isnull(ls_text) then return
 
 if (ld_date_of_birth <> current_patient.date_of_birth) or isnull(current_patient.date_of_birth) then
-	current_patient.modify_patient("date_of_birth", ls_text)
+	current_patient.modify_patient("date_of_birth", string(ld_date_of_birth, db_datetime_format))
 	text = string(current_patient.date_of_birth, date_format_string)
 end if
 

@@ -54,7 +54,6 @@ end forward
 
 global type w_svc_patient_checkin from w_window_base
 string title = "Retry Posting"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -273,8 +272,6 @@ type pb_epro_help from w_window_base`pb_epro_help within w_svc_patient_checkin
 boolean visible = true
 integer x = 2629
 integer y = 1432
-integer width = 247
-integer height = 120
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_svc_patient_checkin

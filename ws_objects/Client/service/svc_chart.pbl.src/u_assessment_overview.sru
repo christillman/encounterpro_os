@@ -214,7 +214,6 @@ type rtf from u_rich_text_edit within u_assessment_overview
 integer width = 1883
 integer height = 1164
 integer taborder = 30
-borderstyle borderstyle = stylebox!
 end type
 
 type dw_properties from u_dw_pick_list within u_assessment_overview
@@ -256,7 +255,7 @@ CHOOSE CASE lower(ls_attribute)
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-		ls_new_value = string(ldt_begin_date)
+		ls_new_value = string(ldt_begin_date, db_datetime_format)
 		
 		li_sts = current_patient.assessments.modify_assessment(assessment.problem_id, ls_attribute, ls_new_value)
 		if li_sts <= 0 then return
@@ -271,7 +270,7 @@ CHOOSE CASE lower(ls_attribute)
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-		ls_new_value = string(ldt_begin_date)
+		ls_new_value = string(ldt_begin_date, db_datetime_format)
 		
 		li_sts = current_patient.assessments.modify_assessment(assessment.problem_id, ls_attribute, ls_new_value)
 		if li_sts <= 0 then return

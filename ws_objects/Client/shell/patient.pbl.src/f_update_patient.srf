@@ -42,7 +42,7 @@ li_sts = f_set_patient_object_progress(pstr_patient.cpr_id, &
 // changing a non-null value to a null.
 
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "race", string(pstr_patient.race))
-datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_birth", string(pstr_patient.date_of_birth))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_birth", string(pstr_patient.date_of_birth, db_datetime_format))
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "time_of_birth", string(pstr_patient.time_of_birth))
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "sex", pstr_patient.sex)
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "phone_number", pstr_patient.phone_number)
@@ -61,7 +61,7 @@ datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "primary_provider_id", pstr_patient.primary_provider_id)
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "secondary_provider_id", pstr_patient.secondary_provider_id)
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "ssn", pstr_patient.ssn)
-datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_conception", string(pstr_patient.date_of_conception))
+datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "date_of_conception", string(pstr_patient.date_of_conception, db_datetime_format))
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "referring_provider_id", pstr_patient.referring_provider_id)
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "email_address", pstr_patient.email_address)
 datalist.clinical_data_cache.modify_property(pstr_patient.cpr_id, "Patient", ll_null, "nickname", pstr_patient.nickname)

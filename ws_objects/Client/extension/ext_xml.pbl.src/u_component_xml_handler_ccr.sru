@@ -3457,7 +3457,7 @@ if len(epro_patient.country) > 0 then
 end if
 
 if not isnull(epro_patient.date_of_conception) then
-	current_patient.modify_patient("date_of_conception", string(epro_patient.date_of_conception))
+	current_patient.modify_patient("date_of_conception", string(epro_patient.date_of_conception, db_datetime_format))
 end if
 
 if len(epro_patient.email_address) > 0 then

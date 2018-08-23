@@ -781,7 +781,7 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 2 then return
 
 ldt_end_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-li_sts = modify_property("end_date", string(ldt_end_date))
+li_sts = modify_property("end_date", string(ldt_end_date, db_datetime_format))
 if li_sts <= 0 then return
 
 display_properties()
@@ -1033,7 +1033,7 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 2 then return
 
 ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-li_sts = modify_property("begin_date", string(ldt_begin_date))
+li_sts = modify_property("begin_date", string(ldt_begin_date, db_datetime_format))
 if li_sts <= 0 then return
 
 display_properties()

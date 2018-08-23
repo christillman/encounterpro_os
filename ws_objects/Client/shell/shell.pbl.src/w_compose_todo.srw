@@ -30,7 +30,6 @@ end forward
 
 global type w_compose_todo from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -112,7 +111,6 @@ if not tf_check() then return -1
 if trim(mle_message.text) <> "" then
 	ls_attribute = "MESSAGE"
 	ls_value = mle_message.text
-//	EXECUTE lsp_add_workplan_item_attribute;
 	sqlca.sp_add_workplan_item_attribute( &
 			ls_cpr_id,&
 			0,&
@@ -239,6 +237,8 @@ type pb_done from u_picture_button within w_compose_todo
 boolean visible = false
 integer x = 2560
 integer y = 1552
+integer width = 256
+integer height = 224
 integer taborder = 40
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -252,6 +252,8 @@ end event
 type pb_cancel from u_picture_button within w_compose_todo
 integer x = 87
 integer y = 1552
+integer width = 256
+integer height = 224
 integer taborder = 50
 boolean bringtotop = true
 boolean cancel = true

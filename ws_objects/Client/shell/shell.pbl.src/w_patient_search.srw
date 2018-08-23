@@ -53,7 +53,6 @@ end type
 end forward
 
 global type w_patient_search from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -185,7 +184,7 @@ current_patient.modify_patient("middle_name", patient.middle_name)
 current_patient.modify_patient("name_suffix", patient.name_suffix)
 current_patient.modify_patient("name_prefix", patient.name_prefix)
 current_patient.modify_patient("degree", patient.degree)
-current_patient.modify_patient("date_of_birth", string(patient.date_of_birth))
+current_patient.modify_patient("date_of_birth", string(patient.date_of_birth, db_datetime_format))
 current_patient.modify_patient("ssn", patient.ssn)
 current_patient.modify_patient("billing_id", patient.billing_id)
 current_patient.modify_patient("phone_number", patient.phone_number)

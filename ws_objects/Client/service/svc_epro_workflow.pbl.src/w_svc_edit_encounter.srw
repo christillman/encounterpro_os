@@ -52,7 +52,6 @@ end forward
 
 global type w_svc_edit_encounter from w_window_base
 string title = "Retry Posting"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -113,7 +112,7 @@ if original_encounter.encounter_date <> modified_encounter.encounter_date then
 	current_patient.encounters.modify_encounter( &
 						modified_encounter.encounter_id, &
 						"encounter_date", &
-						string(modified_encounter.encounter_date, "[shortdate] [time]") )
+						string(modified_encounter.encounter_date, db_datetime_format) )
 end if
 
 // Indirect Flag

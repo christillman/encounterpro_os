@@ -247,7 +247,7 @@ CHOOSE CASE lower(ls_attribute)
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-		ls_new_value = string(ldt_begin_date)
+		ls_new_value = string(ldt_begin_date, db_datetime_format)
 		
 		li_sts = current_patient.treatments.modify_treatment(treatment.treatment_id, ls_attribute, ls_new_value)
 		if li_sts <= 0 then return
@@ -262,7 +262,7 @@ CHOOSE CASE lower(ls_attribute)
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
-		ls_new_value = string(ldt_begin_date)
+		ls_new_value = string(ldt_begin_date, db_datetime_format)
 		
 		li_sts = current_patient.treatments.modify_treatment(treatment.treatment_id, ls_attribute, ls_new_value)
 		if li_sts <= 0 then return

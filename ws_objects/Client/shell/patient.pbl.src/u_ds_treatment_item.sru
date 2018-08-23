@@ -921,7 +921,7 @@ if not f_string_to_boolean(datalist.treatment_type_field(puo_treatment.treatment
 end if
 
 // If we get here then just modify the editable fields
-modify_treatment(puo_treatment.treatment_id, "begin_date", string(puo_treatment.begin_date))
+modify_treatment(puo_treatment.treatment_id, "begin_date", string(puo_treatment.begin_date, db_datetime_format))
 modify_treatment(puo_treatment.treatment_id, "package_id", puo_treatment.package_id)
 modify_treatment(puo_treatment.treatment_id, "specialty_id", puo_treatment.specialty_id)
 modify_treatment(puo_treatment.treatment_id, "procedure_id", puo_treatment.procedure_id)
@@ -943,7 +943,7 @@ modify_treatment(puo_treatment.treatment_id, "treatment_goal", puo_treatment.tre
 modify_treatment(puo_treatment.treatment_id, "location", puo_treatment.location)
 modify_treatment(puo_treatment.treatment_id, "maker_id", puo_treatment.maker_id)
 modify_treatment(puo_treatment.treatment_id, "lot_number", puo_treatment.lot_number)
-modify_treatment(puo_treatment.treatment_id, "expiration_date", string(puo_treatment.expiration_date))
+modify_treatment(puo_treatment.treatment_id, "expiration_date", string(puo_treatment.expiration_date, db_datetime_format))
 modify_treatment(puo_treatment.treatment_id, "send_out_flag", puo_treatment.send_out_flag)
 modify_treatment(puo_treatment.treatment_id, "original_treatment_id", string(puo_treatment.original_treatment_id))
 modify_treatment(puo_treatment.treatment_id, "referral_question", puo_treatment.referral_question)
@@ -954,7 +954,7 @@ modify_treatment(puo_treatment.treatment_id, "treatment_description", puo_treatm
 modify_treatment(puo_treatment.treatment_id, "office_id", puo_treatment.treatment_office_id)
 modify_treatment(puo_treatment.treatment_id, "ordered_for", puo_treatment.ordered_for)
 modify_treatment(puo_treatment.treatment_id, "ordered_by_supervisor", puo_treatment.ordered_by_supervisor)
-modify_treatment(puo_treatment.treatment_id, "appointment_date_time", string(puo_treatment.appointment_date_time))
+modify_treatment(puo_treatment.treatment_id, "appointment_date_time", string(puo_treatment.appointment_date_time, db_datetime_format))
 
 Return 1
 
@@ -2242,11 +2242,11 @@ if not pb_only_attached_treatments then
 	if li_sts <= 0 then return li_count
 	
 	ls_date = "datetime('" + string(lstr_assessment.begin_date, "[shortdate] [time]") + "')"
-	ls_find = "begin_date>=" + ls_date
+	ls_find = "begin_date >= " + ls_date
 	
 	if not isnull(lstr_assessment.end_date) then
 		ls_date = "datetime('" + string(lstr_assessment.end_date, "[shortdate] [time]") + "')"
-		ls_find = " and begin_date<=" + ls_date
+		ls_find = " and begin_date <= " + ls_date
 	end if
 	
 	ll_row = find(ls_find, 1, ll_rowcount)
@@ -2519,7 +2519,7 @@ string ls_date
 
 ls_date = "datetime('" + string(pdt_begin_date, "[shortdate] [time]") + "')"
 
-ls_find = "begin_date=" + ls_date
+ls_find = "begin_date = " + ls_date
 ls_find += " and left(lower(treatment_description), 80)='" + left(lower(ps_description), 80) + "'"
 
 if len(ps_treatment_type) > 0 then

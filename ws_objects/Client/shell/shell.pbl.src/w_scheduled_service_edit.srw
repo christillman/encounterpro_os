@@ -80,7 +80,6 @@ global type w_scheduled_service_edit from w_window_base
 integer width = 2898
 integer height = 1808
 string title = "Scheduled Task Properties"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -204,7 +203,7 @@ if isnull(ldt_last_service_date) then
 	st_last_service_status.text = "N/A"
 	st_last_successful_date.text = "N/A"
 else
-	st_last_service_date.text = string(ldt_last_service_date)
+	st_last_service_date.text = string(ldt_last_service_date, "[shortdate]")
 	st_last_service_status.text = wordcap(ls_last_service_status)
 	if isnull(ldt_last_successful_date) then
 		st_last_successful_date.text = "N/A"

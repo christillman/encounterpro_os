@@ -127,6 +127,9 @@ boolean bill_test_collection
 
 string date_format_string = "[shortdate]"
 string time_format_string = "[time]"
+// Necessary to avoid errors if the regional settings are d/m/y
+// because SQL server is always m/d/y
+string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
 string followup_specialty = "FOLLOWUP"
 string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
@@ -252,6 +255,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -315,6 +319,8 @@ if ls_parm = "" or left(ls_parm, 1) = "/" then setnull(ls_parm)
 
 // Initialize the windows API
 windows_api = CREATE u_windows_api
+string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
+RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
 
 // Create the log object
 log = CREATE u_event_log
