@@ -2,6 +2,10 @@
 forward
 global type u_tabpage_drug_properties from u_tabpage_drug_base
 end type
+type st_max_dose_unit_title from statictext within u_tabpage_drug_properties
+end type
+type shl_drug from statichyperlink within u_tabpage_drug_properties
+end type
 type cb_equivalence from commandbutton within u_tabpage_drug_properties
 end type
 type st_constituents_title from statictext within u_tabpage_drug_properties
@@ -22,7 +26,7 @@ type u_max_dose_per_day from u_sle_real_number within u_tabpage_drug_properties
 end type
 type cb_set_max_dose_amount from commandbutton within u_tabpage_drug_properties
 end type
-type st_max_dose_unit_title from statictext within u_tabpage_drug_properties
+type st_link from statictext within u_tabpage_drug_properties
 end type
 type st_dose_amount_title from statictext within u_tabpage_drug_properties
 end type
@@ -49,6 +53,8 @@ end forward
 global type u_tabpage_drug_properties from u_tabpage_drug_base
 integer width = 2802
 integer height = 1116
+st_max_dose_unit_title st_max_dose_unit_title
+shl_drug shl_drug
 cb_equivalence cb_equivalence
 st_constituents_title st_constituents_title
 dw_constituents dw_constituents
@@ -59,7 +65,7 @@ st_patient_reference_material st_patient_reference_material
 st_patient_reference_material_title st_patient_reference_material_title
 u_max_dose_per_day u_max_dose_per_day
 cb_set_max_dose_amount cb_set_max_dose_amount
-st_max_dose_unit_title st_max_dose_unit_title
+st_link st_link
 st_dose_amount_title st_dose_amount_title
 st_max_dose_unit st_max_dose_unit
 st_dea_schedule_title st_dea_schedule_title
@@ -259,6 +265,9 @@ str_patient_material lstr_patient_material
 
 set_screen()
 
+shl_drug.text = drug_tab.drug.common_name
+shl_drug.url = "https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=" + drug_tab.drug.common_name
+
 st_drug_type.text = drug_tab.drug.drug_type
 
 u_default_duration.set_amount(drug_tab.drug.default_duration_amount, drug_tab.drug.default_duration_unit, drug_tab.drug.default_duration_prn)
@@ -314,6 +323,8 @@ end function
 on u_tabpage_drug_properties.create
 int iCurrent
 call super::create
+this.st_max_dose_unit_title=create st_max_dose_unit_title
+this.shl_drug=create shl_drug
 this.cb_equivalence=create cb_equivalence
 this.st_constituents_title=create st_constituents_title
 this.dw_constituents=create dw_constituents
@@ -324,7 +335,7 @@ this.st_patient_reference_material=create st_patient_reference_material
 this.st_patient_reference_material_title=create st_patient_reference_material_title
 this.u_max_dose_per_day=create u_max_dose_per_day
 this.cb_set_max_dose_amount=create cb_set_max_dose_amount
-this.st_max_dose_unit_title=create st_max_dose_unit_title
+this.st_link=create st_link
 this.st_dose_amount_title=create st_dose_amount_title
 this.st_max_dose_unit=create st_max_dose_unit
 this.st_dea_schedule_title=create st_dea_schedule_title
@@ -336,31 +347,35 @@ this.st_default_duration=create st_default_duration
 this.st_controlled_substance_title=create st_controlled_substance_title
 this.st_controlled_substance_flag=create st_controlled_substance_flag
 iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.cb_equivalence
-this.Control[iCurrent+2]=this.st_constituents_title
-this.Control[iCurrent+3]=this.dw_constituents
-this.Control[iCurrent+4]=this.st_max_dose_title
-this.Control[iCurrent+5]=this.st_provider_reference_material
-this.Control[iCurrent+6]=this.st_provider_reference_material_title
-this.Control[iCurrent+7]=this.st_patient_reference_material
-this.Control[iCurrent+8]=this.st_patient_reference_material_title
-this.Control[iCurrent+9]=this.u_max_dose_per_day
-this.Control[iCurrent+10]=this.cb_set_max_dose_amount
-this.Control[iCurrent+11]=this.st_max_dose_unit_title
-this.Control[iCurrent+12]=this.st_dose_amount_title
-this.Control[iCurrent+13]=this.st_max_dose_unit
-this.Control[iCurrent+14]=this.st_dea_schedule_title
-this.Control[iCurrent+15]=this.st_dea_schedule
-this.Control[iCurrent+16]=this.st_drug_type_title
-this.Control[iCurrent+17]=this.st_drug_type
-this.Control[iCurrent+18]=this.u_default_duration
-this.Control[iCurrent+19]=this.st_default_duration
-this.Control[iCurrent+20]=this.st_controlled_substance_title
-this.Control[iCurrent+21]=this.st_controlled_substance_flag
+this.Control[iCurrent+1]=this.st_max_dose_unit_title
+this.Control[iCurrent+2]=this.shl_drug
+this.Control[iCurrent+3]=this.cb_equivalence
+this.Control[iCurrent+4]=this.st_constituents_title
+this.Control[iCurrent+5]=this.dw_constituents
+this.Control[iCurrent+6]=this.st_max_dose_title
+this.Control[iCurrent+7]=this.st_provider_reference_material
+this.Control[iCurrent+8]=this.st_provider_reference_material_title
+this.Control[iCurrent+9]=this.st_patient_reference_material
+this.Control[iCurrent+10]=this.st_patient_reference_material_title
+this.Control[iCurrent+11]=this.u_max_dose_per_day
+this.Control[iCurrent+12]=this.cb_set_max_dose_amount
+this.Control[iCurrent+13]=this.st_link
+this.Control[iCurrent+14]=this.st_dose_amount_title
+this.Control[iCurrent+15]=this.st_max_dose_unit
+this.Control[iCurrent+16]=this.st_dea_schedule_title
+this.Control[iCurrent+17]=this.st_dea_schedule
+this.Control[iCurrent+18]=this.st_drug_type_title
+this.Control[iCurrent+19]=this.st_drug_type
+this.Control[iCurrent+20]=this.u_default_duration
+this.Control[iCurrent+21]=this.st_default_duration
+this.Control[iCurrent+22]=this.st_controlled_substance_title
+this.Control[iCurrent+23]=this.st_controlled_substance_flag
 end on
 
 on u_tabpage_drug_properties.destroy
 call super::destroy
+destroy(this.st_max_dose_unit_title)
+destroy(this.shl_drug)
 destroy(this.cb_equivalence)
 destroy(this.st_constituents_title)
 destroy(this.dw_constituents)
@@ -371,7 +386,7 @@ destroy(this.st_patient_reference_material)
 destroy(this.st_patient_reference_material_title)
 destroy(this.u_max_dose_per_day)
 destroy(this.cb_set_max_dose_amount)
-destroy(this.st_max_dose_unit_title)
+destroy(this.st_link)
 destroy(this.st_dose_amount_title)
 destroy(this.st_max_dose_unit)
 destroy(this.st_dea_schedule_title)
@@ -383,6 +398,46 @@ destroy(this.st_default_duration)
 destroy(this.st_controlled_substance_title)
 destroy(this.st_controlled_substance_flag)
 end on
+
+type st_max_dose_unit_title from statictext within u_tabpage_drug_properties
+integer x = 389
+integer y = 912
+integer width = 155
+integer height = 72
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Unit:"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type shl_drug from statichyperlink within u_tabpage_drug_properties
+integer x = 928
+integer y = 272
+integer width = 791
+integer height = 92
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+boolean underline = true
+string pointer = "HyperLink!"
+long textcolor = 134217856
+long backcolor = 12632256
+string text = "Tapentadol"
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
+string url = "https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=Tapentadol"
+end type
 
 type cb_equivalence from commandbutton within u_tabpage_drug_properties
 integer x = 1975
@@ -529,7 +584,7 @@ end type
 
 type st_provider_reference_material from statictext within u_tabpage_drug_properties
 integer x = 928
-integer y = 492
+integer y = 500
 integer width = 791
 integer height = 88
 integer taborder = 40
@@ -592,7 +647,7 @@ end event
 
 type st_provider_reference_material_title from statictext within u_tabpage_drug_properties
 integer x = 41
-integer y = 500
+integer y = 508
 integer width = 869
 integer height = 72
 boolean bringtotop = true
@@ -610,7 +665,7 @@ end type
 
 type st_patient_reference_material from statictext within u_tabpage_drug_properties
 integer x = 928
-integer y = 380
+integer y = 388
 integer width = 791
 integer height = 88
 integer taborder = 40
@@ -673,7 +728,7 @@ end event
 
 type st_patient_reference_material_title from statictext within u_tabpage_drug_properties
 integer x = 41
-integer y = 388
+integer y = 396
 integer width = 869
 integer height = 72
 boolean bringtotop = true
@@ -752,10 +807,10 @@ drug_tab.drug.max_dose_per_day = real(u_max_dose_per_day.text)
 
 end event
 
-type st_max_dose_unit_title from statictext within u_tabpage_drug_properties
-integer x = 389
-integer y = 912
-integer width = 155
+type st_link from statictext within u_tabpage_drug_properties
+integer x = 690
+integer y = 284
+integer width = 219
 integer height = 72
 boolean bringtotop = true
 integer textsize = -10
@@ -765,7 +820,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "Unit:"
+string text = "RxNav:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
