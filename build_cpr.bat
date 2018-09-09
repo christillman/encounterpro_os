@@ -23,6 +23,7 @@ REM move /Y "Client\base\data_functions.pbd" %build_folder%
 REM move /Y "Client\base\pick.pbd" %build_folder%
 REM move /Y "Client\base\popup.pbd" %build_folder%
 REM move /Y "Client\base\pretty.pbd" %build_folder%
+move /Y "Client\base\base_dw.pbd" %build_folder%
 move /Y "Client\shell\common.pbd" %build_folder%
 move /Y "Client\shell\chart.pbd" %build_folder%
 move /Y "Client\shell\clinicaldatacache.pbd" %build_folder%
