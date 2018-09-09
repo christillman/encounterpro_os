@@ -1,4 +1,4 @@
-$PBExportHeader$w_review_material.srw
+﻿$PBExportHeader$w_review_material.srw
 forward
 global type w_review_material from window
 end type

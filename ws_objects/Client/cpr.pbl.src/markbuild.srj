@@ -12,6 +12,7 @@ FVS:7.0.1.0
 FVN:7,0,1,0
 MAN:1,asInvoker,0
 PBD:cpr.pbl,,1
+PBD:base\base_dw.pbl,,1
 PBD:shell\common.pbl,,1
 PBD:shell\clinicaldatacache.pbl,,1
 PBD:shell\chart.pbl,,1
