@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_grid_column.srs
-global type str_grid_column from structure
-	string		column_text
-	string		field_data
-	boolean		use_font_settings
-	str_font_settings		font_settings
-end type
-

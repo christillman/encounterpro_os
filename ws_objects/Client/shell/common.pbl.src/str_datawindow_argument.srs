@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_datawindow_argument.srs
-global type str_datawindow_argument from structure
-	string		argument_name
-	string		argument_type
-end type
-

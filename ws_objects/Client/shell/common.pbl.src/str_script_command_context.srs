@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_script_command_context.srs
-global type str_script_command_context from structure
-	string		script_type
-	string		context_object
-end type
-

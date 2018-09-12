@@ -1,9 +1,0 @@
-﻿$PBExportHeader$docinfo.srs
-global type docinfo from structure
-	long		cbSize
-	string		lpszDocName
-	long		l1
-	long		l2
-	long		l3
-end type
-

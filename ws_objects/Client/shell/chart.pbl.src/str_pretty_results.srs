@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_pretty_results.srs
-global type str_pretty_results from structure
-	long		result_count
-	str_pretty_result		result[]
-end type
-

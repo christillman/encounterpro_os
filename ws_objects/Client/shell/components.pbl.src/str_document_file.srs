@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_document_file.srs
-global type str_document_file from structure
-	string		filename
-	string		filetype
-	string		filedescription
-	blob		filedata
-	datetime		modifieddate
-end type
-

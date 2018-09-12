@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_hm_policy_edit.srs
-global type str_hm_policy_edit from structure
-	long		maintenance_rule_id
-	string		description
-	str_hm_policy		policy
-	string		return_status
-end type
-

@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_picked_patient_material.srs
-global type str_picked_patient_material from structure
-	string		material_id
-	string		description
-	string		treatment_mode
-end type
-

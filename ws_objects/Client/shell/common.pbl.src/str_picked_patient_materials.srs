@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_picked_patient_materials.srs
-global type str_picked_patient_materials from structure
-	long		material_count
-	str_picked_patient_material		materials[]
-end type
-

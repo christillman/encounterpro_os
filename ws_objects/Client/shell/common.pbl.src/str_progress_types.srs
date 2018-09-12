@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_progress_types.srs
-global type str_progress_types from structure
-	string		context_object
-	string		context_object_type
-	long		progress_type_count
-	str_progress_type		progress_type[]
-end type
-

@@ -1,4 +1,4 @@
-$PBExportHeader$w_window_base.srw
+ï»¿$PBExportHeader$w_window_base.srw
 forward
 global type w_window_base from window
 end type
@@ -51,10 +51,6 @@ long backcolor = 33538240
 string icon = "epman.ico"
 event post_open pbm_custom01
 event button_pressed ( integer button_index )
-event results_posted ( u_component_observation puo_observation )
-event source_connected ( u_component_observation puo_observation )
-event source_disconnected ( u_component_observation puo_observation )
-event ole_updated ( u_ole_control puo_ole_control )
 pb_epro_help pb_epro_help
 st_config_mode_menu st_config_mode_menu
 end type
@@ -433,7 +429,7 @@ if ll_DC = 0 or isnull(ll_DC) then
 	RETURN -1
 end if
 
-//This returns a pointer to an object that has details about the current screen setup—such as the number of colors—but this isn't really important to know because the next function call is used to create your own device context. It just makes a new one that is the same as the current one:
+//This returns a pointer to an object that has details about the current screen setupâ€”such as the number of colorsâ€”but this isn't really important to know because the next function call is used to create your own device context. It just makes a new one that is the same as the current one:
 
 ll_DestDC = CreateCompatibleDC( ll_DC )
 if ll_DestDC = 0 or isnull(ll_DestDC) then
@@ -488,56 +484,47 @@ return 1
 end function
 
 public subroutine resize_and_move ();long i
-dragobject dobj
-line ln
-rectangle rect
-datawindow dw
-picturebutton pb
-u_user_resizable rr
-classdefinition cd
-boolean lb_user_resizable
-string ls_classname
 
-if isnull(main_window) or not isvalid(main_window) then return
+//if isnull(main_window) or not isvalid(main_window) then return
 
 if this.windowstate = maximized! then return
 
 // Move this window relative to the main window
-x += main_window.x
-y += main_window.y
-
+//x += main_window.x
+//y += main_window.y
+//
 
 // If we're not close to the 640x480 size, then don't resize the window
-if width < 2800 or height < 1700 then
-	// Small windows are popups, so center them on the main window
-	if isvalid(main_window) then
-		x = main_window.x + ((main_window.width - width) / 2)
-		y = main_window.y + ((main_window.height - height) / 2)
-	end if
-	return
-end if
-
-x_factor = main_window.service_window_width / width
-y_factor = main_window.service_window_height / height
-
+//if width < 2800 or height < 1700 then
+//	// Small windows are popups, so center them on the main window
+//	if isvalid(main_window) then
+//		x = main_window.x + ((main_window.width - width) / 2)
+//		y = main_window.y + ((main_window.height - height) / 2)
+//	end if
+//	return
+//end if
+//
+//x_factor = main_window.service_window_width / width
+//y_factor = main_window.service_window_height / height
+//
 // If the main_window isn't significantly bigger than its original size, then
 // don't resize the window
 if x_factor <= 1.01 and y_factor <= 1.01 then return
 
 
-width = main_window.service_window_width
-height = main_window.service_window_height
-
+//width = main_window.service_window_width
+//height = main_window.service_window_height
+//
 if auto_resize_objects then f_resize_objects(control, x_factor, y_factor, zoom_dw_on_resize, nested_user_object_resize)
 
 end subroutine
 
 public subroutine center_popup ();
-if isnull(main_window) then return
-
-x = main_window.x + (main_window.width - width) / 2
-y = main_window.y + (main_window.height - height) / 2
-
+//if isnull(main_window) then return
+//
+//x = main_window.x + (main_window.width - width) / 2
+//y = main_window.y + (main_window.height - height) / 2
+//
 end subroutine
 
 on w_window_base.create
@@ -671,25 +658,26 @@ long backcolor = 33538240
 boolean focusrectangle = false
 end type
 
-event clicked;w_menu_edit lw_window
-str_popup popup
-w_menu_display lw_menu_display
-
+event clicked;
+//w_menu_edit lw_window
+//str_popup popup
+//w_menu_display lw_menu_display
+//
 //if menu.menu_id > 0 then
 //	openwithparm(lw_window, menu.menu_id, "w_menu_edit")
 //end if
 
-SELECT CAST(id AS varchar(38))
-INTO :popup.items[1]
-FROM c_menu
-WHERE menu_id = :menu.menu_id;
-if not tf_check() then return
-popup.items[2] = f_boolean_to_string(true)
-popup.data_row_count = 2
-openwithparm(lw_menu_display, popup, "w_menu_display")
-
-remove_buttons()
-paint_menu(menu.menu_id)
-
+//SELECT CAST(id AS varchar(38))
+//INTO :popup.items[1]
+//FROM c_menu
+//WHERE menu_id = :menu.menu_id;
+//if not tf_check() then return
+//popup.items[2] = f_boolean_to_string(true)
+//popup.data_row_count = 2
+//openwithparm(lw_menu_display, popup, "w_menu_display")
+//
+//remove_buttons()
+//paint_menu(menu.menu_id)
+//
 end event
 

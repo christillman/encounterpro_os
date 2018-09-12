@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_selected_data_restriction.srs
-global type str_selected_data_restriction from structure
-	long		restriction_id
-	integer		restriction_list_count
-	string		restriction_list[]
-	string		description
-	boolean		restrict_in
-end type
-
