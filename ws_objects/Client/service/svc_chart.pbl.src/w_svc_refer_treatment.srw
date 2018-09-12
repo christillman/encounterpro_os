@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_svc_refer_treatment.srw
 forward
-global type w_svc_refer_treatment from w_window_base
+global type w_svc_refer_treatment from w_observation_base
 end type
 type st_title from statictext within w_svc_refer_treatment
 end type
@@ -58,7 +58,7 @@ type st_specimen_id_reader from statictext within w_svc_refer_treatment
 end type
 end forward
 
-global type w_svc_refer_treatment from w_window_base
+global type w_svc_refer_treatment from w_observation_base
 integer height = 1840
 boolean controlmenu = false
 windowtype windowtype = response!
