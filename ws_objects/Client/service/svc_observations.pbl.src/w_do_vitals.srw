@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_do_vitals.srw
 forward
-global type w_do_vitals from w_window_base
+global type w_do_vitals from w_observation_base
 end type
 type uo_current_meds from u_current_meds_small within w_do_vitals
 end type
@@ -32,7 +32,7 @@ type st_title from statictext within w_do_vitals
 end type
 end forward
 
-global type w_do_vitals from w_window_base
+global type w_do_vitals from w_observation_base
 integer height = 1840
 string title = ""
 boolean controlmenu = false
@@ -286,12 +286,12 @@ event source_disconnected;call super::source_disconnected;dw_vitals.event TRIGGE
 
 end event
 
-type pb_epro_help from w_window_base`pb_epro_help within w_do_vitals
+type pb_epro_help from w_observation_base`pb_epro_help within w_do_vitals
 integer x = 2830
 integer y = 0
 end type
 
-type st_config_mode_menu from w_window_base`st_config_mode_menu within w_do_vitals
+type st_config_mode_menu from w_observation_base`st_config_mode_menu within w_do_vitals
 end type
 
 type uo_current_meds from u_current_meds_small within w_do_vitals
