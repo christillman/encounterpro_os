@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_observation_grid.srw
 forward
-global type w_observation_grid from w_window_base
+global type w_observation_grid from w_observation_base
 end type
 type pb_down from u_picture_button within w_observation_grid
 end type
@@ -22,7 +22,7 @@ type st_title from statictext within w_observation_grid
 end type
 end forward
 
-global type w_observation_grid from w_window_base
+global type w_observation_grid from w_observation_base
 boolean titlebar = false
 string title = ""
 boolean minbox = false
