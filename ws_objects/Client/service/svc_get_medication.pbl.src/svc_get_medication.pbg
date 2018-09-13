@@ -1,9 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "svc_get_medication.pbl" "";
-@end;
-@begin Objects 
- "u_component_service_get_medication.sru" "svc_get_medication.pbl";
- "w_drug_treatment.srw" "svc_get_medication.pbl";
- "w_svc_drug_treatment_edit.srw" "svc_get_medication.pbl";
-@end;

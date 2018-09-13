@@ -1,8 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "svc_patient_message.pbl" "";
-@end;
-@begin Objects 
- "u_component_service_patient_msg.sru" "svc_patient_message.pbl";
- "w_patient_messages.srw" "svc_patient_message.pbl";
-@end;

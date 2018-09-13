@@ -1,7 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "ext_properties.pbl" "";
-@end;
-@begin Objects 
- "u_component_property_script.sru" "ext_properties.pbl";
-@end;

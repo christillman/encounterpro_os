@@ -1,8 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "eproepiegateway.pbl" "";
-@end;
-@begin Objects 
- "epiegateway_credentialsheader.sru" "eproepiegateway.pbl";
- "epiegateway_service.srx" "eproepiegateway.pbl";
-@end;

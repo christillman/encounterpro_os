@@ -1,8 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "svc_activity.pbl" "";
-@end;
-@begin Objects 
- "u_component_service_review_activity.sru" "svc_activity.pbl";
- "w_edit_activity.srw" "svc_activity.pbl";
-@end;

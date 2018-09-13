@@ -485,46 +485,46 @@ end function
 
 public subroutine resize_and_move ();long i
 
-//if isnull(main_window) or not isvalid(main_window) then return
+if isnull(main_window) or not isvalid(main_window) then return
 
 if this.windowstate = maximized! then return
 
 // Move this window relative to the main window
-//x += main_window.x
-//y += main_window.y
-//
+x += main_window.x
+y += main_window.y
+
 
 // If we're not close to the 640x480 size, then don't resize the window
-//if width < 2800 or height < 1700 then
-//	// Small windows are popups, so center them on the main window
-//	if isvalid(main_window) then
-//		x = main_window.x + ((main_window.width - width) / 2)
-//		y = main_window.y + ((main_window.height - height) / 2)
-//	end if
-//	return
-//end if
-//
-//x_factor = main_window.service_window_width / width
-//y_factor = main_window.service_window_height / height
-//
+if width < 2800 or height < 1700 then
+	// Small windows are popups, so center them on the main window
+	if isvalid(main_window) then
+		x = main_window.x + ((main_window.width - width) / 2)
+		y = main_window.y + ((main_window.height - height) / 2)
+	end if
+	return
+end if
+
+x_factor = main_window.service_window_width / width
+y_factor = main_window.service_window_height / height
+
 // If the main_window isn't significantly bigger than its original size, then
 // don't resize the window
 if x_factor <= 1.01 and y_factor <= 1.01 then return
 
 
-//width = main_window.service_window_width
-//height = main_window.service_window_height
-//
+width = main_window.service_window_width
+height = main_window.service_window_height
+
 if auto_resize_objects then f_resize_objects(control, x_factor, y_factor, zoom_dw_on_resize, nested_user_object_resize)
 
 end subroutine
 
 public subroutine center_popup ();
-//if isnull(main_window) then return
-//
-//x = main_window.x + (main_window.width - width) / 2
-//y = main_window.y + (main_window.height - height) / 2
-//
+if isnull(main_window) then return
+
+x = main_window.x + (main_window.width - width) / 2
+y = main_window.y + (main_window.height - height) / 2
+
 end subroutine
 
 on w_window_base.create
