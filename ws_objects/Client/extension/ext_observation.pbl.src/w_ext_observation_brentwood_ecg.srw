@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_ext_observation_brentwood_ecg.srw
 forward
-global type w_ext_observation_brentwood_ecg from w_window_base
+global type w_ext_observation_brentwood_ecg from w_observation_base
 end type
 type st_title from statictext within w_ext_observation_brentwood_ecg
 end type
@@ -10,7 +10,7 @@ type ole_erc from u_ole_erc within w_ext_observation_brentwood_ecg
 end type
 end forward
 
-global type w_ext_observation_brentwood_ecg from w_window_base
+global type w_ext_observation_brentwood_ecg from w_observation_base
 integer width = 2053
 integer height = 460
 boolean controlmenu = false

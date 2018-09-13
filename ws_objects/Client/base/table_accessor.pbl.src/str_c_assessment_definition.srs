@@ -1,0 +1,18 @@
+﻿$PBExportHeader$str_c_assessment_definition.srs
+global type str_c_assessment_definition from structure
+	string		assessment_id
+	string		assessment_type
+	string		assessment_category_id
+	string		description
+	string		long_description
+	string		location_domain
+	string		icd10_code
+	long		risk_level
+	long		complexity
+	string		status
+	string		auto_close
+	integer		auto_close_interval_amount
+	string		auto_close_interval_unit
+	string		acuteness
+end type
+

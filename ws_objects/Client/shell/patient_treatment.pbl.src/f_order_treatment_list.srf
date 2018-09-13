@@ -1,0 +1,87 @@
+﻿$PBExportHeader$f_order_treatment_list.srf
+global type f_order_treatment_list from function_object
+end type
+
+forward prototypes
+global function integer f_order_treatment_list (string ps_treatment_list_id)
+end prototypes
+
+global function integer f_order_treatment_list (string ps_treatment_list_id);String	ls_treatment_type
+long ll_null
+datetime ldt_null
+integer i
+integer li_attribute_count
+string lsa_attributes[]
+string lsa_values[]
+integer li_sts
+long ll_list_sequence
+string ls_defined_flag
+string ls_description
+str_attributes lstr_order_attributes
+str_attributes lstr_pre_attributes
+str_attributes lstr_trt_attributes
+u_component_treatment	luo_treatment
+long ll_treatment_id
+
+li_attribute_count = 0
+
+setnull(ldt_null)
+Setnull(ll_null)
+
+li_sts = f_pick_treatment_from_list(ps_treatment_list_id, &
+																ll_list_sequence, &
+																ls_treatment_type, &
+																ls_defined_flag, &
+																lstr_pre_attributes)
+If li_sts <= 0 Then return li_sts
+
+luo_treatment = f_get_treatment_component(ls_treatment_type)
+If Isnull(luo_treatment) Then
+	log.log(po_null, "f_order_treatment_list:0032", "Unable to get treatment component (" + ls_treatment_type + ")", 4)
+	return -1
+end if
+
+if ls_defined_flag = "Y" then
+	setnull(ls_description)
+	ll_treatment_id = current_patient.treatments.order_treatment(current_patient.cpr_id, &
+																					current_patient.open_encounter_id, &
+																					ls_treatment_type, &
+																					ls_description, &
+																					ll_null, &
+																					false, &
+																					current_user.user_id, &
+																					ll_null, &
+																					lstr_pre_attributes)
+else
+	luo_treatment.define_treatment()
+	for i = 1 to luo_treatment.treatment_count
+		// Reinitialize to the pre-defined attributes
+		lstr_order_attributes = lstr_pre_attributes
+		
+		// Get the attributes for this new treatment
+		lstr_trt_attributes = f_attribute_arrays_to_str(luo_treatment.treatment_definition[i].attribute_count, &
+																luo_treatment.treatment_definition[i].attribute, &
+																luo_treatment.treatment_definition[i].value)
+		
+		// Add the treatment attributes to the predefined attributes
+		f_attribute_add_attributes(lstr_order_attributes, lstr_trt_attributes)
+		
+		ll_treatment_id = current_patient.treatments.order_treatment(current_patient.cpr_id, &
+																						current_patient.open_encounter_id, &
+																						ls_treatment_type, &
+																						luo_treatment.treatment_definition[i].item_description, &
+																						ll_null, &
+																						false, &
+																						current_user.user_id, &
+																						ll_null, &
+																						lstr_order_attributes)
+	next
+end if
+
+if li_sts < 0 then return -1
+
+Return 1
+
+
+end function
+

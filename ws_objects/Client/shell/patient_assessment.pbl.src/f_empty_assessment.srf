@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_empty_assessment.srf
+global type f_empty_assessment from function_object
+end type
+
+forward prototypes
+global function str_assessment_description f_empty_assessment ()
+end prototypes
+
+global function str_assessment_description f_empty_assessment ();
+str_assessment_description lstr_assessment_description
+
+setnull(lstr_assessment_description.problem_id)
+setnull(lstr_assessment_description.diagnosis_sequence)
+setnull(lstr_assessment_description.assessment_id)
+setnull(lstr_assessment_description.assessment_type)
+setnull(lstr_assessment_description.assessment)
+setnull(lstr_assessment_description.begin_date)
+setnull(lstr_assessment_description.end_date)
+setnull(lstr_assessment_description.open_encounter_id)
+setnull(lstr_assessment_description.close_encounter_id)
+setnull(lstr_assessment_description.assessment_status)
+setnull(lstr_assessment_description.icd10_code)
+setnull(lstr_assessment_description.diagnosed_by)
+setnull(lstr_assessment_description.created)
+setnull(lstr_assessment_description.location)
+setnull(lstr_assessment_description.acuteness)
+setnull(lstr_assessment_description.sort_sequence)
+
+
+return lstr_assessment_description
+
+
+end function
+

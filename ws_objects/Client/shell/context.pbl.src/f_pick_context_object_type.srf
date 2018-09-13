@@ -1,0 +1,78 @@
+﻿$PBExportHeader$f_pick_context_object_type.srf
+global type f_pick_context_object_type from function_object
+end type
+
+forward prototypes
+global function string f_pick_context_object_type (string ps_context_object, string ps_prompt)
+end prototypes
+
+global function string f_pick_context_object_type (string ps_context_object, string ps_prompt);str_popup_return popup_return
+str_popup popup
+string ls_encounter_type
+string ls_context_object_type
+
+setnull(ls_context_object_type)
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "general"
+		return "General"
+	CASE "patient"
+		return "Patient"
+	CASE "encounter"
+		popup.data_row_count = 2
+		popup.items[1] = "PICK"
+		popup.items[2] = "D"
+		
+		openwithparm(w_pick_encounter_type, popup)
+		return message.stringparm
+	CASE "assessment"
+		popup.dataobject = "dw_assessment_type_list"
+		popup.datacolumn = 1
+		popup.displaycolumn = 2
+		if len(ps_prompt) > 0 then
+			popup.title = "Select Assessment Type for " + ps_prompt
+		else
+			popup.title = "Select Assessment Type"
+		end if
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return ls_context_object_type
+
+		return popup_return.items[1]
+	CASE "treatment"
+		openwithparm(w_pick_treatment_type, ps_prompt)
+		return message.stringparm
+	CASE "observation"
+		popup.dataobject = "dw_observation_type_pick_list"
+		popup.datacolumn = 1
+		popup.displaycolumn = 1
+		if len(ps_prompt) > 0 then
+			popup.title = "Select Observation Type for " + ps_prompt
+		else
+			popup.title = "Select Observation Type"
+		end if
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return ls_context_object_type
+
+		return popup_return.items[1]
+	CASE "attachment"
+		popup.dataobject = "dw_attachment_type_pick"
+		popup.datacolumn = 1
+		popup.displaycolumn = 2
+		if len(ps_prompt) > 0 then
+			popup.title = "Select Attachment Type for " + ps_prompt
+		else
+			popup.title = "Select Attachment Type"
+		end if
+		openwithparm(w_pop_pick, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return ls_context_object_type
+
+		return popup_return.items[1]
+END CHOOSE
+
+return ls_context_object_type
+
+end function
+

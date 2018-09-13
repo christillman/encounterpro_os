@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_administer_frequency.srs
+global type str_administer_frequency from structure
+    string administer_frequency
+    string description
+    integer frequency
+end type
+

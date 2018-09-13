@@ -1,0 +1,8 @@
+﻿$PBExportHeader$str_workplan_context.srs
+global type str_workplan_context from structure
+	string		context_object
+	string		in_office_flag
+	string		top_20_prefix
+	string		second_context_object
+end type
+

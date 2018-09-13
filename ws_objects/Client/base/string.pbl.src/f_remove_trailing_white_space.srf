@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_remove_trailing_white_space.srf
+global type f_remove_trailing_white_space from function_object
+end type
+
+forward prototypes
+global function string f_remove_trailing_white_space (string ps_string)
+end prototypes
+
+global function string f_remove_trailing_white_space (string ps_string);string ls_string
+string ls_char
+
+// For the purposes of this function, white space is defined as any character that is either a space or which
+// has an ascii value less than 32.
+
+ls_string = ps_string
+
+DO WHILE len(ls_string) > 0
+	ls_char = right(ls_string, 1)
+	if ls_char = " " or asc(ls_char) < 32 then
+		ls_string = left(ls_string, len(ls_string) - 1)
+	else
+		exit
+	end if
+LOOP
+
+return ls_string
+
+
+end function
+

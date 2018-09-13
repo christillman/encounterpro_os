@@ -1,0 +1,88 @@
+﻿$PBExportHeader$f_object_property.srf
+global type f_object_property from function_object
+end type
+
+forward prototypes
+global function string f_object_property (string ps_attribute_name, string ps_attribute_value, string ps_object_type, string ps_object_property, str_attributes pstr_context_attributes)
+end prototypes
+
+global function string f_object_property (string ps_attribute_name, string ps_attribute_value, string ps_object_type, string ps_object_property, str_attributes pstr_context_attributes);// This function interprets the passed in value as a key of the specified object type.
+// The specified property of that object type is looked up and passed back to the caller
+any la_property
+string ls_return
+string ls_null
+str_property_value lstr_property_value
+long ll_object_key
+string ls_supervisor
+datetime ldt_datetime
+
+setnull(ls_null)
+setnull(ls_return)
+
+CHOOSE CASE lower(ps_object_type)
+	CASE "administration_frequency"
+		ls_return = drugdb.administration_frequency_property(ps_attribute_value, ps_object_property)
+	CASE "administration_method"
+		ls_return = drugdb.administration_method_property(ps_attribute_value, ps_object_property)
+	CASE "assessment_def"
+		ls_return = datalist.assessment_property(ps_attribute_value, ps_object_property)
+	CASE "assessment_type"
+		ls_return = datalist.assessment_type_property(ps_attribute_value, ps_object_property)
+	CASE "authority"
+	CASE "consultant"
+		ls_return = datalist.consultant_field(ps_attribute_value, ps_object_property)
+	CASE "datetime"
+		ldt_datetime = f_string_to_datetime(ps_attribute_value)
+		CHOOSE CASE lower(ps_object_property)
+			CASE "date"
+				ls_return = string(date(ldt_datetime))
+			CASE "time"
+				ls_return = string(time(ldt_datetime))
+			CASE ELSE
+				ls_return = string(ldt_datetime, ps_object_property)
+		END CHOOSE
+	CASE "drug_def"
+		ls_return = drugdb.get_drug_property(ps_attribute_value, ps_object_property)
+	CASE "package_def"
+		ls_return = drugdb.get_package_property(ps_attribute_value, ps_object_property)
+	CASE "drugpackage_def"
+		ls_return = drugdb.get_drugpackage_property(ps_attribute_value, ps_object_property)
+	CASE "patient", "encounter", "assessment", "treatment", "observation", "attachment"
+		if isnumber(ps_attribute_value) then
+			lstr_property_value = f_get_property(ps_object_type, &
+													ps_object_property, &
+													long(ps_attribute_value), &
+													pstr_context_attributes)
+			ls_return = lstr_property_value.value
+		end if
+	CASE "procedure_def"
+	CASE "supervisor"
+		// The supervisor object means first get the user's supervisor and then get the property
+		ls_supervisor = user_list.user_property(ps_attribute_value, "supervisor")
+		if isnull(ls_supervisor) then
+			setnull(ls_return)
+		else
+			la_property = user_list.user_property(ls_supervisor, ps_object_property)
+			CHOOSE CASE ClassName(la_property)
+				 CASE "blob"
+					ls_return = "<binary file>"
+				 CASE ELSE
+					ls_return = string(la_property)
+			END CHOOSE
+		end if
+	CASE "treatment_type"
+		ls_return = datalist.treatment_type_field(ps_attribute_value, ps_object_property)
+	CASE "user"
+		la_property = user_list.user_property(ps_attribute_value, ps_object_property)
+		CHOOSE CASE ClassName(la_property)
+			 CASE "blob"
+				ls_return = "<binary file>"
+			 CASE ELSE
+				ls_return = string(la_property)
+		END CHOOSE
+END CHOOSE
+
+return ls_return
+
+end function
+

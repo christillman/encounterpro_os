@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_edit_attachment.srf
+global type f_edit_attachment from function_object
+end type
+
+forward prototypes
+global function integer f_edit_attachment (long pl_attachment_id)
+end prototypes
+
+global function integer f_edit_attachment (long pl_attachment_id);str_attributes lstr_attributes
+
+lstr_attributes.attribute_count = 0
+
+return f_edit_attachment_with_attributes(pl_attachment_id, lstr_attributes)
+
+end function
+

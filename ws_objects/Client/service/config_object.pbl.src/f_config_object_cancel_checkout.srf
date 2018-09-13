@@ -1,0 +1,47 @@
+﻿$PBExportHeader$f_config_object_cancel_checkout.srf
+global type f_config_object_cancel_checkout from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_cancel_checkout (ref string ps_config_object_id)
+end prototypes
+
+global function integer f_config_object_cancel_checkout (ref string ps_config_object_id);str_popup_return popup_return
+string ls_message
+long ll_previous_version
+integer li_sts
+str_config_object_info lstr_config_object_info
+
+li_sts = f_get_config_object_info(ps_config_object_id, lstr_config_object_info)
+if li_sts <= 0 then return -1
+
+if isnull(lstr_config_object_info.installed_version) then
+	log.log(po_null, "f_config_object_cancel_checkout:0011", "ERROR:  installed version is null (" + lstr_config_object_info.config_object_id + ")", 4)
+	return -1
+end if
+
+ls_message = "Cancelling the checkout will automatically reinstall the previous version and discard all of the changes made since the checkout."
+ls_message += "  Are you sure you want to do this?"
+openwithparm(w_pop_yes_no, ls_message)
+popup_return = message.powerobjectparm
+if popup_return.item <> "YES" then return 0
+
+
+// cancel the currently checked out version
+ll_previous_version = sqlca.config_cancel_checkout(lstr_config_object_info.config_object_id, current_scribe.user_id)
+if not tf_check() then return -1
+if ll_previous_version < 0 then
+	log.log(po_null, "f_config_object_cancel_checkout:0026", "An error occured cancelling the checkout (" + lstr_config_object_info.config_object_id + ", " + string(ll_previous_version) + ")", 4)
+	return -1
+end if
+
+// reinstall the new current version
+li_sts = f_config_object_install(lstr_config_object_info.config_object_id, ll_previous_version)
+if li_sts <= 0 then return -1
+
+return 1
+
+
+
+end function
+

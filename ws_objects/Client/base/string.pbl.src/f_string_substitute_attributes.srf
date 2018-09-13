@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_string_substitute_attributes.srf
+global type f_string_substitute_attributes from function_object
+end type
+
+forward prototypes
+global function string f_string_substitute_attributes (string ps_string, str_attributes pstr_attributes)
+end prototypes
+
+global function string f_string_substitute_attributes (string ps_string, str_attributes pstr_attributes);integer i
+string ls_token
+string ls_value
+string ls_string
+
+ls_string = ps_string
+
+for i = 1 to pstr_attributes.attribute_count
+	ls_token = "%" + pstr_attributes.attribute[i].attribute + "%"
+	ls_value = pstr_attributes.attribute[i].value
+	ls_string = f_string_substitute(ls_string, ls_token, ls_value)
+next
+
+
+return ls_string
+
+end function
+

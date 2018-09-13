@@ -1,0 +1,19 @@
+﻿$PBExportHeader$f_empty_simple_context.srf
+global type f_empty_simple_context from function_object
+end type
+
+forward prototypes
+global function str_context f_empty_simple_context ()
+end prototypes
+
+global function str_context f_empty_simple_context ();str_context lstr_context
+
+setnull(lstr_context.cpr_id)
+setnull(lstr_context.context_object)
+setnull(lstr_context.object_key)
+
+return lstr_context
+
+
+end function
+

@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_document_elements.srs
+global type str_document_elements from structure
+	long		element_set_count
+	str_document_element_set		element_set[]
+end type
+

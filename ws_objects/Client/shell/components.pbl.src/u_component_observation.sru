@@ -11,7 +11,7 @@ end type
 global u_component_observation u_component_observation
 
 type variables
-public w_window_base display_window
+public w_observation_base display_window
 
 public integer observation_count
 public str_external_observation observations[]

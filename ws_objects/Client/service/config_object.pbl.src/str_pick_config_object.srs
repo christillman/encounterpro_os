@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_pick_config_object.srs
+global type str_pick_config_object from structure
+	string		config_object_type
+	string		context_object
+	string		mode
+	boolean		show_beta
+	long		owner_filter
+end type
+

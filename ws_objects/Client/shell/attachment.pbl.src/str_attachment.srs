@@ -1,0 +1,27 @@
+﻿$PBExportHeader$str_attachment.srs
+global type str_attachment from structure
+	long		attachment_id
+	string		cpr_id
+	long		encounter_id
+	long		problem_id
+	long		treatment_id
+	long		observation_sequence
+	string		attachment_type
+	string		attachment_tag
+	string		attachment_file_path
+	string		attachment_file
+	string		extension
+	string		attachment_text
+	string		storage_flag
+	datetime		attachment_date
+	string		attachment_folder
+	long		box_id
+	long		item_id
+	string		attached_by
+	datetime		created
+	string		created_by
+	string		status
+	long		owner_id
+	long		interfaceserviceid
+end type
+

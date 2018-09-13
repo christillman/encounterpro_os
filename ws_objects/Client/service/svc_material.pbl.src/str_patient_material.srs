@@ -1,0 +1,22 @@
+﻿$PBExportHeader$str_patient_material.srs
+global type str_patient_material from structure
+	long		material_id
+	string		title
+	long		category
+	string		category_description
+	string		status
+	string		extension
+	string		id
+	long		owner_id
+	datetime		last_updated
+	blob		material_object
+	string		owner_key
+	string		url
+	string		filename
+	string		parent_config_object_id
+	datetime		created
+	string		created_by
+	long		version
+	string		attribute
+end type
+

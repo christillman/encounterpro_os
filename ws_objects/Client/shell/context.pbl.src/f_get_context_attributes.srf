@@ -1,0 +1,49 @@
+﻿$PBExportHeader$f_get_context_attributes.srf
+global type f_get_context_attributes from function_object
+end type
+
+forward prototypes
+global function str_attributes f_get_context_attributes ()
+end prototypes
+
+global function str_attributes f_get_context_attributes ();str_attributes lstr_attributes
+
+lstr_attributes.attribute_count = 0
+
+if isnull(current_patient) then return lstr_attributes
+
+// Add the patient context
+f_attribute_add_attribute(lstr_attributes, "cpr_id", current_patient.cpr_id)
+
+
+if not isnull(current_service) then
+	// Add the encounter context
+	if not isnull(current_service.encounter_id) then
+		f_attribute_add_attribute(lstr_attributes, "encounter_id", string(current_service.encounter_id))
+	end if
+	
+	// Add the treatment context
+	if not isnull(current_service.treatment) then
+		f_attribute_add_attribute(lstr_attributes, "treatment_id", string(current_service.treatment.treatment_id))
+	end if
+	
+	// Add the assessment context
+	if not isnull(current_service.problem_id) then
+		f_attribute_add_attribute(lstr_attributes, "problem_id", string(current_service.problem_id))
+	end if	
+
+	// Add the observation context
+	if not isnull(current_service.observation_sequence) then
+		f_attribute_add_attribute(lstr_attributes, "observation_sequence", string(current_service.observation_sequence))
+	end if	
+
+	// Add the attachment context
+	if not isnull(current_service.attachment_id) then
+		f_attribute_add_attribute(lstr_attributes, "attachment_id", string(current_service.attachment_id))
+	end if	
+end if
+
+return lstr_attributes
+
+end function
+

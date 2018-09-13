@@ -1,0 +1,26 @@
+﻿$PBExportHeader$f_system_error.srf
+global type f_system_error from function_object
+end type
+
+forward prototypes
+global subroutine f_system_error ()
+end prototypes
+
+global subroutine f_system_error ();string ls_msg
+
+ls_msg  =   "errornum:"+string(error.number)
+ls_msg += "~nmessage :"+error.text
+ls_msg += "~nwhere   :"+error.windowmenu
+ls_msg += "~nobject  :"+error.object
+ls_msg += "~nevent   :"+error.objectevent
+ls_msg += "~nline    :"+string(error.line)
+
+IF NOT IsNull(log) AND IsValid(log) THEN
+	log.log(po_null, "f_system_error:0011", ls_msg, 4)
+ELSE
+	Clipboard(ls_msg)
+	//DebugBreak()
+END IF
+
+end subroutine
+

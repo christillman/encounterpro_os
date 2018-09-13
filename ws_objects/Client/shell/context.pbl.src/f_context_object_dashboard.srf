@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_context_object_dashboard.srf
+global type f_context_object_dashboard from function_object
+end type
+
+forward prototypes
+global function integer f_context_object_dashboard (string ps_cpr_id, string ps_context_object, long pl_object_key, str_attributes pstr_attributes)
+end prototypes
+
+global function integer f_context_object_dashboard (string ps_cpr_id, string ps_context_object, long pl_object_key, str_attributes pstr_attributes);str_service_info lstr_service
+integer li_sts
+
+lstr_service.attributes = pstr_attributes
+
+f_attribute_add_attribute(lstr_service.attributes, "cpr_id", ps_cpr_id)
+f_attribute_add_attribute(lstr_service.attributes, "context_object", ps_context_object)
+f_attribute_add_attribute(lstr_service.attributes, "object_key", string(pl_object_key))
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "general"
+		return 0
+	CASE "patient"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Patient Service")
+		if isnull(lstr_service.service) then lstr_service.service = "CHART"
+	CASE "encounter"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Encounter Service")
+		if isnull(lstr_service.service) then lstr_service.service = "Encounter Review"
+		f_attribute_add_attribute(lstr_service.attributes, "encounter_id", string(pl_object_key))
+	CASE "assessment"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Assessment Service")
+		if isnull(lstr_service.service) then lstr_service.service = "ASSESSMENT_REVIEW"
+		f_attribute_add_attribute(lstr_service.attributes, "problem_id", string(pl_object_key))
+	CASE "treatment"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Treatment Service")
+		if isnull(lstr_service.service) then lstr_service.service = "TREATMENT_REVIEW"
+		f_attribute_add_attribute(lstr_service.attributes, "treatment_id", string(pl_object_key))
+	CASE "observation"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Observation Service")
+		if isnull(lstr_service.service) then lstr_service.service = "TREATMENT_REVIEW"
+		f_attribute_add_attribute(lstr_service.attributes, "object_key", string(pl_object_key))
+	CASE "attachment"
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Attachment Service")
+		if isnull(lstr_service.service) then lstr_service.service = "ATTACHMENT"
+		f_attribute_add_attribute(lstr_service.attributes, "attachment_id", string(pl_object_key))
+	CASE ELSE
+		lstr_service.service = datalist.get_preference("WORKFLOW", "Default Patient Service")
+		if isnull(lstr_service.service) then lstr_service.service = "CHART"
+END CHOOSE
+
+
+li_sts = service_list.do_service(lstr_service)
+
+return li_sts
+
+end function
+

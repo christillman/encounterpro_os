@@ -1,0 +1,34 @@
+﻿$PBExportHeader$f_any_params.srf
+global type f_any_params from function_object
+end type
+
+forward prototypes
+global function boolean f_any_params (string ps_id, string ps_param_mode)
+end prototypes
+
+global function boolean f_any_params (string ps_id, string ps_param_mode);///////////////////////////////////////////////////////////////////////////////////////////
+//
+//	Return: Integer [ 0 - User pressed 'Cancel' , 1 - success , -1 - Failure ]
+//
+//	Description: determine of any params are available in the given mode
+//              
+//
+// Created By:Sumathi Chinnasamy										Creation dt: 10/01/99
+//
+// Modified By:															Modified On:
+////////////////////////////////////////////////////////////////////////////////////////////
+Integer				li_count
+u_ds_data luo_params
+
+luo_params = Create u_ds_data
+luo_params.set_dataobject("dw_component_param_list")
+li_count = luo_params.Retrieve(ps_id, ps_param_mode)
+
+DESTROY luo_params
+
+if li_count > 0 then return true
+
+return false
+
+end function
+

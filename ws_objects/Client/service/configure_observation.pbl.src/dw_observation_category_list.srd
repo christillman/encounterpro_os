@@ -1,0 +1,14 @@
+﻿$PBExportHeader$dw_observation_category_list.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=116 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=observation_category_id dbname="c_Observation_Category.observation_category_id" )
+ column=(type=char(80) updatewhereclause=yes name=description dbname="c_Observation_Category.description" )
+ column=(type=long updatewhereclause=yes name=sort_sequence dbname="c_Specialty_Observation_Category.sort_sequence" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Observation_Category~" )  TABLE(NAME=~"c_Specialty_Observation_Category~" ) COLUMN(NAME=~"c_Observation_Category.observation_category_id~") COLUMN(NAME=~"c_Observation_Category.description~") COLUMN(NAME=~"c_Specialty_Observation_Category.sort_sequence~") COMPUTE(NAME=~"selected_flag=0~")    JOIN (LEFT=~"c_Observation_Category.treatment_type~"    OP =~"=~"RIGHT=~"c_Specialty_Observation_Category.treatment_type~" )    JOIN (LEFT=~"c_Observation_Category.observation_category_id~"    OP =~"=~"RIGHT=~"c_Specialty_Observation_Category.observation_category_id~" )WHERE(    EXP1 =~"c_Specialty_Observation_Category.specialty_id~"   OP =~"=~"    EXP2 =~":specialty_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"c_Specialty_Observation_Category.treatment_type~"   OP =~"=~"    EXP2 =~":treatment_type~" ) ) ORDER(NAME=~"c_Observation_Category.description~" ASC=yes ) ARG(NAME = ~"treatment_type~" TYPE = string)  ARG(NAME = ~"specialty_id~" TYPE = string) " arguments=(("treatment_type", string),("specialty_id", string))  sort="sort_sequence A description A observation_category_id A " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="96" width="1102" format="[general]"  name=description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0,rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

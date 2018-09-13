@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_menu_context.srs
+global type str_menu_context from structure
+	string		menu_context
+	string		menu_key
+	string		menu_key2
+	string		context_object
+	boolean		configure_if_null
+end type
+

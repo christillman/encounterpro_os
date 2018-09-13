@@ -1,0 +1,71 @@
+﻿$PBExportHeader$f_find_assessment_id.srf
+global type f_find_assessment_id from function_object
+end type
+
+forward prototypes
+global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd10_code)
+end prototypes
+
+global function string f_find_assessment_id (string ps_assessment_type, string ps_assessment, string ps_icd10_code);str_popup popup
+str_popup_return popup_return
+string ls_find
+long ll_row
+string ls_null
+u_ds_data luo_sp_new_assessment_definition
+long ll_count
+string ls_assessment_category_id
+string ls_location_domain
+string ls_auto_close
+integer li_auto_close_interval_amount
+string ls_auto_close_interval_unit
+long ll_em_risk_level
+long ll_complexity
+string ls_long_description
+string ls_assessment_id
+
+
+setnull(ls_null)
+
+setnull(ls_assessment_category_id)
+setnull(ls_location_domain)
+setnull(ls_auto_close)
+setnull(li_auto_close_interval_amount)
+setnull(ls_auto_close_interval_unit)
+setnull(ll_em_risk_level)
+setnull(ll_complexity)
+setnull(ls_long_description)
+
+
+if isnull(ps_assessment_type) then ps_assessment_type = "SICK"
+
+
+luo_sp_new_assessment_definition = CREATE u_ds_data
+luo_sp_new_assessment_definition.set_dataobject("dw_sp_new_assessment_definition")
+ll_count = luo_sp_new_assessment_definition.retrieve(ps_assessment_type, &
+																			ps_icd10_code, &
+																			ls_assessment_category_id, &
+																			ps_assessment, &
+																			ls_location_domain, &
+																			ls_auto_close, &
+																			li_auto_close_interval_amount, &
+																			ls_auto_close_interval_unit, &
+																			ll_em_risk_level, &
+																			ll_complexity, &
+																			ls_long_description)
+if ll_count <= 0 then
+	return ls_null
+else
+	ls_assessment_id = luo_sp_new_assessment_definition.object.assessment_id[1]
+end if
+destroy luo_sp_new_assessment_definition
+
+if isnull(ls_assessment_id) then
+	return ls_null
+end if
+
+
+
+return ls_assessment_id
+
+end function
+

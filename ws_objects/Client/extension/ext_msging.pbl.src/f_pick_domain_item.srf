@@ -1,0 +1,118 @@
+﻿$PBExportHeader$f_pick_domain_item.srf
+global type f_pick_domain_item from function_object
+end type
+
+forward prototypes
+global function str_domain_item f_pick_domain_item (string ps_domain_id, string ps_helptext)
+end prototypes
+
+global function str_domain_item f_pick_domain_item (string ps_domain_id, string ps_helptext);str_popup popup
+str_popup_return popup_return
+long i
+str_param_setting lstr_param
+str_param_wizard_return lstr_return
+long ll_count
+string ls_domain_description
+boolean lb_is_param
+string ls_param_class
+string ls_param_query
+string ls_null
+str_domain_item lstr_domain_item
+w_param_setting lw_param_window
+
+setnull(ls_null)
+lstr_domain_item = f_empty_domain_item()
+
+// Get the details of the mapping
+SELECT d.param_class, d.description, CAST(d.param_query AS varchar(4000))
+INTO :ls_param_class, :ls_domain_description, :ls_param_query
+FROM c_Domain_Master d
+WHERE d.domain_id = :ps_domain_id;
+if not tf_check() then return lstr_domain_item
+if sqlca.sqlnrows < 1 then
+	setnull(ls_param_class)
+end if
+
+lb_is_param = false
+if len(ls_param_class) > 0 then
+	// See if the cat query is a param class
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Component_Param_Class
+	WHERE param_class = :ls_param_class;
+	if not tf_check() then return lstr_domain_item
+	
+	if ll_count > 0 then lb_is_param = true
+end if
+
+if lb_is_param then
+	// param class
+	
+	lstr_param.param.param_class = ls_param_class
+	if len(ls_domain_description) > 0 then
+		lstr_param.param.param_title = ls_domain_description
+	else
+		lstr_param.param.param_title = wordcap(ps_domain_id)
+	end if
+	lstr_param.param.helptext = ps_helptext
+	lstr_param.param.token1 = ps_domain_id
+	lstr_param.param.query = ls_param_query
+	lstr_param.param.required_flag = "N"
+	lstr_param.invisible_wizard = true
+	
+	f_attribute_add_attribute(lstr_param.attributes, "domain_id", ps_domain_id)
+	
+	openwithparm(lw_param_window, lstr_param, "w_param_setting")
+	lstr_return = message.powerobjectparm
+	if lstr_return.return_status <= 0 then return lstr_domain_item
+	
+	lstr_domain_item.domain_item = f_attribute_find_attribute(lstr_return.attributes, lstr_param.param.token1)
+else
+	// If no param class is specified, then offer the choices from the c_Domain table, with an option to manually enter a value
+	popup.dataobject = "dw_domain_translate_list"
+	popup.argument_count = 1
+	popup.argument[1] = ps_domain_id
+	popup.add_blank_row = true
+	popup.blank_text = "<Other Value>"
+	popup.blank_at_bottom = true
+	popup.auto_singleton = true
+	popup.datacolumn = 2
+	popup.displaycolumn = 3
+	openwithparm(w_pop_pick, popup)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return lstr_domain_item
+	if popup_return.items[1] = "" then
+		// Other Value
+		popup.argument_count = 0
+		popup.title = ps_helptext
+		popup.item = ""
+		popup.displaycolumn = 64
+		openwithparm(w_pop_prompt_string, popup)
+		popup_return = message.powerobjectparm
+		if popup_return.item_count <> 1 then return lstr_domain_item
+		
+		lstr_domain_item.domain_item = popup_return.items[1]
+	else
+		lstr_domain_item.domain_item = popup_return.items[1]
+		lstr_domain_item.domain_item_description = popup_return.descriptions[1]
+	end if
+end if
+
+// If we don't have a new epro_id then return 0
+if trim(lstr_domain_item.domain_item) = "" then
+	setnull(lstr_domain_item.domain_item)
+end if
+
+if isnull(lstr_domain_item.domain_item_description) then
+	lstr_domain_item.domain_item_description = lstr_domain_item.domain_item
+end if
+
+lstr_domain_item.domain_owner_id = 0
+lstr_domain_item.domain_item_owner_id = sqlca.customer_id
+lstr_domain_item.domain = ps_domain_id
+
+return lstr_domain_item
+
+
+end function
+

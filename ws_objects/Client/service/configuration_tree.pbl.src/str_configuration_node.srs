@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_configuration_node.srs
+global type str_configuration_node from structure
+	string		label
+	string		class
+	string		key
+	string		button
+	str_attributes		attributes
+end type
+

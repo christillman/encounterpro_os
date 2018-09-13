@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_document_files.srs
+global type str_document_files from structure
+	long		file_count
+	str_document_file		file[]
+end type
+

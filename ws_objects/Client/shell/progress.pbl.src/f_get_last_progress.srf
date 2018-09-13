@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_get_last_progress.srf
+global type f_get_last_progress from function_object
+end type
+
+forward prototypes
+global function integer f_get_last_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, ref str_progress pstr_progress)
+end prototypes
+
+global function integer f_get_last_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, ref str_progress pstr_progress);str_progress_list lstr_progress
+
+lstr_progress = f_get_progress(ps_cpr_id, ps_context_object, pl_object_key, ps_progress_type, ps_progress_key)
+
+if lstr_progress.progress_count > 0 then
+	pstr_progress = lstr_progress.progress[lstr_progress.progress_count]
+	return 1
+else
+	return 0
+end if
+
+
+
+end function
+

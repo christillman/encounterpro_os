@@ -1,0 +1,62 @@
+﻿$PBExportHeader$f_new_config_object_2.srf
+global type f_new_config_object_2 from function_object
+end type
+
+forward prototypes
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes)
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes)
+end prototypes
+
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes);string ls_null
+string ls_config_object_id
+string ls_config_object_type_id
+str_attributes lstr_state_attributes
+
+setnull(ls_null)
+
+CHOOSE CASE lower(ps_config_object_type)
+	CASE "report"
+		ls_config_object_id = f_new_report(pstr_attributes)
+	CASE "datafile"
+		ls_config_object_id = f_new_datafile(pstr_attributes)
+	CASE "contraindication alerts"
+		ls_config_object_id = f_new_contraindication_alerts(pstr_attributes)
+	CASE "health management class"
+		ls_config_object_type_id = "{6030C110-5CDA-4aef-A2B4-564790E627A7}"
+		f_get_params_with_state2(ls_config_object_type_id, "Config", pstr_attributes, lstr_state_attributes, true)
+		ls_config_object_id = f_new_hm_patient_class(pstr_attributes)
+	CASE ELSE
+		setnull(ls_config_object_id)
+END CHOOSE
+
+return ls_config_object_id
+
+
+end function
+
+global function string f_new_config_object_2 (string ps_config_object_type, ref str_attributes pstr_attributes, str_attributes pstr_state_attributes);string ls_null
+string ls_config_object_id
+string ls_config_object_type_id
+
+setnull(ls_null)
+
+CHOOSE CASE lower(ps_config_object_type)
+	CASE "report"
+		ls_config_object_id = f_new_report(pstr_attributes)
+	CASE "datafile"
+		ls_config_object_id = f_new_datafile(pstr_attributes)
+	CASE "contraindication alerts"
+		ls_config_object_id = f_new_contraindication_alerts(pstr_attributes)
+	CASE "health management class"
+		ls_config_object_type_id = "{6030C110-5CDA-4aef-A2B4-564790E627A7}"
+		f_get_params_with_state2(ls_config_object_type_id, "Config", pstr_attributes, pstr_state_attributes, true)
+		ls_config_object_id = f_new_hm_patient_class(pstr_attributes)
+	CASE ELSE
+		setnull(ls_config_object_id)
+END CHOOSE
+
+return ls_config_object_id
+
+
+end function
+

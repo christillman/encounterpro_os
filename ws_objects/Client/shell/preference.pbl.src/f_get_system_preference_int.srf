@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_get_system_preference_int.srf
+global type f_get_system_preference_int from function_object
+end type
+
+forward prototypes
+global function long f_get_system_preference_int (string ps_preference_type, string ps_preference_id)
+end prototypes
+
+global function long f_get_system_preference_int (string ps_preference_type, string ps_preference_id);integer li_sts
+string ls_preference
+long ll_preference
+
+ls_preference = f_get_system_preference(ps_preference_type, ps_preference_id)
+if isnull(ls_preference) then
+	setnull(ll_preference)
+else
+	ll_preference = long(ls_preference)
+end if
+
+return ll_preference
+
+end function
+

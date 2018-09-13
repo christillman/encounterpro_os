@@ -1,0 +1,129 @@
+﻿$PBExportHeader$f_create_new_patient.srf
+global type f_create_new_patient from function_object
+end type
+
+forward prototypes
+global function integer f_create_new_patient (ref string ps_cpr_id, string ps_race, date pd_date_of_birth, string ps_sex, string ps_phone_number, string ps_primary_language, string ps_marital_status, string ps_billing_id, long pl_patient_id, string ps_first_name, string ps_last_name, string ps_degree, string ps_name_prefix, string ps_middle_name, string ps_name_suffix, string ps_primary_provider_id, string ps_secondary_provider_id, integer pi_priority, string ps_ssn)
+end prototypes
+
+global function integer f_create_new_patient (ref string ps_cpr_id, string ps_race, date pd_date_of_birth, string ps_sex, string ps_phone_number, string ps_primary_language, string ps_marital_status, string ps_billing_id, long pl_patient_id, string ps_first_name, string ps_last_name, string ps_degree, string ps_name_prefix, string ps_middle_name, string ps_name_suffix, string ps_primary_provider_id, string ps_secondary_provider_id, integer pi_priority, string ps_ssn);string ls_cpr_id
+long ll_temp
+integer li_sts, i, j
+boolean lb_p_exists
+datetime ldt_date_of_birth
+string ls_patient_name
+
+log.log(po_null, "f_create_new_patient:0008", "Adding patient #" + ps_cpr_id, 1)
+
+if not isnull(ps_last_name) and len(ps_last_name) > 0 then
+	ls_patient_name = ps_last_name
+end if
+if not isnull(ps_first_name) and len(ps_first_name) > 0 then
+	if len(ls_patient_name) > 0 Then
+		ls_patient_name = ps_last_name + ","+ps_first_name
+	else
+		ls_patient_name = ps_first_name
+	end if
+end if
+if isnull(ls_patient_name) or len(ls_patient_name) = 0 Then
+	log.log(po_null, "f_create_new_patient:0021", "Invalid PatientName(NULL or Blank), create failed ", 4)
+	return -1
+end if
+
+ls_cpr_id = left(ps_cpr_id, 12)
+
+if len(trim(ps_billing_id)) = 0 then setnull(ps_billing_id)
+if pl_patient_id <= 0 then setnull(pl_patient_id)
+
+// Check for duplicate billing_id
+if not isnull(ps_billing_id) then
+	li_sts = tf_get_patient_from_billing_id(ps_billing_id, ls_cpr_id)
+	if li_sts > 0 then
+		log.log(po_null, "f_create_new_patient:0034", "Billing_id (" + ps_billing_id + ") already exists", 4)
+		return -1
+	end if
+end if
+
+// Check for duplicate patient_id
+if not isnull(pl_patient_id) then
+	li_sts = tf_get_patient_from_patient_id(pl_patient_id, ls_cpr_id)
+	if li_sts > 0 then
+		log.log(po_null, "f_create_new_patient:0043", "Patient_id (" + string(pl_patient_id) + ") already exists", 4)
+		return -1
+	end if
+end if
+
+// if cpr_id is provided, make sure it doesn't exist
+if not isnull(ls_cpr_id) then
+	li_sts = tf_patient_exists(ls_cpr_id)
+	if li_sts <> 0 then
+		setnull(ls_cpr_id)
+	end if
+end if
+
+// if cpr_id is null and billing_id is provided, try using it as the cpr_id
+if isnull(ls_cpr_id) and not isnull(ps_billing_id) then
+	li_sts = tf_patient_exists(left(ps_billing_id, 12))
+	if li_sts = 0 then
+		ls_cpr_id = left(ps_billing_id, 12)
+	else
+		setnull(ls_cpr_id)
+	end if
+end if
+
+// if cpr_id is null and patient_id is provided, try using it as the cpr_id
+if isnull(ls_cpr_id) and not isnull(pl_patient_id) then
+	ls_cpr_id = string(pl_patient_id)
+	li_sts = tf_patient_exists(ls_cpr_id)
+	if li_sts <> 0 then
+		setnull(ls_cpr_id)
+	end if
+end if
+
+li_sts = f_create_patient(ls_cpr_id)
+if li_sts <= 0 then
+	log.log(po_null, "f_create_new_patient:0077", "Error creating patient record", 4)
+	return -1
+end if
+
+ldt_date_of_birth = datetime(pd_date_of_birth)
+
+// If we have a numeric billing_id then set the patient_id to it
+if long(ps_billing_id) > 0 and isnull(pl_patient_id) then
+	pl_patient_id = long(ps_billing_id)
+end if
+
+// On the other hand, if we have a patient_id but no billing_id then
+// set the billing_id to the stringified patient_id
+if isnull(ps_billing_id) and not isnull(pl_patient_id) then
+	ps_billing_id = string(pl_patient_id)
+end if
+
+UPDATE p_Patient
+SET	race = :ps_race,
+		date_of_birth = :ldt_date_of_birth,
+		sex = :ps_sex,
+		phone_number = :ps_phone_number,
+		primary_language = :ps_primary_language,
+		marital_status = :ps_marital_status,
+		billing_id = :ps_billing_id,
+		patient_id = :pl_patient_id,
+		first_name = :ps_first_name,
+		last_name = :ps_last_name,
+		degree = :ps_degree,
+		name_prefix = :ps_name_prefix,
+		middle_name = :ps_middle_name,
+		name_suffix = :ps_name_suffix,
+		primary_provider_id = :ps_primary_provider_id,
+		secondary_provider_id = :ps_secondary_provider_id,
+		ssn = :ps_ssn
+WHERE cpr_id = :ls_cpr_id;
+if not tf_check() then return -1
+
+ps_cpr_id = ls_cpr_id
+
+return 1
+
+
+end function
+

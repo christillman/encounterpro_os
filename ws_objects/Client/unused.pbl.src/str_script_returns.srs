@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_script_returns.srs
-global type str_script_returns from structure
-	long		return_count
-	string		return_name[]
-	string		return_value[]
-end type
-

@@ -1,0 +1,23 @@
+﻿$PBExportHeader$dw_fkey_assignment_display.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=112 color="536870912" )
+table(column=(type=char(12) updatewhereclause=yes name=fkey dbname="fkey" )
+ column=(type=number updatewhereclause=yes name=flags dbname="flags" )
+ column=(type=char(80) updatewhereclause=yes name=assignment dbname="Assignment" )
+  sort="fkey A flags A " )
+compute(band=detail alignment="0" expression="if(flags=0,'', if(flags=1, 'Shft-', if(flags=2, 'Ctrl-', 'Ctrl-Shft-'))) +  fkey + ' : ' +  assignment "border="0" color="0" x="23~tif(flags=0, 23, 123)" y="16" height="76" width="2382" format="[GENERAL]" html.valueishtml="0"  name=compute_1 visible="1"  font.face="Arial" font.height="-12~tif(flags=0, -12, -9)" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33538240" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

@@ -39,7 +39,6 @@ long computer_id
 string windows_logon_id
 string month_str[12] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"}
 w_window_base main_window
-w_image_objects object_window
 boolean just_logged_on
 //integer password_length = 3
 //boolean variable_password_length = false
@@ -234,8 +233,6 @@ u_common_thread common_thread
 // Service control manager
 //u_service_control_manager scm
 
-u_msscript msscript
-
 // Trace settings
 boolean trc_ActESql = true
 boolean trc_ActRoutine = true
@@ -360,7 +357,6 @@ if not fileexists(ini_file) then
 end if
 
 // Initialize the logging system
-open(w_image_objects)
 
 // If no command-line param is supplied, then check the registry
 if isnull(ls_parm) or trim(ls_parm) = "" then

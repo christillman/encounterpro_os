@@ -1,0 +1,19 @@
+﻿$PBExportHeader$f_clear_patient.srf
+global type f_clear_patient from function_object
+end type
+
+forward prototypes
+global subroutine f_clear_patient ()
+end prototypes
+
+global subroutine f_clear_patient ();//
+// Clears current_patient global variable
+//
+
+
+f_clear_current_encounter()
+
+setnull(current_patient)
+
+end subroutine
+

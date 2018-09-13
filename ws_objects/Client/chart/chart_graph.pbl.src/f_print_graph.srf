@@ -1,0 +1,55 @@
+﻿$PBExportHeader$f_print_graph.srf
+global type f_print_graph from function_object
+end type
+
+forward prototypes
+global function integer f_print_graph (graph puo_graph)
+end prototypes
+
+global function integer f_print_graph (graph puo_graph);long ll_printjob
+string ls_temp
+string ls_printer
+long ll_width
+long ll_height
+double ld_aspect_ratio
+long ll_backcolor
+borderstyle le_borderstyle
+
+ls_printer = common_thread.select_printer()
+// If the user didn't select a printer then don't do anything
+if isnull(ls_printer) then return 0
+
+common_thread.set_printer(ls_printer)
+
+ls_temp = "EncounterPRO Graph"
+ll_printjob = printopen(ls_temp, false)
+if ll_printjob < 0 then
+	log.log(po_null, "f_print_graph:0019", "Error opening print job (" + ls_temp + ")", 4)
+	return -1
+end if
+	
+PrintDefineFont(ll_printjob, 1, "ARIAL", -12, 400, Default!, AnyFont!, false, false)
+printtext(ll_printjob, puo_graph.title, 400, 500, 1)
+
+// Preserve the aspect ratio but print as wide as possible
+ll_width = 7500
+ld_aspect_ratio = double(puo_graph.width) / double(puo_graph.height)
+ll_height = ll_width / ld_aspect_ratio
+
+ll_backcolor = puo_graph.backcolor
+puo_graph.backcolor = color_white
+le_borderstyle = puo_graph.borderstyle
+puo_graph.borderstyle = StyleBox!
+puo_graph.print(ll_printjob, 400, 1000 , ll_width, ll_height)
+puo_graph.backcolor = ll_backcolor
+puo_graph.borderstyle = le_borderstyle
+
+printclose(ll_printjob)
+
+// Reset the default printer
+common_thread.set_default_printer()
+
+return 1
+
+end function
+

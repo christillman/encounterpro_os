@@ -1,0 +1,12 @@
+﻿$PBExportHeader$str_document_element_context.srs
+global type str_document_element_context from structure
+	str_document_elements		document_elements
+	long		element_set_index
+	long		element_index
+	long		mapped_property_index
+	long		mapping_rule_index
+	str_complete_context		context
+	str_attributes		attributes
+	string		config_object_id
+end type
+

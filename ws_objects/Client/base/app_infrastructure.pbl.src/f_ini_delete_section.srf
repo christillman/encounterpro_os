@@ -1,0 +1,145 @@
+﻿$PBExportHeader$f_ini_delete_section.srf
+global type f_ini_delete_section from function_object
+end type
+
+forward prototypes
+global function integer f_ini_delete_section (string as_file, string as_section)
+end prototypes
+
+global function integer f_ini_delete_section (string as_file, string as_section);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  		of_Delete
+//
+//	Access:  		public
+//
+//	Arguments:		
+//	as_file			The .ini file.
+//	as_section		The section name to remove from the INI file.
+//						(Do not include the brackets with this argument.)
+//
+//	Returns:  		Integer
+//						 1	success
+//						 0	section does not exist in the INI file.
+//						-1	error
+//						-2 if .INI file does not exist or has not been specified.
+//
+//	Description:  	Removes the specified section and all entries for 
+//						that section from the INI file.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	5.0   Initial version
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Copyright © 1996 Powersoft Corporation.  All Rights Reserved.
+//	Any distribution of the PowerBuilder Foundation Classes (PFC)
+//	source code by other than Powersoft is prohibited.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+string			ls_newfile
+boolean		lb_skipline
+boolean		lb_sectionfound
+integer		li_file
+integer		li_rc = 1
+integer		li_filewriterc
+long			ll_length
+long			ll_first
+long			ll_last
+long			ll_pos
+string		ls_line
+string		ls_section
+string		ls_temp
+long ll_bytes_written
+
+SetPointer (Hourglass!)
+
+// Determine if file exists.
+if not FileExists (as_file) then
+	return -2
+end if
+
+// Open file for reading (check rc).
+ll_length = FileLength (as_file)
+li_file = FileOpen (as_file)
+if li_file = -1 then	return li_file
+
+//////////////////////////////////////////////////////////////////////////////
+// Read the file and locate the desired section that should be removed.
+//////////////////////////////////////////////////////////////////////////////
+do while li_rc >= 0
+	
+	// Read one line from the file (validate the rc).
+	li_rc = FileRead (li_file, ls_line)
+	if li_rc = -1 then
+		return -1
+	end if
+
+	// Check that at least one character was read.
+	if li_rc >= 1 then
+		// Look for a section header components (the OpenBracket and CloseBracket (if any)).
+		ll_first = Pos (ls_line, "[")
+		ll_last = Pos (ls_line, "]")
+		
+		// Was section header found?
+		if ll_first >0 and ll_last >0 then
+			// Yes, a section has been found.
+			// Get the name of the section.
+			ls_temp = trim(ls_line)
+			if Left (ls_temp, 1) = "[" then
+				ll_pos = Pos (ls_temp, "]")
+				ls_section = Mid (ls_temp, 2, ll_pos - 2)
+				// Determine if this is the section being searched for.				
+				if ls_section = as_section then
+					// The search for section has been found.
+					lb_sectionfound = true
+					// Skip ALL lines until a new section is found.
+					lb_skipline = true
+				else
+					// Do not skip this section or just simply Stop skipping.
+					lb_skipline = false
+				end if
+			end if
+		end if
+	end if
+
+	// Add the carriage control.
+	ls_line = ls_line + "~r~n"
+
+	// Create the output file by including all lines not
+	// marked to be skipped.
+	if li_rc >= 0 and not lb_skipline then
+		ls_newfile = ls_newfile + ls_line
+	end if
+loop 
+
+// Close the input file
+FileClose (li_file)
+
+//If the section was not found, return
+if not lb_sectionfound then
+	return 0
+end if
+
+//Replace the file with the section removed.
+li_file = FileOpen (as_file, TextMode!, Write!, LockReadWrite!, Replace!)
+if li_file = -1 then
+	return -1
+end if
+
+ll_bytes_written = FileWriteEX(li_file, ls_newfile)
+FileClose (li_file)
+
+//li_rc = log.file_write(ls_newfile, as_file)
+if ll_bytes_written >= 0 then
+	return 1
+else
+	return -1
+end if
+
+end function
+

@@ -1,0 +1,134 @@
+﻿$PBExportHeader$f_get_patient_property.srf
+global type f_get_patient_property from function_object
+end type
+
+forward prototypes
+global function str_property_value f_get_patient_property (string ps_cpr_id, long pl_object_key, string ps_context_object, string ps_property, str_attributes pstr_context_attributes)
+end prototypes
+
+global function str_property_value f_get_patient_property (string ps_cpr_id, long pl_object_key, string ps_context_object, string ps_property, str_attributes pstr_context_attributes);str_property lstr_property
+str_property_value lstr_property_value
+integer li_sts
+string ls_component_id
+u_component_property luo_property
+string ls_value
+u_ds_data luo_data
+long ll_count
+string ls_context_object
+string ls_cpr_id
+long i
+string ls_attribute
+str_attributes lstr_attributes
+string ls_observation_id
+string ls_result_sequence
+integer li_result_sequence
+string ls_object_type
+string ls_object_property
+long ll_pos1
+long ll_pos2
+long ll_pos3
+string ls_temp
+str_complete_context lstr_complete_context
+
+setnull(lstr_property_value.value)
+setnull(lstr_property_value.textcolor)
+setnull(lstr_property_value.backcolor)
+setnull(lstr_property_value.weight)
+
+// Allow the property to specified in the format <property_name>[(<object_type>.<object_property>)]
+ll_pos1 = pos(ps_property, "(")
+ll_pos2 = pos(ps_property, ")")
+ll_pos3 = pos(ps_property, ".")
+if ll_pos3 > 0 and (ll_pos1 = 0 or ll_pos3 < ll_pos1) then
+	// If the first period is before the first paren, or there is a period and no paren, then we know this is EDAS format
+	lstr_complete_context = f_empty_context()
+	lstr_complete_context.cpr_id = ps_cpr_id
+	lstr_complete_context.context_object = ps_context_object
+	CHOOSE CASE lower(ps_context_object) 
+		CASE "encounter"
+			lstr_complete_context.encounter_id = pl_object_key
+		CASE "assessment"
+			lstr_complete_context.problem_id = pl_object_key
+		CASE "treatment"
+			lstr_complete_context.treatment_id = pl_object_key
+		CASE "attachment"
+			lstr_complete_context.attachment_id = pl_object_key
+		CASE "observation"
+			lstr_complete_context.observation_sequence = pl_object_key
+	END CHOOSE
+	
+	return f_edas_interpret_address(ps_property, lstr_complete_context, pstr_context_attributes)
+elseif ll_pos1 > 0 and ll_pos2 > 0 then
+	ls_temp = mid(ps_property, ll_pos1 + 1, ll_pos2 - ll_pos1 - 1)
+	f_split_string(ls_temp, ".", ls_object_type, ls_object_property)
+	if ls_object_property = "" then
+		setnull(ls_object_property)
+	end if
+	ps_property = left(ps_property, ll_pos1 - 1)
+else
+	setnull(ls_object_type)
+	setnull(ls_object_property)
+end if
+
+lstr_property = datalist.find_property(ps_context_object, ps_property)
+
+// If this isn't a general property then we must have a current patient
+if lower(ps_context_object) <> "general" and isnull(ps_cpr_id) then
+	log.log(po_null, "f_get_patient_property:0069" + ps_context_object + ", " + ps_property + ")", "No patient context", 4)
+	return lstr_property_value
+end if
+
+// Add the property attributes to the context attributes
+for i = 1 to lstr_property.attributes.attribute_count
+	ls_attribute = lstr_property.attributes.attribute[i].attribute
+	ls_value = lstr_property.attributes.attribute[i].value
+	f_attribute_add_attribute(pstr_context_attributes, &
+										ls_attribute, &
+										f_attribute_value_substitute(lstr_property.property_object, pl_object_key, ls_value) )
+next
+
+CHOOSE CASE lower(lstr_property.property_type)
+	CASE "observation"
+		// Get observation_id and result_sequence from the script
+		f_split_string(lstr_property.script, "|", ls_observation_id, ls_result_sequence)
+		li_result_sequence = integer(ls_result_sequence)
+		lstr_property_value.value = sqlca.fn_patient_object_last_result(ps_cpr_id, &
+																							lstr_property.property_object, &
+																							pl_object_key, &
+																							ls_observation_id, &
+																							li_result_sequence)
+		lstr_property_value.display_value = lstr_property_value.value		
+	CASE "sql"
+		lstr_property_value = f_sql_property(lstr_property, ps_cpr_id, string(pl_object_key), pstr_context_attributes)
+	CASE "built in", "user defined"
+		lstr_property_value = f_built_in_property(lstr_property, ps_cpr_id, pl_object_key, pstr_context_attributes)
+	CASE ELSE
+		ls_component_id = datalist.property_type_component_id(lstr_property.property_type)
+		if isnull(ls_component_id) then
+			log.log(po_null, "f_get_patient_property:0100", "component_id not found (" + ps_context_object + ", " + ps_property + ")", 4)
+			return lstr_property_value
+		end if
+		
+		lstr_attributes = f_get_context_attributes()
+		f_attribute_add_attributes(lstr_attributes, pstr_context_attributes)
+		
+		luo_property = component_manager.get_component(ls_component_id)
+		lstr_property_value.value = luo_property.get_property(lstr_property.property_id, lstr_attributes)
+		lstr_property_value.display_value = lstr_property_value.value
+		component_manager.destroy_component(luo_property)
+END CHOOSE
+
+// if the called specified an object type and object property, then get the specified object property as the value
+if not isnull(ls_object_type) then
+	ls_temp = f_object_property(ps_property, lstr_property_value.value, ls_object_type, ls_object_property, lstr_attributes)
+	if len(ls_temp) > 0 then
+		lstr_property_value.value = ls_temp
+		lstr_property_value.display_value = ls_temp
+	end if
+end if
+
+return lstr_property_value
+
+
+end function
+

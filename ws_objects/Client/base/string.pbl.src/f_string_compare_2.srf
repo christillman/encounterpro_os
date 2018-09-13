@@ -1,0 +1,53 @@
+﻿$PBExportHeader$f_string_compare_2.srf
+global type f_string_compare_2 from function_object
+end type
+
+forward prototypes
+global function boolean f_string_compare_2 (string ps_left_side, string ps_right_side, string ps_right_side_2, string ps_operator)
+end prototypes
+
+global function boolean f_string_compare_2 (string ps_left_side, string ps_right_side, string ps_right_side_2, string ps_operator);// For the "between" operator, the last two characters identify whether the lower bound and upper bound comarisons
+// should be inclusive or exclusive:
+//
+//	i = inclusice
+// e = exclusive
+//
+// e.g. if the operator is "between-ie" then the lower bound comparison is inclusive and the upper bound comparison is exclusive
+//
+
+boolean lb_greater_than
+boolean lb_less_than
+string ls_greater_than_operator
+string ls_less_than_operator
+
+if left(lower(ps_operator), 7) <> "between" then
+	return f_string_compare(ps_left_side, ps_right_side, ps_operator)
+end if
+
+if len(ps_operator) < 9 then
+	ls_greater_than_operator = ">="
+	ls_less_than_operator = "<="
+else
+	if lower(left(right(ps_operator, 2), 1)) = "e" then
+		ls_greater_than_operator = ">"
+	else
+		ls_greater_than_operator = ">="
+	end if
+	
+	if lower(right(ps_operator, 1)) = "e" then
+		ls_less_than_operator = "<"
+	else
+		ls_less_than_operator = "<="
+	end if
+end if
+
+lb_greater_than = f_string_compare(ps_left_side, ps_right_side, ls_greater_than_operator)
+
+lb_less_than = f_string_compare(ps_left_side, ps_right_side_2, ls_less_than_operator)
+
+if lb_greater_than AND lb_less_than then return true
+
+return false
+
+end function
+

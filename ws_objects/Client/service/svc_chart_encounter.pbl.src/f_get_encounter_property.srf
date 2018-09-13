@@ -1,0 +1,23 @@
+﻿$PBExportHeader$f_get_encounter_property.srf
+global type f_get_encounter_property from function_object
+end type
+
+forward prototypes
+global function string f_get_encounter_property (string ps_cpr_id, long pl_encounter_id, string ps_progress_key)
+end prototypes
+
+global function string f_get_encounter_property (string ps_cpr_id, long pl_encounter_id, string ps_progress_key);string ls_progress
+string ls_null
+string ls_progress_type
+
+ls_progress_type = "PROPERTY"
+
+ls_progress = f_get_progress_value(ps_cpr_id, "encounter", pl_encounter_id, ls_progress_type, ps_progress_key)
+
+return ls_progress
+
+
+
+
+end function
+

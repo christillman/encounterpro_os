@@ -1,0 +1,13 @@
+﻿$PBExportHeader$str_config_object_type.srs
+global type str_config_object_type from structure
+	string		config_object_type
+	string		description
+	string		config_object_key
+	string		creator_xml_script_guid
+	long		creator_xml_script_id
+	boolean		version_control
+	string		object_encoding_method
+	boolean		auto_install
+	boolean		concurrent_install
+end type
+

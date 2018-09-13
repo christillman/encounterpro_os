@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_attribute_find_attribute.srf
+global type f_attribute_find_attribute from function_object
+end type
+
+forward prototypes
+global function string f_attribute_find_attribute (str_attributes pstr_attributes, string ps_attribute)
+end prototypes
+
+global function string f_attribute_find_attribute (str_attributes pstr_attributes, string ps_attribute);integer i
+string ls_null
+
+setnull(ls_null)
+
+// If there are multiples, then find the last one
+for i = pstr_attributes.attribute_count to 1 step -1
+	if lower(pstr_attributes.attribute[i].attribute) = lower(ps_attribute) then return pstr_attributes.attribute[i].value
+next
+
+return ls_null
+
+end function
+

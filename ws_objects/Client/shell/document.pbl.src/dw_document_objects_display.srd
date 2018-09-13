@@ -1,0 +1,53 @@
+﻿$PBExportHeader$dw_document_objects_display.srd
+release 11;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+header(height=0 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=152 color="536870912" )
+table(column=(type=long updatewhereclause=yes name=object_sequence dbname="object_sequence" )
+ column=(type=char(12) updatewhereclause=yes name=cpr_id dbname="cpr_id" )
+ column=(type=char(24) updatewhereclause=yes name=context_object dbname="context_object" )
+ column=(type=long updatewhereclause=yes name=object_key dbname="object_key" )
+ column=(type=datetime updatewhereclause=yes name=object_date dbname="object_date" )
+ column=(type=char(24) updatewhereclause=yes name=object_type dbname="object_type" )
+ column=(type=char(80) updatewhereclause=yes name=object_description dbname="object_description" )
+ column=(type=char(12) updatewhereclause=yes name=object_status dbname="object_status" )
+ column=(type=char(38) updatewhereclause=yes name=id dbname="id" )
+ column=(type=char(80) updatewhereclause=yes name=patient_name dbname="patient_name" )
+ column=(type=char(24) updatewhereclause=yes name=billing_id dbname="billing_id" )
+ retrieve="  SELECT object_sequence ,
+	p.cpr_id ,
+	o.context_object ,
+	o.object_key ,
+	o.object_date,
+	o.object_type ,
+	o.object_description ,
+	o.object_status ,
+	o.id,
+	dbo.fn_pretty_name(p.last_name ,
+						p.first_name ,
+						p.middle_name ,
+						p.name_suffix ,
+						p.name_prefix ,
+						p.degree ) as patient_name,
+	p.billing_id
+from dbo.fn_document_objects(:document_id) o
+	INNER JOIN p_Patient p
+	ON o.cpr_id = p.cpr_id" arguments=(("document_id", number)) )
+text(band=detail alignment="0" text="" border="6" color="0" x="18" y="12" height="132" width="2391" html.valueishtml="0"  name=t_1 visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=5 alignment="0" tabsequence=32766 border="0" color="0" x="27" y="16" height="68" width="302" format="[shortdate]" html.valueishtml="0"  name=object_date visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=11 alignment="0" tabsequence=0 border="0" color="0" x="27" y="84" height="52" width="338" html.valueishtml="0"  name=billing_id visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=7 alignment="0" tabsequence=32766 border="0" color="0" x="384" y="16" height="68" width="2011" format="[general]" html.valueishtml="0"  name=object_description visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+column(band=detail id=10 alignment="0" tabsequence=0 border="0" color="0" x="384" y="84" height="52" width="1842" html.valueishtml="0"  name=patient_name visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-8" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
+export.xhtml()
+ 

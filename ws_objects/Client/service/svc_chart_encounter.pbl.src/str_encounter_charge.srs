@@ -1,0 +1,25 @@
+﻿$PBExportHeader$str_encounter_charge.srs
+global type str_encounter_charge from structure
+	string		cpr_id
+	long		encounter_id
+	long		encounter_charge_id
+	long		problem_id
+	string		procedure_type
+	long		treatment_id
+	long		treatment_billing_id
+	string		procedure_id
+	string		description
+	string		cpt_code
+	string		modifier
+	string		other_modifiers
+	real		units
+	decimal { 2 }		charge
+	string		assessment_charge_bill_flag
+	string		charge_bill_flag
+	string		created_by
+	datetime		last_updated
+	string		last_updated_by
+	string		posted
+	long		billing_sequence		descriptor "comment" = "assessment sequence within a given charge"
+end type
+

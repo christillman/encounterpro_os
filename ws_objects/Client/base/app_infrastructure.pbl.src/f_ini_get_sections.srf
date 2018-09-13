@@ -1,0 +1,95 @@
+﻿$PBExportHeader$f_ini_get_sections.srf
+global type f_ini_get_sections from function_object
+end type
+
+forward prototypes
+global function integer f_ini_get_sections (string as_file, ref string as_sections[])
+end prototypes
+
+global function integer f_ini_get_sections (string as_file, ref string as_sections[]);//////////////////////////////////////////////////////////////////////////////
+//
+//	Function:  		of_GetSections
+//
+//	Access:  		public
+//
+//	Arguments:	
+// as_file			The .ini file.
+//	as_sections[]	An array of strings passed by reference.  This will store
+//						the section names retrieved from the .INI file
+//
+//	Returns:			Integer
+//						 #	the number of sections retrieved
+//						-1	error
+//						-2 if .INI file does not exist or has not been specified.
+//
+//	Description:  	Retrieves all sections from an .INI file
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Revision History
+//
+//	Version
+//	5.0   Initial version
+// 5.0.02 Initialize sections array to blanks at start of function
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	Copyright © 1996 Powersoft Corporation.  All Rights Reserved.
+//	Any distribution of the PowerBuilder Foundation Classes (PFC)
+//	source code by other than Powersoft is prohibited.
+//
+//////////////////////////////////////////////////////////////////////////////
+
+long			ll_length
+integer		li_file
+integer		li_rc
+long			ll_pos
+long			ll_first
+long			ll_last
+integer		li_section
+string		ls_line
+string		ls_section
+string		ls_sections[]
+
+SetPointer (Hourglass!)
+
+// Determine if file exists
+if not FileExists (as_file) then
+	return -2
+end if
+
+// Open file
+ll_length = FileLength (as_file)
+li_file = FileOpen (as_file, LineMode!)
+if li_file = -1 then	return -1
+
+// reset the array coming in
+as_sections = ls_sections
+//////////////////////////////////////////////////////////////////////////////
+// Retrieve all section names in the file
+//////////////////////////////////////////////////////////////////////////////
+do while li_rc >= 0
+	li_rc = FileRead (li_file, ls_line)
+	if li_rc = -1 then
+		return li_rc
+	elseif li_rc > 0 then
+		ll_first = Pos (ls_line, "[")
+		ll_last = Pos (ls_line, "]")
+		if ll_first > 0 and ll_last > 0 then
+			ls_line = trim(ls_line)
+			if Left (ls_line, 1) = "[" then
+				ll_pos = Pos (ls_line, "]")
+				ls_section = Mid (ls_line, 2, ll_pos - 2)
+				li_section++
+				as_sections[li_section] = ls_section
+			end if
+		end if
+	end if
+loop 
+
+// Close file and return
+FileClose (li_file)
+return li_section
+
+end function
+

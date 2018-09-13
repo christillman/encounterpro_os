@@ -1,0 +1,27 @@
+﻿$PBExportHeader$tf_get_test_procedures.srf
+global type tf_get_test_procedures from function_object
+end type
+
+forward prototypes
+global function integer tf_get_test_procedures (string ps_cpr_id, long pl_treatment_id, ref string ps_perform_procedure_id, ref string ps_collection_procedure_id)
+end prototypes
+
+global function integer tf_get_test_procedures (string ps_cpr_id, long pl_treatment_id, ref string ps_perform_procedure_id, ref string ps_collection_procedure_id);string ls_observation_id
+
+SELECT	max(observation_id)
+INTO	:ls_observation_id
+FROM p_Objective (NOLOCK)
+WHERE cpr_id = :ps_cpr_id
+AND treatment_id = :pl_treatment_id;
+if not tf_check() then return -1
+
+if isnull(ls_observation_id) then return 0
+
+if sqlca.sqlcode = 0 then
+	return tf_get_observation_procedures(ls_observation_id, ps_perform_procedure_id, ps_collection_procedure_id)
+else
+	return 0
+end if
+
+end function
+

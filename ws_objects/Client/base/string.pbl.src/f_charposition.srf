@@ -1,0 +1,17 @@
+﻿$PBExportHeader$f_charposition.srf
+global type f_charposition from function_object
+end type
+
+forward prototypes
+global function str_charposition f_charposition (long pl_line_number, long pl_char_position)
+end prototypes
+
+global function str_charposition f_charposition (long pl_line_number, long pl_char_position);str_charposition lstr_charposition
+
+lstr_charposition.line_number = pl_line_number
+lstr_charposition.char_position = pl_char_position
+
+return lstr_charposition
+
+end function
+

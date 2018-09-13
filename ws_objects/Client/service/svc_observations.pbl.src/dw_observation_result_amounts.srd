@@ -1,0 +1,16 @@
+﻿$PBExportHeader$dw_observation_result_amounts.srd
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=datetime updatewhereclause=yes name=begin_date dbname="p_Treatment_Item.begin_date" )
+ column=(type=real updatewhereclause=yes name=result_amount dbname="result_amount" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"p_Treatment_Item~" )  TABLE(NAME=~"p_Observation_Result~" ) COLUMN(NAME=~"p_Treatment_Item.begin_date~") COMPUTE(NAME=~"result_amount = convert(real,result_value)~")    JOIN (LEFT=~"p_Treatment_Item.cpr_id~"    OP =~"=~"RIGHT=~"p_Observation_Result.cpr_id~" )    JOIN (LEFT=~"p_Treatment_Item.treatment_id~"    OP =~"=~"RIGHT=~"p_Observation_Result.treatment_id~" )WHERE(    EXP1 =~"p_Observation_Result.cpr_id~"   OP =~"=~"    EXP2 =~":cpr_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Observation_Result.observation_id~"   OP =~"=~"    EXP2 =~":observation_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Observation_Result.result_sequence~"   OP =~"=~"    EXP2 =~":result_sequence~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"p_Observation_Result.location~"   OP =~"=~"    EXP2 =~":location~" ) ) ARG(NAME = ~"cpr_id~" TYPE = string)  ARG(NAME = ~"observation_id~" TYPE = string)  ARG(NAME = ~"result_sequence~" TYPE = number)  ARG(NAME = ~"location~" TYPE = string) " arguments=(("cpr_id", string),("observation_id", string),("result_sequence", number),("location", string))  sort="begin_date A " )
+text(band=header alignment="2" text="Result Date Time" border="0" color="0" x="5" y="4" height="64" width="603"  name=result_date_time_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Result Amount" border="0" color="0" x="613" y="4" height="64" width="393"  name=result_amount_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="1006" y="12" height="64" width="517" format="[shortdate] [time]"  name=begin_date edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=32766 border="0" color="0" x="562" y="12" height="64" width="411" format="[general]"  name=result_amount edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

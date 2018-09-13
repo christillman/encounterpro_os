@@ -1,0 +1,27 @@
+﻿$PBExportHeader$f_string_set_special_characters.srf
+global type f_string_set_special_characters from function_object
+end type
+
+forward prototypes
+global function string f_string_set_special_characters (string ps_string)
+end prototypes
+
+global function string f_string_set_special_characters (string ps_string);string ls_string
+
+ls_string = ps_string
+
+ls_string = f_string_substitute(ls_string, "~~n", "~n")
+ls_string = f_string_substitute(ls_string, "~~t", "~t")
+ls_string = f_string_substitute(ls_string, "~~v", "~v")
+ls_string = f_string_substitute(ls_string, "~~r", "~r")
+ls_string = f_string_substitute(ls_string, "~~f", "~f")
+ls_string = f_string_substitute(ls_string, "~~b", "~b")
+ls_string = f_string_substitute(ls_string, "~~~~", "~~")
+ls_string = f_string_substitute(ls_string, "~~'", "~'")
+ls_string = f_string_substitute(ls_string, "~~~"", "~"")
+
+return ls_string
+
+
+end function
+

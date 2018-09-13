@@ -1,0 +1,18 @@
+﻿$PBExportHeader$dw_graph_definition_restriction_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=96 color="553648127" )
+table(column=(type=char(24) update=yes updatewhereclause=yes key=yes name=user_id dbname="u_Graph_Definition_Restriction.user_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=graph_id dbname="u_Graph_Definition_Restriction.graph_id" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=series_sequence dbname="u_Graph_Definition_Restriction.series_sequence" )
+ column=(type=long update=yes updatewhereclause=yes key=yes name=restriction_sequence dbname="u_Graph_Definition_Restriction.restriction_sequence" )
+ column=(type=long update=yes updatewhereclause=yes name=restriction_id dbname="u_Graph_Definition_Restriction.restriction_id" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=description dbname="u_Graph_Definition_Restriction.description" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=restrict_in dbname="u_Graph_Definition_Restriction.restrict_in" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="u_Graph_Definition_Restriction.sort_sequence" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"u_Graph_Definition_Restriction~" ) COLUMN(NAME=~"u_Graph_Definition_Restriction.user_id~") COLUMN(NAME=~"u_Graph_Definition_Restriction.graph_id~") COLUMN(NAME=~"u_Graph_Definition_Restriction.series_sequence~") COLUMN(NAME=~"u_Graph_Definition_Restriction.restriction_sequence~") COLUMN(NAME=~"u_Graph_Definition_Restriction.restriction_id~") COLUMN(NAME=~"u_Graph_Definition_Restriction.description~") COLUMN(NAME=~"u_Graph_Definition_Restriction.restrict_in~") COLUMN(NAME=~"u_Graph_Definition_Restriction.sort_sequence~") COMPUTE(NAME=~"selected_flag=0~")WHERE(    EXP1 =~"u_Graph_Definition_Restriction.user_id~"   OP =~"=~"    EXP2 =~":user_id~"    LOGIC =~"and~" ) WHERE(    EXP1 =~"u_Graph_Definition_Restriction.graph_id~"   OP =~"=~"    EXP2 =~":graph_id~" ) ) ARG(NAME = ~"user_id~" TYPE = string)  ARG(NAME = ~"graph_id~" TYPE = number) " update="u_Graph_Definition_Restriction" updatewhere=0 updatekeyinplace=no arguments=(("user_id", string),("graph_id", number))  sort="sort_sequence A description A " )
+column(band=detail id=6 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="76" width="2345" format="[general]"  name=description edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_empty_domain_item.srf
+global type f_empty_domain_item from function_object
+end type
+
+forward prototypes
+global function str_domain_item f_empty_domain_item ()
+end prototypes
+
+global function str_domain_item f_empty_domain_item ();str_domain_item lstr_domain_item
+
+
+setnull(lstr_domain_item.domain_owner_id)
+setnull(lstr_domain_item.domain_item_owner_id)
+setnull(lstr_domain_item.domain)
+setnull(lstr_domain_item.domain_item)
+setnull(lstr_domain_item.domain_item_description)
+
+
+return lstr_domain_item
+
+end function
+

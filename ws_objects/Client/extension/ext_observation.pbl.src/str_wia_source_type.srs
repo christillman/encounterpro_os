@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_wia_source_type.srs
+global type str_wia_source_type from structure
+	string		external_source_type
+	integer		device_count
+	str_wia_device		device[]
+end type
+

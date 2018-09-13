@@ -1,0 +1,27 @@
+﻿$PBExportHeader$f_code_display.srf
+global type f_code_display from function_object
+end type
+
+forward prototypes
+global function string f_code_display (string ps_code, string ps_description)
+end prototypes
+
+global function string f_code_display (string ps_code, string ps_description);string ls_display
+
+
+if len(ps_description) > 0 then
+	ls_display = ps_description
+	if ps_description <> ps_code then
+		ls_display += " (" + ps_code + ")"
+	end if
+else
+	ls_display = ps_code
+end if
+
+
+	
+	
+return ls_display
+
+end function
+

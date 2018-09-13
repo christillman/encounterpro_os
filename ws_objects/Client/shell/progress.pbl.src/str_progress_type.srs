@@ -1,0 +1,12 @@
+﻿$PBExportHeader$str_progress_type.srs
+global type str_progress_type from structure
+	string		progress_type
+	string		display_flag
+	string		display_style
+	string		soap_display_style
+	string		progress_key_required_flag
+	string		progress_key_enumerated_flag
+	string		progress_key_object
+	long		sort_sequence
+end type
+

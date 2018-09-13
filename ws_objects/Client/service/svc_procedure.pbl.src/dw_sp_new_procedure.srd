@@ -1,0 +1,13 @@
+﻿$PBExportHeader$dw_sp_new_procedure.srd
+release 8;
+datawindow(units=0 timer_interval=0 color=1073741824 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=char(24) updatewhereclause=yes name=procedure_id dbname="procedure_id" )
+ procedure="1 execute dbo.sp_new_procedure;1 @ps_procedure_type = :ps_procedure_type, @ps_cpt_code = :ps_cpt_code, @pdc_charge = :pdc_charge, @ps_procedure_category_id = :ps_procedure_category_id, @ps_description = :ps_description, @ps_service = :ps_service, @ps_vaccine_id = :ps_vaccine_id, @pr_units = :pr_units, @ps_modifier = :ps_modifier, @ps_other_modifiers = :ps_other_modifiers, @ps_billing_id = :ps_billing_id, @ps_location_domain = :ps_location_domain, @pi_risk_level = :pi_risk_level, @ps_default_bill_flag = :ps_default_bill_flag" arguments=(("ps_procedure_type", string),("ps_cpt_code", string),("pdc_charge", number),("ps_procedure_category_id", string),("ps_description", string),("ps_service", string),("ps_vaccine_id", string),("pr_units", number),("ps_modifier", string),("ps_other_modifiers", string),("ps_billing_id", string),("ps_location_domain", string),("pi_risk_level", number),("ps_default_bill_flag", string)) )
+text(band=header alignment="2" text="Procedure Id" border="0" color="33554432" x="5" y="4" height="64" width="686" html.valueishtml="0"  name=procedure_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="33554432" x="5" y="4" height="76" width="686" format="[general]" html.valueishtml="0"  name=procedure_id visible="1" edit.limit=24 edit.case=any edit.autoselect=yes edit.autohscroll=yes edit.imemode=0  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" netscapelayers="0" )

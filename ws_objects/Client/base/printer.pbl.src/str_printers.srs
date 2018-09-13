@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_printers.srs
+global type str_printers from structure
+	integer		printer_count
+	str_printer		printers[]
+end type
+

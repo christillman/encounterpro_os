@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_default_attachment_path.srf
+global type f_default_attachment_path from function_object
+end type
+
+forward prototypes
+global function string f_default_attachment_path ()
+end prototypes
+
+global function string f_default_attachment_path ();string ls_path
+
+if len(object_file_server) > 1 then
+	ls_path = "\\" + object_file_server
+else
+	ls_path = object_file_server + ":"
+end if
+
+ls_path += "\" + object_file_path
+
+return ls_path
+
+end function
+

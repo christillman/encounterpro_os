@@ -1,0 +1,25 @@
+﻿$PBExportHeader$f_char_position_compare.srf
+global type f_char_position_compare from function_object
+end type
+
+forward prototypes
+global function integer f_char_position_compare (str_charposition pstr_charposition1, str_charposition pstr_charposition2)
+end prototypes
+
+global function integer f_char_position_compare (str_charposition pstr_charposition1, str_charposition pstr_charposition2);// Returns:
+// -1		pstr_charposition1 < pstr_charposition2
+// 0		pstr_charposition1 = pstr_charposition2
+// 1 		pstr_charposition1 > pstr_charposition2
+
+if pstr_charposition1.line_number < pstr_charposition2.line_number then return -1
+if pstr_charposition1.line_number > pstr_charposition2.line_number then return 1
+
+// Line numbers are equal, check the charpos
+
+if pstr_charposition1.char_position < pstr_charposition2.char_position then return -1
+if pstr_charposition1.char_position > pstr_charposition2.char_position then return 1
+
+return 0
+
+end function
+

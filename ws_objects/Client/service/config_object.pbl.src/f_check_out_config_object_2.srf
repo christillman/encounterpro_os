@@ -1,0 +1,30 @@
+﻿$PBExportHeader$f_check_out_config_object_2.srf
+global type f_check_out_config_object_2 from function_object
+end type
+
+forward prototypes
+global function integer f_check_out_config_object_2 (ref str_config_object_info pstr_config_object, string ps_version_description)
+end prototypes
+
+global function integer f_check_out_config_object_2 (ref str_config_object_info pstr_config_object, string ps_version_description);long ll_sts
+u_config_object_manager lo_config_object_manager
+string ls_config_object_data
+
+// Make sure the config object has a version record
+ll_sts = f_config_object_check_version(pstr_config_object)
+if ll_sts <= 0 then return -1
+
+
+ll_sts =  sqlca.config_checkout(pstr_config_object.config_object_id, ps_version_description, current_user.user_id)
+if not tf_check() then return -1
+if ll_sts < 0 then
+	log.log(po_null, "f_check_out_config_object_2:0013", "Error checking out config object (" + string(ll_sts) + ")", 4)
+	return -1
+end if
+
+
+return 1
+
+
+end function
+

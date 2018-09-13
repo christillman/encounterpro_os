@@ -1,0 +1,10 @@
+﻿$PBExportHeader$str_location_domain.srs
+global type str_location_domain from structure
+	string		location_domain
+	string		description
+	long		owner_id
+	string		status
+	long		location_count
+	str_location		location[]
+end type
+

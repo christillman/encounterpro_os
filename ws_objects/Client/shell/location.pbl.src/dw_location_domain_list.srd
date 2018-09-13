@@ -1,0 +1,12 @@
+﻿$PBExportHeader$dw_location_domain_list.srd
+release 6;
+datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=100 color="553648127" )
+table(column=(type=char(12) update=yes updatewhereclause=yes key=yes name=location_domain dbname="c_Location_Domain.location_domain" )
+ column=(type=char(40) update=yes updatewhereclause=yes name=description dbname="c_Location_Domain.description" )
+ column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Location_Domain~" ) COLUMN(NAME=~"c_Location_Domain.location_domain~") COLUMN(NAME=~"c_Location_Domain.description~") COMPUTE(NAME=~"selected_flag=0~")) " update="c_Location_Domain" updatewhere=0 updatekeyinplace=no  sort="description A " )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="76" width="1115" format="[general]"  name=description edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no edit.displayonly=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" )
+htmltable(border="1" cellpadding="0" cellspacing="0" generatecss="no" nowrap="yes")

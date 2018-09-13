@@ -1,0 +1,77 @@
+﻿$PBExportHeader$f_get_progress_audit.srf
+global type f_get_progress_audit from function_object
+end type
+
+forward prototypes
+global function str_progress_list f_get_progress_audit (string ps_cpr_id, string ps_context_object, long pl_object_key)
+end prototypes
+
+global function str_progress_list f_get_progress_audit (string ps_cpr_id, string ps_context_object, long pl_object_key);// This function gets all of the progress records associated with a particular object
+
+long ll_rows
+integer li_count
+long i
+string ls_progress_short
+string ls_progress_long
+string ls_progress
+string ls_temp1
+string ls_temp2
+long ll_attachment_id
+u_ds_data luo_progress
+str_progress_type lstr_progress_type[]
+integer li_progress_type_count
+long ll_pt
+str_progress_list lstr_progress
+string ls_progress_key
+
+li_count = 0
+luo_progress = CREATE u_ds_data
+luo_progress.set_dataobject("dw_sp_get_progress_audit")
+
+ll_rows = luo_progress.retrieve(ps_cpr_id, ps_context_object, pl_object_key)
+
+// The records are sorted by progress_sequence (descending)
+for i = 1 to ll_rows
+	ls_progress_key = luo_progress.object.progress_key[i]
+	ls_progress_short = luo_progress.object.progress_value[i]
+	ls_progress_long = luo_progress.object.progress[i]
+	ls_progress = f_progress_value(ls_progress_short, ls_progress_long)
+	
+	ll_attachment_id = luo_progress.object.attachment_id[i]
+	
+	// If we have a key but no valuess then this record is a delete record
+	if isnull(ls_progress_short) &
+	  and isnull(ls_progress_long) &
+	  and isnull(ll_attachment_id) &
+	  and not isnull(ls_progress_key) then ls_progress = "<Deleted>"
+	
+	li_count += 1
+	lstr_progress.progress[li_count].progress_sequence = luo_progress.object.progress_sequence[i]
+	lstr_progress.progress[li_count].encounter_id = luo_progress.object.encounter_id[i]
+	lstr_progress.progress[li_count].user_id = luo_progress.object.user_id[i]
+	lstr_progress.progress[li_count].progress_date_time = luo_progress.object.progress_date_time[i]
+	lstr_progress.progress[li_count].progress_type = luo_progress.object.progress_type[i]
+	lstr_progress.progress[li_count].progress_key = luo_progress.object.progress_key[i]
+	lstr_progress.progress[li_count].progress = ls_progress
+	lstr_progress.progress[li_count].attachment_id = ll_attachment_id
+	lstr_progress.progress[li_count].created = luo_progress.object.created[i]
+	lstr_progress.progress[li_count].created_by = luo_progress.object.created_by[i]
+
+	// Add the progress type structure
+	li_progress_type_count = f_get_progress_types(ps_cpr_id, luo_progress.object.progress_type[i], ps_context_object, pl_object_key, lstr_progress_type)
+	if li_progress_type_count > 0 then
+		lstr_progress.progress[li_count].progress_type_properties = lstr_progress_type[1]
+	end if
+
+	// Populate the progress_key_description and progress_note_description fields
+	f_progress_description(lstr_progress.progress[li_count])
+next
+
+DESTROY luo_progress
+
+lstr_progress.progress_count = li_count
+
+return lstr_progress
+
+end function
+

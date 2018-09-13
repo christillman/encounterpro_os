@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_set_progress.srf
+global type f_set_progress from function_object
+end type
+
+forward prototypes
+global function integer f_set_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_risk_level, long pl_attachment_id, long pl_patient_workplan_item_id)
+end prototypes
+
+global function integer f_set_progress (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_risk_level, long pl_attachment_id, long pl_patient_workplan_item_id);integer li_diagnosis_sequence
+string ls_severity
+
+setnull(li_diagnosis_sequence)
+setnull(ls_severity)
+
+return f_set_patient_object_progress(ps_cpr_id, &
+							ps_context_object, &
+							pl_object_key, &
+							ps_progress_type, &
+							ps_progress_key, &
+							ps_progress, &
+							pdt_progress_date_time, &
+							pl_risk_level, &
+							pl_attachment_id, &
+							pl_patient_workplan_item_id, &
+							li_diagnosis_sequence, &
+							ls_severity, &
+							current_user.user_id, &
+							true)
+
+
+end function
+

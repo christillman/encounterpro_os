@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_hm_policy.srs
+global type str_hm_policy from structure
+	long		policy_sequence
+	string		policy_event
+	string		include_new_flag
+	long		time_offset_amount
+	string		time_offset_unit
+	long		action_workplan_id
+	string		action_workplan_recipient
+end type
+

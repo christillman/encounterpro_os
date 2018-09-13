@@ -1,0 +1,16 @@
+﻿$PBExportHeader$f_display_menu.srf
+global type f_display_menu from function_object
+end type
+
+forward prototypes
+global function integer f_display_menu (long pl_menu_id, boolean pb_auto_singleton)
+end prototypes
+
+global function integer f_display_menu (long pl_menu_id, boolean pb_auto_singleton);str_attributes lstr_attributes
+
+lstr_attributes.attribute_count = 0
+
+return f_display_menu_remainder(pl_menu_id, pb_auto_singleton, 0, lstr_attributes)
+
+end function
+

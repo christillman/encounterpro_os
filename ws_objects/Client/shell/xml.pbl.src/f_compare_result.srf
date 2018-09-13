@@ -1,0 +1,69 @@
+﻿$PBExportHeader$f_compare_result.srf
+global type f_compare_result from function_object
+end type
+
+forward prototypes
+global function boolean f_compare_result (str_p_observation_result pstr_result, string ps_result_unit, string ps_operation, string ps_compare_value)
+end prototypes
+
+global function boolean f_compare_result (str_p_observation_result pstr_result, string ps_result_unit, string ps_operation, string ps_compare_value);string ls_value
+decimal ld_value
+decimal ld_compare_value
+boolean lb_numeric
+u_unit luo_unit
+
+if upper(pstr_result.result_amount_flag) = "Y" then
+	ls_value = pstr_result.result_value
+	luo_unit = unit_list.find_unit(pstr_result.result_unit)
+	if isnull(luo_unit) then return false
+	if lower(luo_unit.unit_type) = "number" then
+		lb_numeric = true
+		if len(ps_result_unit) > 0 then
+			ls_value = luo_unit.convert(ps_result_unit, ls_value)
+		end if
+	else
+		lb_numeric = false
+	end if
+else
+	ls_value = pstr_result.result
+	lb_numeric = isnumber(ls_value)
+end if
+
+if lb_numeric then
+	ld_value = dec(ls_value)
+	if isnumber(ps_compare_value) then
+		ld_compare_value = dec(ps_compare_value)
+	else
+		return false
+	end if
+	CHOOSE CASE lower(ps_operation)
+		CASE "="
+			if ld_value = ld_compare_value then return true
+		CASE "<"
+			if ld_value < ld_compare_value then return true
+		CASE "<="
+			if ld_value <= ld_compare_value then return true
+		CASE ">"
+			if ld_value > ld_compare_value then return true
+		CASE ">="
+			if ld_value >= ld_compare_value then return true
+	END CHOOSE
+else
+	CHOOSE CASE lower(ps_operation)
+		CASE "="
+			if lower(ls_value) = lower(ps_compare_value) then return true
+		CASE "<"
+			if lower(ls_value) < lower(ps_compare_value) then return true
+		CASE "<="
+			if lower(ls_value) <= lower(ps_compare_value) then return true
+		CASE ">"
+			if lower(ls_value) > lower(ps_compare_value) then return true
+		CASE ">="
+			if lower(ls_value) >= lower(ps_compare_value) then return true
+	END CHOOSE
+end if
+
+return false
+
+end function
+

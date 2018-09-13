@@ -1,0 +1,27 @@
+﻿$PBExportHeader$f_crash_clean_up.srf
+global type f_crash_clean_up from function_object
+end type
+
+forward prototypes
+global function integer f_crash_clean_up ()
+end prototypes
+
+global function integer f_crash_clean_up ();
+if cpr_mode = "CLIENT" then
+	// Don't remove users or services owned by system users
+	DELETE o_user_service_lock
+	WHERE computer_id = :computer_id
+	AND user_id NOT LIKE '#%';
+	if not tf_check() then return -1
+	
+	DELETE o_users
+	WHERE computer_id = :computer_id
+	AND user_id NOT LIKE '#%';
+	if not tf_check() then return -1
+end if
+
+return 1
+
+
+end function
+

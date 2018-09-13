@@ -1,0 +1,71 @@
+﻿$PBExportHeader$f_print_cover_page.srf
+global type f_print_cover_page from function_object
+end type
+
+forward prototypes
+global function integer f_print_cover_page (u_component_wp_item_document puo_document)
+end prototypes
+
+global function integer f_print_cover_page (u_component_wp_item_document puo_document);unsignedlong lul_printjob
+string ls_temp
+string ls_document_route
+string ls_communication_type
+string ls_via_address
+u_ds_data luo_data
+long ll_rows
+string ls_ordered_for
+string ls_name
+string ls_patient_name
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_document_cover_page")
+ll_rows = luo_data.retrieve("Document", puo_document.cpr_id, puo_document.patient_workplan_item_id)
+if ll_rows <= 0 then return -1
+
+luo_data.object.message_sender[1] = user_list.user_full_name(puo_document.ordered_by)
+
+ls_document_route = puo_document.dispatch_method
+
+// get the communication_type
+SELECT communication_type
+INTO :ls_communication_type
+FROM c_Document_Route
+WHERE document_route = :ls_document_route;
+if not tf_check() then return -1
+if sqlca.sqlcode = 100 then
+	log.log(po_null, "f_print_cover_page:0028", "No current patient", 4)
+	return -1
+end if
+
+if isnull(ls_communication_type) and lower(ls_document_route) = "printer" then
+	ls_communication_type = "Printer"
+end if
+
+luo_data.object.communication_type[1] = ls_communication_type
+
+
+luo_data.object.message_subject[1] = puo_document.get_attribute("message_subject")
+
+luo_data.object.message[1] = puo_document.get_attribute("message")
+
+lul_printjob = printopen("Document Cover Page " + string(puo_document.patient_workplan_item_id), false)
+
+// If the ordered-for is the patient, then add their name to the cover page
+ls_ordered_for = luo_data.object.ordered_for[1]
+if upper(ls_ordered_for) = "#PATIENT" then
+	ls_patient_name = puo_document.get_property_value("patient.FullName")
+	if len(ls_patient_name) > 0 then
+		luo_data.object.user_full_name[1] = "Patient:  " + ls_patient_name
+	end if
+end if
+
+printdatawindow(lul_printjob, luo_data)
+
+printclose(lul_printjob)
+
+DESTROY luo_data
+
+return 1
+
+end function
+

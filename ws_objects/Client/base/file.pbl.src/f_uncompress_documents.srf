@@ -1,0 +1,87 @@
+﻿$PBExportHeader$f_uncompress_documents.srf
+global type f_uncompress_documents from function_object
+end type
+
+forward prototypes
+global function integer f_uncompress_documents (ref str_document_file pstr_compressed_document, ref str_document_files pstr_uncompressed_documents, ref string ps_destpath)
+end prototypes
+
+global function integer f_uncompress_documents (ref str_document_file pstr_compressed_document, ref str_document_files pstr_uncompressed_documents, ref string ps_destpath);string ls_destpath
+string ls_compressed_file
+boolean lb_subdirs
+integer li_sts
+string lsa_items[]
+string lsa_paths[]
+string lsa_files[]
+long ll_count
+long i
+blob lbl_file
+string ls_drive
+string ls_directory
+string	ls_filename
+string ls_extension
+str_file_attributes lstr_file_attributes
+
+if lower(pstr_compressed_document.filetype) <> "zip" then
+	log.log(po_null, "f_uncompress_documents:0018", "compressed filetype not supported (" + pstr_compressed_document.filetype + ")", 4)
+	return -1
+end if
+
+ls_compressed_file = f_temp_file(pstr_compressed_document.filetype)
+li_sts = log.file_write(pstr_compressed_document.filedata, ls_compressed_file)
+if li_sts <= 0 then return -1
+
+lb_subdirs = false
+
+ls_destpath = temp_path + "\" + f_new_guid()
+
+li_sts = createdirectory(ls_destpath)
+if li_sts <= 0 then return -1
+
+TRY
+	common_thread.eprolibnet4.unzip(ls_compressed_file, ls_destpath, lb_subdirs, lsa_items)
+CATCH (oleruntimeerror lt_error)
+	log.log(po_null, "f_uncompress_documents:0036", "Error UnZipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+	return -1
+END TRY
+
+pstr_uncompressed_documents.file_count = 0
+
+ll_count = log.get_all_files(ls_destpath + "\*.*", lsa_files)
+for i = 1 to ll_count
+	lsa_paths[i] = ls_destpath + "\" + lsa_files[i]
+next
+
+for i = 1 to ll_count
+	// Skip the shorthand directories
+	if lsa_files[i] = "." or lsa_files[i] = ".." then continue
+	
+	// Skip the file if we can't get its properties
+	li_sts = log.file_attributes(lsa_paths[i], lstr_file_attributes)
+	if li_sts <= 0 then continue
+	
+	// Skip the directories
+	if lstr_file_attributes.subdirectory then continue
+	
+	li_sts = f_parse_filepath(lsa_paths[i], ls_drive, ls_directory, ls_filename, ls_extension )
+	if li_sts <= 0 then continue
+	
+	// Read the file into the structure
+	li_sts = log.file_read(lsa_paths[i], lbl_file)
+	if li_sts <= 0 then continue
+	
+	pstr_uncompressed_documents.file_count += 1
+	pstr_uncompressed_documents.file[pstr_uncompressed_documents.file_count].filename = ls_filename
+	pstr_uncompressed_documents.file[pstr_uncompressed_documents.file_count].filetype = ls_extension
+	pstr_uncompressed_documents.file[pstr_uncompressed_documents.file_count].filedescription = ls_filename
+	pstr_uncompressed_documents.file[pstr_uncompressed_documents.file_count].modifieddate = datetime(lstr_file_attributes.lastwritedate, lstr_file_attributes.lastwritetime)
+	pstr_uncompressed_documents.file[pstr_uncompressed_documents.file_count].filedata = lbl_file
+next
+
+ps_destpath = ls_destpath
+
+return 1
+
+
+end function
+

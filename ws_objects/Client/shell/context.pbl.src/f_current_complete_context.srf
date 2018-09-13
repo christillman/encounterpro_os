@@ -1,0 +1,12 @@
+﻿$PBExportHeader$f_current_complete_context.srf
+global type f_current_complete_context from function_object
+end type
+
+forward prototypes
+global function str_complete_context f_current_complete_context ()
+end prototypes
+
+global function str_complete_context f_current_complete_context ();return f_get_complete_context()
+
+end function
+

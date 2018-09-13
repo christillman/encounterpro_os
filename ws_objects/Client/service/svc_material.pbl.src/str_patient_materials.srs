@@ -1,0 +1,7 @@
+﻿$PBExportHeader$str_patient_materials.srs
+global type str_patient_materials from structure
+	long		material_count
+	str_patient_material		material[]
+	boolean		includes_data
+end type
+

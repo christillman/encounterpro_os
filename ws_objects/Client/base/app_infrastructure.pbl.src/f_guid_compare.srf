@@ -1,0 +1,22 @@
+﻿$PBExportHeader$f_guid_compare.srf
+global type f_guid_compare from function_object
+end type
+
+forward prototypes
+global function boolean f_guid_compare (string ps_guid1, string ps_guid2)
+end prototypes
+
+global function boolean f_guid_compare (string ps_guid1, string ps_guid2);
+if left(ps_guid1, 1) <> "{" then ps_guid1 = "{" + ps_guid1
+if right(ps_guid1, 1) <> "}" then ps_guid1 = ps_guid1 + "}"
+
+if left(ps_guid2, 1) <> "{" then ps_guid2 = "{" + ps_guid2
+if right(ps_guid2, 1) <> "}" then ps_guid2 = ps_guid2 + "}"
+
+if upper(ps_guid1) = upper(ps_guid2) then return true
+
+return false
+
+
+end function
+

@@ -1,0 +1,27 @@
+﻿$PBExportHeader$str_c_observation_result.srs
+global type str_c_observation_result from structure
+	string		observation_id
+	integer		result_sequence
+	string		result_type
+	string		result_unit
+	string		result
+	string		result_amount_flag
+	string		print_result_flag
+	integer		severity
+	string		abnormal_flag
+	string		specimen_type
+	decimal { 0 }		specimen_amount
+	string		external_source
+	long		property_id
+	string		service
+	string		print_result_separator
+	string		unit_preference
+	string		display_mask
+	integer		sort_sequence
+	string		status
+	string		normal_range
+	string		property_address
+	string		id
+	string		observation_description
+end type
+

@@ -1,0 +1,21 @@
+﻿$PBExportHeader$f_attribute_value_substitute_multiple.srf
+global type f_attribute_value_substitute_multiple from function_object
+end type
+
+forward prototypes
+global subroutine f_attribute_value_substitute_multiple (ref str_attributes pstr_attributes_to_substitute, str_complete_context pstr_context, str_attributes pstr_attributes)
+end prototypes
+
+global subroutine f_attribute_value_substitute_multiple (ref str_attributes pstr_attributes_to_substitute, str_complete_context pstr_context, str_attributes pstr_attributes);// This function loops through all of the attribute values in the passed in attributes structure and performs a substitution using the
+// passed in context
+
+long i
+
+for i = 1 to pstr_attributes_to_substitute.attribute_count
+	pstr_attributes_to_substitute.attribute[i].value = f_attribute_value_substitute_string(pstr_attributes_to_substitute.attribute[i].value, pstr_context, pstr_attributes)
+next
+
+return
+
+end subroutine
+

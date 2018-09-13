@@ -1,0 +1,31 @@
+﻿$PBExportHeader$f_context_object_short.srf
+global type f_context_object_short from function_object
+end type
+
+forward prototypes
+global function string f_context_object_short (string ps_context_object)
+end prototypes
+
+global function string f_context_object_short (string ps_context_object);// Returns a 2-byte version of the context object
+
+CHOOSE CASE lower(ps_context_object)
+	CASE "general"
+		return "GN"
+	CASE "patient"
+		return "PT"
+	CASE "encounter"
+		return "EN"
+	CASE "assessment"
+		return "AS"
+	CASE "treatment"
+		return "TR"
+	CASE "attachment"
+		return "AT"
+	CASE "observation"
+		return "OB"
+END CHOOSE
+
+return "GN"
+
+end function
+

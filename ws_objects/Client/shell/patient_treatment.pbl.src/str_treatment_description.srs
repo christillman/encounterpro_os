@@ -1,0 +1,56 @@
+﻿$PBExportHeader$str_treatment_description.srs
+global type str_treatment_description from structure
+	long		treatment_id
+	string		treatment_type
+	string		treatment_key
+	string		treatment_description
+	datetime		begin_date
+	datetime		end_date
+	string		treatment_status
+	integer		selected_flag
+	long		color
+	long		open_encounter_id
+	long		close_encounter_id
+	long		parent_treatment_id
+	integer		problem_count
+	long		problem_ids[]
+	long		attachment_count
+	string		observation_id
+	long		encounter_id
+	string		cpt_code
+	string		drug_id
+	string		package_id
+	string		specialty_id
+	string		procedure_id
+	string		location
+	string		ordered_by
+	long		material_id
+	string		treatment_mode
+	string		observation_type
+	datetime		created
+	string		created_by
+	real		dose_amount
+	string		dose_unit
+	real		duration_amount
+	string		duration_unit
+	string		duration_prn
+	real		dispense_amount
+	real		office_dispense_amount
+	string		dispense_unit
+	integer		administration_sequence
+	string		administer_frequency
+	integer		refills
+	string		brand_name_required
+	str_access_control_list		access_control_list
+	string		maker_id
+	string		lot_number
+	datetime		expiration_date
+	str_id_list		id_list
+	string		specimen_id
+	string		ordered_by_supervisor
+	datetime		appointment_date_time
+	string		ordered_for
+	string		completed_by
+	long		dispatch_encounter_id
+end type
+

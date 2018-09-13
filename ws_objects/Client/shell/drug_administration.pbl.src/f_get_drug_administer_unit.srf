@@ -1,0 +1,29 @@
+﻿$PBExportHeader$f_get_drug_administer_unit.srf
+global type f_get_drug_administer_unit from function_object
+end type
+
+forward prototypes
+global function integer f_get_drug_administer_unit (string ps_drug_id, string ps_administer_frequency, ref string psa_unit_id[], ref string psa_descriptions[])
+end prototypes
+
+global function integer f_get_drug_administer_unit (string ps_drug_id, string ps_administer_frequency, ref string psa_unit_id[], ref string psa_descriptions[]);integer li_sts
+long ll_rows
+long i
+u_ds_data luo_data
+
+luo_data = CREATE u_ds_data
+luo_data.set_dataobject("dw_drug_administer_units")
+
+ll_rows = luo_data.retrieve(ps_drug_id, ps_administer_frequency)
+
+for i = 1 to ll_rows
+	psa_unit_id[i] = luo_data.object.unit_id[i]
+	psa_descriptions[i] = luo_data.object.description[i]
+next
+
+DESTROY luo_data
+
+return ll_rows
+
+end function
+

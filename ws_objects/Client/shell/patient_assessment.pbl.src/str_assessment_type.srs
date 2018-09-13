@@ -1,0 +1,9 @@
+﻿$PBExportHeader$str_assessment_type.srs
+global type str_assessment_type from structure
+	string		assessment_type
+	string		description
+	string		button
+	string		icon_open
+	string		icon_closed
+end type
+

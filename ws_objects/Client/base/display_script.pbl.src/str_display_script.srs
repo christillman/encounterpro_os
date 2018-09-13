@@ -1,0 +1,20 @@
+﻿$PBExportHeader$str_display_script.srs
+global type str_display_script from structure
+	long		display_script_id
+	string		context_object
+	string		display_script
+	string		description
+	string		example
+	string		status
+	datetime		last_updated
+	string		updated_by
+	string		id
+	long		owner_id
+	string		parent_config_object_id
+	string		original_id
+	string		script_type
+	string		default_root_element
+	long		display_command_count
+	str_c_display_script_command		display_command[]
+end type
+

@@ -1,0 +1,233 @@
+﻿$PBExportHeader$f_config_object_import_xml.srf
+global type f_config_object_import_xml from function_object
+end type
+
+forward prototypes
+global function integer f_config_object_import_xml (string ps_object_xml, ref str_config_object_version pstr_config_object_version)
+end prototypes
+
+global function integer f_config_object_import_xml (string ps_object_xml, ref str_config_object_version pstr_config_object_version);long ll_sts
+string ls_config_object_id
+integer li_sts
+u_xml_document lxml_doc
+PBDOM_ELEMENT lo_root
+PBDOM_ATTRIBUTE pbdom_attribute_array[]
+PBDOM_ELEMENT lo_elem[]
+string ls_root
+long i
+str_config_object_version lstr_version
+long ll_count
+long ll_attribute_count
+string ls_tag
+string ls_value
+long j
+string ls_context_object
+string ls_long_description
+string ls_config_object_category
+string ls_copyright_status
+string ls_copyable
+
+li_sts = f_get_xml_document(ps_object_xml, lxml_doc)
+if li_sts <= 0 then
+	log.log(po_null, "f_config_object_import_xml:0024", "Error:  Object data is not valid XML", 4)
+	return -1
+end if
+
+lstr_version = f_empty_config_object_version()
+
+setnull(ls_context_object)
+setnull(ls_long_description)
+setnull(ls_config_object_category)
+setnull(ls_copyright_status)
+setnull(ls_copyable)
+
+TRY
+	lo_root = lxml_doc.XML_Document.GetRootElement()
+	ls_root = lo_root.GetName()
+	
+	lo_root.GetChildElements(ref lo_elem)
+	ll_count = UpperBound(lo_elem)
+
+	lo_root.GetAttributes(ref pbdom_attribute_array[])
+	ll_attribute_count = UpperBound(pbdom_attribute_array)
+CATCH (pbdom_exception lo_error)
+	log.log(po_null, "f_config_object_import_xml:0046", "Error - " + lo_error.text, 4)
+	return -1
+END TRY
+
+
+if lower(ls_root) <> "epconfigobjects" then
+	log.log(po_null, "f_config_object_import_xml:0052", "Error:  Root element tag is not ~"EPConfigObjects~"", 4)
+	return -1
+end if
+
+//<EPConfigObjects ObjectEncodingMethod="SQL">
+// Scan the root attributes
+for i = 1 to ll_attribute_count
+	choose case lower(pbdom_attribute_array[i].GetName())
+		case "objectencodingmethod"
+			lstr_version.object_encoding_method = pbdom_attribute_array[i].GetText()
+	end choose
+next
+
+if isnull(lstr_version.object_encoding_method) then lstr_version.object_encoding_method = "ComObjMgr"
+
+// Scan the first level elements
+for i = 1 to ll_count
+	ls_tag = lo_elem[i].getname()
+	ls_value = lo_elem[i].gettexttrim( )
+	
+	CHOOSE CASE lower(ls_tag)
+		CASE "configobject"
+			lo_elem[i].GetAttributes(ref pbdom_attribute_array[])
+			ll_attribute_count = UpperBound(pbdom_attribute_array)
+			for j = 1 to ll_attribute_count
+				ls_value = pbdom_attribute_array[j].GetText()
+				CHOOSE CASE lower(pbdom_attribute_array[j].GetName())
+					CASE "config_object_id"
+					CASE "config_object_type"
+					CASE "context_object"
+						ls_context_object = ls_value
+					CASE "description"
+					CASE "long_description"
+						ls_long_description = ls_value
+					CASE "config_object_category"
+						ls_config_object_category = ls_value
+					CASE "owner_id"
+					CASE "owner_description"
+					CASE "created"
+					CASE "created_by"
+					CASE "status"
+					CASE "copyright_status"
+						ls_copyright_status = ls_value
+					CASE "copyable"
+						if isnumber(ls_value) then
+							if long(ls_value) = 0 then
+								ls_copyable = "N"
+							else
+								ls_copyable = "Y"
+							end if
+						else
+							if f_string_to_boolean(ls_value) then
+								ls_copyable = "Y"
+							else
+								ls_copyable = "N"
+							end if
+						end if
+				END CHOOSE
+			next
+		CASE "configobjectversion"
+			lo_elem[i].GetAttributes(ref pbdom_attribute_array[])
+			ll_attribute_count = UpperBound(pbdom_attribute_array)
+			for j = 1 to ll_attribute_count
+				ls_value = pbdom_attribute_array[j].GetText()
+				CHOOSE CASE lower(pbdom_attribute_array[j].GetName())
+					CASE "config_object_id"
+						lstr_version.config_object_id = ls_value
+					CASE "version"
+						lstr_version.version = long(ls_value)
+					CASE "description"
+						lstr_version.description = ls_value
+					CASE "version_description"
+						lstr_version.version_description = ls_value
+					CASE "config_object_type"
+						lstr_version.config_object_type = ls_value
+					CASE "owner_id"
+						lstr_version.owner_id = long(ls_value)
+					CASE "created"
+						lstr_version.created = f_xml_datetime(ls_value)
+					CASE "created_by"
+						lstr_version.created_by = ls_value
+					CASE "created_from_version"
+						lstr_version.created_from_version = long(ls_value)
+					CASE "status"
+						lstr_version.status = ls_value
+					CASE "status_date_time"
+						lstr_version.status_date_time = f_xml_datetime(ls_value)
+					CASE "release_status"
+						lstr_version.release_status = ls_value
+					CASE "release_status_date_time"
+						lstr_version.release_status_date_time = f_xml_datetime(ls_value)
+					CASE "object_encoding_method"
+						lstr_version.object_encoding_method = ls_value
+				END CHOOSE
+			next
+		CASE "objectid"
+			lstr_version.config_object_id = ls_value
+		CASE "objecttype"
+			lstr_version.config_object_type = ls_value
+		CASE "contextobject"
+			ls_context_object = ls_value
+		CASE "version"
+			lstr_version.version = long(ls_value)
+		CASE "ownerid"
+			lstr_version.owner_id = long(ls_value)
+		CASE "description"
+			lstr_version.description = ls_value
+		CASE "longdescription"
+			ls_long_description = ls_value
+		CASE "versiondescription"
+			lstr_version.version_description = ls_value
+		CASE "configobjectcategory"
+			ls_config_object_category = ls_value
+		CASE "copyrightstatus"
+			ls_copyright_status = ls_value
+		CASE "copyable"
+			if isnumber(ls_value) then
+				if long(ls_value) = 0 then
+					ls_copyable = "N"
+				else
+					ls_copyable = "Y"
+				end if
+			else
+				if f_string_to_boolean(ls_value) then
+					ls_copyable = "Y"
+				else
+					ls_copyable = "N"
+				end if
+			end if
+	END CHOOSE
+next
+
+// If we get here we should have a config_object_id and a version number
+if isnull(lstr_version.config_object_id) then
+	log.log(po_null, "f_config_object_import_xml:0186", "Error:  config_object_id not found", 4)
+	return -1
+end if
+
+if isnull(lstr_version.version) then
+	log.log(po_null, "f_config_object_import_xml:0191", "Error:  version not found", 4)
+	return -1
+end if
+
+if isnull(lstr_version.owner_id) then
+	log.log(po_null, "f_config_object_import_xml:0196", "Error:  owner_id not found", 4)
+	return -1
+end if
+
+lstr_version.objectdata = f_string_to_blob(ps_object_xml, "UTF-8")
+
+ll_sts = sqlca.config_create_object_version(lstr_version.config_object_id, &
+														lstr_version.config_object_type, &
+														ls_context_object, &
+														lstr_version.owner_id, &
+														lstr_version.description, &
+														ls_long_description, &
+														ls_config_object_category, &
+														lstr_version.version, &
+														lstr_version.objectdata, &
+														lstr_version.created_by, &
+														lstr_version.status, &
+														lstr_version.version_description, &
+														ls_copyright_status, &
+														ls_copyable , &
+														lstr_version.object_encoding_method &
+														)
+if not tf_check() then return -1
+
+pstr_config_object_version = lstr_version
+
+return 1
+
+end function
+

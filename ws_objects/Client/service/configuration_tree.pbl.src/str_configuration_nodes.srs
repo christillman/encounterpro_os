@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_configuration_nodes.srs
+global type str_configuration_nodes from structure
+	long		node_count
+	str_configuration_node		node[]
+end type
+

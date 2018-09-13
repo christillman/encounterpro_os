@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_c_display_command_definition.srs
+global type str_c_display_command_definition from structure
+	string		context_object
+	string		display_command
+	string		description
+	string		command_help
+	string		script_type
+	string		id
+	long		min_build
+end type
+

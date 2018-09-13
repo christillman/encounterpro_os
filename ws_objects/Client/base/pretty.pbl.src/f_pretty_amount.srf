@@ -1,0 +1,145 @@
+﻿$PBExportHeader$f_pretty_amount.srf
+global type f_pretty_amount from function_object
+end type
+
+forward prototypes
+global function string f_pretty_amount (ref real pr_amount, string ps_unit, ref u_unit puo_unit)
+end prototypes
+
+global function string f_pretty_amount (ref real pr_amount, string ps_unit, ref u_unit puo_unit);integer li_integer, li_pos, li_sts
+real lr_fraction, lr_amount
+string ls_pretty_fraction, ls_plural_flag
+string ls_fraction, ls_amount, ls_unit, ls_null
+
+setnull(ls_null)
+
+// If the amount to print is null then the result is null
+if isnull(pr_amount) then return ls_null
+
+// If the caller passed a string unit_id, then find the unit object
+// If the caller passed a null or blank unit_id and a valid unit object, then use the object
+if isnull(ps_unit) or trim(ps_unit) = "" then
+	if isnull(puo_unit) or not isvalid(puo_unit) then
+		return ls_null
+	else
+		ps_unit = puo_unit.unit_id
+	end if
+else
+	puo_unit = unit_list.find_unit(ps_unit)
+	if isnull(puo_unit) then return ls_null
+end if
+
+return puo_unit.pretty_amount(pr_amount)
+
+//CHOOSE CASE puo_unit.pretty_fraction
+//	CASE "TENTH"
+//		lr_amount = round(pr_amount*10, 0)
+//		ls_amount = string(lr_amount)
+//		ls_fraction = "." + right(ls_amount, 1)
+//		if ls_fraction = ".0" then ls_fraction = ""
+//		if len(ls_amount) = 0 or ls_amount = "0" then
+//			ls_amount = "0"
+//		elseif len(ls_amount) = 1 then
+//			ls_amount = "0." + ls_amount
+//		else
+//			ls_amount = left(ls_amount, len(ls_amount) - 1) + ls_fraction
+//		end if
+//		pr_amount = real(ls_amount)
+//	CASE "HUNDREDTH"
+//		lr_amount = round(pr_amount*100, 0)
+//		ls_amount = string(lr_amount)
+//		ls_fraction = "." + right(ls_amount, 2)
+//		if ls_fraction = ".00" then ls_fraction = ""
+//		if len(ls_amount) = 0 or ls_amount = "0" then
+//			ls_amount = "0"
+//		elseif len(ls_amount) = 1 then
+//			ls_amount = "0.0" + ls_amount
+//		elseif len(ls_amount) = 2 then
+//			ls_amount = "0." + ls_amount
+//		else
+//			ls_amount = left(ls_amount, len(ls_amount) - 2) + ls_fraction
+//		end if
+//		pr_amount = real(ls_amount)
+//	CASE "THOUSANDTH"
+//		lr_amount = round(pr_amount*1000, 0)
+//		ls_amount = string(lr_amount)
+//		ls_fraction = "." + right(ls_amount, 3)
+//		if ls_fraction = ".000" then ls_fraction = ""
+//		if len(ls_amount) = 0 or ls_amount = "0" then
+//			ls_amount = "0"
+//		elseif len(ls_amount) = 1 then
+//			ls_amount = "0.00" + ls_amount
+//		elseif len(ls_amount) = 2 then
+//			ls_amount = "0.0" + ls_amount
+//		elseif len(ls_amount) = 3 then
+//			ls_amount = "0." + ls_amount
+//		else
+//			ls_amount = left(ls_amount, len(ls_amount) - 3) + ls_fraction
+//		end if
+//		pr_amount = real(ls_amount)
+//	CASE "QUARTER"
+//		li_integer = int(pr_amount)
+//		lr_fraction = pr_amount - li_integer
+//		if lr_fraction <= .125 then
+//			ls_fraction = ""
+//			pr_amount = li_integer
+//		elseif lr_fraction <= .375 then
+//			ls_fraction = "1/4"
+//			pr_amount = li_integer + .25
+//		elseif lr_fraction <= .625 then
+//			ls_fraction = "1/2"
+//			pr_amount = li_integer + .5
+//		elseif lr_fraction <= .875 then
+//			ls_fraction = "3/4"
+//			pr_amount = li_integer + .75
+//		else
+//			ls_fraction = ""
+//			li_integer = li_integer + 1
+//			pr_amount = li_integer
+//		end if
+//
+//		if li_integer > 0 then
+//			if ls_fraction = "" then
+//				ls_amount = string(li_integer)
+//			else
+//				ls_amount = string(li_integer) + " " + ls_fraction
+//			end if
+//		else
+//			ls_amount = ls_fraction
+//		end if
+//	CASE "HALF"
+//		li_integer = int(pr_amount)
+//		lr_fraction = pr_amount - li_integer
+//		if lr_fraction <= .25 then
+//			ls_fraction = ""
+//			pr_amount = li_integer
+//		elseif lr_fraction <= .75 then
+//			ls_fraction = "1/2"
+//			pr_amount = li_integer + .5
+//		else
+//			ls_fraction = ""
+//			li_integer = li_integer + 1
+//			pr_amount = li_integer
+//		end if
+//
+//		if li_integer > 0 then
+//			if ls_fraction = "" then
+//				ls_amount = string(li_integer)
+//			else
+//				ls_amount = string(li_integer) + " " + ls_fraction
+//			end if
+//		else
+//			ls_amount = ls_fraction
+//		end if
+//	CASE "UNIT"
+//		pr_amount = round(pr_amount,0)
+//		ls_amount = string(pr_amount)
+//	CASE ELSE
+//		ls_amount = string(pr_amount)
+//			
+//END CHOOSE
+//
+//return ls_amount
+//
+end function
+

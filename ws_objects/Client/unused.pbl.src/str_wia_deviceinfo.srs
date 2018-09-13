@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_wia_deviceinfo.srs
-global type str_wia_deviceinfo from structure
-	string		external_source_type
-	string		device_id
-	string		description
-end type
-

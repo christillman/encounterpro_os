@@ -1,0 +1,40 @@
+﻿$PBExportHeader$f_datetime_diff_seconds.srf
+global type f_datetime_diff_seconds from function_object
+end type
+
+forward prototypes
+global function long f_datetime_diff_seconds (datetime pdt_from, datetime pdt_to)
+end prototypes
+
+global function long f_datetime_diff_seconds (datetime pdt_from, datetime pdt_to);integer li_days
+long ll_seconds
+datetime ldt_temp
+boolean lb_negative
+
+if pdt_from = pdt_to then
+	return 0
+elseif pdt_from < pdt_to then
+	lb_negative = false
+else
+	lb_negative = true
+	ldt_temp = pdt_from
+	pdt_from = pdt_to
+	pdt_to = ldt_temp
+end if
+
+li_days = daysafter(date(pdt_from), date(pdt_to))
+if li_days = 0 then
+	ll_seconds = secondsafter(time(pdt_from), time(pdt_to))
+else
+	ll_seconds = secondsafter(time(pdt_from), time("23:59:59")) + 1
+	ll_seconds += secondsafter(time("00:00:00"), time(pdt_to))
+	ll_seconds += (li_days - 1) * 86400
+end if
+
+if lb_negative then ll_seconds = -ll_seconds
+
+return ll_seconds
+
+
+end function
+

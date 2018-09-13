@@ -1,0 +1,11 @@
+﻿$PBExportHeader$str_drug_package.srs
+global type str_drug_package from structure
+	string		drug_id
+	string		package_id
+	integer		sort_order
+	string		prescription_flag
+	real		default_dispense_amount
+	string		default_dispense_unit
+	string		take_as_directed
+end type
+
