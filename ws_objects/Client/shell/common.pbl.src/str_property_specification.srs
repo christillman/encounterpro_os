@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_property_specification.srs
-global type str_property_specification from structure
-	str_property		property
-	str_edas_which_object		which_object
-	str_epro_object_definition		referenced_epro_object
-	string		referer_object_identifier
-end type
-

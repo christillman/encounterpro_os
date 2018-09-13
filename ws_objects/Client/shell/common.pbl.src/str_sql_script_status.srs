@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_sql_script_status.srs
-global type str_sql_script_status from structure
-	integer		status
-	long		error_index
-	string		error_message
-end type
-

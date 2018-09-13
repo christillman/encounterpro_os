@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_patient_authority.srs
-global type str_patient_authority from structure
-	string		cpr_id
-	string		authority_type
-	integer		authority_sequence
-	string		authority_id
-	string		authority_name
-end type
-

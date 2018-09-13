@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_room_type.srs
-global type str_room_type from structure
-	string		room_type
-	string		description
-	string		button
-	string		dirty_button
-end type
-

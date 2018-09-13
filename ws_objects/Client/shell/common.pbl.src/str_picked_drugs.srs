@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_picked_drugs.srs
-global type str_picked_drugs from structure
-	long		drug_count
-	str_picked_drug		drugs[]
-end type
-

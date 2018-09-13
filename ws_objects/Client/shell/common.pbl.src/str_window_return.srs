@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_window_return.srs
-global type str_window_return from structure
-	integer		return_status
-	any		return_value
-end type
-

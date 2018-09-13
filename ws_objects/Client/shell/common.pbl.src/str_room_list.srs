@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_room_list.srs
-global type str_room_list from structure
-	long		room_count
-	str_room		room[]
-end type
-

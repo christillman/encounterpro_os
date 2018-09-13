@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_item_definition.srs
-global type str_item_definition from structure
-	string		treatment_type
-	string		item_description
-	long		attribute_count
-	string		attribute[]
-	string		value[]
-end type
-

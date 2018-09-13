@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_service_info.srs
-global type str_service_info from structure
-	string		service
-	str_attributes		attributes
-	str_complete_context		context
-end type
-

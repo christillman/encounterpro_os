@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_domain_item.srs
-global type str_domain_item from structure
-	long		domain_owner_id
-	long		domain_item_owner_id
-	string		domain
-	string		domain_item
-	string		domain_item_description
-end type
-

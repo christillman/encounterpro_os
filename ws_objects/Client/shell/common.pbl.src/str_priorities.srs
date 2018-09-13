@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_priorities.srs
-global type str_priorities from structure
-	integer		priority_count
-	str_priority		priority[]
-end type
-

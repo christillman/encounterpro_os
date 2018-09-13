@@ -1,9 +1,0 @@
-﻿$PBExportHeader$str_picked_observations.srs
-global type str_picked_observations from structure
-	long		observation_count
-	string		observation_id[]
-	string		description[]
-	string		treatment_mode[]
-	string		location[]
-end type
-

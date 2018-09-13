@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_drug_package_dispense_list.srs
-global type str_drug_package_dispense_list from structure
-	integer		dispense_count
-	str_drug_package_dispense		dispense[]
-end type
-

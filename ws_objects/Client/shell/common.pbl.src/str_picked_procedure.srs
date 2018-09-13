@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_picked_procedure.srs
-global type str_picked_procedure from structure
-	string		procedure_id
-	string		description
-	string		treatment_mode
-end type
-

@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_wp_item_list.srs
-global type str_wp_item_list from structure
-	long		wp_item_count
-	str_wp_item		wp_item[]
-end type
-

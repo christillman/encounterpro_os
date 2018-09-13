@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_document_template_fields.srs
-global type str_document_template_fields from structure
-	string		template_string
-	long		template_field_count
-	str_document_template_field		template_field[]
-end type
-

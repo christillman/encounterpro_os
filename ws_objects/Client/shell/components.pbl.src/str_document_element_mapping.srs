@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_document_element_mapping.srs
-global type str_document_element_mapping from structure
-	string		mapped_property
-	long		mapping_rule_count
-	str_document_element_mapping_rule		mapping_rule[]
-	str_property_suffix		suffix
-end type
-

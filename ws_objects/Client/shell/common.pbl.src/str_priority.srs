@@ -1,8 +1,0 @@
-﻿$PBExportHeader$str_priority.srs
-global type str_priority from structure
-	integer		priority
-	string		description
-	string		bitmap
-	string		sound_file
-end type
-

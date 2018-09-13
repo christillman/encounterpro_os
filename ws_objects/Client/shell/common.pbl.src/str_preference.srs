@@ -1,7 +1,0 @@
-﻿$PBExportHeader$str_preference.srs
-global type str_preference from structure
-	string		preference_type
-	string		preference_id
-	string		preference_value
-end type
-

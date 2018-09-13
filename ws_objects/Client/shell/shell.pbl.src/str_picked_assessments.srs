@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_picked_assessments.srs
-global type str_picked_assessments from structure
-	long		assessment_count
-	str_picked_assessment		assessments[]
-end type
-
