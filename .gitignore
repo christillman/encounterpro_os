@@ -16,6 +16,7 @@ Client/chart/*.pbl
 Client/extension/*.pbl
 Client/server/*.pbl
 Client/service/*.pbl
+Client/*.pbl
 Client/base/*.pbd
 Client/shell/*.pbd
 Client/chart/*.pbd
@@ -29,7 +30,6 @@ Client/extension/*.bak
 Client/server/*.bak
 Client/service/*.bak
 *.usr.opt
-Client/*.pbl
 Client/*.pbd
 Client/*.pbx
 Client/*.exe
