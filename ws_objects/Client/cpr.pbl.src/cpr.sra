@@ -230,6 +230,8 @@ str_preference system_preferences[]
 //u_mmserver mmserver
 u_common_thread common_thread
 
+u_msscript msscript
+
 // Service control manager
 //u_service_control_manager scm
 
@@ -252,7 +254,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown

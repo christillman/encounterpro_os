@@ -264,7 +264,9 @@ if isnull(adodb) then
 			return -1
 		END TRY
 	end if
-
+	
+	msscript.object.Language = "VBScript"
+	msscript.object.addobject("ADODB_Connection", adodb)
 end if
 
 puo_adodb = adodb

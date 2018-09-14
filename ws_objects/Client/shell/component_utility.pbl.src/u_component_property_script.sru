@@ -29,14 +29,11 @@ integer i
 any laa_attributes[]
 any laa_values[]
 any la_property
-u_msscript msscript
 
 li_count = get_attributes(lsa_attributes, lsa_values)
 
 laa_attributes = lsa_attributes
 laa_values = lsa_values
-
-msscript.object.addobject("ADODB_Connection", adodb) 
 
 // Set the property_id so script errors will report it
 msscript.property_id = property.property_id
