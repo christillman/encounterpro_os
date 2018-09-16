@@ -418,8 +418,10 @@ end if
 
 SetNull(datalist)
 SetNull(windows_api)
-sqlca.dbdisconnect()
-SetNull(sqlca)
+if not isnull(sqlca) and isvalid(sqlca) then
+	sqlca.dbdisconnect()
+	SetNull(sqlca)
+end if
 
 
 end event

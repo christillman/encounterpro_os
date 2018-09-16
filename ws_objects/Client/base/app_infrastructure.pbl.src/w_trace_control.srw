@@ -43,7 +43,6 @@ end type
 end forward
 
 global type w_trace_control from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -345,7 +344,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 33538240
-string text = "Rountine Entry/Exit"
+string text = "Routine Entry/Exit"
 end type
 
 event clicked;trc_ActRoutine = checked

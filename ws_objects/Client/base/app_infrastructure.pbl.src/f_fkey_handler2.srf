@@ -62,7 +62,7 @@ CHOOSE CASE key
 	CASE KeyF3!
 		if keyflags = 0 then
 			open(w_context_display)
-			return true
+			return false // might have hit Stop button
 		elseif keyflags = 2 then
 			open(w_data_address_builder_tree)
 		elseif keyflags = 3 then

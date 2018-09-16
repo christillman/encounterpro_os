@@ -517,7 +517,8 @@ string facename = "Arial"
 string text = "Exit EncounterPRO"
 end type
 
-event clicked;gnv_app.event close()
+event clicked;
+gnv_app.post event close()
 end event
 
 type dw_display from u_dw_pick_list within w_context_display

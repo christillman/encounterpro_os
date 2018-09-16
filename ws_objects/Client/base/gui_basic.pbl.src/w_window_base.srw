@@ -620,8 +620,11 @@ end if
 
 end event
 
-event key;if IsValid(this) and not IsNull(this) then
-	if f_fkey_handler2(key, keyflags, this.classname()) then refresh()
+event key;if NOT IsNull(key) AND NOT ISNull(keyflags) then
+	if f_fkey_handler2(key, keyflags, classname()) then 
+		post refresh()
+	end if
+
 	// Handle F6 here
 	if key = KeyF6! AND keyflags = 0 then
 		window_to_clipboard()

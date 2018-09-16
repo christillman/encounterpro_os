@@ -215,7 +215,11 @@ public function integer log (powerobject po_who, string ps_script, string ps_mes
 end prototypes
 
 public function integer shutdown ();//DeregisterEventSource(event_handle)
-common_thread.eprolibnet4.CloseEventLog(event_source)
+if IsValid(common_thread) then
+	if NOT IsNull(common_thread.eprolibnet4) AND IsValid(common_thread.eprolibnet4) then
+		common_thread.eprolibnet4.CloseEventLog(event_source)
+	end if
+end if
 initialized = false
 
 return 1

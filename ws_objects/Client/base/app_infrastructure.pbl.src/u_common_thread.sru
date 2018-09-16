@@ -207,9 +207,11 @@ public subroutine shutdown ();if default_printer_set and lower(current_printer.p
 	set_default_printer()
 end if
 
-eprolibnet4.disconnectobject()
-DESTROY eprolibnet4
-setnull(eprolibnet4)
+if NOT IsNull(eprolibnet4) AND IsValid(eprolibnet4) then
+	eprolibnet4.disconnectobject()
+	DESTROY eprolibnet4
+	setnull(eprolibnet4)
+end if
 
 if not isnull(adodb) and isvalid(adodb) then
 	adodb.close()
