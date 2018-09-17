@@ -13,14 +13,6 @@ integer li_sts
 string lsa_values[]
 long ll_temp
 
-enable_contraindication_checking = datalist.get_preference_boolean("PREFERENCES", "Enable Contraindication Checking", false)
-contraindication_external_source = datalist.get_preference("PREFERENCES", "contraindication_external_source","Contraindication")
-
-bill_test_collection = datalist.get_preference_boolean("PREFERENCES", "bill_test_collection", false)
-auto_patient_select = datalist.get_preference_boolean("PREFERENCES", "auto_patient_select", false)
-auto_room_select = datalist.get_preference_boolean("PREFERENCES", "auto_room_select", false)
-rx_use_signature_stamp = datalist.get_preference_boolean("PREFERENCES", "rx_use_signature_stamp", false)
-
 ls_temp = datalist.get_preference("SYSTEM", "idle_logoff")
 if isnull(ls_temp) then
 	common_thread.idle_timeout = 0
@@ -63,8 +55,6 @@ if not log.of_directoryexists(debug_path) then
 	log.of_createdirectory(debug_path)
 end if
 
-temp_image = datalist.get_preference("SYSTEM", "temp_image", "tmpimg.tif")
-
 default_encounter_type = datalist.get_preference("PREFERENCES", "default_encounter_type", "SICK")
 
 original_unit_preference = datalist.get_preference("PREFERENCES", "unit", "METRIC")
@@ -73,16 +63,6 @@ unit_preference = original_unit_preference
 date_format_string = datalist.get_preference("PREFERENCES", "date_format_string","[shortdate]")
 
 time_format_string = datalist.get_preference("PREFERENCES", "time_format_string","[time]")
-
-followup_specialty = datalist.get_preference("PREFERENCES", "followup_specialty", "FOLLOWUP")
-
-rx_gravityprompt = datalist.get_preference("PREFERENCES", "rx_gravityprompt", "I hereby prescribe these medications")
-
-vaccine_gravityprompt = datalist.get_preference("PREFERENCES", "vaccine_gravityprompt", "I hereby authorize these vaccines to be administered")
-
-encounter_gravityprompt = datalist.get_preference("PREFERENCES", "encounter_gravityprompt", "The information in this encounter record is accurate to the best of my knowledge")
-
-color_service_ordered = datalist.get_preference_int("PREFERENCES", "color_service_ordered", COLOR_LIGHT_YELLOW)
 
 COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_EPRO_BLUE)
 

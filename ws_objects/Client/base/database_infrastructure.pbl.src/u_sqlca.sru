@@ -719,8 +719,6 @@ string db_script_database_version
 
 string appname
 
-//integer db_reconnect_retries = 5
-
 boolean deadlock
 boolean connected
 
@@ -760,7 +758,6 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
-
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -898,7 +895,8 @@ mylog.log(this, "u_sqlca.dbreconnect:0007", "Database Connection Lost - Attempti
 DO
 	li_retries += 1
 	CONNECT using luo_this;
-LOOP UNTIL SQLCode = 0 or li_retries = db_reconnect_retries
+	sleep(1)
+LOOP UNTIL SQLCode = 0 or li_retries = 10
 
 if SQLCode = 0 then
 	connected = true

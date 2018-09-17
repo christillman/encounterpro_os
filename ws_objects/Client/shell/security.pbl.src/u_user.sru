@@ -345,12 +345,6 @@ public subroutine get_preferences ();string ls_temp
 integer li_sts
 integer li_temp
 
-ls_temp = datalist.get_preference("PREFERENCES", "auto_patient_select")
-auto_patient_select = f_string_to_boolean(ls_temp)
-
-ls_temp = datalist.get_preference("PREFERENCES", "auto_room_select")
-auto_room_select = f_string_to_boolean(ls_temp)
-
 ls_temp = datalist.get_preference("PREFERENCES", "config_mode")
 config_mode = f_string_to_boolean(ls_temp)
 
@@ -363,15 +357,6 @@ if isnull(ls_temp) then
 else
 	sticky_logon_prompt = f_string_to_boolean(ls_temp)
 end if
-
-
-// mark 10/9/02 we don't support the idle event now
-//ls_temp = datalist.get_preference("SYSTEM", "idle_logoff")
-//if isnull(ls_temp) then
-//	idle(0)
-//else
-//	idle(integer(ls_temp))
-//end if
 
 li_temp = datalist.get_preference_int("SYSTEM", "display_log_level")
 if isnull(li_temp) then
@@ -388,8 +373,6 @@ original_unit_preference = datalist.get_preference("PREFERENCES", "unit", "METRI
 unit_preference = original_unit_preference
 
 date_format_string = datalist.get_preference("PREFERENCES", "date_format_string", "[shortdate]")
-
-encounter_gravityprompt = datalist.get_preference("PREFERENCES", "encounter_gravityprompt", "The information in this encounter record is accurate to the best of my knowledge")
 
 COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_EPRO_BLUE)
 

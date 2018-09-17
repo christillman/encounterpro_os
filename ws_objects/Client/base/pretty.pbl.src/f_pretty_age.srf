@@ -29,7 +29,6 @@ else
 	ll_temp = f_age_years(pd_date_of_birth, pd_current_date)
 	lr_temp = real(ll_temp)
 	ls_unit_id = "YEAR"
-//	ls_temp = string(ll_temp) + " Year"
 end if
 
 ls_temp = f_pretty_amount_unit(lr_temp, ls_unit_id)

@@ -71,9 +71,6 @@ u_room current_room
 // If the user is viewing a room, this is the room object
 u_room viewed_room
 
-string CNST_TREATMENT_CLOSED = "CLOSED"
-string CNST_WEIGHT_OBSERVATION = "WGT"
-
 long COLOR_LIGHT_BLUE = rgb(164, 200, 240)
 long COLOR_BLUE = rgb(0,64,128)
 long COLOR_DARK_BLUE = rgb(0, 0, 128)
@@ -92,26 +89,14 @@ long COLOR_EPRO_BLUE = rgb(192,192,255)
 ///////////////////////////////////////////////////
 // Preferences
 
-integer db_reconnect_retries=10
-
-boolean auto_patient_select = false
-boolean auto_room_select = false
-boolean rx_use_signature_stamp = false
-boolean bill_test_collection
-
 string date_format_string = "[shortdate]"
 string time_format_string = "[time]"
 // Necessary to avoid errors if the regional settings are d/m/y
 // because SQL server is always m/d/y
 string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
-string followup_specialty = "FOLLOWUP"
 string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
 string debug_path = "C:\TEMP\EproDebug"
-string temp_image = "tmpimg.tif"
-string rx_gravityprompt
-string vaccine_gravityprompt
-string encounter_gravityprompt
 
 long COLOR_BACKGROUND = rgb(192,192,255)
 long COLOR_TEXT_NORMAL
@@ -119,8 +104,6 @@ long COLOR_TEXT_WARNING
 long COLOR_TEXT_ERROR
 long COLOR_OBJECT
 long COLOR_OBJECT_SELECTED
-
-long color_service_ordered
 
 string object_file_server
 string object_file_path
@@ -132,12 +115,6 @@ u_list_data datalist
 
 // Drug database interface
 u_component_drug drugdb
-
-// Patient list
-//u_patient_list patient_list
-
-// Parent object for development history
-//u_stage_list stage_list
 
 // Parent object for vaccines and immunizations
 u_vaccine_list vaccine_list
@@ -167,48 +144,9 @@ u_unit_list unit_list
 // Generic datastore for loading data
 u_ds_data temp_datastore
 
-///////////////////////////////////////////
-// global datawindow controls
-//u_ds_data dw_data
-//u_ds_data dw_data_development
-//u_ds_data dw_data_dev_stages
-//u_ds_data dw_data_dev_items
-//u_ds_data dw_data_report_queue
-
-///////////////////////////////////////////
-// Global Other Controls
-
-u_pb_picture_control pb_picture_control
-
-/////////////////////////////////////////
-// Holding list values
-string holding_list_cpr_id = "JMJCPR00"
-long holding_list_attachment_id = 1
-
-/////////////////////////////////////////
-// System Preferences
-integer system_preference_count
-str_preference system_preferences[]
-
-//////////////////////////////////////////
-// Billing System Variables
-//u_billing_system billing_system
-//string billing_system_id
-
-
-//////////////////////////////////////////
-// Shared object for communicating between
-// the server application and server shared objects
-//u_epparms epparms
-
-//u_file_compression file_compression
-//u_mmserver mmserver
 u_common_thread common_thread
 
 u_msscript msscript
-
-// Service control manager
-//u_service_control_manager scm
 
 // Trace settings
 boolean trc_ActESql = true
