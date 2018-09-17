@@ -18,7 +18,7 @@ end if
 ls_filename = temp_path
 if right(ls_filename, 1) <> "\" then ls_filename += "\"
 
-ls_filename += "jmj_" + string(computer_id) + "_"
+ls_filename += "jmj_" + string(gnv_app.computer_id) + "_"
 
 if not isnull(current_patient) then
 	ls_filename += current_patient.cpr_id + "_"
@@ -67,7 +67,7 @@ end if
 
 if right(ls_filename, 1) <> "\" then ls_filename += "\"
 
-ls_filename += "jmj_" + string(computer_id) + "_"
+ls_filename += "jmj_" + string(gnv_app.computer_id) + "_"
 
 if not isnull(current_patient) then
 	ls_filename += current_patient.cpr_id + "_"

@@ -31,7 +31,6 @@ public function integer document_configure ()
 public function integer document_send (boolean pb_send_from_here)
 private function integer document_send_set_ready ()
 private function integer document_send_now ()
-private function integer document_send_now_old ()
 public function integer document_pick_address ()
 public function integer document_pick_recipient ()
 public function integer document_set_recipient (string ps_ordered_for, string ps_dispatch_method, string ps_address_attribute, string ps_address_value)
@@ -199,7 +198,7 @@ if isnull(ls_send_from) then
 	end if
 end if
 
-if cpr_mode = "CLIENT" THEN
+if gnv_app.cpr_mode = "CLIENT" THEN
 	// See if the preference is set to send everything from the client
 	lb_send_from_here = datalist.get_preference_boolean("SYSTEM", "Document Send All From Client", false)
 	if not lb_send_from_here then
@@ -359,7 +358,7 @@ FROM c_Report_Definition
 WHERE report_id = :ps_report_id;
 If Not tf_check() Then Return -1
 
-If cpr_mode = "CLIENT" and not f_string_to_boolean(runtime_configured_flag) Then
+If gnv_app.cpr_mode = "CLIENT" and not f_string_to_boolean(runtime_configured_flag) Then
 	li_sts = f_get_params(ps_report_id, "Runtime", lstr_attributes)
 	if li_sts < 0 then return 0
 
@@ -412,7 +411,7 @@ end if
 
 // Get the attributes for this service
 lstr_attributes = get_attributes()
-mylog.log(this, "u_component_wp_item_document.run_report:0190","processing report ("+ps_report_id+") on mode "+cpr_mode,1)
+log.log(this, "u_component_wp_item_document.run_report:0190","processing report ("+ps_report_id+") on mode "+gnv_app.cpr_mode,1)
 
 if len(cpr_id) > 0 then
 	f_attribute_add_attribute(lstr_attributes, "cpr_id", cpr_id)
@@ -621,7 +620,7 @@ if lower(status) = "error" then
 end if
 
 // If we're on the client and we need to create the document from the client and the document is not created then create it now
-if cpr_mode = "CLIENT" and not document_created and lower(ls_create_from) = "client" then
+if gnv_app.cpr_mode = "CLIENT" and not document_created and lower(ls_create_from) = "client" then
 	li_sts = document_create()
 end if
 
@@ -732,398 +731,6 @@ DESTROY luo_sender
 
 return 1
 
-end function
-
-private function integer document_send_now_old ();//string ls_temp
-//long ll_attachment_id
-//boolean lb_auto_create
-//boolean lb_recreate_on_send
-//integer li_sts
-//str_external_observation_attachment lstr_attachment
-//string ls_document_type
-//long ll_addressee
-//long ll_material_id
-//string ls_item_subtype
-//str_patient_material lstr_material
-//string ls_printer
-//integer li_wait
-//str_attributes lstr_attributes
-//string ls_report_id
-//string ls_dispatch_method
-//string ls_purpose
-//string ls_ordered_for
-//string ls_address_attribute
-//string ls_address_value
-//long ll_transportsequence
-//string ls_sender_component_id
-//u_ds_data luo_data
-//long ll_attribute_count
-//long ll_attachment_location_id
-//string ls_send_to_directory
-//str_attachment_location lstr_attachment_location
-//string ls_save_path
-//string ls_filename_prefix
-//boolean lb_cover_letter
-//
-//// Either we have an attachment_id or a material_id to send
-//get_attribute("report_id", ls_report_id)
-//get_attribute("material_id", ll_material_id)
-//get_attribute("purpose", ls_purpose)
-//
-//ls_item_subtype = document_subtype( )
-//
-//CHOOSE CASE lower(ls_item_subtype)
-//	CASE "report"
-//		get_attribute("attachment_id", ll_attachment_id)
-//		get_attribute("recreate_on_send", lb_recreate_on_send, true)
-//
-//		if upper(status) <> "READY" then
-//			if isnull(ll_attachment_id) or ll_attachment_id <= 0 or lb_recreate_on_send then
-//				get_attribute("auto_create", lb_auto_create, true)
-//				if lb_auto_create or lb_recreate_on_send then
-//					li_sts = document_create()
-//					if li_sts <= 0 then return li_sts
-//					get_attribute("attachment_id", ll_attachment_id)
-//					if isnull(ll_attachment_id) then
-//						log.log(this, "u_component_wp_item_document.document_send_now_old:0052", "Document created but not found", 4)
-//						return -1
-//					end if
-//				else
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0056", "Document not found", 4)
-//					return -1
-//				end if
-//			end if
-//		elseif isnull(ll_attachment_id) then
-//			log.log(this, "u_component_wp_item_document.document_send_now_old:0061", "Status is 'Ready' but document not found (" + string(patient_workplan_item_id) + ")", 4)
-//			return -1
-//		end if
-//		
-//		SELECT ordered_for,
-//				document_route,
-//				address_attribute,
-//				address_value
-//		INTO :ls_ordered_for,
-//				:ls_dispatch_method,
-//				:ls_address_attribute,
-//				:ls_address_value
-//		FROM dbo.fn_document_default_recipient(:cpr_id ,
-//												:encounter_id ,
-//												:context_object ,
-//												:object_key ,
-//												:ls_report_id ,
-//												:ls_purpose ,
-//												:ordered_by ,
-//												:ordered_for ,
-//												:dispatch_method);
-//		if not tf_check() then return -1
-//		
-//		if isnull(ordered_for) then
-//			setnull(dispatch_method)
-//			document_set_recipient(ls_ordered_for)
-//		end if
-//
-//		// Make sure we have a route (dispatch_method)
-//		if isnull(dispatch_method) or trim(dispatch_method) = "" then
-//			document_set_route(ls_dispatch_method, ls_address_attribute, ls_address_value)
-//		end if
-//
-//		// Get information about this route
-//		SELECT send_via_addressee, document_type, transportsequence, sender_component_id
-//		INTO :ll_addressee, :ls_document_type, :ll_transportsequence, :ls_sender_component_id
-//		FROM dbo.fn_document_route_information(:dispatch_method);
-//		if not tf_check() then return -1
-//		if sqlca.sqlnrows <> 1 then
-//			log.log(this, "u_component_wp_item_document.document_send_now_old:0100", "Invalid dispatch_method (" + dispatch_method + ")", 4)
-//			return -1
-//		end if
-//		
-//		CHOOSE CASE lower(ls_sender_component_id)
-//			CASE "sender_printer"
-//				ls_printer = get_attribute("Printer")
-//				if len(ls_printer) > 0 then
-//					f_attribute_add_attribute(lstr_attributes, "Printer", ls_printer)
-//				else
-//					f_attribute_add_attribute(lstr_attributes, "use_default_printer", "True")
-//				end if
-//				
-//				li_wait = f_please_wait_open()
-//				
-//				// If the "cover_page" attribute isn't present then the default behavior is to print a cover_page if there is a "subject" or "message" attribute
-//				lb_cover_letter = false
-//				ls_temp = get_attribute("cover_page")
-//				if isnull(ls_temp) then
-//					if len(get_attribute("subject")) > 0 then
-//						lb_cover_letter = true
-//					elseif len(get_attribute("message")) > 0 then
-//						lb_cover_letter = true
-//					end if
-//				else
-//					lb_cover_letter = f_string_to_boolean(ls_temp)
-//				end if
-//				
-//				if lb_cover_letter then
-//					f_print_cover_page(this)
-//				end if
-//				
-//				li_sts = f_print_attachment_with_attributes(ll_attachment_id, lstr_attributes)
-//				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0134", "Error printing attachment", 4)
-//					f_please_wait_close(li_wait)
-//					return -1
-//				end if
-//				
-//				f_please_wait_close(li_wait)
-//			CASE "filesender"
-//				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0142", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
-//					return -1
-//				end if
-//
-//				li_sts = f_get_attachment(ll_attachment_id, lstr_attachment)
-//				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0148", "Error getting attacment file", 4)
-//					return -1
-//				end if
-//				
-//				luo_data = CREATE u_ds_data
-//				luo_data.set_dataobject("dw_practice_interface_transport_properties")
-//				ll_attribute_count = luo_data.retrieve(sqlca.customer_id, ll_addressee, ll_transportsequence)
-//				f_attribute_ds_to_str(luo_data, lstr_attributes)
-//				DESTROY luo_data
-//				
-//				ls_temp = f_attribute_find_attribute(lstr_attributes, "attachment_location_id")
-//				if isnull(ls_temp) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0160", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
-//					return -1
-//				end if
-//				ll_attachment_location_id = long(ls_temp)
-//				ls_send_to_directory = f_attribute_find_attribute(lstr_attributes, "send_to_directory")
-//				if isnull(ls_send_to_directory) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0166", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
-//					return -1
-//				end if
-//				
-//				lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
-//				if isnull(lstr_attachment_location.attachment_location_id) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0172", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
-//					return -1
-//				end if
-//				
-//				ls_save_path = "\\" + lstr_attachment_location.attachment_server + "\" + lstr_attachment_location.attachment_share
-//				
-//				ls_send_to_directory = f_string_substitute(ls_send_to_directory, "/", "\")
-//				
-//				if left(ls_send_to_directory, 1) = "\" then
-//					ls_save_path += ls_send_to_directory
-//				else
-//					ls_save_path += "\" + ls_send_to_directory
-//				end if
-//				
-//				if right(ls_save_path, 1) <> "\" then ls_save_path += "\"
-//				
-//				// Determine the filename
-//				ls_filename_prefix = f_attribute_find_attribute(lstr_attributes, "filename_prefix")
-//				if len(ls_filename_prefix) > 0 then
-//					ls_save_path += ls_filename_prefix + "_"
-//				end if
-//				
-//				ls_save_path += right("000000000000" + string(patient_workplan_item_id), 12)
-//				ls_save_path += "." + lstr_attachment.extension
-//				
-//				li_sts = log.file_write(lstr_attachment.attachment, ls_save_path)
-//				if li_sts < 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0199", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
-//					return -1
-//				end if
-//
-//			CASE "sender_epie"
-//				// Verify that this customer is licensed to use the selected route
-//				if lower(dispatch_method) = "email" then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0206", "This installation is not licensed to send documents via eMail", 4)
-//					if cpr_mode = "CLIENT" then
-//						openwithparm(w_pop_message, "This installation is not licensed to send documents via eMail")
-//					end if
-//					return -1
-//				end if
-//
-//				if lower(dispatch_method) = "fax" then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0214", "This installation is not licensed to send documents via Fax", 4)
-//					if cpr_mode = "CLIENT" then
-//						openwithparm(w_pop_message, "This installation is not licensed to send documents via Fax")
-//					end if
-//					return -1
-//				end if
-//
-//				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0222", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
-//					return -1
-//				end if
-//
-//				if isnull(ls_document_type) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0227", dispatch_method + " dispatch_method does not have a valid document type", 4)
-//					return -1
-//				end if
-//				
-//				li_sts = f_get_attachment(ll_attachment_id, lstr_attachment)
-//				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0233", "Error getting attacment file", 4)
-//					return -1
-//				end if
-//				
-//				if f_file_is_text(lstr_attachment.extension) then
-//					li_sts = f_send_document(ls_document_type, ll_addressee, "XML", string(lstr_attachment.attachment), id, ordered_by, ordered_for)
-//				else
-//					li_sts = f_send_document_blob(ls_document_type, ll_addressee, lstr_attachment.attachment, id, ordered_by, ordered_for)
-//				end if
-//				if li_sts <= 0 then return -1
-//		END CHOOSE
-//	CASE "material"
-//		// Get information about this route
-//		SELECT send_via_addressee, document_type, transportsequence, sender_component_id
-//		INTO :ll_addressee, :ls_document_type, :ll_transportsequence, :ls_sender_component_id
-//		FROM dbo.fn_document_route_information(:dispatch_method);
-//		if not tf_check() then return -1
-//		if sqlca.sqlnrows <> 1 then
-//			log.log(this, "u_component_wp_item_document.document_send_now_old:0251", "Invalid dispatch_method (" + dispatch_method + ")", 4)
-//			return -1
-//		end if
-//		
-//		CHOOSE CASE lower(ls_sender_component_id)
-//			CASE "sender_printer"
-//				ls_printer = get_attribute("Printer")
-//				
-//				li_wait = f_please_wait_open()
-//				
-//				if len(ls_printer) > 0 then
-//					common_thread.set_printer(ls_printer)
-//				end if
-//				li_sts = f_open_patient_material(ll_material_id, "print", false)
-//				if li_sts <= 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0266", "Error printing patient material", 4)
-//					f_please_wait_close(li_wait)
-//					return -1
-//				end if
-//				if len(ls_printer) > 0 then
-//					common_thread.set_default_printer()
-//				end if
-//				
-//				f_please_wait_close(li_wait)
-//			CASE "sender_file"
-//				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0277", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
-//					return -1
-//				end if
-//
-//				lstr_material = f_get_patient_material(ll_material_id, true)
-//				if isnull(lstr_material.material_id) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0283", "Error getting material file", 4)
-//					return -1
-//				end if
-//				
-//				luo_data = CREATE u_ds_data
-//				luo_data.set_dataobject("dw_practice_interface_transport_properties")
-//				ll_attribute_count = luo_data.retrieve(sqlca.customer_id, ll_addressee, ll_transportsequence)
-//				f_attribute_ds_to_str(luo_data, lstr_attributes)
-//				DESTROY luo_data
-//				
-//				ls_temp = f_attribute_find_attribute(lstr_attributes, "attachment_location_id")
-//				if isnull(ls_temp) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0295", dispatch_method + " dispatch_method is not properly configured - missing attachment_location_id", 4)
-//					return -1
-//				end if
-//
-//				ll_attachment_location_id = long(ls_temp)
-//				ls_send_to_directory = f_attribute_find_attribute(lstr_attributes, "send_to_directory")
-//				if isnull(ls_send_to_directory) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0302", dispatch_method + " dispatch_method is not properly configured - missing directory", 4)
-//					return -1
-//				end if
-//				
-//				lstr_attachment_location = datalist.get_attachment_location(ll_attachment_location_id)
-//				if isnull(lstr_attachment_location.attachment_location_id) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0308", dispatch_method + " dispatch_method is not properly configured - invalid attachment location", 4)
-//					return -1
-//				end if
-//				
-//				ls_save_path = "\\" + lstr_attachment_location.attachment_server + "\" + lstr_attachment_location.attachment_share
-//				
-//				ls_send_to_directory = f_string_substitute(ls_send_to_directory, "/", "\")
-//				
-//				if left(ls_send_to_directory, 1) = "\" then
-//					ls_save_path += ls_send_to_directory
-//				else
-//					ls_save_path += "\" + ls_send_to_directory
-//				end if
-//				
-//				if right(ls_save_path, 1) <> "\" then ls_save_path += "\"
-//				
-//				// Determine the filename
-//				ls_filename_prefix = f_attribute_find_attribute(lstr_attributes, "filename_prefix")
-//				if len(ls_filename_prefix) > 0 then
-//					ls_save_path += ls_filename_prefix + "_"
-//				end if
-//				
-//				ls_save_path += right("000000000000" + string(patient_workplan_item_id), 12)
-//				ls_save_path += "." + lstr_material.extension
-//				
-//				li_sts = log.file_write(lstr_material.material_object, ls_save_path)
-//				if li_sts < 0 then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0335", dispatch_method + "Error saving document (" + ls_save_path + ")", 4)
-//					return -1
-//				end if
-//
-//			CASE "sender_epie"
-//				// Verify that this customer is licensed to use the selected route
-//				if lower(dispatch_method) = "email" then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0342", "This installation is not licensed to send documents via eMail", 4)
-//					if cpr_mode = "CLIENT" then
-//						openwithparm(w_pop_message, "This installation is not licensed to send documents via eMail")
-//					end if
-//					return -1
-//				end if
-//
-//				if lower(dispatch_method) = "fax" then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0350", "This installation is not licensed to send documents via Fax", 4)
-//					if cpr_mode = "CLIENT" then
-//						openwithparm(w_pop_message, "This installation is not licensed to send documents via Fax")
-//					end if
-//					return -1
-//				end if
-//
-//				// Send the document
-//				lstr_material = f_get_patient_material(ll_material_id, true)
-//				if isnull(lstr_material.material_id) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0360", "Error getting material file", 4)
-//					return -1
-//				end if
-//				
-//				if isnull(ll_addressee) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0365", dispatch_method + " dispatch_method does not have a valid send-to-addressee", 4)
-//					return -1
-//				end if
-//
-//				if isnull(ls_document_type) then
-//					log.log(this, "u_component_wp_item_document.document_send_now_old:0370", dispatch_method + " dispatch_method does not have a valid document type", 4)
-//					return -1
-//				end if
-//				
-//				if f_file_is_text(lstr_material.extension) then
-//					li_sts = f_send_document(ls_document_type, ll_addressee, "XML", string(lstr_material.material_object), id, ordered_by, ordered_for)
-//				else
-//					li_sts = f_send_document_blob(ls_document_type, ll_addressee, lstr_material.material_object, id, ordered_by, ordered_for)
-//				end if
-//				if li_sts <= 0 then return -1
-//		END CHOOSE
-//END CHOOSE
-//
-//li_sts = set_progress("Sent")
-//if li_sts < 0 then
-//	log.log(this, "u_component_wp_item_document.document_send_now_old:0385", "Error setting 'sent' progress", 4)
-//	return -1
-//end if
-//
-return 1
-//
 end function
 
 public function integer document_pick_address ();u_component_route luo_sender
@@ -1449,7 +1056,7 @@ public subroutine document_error (string ps_operation);
 sqlca.jmj_set_document_error(patient_workplan_item_id, &
 									ps_operation, &
 									current_user.user_id, &
-									computer_id)
+									gnv_app.computer_id)
 if not tf_check() then return
 
 

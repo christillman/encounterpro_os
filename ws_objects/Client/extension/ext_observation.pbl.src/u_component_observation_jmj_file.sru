@@ -194,7 +194,7 @@ end if
 if isnull(ls_address) then return 0
 
 if lower(ls_address) = "pick" then
-	if cpr_mode = "SERVER" then
+	if gnv_app.cpr_mode = "SERVER" then
 		log.log(this, "u_component_observation_jmj_file.get_attachments:0068", "address is required in server mode", 4)
 		return -1
 	else

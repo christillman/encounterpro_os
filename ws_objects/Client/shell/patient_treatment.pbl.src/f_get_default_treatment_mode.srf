@@ -6,7 +6,40 @@ forward prototypes
 global function string f_get_default_treatment_mode (string ps_treatment_type, string ps_treatment_key)
 end prototypes
 
-global function string f_get_default_treatment_mode (string ps_treatment_type, string ps_treatment_key);return f_get_default_treatment_mode_2(ps_treatment_type, ps_treatment_key, false)
+global function string f_get_default_treatment_mode (string ps_treatment_type, string ps_treatment_key);
+
+string ls_treatment_mode
+
+
+SELECT treatment_mode
+INTO :ls_treatment_mode
+FROM o_Treatment_Type_Default_Mode
+WHERE treatment_type = :ps_treatment_type
+AND treatment_key = :ps_treatment_key
+AND office_id = :gnv_app.office_id;
+if not tf_check() then
+	setnull(ls_treatment_mode)
+elseif sqlca.sqlcode = 100 then
+	// If no key specific mode was found see if a default mode has been set for the office
+	//if pb_use_office_default then
+		SELECT treatment_mode
+		INTO :ls_treatment_mode
+		FROM o_Treatment_Type_Default_Mode
+		WHERE treatment_type = :ps_treatment_type
+		AND treatment_key = '!DefaultMode'
+		AND office_id = :gnv_app.office_id;
+		if not tf_check() then
+			setnull(ls_treatment_mode)
+		elseif sqlca.sqlcode = 100 then
+			setnull(ls_treatment_mode)
+		end if
+//	else
+//		setnull(ls_treatment_mode)
+//	end if
+end if
+
+return ls_treatment_mode
+
 
 end function
 

@@ -113,7 +113,7 @@ st_attending_doctor.text = current_user.user_short_name
 st_attending_doctor.backcolor = current_user.color
 attending_doctor = current_user.user_id
 
-encounter_office_id = office_id
+encounter_office_id = gnv_app.office_id
 st_location.text = office_description
 
 if isnull(current_patient) then

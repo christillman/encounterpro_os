@@ -18,7 +18,7 @@ string lsa_values[]
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_sp_get_observation_sources")
-ll_rows = luo_data.retrieve(computer_id, ps_observation_id)
+ll_rows = luo_data.retrieve(gnv_app.computer_id, ps_observation_id)
 
 li_count = 0
 li_attribute_count = 1

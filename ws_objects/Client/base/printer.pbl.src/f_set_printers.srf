@@ -32,7 +32,7 @@ li_printer_count = f_parse_string(ls_printers, "~r~n", lsa_printers)
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_o_computer_printer")
-li_count = luo_data.retrieve(computer_id)
+li_count = luo_data.retrieve(gnv_app.computer_id)
 if li_count < 0 then return -1
 
 for i = 1 to li_printer_count
@@ -42,7 +42,7 @@ for i = 1 to li_printer_count
 	ll_row = luo_data.find(ls_find, 1, li_count)
 	if ll_row <= 0 then
 		ll_row = luo_data.insertrow(0)
-		luo_data.object.computer_id[ll_row] = computer_id
+		luo_data.object.computer_id[ll_row] = gnv_app.computer_id
 		luo_data.object.printer[ll_row] = lstr_printer.printername
 	end if
 	luo_data.object.driver[ll_row] = lstr_printer.driver
@@ -64,8 +64,8 @@ LOOP
 li_sts = luo_data.update()
 if li_sts < 0 then return -1
 
-if cpr_mode = "SERVER" then
-	sqlca.jmj_set_server_printers(computer_id)
+if gnv_app.cpr_mode = "SERVER" then
+	sqlca.jmj_set_server_printers(gnv_app.computer_id)
 	if not tf_check() then return -1
 end if
 

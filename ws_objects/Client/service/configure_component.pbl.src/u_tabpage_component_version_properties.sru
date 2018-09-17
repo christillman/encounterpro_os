@@ -299,8 +299,8 @@ sqlca.jmj_component_log(component.component_id , &
 						component_version.version,  &
 						"Trial Started", & 
 						datetime(today(), now()) ,  &
-						computer_id ,  &
-						windows_logon_id ,  &
+						gnv_app.computer_id ,  &
+						gnv_app.windows_logon_id ,  &
 						"OK" ,  &
 						ls_message ,  &
 						current_scribe.user_id  ) 
@@ -375,8 +375,8 @@ sqlca.jmj_component_log(component_version.component_id , &
 						ll_new_normal_version,  &
 						ls_operation, & 
 						datetime(today(), now()) ,  &
-						computer_id ,  &
-						windows_logon_id ,  &
+						gnv_app.computer_id ,  &
+						gnv_app.windows_logon_id ,  &
 						"OK" ,  &
 						ls_message ,  &
 						current_scribe.user_id  ) 

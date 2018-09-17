@@ -49,7 +49,7 @@ if isnull(temp_path) then
 end if
 if right(temp_path, 1) = "\" then temp_path = left(temp_path, len(temp_path) - 1)
 
-temp_path += "\" + string(computer_id)
+temp_path += "\" + string(gnv_app.computer_id)
 
 if not log.of_directoryexists(temp_path) then
 	log.of_createdirectory(temp_path)

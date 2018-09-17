@@ -197,7 +197,7 @@ public function integer doing_service ();
 UPDATE o_Users
 SET in_service = "Y"
 WHERE user_id = :user_Id
-AND computer_id = :computer_id;
+AND computer_id = :gnv_app.computer_id;
 if not tf_check() then return -1
 
 if sqlca.sqlcode = 100 then return 0
@@ -214,7 +214,7 @@ public function integer not_doing_service ();
 UPDATE o_Users
 SET in_service = "N"
 WHERE user_id = :user_Id
-AND computer_id = :computer_id;
+AND computer_id = :gnv_app.computer_id;
 if not tf_check() then return -1
 
 if sqlca.sqlcode = 100 then return 0
@@ -315,12 +315,12 @@ SELECT count(*)
 INTO :ll_count
 FROM o_users (nolock)
 WHERE user_id = :current_scribe.user_id
-AND computer_id = :computer_id;
+AND computer_id = :gnv_app.computer_id;
 if not tf_check() then return -1
 
 if ll_count = 0 then
 	// We didn't find the logon record so report a warning
-	log.log(this, "u_user.check_logon:0025", "User '" + user_full_name + "' is not logged in at computer # " + string(computer_id), 3)
+	log.log(this, "u_user.check_logon:0025", "User '" + user_full_name + "' is not logged in at computer # " + string(gnv_app.computer_id), 3)
 	
 	// If we're not working on a service, then log the user out
 	if isnull(current_service) then logoff(false)
@@ -409,12 +409,12 @@ public function integer change_office (string ps_new_office_id);
 UPDATE o_Users
 SET office_id = :ps_new_office_id
 WHERE user_id = :user_Id
-AND computer_id = :computer_id;
+AND computer_id = :gnv_app.computer_id;
 if not tf_check() then return -1
 
 if sqlca.sqlcode = 100 then return 0
 
-office_id = ps_new_office_id
+gnv_app.office_id = ps_new_office_id
 
 return 1
 
@@ -707,7 +707,7 @@ public subroutine logoff (boolean pb_shutting_down);string ls_services_waiting
 
  DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
          @ps_user_id = :user_id,
-			@pl_computer_id = :computer_id;
+			@pl_computer_id = :gnv_app.computer_id;
 
 
 log.log(this, "u_user.logoff:0013", "User " + user_short_name + " logging off...", 2)

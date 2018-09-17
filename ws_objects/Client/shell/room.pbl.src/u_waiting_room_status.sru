@@ -62,7 +62,7 @@ END CHOOSE
 
 setsort(ls_sort)
 
-ll_rowcount = retrieve(office_id, room_id)
+ll_rowcount = retrieve(gnv_app.office_id, room_id)
 if ll_rowcount < 0 then return -1
 
 return 1

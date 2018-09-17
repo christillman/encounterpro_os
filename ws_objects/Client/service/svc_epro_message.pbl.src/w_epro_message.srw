@@ -28,7 +28,6 @@ end forward
 
 global type w_epro_message from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -244,7 +243,7 @@ end if
 
 service.set_service_buttons(cb_finished, cb_beback, cb_dolater)
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	cb_finished.event trigger clicked()
 	return
 end if
@@ -663,7 +662,7 @@ sqlca.sp_set_workplan_item_progress(service.patient_workplan_item_id, &
 												"Cancelled", &
 												ldt_now, &
 												current_scribe.user_id, &
-												computer_id)
+												gnv_app.computer_id)
 if not tf_check() then return
 
 popup_return.item_count = 1

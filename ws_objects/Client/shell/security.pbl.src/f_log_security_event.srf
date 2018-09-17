@@ -20,8 +20,8 @@ INSERT INTO o_User_Logins (
 	scribe_for_user_id )
 VALUES (
 	:current_scribe.user_id ,
-	:computer_id ,
-	:office_id ,
+	:gnv_app.computer_id ,
+	:gnv_app.office_id ,
 	:ps_action ,
 	:ps_action_status,
 	:ps_action_for_user_id,

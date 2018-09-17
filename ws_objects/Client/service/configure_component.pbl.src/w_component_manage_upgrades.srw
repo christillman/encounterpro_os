@@ -190,8 +190,8 @@ sqlca.jmj_component_log(ps_component_id , &
 						ll_upgrade_to_version,  &
 						"Version Upgraded", & 
 						datetime(today(), now()) ,  &
-						computer_id ,  &
-						windows_logon_id ,  &
+						gnv_app.computer_id ,  &
+						gnv_app.windows_logon_id ,  &
 						"OK" ,  &
 						ls_message ,  &
 						current_scribe.user_id  ) 

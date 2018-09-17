@@ -200,7 +200,7 @@ sqlca.sp_set_workplan_item_progress(patient_workplan_item_id, &
 												ps_progress_type, &
 												ldt_null, &
 												current_scribe.user_id, &
-												computer_id)
+												gnv_app.computer_id)
 
 RETURN 1
 
@@ -430,10 +430,10 @@ if sqlca.sqlcode = 100 then
 	VALUES (
 		:patient_workplan_item_id,
 		:current_scribe.user_id,
-		:computer_id );
+		:gnv_app.computer_id );
 	if not tf_check() then return -1
 	lb_already_locked = false
-elseif ls_locked_by_user_id = current_scribe.user_id and ll_locked_by_computer_id = computer_id then
+elseif ls_locked_by_user_id = current_scribe.user_id and ll_locked_by_computer_id = gnv_app.computer_id then
 	// If the same user/computer already holds the lock then we're OK
 	lb_already_locked = false
 else
@@ -448,7 +448,7 @@ if lb_already_locked then
 	ls_message = "This service is already being performed by "
 	ls_message += user_list.user_full_name(ls_locked_by_user_id)
 	ls_message += " at " + ls_other_computer
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message)
 	else
 		log.log(this, "u_component_workplan_item.doing_service:0070", ls_message, 4)
@@ -457,7 +457,7 @@ if lb_already_locked then
 end if
 
 // Perform some checks if we're in client mode
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	// If this service is ordered for someone else, then warn the user
 	if user_list.is_user(owned_by) then
 		If upper(owned_by) <> upper(current_user.user_id) Then
@@ -810,7 +810,7 @@ sqlca.jmj_set_service_error(patient_workplan_item_id, &
 									current_user.user_id, &
 									current_scribe.user_id, &
 									ls_manual_service_flag, &
-									computer_id)
+									gnv_app.computer_id)
 
 
 
@@ -1170,7 +1170,7 @@ if isnull(treatment) then return 0
 if isnull(treatment.observation_id) then
 	// If the treatment has no observation_id and we're in CLIENT mode, then let the user
 	// pick an observation
-	if cpr_mode = "CLIENT" then		
+	if gnv_app.cpr_mode = "CLIENT" then		
 		popup.data_row_count = 2
 		popup.title = "Select Observation for '" + treatment.treatment_description + "'"
 		popup.multiselect = false
@@ -1510,7 +1510,7 @@ public function str_complete_context context ();str_complete_context lstr_contex
 lstr_context = f_empty_context()
 
 lstr_context.customer_id = sqlca.customer_id
-lstr_context.office_id = office_id
+lstr_context.office_id = gnv_app.office_id
 lstr_context.user_id = current_user.user_id
 lstr_context.scribe_user_id = current_scribe.user_id
 

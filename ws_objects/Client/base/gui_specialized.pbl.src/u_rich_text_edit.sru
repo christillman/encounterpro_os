@@ -6820,7 +6820,7 @@ else
 	
 	// Make sure the non-patient context is set
 	last_context.customer_id = sqlca.customer_id
-	last_context.office_id = office_id
+	last_context.office_id = gnv_app.office_id
 	last_context.user_id = current_user.user_id
 	last_context.scribe_user_id = current_scribe.user_id
 	
@@ -6919,7 +6919,7 @@ else
 end if  // End not-reentry section
 
 // If we're in debug mode and the editor window isn't open yet, then open the editor window instead of running the script
-if (cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) or isnull(editor_window)) then
+if (gnv_app.cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) or isnull(editor_window)) then
 	open_editor()
 	return ls_rtf
 end if

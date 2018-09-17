@@ -6,7 +6,7 @@ forward prototypes
 global function string f_database_version ()
 end prototypes
 
-global function string f_database_version ();return string(major_release) + "." + database_version
+global function string f_database_version ();return string(gnv_app.major_release) + "." + gnv_app.database_version
 
 end function
 

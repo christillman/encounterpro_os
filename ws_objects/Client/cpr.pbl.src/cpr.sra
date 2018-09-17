@@ -11,41 +11,16 @@ end forward
 
 global variables
 
-///////////////////////////////////////////////////////////
-// !!!! Change these values for every compile !!!!
-long minimum_modification_level = 203
-date compile_date = date("20/8/2018")
-integer major_release = 7
-string database_version = "0" // this is really minor release
-string build = "2"
-////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////
-// DB Version this client is compatible with.  Do not change.
-string my_sql_version = "4.05"
-////////////////////////////////////////////////////////////
-
 cpr gnv_app
 
-string registry_key
-string ini_file
-string program_directory
-string cpr_mode = "NA"
-string eml
-string computername
-string servicename
-long computer_id
-string windows_logon_id
 string month_str[12] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"}
-w_window_base main_window
+w_main main_window
 boolean just_logged_on
 //integer password_length = 3
 //boolean variable_password_length = false
 string system_user_id = "#SYSTEM"
 string logon_id = "jmjtech"
 date immunization_date_of_birth = date("1/1/1980")
-string office_id
 string office_description
 long default_group_id
 boolean config_mode
@@ -270,6 +245,32 @@ Function boolean IsWindowEnabled(ulong hWnd)  library "USER32.DLL"
 end prototypes
 
 type variables
+
+
+///////////////////////////////////////////////////////////
+// !!!! Change these values for every compile !!!!
+long minimum_modification_level = 203
+date compile_date = date("20/8/2018")
+integer major_release = 7
+string database_version = "0" // this is really minor release
+string build = "2"
+////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////
+// DB Version this client is compatible with.
+string my_sql_version = "4.05"
+////////////////////////////////////////////////////////////
+
+string registry_key
+string ini_file
+string program_directory
+string cpr_mode = "NA"
+string computername
+string servicename
+long computer_id
+string office_id
+string windows_logon_id
 
 // Don't get your hopes up; only a couple of locales are supported
 // so far, and only in a limited way!

@@ -1060,7 +1060,7 @@ if not isnull(current_room) then
 end if
 
 // If the CPR mode is SERVER, then we can't present a user window
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	// If there are rooms to pick from then pick the first
 	if ll_rooms > 0 then
 		ls_room_id = luo_data.object.room_id[1]

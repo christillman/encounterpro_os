@@ -88,7 +88,7 @@ FROM p_Patient_WP_Item
 WHERE patient_workplan_item_id = :pl_patient_workplan_item_id;
 if not tf_check() then return -1
 
-sqlca.sp_set_workplan_item_progress(patient_workplan_item_id, current_user.user_id, "Started", datetime(today(), now()), current_user.user_id, computer_id)
+sqlca.sp_set_workplan_item_progress(patient_workplan_item_id, current_user.user_id, "Started", datetime(today(), now()), current_user.user_id, gnv_app.computer_id)
 if not tf_check() then return -1
 
 
@@ -96,7 +96,7 @@ ll_document_count = xx_get_documents()
 
 if ll_document_count < 0 then return -1
 
-sqlca.sp_set_workplan_item_progress(pl_patient_workplan_item_id, current_user.user_id, "Completed", datetime(today(), now()), current_user.user_id, computer_id)
+sqlca.sp_set_workplan_item_progress(pl_patient_workplan_item_id, current_user.user_id, "Completed", datetime(today(), now()), current_user.user_id, gnv_app.computer_id)
 if not tf_check() then return -1
 
 add_attribute( "document_count", string(ll_document_count))

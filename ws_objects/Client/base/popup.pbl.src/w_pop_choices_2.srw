@@ -44,7 +44,7 @@ if popup.data_row_count < 2 then
 	return
 end if
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	log.log(this, "w_pop_choices_2:open", "Invalid parameters", 4)
 	closewithreturn(this, 0)
 	return

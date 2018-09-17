@@ -277,7 +277,7 @@ long i
 
 st_zip_filter.text = ""
 
-zipcode_filter_domain_id = "ActorZipFilter_" + office_id
+zipcode_filter_domain_id = "ActorZipFilter_" + gnv_app.office_id
 
 // Load the zip codes from the c_Domain table
 luo_data = CREATE u_ds_data

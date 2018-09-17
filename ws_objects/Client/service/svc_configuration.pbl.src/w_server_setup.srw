@@ -557,7 +557,7 @@ str_popup_return popup_return
 
 DECLARE lsp_setup_integration PROCEDURE FOR dbo.sp_setup_practicemanagement
 @ps_billing_system = :default_billing_system,
-@ps_office_id = :office_id
+@ps_office_id = :gnv_app.office_id
 USING SQLCA; 
 
 popup.dataobject = "dw_pick_integration"

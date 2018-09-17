@@ -213,7 +213,7 @@ popup_return.items[1] = "ERROR"
 service = message.powerobjectparm
 
 service_office_id = service.get_attribute("service_office_id")
-if isnull(service_office_id) then service_office_id = office_id
+if isnull(service_office_id) then service_office_id = gnv_app.office_id
 
 services = service.get_attribute("service_list")
 if isnull(services) then services = "GET_PATIENT"

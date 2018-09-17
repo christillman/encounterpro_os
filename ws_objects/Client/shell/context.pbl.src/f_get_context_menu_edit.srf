@@ -30,7 +30,7 @@ for i = 1 to ll_count
 	ls_user_id = luo_data.object.user_id[i]
 	
 	// Make sure the office_id matches
-	if not isnull(ls_office_id) and ls_office_id <> office_id then continue
+	if not isnull(ls_office_id) and ls_office_id <> gnv_app.office_id then continue
 	
 	// Make sure the menu_key matches; for room menus (check for specific room id or room type).
 	if not isnull(ls_menu_key) then
@@ -98,7 +98,7 @@ for i = 1 to ll_count
 	ls_user_id = luo_data.object.user_id[i]
 	
 	// Make sure the office_id matches
-	if not isnull(ls_office_id) and ls_office_id <> office_id then continue
+	if not isnull(ls_office_id) and ls_office_id <> gnv_app.office_id then continue
 	
 	// Make sure the menu_key matches; for room menus (check for specific room id or room type).
 	if not isnull(ls_menu_key) then

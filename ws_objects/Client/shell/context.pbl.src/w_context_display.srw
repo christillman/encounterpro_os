@@ -188,10 +188,10 @@ else
 	st_db_spid.text = "Not Connected"
 end if	
 
-st_client.text = computername + "/" + windows_logon_id
+st_client.text = gnv_app.computername + "/" + gnv_app.windows_logon_id
 
-if computer_id > 0 then
-	st_client.text += "  (" + string(computer_id) + ")"
+if gnv_app.computer_id > 0 then
+	st_client.text += "  (" + string(gnv_app.computer_id) + ")"
 end if
 
 if isnull(current_service) then
@@ -1488,7 +1488,7 @@ end type
 
 event clicked;str_log_search lstr_log_search
 
-lstr_log_search.computer_id = computer_id
+lstr_log_search.computer_id = gnv_app.computer_id
 lstr_log_search.begin_date = datetime(today(), time("00:00"))
 
 openwithparm(w_log_display, lstr_log_search)

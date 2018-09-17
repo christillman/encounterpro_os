@@ -986,13 +986,13 @@ else
 			return -1
 		end if
 	else
-		ls_dbserver = profilestring(ini_file, common_thread.default_database, "dbserver", "")
+		ls_dbserver = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "")
 		if ls_dbserver = "" then
 			log.log(this, "u_sqlca.dbconnect:0022", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 			return -1
 		end if
 		
-		ls_dbname = profilestring(ini_file, common_thread.default_database, "dbname", "")
+		ls_dbname = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "")
 		if ls_dbserver = "" then
 			log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 			return -1
@@ -1001,7 +1001,7 @@ else
 	
 	
 	ls_dbms = "SNC"
-//	ls_dbms = profilestring(ini_file, common_thread.default_database, "dbms", "")
+//	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
 //	if ls_dbserver = "" then
 //		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 //		return -1
@@ -1318,7 +1318,7 @@ if not connected then
 	end if
 	
 	// If there's a user then show them the error
-	if cpr_mode = "CLIENT" or cpr_mode = "DBMAINT" then
+	if gnv_app.cpr_mode = "CLIENT" or gnv_app.cpr_mode = "DBMAINT" then
 		openwithparm(w_pop_message, ls_message)
 	end if
 	
@@ -1330,7 +1330,7 @@ end if
 
 // If we get here then we've successfully connected
 
-if cpr_mode <> "SERVER" then
+if gnv_app.cpr_mode <> "SERVER" then
 	log.log(this, "u_sqlca.dbconnect:0186", "Successfully connected to database (" + database + ") using " + connected_using + " authentication (spid = " + string(spid) + ").", 2)
 end if
 
@@ -1547,7 +1547,7 @@ elseif lower(ps_user) = "synch" then
 	ls_temp  += "v"
 	ls_temp  += "e"
 	ls_temp  += "."
-elseif cpr_mode <> "SERVER" then
+elseif gnv_app.cpr_mode <> "SERVER" then
 	openwithparm(w_pop_get_password, "Please enter the " + ps_user + " password")
 	ls_temp = message.stringparm
 	if isnull(ls_temp) then ls_temp = ""
@@ -1656,7 +1656,7 @@ sql_version = long(left(sql_server_productversion, ll_pos - 1))
 
 if sql_version <= 8 then
 	ls_temp = "This database is running on an older version of SQL Server.  EncounterPRO-OS SQL Server 2005 or later."
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_temp)
 	end if
 	log.log(this, "u_sqlca.check_database:0060", ls_temp, 4)
@@ -1735,7 +1735,7 @@ if luo_this.sqlcode = 0 then
 	// First see if this is an EncounterPRO database
 	if isnull(ls_c_database_status) then
 		is_eprodb = false
-		if cpr_mode = "CLIENT" then
+		if gnv_app.cpr_mode = "CLIENT" then
 			ls_temp = "This database (" + database + ")"
 			ls_temp += " does not appear to be a valid EncounterPRO database."
 			openwithparm(w_pop_message, ls_temp)
@@ -2344,7 +2344,7 @@ luo_this = this
 // Then run all the scripts where the script_type matches the system_id
 luo_scripts = CREATE u_ds_data
 luo_scripts.set_dataobject("dw_jmj_latest_scripts", luo_this)
-ll_rowcount = luo_scripts.retrieve(ps_script_type, major_release, database_version, modification_level)
+ll_rowcount = luo_scripts.retrieve(ps_script_type, gnv_app.major_release, gnv_app.database_version, modification_level)
 if ll_rowcount < 0 then return -1
 if ll_rowcount = 0 then return 0
 
@@ -2642,7 +2642,7 @@ string ls_null
 
 setnull(ls_null)
 
-IF cpr_mode = "DBMAINT" then
+IF gnv_app.cpr_mode = "DBMAINT" then
 	SELECT preference_value
 	INTO :ls_return
 	FROM o_Preferences
@@ -3476,7 +3476,7 @@ INSERT INTO c_Database_Script_Log (
 VALUES (
 	:pl_script_id,
 	:ldt_now,
-	:computer_id,
+	:gnv_app.computer_id,
 	:ls_script,
 	:ls_completion_status,
 	:lstr_status.error_index,
@@ -3826,7 +3826,7 @@ if not tf_check() then return -1
 // If no material was found try loading the schema for this mod level
 if ll_material_id = 0 or isnull(ll_material_id) then
 	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
-	ll_material_id = load_schema_file(program_directory, ll_modification_level, as_filename)
+	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
 	if ll_material_id <= 0 then
 		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
 	end if

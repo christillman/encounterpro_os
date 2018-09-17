@@ -72,13 +72,13 @@ else
 	ls_allow_editing = "N"
 end if
 
-st_client.text = computername + "/" + windows_logon_id
+st_client.text = gnv_app.computername + "/" + gnv_app.windows_logon_id
 
-if computer_id > 0 then
-	st_client.text += "  (" + string(computer_id) + ")"
+if gnv_app.computer_id > 0 then
+	st_client.text += "  (" + string(gnv_app.computer_id) + ")"
 end if
 
-ll_count = dw_components.retrieve(computer_id)
+ll_count = dw_components.retrieve(gnv_app.computer_id)
 
 for i = 1 to ll_count
 	ls_component_id = dw_components.object.component_id[i]

@@ -71,7 +71,7 @@ event open;call super::open;// Parameters (popup.):
 
 st_printer.text = message.stringparm
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	close(this)
 	return
 end if

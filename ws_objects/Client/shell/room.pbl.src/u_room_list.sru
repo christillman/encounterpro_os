@@ -45,7 +45,7 @@ string ls_room_id
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_room_list_this_office")
-ll_rows = luo_data.retrieve(office_id)
+ll_rows = luo_data.retrieve(gnv_app.office_id)
 
 setnull(ls_null)
 

@@ -164,7 +164,7 @@ if isnull(current_user) or not isvalid(current_user) then
 end if
 
 li_sts = 1
-ls_office = office_id
+ls_office = gnv_app.office_id
 li_found_one = xx_get_next_checked_in(	ll_checked_in_id, &
 													ls_cpr_id, &
 													ls_encounter_type, &

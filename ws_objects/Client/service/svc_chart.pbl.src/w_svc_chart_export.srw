@@ -25,7 +25,6 @@ end forward
 global type w_svc_chart_export from w_window_base
 integer width = 2962
 integer height = 1936
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 3
@@ -377,7 +376,7 @@ separator_page_display_script_id = long(service.get_attribute("separator_page_di
 ole_rtf.set_view_mode("page")
 
 service.get_attribute("auto_perform", auto_perform)
-if auto_perform or cpr_mode = "SERVER" then
+if auto_perform or gnv_app.cpr_mode = "SERVER" then
 	visible = false
 	cb_finished.EVENT post clicked()
 end if
@@ -467,7 +466,7 @@ string ls_path
 
 li_sts = dump_patient()
 
-if auto_perform or cpr_mode = "SERVER" then
+if auto_perform or gnv_app.cpr_mode = "SERVER" then
 	if li_sts <= 0 then
 		log.log(this, "w_svc_chart_export.cb_finished.clicked:0009", "Export Patient Chart Failed (" + service.cpr_id + ")", 4)
 		popup_return.item_count = 1

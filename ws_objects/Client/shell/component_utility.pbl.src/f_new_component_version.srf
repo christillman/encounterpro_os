@@ -261,8 +261,8 @@ if ll_current_version_count = 0 then
 							ll_version,  &
 							"Initial Version Set", & 
 							datetime(today(), now()) ,  &
-							computer_id ,  &
-							windows_logon_id ,  &
+							gnv_app.computer_id ,  &
+							gnv_app.windows_logon_id ,  &
 							"OK" ,  &
 							ls_null ,  &
 							current_scribe.user_id  ) 

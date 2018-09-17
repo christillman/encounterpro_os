@@ -278,8 +278,8 @@ long ll_row
 
 
 global_preference_key = "Global"
-office_preference_key = office_id
-computer_preference_key = string(computer_id)
+office_preference_key = gnv_app.office_id
+computer_preference_key = string(gnv_app.computer_id)
 specialty_preference_key = current_user.common_list_id()
 user_preference_key = current_user.user_id
 
@@ -383,7 +383,7 @@ CHOOSE CASE lower(preference_level)
 		popup.datacolumn = 1
 		popup.displaycolumn = 5
 		popup.argument_count = 1
-		popup.argument[1] = office_id
+		popup.argument[1] = gnv_app.office_id
 		openwithparm(w_pop_pick, popup)
 		popup_return = message.powerobjectparm
 		if popup_return.item_count <> 1 then return

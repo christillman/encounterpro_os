@@ -2831,7 +2831,7 @@ puo_treatment.treatment_goal = left(puo_treatment.treatment_goal, 80)
 
 // Make sure the office_id is set if it needs to be
 If not puo_treatment.past_treatment and pb_workflow and isnull(puo_treatment.treatment_office_id) Then
-	puo_treatment.treatment_office_id = office_id
+	puo_treatment.treatment_office_id = gnv_app.office_id
 end if
 
 
@@ -3090,7 +3090,7 @@ If isnull(pdt_begin_date) Then pdt_begin_date = datetime(today(), now())
 
 // Make sure the office_id is set if it needs to be
 If isnull(ps_office_id) Then
-	ps_office_id = office_id
+	ps_office_id = gnv_app.office_id
 end if
 
 ls_treatment_description_80 = left(ps_treatment_description, 80)
@@ -3250,7 +3250,7 @@ puo_treatment.treatment_goal = left(puo_treatment.treatment_goal, 80)
 
 // Make sure the office_id is set if it needs to be
 If not puo_treatment.past_treatment and pb_workflow and isnull(puo_treatment.treatment_office_id) Then
-	puo_treatment.treatment_office_id = office_id
+	puo_treatment.treatment_office_id = gnv_app.office_id
 end if
 
 

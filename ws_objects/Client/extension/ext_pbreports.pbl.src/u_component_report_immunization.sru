@@ -72,7 +72,7 @@ INTO	:ls_office_description,
       :ls_phone,   
       :ls_fax  
 FROM c_Office
-WHERE c_Office.office_id = :office_id
+WHERE c_Office.office_id = :gnv_app.office_id
 USING cprdb;
 If Not cprdb.check() Then Return -1
 

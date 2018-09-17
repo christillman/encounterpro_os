@@ -85,10 +85,10 @@ public subroutine db_selected (long pl_row);integer li_sts
 
 selected_database = dw_databases.object.database[pl_row]
 
-st_server.text = profilestring(ini_file, selected_database, "dbserver", "")
-st_db.text = profilestring(ini_file, selected_database, "dbname", "")
-//st_dbms.text = profilestring(ini_file, selected_database, "dbms", "")
-st_office_id.text = profilestring(ini_file, selected_database, "office_id", "")
+st_server.text = profilestring(gnv_app.ini_file, selected_database, "dbserver", "")
+st_db.text = profilestring(gnv_app.ini_file, selected_database, "dbname", "")
+//st_dbms.text = profilestring(gnv_app.ini_file, selected_database, "dbms", "")
+st_office_id.text = profilestring(gnv_app.ini_file, selected_database, "office_id", "")
 
 if selected_database = default_database then
 	cb_delete.enabled = false
@@ -108,7 +108,7 @@ long ll_row
 integer li_sts
 integer i
 
-li_section_count = f_ini_get_sections(ini_file, ls_sections)
+li_section_count = f_ini_get_sections(gnv_app.ini_file, ls_sections)
 
 dw_databases.reset()
 
@@ -138,10 +138,10 @@ public subroutine update_db (string ps_subkey, string ps_dbms, string ps_dbserve
 string ls_find
 long ll_row
 
-SetProfileString ( ini_file, selected_database, "dbserver", ps_dbserver )
-SetProfileString ( ini_file, selected_database, "dbname", ps_dbname )
-//SetProfileString ( ini_file, selected_database, "dbms", ps_dbms )
-SetProfileString ( ini_file, selected_database, "office_id", ps_office_id )
+SetProfileString ( gnv_app.ini_file, selected_database, "dbserver", ps_dbserver )
+SetProfileString ( gnv_app.ini_file, selected_database, "dbname", ps_dbname )
+//SetProfileString ( gnv_app.ini_file, selected_database, "dbms", ps_dbms )
+SetProfileString ( gnv_app.ini_file, selected_database, "office_id", ps_office_id )
 
 get_databases()
 
@@ -162,10 +162,10 @@ string ls_find
 long ll_row
 
 
-SetProfileString ( ini_file, ps_new_database, "dbserver", ps_dbserver )
-SetProfileString ( ini_file, ps_new_database, "dbname", ps_dbname )
-SetProfileString ( ini_file, ps_new_database, "dbms", ps_dbms )
-SetProfileString ( ini_file, ps_new_database, "office_id", ps_office_id )
+SetProfileString ( gnv_app.ini_file, ps_new_database, "dbserver", ps_dbserver )
+SetProfileString ( gnv_app.ini_file, ps_new_database, "dbname", ps_dbname )
+SetProfileString ( gnv_app.ini_file, ps_new_database, "dbms", ps_dbms )
+SetProfileString ( gnv_app.ini_file, ps_new_database, "office_id", ps_office_id )
 
 get_databases()
 
@@ -236,7 +236,7 @@ end on
 
 event open;st_version.text = f_app_version()
 
-dbkey = registry_key + "\Database"
+dbkey = gnv_app.registry_key + "\Database"
 
 get_databases()
 
@@ -371,7 +371,7 @@ openwithparm(w_pop_yes_no, "Are you sure you wish to delete '" + selected_databa
 popup_return = message.powerobjectparm
 if isnull(popup_return.item) or popup_return.item <> "YES" then return
 
-li_sts = f_ini_delete_section(ini_file, selected_database)
+li_sts = f_ini_delete_section(gnv_app.ini_file, selected_database)
 
 setnull(selected_database)
 get_databases()

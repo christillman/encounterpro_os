@@ -628,7 +628,7 @@ dw_access.setredraw(false)
 
 ll_row = dw_access.insertrow(0)
 dw_access.object.user_id[ll_row] = luo_user.user_id
-dw_access.object.office_id[ll_row] = office_id
+dw_access.object.office_id[ll_row] = gnv_app.office_id
 dw_access.object.service[ll_row] = ls_service
 dw_access.object.access_flag[ll_row] = ls_access_flag
 dw_access.object.created[ll_row] = datetime(today(), now())

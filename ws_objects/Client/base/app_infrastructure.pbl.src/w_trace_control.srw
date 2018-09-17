@@ -562,7 +562,7 @@ else
 	trace_mode = true
 	st_tracing_title.text = "Tracing is ON"
 	cb_startstop.text = "Stop Tracing"
-	f_start_tracing("EproTrace_" + string(computer_id) + ".pbp")
+	f_start_tracing("EproTrace_" + string(gnv_app.computer_id) + ".pbp")
 end if
 
 

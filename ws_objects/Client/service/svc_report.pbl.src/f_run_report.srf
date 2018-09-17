@@ -104,7 +104,7 @@ WHERE report_id = :ps_report_id;
 If Not tf_check() Then Return -1
 
 // If the pb_prompt_for_runtime_params flag is set and we're in client mode then prompt the user for any runtime params
-If cpr_mode = "CLIENT" and pb_prompt_for_runtime_params Then
+If gnv_app.cpr_mode = "CLIENT" and pb_prompt_for_runtime_params Then
 	li_sts = f_get_params(ps_report_id, "Runtime", pstr_attributes)
 	if li_sts < 0 then return 0
 end if

@@ -280,7 +280,7 @@ CHOOSE CASE lower(ls_display_how)
 		
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
-			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", program_directory)
+			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
 			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
 			
 			ls_file = get_attachment()
@@ -469,7 +469,7 @@ CHOOSE CASE lower(ls_edit_how)
 		
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
-			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", program_directory)
+			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
 			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
 			
 			if isnull(ls_arguments) then
@@ -1129,7 +1129,7 @@ CHOOSE CASE lower(ls_print_how)
 		
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
-			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", program_directory)
+			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
 			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
 			
 			ls_file = get_attachment()
@@ -1141,9 +1141,9 @@ CHOOSE CASE lower(ls_print_how)
 			end if
 			
 			TRY
-				get_attribute("print_program_timeout_" + cpr_mode, ll_timeout)
+				get_attribute("print_program_timeout_" + gnv_app.cpr_mode, ll_timeout)
 				if isnull(ll_timeout) then
-					if cpr_mode = "CLIENT" then
+					if gnv_app.cpr_mode = "CLIENT" then
 						// Default client timeout = 10 minutes
 						ll_timeout = 600000
 					else
@@ -1218,7 +1218,7 @@ boolean lb_use_default_printer
 
 if isnull(ps_printer) then
 	get_attribute("use_default_printer", lb_use_default_printer)
-	if cpr_mode = "CLIENT" and not lb_use_default_printer then
+	if gnv_app.cpr_mode = "CLIENT" and not lb_use_default_printer then
 		ps_printer = common_thread.select_printer()
 		// If the user didn't select a printer then don't do anything
 		if isnull(ps_printer) then return 0

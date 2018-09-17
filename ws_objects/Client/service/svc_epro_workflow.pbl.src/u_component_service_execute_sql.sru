@@ -36,7 +36,7 @@ get_attribute("success_message", ls_success_message)
 get_attribute("failure_message", ls_failure_message)
 if isnull(ls_failure_message) then ls_failure_message = "Operation"
 
-if len(ls_are_you_sure_prompt) > 0 and cpr_mode <> "SERVER" then
+if len(ls_are_you_sure_prompt) > 0 and gnv_app.cpr_mode <> "SERVER" then
 	openwithparm(w_pop_yes_no, ls_are_you_sure_prompt)
 	popup_return = message.powerobjectparm
 	if popup_return.item <> "YES" then return 2

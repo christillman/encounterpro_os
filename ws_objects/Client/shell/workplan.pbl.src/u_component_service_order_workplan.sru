@@ -79,7 +79,7 @@ if upper(ls_in_office_flag) = "Y" then
 	end if
 	ls_encounter_status = current_patient.encounters.encounter_status(encounter_id)
 	if upper(ls_encounter_status) = "CLOSED" then
-		if cpr_mode = "CLIENT" then
+		if gnv_app.cpr_mode = "CLIENT" then
 			ls_prompt = "You are attempting to order an in-office workplan when the associated encounter is already closed."
 			ls_prompt += "  Do you wish to re-open the encounter?"
 			openwithparm(w_pop_yes_no, ls_prompt)

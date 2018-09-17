@@ -83,7 +83,7 @@ long ll_pos
 str_popup_return popup_return
 
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	setnull(popup_return.item)
 	popup_return.item_count = 0
 	closewithreturn(this, popup_return)

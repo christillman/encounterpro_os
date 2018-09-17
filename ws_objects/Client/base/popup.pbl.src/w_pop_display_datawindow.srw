@@ -22,7 +22,6 @@ integer width = 2962
 integer height = 1864
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -56,6 +55,12 @@ long ll_rows
 str_point pt
 
 popup = message.powerobjectparm
+
+// If we get here in server mode then cancel
+if gnv_app.cpr_mode = "SERVER" then
+	cb_ok.event trigger clicked()
+	return
+end if
 
 GetCursorPos( pt )		// get screen coords of cursor
 popup.pointerx = PixelsToUnits( pt.x, XPixelsToUnits! )
@@ -171,23 +176,6 @@ else
 	setnull(blank_row)
 end if
 
-//// Check for singleton
-//if popup.auto_singleton and dw_pick.rowcount() = 1 then
-//	picked(1)
-//	return
-//end if
-//
-//// Check for rows.  If no rows, treat as if cancel were pressed
-//if dw_pick.rowcount() = 0 then
-//	cb_cancel.triggerevent("clicked")
-//	return
-//end if
-
-// If we get here in server mode then cancel
-if cpr_mode = "SERVER" then
-	cb_ok.event trigger clicked()
-	return
-end if
 
 setfocus()
 

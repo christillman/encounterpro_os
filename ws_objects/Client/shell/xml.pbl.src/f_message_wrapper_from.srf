@@ -68,7 +68,7 @@ lo_actor.addcontent(lo_element)
 
 lo_element = CREATE PBDOM_Element
 lo_element.setname("ApplicationName")
-lo_element.addcontent("EncounterPRO " + Wordcap(cpr_mode))
+lo_element.addcontent("EncounterPRO " + Wordcap(gnv_app.cpr_mode))
 lo_actor.addcontent(lo_element)
 
 lo_element = CREATE PBDOM_Element

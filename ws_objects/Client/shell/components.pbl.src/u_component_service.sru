@@ -86,7 +86,7 @@ end if
 if not user_list.is_user_authorized(current_user.user_id, service, context_object) then
 	set_progress("Access Denied")
 	mylog.log(this, "u_component_service.do_service:0066", "User not authorized to perform service (" + service + ")", 4)
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, "You are not authorized to perform the " + description + " service.")
 	end if
 	restore_service_state(-1)
@@ -147,7 +147,7 @@ If not isnull(cpr_id) Then
 	  // If the user is not the primary or secondary provider, then check the access control list
 		if not user_list.check_access(current_user.user_id, current_patient.access_control_list) then
 			mylog.log(this, "u_component_service.do_service:0127", "User not authorized to see this patient", 4)
-			if cpr_mode = "CLIENT" then
+			if gnv_app.cpr_mode = "CLIENT" then
 				openwithparm(w_pop_message, "You are not authorized to perform any services for this patient.")
 			end if
 			restore_service_state(-1)
@@ -234,7 +234,7 @@ if li_sts < 0 then
 	Return -1
 end if
 
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	get_attribute("show_alerts", lb_show_alerts)
 	if lb_show_alerts and not isnull(current_patient) then
 		luo_alert = component_manager.get_component(common_thread.chart_alert_component())
@@ -251,7 +251,7 @@ TRY
 	
 	If Not Isnull(current_patient) Then
 		If Isvalid(current_patient.open_encounter) Then
-			if cpr_mode = "CLIENT" then
+			if gnv_app.cpr_mode = "CLIENT" then
 				// If the room has changed and we're in client mode, then Select/Set the next room
 				ls_next_room_id = current_patient.open_encounter.room_menu()
 				If Not isnull(ls_next_room_id) Then
@@ -298,7 +298,7 @@ TRY
 																		"Change Owner", &
 																		ldt_progress_date_time, &
 																		current_scribe.user_id, &
-																		computer_id)
+																		gnv_app.computer_id)
 						if not tf_check() then
 							restore_service_state(-1)
 							return -1
@@ -328,7 +328,7 @@ TRY
 				ls_status, &
 				ldt_progress_date_time, &
 				current_scribe.user_id, &
-				computer_id)
+				gnv_app.computer_id)
 		if not cprdb.check() then
 			restore_service_state(-1)
 			return -1
@@ -366,7 +366,7 @@ TRY
 	end if
 
 	// if we completed or cancelled this service then check for next auto-perform service
-	if do_autoperform and cpr_mode = "CLIENT" and li_sts > 0 and (not manual_service or (visible_flag = "N")) then
+	if do_autoperform and gnv_app.cpr_mode = "CLIENT" and li_sts > 0 and (not manual_service or (visible_flag = "N")) then
 		EXECUTE lsp_get_next_auto_perform_service;
 		if not cprdb.check() then
 			restore_service_state(-1)
@@ -390,12 +390,12 @@ TRY
 	// services and then clean up
 	if isnull(last_service) then
 		// Clear the office status cache so it reflects this service closure immediately
-		if cpr_mode = "CLIENT" then datalist.clear_cache("office_status")
+		if gnv_app.cpr_mode = "CLIENT" then datalist.clear_cache("office_status")
 		
 		if my_patient then f_clear_patient()
 	
 		// Tell the user object that the service is completed
-		if cpr_mode = "CLIENT" then current_user.complete_service()
+		if gnv_app.cpr_mode = "CLIENT" then current_user.complete_service()
 		
 		// Reclaim orphan objects
 		//garbagecollect()

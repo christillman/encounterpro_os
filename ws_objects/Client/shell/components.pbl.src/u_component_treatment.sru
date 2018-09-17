@@ -101,6 +101,7 @@ string comment_service = "OBSERVATION_COMMENT"
 string attachment_service = "EXTERNAL_SOURCE"
 
 end variables
+
 forward prototypes
 public function string description ()
 public subroutine get_descriptions ()
@@ -3864,7 +3865,7 @@ assessment = pstr_assessment
 // If the called sets pb_grant_access to true, then we don't need to check the clinical access flag
 if not pb_grant_access then
 	if not user_list.user_clinical_access_flag(current_scribe.user_id) then
-		if cpr_mode = "CLIENT" then
+		if gnv_app.cpr_mode = "CLIENT" then
 			openwithparm(w_pop_message, "You are not authorized to define new treatments.")
 		end if
 		return 0

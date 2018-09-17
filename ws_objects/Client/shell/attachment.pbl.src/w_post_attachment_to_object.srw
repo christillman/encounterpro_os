@@ -289,7 +289,7 @@ CHOOSE CASE lower(attachment_context.context_object)
 	CASE "treatment"
 		// Make sure we have an encounter context
 		if isnull(current_display_encounter) then
-			lstr_new_encounter.office_id = office_id
+			lstr_new_encounter.office_id = gnv_app.office_id
 			lstr_new_encounter.encounter_type = "REVIEW"
 			lstr_new_encounter.encounter_date = datetime(today(), now())
 			lstr_new_encounter.new_flag = "N"

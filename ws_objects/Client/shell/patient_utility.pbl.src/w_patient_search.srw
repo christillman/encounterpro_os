@@ -194,7 +194,7 @@ current_patient.modify_patient("sex", patient.sex)
 ls_encounter_type = datalist.get_preference( "Preferences", "Initial Data Load Encounter Type", "Initial Data Load")
 
 // Now create a data-entry encounter
-current_patient.new_encounter( office_id, &
+current_patient.new_encounter( gnv_app.office_id, &
 										ls_encounter_type, &
 										datetime(today(), now()), &
 										"N", &

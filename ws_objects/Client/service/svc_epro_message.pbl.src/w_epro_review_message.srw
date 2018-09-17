@@ -28,7 +28,6 @@ end forward
 
 global type w_epro_review_message from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -311,7 +310,7 @@ else
 	cb_beback.visible = true
 end if
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	cb_finished.event trigger clicked()
 	return
 end if
@@ -579,7 +578,7 @@ if lower(status) = "cancelled" then
 														"Uncancel", & 
 														datetime(today(), now()), & 
 														current_scribe.user_id, & 
-														computer_id)
+														gnv_app.computer_id)
 end if
 
 sqlca.sp_add_workplan_item_attribute(&
@@ -768,7 +767,7 @@ sqlca.sp_set_workplan_item_progress(message_workplan_item_id, &
 												"Cancelled", &
 												ldt_now, &
 												current_scribe.user_id, &
-												computer_id)
+												gnv_app.computer_id)
 if not tf_check() then return
 
 popup_return.item_count = 1

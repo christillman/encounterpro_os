@@ -82,11 +82,11 @@ CHOOSE CASE lower(preference_level)
 		st_preference_key.visible = false
 		st_preference_key_title.visible = false
 	CASE "office"
-		preference_key = office_id
+		preference_key = gnv_app.office_id
 		st_preference_key.text = office_description
 	CASE "computer"
-		preference_key = string(computer_id)
-		st_preference_key.text = computername + "/" + windows_logon_id
+		preference_key = string(gnv_app.computer_id)
+		st_preference_key.text = gnv_app.computername + "/" + gnv_app.windows_logon_id
 	CASE "specialty"
 		preference_key = current_user.common_list_id()
 		st_preference_key.text = datalist.specialty_description(preference_key)
@@ -226,7 +226,7 @@ CHOOSE CASE lower(preference_level)
 		popup.datacolumn = 1
 		popup.displaycolumn = 5
 		popup.argument_count = 1
-		popup.argument[1] = office_id
+		popup.argument[1] = gnv_app.office_id
 		openwithparm(w_pop_pick, popup)
 		popup_return = message.powerobjectparm
 		if popup_return.item_count <> 1 then return

@@ -28,7 +28,6 @@ end forward
 
 global type w_post_attachment from w_window_base
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -125,7 +124,7 @@ if lower(attachment_context.context_object) = lower(folder_selection_info.contex
 			if lower(folder_selection_info.extension) = "xml" then
 				attachment_context.description = folder_selection_info.description
 			else
-				if cpr_mode = "CLIENT" then
+				if gnv_app.cpr_mode = "CLIENT" then
 					// Find out if this folder should preserve the attachment
 					// description or default it to the folder name
 					SELECT max(value)
@@ -183,7 +182,7 @@ else
 	// If we're posting to a different context_object, then pick the context object
 	CHOOSE CASE lower(attachment_context.context_object)
 		CASE "encounter","assessment","treatment"
-			if cpr_mode = "CLIENT" then
+			if gnv_app.cpr_mode = "CLIENT" then
 				attachment_context.posting_file = true
 				openwithparm(w_post_attachment_to_object, attachment_context)
 				attachment_context = message.powerobjectparm
@@ -193,7 +192,7 @@ else
 				return 0
 			end if
 		CASE ELSE
-			if cpr_mode = "CLIENT" then
+			if gnv_app.cpr_mode = "CLIENT" then
 				popup.title = "Enter Description:"
 				popup.item = attachment_context.folder
 				popup.argument_count = 1
@@ -388,7 +387,7 @@ if ll_folder_count = 1 then
 end if
 
 // If we didn't find an auto_pick row but we're in server mode, then pick the first folder
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	li_sts = post_to_folder(1)
 	if li_sts <= 0 then
 		setnull(attachment_context.folder)

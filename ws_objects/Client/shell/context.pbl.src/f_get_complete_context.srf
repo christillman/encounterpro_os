@@ -12,7 +12,7 @@ if isnull(current_service) then
 	lstr_context = f_empty_context()
 
 	lstr_context.customer_id = sqlca.customer_id
-	lstr_context.office_id = office_id
+	lstr_context.office_id = gnv_app.office_id
 	lstr_context.user_id = current_user.user_id
 	lstr_context.scribe_user_id = current_scribe.user_id
 

@@ -226,7 +226,7 @@ else
 end if
 
 setnull(filter_user_id)
-filter_office_id = office_id
+filter_office_id = gnv_app.office_id
 filter_description = st_office.text
 indirect_flag = "[DI]"
 encounter_type = "%"
@@ -254,7 +254,7 @@ datetime ldt_today
 
 ldt_today = datetime(today())
 
-li_patient_count = count_encounters(office_id, ldt_today)
+li_patient_count = count_encounters(gnv_app.office_id, ldt_today)
 
 if li_patient_count = 0 then
 	if text <> "Checkout" then text = "Checkout"
@@ -921,7 +921,7 @@ u_user luo_user
 if single_office then 
 	if not isnull(filter_user_id) then
 		setnull(filter_user_id)
-		filter_office_id = office_id
+		filter_office_id = gnv_app.office_id
 		filter_description = "<All Providers>"
 	else
 		// The user must be logged in to use this option
@@ -1052,6 +1052,8 @@ type pb_pick_date from u_picture_button within u_checked_out
 event clicked pbm_bnclicked
 integer x = 1760
 integer y = 1412
+integer width = 256
+integer height = 224
 integer taborder = 10
 string picturename = "button14.bmp"
 string disabledname = "b_push14.bmp"

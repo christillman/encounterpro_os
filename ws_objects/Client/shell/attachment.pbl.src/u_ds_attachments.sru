@@ -1370,7 +1370,7 @@ if isnull(pstr_attachment.storage_flag) or trim(pstr_attachment.storage_flag) = 
 end if
 
 // Don't allow file attachments with demonstration databases
-if pstr_attachment.storage_flag = "F" and eml <> "D" then
+if pstr_attachment.storage_flag = "F" and main_window.eml <> "D" then
 	// Get the path where the file should be stored
 	ls_filespec = attachment_file_path(pstr_attachment)
 	

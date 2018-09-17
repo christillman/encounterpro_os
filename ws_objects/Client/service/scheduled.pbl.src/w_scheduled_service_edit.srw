@@ -1544,7 +1544,7 @@ if not tf_check() then return -1
 if isnull(ll_patient_workplan_item_id) then
 	openwithparm(w_pop_message, "This scheduled task is no longer running")
 else
-	sqlca.sp_set_workplan_item_progress(ll_patient_workplan_item_id, current_user.user_id, "Cancelled", ldt_null, current_scribe.user_id, computer_id)
+	sqlca.sp_set_workplan_item_progress(ll_patient_workplan_item_id, current_user.user_id, "Cancelled", ldt_null, current_scribe.user_id, gnv_app.computer_id)
 	if not tf_check() then return -1
 end if
 

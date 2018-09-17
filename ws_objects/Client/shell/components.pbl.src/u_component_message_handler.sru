@@ -162,7 +162,7 @@ if isnull(ls_template_file) then
 end if
 
 f_split_string(ls_template_file, ".", ls_filename, ls_extension)
-f_parse_filepath(ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
+f_parse_filepath(gnv_app.ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
 
 ls_message_location = ls_drive + ls_directory
 if right(ls_message_location, 1) <> "\" then ls_message_location += "\"

@@ -14,10 +14,9 @@ global type w_pop_buttons from w_window_base
 integer x = 270
 integer y = 1092
 integer width = 1513
-integer height = 236
+integer height = 344
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -245,7 +244,7 @@ integer li_sts
 button_popup = message.powerobjectparm
 
 // If we're in server mode, just return that the first button was pressed
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	button_pressed = 1
 	closewithreturn(this, button_pressed)
 end if

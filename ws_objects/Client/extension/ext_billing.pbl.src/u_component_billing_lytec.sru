@@ -159,7 +159,7 @@ ti_loop_count = 1
 lb_loop = TRUE
 
 //	A fully qualified path is now available in ls_filepath
-f_parse_filepath(ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
+f_parse_filepath(gnv_app.ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
 
 ls_filepath = ls_drive + ls_directory
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"

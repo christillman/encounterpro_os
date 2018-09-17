@@ -82,7 +82,7 @@ if isnull(current_patient) then
 end if
 
 
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	if isnull(current_patient.date_of_birth) then
 		ls_message = "The correct workplan may not be selected because this patient does not have a date-of-birth.  "
 		ls_message += "Are you sure you want to create a new encounter without a date-of-birth?"
@@ -196,7 +196,7 @@ else
 end if
 
 // If we're in CLIENT mode then the user has already been offered the followups.  If there's a Dispatch Followup service out there now then cancel it
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	ls_followup_check_service = datalist.get_preference("WORKFLOW", "followup_check_service")
 	if len(ls_followup_check_service) > 0 then
 		SELECT max(patient_workplan_item_id)
@@ -214,7 +214,7 @@ if cpr_mode = "CLIENT" then
 															"Cancelled", &
 															datetime(today(), now()), &
 															current_scribe.user_id, &
-															computer_id )
+															gnv_app.computer_id )
 			if not tf_check() then return -1
 		end if
 	end if
@@ -323,7 +323,7 @@ lstr_encounter.supervising_doctor = user_list.supervisor_user_id(lstr_encounter.
 
 lstr_encounter.referring_doctor = current_patient.referring_provider_id
 
-lstr_encounter.office_id = office_id
+lstr_encounter.office_id = gnv_app.office_id
 setnull(lstr_encounter.bill_flag)
 
 get_attribute("Show Screen", lb_show_screen, true)

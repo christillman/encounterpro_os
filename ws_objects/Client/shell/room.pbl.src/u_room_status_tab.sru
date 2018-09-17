@@ -18,7 +18,6 @@ global type u_room_status_tab from u_main_tabpage_base
 integer width = 2414
 integer height = 1704
 long tabbackcolor = 16777215
-event refresh pbm_custom01
 event refresh_tab pbm_custom02
 event resized ( )
 cb_checkin cb_checkin
@@ -46,15 +45,9 @@ forward prototypes
 public subroutine just_logged_on ()
 public subroutine initialize (string ps_room_id, string ps_room_name)
 public subroutine do_next_service ()
-public subroutine refresh_tab ()
-public subroutine refresh ()
 end prototypes
 
-event refresh;if not w_main.doing_service then refresh()
-
-end event
-
-event refresh_tab;refresh_tab()
+event refresh_tab;this.event refresh()
 
 end event
 
@@ -108,7 +101,7 @@ end if
 
 this.event trigger resized()
 
-refresh_tab()
+this.event refresh()
 
 
 end subroutine
@@ -172,11 +165,32 @@ LOOP WHILE lb_do_service and not isnull(current_user)
 
 end subroutine
 
-public subroutine refresh_tab ();refresh()
+on u_room_status_tab.create
+int iCurrent
+call super::create
+this.cb_checkin=create cb_checkin
+this.cb_cleaned=create cb_cleaned
+this.st_empty=create st_empty
+this.cb_get_patient=create cb_get_patient
+this.uo_room=create uo_room
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.cb_checkin
+this.Control[iCurrent+2]=this.cb_cleaned
+this.Control[iCurrent+3]=this.st_empty
+this.Control[iCurrent+4]=this.cb_get_patient
+this.Control[iCurrent+5]=this.uo_room
+end on
 
-end subroutine
+on u_room_status_tab.destroy
+call super::destroy
+destroy(this.cb_checkin)
+destroy(this.cb_cleaned)
+destroy(this.st_empty)
+destroy(this.cb_get_patient)
+destroy(this.uo_room)
+end on
 
-public subroutine refresh ();integer li_sts
+event refresh;call super::refresh;integer li_sts
 string ls_room_status
 integer li_waiting_count
 str_encounter_list lstr_encounters
@@ -251,32 +265,7 @@ end if
 
 if just_logged_on then just_logged_on()
 
-end subroutine
-
-on u_room_status_tab.create
-int iCurrent
-call super::create
-this.cb_checkin=create cb_checkin
-this.cb_cleaned=create cb_cleaned
-this.st_empty=create st_empty
-this.cb_get_patient=create cb_get_patient
-this.uo_room=create uo_room
-iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.cb_checkin
-this.Control[iCurrent+2]=this.cb_cleaned
-this.Control[iCurrent+3]=this.st_empty
-this.Control[iCurrent+4]=this.cb_get_patient
-this.Control[iCurrent+5]=this.uo_room
-end on
-
-on u_room_status_tab.destroy
-call super::destroy
-destroy(this.cb_checkin)
-destroy(this.cb_cleaned)
-destroy(this.st_empty)
-destroy(this.cb_get_patient)
-destroy(this.uo_room)
-end on
+end event
 
 type cb_checkin from commandbutton within u_room_status_tab
 integer x = 965
@@ -317,7 +306,7 @@ else
 	service_list.do_service(new_encounter_service, lstr_attributes)
 end if
 
-refresh()
+parent.event refresh()
 
 end event
 
@@ -406,7 +395,7 @@ lstr_service.service = "Service List"
 f_attribute_add_attribute(lstr_service.attributes, "this_room_id", room_id)
 service_list.do_service(lstr_service)
 
-refresh()
+parent.event refresh()
 
 If isnull(current_user) Then return
 

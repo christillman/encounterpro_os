@@ -15,7 +15,6 @@ end type
 end forward
 
 global type w_doc_datawindow from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -323,7 +322,7 @@ blob lbl_document
 
 li_sts = save_to_file()
 if li_sts <= 0 then
-	if this.visible and cpr_mode = "CLIENT" then
+	if this.visible and gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, "Save to file failed")
 		return
 	else
@@ -334,7 +333,7 @@ end if
 
 li_sts = log.file_read(file_save_params.file_path, lbl_document)
 if li_sts <= 0 then
-	if this.visible and cpr_mode = "CLIENT" then
+	if this.visible and gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, "Reading saved file failed (" + file_save_params.file_path + ")")
 		return
 	else

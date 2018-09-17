@@ -252,7 +252,7 @@ attributes = lstr_wizard.param_attributes
 allow_preference = lstr_wizard.allow_preference
 
 // If we're in server mode then don't bother trying to get any input from the user
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	lstr_return.return_status = 0
 	closewithreturn(this, lstr_return)
 	return
@@ -303,8 +303,6 @@ event ue_required;call super::ue_required;cb_next.Enabled = pb_enable
 end event
 
 type pb_epro_help from w_param_base`pb_epro_help within w_param_wizard
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_param_base`st_config_mode_menu within w_param_wizard

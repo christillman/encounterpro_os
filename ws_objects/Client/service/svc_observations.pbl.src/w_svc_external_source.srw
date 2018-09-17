@@ -212,7 +212,7 @@ if trim(ls_progress_type) = "" then setnull(ls_progress_type)
 // If we have a wia_device_id then we don't need an external_source
 ls_external_source = service.get_attribute("external_source")
 if isnull(ls_external_source) then
-	if cpr_mode = "SERVER" then
+	if gnv_app.cpr_mode = "SERVER" then
 		// If we're in server mode then an external source must be specified
 		log.log(this, "w_svc_external_source.do_source:0106", "Null external source", 4)
 		closewithreturn(this, -1)
@@ -294,7 +294,7 @@ if li_sts <= 0 then
 	ls_temp = 'The specified external source ('
 	ls_temp += ls_external_source
 	ls_temp += ') does not exist on this computer.'
-	if cpr_mode = "SERVER" then
+	if gnv_app.cpr_mode = "SERVER" then
 		// If we're in server mode then just return an error
 		log.log(this, "w_svc_external_source.do_source:0188", ls_temp, 4)
 		closewithreturn(this, -1)
@@ -388,7 +388,7 @@ if li_sts = 0 then
 		// If this is a manual service then just cancel it
 		closewithreturn(this, 2)
 		return
-	elseif cpr_mode = "CLIENT" then
+	elseif gnv_app.cpr_mode = "CLIENT" then
 		// If this is not a manual service then ask the user if they want to
 		// try again later
 		popup.data_row_count = 2

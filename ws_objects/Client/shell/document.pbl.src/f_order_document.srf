@@ -102,7 +102,7 @@ if pb_send_now then
 	DESTROY luo_document
 elseif pb_create_now then
 	// We only check the create_now if the send_now is false because a true send_now will automatically do a create_now
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		luo_document = CREATE u_component_wp_item_document
 		
 		li_sts = luo_document.initialize(ll_patient_workplan_item_id)

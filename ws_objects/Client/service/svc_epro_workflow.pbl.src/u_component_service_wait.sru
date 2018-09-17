@@ -39,7 +39,7 @@ END CHOOSE
 
 // If we get here then the WAIT condition has not been satisfied.  If this is client mode then
 // display the user window for this service
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	Openwithparm(service_window, this, "w_svc_wait", f_active_window())
 	if lower(classname(message.powerobjectparm)) = "str_popup_return" then
 		popup_return = message.powerobjectparm

@@ -229,7 +229,7 @@ f_attribute_ds_to_str(luo_attributes, lstr_attributes)
 
 // Load the source-specific attributes
 luo_attributes.set_dataobject("dw_o_external_source_attribute")
-li_sts = luo_attributes.retrieve(external_source, computer_id, office_id)
+li_sts = luo_attributes.retrieve(external_source, gnv_app.computer_id, gnv_app.office_id)
 if li_sts < 0 then
 	mylog.log(this, "u_component_observation.base_initialize:0033", "error getting external source attributes (" + external_source + ")", 4)
 	return -1
@@ -300,7 +300,7 @@ setnull(ll_null)
 
 lb_current_service_window_enabled = false
 
-if cpr_mode = "CLIENT" then
+if gnv_app.cpr_mode = "CLIENT" then
 	// See if the current service has the enabled window.
 	if not isnull(current_service) and isvalid(current_service) then
 		if not isnull(current_service.service_window) and isvalid(current_service.service_window) then

@@ -94,7 +94,7 @@ if first_time then
 			luo_tabpages[li_office_count].service_filter = todo_type_default
 			luo_tabpages[li_office_count].initialize(user_id)
 			
-			if upper(lstra_offices[i].office_id) = office_id then
+			if upper(lstra_offices[i].office_id) = gnv_app.office_id then
 				li_my_office = li_office_count
 			end if
 		end if

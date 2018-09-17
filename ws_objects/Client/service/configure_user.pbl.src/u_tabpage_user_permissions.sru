@@ -95,7 +95,7 @@ end subroutine
 
 public function integer initialize ();long ll_count
 
-privilege_office_id = office_id
+privilege_office_id = gnv_app.office_id
 
 
 dw_privileges.settransobject(sqlca)

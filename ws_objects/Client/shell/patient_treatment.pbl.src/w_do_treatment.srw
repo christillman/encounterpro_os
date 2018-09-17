@@ -300,7 +300,7 @@ If NOT current_patient.display_only AND NOT isnull(current_patient.open_encounte
 	ll_count = luo_services.retrieve(current_patient.cpr_id, treatment.treatment_id)
 	
 	luo_locked_services.set_dataobject("dw_o_user_service_lock_mine")
-	ll_locked_count = luo_locked_services.retrieve(current_scribe.user_id, computer_id)
+	ll_locked_count = luo_locked_services.retrieve(current_scribe.user_id, gnv_app.computer_id)
 	
 	for i = 1 to ll_count
 		ls_service = luo_services.object.ordered_service[i]

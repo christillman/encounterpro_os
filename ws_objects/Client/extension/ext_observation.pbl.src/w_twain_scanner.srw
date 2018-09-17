@@ -1,4 +1,4 @@
-$PBExportHeader$w_twain_scanner.srw
+﻿$PBExportHeader$w_twain_scanner.srw
 forward
 global type w_twain_scanner from w_window_base
 end type
@@ -101,7 +101,7 @@ str_popup_return popup_return
 ole_twain_scanner.object.ScanTo = 4
 
 // construct the template and make sure there aren't any files which match it
-ls_file_template = left("x" + string(computer_id) + "____", 4)
+ls_file_template = left("x" + string(gnv_app.computer_id) + "____", 4)
 ls_file_search = temp_path + "\" + ls_file_template + "*.*"
 ll_file_count = log.directory_list(ls_file_search, lstra_files)
 for i = 1 to ll_file_count

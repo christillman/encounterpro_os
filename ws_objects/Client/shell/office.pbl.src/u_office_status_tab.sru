@@ -24,7 +24,6 @@ global type u_office_status_tab from u_main_tabpage_base
 integer width = 2254
 integer height = 1736
 long tabbackcolor = 16777215
-event refresh pbm_custom01
 event refresh_tab pbm_custom02
 event resized ( )
 uo_office_status_1 uo_office_status_1
@@ -45,14 +44,9 @@ long priority_tab_color
 end variables
 
 forward prototypes
-public subroutine refresh ()
 public subroutine refresh_tab ()
 public subroutine initialize (long pl_group_id, string ps_description, string ps_persistence_flag)
 end prototypes
-
-event refresh;refresh()
-
-end event
 
 event refresh_tab;refresh_tab()
 
@@ -97,7 +91,44 @@ uo_office_status_2.object.compute_alert_bitmap.x = uo_office_status_2.width - 15
 
 end event
 
-public subroutine refresh ();integer i
+public subroutine refresh_tab ();this.event refresh()
+
+end subroutine
+
+public subroutine initialize (long pl_group_id, string ps_description, string ps_persistence_flag);normal_tab_color = rgb(192, 192, 192)
+priority_tab_color = rgb(255, 224, 224)
+
+group_id = pl_group_id
+group_description = ps_description
+persistence_flag = ps_persistence_flag
+
+uo_office_status_1.initialize(group_id)
+
+refresh_tab()
+
+
+end subroutine
+
+on u_office_status_tab.create
+int iCurrent
+call super::create
+this.uo_office_status_1=create uo_office_status_1
+this.uo_office_status_2=create uo_office_status_2
+this.ln_1=create ln_1
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.uo_office_status_1
+this.Control[iCurrent+2]=this.uo_office_status_2
+this.Control[iCurrent+3]=this.ln_1
+end on
+
+on u_office_status_tab.destroy
+call super::destroy
+destroy(this.uo_office_status_1)
+destroy(this.uo_office_status_2)
+destroy(this.ln_1)
+end on
+
+event refresh;call super::refresh;integer i
 integer li_sts
 long ll_group_id
 string ls_description
@@ -179,44 +210,7 @@ end if
 if tabtextcolor <> ll_new_tabtextcolor then tabtextcolor = ll_new_tabtextcolor
 if text <> ls_new_tabtext then text = ls_new_tabtext
 
-end subroutine
-
-public subroutine refresh_tab ();refresh()
-
-end subroutine
-
-public subroutine initialize (long pl_group_id, string ps_description, string ps_persistence_flag);normal_tab_color = rgb(192, 192, 192)
-priority_tab_color = rgb(255, 224, 224)
-
-group_id = pl_group_id
-group_description = ps_description
-persistence_flag = ps_persistence_flag
-
-uo_office_status_1.initialize(group_id)
-
-refresh_tab()
-
-
-end subroutine
-
-on u_office_status_tab.create
-int iCurrent
-call super::create
-this.uo_office_status_1=create uo_office_status_1
-this.uo_office_status_2=create uo_office_status_2
-this.ln_1=create ln_1
-iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.uo_office_status_1
-this.Control[iCurrent+2]=this.uo_office_status_2
-this.Control[iCurrent+3]=this.ln_1
-end on
-
-on u_office_status_tab.destroy
-call super::destroy
-destroy(this.uo_office_status_1)
-destroy(this.uo_office_status_2)
-destroy(this.ln_1)
-end on
+end event
 
 type uo_office_status_1 from u_office_status within u_office_status_tab
 event post_click pbm_custom01

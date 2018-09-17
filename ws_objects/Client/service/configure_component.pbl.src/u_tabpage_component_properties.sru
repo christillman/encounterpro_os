@@ -128,7 +128,7 @@ dw_installation_history.retrieve(component.component_id)
 luo_data = CREATE u_ds_data
 
 luo_data.set_dataobject("dw_sp_get_component_attributes")
-ll_count = luo_data.retrieve(component.component_id, office_id, computer_id)
+ll_count = luo_data.retrieve(component.component_id, gnv_app.office_id, gnv_app.computer_id)
 if ll_count > 0 then f_attribute_ds_to_str(luo_data, component_attributes)
 
 DESTROY luo_data

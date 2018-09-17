@@ -459,7 +459,7 @@ if dw_pick.rowcount() = 0 then
 end if
 
 // If we get here in server mode then cancel
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	cb_cancel.event trigger clicked()
 	return
 end if

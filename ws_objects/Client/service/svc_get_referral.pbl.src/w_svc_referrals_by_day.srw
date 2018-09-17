@@ -233,7 +233,7 @@ else
 	st_office_title.visible = true
 	st_office.visible = true
 	st_office.text = office_description
-	viewed_office_id = office_id
+	viewed_office_id = gnv_app.office_id
 end if
 
 display_date = today()

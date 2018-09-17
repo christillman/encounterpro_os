@@ -563,7 +563,6 @@ integer li_sts
 cpr_id = ps_cpr_id
 display_only = false
 
-//if cpr_mode = "CLIENT" then open(w_pop_loading_please_wait)
 li_sts = load()
 
 if li_sts <= 0 then
@@ -1622,7 +1621,7 @@ setnull(ls_encounter_status)
 
 // If we didn't get an office_id passed in, the use the current office_id
 if isnull(pstr_encounter.office_id) then
-	pstr_encounter.office_id = office_id
+	pstr_encounter.office_id = gnv_app.office_id
 end if
 
 // Get indirect flag

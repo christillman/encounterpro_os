@@ -152,7 +152,7 @@ end if
 
 workplan_required = f_string_to_boolean(ls_workplan_required_flag)
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	// If we're in server mode then automatically pick the first workplan
 	attachment_context.workplan_id = dw_workplans.object.workplan_id[1]
 	attachment_context.user_id = dw_workplans.object.owned_by[1]

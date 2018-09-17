@@ -736,7 +736,7 @@ if isnull(ls_communication_type) then
 					ls_room_id = current_patient.encounters.get_property_value(service.encounter_id, "patient_location")
 				end if
 				
-				ls_printer = f_get_default_printer(ls_report_id, office_id, computer_id, ls_room_id)
+				ls_printer = f_get_default_printer(ls_report_id, gnv_app.office_id, gnv_app.computer_id, ls_room_id)
 				
 				if len(ls_printer) > 0 then
 					popup.data_row_count = 2

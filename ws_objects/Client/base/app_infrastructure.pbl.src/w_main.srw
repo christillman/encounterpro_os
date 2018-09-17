@@ -33,6 +33,7 @@ boolean initializing = true
 long original_height
 long original_width
 
+string eml
 
 end variables
 
@@ -161,7 +162,7 @@ CHOOSE CASE windowstate
 		ls_window_state += "normal"
 END CHOOSE
 
-datalist.update_preference("SYSTEM", "Computer", string(computer_id), "window_state", ls_window_state)
+datalist.update_preference("SYSTEM", "Computer", string(gnv_app.computer_id), "window_state", ls_window_state)
 
 end subroutine
 

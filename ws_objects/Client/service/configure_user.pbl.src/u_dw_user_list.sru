@@ -309,7 +309,7 @@ if allow_editing and left(ls_user_id, 1) <> "!" then
 	INTO :li_count
 	FROM o_Users
 	WHERE user_id = :ls_user_id
-	AND computer_id <> :computer_id;
+	AND computer_id <> :gnv_app.computer_id;
 	if not tf_check() then return
 	if sqlca.sqlcode = 0 and li_count > 0 then
 		lb_active = true
@@ -548,7 +548,7 @@ CHOOSE CASE buttons[button_pressed]
 		popup.displaycolumn = 3
 		popup.argument_count = 2
 		popup.argument[1] = ls_user_id
-		popup.argument[2] = string(computer_id)
+		popup.argument[2] = string(gnv_app.computer_id)
 		popup.auto_singleton = true
 		openwithparm(w_pop_pick, popup)
 		popup_return = message.powerobjectparm
@@ -764,7 +764,7 @@ ll_count = retrieve( &
 						cpr_id, &
 						distance_filter_amount, &
 						distance_filter_unit, &
-						office_id, &
+						gnv_app.office_id, &
 						ls_zipcode)
 
 last_page = 0
@@ -802,7 +802,7 @@ ll_count = retrieve( &
 						cpr_id, &
 						distance_filter_amount, &
 						distance_filter_unit, &
-						office_id, &
+						gnv_app.office_id, &
 						ls_zipcode)
 
 
@@ -961,7 +961,7 @@ ll_count = retrieve( &
 						cpr_id, &
 						distance_filter_amount, &
 						distance_filter_unit, &
-						office_id, &
+						gnv_app.office_id, &
 						ps_zipcode)
 
 last_page = 0

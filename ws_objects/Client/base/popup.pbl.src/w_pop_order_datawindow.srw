@@ -30,7 +30,6 @@ integer width = 1915
 integer height = 1864
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -235,7 +234,7 @@ end if
 //end if
 
 // If we get here in server mode then cancel
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	cb_ok.event trigger clicked()
 	return
 end if

@@ -98,7 +98,7 @@ dw_computers.set_page(1, pb_up_c, pb_down_c, st_page_c)
 
 // See if the current computer is in the list
 li_page = 1
-ls_find = "computer_id=" + string(computer_id)
+ls_find = "computer_id=" + string(gnv_app.computer_id)
 ll_row = dw_computers.find(ls_find, 1, dw_computers.rowcount())
 if ll_row > 0 then
 	// If the current computer is in the list, then scroll down to it
@@ -113,7 +113,7 @@ if ll_row > 0 then
 		if li_page >= dw_computers.last_page then exit
 	LOOP
 	dw_computers.object.selected_flag[ll_row] = 1
-	this_computer_id = computer_id
+	this_computer_id = gnv_app.computer_id
 else
 	setnull(this_computer_id)
 end if
@@ -249,7 +249,7 @@ if service.manual_service then
 	max_buttons = 4
 end if
 
-this_office_id = office_id
+this_office_id = gnv_app.office_id
 st_office.text = office_description
 
 computer_sources = CREATE u_ds_data
@@ -259,7 +259,7 @@ computer_sources.retrieve()
 dw_external_sources.settransobject(sqlca)
 ll_source_count = dw_external_sources.retrieve()
 
-this_office_id = office_id
+this_office_id = gnv_app.office_id
 display_computers()
 
 	

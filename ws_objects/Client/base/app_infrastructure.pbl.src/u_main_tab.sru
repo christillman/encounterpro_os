@@ -325,7 +325,6 @@ luo_data = CREATE u_ds_data
 page_count = upperbound(control)
 for i = 1 to page_count
 	pages[i] = control[i]
-	pages[i].main_tab = this
 next
 
 // Close any office tabs
@@ -344,7 +343,7 @@ lb_loop = true
 group_count = 0
 
 luo_data.set_dataobject("dw_o_groups_for_office")
-ll_group_count = luo_data.retrieve(office_id)
+ll_group_count = luo_data.retrieve(gnv_app.office_id)
 if ll_group_count < 0 then return
 
 for i = 1 to ll_group_count
@@ -378,13 +377,14 @@ next
 // Set the default group id
 if not lb_default_group_found then default_group_id = groups[1].group_id
 
+
 //// Now create a tab page for other offices and initialize it
 //SELECT count(*)
 //INTO :li_count
 //FROM c_Office
 //WHERE status = 'OK'
 //AND server IS NOT NULL
-//AND office_id <> :office_id;
+//AND office_id <> :gnv_app.office_id;
 //if not tf_check() then return
 //
 //if li_count >= 1 then
