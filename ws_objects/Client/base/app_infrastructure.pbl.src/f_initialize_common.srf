@@ -16,7 +16,7 @@ string ls_security
 long ll_count
 string ls_description
 
-if cpr_mode <> "SERVER" then
+if gnv_app.cpr_mode <> "SERVER" then
 	// Issue the startup message
 	ls_message = "Session started on " + log.get_computername() + " @ " + string(datetime(today(), now()), "[shortdate] [time]")
 	ls_message += ", " + f_app_version()
@@ -43,7 +43,7 @@ component_manager.initialize()
 
 
 // Determine our computer id
-if cpr_mode = "DBMAINT" then
+if gnv_app.cpr_mode = "DBMAINT" then
 	user_list = CREATE u_component_security_pin
 	common_thread.practice_user_id =  '$!!' + string(sqlca.customer_id)
 	return 1
@@ -82,7 +82,7 @@ else
 				SELECT CAST(description AS varchar(64))
 				INTO :ls_description
 				FROM c_Office
-				WHERE office_id = :office_id;
+				WHERE office_id = :gnv_app.office_id;
 				if not tf_check() then return -1
 				if sqlca.sqlcode = 100 then
 					ls_description = "EncounterPRO Customer"
@@ -126,7 +126,7 @@ CHOOSE CASE lower(ls_security)
 		user_list = CREATE u_component_security_pin
 		ls_message = "Unrecognized authentication system (" + ls_security + ")."
 		log.log(po_null, "f_initialize_common:0120", ls_message, 4)
-		if cpr_mode = "CLIENT" then
+		if gnv_app.cpr_mode = "CLIENT" then
 			openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 		end if
 		gnv_app.event close()
@@ -135,7 +135,7 @@ li_sts = user_list.initialize()
 if li_sts <= 0 then
 	ls_message = "Error initializing authentication system."
 	log.log(po_null, "f_initialize_common:0129", ls_message, 4)
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if
 	gnv_app.event close()
@@ -155,7 +155,7 @@ elseif decimal_character <> ls_decimal_character then
 			+ ") does not match computer decimal character (" &
 			+ ls_decimal_character + ")."
 	log.log(po_null, "f_initialize_common:0149", ls_message, 4)
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_message + "  Please contact your system administrator.")
 	end if
 	gnv_app.event close()

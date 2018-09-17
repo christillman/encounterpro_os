@@ -532,14 +532,14 @@ ll_source_type_count = luo_types.retrieve()
 if ll_source_type_count <= 0 then return lstr_sources
 
 luo_sources = CREATE u_ds_data
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	// If we're running in server mode then we can use any external source
 	luo_sources.set_dataobject("dw_c_external_source")
 	ll_source_count = luo_sources.retrieve()
 else
 	// Otherwise, only show sources available on this computer
 	luo_sources.set_dataobject("dw_jmj_get_available_sources")
-	ll_source_count = luo_sources.retrieve(computer_id)
+	ll_source_count = luo_sources.retrieve(gnv_app.computer_id)
 end if
 if ll_source_count < 0 then return lstr_sources
 
@@ -614,7 +614,7 @@ for i = 1 to ll_source_type_count
 		else
 			lstr_source.always_available = true
 		end if
-		if cpr_mode = "SERVER" then
+		if gnv_app.cpr_mode = "SERVER" then
 			// For server mode, assume we have the external source available
 			lstr_source.on_computer = true
 		else
@@ -692,7 +692,7 @@ if sqlca.sqlcode = 0 then
 		SELECT count(*)
 		INTO :ll_count
 		FROM o_Computer_External_Source
-		WHERE computer_id = :computer_id
+		WHERE computer_id = :gnv_app.computer_id
 		AND external_source = :ps_external_source;
 		if not tf_check() then return -1
 		if ll_count > 0 then
@@ -746,7 +746,7 @@ elseif popup.data_row_count > 1 then
 	if ll_on_computer_count = 1 then
 		ll_index = ll_on_computer_index
 	else
-		if cpr_mode = "SERVER" then
+		if gnv_app.cpr_mode = "SERVER" then
 			ll_index = 1
 		else
 			openwithparm(w_pop_pick, popup)
@@ -1174,7 +1174,7 @@ else
 	ll_patient_workplan_item_id = current_service.patient_workplan_item_id
 end if
 
-sqlca.jmj_log_performance(computer_id, &
+sqlca.jmj_log_performance(gnv_app.computer_id, &
 									ll_patient_workplan_item_id, &
 									ls_user_id, &
 									ps_metric, &
@@ -1220,7 +1220,7 @@ popup.dataobject = "dw_server_printers_for_office"
 popup.datacolumn = 1
 popup.displaycolumn = 4
 popup.argument_count = 2
-popup.argument[1] = office_id
+popup.argument[1] = gnv_app.office_id
 popup.argument[2] = "N"
 if config_mode then
 	popup.add_blank_row = true
@@ -1252,7 +1252,7 @@ popup.dataobject = "dw_server_printers_for_office"
 popup.datacolumn = 1
 popup.displaycolumn = 4
 popup.argument_count = 2
-popup.argument[1] = office_id
+popup.argument[1] = gnv_app.office_id
 popup.argument[2] = "Y"
 if config_mode then
 	popup.add_blank_row = true
@@ -1297,7 +1297,7 @@ setnull(ls_null)
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_server_printers_for_office")
-ll_count = luo_data.retrieve(office_id, "Y")
+ll_count = luo_data.retrieve(gnv_app.office_id, "Y")
 if ll_count < 0 then return ls_null
 
 if ll_count = 0 and not config_mode then

@@ -68,7 +68,7 @@ CHOOSE CASE key
 		elseif keyflags = 3 then
 			str_log_search lstr_log_search
 			
-			lstr_log_search.computer_id = computer_id
+			lstr_log_search.computer_id = gnv_app.computer_id
 			lstr_log_search.begin_date = datetime(today(), time("00:00"))
 			
 			openwithparm(w_log_display, lstr_log_search)

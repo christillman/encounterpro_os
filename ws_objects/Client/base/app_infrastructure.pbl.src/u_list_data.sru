@@ -3470,7 +3470,7 @@ else
 	ls_user_id = current_scribe.user_id
 end if
 
-ls_preference_value = sqlca.fn_get_preference(ps_preference_type, ps_preference_id, ls_user_id, computer_id)
+ls_preference_value = sqlca.fn_get_preference(ps_preference_type, ps_preference_id, ls_user_id, gnv_app.computer_id)
 if not tf_check() then return ls_null
 
 if isnull(ls_preference_value) then return ls_null
@@ -4181,7 +4181,7 @@ else
 	// refresh the data stores
 	
 	// Get the groups and rooms in this office
-	pl_room_count = office_rooms.retrieve(office_id)
+	pl_room_count = office_rooms.retrieve(gnv_app.office_id)
 	if pl_room_count < 0 then return -1
 	
 	// Get all the open encounters
@@ -5391,7 +5391,7 @@ setnull(ls_null)
 
 if offices.rowcount() <= 0 then load_offices()
 
-if trim(ps_office_id) = "" or isnull(ps_office_id) then ps_office_id = office_id
+if trim(ps_office_id) = "" or isnull(ps_office_id) then ps_office_id = gnv_app.office_id
 
 ls_find = "office_id='" + ps_office_id + "'"
 ll_row = offices.find(ls_find, 1, offices.rowcount())
@@ -5554,7 +5554,7 @@ setnull(ls_null)
 
 if offices.rowcount() <= 0 then load_offices()
 
-if trim(ps_office_id) = "" or isnull(ps_office_id) then ps_office_id = office_id
+if trim(ps_office_id) = "" or isnull(ps_office_id) then ps_office_id = gnv_app.office_id
 
 ls_find = "office_id='" + ps_office_id + "'"
 ll_row = offices.find(ls_find, 1, offices.rowcount())
@@ -6912,7 +6912,7 @@ end if
 // Loop through the services which should appear on this tab
 // See if there are any patients in this room
 ls_service_find = "owned_by='" + ps_user_id + "'"
-ls_service_find += " and office_id<>'" +  office_id + "'"
+ls_service_find += " and office_id<>'" +  gnv_app.office_id + "'"
 ls_service_find += " and in_office_flag = 'Y'"
 ll_service_row = active_services.find(ls_service_find, 1, ll_wp_item_count)
 DO WHILE ll_service_row > 0 and ll_service_row <= ll_wp_item_count

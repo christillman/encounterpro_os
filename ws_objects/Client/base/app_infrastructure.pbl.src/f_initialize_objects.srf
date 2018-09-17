@@ -89,7 +89,7 @@ if isnull(drugdb) then
 end if
 
 // If the computername matches one of the room_id's then set the current_room
-current_room = room_list.find_room_computer(computer_id)
+current_room = room_list.find_room_computer(gnv_app.computer_id)
 
 log.log(po_null, "f_initialize_objects:0085", "Clean up in case last time crashed", 1)
 li_sts = f_crash_clean_up()

@@ -423,15 +423,15 @@ string ls_temp
 string ls_server
 string ls_msg
 
-loglevel = profileint(ini_file, "<LogSystem>", "LogLevel", 2)
+loglevel = profileint(gnv_app.ini_file, "<LogSystem>", "LogLevel", 2)
 if loglevel <= 0 then loglevel = 2
 if loglevel > 5 then loglevel = 2
 
-dbloglevel = profileint(ini_file, "<LogSystem>", "DBLogLevel", 3)
+dbloglevel = profileint(gnv_app.ini_file, "<LogSystem>", "DBLogLevel", 3)
 if dbloglevel <= 0 then dbloglevel = 3
 if dbloglevel > 5 then dbloglevel = 3
 
-displayloglevel = profileint(ini_file, "<LogSystem>", "DisplayLogLevel", 4)
+displayloglevel = profileint(gnv_app.ini_file, "<LogSystem>", "DisplayLogLevel", 4)
 if displayloglevel <= 0 then displayloglevel = 4
 if displayloglevel > 5 then displayloglevel = 4
 
@@ -1306,9 +1306,9 @@ VALUES (
 		:ls_who,
 		:ps_script,
 		:ls_message,
-		:computer_id,
-		:computername,
-		:windows_logon_id,
+		:gnv_app.computer_id,
+		:gnv_app.computername,
+		:gnv_app.windows_logon_id,
 		:ls_cpr_id,
 		:ll_encounter_id,
 		:ll_treatment_id,

@@ -110,7 +110,7 @@ if pb_edit or isnull(lstr_article.article) then
 		lstr_xml_code.epro_id = lstr_article.article
 		lstr_xml_code.epro_description = "Help Article: " + lstr_article.article
 		lstr_xml_code.unique_flag = 1
-		lstr_xml_code.created_by = windows_logon_id
+		lstr_xml_code.created_by = gnv_app.windows_logon_id
 		lstr_xml_code.mapping_owner_id = 0
 		lstr_xml_code.status = "OK"
 		lstr_xml_code.description = "Help Article Mapping"

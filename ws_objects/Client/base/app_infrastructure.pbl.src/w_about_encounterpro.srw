@@ -99,7 +99,7 @@ phl_agpl.x = (width - phl_agpl.width) / 2
 
 st_license_title.x = rte_license.x
 
-rte_license.InsertDocument(program_directory + "\Open Source License.rtf", true)
+rte_license.InsertDocument(gnv_app.program_directory + "\Open Source License.rtf", true)
 rte_license.displayonly = true
 
 this.center_popup( )
