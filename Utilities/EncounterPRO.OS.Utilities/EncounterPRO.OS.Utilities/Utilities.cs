@@ -830,27 +830,27 @@ namespace EncounterPRO.OS
 		public string TransformXML(string xml, string xsl)
 		{
 			System.IO.StringReader stringReader = null;
-			System.Xml.Xsl.XslTransform xslTransform = null;
+			System.Xml.Xsl.XslCompiledTransform xslTransform = null;
 			System.Xml.XmlTextReader xmlTextReader = null;
 			System.IO.MemoryStream xmlTextWriterStream = null;
 			System.Xml.XmlTextWriter xmlTextWriter = null;
 			System.Xml.XmlDocument xmlDocument = null;
 			System.IO.StreamReader streamReader = null;
-			System.Security.Policy.Evidence evidence = null;
+			//System.Security.Policy.Evidence evidence = null;
 			try
 			{
 				stringReader = new System.IO.StringReader(xsl);
-				xslTransform = new System.Xml.Xsl.XslTransform();
+				xslTransform = new System.Xml.Xsl.XslCompiledTransform();
 				xmlTextReader = new System.Xml.XmlTextReader(stringReader);
 				xmlTextWriterStream = new System.IO.MemoryStream();
 				xmlTextWriter = new System.Xml.XmlTextWriter(xmlTextWriterStream, System.Text.Encoding.Default);
 				xmlDocument = new System.Xml.XmlDocument();
 
-				evidence =  new System.Security.Policy.Evidence();
-				evidence.AddAssembly(this);
+				//evidence =  new System.Security.Policy.Evidence();
+				//evidence.AddAssembly(this);
 				xmlDocument.LoadXml(xml);
-				xslTransform.Load(xmlTextReader,null, evidence);
-				xslTransform.Transform(xmlDocument,null,xmlTextWriter, null);
+				xslTransform.Load(xmlTextReader);
+				xslTransform.Transform(xmlDocument, null, xmlTextWriter, null);
 				xmlTextWriter.Flush();
 
 				xmlTextWriterStream.Position=0;

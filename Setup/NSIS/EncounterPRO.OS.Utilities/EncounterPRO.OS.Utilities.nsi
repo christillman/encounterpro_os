@@ -7,7 +7,7 @@
 !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
 
 ; Component Versions
-!define EncounterPRO_Utilities_VERSION   1.0.0.6
+!define EncounterPRO_Utilities_VERSION   1.0.1.0
 ; This has a virus in it
 ; !define TPS_Foxit_Version 2.3
 !define EventLogInstaller_Version 1.1
@@ -18,14 +18,14 @@
 !define PRODUCT_VERSION "${EncounterPRO_Utilities_VERSION}"
 !define PRODUCT_PUBLISHER "EncounterPRO.ORG"
 !define PRODUCT_WEB_SITE "http://www.encounterpro.org"
-!define Required_Dotnet_VERSION   'v3.5 SP1'
+!define Required_Dotnet_VERSION   'v4.0'
 
 ; Module Locations
 !define EncounterPRO_Utilities_SOURCE  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\${EncounterPRO_Utilities_VERSION}\Files'
 ; !define FOXIT_READER_SOURCE "${SOURCE_ROOT}\3rd Party Software\Foxit Reader\${TPS_Foxit_Version}"
-!define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\Install\EproEventLogInstaller\${EventLogInstaller_Version}"
-!define CSharpGACTool_SOURCE "${SOURCE_ROOT}\Utilities\CSharpGACTool\${CSharpGACTool_Version}"
-!define PS_Distiller_Driver_SOURCE "${SOURCE_ROOT}\3rd Party Software\Adobe\PS Distiller Driver"
+!define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\EproEventLogInstaller\${EventLogInstaller_Version}"
+!define CSharpGACTool_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\CSharpGACTool\${CSharpGACTool_Version}"
+; !define PS_Distiller_Driver_SOURCE "${SOURCE_ROOT}\3rd Party Software\Adobe\PS Distiller Driver"
 !define ICSharpCode_SharpZipLib_SOURCE "${SOURCE_ROOT}\3rd Party Software\ICSharpCode\SharpZipLib\${ICSharpCode_SharpZipLib_Version}"
 
 
@@ -124,19 +124,6 @@ Function PreInstall
       Abort "This program Windows XP, Windows 2003 or Later."
   ${EndIf}
   
-  Call isNet35Installed
-  Pop $R0
-  ${If} $R0 != 'Yes'
-      MessageBox MB_YESNO|MB_ICONEXCLAMATION "This program requires the .NET Framework 3.5 Service Pack 1.  Do you wish to download the required framework now?" IDYES OpenBrowser35 IDNO GiveUpNow35
-      
-      OpenBrowser35:
-      ${OpenURL} "http://www.microsoft.com/downloads/details.aspx?FamilyId=AB99342F-5D1A-413D-8319-81DA479AB0D7&displaylang=en"
-      Abort "Please restart setup after installing the .NET Framework 3.5 Service Pack 1."
-      
-      GiveUpNow35:
-      Abort "Please install the .NET Framework 3.5 Service Pack 1 before running setup again."
-  ${EndIf}
-
   Call isNet40Installed
   Pop $R0
   ${If} $R0 != 'Yes'
@@ -156,8 +143,8 @@ Section "EncounterPRO.OS.Utilities"
   SetOverwrite on
 
   ; Copy files for Adobe PS Distiller Driver (used for "Sybase Datawindow PS" printer)
-  SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\Sybase Datawindow PS"
-  File "${PS_Distiller_Driver_SOURCE}\*"
+  ; SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\Sybase Datawindow PS"
+  ; File "${PS_Distiller_Driver_SOURCE}\*"
 
   ; Start by making sure that some .Net utilities are installed
       
@@ -186,7 +173,7 @@ Section "EncounterPRO.OS.Utilities"
   SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities"
   
   ; CSharpGACTool
-  File "${CSharpGACTool_SOURCE}\CSharpGACTool.exe"
+  File "${CSharpGACTool_SOURCE}\EncounterPRO.OS.CSharpGACTool.exe"
 
   ; Foxit Reader
   ; File "${FOXIT_READER_SOURCE}\Foxit Reader.exe"
@@ -210,7 +197,7 @@ Section "EncounterPRO.OS.Utilities"
   WriteINIStr "$COMMONFILES\${COMMONFILES_TARGET}\EPCompInfo.ini" "EncounterPRO.OS.Utilities" "ProductVersion" "$R0"
 
   ; Install the EncounterPRO Event Log Sources
-  File "${EVENTLOG_INSTALLER_SOURCE}\EPROEventLogInstaller.dll"
+  File "${EVENTLOG_INSTALLER_SOURCE}\EncounterPRO.OS.EventLogSourceInstaller.dll"
   nsExec::Exec '"${InstallUtil}" "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EPROEventLogInstaller.dll"'
   
 SectionEnd
