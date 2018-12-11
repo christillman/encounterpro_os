@@ -1,9 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "server.pbl" "";
-@end;
-@begin Objects 
- "server.sra" "server.pbl";
- "serverbuild.srj" "server.pbl";
- "u_sqlca_server.sru" "server.pbl";
-@end;

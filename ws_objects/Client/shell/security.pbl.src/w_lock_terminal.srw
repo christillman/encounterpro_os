@@ -216,7 +216,7 @@ sqlca.begin_transaction(this, "Session Takeover")
 li_sts = f_log_security_event("Forced Logout", "Success", ls_null)
 if li_sts <= 0 then return
 
-sqlca.sp_user_logoff(current_scribe.user_id, computer_id)
+sqlca.sp_user_logoff(current_scribe.user_id, gnv_app.computer_id)
 if not tf_check() then return
 
 lstr_attempt_logon.user_id = ls_user_id

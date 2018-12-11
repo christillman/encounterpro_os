@@ -1,6 +1,0 @@
-﻿$PBExportHeader$str_image_size.srs
-global type str_image_size from structure
-	long		width
-	long		height
-end type
-

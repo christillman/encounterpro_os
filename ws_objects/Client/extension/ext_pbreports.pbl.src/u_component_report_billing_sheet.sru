@@ -72,7 +72,7 @@ Else
 End If
 
 ls_office_id = get_attribute("office_id")
-if isnull(ls_office_id) then ls_office_id = office_id
+if isnull(ls_office_id) then ls_office_id = gnv_app.office_id
 
 report_datastore.Modify("t_office_name.Text='" + datalist.office_description(ls_office_id) + "'")
 report_datastore.Modify("t_office_address.Text='" + datalist.office_address(ls_office_id) + "'")

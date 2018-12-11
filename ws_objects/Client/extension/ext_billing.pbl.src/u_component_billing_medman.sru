@@ -1,4 +1,4 @@
-$PBExportHeader$u_component_billing_medman.sru
+﻿$PBExportHeader$u_component_billing_medman.sru
 forward
 global type u_component_billing_medman from u_component_billing
 end type
@@ -221,7 +221,7 @@ if not cprdb.check() then return -1
 if isnull(ls_encounter) then ls_encounter = '""'
 
 //	A fully qualified path is now available in ls_filepath
-f_parse_filepath(ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
+f_parse_filepath(gnv_app.ini_file,ls_drive,ls_directory,ls_inifilename,ls_iniextension)
 
 ls_filepath = ls_drive+ls_directory
 if right(ls_filepath, 1) <> "\" then ls_filepath += "\"

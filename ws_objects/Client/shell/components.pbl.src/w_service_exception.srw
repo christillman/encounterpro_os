@@ -669,7 +669,7 @@ sqlca.sp_set_workplan_item_progress(service.patient_workplan_item_id, &
 												"Change Owner", &
 												ldt_null, &
 												current_scribe.user_id, &
-												computer_id)
+												gnv_app.computer_id)
 if not tf_check() then return
 
 closewithreturn(parent, 0)

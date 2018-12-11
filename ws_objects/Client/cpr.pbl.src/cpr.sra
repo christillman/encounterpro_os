@@ -11,42 +11,16 @@ end forward
 
 global variables
 
-///////////////////////////////////////////////////////////
-// !!!! Change these values for every compile !!!!
-long minimum_modification_level = 203
-date compile_date = date("20/8/2018")
-integer major_release = 7
-string database_version = "0" // this is really minor release
-string build = "2"
-////////////////////////////////////////////////////////////
-
-
-////////////////////////////////////////////////////////////
-// DB Version this client is compatible with.  Do not change.
-string my_sql_version = "4.05"
-////////////////////////////////////////////////////////////
-
 cpr gnv_app
 
-string registry_key
-string ini_file
-string program_directory
-string cpr_mode = "NA"
-string eml
-string computername
-string servicename
-long computer_id
-string windows_logon_id
 string month_str[12] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"}
-w_window_base main_window
-w_image_objects object_window
+w_main main_window
 boolean just_logged_on
 //integer password_length = 3
 //boolean variable_password_length = false
 string system_user_id = "#SYSTEM"
 string logon_id = "jmjtech"
 date immunization_date_of_birth = date("1/1/1980")
-string office_id
 string office_description
 long default_group_id
 boolean config_mode
@@ -97,9 +71,6 @@ u_room current_room
 // If the user is viewing a room, this is the room object
 u_room viewed_room
 
-string CNST_TREATMENT_CLOSED = "CLOSED"
-string CNST_WEIGHT_OBSERVATION = "WGT"
-
 long COLOR_LIGHT_BLUE = rgb(164, 200, 240)
 long COLOR_BLUE = rgb(0,64,128)
 long COLOR_DARK_BLUE = rgb(0, 0, 128)
@@ -118,23 +89,14 @@ long COLOR_EPRO_BLUE = rgb(192,192,255)
 ///////////////////////////////////////////////////
 // Preferences
 
-integer db_reconnect_retries=10
-
-boolean auto_patient_select = false
-boolean auto_room_select = false
-boolean rx_use_signature_stamp = false
-boolean bill_test_collection
-
 string date_format_string = "[shortdate]"
 string time_format_string = "[time]"
-string followup_specialty = "FOLLOWUP"
+// Necessary to avoid errors if the regional settings are d/m/y
+// because SQL server is always m/d/y
+string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
 string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
 string debug_path = "C:\TEMP\EproDebug"
-string temp_image = "tmpimg.tif"
-string rx_gravityprompt
-string vaccine_gravityprompt
-string encounter_gravityprompt
 
 long COLOR_BACKGROUND = rgb(192,192,255)
 long COLOR_TEXT_NORMAL
@@ -142,8 +104,6 @@ long COLOR_TEXT_WARNING
 long COLOR_TEXT_ERROR
 long COLOR_OBJECT
 long COLOR_OBJECT_SELECTED
-
-long color_service_ordered
 
 string object_file_server
 string object_file_path
@@ -155,12 +115,6 @@ u_list_data datalist
 
 // Drug database interface
 u_component_drug drugdb
-
-// Patient list
-//u_patient_list patient_list
-
-// Parent object for development history
-//u_stage_list stage_list
 
 // Parent object for vaccines and immunizations
 u_vaccine_list vaccine_list
@@ -190,46 +144,7 @@ u_unit_list unit_list
 // Generic datastore for loading data
 u_ds_data temp_datastore
 
-///////////////////////////////////////////
-// global datawindow controls
-//u_ds_data dw_data
-//u_ds_data dw_data_development
-//u_ds_data dw_data_dev_stages
-//u_ds_data dw_data_dev_items
-//u_ds_data dw_data_report_queue
-
-///////////////////////////////////////////
-// Global Other Controls
-
-u_pb_picture_control pb_picture_control
-
-/////////////////////////////////////////
-// Holding list values
-string holding_list_cpr_id = "JMJCPR00"
-long holding_list_attachment_id = 1
-
-/////////////////////////////////////////
-// System Preferences
-integer system_preference_count
-str_preference system_preferences[]
-
-//////////////////////////////////////////
-// Billing System Variables
-//u_billing_system billing_system
-//string billing_system_id
-
-
-//////////////////////////////////////////
-// Shared object for communicating between
-// the server application and server shared objects
-//u_epparms epparms
-
-//u_file_compression file_compression
-//u_mmserver mmserver
 u_common_thread common_thread
-
-// Service control manager
-//u_service_control_manager scm
 
 u_msscript msscript
 
@@ -268,6 +183,32 @@ Function boolean IsWindowEnabled(ulong hWnd)  library "USER32.DLL"
 end prototypes
 
 type variables
+
+
+///////////////////////////////////////////////////////////
+// !!!! Change these values for every compile !!!!
+long minimum_modification_level = 203
+date compile_date = date("20/8/2018")
+integer major_release = 7
+string database_version = "0" // this is really minor release
+string build = "2"
+////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////
+// DB Version this client is compatible with.
+string my_sql_version = "4.05"
+////////////////////////////////////////////////////////////
+
+string registry_key
+string ini_file
+string program_directory
+string cpr_mode = "NA"
+string computername
+string servicename
+long computer_id
+string office_id
+string windows_logon_id
 
 // Don't get your hopes up; only a couple of locales are supported
 // so far, and only in a limited way!
@@ -315,6 +256,8 @@ if ls_parm = "" or left(ls_parm, 1) = "/" then setnull(ls_parm)
 
 // Initialize the windows API
 windows_api = CREATE u_windows_api
+string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
+RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
 
 // Create the log object
 log = CREATE u_event_log
@@ -354,7 +297,6 @@ if not fileexists(ini_file) then
 end if
 
 // Initialize the logging system
-open(w_image_objects)
 
 // If no command-line param is supplied, then check the registry
 if isnull(ls_parm) or trim(ls_parm) = "" then
@@ -415,8 +357,10 @@ end if
 
 SetNull(datalist)
 SetNull(windows_api)
-sqlca.dbdisconnect()
-SetNull(sqlca)
+if not isnull(sqlca) and isvalid(sqlca) then
+	sqlca.dbdisconnect()
+	SetNull(sqlca)
+end if
 
 
 end event

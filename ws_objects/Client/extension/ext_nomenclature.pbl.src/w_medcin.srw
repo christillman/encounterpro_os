@@ -80,11 +80,11 @@ cb_history2.Enabled = True
 
 end subroutine
 
-public subroutine store_browser_state (long row);			RegistrySet(registry_key + "\Nomenclature\Medcin", &
+public subroutine store_browser_state (long row);			RegistrySet(gnv_app.registry_key + "\Nomenclature\Medcin", &
 							"part", RegString!, is_part)
-			RegistrySet(registry_key + "\Nomenclature\Medcin", & 
+			RegistrySet(gnv_app.registry_key + "\Nomenclature\Medcin", & 
 							"pctrl", RegString!, dw_n.GetItemString(row,"pctrl"))
-			RegistrySet(registry_key + "\Nomenclature\Medcin", & 
+			RegistrySet(gnv_app.registry_key + "\Nomenclature\Medcin", & 
 							"clickedrow", RegString!, string(dw_n.GetRow())) //dw_n.GetClickedRow() which generated error if nothing had been clicked
 	
 end subroutine
@@ -92,13 +92,13 @@ end subroutine
 public subroutine retrieve_data (string part, string pctrl, long row);string ls_part, ls_pctrl, ls_clickedrow, ls_NewSelectString
 int li_length
 
-RegistryGet(registry_key + "\Nomenclature\Medcin", &
+RegistryGet(gnv_app.registry_key + "\Nomenclature\Medcin", &
 				"part", RegString!, ls_part)
 				
-RegistryGet(registry_key + "\Nomenclature\Medcin", & 
+RegistryGet(gnv_app.registry_key + "\Nomenclature\Medcin", & 
 				"pctrl", RegString!, ls_pctrl)
 
-RegistryGet(registry_key + "\Nomenclature\Medcin", & 
+RegistryGet(gnv_app.registry_key + "\Nomenclature\Medcin", & 
 				"clickedrow", RegString!, ls_clickedrow)
 
 IF pctrl = '' THEN
@@ -214,109 +214,13 @@ int iLength
 
 Close(this)
 Return
-/*
-
-RegistryGet(registry_key + "\Nomenclature\Medcin", &
-				"part", RegString!, ls_part)
-				
-RegistryGet(registry_key + "\Nomenclature\Medcin", & 
-				"pctrl", RegString!, ls_pctrl)
-
-ilength = Len(ls_pctrl) - 2
-
-is_pctrl = Right(Left(ls_pctrl, ilength), ilength - 1)
-
-RegistryGet(registry_key + "\Nomenclature\Medcin", & 
-				"clickedrow", RegString!, ls_clickedrow)
-				
-il_clickedrow = long(ls_clickedrow)
-
-//messagebox("RegistryGet", ls_part + " " + "-" + is_pctrl + "-" + " " + string(ls_clickedrow))
-
-//messagebox("Length ls_pctrl", len(ls_pctrl))
-
-dw_n.SetTransObject(SQLCA)
-
-CHOOSE CASE ls_part
-	CASE "symptoms"
-		retrieve_data("symptoms",is_pctrl,1)
-		enable_all_buttons()
-		cb_symptoms2.Enabled = FALSE
-		is_part = "symptoms"
-		is_top = "A"
-		
-		//cb_symptoms2.triggerevent(Clicked!)
-		
-	CASE "history"
-		retrieve_data("history",is_pctrl,1)
-		enable_all_buttons()
-		cb_history2.Enabled = FALSE
-		is_part = "history"
-		is_top = "B"
-		
-		//cb_history2.triggerevent(Clicked!)
-		
-	CASE "exam"
-		
-		retrieve_data("exam",is_pctrl,1)
-		enable_all_buttons()
-		cb_exam2.Enabled = FALSE
-		is_part = "exam"
-		is_top = "C"
-		
-		//cb_exam2.triggerevent(Clicked!)
-		
-	CASE "tests"
-		retrieve_data("tests",is_pctrl,1)
-		enable_all_buttons()
-		cb_tests2.Enabled = FALSE
-		is_part = "tests"
-		is_top = "D"
-		
-		//cb_tests2.triggerevent(Clicked!)
-		
-	CASE "diagnoses"
-		retrieve_data("diagnoses",is_pctrl,1)
-		enable_all_buttons()
-		cb_diagnoses2.Enabled = FALSE
-		is_part = "diagnoses"
-		is_top = "F"
-		
-		//cb_diagnoses2.triggerevent(Clicked!)
-		
-	CASE "therapy"
-		retrieve_data("therapy",is_pctrl,1)
-		enable_all_buttons()
-		cb_therapy2.Enabled = FALSE
-		is_part = "therapy"
-		is_top = "G"
-				
-		//cb_therapy2.triggerevent(Clicked!)
-		
-	CASE ELSE
-		cb_symptoms2.triggerevent(Clicked!)
-		
-END CHOOSE
-
-
-
-
-
-
-
-
-//is_part = "symptoms" //do this if part = ""
-
-//cb_symptoms.Enabled = FALSE
-//dw_n.SetTransObject(SQLCA)
-//dw_n.Retrieve()
-//messagebox("dw_n.RowCount()", dw_n.RowCount())
-*/
 end event
 
 type pb_1 from u_pb_help_button within w_medcin
 integer x = 2633
 integer y = 1688
+integer width = 256
+integer height = 128
 integer taborder = 30
 end type
 

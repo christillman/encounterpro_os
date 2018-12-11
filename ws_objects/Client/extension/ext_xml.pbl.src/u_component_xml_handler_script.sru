@@ -1,4 +1,4 @@
-$PBExportHeader$u_component_xml_handler_script.sru
+﻿$PBExportHeader$u_component_xml_handler_script.sru
 forward
 global type u_component_xml_handler_script from u_component_xml_handler_base
 end type
@@ -257,7 +257,7 @@ if li_sts <= 0 then
 	return -1
 end if
 
-if not lb_nested and cpr_mode = "CLIENT" then
+if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 	li_index = f_please_wait_open()
 	f_please_wait_progress_bar(li_index, 0, lstr_display_script.display_command_count)
 end if
@@ -265,12 +265,12 @@ end if
 // Perform the commands
 for i = 1 to lstr_display_script.display_command_count
 	interpret_xml_command(lstr_display_script.display_command[i])
-	if not lb_nested and cpr_mode = "CLIENT" then
+	if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 		f_please_wait_progress_bump(li_index)
 	end if
 next
 
-if not lb_nested and cpr_mode = "CLIENT" then
+if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 	f_please_wait_close(li_index)
 end if
 

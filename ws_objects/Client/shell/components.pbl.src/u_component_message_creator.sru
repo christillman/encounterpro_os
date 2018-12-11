@@ -209,7 +209,7 @@ if ll_message_number <= 0 or isnull(ll_message_number) then
 	mylog.log(this, "u_component_message_creator.get_message_file:0038", "Error getting next file number", 4)
 	return -1
 end if
-message_file = message_type + "_" + office_id + "_OUT_" + string(ll_message_number) + "." + ls_extension
+message_file = message_type + "_" + gnv_app.office_id + "_OUT_" + string(ll_message_number) + "." + ls_extension
 
 if right(ls_message_location, 1) = "\" then
 	message_file = ls_message_location + message_file
@@ -492,7 +492,7 @@ string ls_version
 integer li_build
 
 ls_version = f_database_version()
-li_build = integer(build)
+li_build = integer(gnv_app.build)
 
 luo_data = CREATE u_ds_data
 luo_data.set_database(mydb)
@@ -514,7 +514,7 @@ ldt_now = datetime(today(), now())
 update message_header
 set message_type = :message_type,
 	description = :message_description,
-	sender_office_id = :office_id,
+	sender_office_id = :gnv_app.office_id,
 	sender = :office_description,
 	created = :ldt_now,
 	version = :ls_version,

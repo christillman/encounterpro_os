@@ -536,7 +536,7 @@ end if
 
 // If we get here then we didn't find the treatment and we couldn't create
 // the treatment.  See if the caller wants to prompt the user
-if not pb_prompt_user or cpr_mode <> "CLIENT" then
+if not pb_prompt_user or gnv_app.cpr_mode <> "CLIENT" then
 	setnull(ll_treatment_id)
 	return ll_treatment_id
 end if
@@ -701,7 +701,7 @@ end if
 
 // If we get here then we didn't find the assessment and we couldn't create
 // the assessment.  See if the caller wants to prompt the user
-if not pb_prompt_user or cpr_mode <> "CLIENT" then
+if not pb_prompt_user or gnv_app.cpr_mode <> "CLIENT" then
 	setnull(ll_problem_id)
 	return ll_problem_id
 end if
@@ -892,7 +892,7 @@ end if
 
 // If we get here then we didn't find the patient and we couldn't create
 // the patient.  See if the caller wants to prompt the user
-if not pb_prompt_user or cpr_mode <> "CLIENT" then
+if not pb_prompt_user or gnv_app.cpr_mode <> "CLIENT" then
 	ls_temp = ""
 	if not isnull(pstr_patient.last_name) then
 		ls_temp = pstr_patient.last_name
@@ -1094,7 +1094,7 @@ end if
 
 // If we get here then we didn't find the encounter and we couldn't create
 // the encounter.  See if the caller wants to prompt the user
-if not pb_prompt_user or cpr_mode <> "CLIENT" then
+if not pb_prompt_user or gnv_app.cpr_mode <> "CLIENT" then
 	setnull(ll_encounter_id)
 	return ll_encounter_id
 end if

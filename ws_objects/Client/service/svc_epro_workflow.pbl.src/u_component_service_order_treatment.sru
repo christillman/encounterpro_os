@@ -270,7 +270,6 @@ end function
 public function integer order_from_pick_new_treatments ();w_window_base lw_window
 str_popup_return popup_return
 
-//Openwithparm(lw_window, this, "w_pick_new_treatment")
 Openwithparm(lw_window, this, "w_svc_treatment_list")
 popup_return = message.powerobjectparm
 

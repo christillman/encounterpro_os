@@ -224,7 +224,7 @@ setnull(reader_user_id)
 lb_document_management_mode = datalist.get_preference_boolean("PREFERENCES", "Use Document Management", false)
 
 If isnull(ls_report_id) then 
-	if cpr_mode = "CLIENT" Then
+	if gnv_app.cpr_mode = "CLIENT" Then
 		// What kind of config object?
 		lstr_pick_config_object.config_object_type = get_attribute("config_object_type")
 		if isnull(lstr_pick_config_object.config_object_type) then
@@ -349,7 +349,7 @@ end if
 // Determine the report computer_id
 get_attribute("computer_id", ll_report_computer_id)
 if isnull(ll_report_computer_id) then
-	ll_report_computer_id = computer_id
+	ll_report_computer_id = gnv_app.computer_id
 end if
 
 // If we still don't have a printer, look up the default printer for this report
@@ -365,9 +365,9 @@ end if
 
 // Get the attributes for this service
 lstr_attributes = get_attributes()
-log.log(this, "u_component_service_report.xx_do_service:0199","processing report ("+ls_report_id+") on mode "+cpr_mode,1)
+log.log(this, "u_component_service_report.xx_do_service:0199","processing report ("+ls_report_id+") on mode "+gnv_app.cpr_mode,1)
 
-If cpr_mode = "CLIENT" Then
+If gnv_app.cpr_mode = "CLIENT" Then
 	If lb_show_toolbar Then
 		DO
 			lb_loop = false
@@ -512,7 +512,7 @@ If cpr_mode = "CLIENT" Then
 			CASE "SERVER"
 				// First add the local office_id so that the server knows which printer to use
 				ls_attribute = "office_id"
-				ls_value = office_id
+				ls_value = gnv_app.office_id
 				sqlca.sp_add_workplan_item_attribute( &
 						ls_cpr_id, &
 						ll_patient_workplan_id, &
@@ -525,7 +525,7 @@ If cpr_mode = "CLIENT" Then
 			
 				// Then add the local computer_id so that the server knows which printer to use
 				ls_attribute = "computer_id"
-				ls_value = string(computer_id)
+				ls_value = string(gnv_app.computer_id)
 				sqlca.sp_add_workplan_item_attribute( &
 						ls_cpr_id, &
 						ll_patient_workplan_id, &
@@ -626,7 +626,7 @@ if li_sts < 0 then return -1
 
 boolean lb_suppress_beback
 get_attribute("Suppress Be back Popup", lb_suppress_beback)
-if cpr_mode = "CLIENT" and not manual_service and not lb_suppress_beback Then
+if gnv_app.cpr_mode = "CLIENT" and not manual_service and not lb_suppress_beback Then
 	// Now ask the user if they're done
 	popup.data_row_count = 2
 	popup.items[1] = "I'll Be Back"
@@ -655,7 +655,7 @@ w_report_configure_and_test lw_window
 f_attribute_add_attribute(pstr_attributes, "DESTINATION", "SCREEN")
 
 // Get the report attributes from the tables
-puo_report.get_report_attributes(office_id)
+puo_report.get_report_attributes(gnv_app.office_id)
 
 popup.objectparm1 = puo_report
 popup.objectparm2 = pstr_attributes
@@ -889,7 +889,7 @@ end if
 ll_patient_workplan_id = 0
 
 
-if cpr_mode = "CLIENT" and lb_send_now then
+if gnv_app.cpr_mode = "CLIENT" and lb_send_now then
 	// If the caller wants to send the document now, make sure we have a recipient
 	if isnull(ls_ordered_for) then
 		ls_ordered_for = pick_recipient(ls_purpose)

@@ -66,7 +66,6 @@ global type w_svc_treatment_close from w_window_base
 integer width = 2935
 integer height = 1912
 string title = "Patients Waiting"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -516,7 +515,7 @@ li_sts = initialize()
 st_treatment_description.text = service.treatment.treatment_description
 st_close_date.text = string(close_progress_date_time, "[shortdate]")
 
-if cpr_mode = "SERVER" then
+if gnv_app.cpr_mode = "SERVER" then
 	if Isnull(close_progress) and close_progress_required then
 		close_progress = "Treatment " + lower(close_progress_type) + " by server"
 	end if

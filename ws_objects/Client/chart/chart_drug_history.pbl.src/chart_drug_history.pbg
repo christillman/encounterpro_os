@@ -1,8 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "chart_drug_history.pbl" "";
-@end;
-@begin Objects 
- "dw_drug_history.srd" "chart_drug_history.pbl";
- "u_cpr_drug_history.sru" "chart_drug_history.pbl";
-@end;

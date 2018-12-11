@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_physical_exam.srw
 forward
-global type w_physical_exam from w_window_base
+global type w_physical_exam from w_observation_base
 end type
 type st_page from statictext within w_physical_exam
 end type
@@ -38,7 +38,7 @@ type cb_legal_notice from commandbutton within w_physical_exam
 end type
 end forward
 
-global type w_physical_exam from w_window_base
+global type w_physical_exam from w_observation_base
 integer height = 1840
 boolean controlmenu = false
 boolean minbox = false

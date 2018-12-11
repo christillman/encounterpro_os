@@ -1,0 +1,280 @@
+﻿$PBExportHeader$f_new_component_version.srf
+global type f_new_component_version from function_object
+end type
+
+forward prototypes
+global function string f_new_component_version (string ps_component_id)
+end prototypes
+
+global function string f_new_component_version (string ps_component_id);str_popup popup
+str_popup popup2
+str_popup popup3
+str_popup_return popup_return
+string ls_consultant_id
+long ll_row
+integer li_sts
+string ls_description
+long ll_nextkey
+string ls_null
+long ll_count
+long ll_iterations
+long ll_version
+string ls_component_type
+string ls_version_description
+string ls_component_class
+string ls_component_location
+string ls_component_data
+long ll_owner_id
+string ls_release_status
+long ll_min_modification_level
+long ll_max_modification_level
+blob lbl_objectdata
+string ls_installer
+string ls_independence
+string ls_system_id
+long ll_build
+string ls_build_name
+long ll_compile
+string ls_compile_name
+string ls_build_status
+long ll_current_version_count
+
+setnull(ls_null)
+
+if isnull(ps_component_id) then
+	log.log(po_null, "f_new_component_version:0037", "Null component_id", 4)
+	return ls_null
+end if
+
+SELECT component_type, description, system_id
+INTO :ls_component_type, :ls_description, :ls_system_id
+FROM c_Component_Definition
+WHERE component_id = :ps_component_id;
+if not tf_check() then return ls_null
+if sqlca.sqlnrows = 0 then
+	log.log(po_null, "f_new_component_version:0047", "component_id not found (" + ps_component_id + ")", 4)
+	return ls_null
+end if
+
+SELECT max(version)
+INTO :ll_version
+FROM dbo.c_Component_Version
+WHERE component_id = :ps_component_id;
+if not tf_check() then return ls_null
+
+if isnull(ll_version) then
+	ll_version = 1
+else
+	ll_version += 1
+end if
+
+popup.item = ""
+popup.title = "Version Description (what has changed)"
+openwithparm(w_pop_prompt_string_multiline, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then
+	setnull(ls_version_description)
+else
+	ls_version_description = popup_return.items[1]
+	if trim(ls_version_description) = "" then setnull(ls_version_description)
+end if
+
+CHOOSE CASE lower(ls_component_type)
+	CASE "document Sender"
+		ls_component_class = "u_component_route_dotnet"
+	CASE "contraindication"
+		ls_component_class = "u_component_document_dotnet"
+	CASE "ocr"
+		ls_component_class = "u_component_document_dotnet"
+	CASE ELSE
+		ls_component_class = "u_component_" + lower(ls_component_type) + "_dotnet"
+END CHOOSE
+
+
+popup2.title = "Assembly Display Name"
+openwithparm(w_pop_prompt_string, popup2)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_component_location = trim(popup_return.items[1])
+
+popup2.title = "Component Class"
+openwithparm(w_pop_prompt_string, popup2)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_component_data = trim(popup_return.items[1])
+
+ll_owner_id = sqlca.customer_id
+
+
+popup.title = "Select Release Status"
+popup.data_row_count = 3
+popup.items[1] = "Testing"
+popup.items[2] = "Beta"
+popup.items[3] = "Production"
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+
+ls_release_status = popup_return.items[1]
+
+popup2.title = "Minimum Database Modification Level"
+popup2.item = string(sqlca.modification_level)
+openwithparm(w_pop_prompt_string, popup2)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return ls_null
+if not isnumber(popup_return.items[1]) then return ls_null
+
+ll_min_modification_level = long(popup_return.items[1])
+
+DO WHILE true
+	popup2.title = "Enter Assembly Version"
+	popup2.item = ""
+	openwithparm(w_pop_prompt_string, popup2)
+	popup_return = message.powerobjectparm
+	if popup_return.item_count <> 1 then return ls_null
+	
+	ls_compile_name = trim(popup_return.items[1])
+	
+	SELECT count(*)
+	INTO :ll_count
+	FROM c_Component_Version
+	WHERE component_id = :ps_component_id
+	AND compile_name = :ls_compile_name
+	AND status = 'OK';
+	if not tf_check() then return ls_null
+	
+	IF ll_count = 0 then exit
+	
+	openwithparm(w_pop_message, "The version ~"" + ls_compile_name + "~" is already assigned.  Please assign a different version.")
+LOOP
+
+ls_installer = "Setup.exe"
+ls_independence = "Multi"
+ll_build = 0
+ls_build_name = ls_compile_name
+ll_compile = ll_version
+ls_build_status = ls_release_status
+setnull(ll_max_modification_level)
+
+
+string ls_filepath
+string ls_filename
+
+li_sts = GetFileOpenName ("Select Installer Executable", ls_filepath, ls_filename ,"exe", "Application,*.exe")
+If li_sts <= 0 Then return ls_null
+
+li_sts = log.file_read(ls_filepath, lbl_objectdata)
+If li_sts <= 0 Then return ls_null
+
+SELECT count(*)
+INTO :ll_current_version_count
+FROM c_Component_Version
+WHERE component_id = :ps_component_id;
+if not tf_check() then return ls_null
+
+tf_begin_transaction(po_null, "Adding component version record")
+
+INSERT INTO dbo.c_Component_Version
+	(component_id
+	,version
+	,description
+	,version_description
+	,component_type
+	,component_class
+	,component_location
+	,component_data
+	,owner_id
+	,created
+	,created_by
+	,status
+	,status_date_time
+	,release_status
+	,release_status_date_time
+	,min_build
+	,min_modification_level
+	,id
+	,installer
+	,independence
+	,system_id
+	,build
+	,build_name
+	,compile
+	,compile_name
+	,build_status
+	,max_modification_level
+	,last_updated)
+VALUES (
+	:ps_component_id,
+	:ll_version,
+	:ls_description,
+	:ls_version_description,
+	:ls_component_type,
+	:ls_component_class,
+	:ls_component_location,
+	:ls_component_data,
+	:ll_owner_id,
+	getdate(),
+	:current_scribe.user_id,
+	'OK',
+	getdate(),
+	:ls_release_status,
+	getdate(),
+	50000,
+	:ll_min_modification_level,
+	newid(),
+	:ls_installer,
+	:ls_independence,
+	:ls_system_id,
+	:ll_build,
+	:ls_build_name,
+	:ll_compile,
+	:ls_compile_name,
+	:ls_build_status,
+	:ll_max_modification_level,
+	getdate() );
+if not tf_check() then
+	tf_rollback()
+	return ls_null
+end if
+
+UPDATEBLOB dbo.c_Component_Version
+SET objectdata = :lbl_objectdata
+WHERE component_id = :ps_component_id
+AND version = :ll_version;
+if not tf_check() then
+	tf_rollback()
+	return ls_null
+end if
+
+if ll_current_version_count = 0 then
+	UPDATE c_Component_Definition
+	SET normal_version = :ll_version
+	WHERE component_id = :ps_component_id;
+	if not tf_check() then
+		tf_rollback()
+		return ls_null
+	end if
+	
+	sqlca.jmj_component_log(ps_component_id , &
+							ll_version,  &
+							"Initial Version Set", & 
+							datetime(today(), now()) ,  &
+							gnv_app.computer_id ,  &
+							gnv_app.windows_logon_id ,  &
+							"OK" ,  &
+							ls_null ,  &
+							current_scribe.user_id  ) 
+	if not tf_check() then
+		tf_rollback()
+		return ls_null
+	end if
+end if
+
+tf_commit_transaction()
+
+return ls_compile_name
+
+end function
+

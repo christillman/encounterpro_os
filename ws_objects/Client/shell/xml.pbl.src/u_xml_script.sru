@@ -557,7 +557,7 @@ if li_sts <= 0 then
 	return -1
 end if
 
-if not lb_nested and cpr_mode = "CLIENT" then
+if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 	li_index = f_please_wait_open()
 	f_please_wait_progress_bar(li_index, 0, lstr_display_script.display_command_count)
 end if
@@ -565,12 +565,12 @@ end if
 // Perform the commands
 for i = 1 to lstr_display_script.display_command_count
 	create_xml_command(lstr_display_script.display_command[i])
-	if not lb_nested and cpr_mode = "CLIENT" then
+	if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 		f_please_wait_progress_bump(li_index)
 	end if
 next
 
-if not lb_nested and cpr_mode = "CLIENT" then
+if not lb_nested and gnv_app.cpr_mode = "CLIENT" then
 	f_please_wait_close(li_index)
 end if
 
@@ -2590,12 +2590,12 @@ lo_element2 = add_element(lo_element, "Caller", "EncounterPRO")
 lo_element2 = add_element(lo_element, "CallerVersion", f_app_version())
 lo_element2 = add_element(lo_element, "DatabaseModLevel", string(sqlca.modification_level))
 lo_element2 = add_element(lo_element, "CustomerID", string(sqlca.customer_id))
-lo_element2 = add_element(lo_element, "OfficeID", office_id)
+lo_element2 = add_element(lo_element, "OfficeID", gnv_app.office_id)
 
 add_actor(lo_element, "CurrentUser", current_user.user_id)
 add_actor(lo_element, "CurrentScribe", current_scribe.user_id)
 
-lo_element2 = add_element(lo_element, "ComputerID", string(computer_id))
+lo_element2 = add_element(lo_element, "ComputerID", string(gnv_app.computer_id))
 
 return 1
 

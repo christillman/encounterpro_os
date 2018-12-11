@@ -198,7 +198,7 @@ lt_thistime = Time(Mid(ls_thisdatetime,12))
 ldt_default_appointment = Datetime(ld_thisdate,lt_thistime)	
 
 //set default office
-ps_office = office_id
+ps_office = gnv_app.office_id
 
 //	Select a single unique record from x_medman_Arrived 
 //	Then process the encounter

@@ -16,7 +16,7 @@ protected function integer xx_send_document (u_component_wp_item_document puo_do
 string ls_return
 
 // This route is client only
-if cpr_mode <> "CLIENT" then return 0
+if gnv_app.cpr_mode <> "CLIENT" then return 0
 
 openwithparm(lw_window, puo_document, "w_route_web_upload")
 ls_return = message.stringparm

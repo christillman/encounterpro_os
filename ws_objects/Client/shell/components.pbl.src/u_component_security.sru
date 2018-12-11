@@ -839,7 +839,7 @@ ldt_last_update = datalist.last_table_update("o_user_service")
 if isnull(user_services_refresh) or ldt_last_update > user_services_refresh then
 	user_services_refresh = ldt_last_update
 	user_services.set_dataobject("dw_data_user_service_list")
-	li_sts = user_services.retrieve(office_id)
+	li_sts = user_services.retrieve(gnv_app.office_id)
 	if li_sts < 0 then
 		log.log(this, "u_component_security.load_users:0059", "Error loading user_services table", 4)
 		return -1
@@ -850,7 +850,7 @@ ldt_last_update = datalist.last_table_update("o_user_privilege")
 if isnull(user_privileges_refresh) or ldt_last_update > user_privileges_refresh then
 	user_privileges_refresh = ldt_last_update
 	user_privileges.set_dataobject("dw_data_user_privilege_list")
-	li_sts = user_privileges.retrieve(office_id)
+	li_sts = user_privileges.retrieve(gnv_app.office_id)
 	if li_sts < 0 then
 		log.log(this, "u_component_security.load_users:0070", "Error loading user_privileges table", 4)
 		return -1
@@ -1118,7 +1118,7 @@ if ll_count < 0 then return luo_null
 // If this user isn't logged in yet then add them and we're done
 if ll_count > 0 then
 	// See if this user is logged in at this computer already.  If so then we're done
-	ls_find = "computer_id=" + string(computer_id)
+	ls_find = "computer_id=" + string(gnv_app.computer_id)
 	ll_row = o_users.find(ls_find, 1, ll_count)
 	if ll_row > 0 then return luo_user
 	
@@ -1133,7 +1133,7 @@ if ll_count > 0 then
 		log.log(this, "u_component_security.user_logon:0084", luo_user.user_full_name + " is already logged in at " &
 							+ ls_other_computer, 2)
 
-		if cpr_mode = "CLIENT" then
+		if gnv_app.cpr_mode = "CLIENT" then
 			lb_allow_multiple_logons = datalist.get_preference_boolean("SECURITY", "Allow Multiple Logons", true)
 		
 			if lb_allow_multiple_logons then
@@ -1178,8 +1178,8 @@ end if
 // If we get here then we need to add the user at this computer
 ll_row = o_users.insertrow(0)
 o_users.object.user_id[ll_row] = luo_user.user_id
-o_users.object.computer_id[ll_row] = computer_id
-o_users.object.office_id[ll_row] = office_id
+o_users.object.computer_id[ll_row] = gnv_app.computer_id
+o_users.object.office_id[ll_row] = gnv_app.office_id
 o_users.object.in_service[ll_row] = "N"
 
 li_sts = o_users.update()
@@ -1475,7 +1475,7 @@ integer li_sts
 
 ls_reset_username = user_username(ps_reset_user_id)
 if isnull(ls_reset_username) or ls_reset_username = "" then
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, "You must establish a username before you can reset the password")
 	end if
 	return 0

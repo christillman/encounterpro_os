@@ -1,8 +1,0 @@
-﻿Save Format v3.0(19990112)
-@begin Libraries
- "svc_get_officemed.pbl" "";
-@end;
-@begin Objects 
- "u_component_service_get_officemed.sru" "svc_get_officemed.pbl";
- "w_office_drug_treatment.srw" "svc_get_officemed.pbl";
-@end;

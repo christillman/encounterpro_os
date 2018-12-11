@@ -1,4 +1,4 @@
-$PBExportHeader$w_svc_compose_message.srw
+﻿$PBExportHeader$w_svc_compose_message.srw
 forward
 global type w_svc_compose_message from w_window_base
 end type
@@ -48,7 +48,6 @@ type str_recipient from structure
 end type
 
 global type w_svc_compose_message from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -712,7 +711,7 @@ else
 end if
 
 service.get_attribute("auto_send", lb_auto_send)
-if lb_auto_send or cpr_mode = "SERVER" then
+if lb_auto_send or gnv_app.cpr_mode = "SERVER" then
 	li_sts = send_message()
 	
 	if li_sts > 0 then

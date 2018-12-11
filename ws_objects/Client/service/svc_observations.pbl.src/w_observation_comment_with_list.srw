@@ -523,7 +523,7 @@ if isnull(dictate_external_source_type) then dictate_external_source_type = "Aud
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_available_sources")
-ll_count = luo_data.retrieve(computer_id, dictate_external_source_type)
+ll_count = luo_data.retrieve(gnv_app.computer_id, dictate_external_source_type)
 if ll_count <= 0 then
 	cb_dictate.visible = false
 else

@@ -46,7 +46,7 @@ if li_sts <= 0 then
 end if
 
 if upper(ls_assessment_status) = "CLOSED" then
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(service_window, this, "w_svc_assessment_close")
 		popup_return = message.powerobjectparm
 		if popup_return.item_count <> 1 then return 0
@@ -70,7 +70,7 @@ if upper(ls_assessment_status) = "CLOSED" then
 end if
 
 if upper(ls_assessment_status) = "CANCELLED" then
-	if cpr_mode = "CLIENT" then
+	if gnv_app.cpr_mode = "CLIENT" then
 		// enter the reason for cancellation
 		popup.argument_count = 1
 		popup.argument[1] = "DELETE_ASSESSMENT"

@@ -279,7 +279,7 @@ ls_text = f_select_date(ld_termination_date, "Employment End Date")
 if isnull(ls_text) then return
 
 if (ld_termination_date <> date(current_patient.termination_date)) or isnull(current_patient.termination_date) then
-	current_patient.modify_patient("termination_date", ls_text)
+	current_patient.modify_patient("termination_date", string(ld_termination_date, db_datetime_format))
 	text = string(current_patient.termination_date, date_format_string)
 	cb_termination_date_clear.visible = true
 end if
@@ -316,7 +316,7 @@ ls_text = f_select_date(ld_start_date, "Employment Start Date")
 if isnull(ls_text) then return
 
 if (ld_start_date <> date(current_patient.start_date)) or isnull(current_patient.start_date) then
-	current_patient.modify_patient("start_date", ls_text)
+	current_patient.modify_patient("start_date", string(ld_start_date, db_datetime_format))
 	text = string(current_patient.start_date, date_format_string)
 	cb_start_date_clear.visible = true
 end if

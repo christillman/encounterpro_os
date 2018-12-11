@@ -46,7 +46,7 @@ CHOOSE CASE lower(ls_which_material)
 		ll_material_id = sqlca.fn_reference_material_id(cpr_id, context_object, object_key, ls_which_material)
 		if not tf_check() then return -1
 		if isnull(ll_material_id) then
-			if cpr_mode = "CLIENT" then
+			if gnv_app.cpr_mode = "CLIENT" then
 				popup.title = "No " + wordcap(ls_which_material) + " material is configured for this treatment."
 				openwithparm(w_pop_choices_2, popup)
 				if manual_service then

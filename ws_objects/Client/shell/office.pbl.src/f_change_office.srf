@@ -1,0 +1,37 @@
+﻿$PBExportHeader$f_change_office.srf
+global type f_change_office from function_object
+end type
+
+forward prototypes
+global function integer f_change_office (string ps_new_office_id, boolean pb_change_default)
+end prototypes
+
+global function integer f_change_office (string ps_new_office_id, boolean pb_change_default);string ls_description
+
+SELECT description
+INTO :ls_description
+FROM c_Office
+WHERE office_id = :ps_new_office_id;
+if not tf_check() then return -1
+
+gnv_app.office_id = ps_new_office_id
+office_description = ls_description
+
+setnull(datalist.office_last_refresh)
+
+if pb_change_default then
+	UPDATE o_Computers
+	SET office_id = :gnv_app.office_id
+	WHERE computer_id = :gnv_app.computer_id;
+	if not tf_check() then return -1
+end if
+
+if gnv_app.cpr_mode = "CLIENT" then
+	w_main.tab_main.initialize()
+	w_main.tab_main.selecttab(2)
+end if
+
+return 1
+
+end function
+

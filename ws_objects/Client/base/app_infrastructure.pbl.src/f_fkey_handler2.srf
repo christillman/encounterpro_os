@@ -1,0 +1,147 @@
+﻿$PBExportHeader$f_fkey_handler2.srf
+global type f_fkey_handler2 from function_object
+end type
+
+forward prototypes
+global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags, string ps_context)
+end prototypes
+
+global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags, string ps_context);//keyflags:
+// 1 Shift key
+// 2 Ctrl key
+// 3 Shift and Ctrl keys
+//
+// Epro System Hotkeys
+// F1 = User Help
+//		Ctrl-F1 = Edit User Help
+// F2 = Configuration Help
+// 		Ctrl-F2 = Edit Configuration Help
+// F3 = Display Current Context
+// F4 = ????
+// F5 = Refresh Current Screen
+// 		Ctrl-F5 = Reset cache object
+// F6 = ???
+// F7 = Run Report
+// F8 = Display Documents for Current Encounter
+//
+// F9 - F12 User Definable
+//
+// Returns:  True if key was pressed that might need a screen refresh
+//
+//
+str_complete_context lstr_complete_context
+long ll_menu_id
+application la_app
+str_service_info lstr_service_info
+str_menu_context lstr_menu_context
+
+if isnull(current_service) then
+	lstr_menu_context.context_object = "General"
+else
+	lstr_menu_context.context_object = current_service.context_object
+end if
+lstr_menu_context.menu_context = "Hotkey" + " " + f_context_object_short(lstr_menu_context.context_object)
+lstr_menu_context.configure_if_null = true
+
+
+CHOOSE CASE key
+	CASE KeyF1!
+		if keyflags = 0 then
+			f_display_help(ps_context, "USER", false)
+		elseif keyflags = 1 then
+			open(w_fkey_manager)
+		elseif keyflags = 2 then
+			f_display_help(ps_context, "USER", true)
+		end if
+	CASE KeyF2!
+		if keyflags = 0 then
+			f_display_help(ps_context, "CONFIG", false)
+		elseif keyflags = 2 then
+			f_display_help(ps_context, "CONFIG", true)
+		end if
+	CASE KeyF3!
+		if keyflags = 0 then
+			open(w_context_display)
+			return false // might have hit Stop button
+		elseif keyflags = 2 then
+			open(w_data_address_builder_tree)
+		elseif keyflags = 3 then
+			str_log_search lstr_log_search
+			
+			lstr_log_search.computer_id = gnv_app.computer_id
+			lstr_log_search.begin_date = datetime(today(), time("00:00"))
+			
+			openwithparm(w_log_display, lstr_log_search)
+		end if
+	CASE KeyF4!
+		if user_list.is_user_privileged(current_user.user_id, "Configuration Mode") then
+			config_mode = NOT config_mode
+		else
+			openwithparm(w_pop_message, "You are not authorized to use EncounterPRO in configuration mode")
+		end if
+		return true
+	CASE KeyF5!
+		if keyflags = 0 then
+			return true
+		elseif keyflags = 2 then
+			f_reset_datalist()
+			return true
+		end if
+	CASE KeyF6!
+		// In w_window_base, window_to_clipboard
+	CASE KeyF7!
+		lstr_service_info.context = f_get_complete_context()
+		lstr_service_info.service = common_thread.order_report_service
+		service_list.do_service(lstr_service_info)
+	CASE KeyF8!
+		lstr_service_info.service = common_thread.manage_documents_service
+		lstr_service_info.context = f_get_complete_context()
+		if isnull(lstr_service_info.context.cpr_id) then
+			openwithparm(w_pop_message, "No Patient Context")
+			return false
+		end if
+		if keyflags = 0 then
+			if isnull(lstr_service_info.context.cpr_id) then
+				openwithparm(w_pop_message, "No Patient Context")
+				return false
+			end if
+		elseif keyflags = 2 then
+			if isnull(lstr_service_info.context.encounter_id) then
+				openwithparm(w_pop_message, "No Encounter Context")
+				return false
+			end if
+			lstr_service_info.context.context_object = "Encounter"
+		elseif keyflags = 3 then
+			lstr_service_info.context.context_object = "Patient"
+		end if
+		
+		service_list.do_service(lstr_service_info)
+	CASE KeyF9!
+		lstr_service_info.service = common_thread.change_scribe_context_service
+		service_list.do_service(lstr_service_info)
+		return true
+	CASE KeyF10!
+		if keyflags = 0 or keyflags = 2  then
+			lstr_menu_context.menu_key = "F10"
+		else
+			lstr_menu_context.menu_key = "Shift F10"
+		end if
+		ll_menu_id = f_get_context_menu_edit(lstr_menu_context)
+		if ll_menu_id > 0 then f_display_menu(ll_menu_id, true)
+	CASE KeyF11!
+		if keyflags = 0 or keyflags = 2  then
+			lstr_menu_context.menu_key = "F11"
+		else
+			lstr_menu_context.menu_key = "Shift F11"
+		end if
+		ll_menu_id = f_get_context_menu_edit(lstr_menu_context)
+		if ll_menu_id > 0 then f_display_menu(ll_menu_id, true)
+	CASE KeyF12!
+		la_app = getapplication()
+		la_app.event trigger idle()
+END CHOOSE
+
+return false
+
+end function
+

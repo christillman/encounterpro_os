@@ -167,7 +167,7 @@ end if
 if isnull(customer_id) then
 	customer_id = sqlca.customer_id
 elseif customer_id <> sqlca.customer_id then
-	if cpr_mode = "SERVER" then
+	if gnv_app.cpr_mode = "SERVER" then
 		log.log(this, "u_component_xml_handler_jmj.xx_interpret_xml:0113", "Data file customer_id doesn't match local database", 4)
 		return -1
 	else
@@ -453,7 +453,7 @@ if lower(ls_purpose) = "check in" then
 		if ll_office_count = 1 then
 			// If there's only one office then automatically check the patient into the one office
 			lstr_encounter.office_id = lstr_offices[1].office_id
-		elseif cpr_mode = "CLIENT" and len(pstr_encounter_info.encounterlocation.user_id) > 0 then
+		elseif gnv_app.cpr_mode = "CLIENT" and len(pstr_encounter_info.encounterlocation.user_id) > 0 then
 			li_sts = pick_office(pstr_encounter_info.encounterlocation)
 			if li_sts > 0 then
 				lstr_encounter.office_id = user_list.user_property(pstr_encounter_info.encounterlocation.user_id, "office_id")

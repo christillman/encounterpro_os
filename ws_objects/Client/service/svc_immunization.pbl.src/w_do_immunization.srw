@@ -96,7 +96,7 @@ treat_immun.location = location
 treat_immun.drug_id = vaccine_id
 treat_immun.duration_prn = trim(sle_lit_date.text)
 treat_immun.expiration_date = datetime(expiration_date, time(""))
-treat_immun.treatment_office_id = office_id
+treat_immun.treatment_office_id = gnv_app.office_id
 treat_immun.updated = true
 
 li_sts = current_patient.treatments.update_treatment(treat_immun)
@@ -676,12 +676,12 @@ end if
 if len(maker_id) > 0 then
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"MAKER_" + primary_preference_suffix, &
 										maker_id)
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"MAKER_" + secondary_preference_suffix, &
 										maker_id)
 end if
@@ -689,12 +689,12 @@ end if
 if len(sle_lot_number.text) > 0 and trim(sle_lot_number.text) <> "" then
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LOT_" + maker_id + "_" + primary_preference_suffix, &
 										trim(sle_lot_number.text))
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LOT_" + maker_id + "_" + secondary_preference_suffix, &
 										trim(sle_lot_number.text))
 end if
@@ -703,12 +703,12 @@ end if
 if len(sle_lit_date.text) > 0 then
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LIT_" + maker_id + "_" + primary_preference_suffix, &
 										sle_lit_date.text)
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LIT_" + maker_id + "_" + secondary_preference_suffix, &
 										sle_lit_date.text)
 end if
@@ -717,12 +717,12 @@ end if
 if len(location) > 0 then
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LOCATION_"+primary_preference_suffix, &
 										location)
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"LOCATION_"+secondary_preference_suffix, &
 										location)
 end if
@@ -732,12 +732,12 @@ if not isnull(expiration_date) then
 	//f_set_global_preference("IMMUNIZATION", "EXP_" + maker_id + "_" + treat_immun.procedure_id, string(expiration_date, date_format_string))
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"EXP_" + maker_id + "_" + primary_preference_suffix, &
 										string(expiration_date))
 	datalist.update_preference( "IMMUNIZATION", &
 										"Office", &
-										office_id, &
+										gnv_app.office_id, &
 										"EXP_" + maker_id + "_" + secondary_preference_suffix, &
 										string(expiration_date))
 end if

@@ -1,4 +1,4 @@
-$PBExportHeader$u_component_schedule_medman.sru
+﻿$PBExportHeader$u_component_schedule_medman.sru
 forward
 global type u_component_schedule_medman from u_component_schedule
 end type
@@ -210,7 +210,7 @@ lt_thistime = Time(Mid(ls_thisdatetime,12))
 ldt_default_appointment = Datetime(ld_thisdate,lt_thistime)	
 
 //set default office
-ps_office = office_id
+ps_office = gnv_app.office_id
 ll_encounter_billing_id = 0
 
 SELECT MIN(message_id) // this is unique key on this table

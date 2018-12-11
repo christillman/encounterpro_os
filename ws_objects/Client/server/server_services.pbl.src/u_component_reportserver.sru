@@ -47,7 +47,7 @@ end if
 ls_temp = upper(left(get_attribute("clear_report_queue"), 1))
 if isnull(ls_temp) or ls_temp = "T" or ls_temp = "Y" then
 	DELETE o_Report_Queue
-	WHERE office_id = :office_id
+	WHERE office_id = :gnv_app.office_id
 	USING cprdb;
 	if not cprdb.check() then return -1
 end if
@@ -114,7 +114,7 @@ u_component_report luo_report
 cprdb.begin_transaction(this, "do_reports()")
 report_queue.dataobject = "dw_data_report_queue"
 report_queue.settransobject(cprdb)
-report_queue.retrieve(office_id)
+report_queue.retrieve(gnv_app.office_id)
 cprdb.commit_transaction()
 
 li_report_count = report_queue.rowcount()

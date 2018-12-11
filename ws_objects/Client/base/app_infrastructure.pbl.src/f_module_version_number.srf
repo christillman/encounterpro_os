@@ -1,0 +1,12 @@
+﻿$PBExportHeader$f_module_version_number.srf
+global type f_module_version_number from function_object
+end type
+
+forward prototypes
+global function string f_module_version_number ()
+end prototypes
+
+global function string f_module_version_number ();return string(gnv_app.major_release) + "." + gnv_app.database_version + "." + gnv_app.build
+
+end function
+

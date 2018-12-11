@@ -468,7 +468,7 @@ if isnull(lstr_component_version.objectdata) then
 							lstr_component_version.version,  &
 							"Install", & 
 							datetime(today(), now()) ,  &
-							computer_id ,  &
+							gnv_app.computer_id ,  &
 							ls_install_user ,  &
 							"ERROR" ,  &
 							ls_message ,  &
@@ -488,7 +488,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 									lstr_component_version.version,  &
 									"Install", & 
 									datetime(today(), now()) ,  &
-									computer_id ,  &
+									gnv_app.computer_id ,  &
 									ls_install_user ,  &
 									"ERROR" ,  &
 									ls_message ,  &
@@ -497,7 +497,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 			return -1
 		end if
 		
-		ls_arguments = "/S EncounterPROFolder=" + program_directory + ";"
+		ls_arguments = "/S EncounterPROFolder=" + gnv_app.program_directory + ";"
 
 		TRY
 			if isnull(ls_install_user) or isnull(ls_install_pw) then
@@ -515,7 +515,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 									lstr_component_version.version,  &
 									"Install", & 
 									datetime(today(), now()) ,  &
-									computer_id ,  &
+									gnv_app.computer_id ,  &
 									ls_install_user ,  &
 									"ERROR" ,  &
 									ls_message ,  &
@@ -530,7 +530,7 @@ CHOOSE CASE lower(lstr_component_version.installer)
 								lstr_component_version.version,  &
 								"Install", & 
 								datetime(today(), now()) ,  &
-								computer_id ,  &
+								gnv_app.computer_id ,  &
 								ls_install_user ,  &
 								"ERROR" ,  &
 								ls_message ,  &
@@ -544,7 +544,7 @@ sqlca.jmj_component_log(pstr_component_definition.component_id , &
 						lstr_component_version.version,  &
 						"Install", & 
 						datetime(today(), now()) ,  &
-						computer_id ,  &
+						gnv_app.computer_id ,  &
 						ls_install_user ,  &
 						"OK" ,  &
 						ls_message ,  &

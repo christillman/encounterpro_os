@@ -1,4 +1,4 @@
-$PBExportHeader$w_report_configure_and_test.srw
+﻿$PBExportHeader$w_report_configure_and_test.srw
 forward
 global type w_report_configure_and_test from w_window_base
 end type
@@ -176,7 +176,7 @@ lb_selection_script = false
 //DESTROY luo_attributes
 
 // Refresh report object attibutes
-report.get_report_attributes(office_id)
+report.get_report_attributes(gnv_app.office_id)
 
 lstr_attributes = report.get_attributes()
 
@@ -332,7 +332,7 @@ End If
 // Set the report_id property
 luo_report.report_id = ls_report_id 
 
-f_attribute_add_attribute(lstr_attributes, "office_id", office_id)
+f_attribute_add_attribute(lstr_attributes, "office_id", gnv_app.office_id)
 f_attribute_add_attribute(lstr_attributes, "DESTINATION", "SCREEN")
 f_attribute_add_attribute(lstr_attributes, "display_script_id", string(pl_display_script_id))
 
@@ -557,7 +557,7 @@ End If
 report.report_id = ls_report_id
 
 // Get the report attributes from the tables
-report.get_report_attributes(office_id)
+report.get_report_attributes(gnv_app.office_id)
 
 // runtime attributes
 report_runtime_attributes.attribute_count = 0

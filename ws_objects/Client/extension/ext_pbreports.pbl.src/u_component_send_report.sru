@@ -51,7 +51,7 @@ end if
 
 // See if an office_id attribute was passed in
 ls_report_office_id = f_attribute_find_attribute(pstr_attributes, "office_id")
-if isnull(ls_report_office_id) then ls_report_office_id = office_id
+if isnull(ls_report_office_id) then ls_report_office_id = gnv_app.office_id
 
 // get attributes from c_report_attribute
 report_attributes = Create u_ds_data

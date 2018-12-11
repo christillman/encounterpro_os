@@ -62,5 +62,5 @@ using System.Runtime.CompilerServices;
 // Version Information
 //
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyVersion("1.0.0.6")]
-[assembly: AssemblyFileVersionAttribute("1.0.0.6")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersionAttribute("1.0.1.0")]

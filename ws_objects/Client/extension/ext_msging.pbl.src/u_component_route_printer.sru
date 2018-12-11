@@ -117,7 +117,7 @@ if lower(puo_document.document_subtype()) = "report" then
 	end if
 	
 	ls_report_id = puo_document.get_attribute("report_id")
-	ls_via_address = f_get_default_printer(ls_report_id, office_id, computer_id, ls_room_id)
+	ls_via_address = f_get_default_printer(ls_report_id, gnv_app.office_id, gnv_app.computer_id, ls_room_id)
 	
 	if len(ls_via_address) > 0 and lower(ls_send_from) = "client" then
 		// If we're sending from the client, then see if the report's default printer is available from the client before

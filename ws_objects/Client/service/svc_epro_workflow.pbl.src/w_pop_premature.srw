@@ -294,7 +294,7 @@ if isnumber(sle_weeks_premature.text) then
 	ll_weeks_premature = long(sle_weeks_premature.text)
 	if ll_weeks_premature >= 0 and ll_weeks_premature < 30 and ll_weeks_premature <> current_patient.weeks_premature then
 		ld_date_of_conception = relativedate(current_patient.date_of_birth, (ll_weeks_premature - 40) * 7)
-		ls_progress = string(ld_date_of_conception)
+		ls_progress = string(ld_date_of_conception, db_datetime_format)
 		
 		li_sts = current_patient.modify_patient("date_of_conception", ls_progress)
 		if li_sts > 0 then

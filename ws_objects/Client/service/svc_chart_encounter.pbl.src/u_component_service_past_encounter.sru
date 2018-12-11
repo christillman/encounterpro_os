@@ -1,4 +1,4 @@
-$PBExportHeader$u_component_service_past_encounter.sru
+﻿$PBExportHeader$u_component_service_past_encounter.sru
 forward
 global type u_component_service_past_encounter from u_component_service
 end type
@@ -33,7 +33,7 @@ ls_office_id = popup_return.items[4]
 
 Setnull(ls_null)
 // WORKFLOW SYSTEM DIDNT HANDLE PAST ENCOUNTER - 08/07/01
-ll_encounter_id = current_patient.new_encounter(office_id, &
+ll_encounter_id = current_patient.new_encounter(gnv_app.office_id, &
 																ls_encounter_type, &
 																ldt_encounter_date, &
 																'N', &

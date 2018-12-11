@@ -251,7 +251,7 @@ if isnull(current_user) or not isvalid(current_user) then
 	return 1
 end if
 
-ll_count = luo_services.retrieve(current_user.user_id, office_id)
+ll_count = luo_services.retrieve(current_user.user_id, gnv_app.office_id)
 if ll_count < 0 then
 	log.log(this,"u_component_serverservice.do_scheduled_services:0037","error getting scheduled services",3)
 	return -1
