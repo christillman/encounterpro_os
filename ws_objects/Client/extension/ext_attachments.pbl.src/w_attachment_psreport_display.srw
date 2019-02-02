@@ -33,6 +33,7 @@ global w_attachment_psreport_display w_attachment_psreport_display
 type prototypes
 
 end prototypes
+
 type variables
 u_component_attachment attachment
 string display_file

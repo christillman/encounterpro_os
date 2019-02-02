@@ -167,6 +167,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -187,7 +188,7 @@ type variables
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
-long minimum_modification_level = 203
+long minimum_modification_level = 202
 date compile_date = date("20/8/2018")
 integer major_release = 7
 string database_version = "0" // this is really minor release
@@ -216,7 +217,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 

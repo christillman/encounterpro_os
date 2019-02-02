@@ -860,3 +860,4 @@ set generic_rxcui = g.generic_rxcui
 from c_drug_interaction_class di
 join c_drug_generic g
 on g.generic_name = di.generic_drug_name
+-- 380

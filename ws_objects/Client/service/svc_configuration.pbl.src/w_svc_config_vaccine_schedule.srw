@@ -1,4 +1,4 @@
-$PBExportHeader$w_svc_config_vaccine_schedule.srw
+﻿$PBExportHeader$w_svc_config_vaccine_schedule.srw
 forward
 global type w_svc_config_vaccine_schedule from w_window_base
 end type

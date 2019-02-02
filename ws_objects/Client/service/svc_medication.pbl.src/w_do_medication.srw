@@ -1,4 +1,4 @@
-$PBExportHeader$w_do_medication.srw
+﻿$PBExportHeader$w_do_medication.srw
 forward
 global type w_do_medication from w_window_base
 end type

@@ -40,6 +40,7 @@ string abnormal_flag = "N"
 u_dw_pick_list pretty_results_display
 
 end variables
+
 forward prototypes
 public subroutine history_clicked ()
 public function boolean get_treatment (string ps_observation_id, ref u_component_treatment puo_treatment)

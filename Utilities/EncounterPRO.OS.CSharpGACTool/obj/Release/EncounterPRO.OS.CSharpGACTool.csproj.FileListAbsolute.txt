@@ -1,0 +1,5 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.CSharpGACTool\bin\Release\EncounterPRO.OS.CSharpGACTool.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.CSharpGACTool\bin\Release\EncounterPRO.OS.CSharpGACTool.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.CSharpGACTool\obj\Release\EncounterPRO.OS.CSharpGACTool.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.CSharpGACTool\obj\Release\EncounterPRO.OS.CSharpGACTool.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.CSharpGACTool\obj\Release\EncounterPRO.OS.CSharpGACTool.pdb

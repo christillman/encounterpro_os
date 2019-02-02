@@ -1,4 +1,4 @@
-$PBExportHeader$w_treatment_properties.srw
+﻿$PBExportHeader$w_treatment_properties.srw
 forward
 global type w_treatment_properties from w_window_base
 end type

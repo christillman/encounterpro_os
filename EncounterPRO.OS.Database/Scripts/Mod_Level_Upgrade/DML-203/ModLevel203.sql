@@ -11,6 +11,20 @@ DELETE from c_Common_Procedure
 
 
 GO
+-- New record to indicate installation country
+INSERT INTO [c_Database_System]
+           ([system_id]
+           ,[system_type]
+           ,[current_version]
+           ,[sort_sequence])
+     VALUES
+           ('Assessments ICD'
+           ,'Version'
+           ,'Rwanda'
+           ,10
+		   )
+GO
+
 
 
 DELETE FROM [c_Database_Column]

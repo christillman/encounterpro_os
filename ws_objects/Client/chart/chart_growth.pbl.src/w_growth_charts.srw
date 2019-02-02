@@ -1,4 +1,4 @@
-$PBExportHeader$w_growth_charts.srw
+﻿$PBExportHeader$w_growth_charts.srw
 forward
 global type w_growth_charts from w_window_base
 end type

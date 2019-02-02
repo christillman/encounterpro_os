@@ -25,6 +25,7 @@ global u_tab_allergy_abnormal_results u_tab_allergy_abnormal_results
 type variables
 
 end variables
+
 on u_tab_allergy_abnormal_results.create
 this.tabpage_tests=create tabpage_tests
 this.tabpage_history=create tabpage_history

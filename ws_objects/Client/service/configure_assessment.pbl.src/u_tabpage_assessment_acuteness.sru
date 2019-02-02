@@ -64,8 +64,11 @@ string ls_left
 string ls_right
 u_unit luo_unit
 
-if isnull(acuteness) or len(acuteness) = 0 then acuteness = "Acute"
-st_acuteness.text = acuteness
+if isnull(acuteness) or len(acuteness) = 0 then 
+	st_acuteness.text = ""
+else
+	st_acuteness.text = acuteness
+end if
 
 // If null, initialize interval as configured
 ls_temp = datalist.get_preference("PREFERENCES", "assessment_auto_close_interval")

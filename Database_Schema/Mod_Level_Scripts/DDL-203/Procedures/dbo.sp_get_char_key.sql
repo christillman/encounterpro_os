@@ -50,4 +50,4 @@ GRANT EXECUTE
 	TO [cprsystem]
 GO
 
-EXEC sp_get_char_key 'c_Authority', 'authority_id', 'Guardian'
+-- EXEC sp_get_char_key 'c_Authority', 'authority_id', 'Guardian'

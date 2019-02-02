@@ -1,4 +1,4 @@
-$PBExportHeader$w_render_isf_signature.srw
+﻿$PBExportHeader$w_render_isf_signature.srw
 forward
 global type w_render_isf_signature from w_window_base
 end type

@@ -1,4 +1,4 @@
-$PBExportHeader$u_ds_epro_object_cache.sru
+﻿$PBExportHeader$u_ds_epro_object_cache.sru
 forward
 global type u_ds_epro_object_cache from u_ds_data
 end type

@@ -25,6 +25,7 @@ str_attributes attributes
 boolean allow_preference = false
 
 end variables
+
 forward prototypes
 public subroutine set_buttons ()
 end prototypes

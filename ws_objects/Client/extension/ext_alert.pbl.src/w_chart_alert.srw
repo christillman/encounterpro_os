@@ -1,4 +1,4 @@
-$PBExportHeader$w_chart_alert.srw
+﻿$PBExportHeader$w_chart_alert.srw
 forward
 global type w_chart_alert from w_window_base
 end type

@@ -1,4 +1,4 @@
-$PBExportHeader$w_xml_code_mapping_edit.srw
+﻿$PBExportHeader$w_xml_code_mapping_edit.srw
 forward
 global type w_xml_code_mapping_edit from w_window_base
 end type

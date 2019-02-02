@@ -1,4 +1,4 @@
-$PBExportHeader$w_followup_reorder.srw
+﻿$PBExportHeader$w_followup_reorder.srw
 forward
 global type w_followup_reorder from w_window_base
 end type

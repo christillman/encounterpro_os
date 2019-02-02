@@ -85,6 +85,7 @@ FROM c_Equivalence
 WHERE object_type = @ps_object_type
 AND object_key = @ps_object_key
 
+-- These are mostly NULL or not-found
 IF @ll_equivalence_group_id > 0 
 	INSERT INTO @equivalent_objects (
 		object_id ,

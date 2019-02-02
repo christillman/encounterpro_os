@@ -134,8 +134,14 @@ INSERT INTO @charges (
 SELECT a.problem_id,
 	a.assessment_sequence,
 	a.assessment_id,
-	assessment = COALESCE(pa.assessment, ad.description),
-	icd10_code = COALESCE(a.icd10_code, ad.icd10_code),
+	COALESCE(
+	-- With ICD10, especially for vaccination, we need the ICD10 description
+	-- rather than the assessment description so it matches the ICD10 code.
+						(SELECT descr
+						FROM icd10cm_codes
+						WHERE code = ad.icd10_code),
+						pa.assessment, ad.description),
+	COALESCE(a.icd10_code, ad.icd10_code),
 	c.encounter_charge_id,
 	c.treatment_id,
 	c.procedure_type,
@@ -185,7 +191,66 @@ AND a.bill_flag = 'Y'
 AND c.bill_flag = 'Y'
 AND ac.bill_flag = 'Y'
 
-
+-- Different ICD versions will expect different descriptions
+IF [dbo].[fn_icd_version]() = 'ICD10-WHO' 
+	UPDATE @charges
+	SET icd10_code = COALESCE(a.icd10_code, w.code),
+		[assessment_description] = COALESCE(pa.assessment, w.descr)
+	FROM @charges ch 
+		INNER JOIN p_Encounter_Assessment a
+			ON ch.assessment_id = a.assessment_id
+		INNER JOIN p_Encounter_Assessment_Charge ac
+			ON ac.cpr_id = a.cpr_id
+			AND ac.encounter_id = a.encounter_id
+			AND ac.problem_id = a.problem_id
+		INNER JOIN p_Encounter_Charge c
+			ON c.cpr_id = ac.cpr_id
+			AND c.encounter_id = ac.encounter_id
+			AND c.encounter_charge_id = ac.encounter_charge_id
+		INNER JOIN c_Assessment_Definition ad
+			ON ad.assessment_id = ch.assessment_id
+		INNER JOIN icd10_who w WITH (NOLOCK)
+			ON ad.icd10_who_code = w.code
+		LEFT OUTER JOIN p_Assessment pa
+			ON ac.cpr_id = pa.cpr_id
+			AND ac.problem_id = pa.problem_id
+			AND pa.current_flag = 'Y'
+	WHERE c.cpr_id = @ps_cpr_id
+	AND c.encounter_id = @pl_encounter_id
+	AND a.bill_flag = 'Y'
+	AND c.bill_flag = 'Y'
+	AND ac.bill_flag = 'Y'
+	AND ch.assessment_id = a.assessment_id
+	
+IF [dbo].[fn_icd_version]() = 'Rwanda' 
+	UPDATE @charges
+	SET icd10_code = COALESCE(a.icd10_code, r.code),
+		[assessment_description] = COALESCE(pa.assessment, r.descr)
+	FROM @charges ch 
+		INNER JOIN p_Encounter_Assessment a
+			ON ch.assessment_id = a.assessment_id
+		INNER JOIN p_Encounter_Assessment_Charge ac
+			ON ac.cpr_id = a.cpr_id
+			AND ac.encounter_id = a.encounter_id
+			AND ac.problem_id = a.problem_id
+		INNER JOIN p_Encounter_Charge c
+			ON c.cpr_id = ac.cpr_id
+			AND c.encounter_id = ac.encounter_id
+			AND c.encounter_charge_id = ac.encounter_charge_id
+		INNER JOIN c_Assessment_Definition ad
+			ON ad.assessment_id = ch.assessment_id
+		INNER JOIN icd10_rwanda r WITH (NOLOCK)
+			ON ad.icd10_who_code = r.code
+		LEFT OUTER JOIN p_Assessment pa
+			ON ac.cpr_id = pa.cpr_id
+			AND ac.problem_id = pa.problem_id
+			AND pa.current_flag = 'Y'
+	WHERE c.cpr_id = @ps_cpr_id
+	AND c.encounter_id = @pl_encounter_id
+	AND a.bill_flag = 'Y'
+	AND c.bill_flag = 'Y'
+	AND ac.bill_flag = 'Y'
+	
 INSERT INTO @charges (
 	problem_id ,
 	assessment_sequence ,

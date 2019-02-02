@@ -1,0 +1,7 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Debug\NSISReplicate.exe.config
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Debug\NSISReplicate.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Debug\NSISReplicate.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Debug\NSISReplicate.csprojAssemblyReference.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Debug\NSISReplicate.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Debug\NSISReplicate.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Debug\NSISReplicate.pdb

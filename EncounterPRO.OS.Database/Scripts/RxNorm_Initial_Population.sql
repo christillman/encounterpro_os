@@ -7,7 +7,7 @@ INSERT INTO c_Drug_Generic (generic_name,
 				mesh_definition,
 				scope_note,
 				mesh_source)
-SELECT [str], c.RXCUI, 1, 
+SELECT [str], c.RXCUI, 'Y', 
 	(SELECT min(sd.ATV) FROM interfaces..rxnsat_full sd
 		WHERE sd.RXCUI = c.RXCUI AND sd.ATN = 'MESH_DEFINITION'),
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
@@ -33,7 +33,7 @@ INSERT INTO c_Drug_Generic (generic_name,
 				scope_note,
 				mesh_source)
 SELECT CASE WHEN LEN([str]) <= 900 THEN [str] ELSE LEFT([str],897) + '...' END, 
-	c.RXCUI, 0, 
+	c.RXCUI, 'N', 
 	(SELECT min(sd.ATV) FROM interfaces..rxnsat_full sd
 		WHERE sd.RXCUI = c.RXCUI AND sd.ATN = 'MESH_DEFINITION'),
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
@@ -66,7 +66,7 @@ INSERT INTO c_Drug_Brand (brand_name,
 				is_single_ingredient, 
 				scope_note,
 				mesh_source)
-SELECT c.[str], c.RXCUI, 1, 
+SELECT c.[str], c.RXCUI, 'Y', 
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
 		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
 	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
@@ -86,7 +86,7 @@ INSERT INTO c_Drug_Brand (brand_name,
 				is_single_ingredient, 
 				scope_note,
 				mesh_source)
-SELECT c.[str], c.RXCUI, 0, 
+SELECT c.[str], c.RXCUI, 'N', 
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
 		WHERE sn.RXCUI = c.RXCUI AND sn.ATN = 'SOS'),
 	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
@@ -118,7 +118,7 @@ UPDATE b
 	SET generic_rxcui = bi.generic_rxcui_ingredient
 	FROM c_Drug_Brand b
 	JOIN c_Drug_Brand_Ingredient bi ON b.brand_name_rxcui = bi.brand_name_rxcui
-	WHERE is_single_ingredient = 1
+	WHERE is_single_ingredient = 'Y'
 -- 3104
 
 -- Fill in the 2 that don't fit in 900 chars so won't match in build_generic_equivalents

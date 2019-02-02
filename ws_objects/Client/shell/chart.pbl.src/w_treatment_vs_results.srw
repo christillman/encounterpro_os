@@ -1,4 +1,4 @@
-$PBExportHeader$w_treatment_vs_results.srw
+﻿$PBExportHeader$w_treatment_vs_results.srw
 forward
 global type w_treatment_vs_results from w_window_base
 end type

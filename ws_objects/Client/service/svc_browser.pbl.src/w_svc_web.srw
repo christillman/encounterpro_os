@@ -1,4 +1,4 @@
-$PBExportHeader$w_svc_web.srw
+﻿$PBExportHeader$w_svc_web.srw
 forward
 global type w_svc_web from w_window_base
 end type
