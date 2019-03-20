@@ -28,7 +28,7 @@ GO
 
 CREATE TABLE icd10_who (
 	code varchar(10) NOT NULL,
-	descr varchar(255) NOT NULL,
+	descr varchar(500) NOT NULL,
 	active varchar(1)
 )
 GO
