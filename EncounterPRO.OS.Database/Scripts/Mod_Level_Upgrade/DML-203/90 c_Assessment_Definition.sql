@@ -50,8 +50,8 @@ update c_Assessment_Definition set [source] = 'ApproxSyn', long_description = 'V
 update c_Assessment_Definition set [source] = 'ApproxSyn', long_description = 'Vaccination for tetanus, diphtheria, acellular pertussis, hepatitis b and polio' where assessment_id = 'DEMO11374'
 update c_Assessment_Definition set [source] = 'ApproxSyn', long_description = 'Vaccination for viral hepatitis a and hepatitis b' where assessment_id = '0^12304'
 
---   Add new VACCINE assessments drop table #new_assess
-CREATE TABLE #new_assess (
+--   Add new VACCINE assessments drop table #new_assess33
+CREATE TABLE #new_assess3 (
 	icd10_code varchar(10), 
 	assessment_type varchar(24),
 	assessment_category_id varchar(24),
@@ -59,27 +59,27 @@ CREATE TABLE #new_assess (
 	long_description text,
 	[source] varchar(10))
 
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus ', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus b', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for respiratory syncytial virus (rsv', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for typhoid (bacteria)', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for viral hepatitis', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Varicella vaccination done', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis a and b vaccination given', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis a vaccination given', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis b vaccination given', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis vaccination given', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Yellow fever vaccination given', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination needed', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus (hpv) type 16 and 18', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus with hpv4', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus with hpv9', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for herpes zoster', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for disease combination', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for diphtheria, tetanus, pertussis, and polio', null, 'ApproxSyn')
-INSERT INTO #new_assess VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for streptococcus pneumoniae with prevnar 7 for pediatric age group', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus ', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus b', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for respiratory syncytial virus (rsv', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for typhoid (bacteria)', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for viral hepatitis', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Varicella vaccination done', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis a and b vaccination given', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis a vaccination given', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis b vaccination given', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Viral hepatitis vaccination given', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Yellow fever vaccination given', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination needed', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus (hpv) type 16 and 18', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus with hpv4', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for human papilloma virus with hpv9', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for herpes zoster', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for disease combination', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for diphtheria, tetanus, pertussis, and polio', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for streptococcus pneumoniae with prevnar 7 for pediatric age group', null, 'ApproxSyn')
 
-CREATE TABLE #new_assess2 (
+CREATE TABLE #new_assess4 (
 	assessment_id varchar(24), 
 	icd10_code varchar(10), 
 	assessment_type varchar(24),
@@ -88,13 +88,13 @@ CREATE TABLE #new_assess2 (
 	long_description text,
 	[source] varchar(10))
 
-INSERT INTO #new_assess2
+INSERT INTO #new_assess4
 SELECT
-	'ASyn-' + #new_assess.icd10_code + '-' 
+	'ASyn-' + #new_assess3.icd10_code + '-' 
 		+ convert(varchar(3), 
 			row_number() over (
-				partition by #new_assess.icd10_code 
-				order by #new_assess.description
+				partition by #new_assess3.icd10_code 
+				order by #new_assess3.description
 				)
 			),  
 	icd10_code,
@@ -103,7 +103,7 @@ SELECT
 	description,
 	long_description,
 	[source]
-FROM #new_assess
+FROM #new_assess3
 
 INSERT INTO c_Assessment_Definition (
 	assessment_id,
@@ -117,20 +117,20 @@ INSERT INTO c_Assessment_Definition (
 	owner_id,
 	status )
 SELECT
-	#new_assess2.assessment_id,
+	#new_assess4.assessment_id,
 	assessment_type,
-	#new_assess2.icd10_code,
+	#new_assess4.icd10_code,
 	assessment_category_id,
-	#new_assess2.description,
-	#new_assess2.long_description,
+	#new_assess4.description,
+	#new_assess4.long_description,
 	[source],
 	2, -- default risk level
 	981, -- default owner
 	'OK' -- default status
-FROM #new_assess2
+FROM #new_assess4
 -- re-entrancy
 WHERE NOT EXISTS (SELECT 1 FROM c_Assessment_Definition a 
-	WHERE a.assessment_id = #new_assess2.assessment_id )
+	WHERE a.assessment_id = #new_assess4.assessment_id )
 
 
 UPDATE c_Assessment_Definition SET long_description = NULL
