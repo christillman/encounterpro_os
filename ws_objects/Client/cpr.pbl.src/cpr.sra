@@ -188,11 +188,11 @@ type variables
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
-long minimum_modification_level = 202
-date compile_date = date("20/8/2018")
+long minimum_modification_level = 204
+date compile_date = date("20/3/2019")
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "2"
+string build = "3"
 ////////////////////////////////////////////////////////////
 
 
