@@ -34,7 +34,6 @@ CREATE TABLE p_Propensity (
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON [p_Propensity] TO [cprsystem]
 
 
-
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[p_Adverse_Reaction]') AND [type]='U'))
 	DROP TABLE [dbo].[p_Adverse_Reaction]
 GO
@@ -42,7 +41,7 @@ GO
 CREATE TABLE p_Adverse_Reaction (
 	patient_id varchar(24) NOT NULL, 
 	substance varchar(40) NOT NULL,
-	manifestation varchar(40,
+	manifestation varchar(40),
 	severity varchar(24),
 	exposure_type varchar(24),
 	observation_method varchar(24)  
@@ -51,13 +50,10 @@ CREATE TABLE p_Adverse_Reaction (
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON [p_Adverse_Reaction] TO [cprsystem]
 
 
-
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[p_Adverse_Sensitivity_Test]') AND [type]='U'))
 	DROP TABLE [dbo].[p_Adverse_Sensitivity_Test]
 GO
-Substance
-Adverse sensitivity test performed
-Adverse sensitivity test result
+
 
 CREATE TABLE p_Adverse_Sensitivity_Test (
 	patient_id varchar(24) NOT NULL, 
