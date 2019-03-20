@@ -4835,33 +4835,53 @@ WHERE assessment_id IN (
 UPDATE c_assessment_definition
 SET icd10_code = 'P590', assessment_id = 'DX-P590-4'
 WHERE assessment_id = 'DX-P031-1'
+AND icd10_code = 'P031'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P590-4' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P598', assessment_id = 'DX-P598-3'
 WHERE assessment_id = 'DX-P031-2'
+AND icd10_code = 'P031'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P598-3' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P598', assessment_id = 'DX-P598-4'
 WHERE assessment_id = 'DX-P031-3'
+AND icd10_code = 'P031'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P598-4' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P588', assessment_id = 'DX-P588-2'
 WHERE assessment_id = 'DX-P031-4'
+AND icd10_code = 'P031'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P588-2' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P589', assessment_id = 'DX-P589-1'
 WHERE assessment_id = 'DX-P031-5'
+AND icd10_code = 'P031'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P589-1' )
 
 
 UPDATE c_assessment_definition
 SET icd10_code = 'P031', assessment_id = 'DX-P031-1'
 WHERE assessment_id = 'DX-P040-1'
+AND icd10_code = 'P040'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P031-1' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P021', assessment_id = 'DX-P021-7'
 WHERE assessment_id = 'DX-P040-2'
+AND icd10_code = 'P040'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P021-7' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P017', assessment_id = 'DX-P017-6'
 WHERE assessment_id = 'DX-P040-3'
+AND icd10_code = 'P040'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-DX-P017-6' )
 UPDATE c_assessment_definition
-SET icd10_code = 'P017', assessment_id = 'DX-P017-72'
+SET icd10_code = 'P017', assessment_id = 'DX-P017-7'
 WHERE assessment_id = 'DX-P040-4'
+AND icd10_code = 'P040'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P017-7' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P036', assessment_id = 'DX-P036-4'
 WHERE assessment_id = 'DX-P040-5'
+AND icd10_code = 'P040'
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P036-4' )
 
