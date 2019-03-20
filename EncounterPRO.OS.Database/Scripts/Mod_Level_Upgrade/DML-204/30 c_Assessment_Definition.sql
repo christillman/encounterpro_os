@@ -106,13 +106,3 @@ WHERE icd10_code IN (SELECT icd10_code FROM #uniq4)
 AND len(long_description) > 80
 -- 522
 
--- Remove orphans
-DELETE a 
-FROM c_Common_Assessment a
-WHERE NOT EXISTS (SELECT 1 FROM c_Assessment_Definition d
-	WHERE d.assessment_id = a.assessment_id)
-
-DELETE a 
-FROM [u_assessment_treat_definition] a
-WHERE NOT EXISTS (SELECT 1 FROM c_Assessment_Definition d
-	WHERE d.assessment_id = a.assessment_id)
