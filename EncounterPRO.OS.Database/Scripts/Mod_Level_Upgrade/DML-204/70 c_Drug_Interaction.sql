@@ -1071,12 +1071,8 @@ INSERT INTO c_Drug_Interaction (interaction_name, object_drug_class, precipitant
 VALUES ('Colchicine with Statin', 'Colchicine', 'Statin', 'Interruptive ONC')
 INSERT INTO c_Drug_Interaction_Class (drug_class, generic_drug_name) VALUES ('Colchicine', 'Colchicine')
 
-
 update di
 set generic_rxcui = g.generic_rxcui
 from c_drug_interaction_class di
 join c_drug_generic g
 on g.generic_name = di.generic_drug_name
-
-select * from c_Drug_Interaction
-order by object_drug_class, precipitant_drug_class
