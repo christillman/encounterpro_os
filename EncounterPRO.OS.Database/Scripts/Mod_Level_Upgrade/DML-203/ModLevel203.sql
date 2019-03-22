@@ -14,7 +14,6 @@ GO
 
 DELETE FROM [c_Database_System]
 WHERE [system_id] = 'Assessments ICD'
-AND [current_version] = 'Kenya'
 
 -- New record to indicate installation country
 INSERT INTO [c_Database_System]
@@ -25,7 +24,7 @@ INSERT INTO [c_Database_System]
      VALUES
            ('Assessments ICD'
            ,'Version'
-           ,'Kenya'
+           ,'ICD10-CM'
            ,10
 		   )
 GO
