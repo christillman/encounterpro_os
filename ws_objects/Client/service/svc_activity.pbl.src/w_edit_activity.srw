@@ -1,4 +1,4 @@
-$PBExportHeader$w_edit_activity.srw
+﻿$PBExportHeader$w_edit_activity.srw
 forward
 global type w_edit_activity from w_window_base
 end type

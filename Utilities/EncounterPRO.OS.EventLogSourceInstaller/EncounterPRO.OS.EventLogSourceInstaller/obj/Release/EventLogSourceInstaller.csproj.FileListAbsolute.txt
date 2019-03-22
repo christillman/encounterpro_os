@@ -1,0 +1,5 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Release\EncounterPRO.OS.EventLogSourceInstaller.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Release\EncounterPRO.OS.EventLogSourceInstaller.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Release\EventLogSourceInstaller.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Release\EncounterPRO.OS.EventLogSourceInstaller.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Release\EncounterPRO.OS.EventLogSourceInstaller.pdb

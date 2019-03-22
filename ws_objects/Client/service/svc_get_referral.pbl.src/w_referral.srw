@@ -1,4 +1,4 @@
-$PBExportHeader$w_referral.srw
+﻿$PBExportHeader$w_referral.srw
 forward
 global type w_referral from w_window_base
 end type

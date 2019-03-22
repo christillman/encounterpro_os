@@ -1,4 +1,4 @@
-$PBExportHeader$w_treatment_list_change_sort_order.srw
+﻿$PBExportHeader$w_treatment_list_change_sort_order.srw
 forward
 global type w_treatment_list_change_sort_order from w_window_base
 end type

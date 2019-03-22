@@ -1,4 +1,4 @@
-$PBExportHeader$w_do_procedure.srw
+﻿$PBExportHeader$w_do_procedure.srw
 forward
 global type w_do_procedure from w_window_base
 end type

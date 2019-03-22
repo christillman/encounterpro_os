@@ -1,4 +1,4 @@
-$PBExportHeader$u_summary_page.sru
+﻿$PBExportHeader$u_summary_page.sru
 forward
 global type u_summary_page from u_cpr_page_base
 end type

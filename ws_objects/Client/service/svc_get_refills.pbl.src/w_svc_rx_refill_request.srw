@@ -1,4 +1,4 @@
-$PBExportHeader$w_svc_rx_refill_request.srw
+﻿$PBExportHeader$w_svc_rx_refill_request.srw
 forward
 global type w_svc_rx_refill_request from w_window_base
 end type

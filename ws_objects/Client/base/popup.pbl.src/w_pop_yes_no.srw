@@ -32,7 +32,6 @@ end event
 on w_pop_yes_no.create
 int iCurrent
 call super::create
-this.dw_message=create dw_message
 this.cb_no=create cb_no
 this.cb_yes=create cb_yes
 iCurrent=UpperBound(this.Control)
@@ -46,10 +45,10 @@ destroy(this.cb_no)
 destroy(this.cb_yes)
 end on
 
-type pb_epro_help from w_window_base`pb_epro_help within w_pop_yes_no
+type pb_epro_help from w_pop_window_base`pb_epro_help within w_pop_yes_no
 end type
 
-type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pop_yes_no
+type st_config_mode_menu from w_pop_window_base`st_config_mode_menu within w_pop_yes_no
 end type
 
 type cb_no from commandbutton within w_pop_yes_no

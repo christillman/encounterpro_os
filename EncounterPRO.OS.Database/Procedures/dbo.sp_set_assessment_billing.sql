@@ -112,14 +112,33 @@ IF @pl_problem_id IS NULL
 	SET @ls_assessment_id = @ps_assessment_id
 	SET @li_diagnosis_sequence = NULL
 	
-	SELECT @ls_icd10_code = a.icd10_code,
-			@ls_default_bill_flag = t.default_bill_flag,
-			@ls_assessment_type = a.assessment_type
-	FROM c_Assessment_Definition a
+	IF [dbo].[fn_icd_version]() = 'ICD10-CM' 
+		SELECT @ls_icd10_code = a.icd10_code,
+				@ls_default_bill_flag = t.default_bill_flag,
+				@ls_assessment_type = a.assessment_type
+		FROM c_Assessment_Definition a
+			INNER JOIN c_Assessment_Type t
+			ON a.assessment_type = t.assessment_type
+		WHERE a.assessment_id = @ps_assessment_id
+
+	IF [dbo].[fn_icd_version]() = 'ICD10-WHO' 
+		SELECT @ls_icd10_code = a.icd10_who_code,
+				@ls_default_bill_flag = t.default_bill_flag,
+				@ls_assessment_type = a.assessment_type
+		FROM c_Assessment_Definition a
 		INNER JOIN c_Assessment_Type t
-		ON a.assessment_type = t.assessment_type
-	WHERE a.assessment_id = @ps_assessment_id
-	
+			ON a.assessment_type = t.assessment_type
+		WHERE a.assessment_id = @ps_assessment_id
+		
+	IF [dbo].[fn_icd_version]() = 'Rwanda' 
+		SELECT @ls_icd10_code = a.icd10_who_code,
+				@ls_default_bill_flag = t.default_bill_flag,
+				@ls_assessment_type = a.assessment_type
+		FROM c_Assessment_Definition a
+			INNER JOIN c_Assessment_Type t
+			ON a.assessment_type = t.assessment_type
+		WHERE a.assessment_id = @ps_assessment_id
+
 	IF @@ROWCOUNT = 0
 		BEGIN
 		RAISERROR ('Cannot find assessment_id (%s)',16,-1, @ps_assessment_id)

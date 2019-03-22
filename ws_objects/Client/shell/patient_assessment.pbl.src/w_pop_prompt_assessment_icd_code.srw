@@ -67,9 +67,9 @@ type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pop_pro
 end type
 
 type sle_string from singlelineedit within w_pop_prompt_assessment_icd_code
-integer x = 795
+integer x = 722
 integer y = 312
-integer width = 421
+integer width = 494
 integer height = 96
 integer taborder = 1
 integer textsize = -10
@@ -84,6 +84,8 @@ end type
 type pb_cancel from u_picture_button within w_pop_prompt_assessment_icd_code
 integer x = 78
 integer y = 388
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean cancel = true
 string picturename = "button11.bmp"
@@ -112,7 +114,7 @@ string facename = "Arial"
 boolean underline = true
 long backcolor = 33538240
 boolean enabled = false
-string text = "Enter the ICD code of the assessment"
+string text = "Enter the ICD10 code of the assessment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

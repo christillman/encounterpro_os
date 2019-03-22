@@ -1,4 +1,4 @@
-$PBExportHeader$w_encounterpro_report_rtf.srw
+﻿$PBExportHeader$w_encounterpro_report_rtf.srw
 forward
 global type w_encounterpro_report_rtf from w_window_base
 end type

@@ -1,4 +1,4 @@
-$PBExportHeader$w_relative.srw
+﻿$PBExportHeader$w_relative.srw
 forward
 global type w_relative from w_window_base
 end type

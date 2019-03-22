@@ -1,0 +1,18 @@
+﻿
+CSharpGACTool.exe
+
+This program will install/uninstall assemblies from the Global Assembly Cache
+and can also register/unregister programs for COM-Interop.
+
+Usage:
+CSharpGACTool.exe [switch] [AssemblyPath]
+
+Switches:
+	/i	Install an assembly to the GAC <default>
+	/u	Remove an assembly from the GAC
+	/r	Register an assembly for COM-Interop
+	/ur	UnRegister an assembly for COM-Interop
+	/?	Prints this help
+
+Example:
+C:/>CSharpGACTool.exe /i "C:\Program Files\SomeFolder\SomeAssembly.dll"

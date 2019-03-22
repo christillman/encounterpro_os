@@ -758,6 +758,7 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
+
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -3736,6 +3737,10 @@ end if
 
 ls_xml = f_blob_to_string(lbl_script)
 
+// Do not keep the material, want to load again next time
+DELETE FROM c_patient_material
+WHERE material_id = :ll_material_id
+USING this;
 
 // Now create the DOM version from the string version
 pbdombuilder_new = Create pbdom_builder
@@ -3811,18 +3816,22 @@ end function
 
 public function long upgrade_material_id (ref string as_filename);long ll_modification_level
 long ll_material_id
+integer li_sts
+string ls_filepath
+string ls_filename
 
 ll_modification_level = modification_level + 1
 
-SELECT MAX(material_id)
-INTO :ll_material_id
-FROM dbo.c_Patient_material
-WHERE status = 'ML'
-AND version = :ll_modification_level;
-if not tf_check() then return -1
-
+// Do not search for existing record, always load from mdlvl file
+//SELECT MAX(material_id)
+//INTO :ll_material_id
+//FROM dbo.c_Patient_material
+//WHERE status = 'ML'
+//AND version = :ll_modification_level;
+//if not tf_check() then return -1
+//
 // If no material was found try loading the schema for this mod level
-if ll_material_id = 0 or isnull(ll_material_id) then
+//if ll_material_id = 0 or isnull(ll_material_id) then
 	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
 	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
 	if ll_material_id <= 0 then
@@ -3832,10 +3841,19 @@ if ll_material_id = 0 or isnull(ll_material_id) then
 		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level, as_filename)
 	end if
 	if ll_material_id <= 0 then
-		log.log(this, "u_sqlca.upgrade_material_id:0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
-		return -1
+		MessageBox("File not found", "The ModLevel-" + string(ll_modification_level) + ".mdlvl schema file for mod level " + string(ll_modification_level) + " was not found in either the program directory or atttachments folder.")
+		// log.log(this, "u_sqlca.upgrade_material_id:0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+
+		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, ls_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
+		If li_sts <= 0 Then return -1
+		
+		li_sts = load_schema_file(ls_filepath, ll_modification_level, ls_filename)
+		if li_sts <= 0 then
+			openwithparm(w_pop_message, "Error loading schema file")
+			return -1
+		end if
 	end if
-end if
+//end if
 
 return ll_material_id
 end function

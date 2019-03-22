@@ -27,7 +27,10 @@ end variables
 
 event open;call super::open;string ls_temp
 str_popup_return popup_return
+integer li_rc
+datawindowchild dwc_ok
 
+ls_temp = message.stringparm
 
 if gnv_app.cpr_mode = "SERVER" then
 	log.log(this, ":open", message.stringparm, 2)
@@ -39,7 +42,9 @@ end if
 
 dw_message.reset()
 dw_message.insertrow(0)
-dw_message.setitem(1,1,message.stringparm)
+li_rc = dw_message.setitem(1,1,message.stringparm)
+ls_temp = dw_message.GetItemString(1, 1)
+return li_rc
 
 end event
 

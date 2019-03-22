@@ -16,6 +16,7 @@ oleobject com_source
 w_ext_observation_com com_window
 
 end variables
+
 forward prototypes
 protected function integer xx_do_source ()
 protected function integer xx_initialize ()

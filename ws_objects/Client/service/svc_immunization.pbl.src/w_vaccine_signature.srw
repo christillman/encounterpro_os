@@ -1,4 +1,4 @@
-$PBExportHeader$w_vaccine_signature.srw
+﻿$PBExportHeader$w_vaccine_signature.srw
 forward
 global type w_vaccine_signature from w_window_base
 end type

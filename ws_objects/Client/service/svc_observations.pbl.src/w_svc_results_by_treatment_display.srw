@@ -1,4 +1,4 @@
-$PBExportHeader$w_svc_results_by_treatment_display.srw
+﻿$PBExportHeader$w_svc_results_by_treatment_display.srw
 forward
 global type w_svc_results_by_treatment_display from w_window_base
 end type

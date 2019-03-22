@@ -12,6 +12,24 @@ DELETE from c_Common_Procedure
 
 GO
 
+DELETE FROM [c_Database_System]
+WHERE [system_id] = 'Assessments ICD'
+
+-- New record to indicate installation country
+INSERT INTO [c_Database_System]
+           ([system_id]
+           ,[system_type]
+           ,[current_version]
+           ,[sort_sequence])
+     VALUES
+           ('Assessments ICD'
+           ,'Version'
+           ,'ICD10-CM'
+           ,10
+		   )
+GO
+
+
 
 DELETE FROM [c_Database_Column]
 WHERE tablename = 'c_ICD_Updates' and columnname = 'assessment_category_id'
