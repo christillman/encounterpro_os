@@ -7,7 +7,7 @@ GO
 SET ANSI_PADDING ON
 GO
 
-DROP TABLE [c_Query_Term]
+DROP TABLE IF EXISTS [c_Query_Term]
 GO
 
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[c_Query_Term]') AND type in (N'U'))
@@ -52,7 +52,7 @@ INSERT INTO #terms VALUES('AFR', 'acute renal failure')
 INSERT INTO #terms VALUES('ARDS', 'acute respiratory distress syndrome') 
 INSERT INTO #terms VALUES('ARF', 'acute kidney failure') 
 INSERT INTO #terms VALUES('ARF', 'acute renal failure') 
-INSERT INTO #terms VALUES('BKA', 'aelow the knee amputation') 
+INSERT INTO #terms VALUES('BKA', 'below the knee amputation') 
 INSERT INTO #terms VALUES('bld', 'blood') 
 INSERT INTO #terms VALUES('BP', 'blood pressure') 
 INSERT INTO #terms VALUES('Ca', 'calcium') 
