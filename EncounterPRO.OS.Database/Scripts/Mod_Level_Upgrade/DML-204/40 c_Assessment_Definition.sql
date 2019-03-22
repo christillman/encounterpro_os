@@ -4873,7 +4873,7 @@ UPDATE c_assessment_definition
 SET icd10_code = 'P017', assessment_id = 'DX-P017-6'
 WHERE assessment_id = 'DX-P040-3'
 AND icd10_code = 'P040'
-AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-DX-P017-6' )
+AND NOT EXISTS ( SELECT 1 FROM c_assessment_definition WHERE assessment_id = 'DX-P017-6' )
 UPDATE c_assessment_definition
 SET icd10_code = 'P017', assessment_id = 'DX-P017-7'
 WHERE assessment_id = 'DX-P040-4'
