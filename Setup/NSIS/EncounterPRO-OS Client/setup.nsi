@@ -12,15 +12,15 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.2.2
+  !define VERSION   7.0.3
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.2.2
-  !define Database_Mod_Level   203
-  !define PBRuntime_VERSION   17.2.1769
+  !define EproClient_VERSION   7.0.3
+  !define Database_Mod_Level   204
+  !define PBRuntime_VERSION   17.3.1858
   !define EncounterPRO_OS_Utilities_VERSION   1.0.1.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -193,12 +193,14 @@
       
         DetailPrint "Installing EncounterPRO Client..."
         SetOverwrite on
-        SetDetailsPrint textonly
+        SetDetailsPrint both
+        File "${SRC_EPRO}\*.*"
+        DetailPrint "Setting ini SERVER to $SERVER"
+        DetailPrint "Setting ini DATABASE to $DATABASE"
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
-        File "${SRC_EPRO}\*.*"
         File "${SOURCE_ROOT}\Icons\epmanos.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
@@ -216,25 +218,22 @@
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
 
-    Section '-Mod Level Script' SecML
-        Delete "$INSTDIR\*.mdlvl"
-        SetOutPath '$INSTDIR'
-        SetDetailsPrint both
-        DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
-        SetDetailsPrint textonly
-        File "${SRC_Mod_Level}\*.mdlvl"
-    SectionEnd
+; Just put it into attachments
+;    Section '-Mod Level Script' SecML
+;        Delete "$INSTDIR\*.mdlvl"
+;        SetOutPath '$INSTDIR'
+;        SetDetailsPrint both
+;        DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
+;        SetDetailsPrint textonly
+;        File "${SRC_Mod_Level}\*.mdlvl"
+;    SectionEnd
 
     Section '-Attachments' SecAT
-        IfFileExists '${SRC_Mod_Level}\Attachments\*.*' DoAttachments
-        Goto SkipAttachments
-        DoAttachments:
         SetOutPath '\\localhost\attachments'
         SetDetailsPrint both
         DetailPrint "Installing Attachments in \\localhost\attachments ..."
         SetOverwrite on
-        File "${SRC_Mod_Level}\Attachments\*.*"
-        SkipAttachments:
+        File /nonfatal "${SRC_Mod_Level}\Attachments\*.*"
     SectionEnd
     
     Section -AdditionalIcons

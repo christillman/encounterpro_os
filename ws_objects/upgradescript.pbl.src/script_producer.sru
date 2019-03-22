@@ -245,7 +245,7 @@ If li_sts <= 0 Then return
 ls_output_path = "C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\Database\Upgrade"
 li_sts = GetFolder ("Select Output Folder", ls_output_path)
 If li_sts <= 0 Then return
-li_sts = produce_upgrade_file(ls_ddl_path, ls_dml_path, ls_output_path)
+li_sts = produce_upgrade_file(ls_ddl_path, ls_dml_path, ls_output_path + "\Attachments")
 
 if li_sts < 0 then
 	MessageBox("Error", "Error producing upgrade file")
