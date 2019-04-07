@@ -7,11 +7,11 @@
 !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
 
 ; Component Versions
-!define EncounterPRO_Utilities_VERSION   1.0.1.0
+!define EncounterPRO_Utilities_VERSION   1.0.2.0
 ; This has a virus in it
 ; !define TPS_Foxit_Version 2.3
-!define EventLogInstaller_Version 1.1
-!define CSharpGACTool_Version 1.0.0.1
+!define EventLogInstaller_Version 1.2
+!define CSharpGACTool_Version 1.0.0.2
 !define ICSharpCode_SharpZipLib_Version 0.84.0.0
 
 ; Other definitions
