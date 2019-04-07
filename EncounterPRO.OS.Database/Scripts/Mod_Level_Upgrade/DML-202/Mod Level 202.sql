@@ -189,10 +189,6 @@ update 	[c_Database_Column] set  column_length = 20
 where tablename = 'p_Assessment'
 and columnname = 'acuteness'
 
-update 	[c_Database_Column] set  columnname = 'icd10_code'
-where columnname = 'icd_9_code'
-
-
 update 	[c_Database_Column] set  column_length = '80'
 where tablename = 'v_Diagnosed_Patients'
 and columnname = 'assessment'
