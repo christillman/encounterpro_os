@@ -8,11 +8,10 @@ C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\Encoun
 C:\Users\mark.ICT\Visual Studio\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\EncounterPRO.OS.Utilities.dll
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.dll.config
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.tlb
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\ICSharpCode.SharpZipLib.dll
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\stdole.dll
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csprojAssemblyReference.cache
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.ResolveComReference.cache
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.CoreCompileInputs.cache
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.CopyComplete
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\EncounterPRO.OS.Utilities.dll
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\bin\Release\EncounterPRO.OS.Utilities.tlb

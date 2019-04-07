@@ -64,7 +64,7 @@ namespace EncounterPRO.OS.Component
         }
         XmlDocument objJMJXmlMapperTemplate2;
 
-        protected override string createDocument()
+        protected string createDocument()
         {
             /************************************************************************************************
              * By Nitin Vikraman								Date: 

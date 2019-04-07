@@ -4,3 +4,4 @@ C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISUnReplic
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISUnReplicate\obj\Release\NSISUnReplicate.csproj.CoreCompileInputs.cache
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISUnReplicate\obj\Release\NSISUnReplicate.exe
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISUnReplicate\obj\Release\NSISUnReplicate.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISUnReplicate\obj\Release\NSISUnReplicate.csprojAssemblyReference.cache
