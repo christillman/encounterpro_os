@@ -96,6 +96,10 @@ AND code NOT IN (SELECT code FROM #map_multiple)
 AND NOT EXISTS (SELECT 1 FROM c_Assessment_Definition a WHERE a.icd10_code = #revisions.code)
 -- 137
 
+-- Prevent subquery problem
+update c_Assessment_Category SET icd10_start = null, icd10_end = null, is_default = 'N'
+where assessment_category_id = 'MA'
+
 -- Additions
 INSERT INTO c_Assessment_Definition (
 	assessment_id,
@@ -110,14 +114,10 @@ INSERT INTO c_Assessment_Definition (
 	status )
 SELECT
 	'ICD-' + #additions.code,
-	'MainT',
-	(SELECT assessment_type FROM c_Assessment_Category c 
-		WHERE #additions.code BETWEEN c.icd10_start AND c.icd10_end + 'z'
-		AND c.is_default = 'Y'),
+	'MainT', 
+	c.assessment_type,
 	#additions.code,
-	(SELECT assessment_category_id FROM c_Assessment_Category c 
-		WHERE #additions.code BETWEEN c.icd10_start AND c.icd10_end + 'z'
-		AND c.is_default = 'Y'),
+	c.assessment_category_id,
 	CASE WHEN LEN(#additions.descr) > 80 THEN SUBSTRING(#additions.descr,1,77)+'...'
 		ELSE #additions.descr END,
 	CASE WHEN LEN(#additions.descr) > 80 THEN #additions.descr
@@ -125,7 +125,9 @@ SELECT
 	2, -- default risk level
 	981, -- default owner
 	'OK' -- default status
-FROM #additions
+FROM #additions join c_Assessment_Category c 
+		ON #additions.code BETWEEN c.icd10_start AND c.icd10_end + 'z'
+		AND c.is_default = 'Y'
 -- re-entrancy
 WHERE NOT EXISTS (SELECT 1 FROM c_Assessment_Definition a WHERE a.icd10_code = #additions.code)
 -- 137
