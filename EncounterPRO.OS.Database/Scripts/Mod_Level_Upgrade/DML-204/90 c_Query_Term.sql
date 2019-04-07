@@ -7,13 +7,13 @@ GO
 SET ANSI_PADDING ON
 GO
 
-IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[c_Query_Term]') AND type in (N'U'))
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'c_Query_Term') AND type in (N'U'))
 BEGIN
 	DROP TABLE [c_Query_Term]
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[c_Query_Term]') AND type in (N'U'))
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'c_Query_Term') AND type in (N'U'))
 BEGIN
 CREATE TABLE [c_Query_Term](
 	[query_target] [varchar](24) NOT NULL,
