@@ -229,6 +229,7 @@
 ;    SectionEnd
 
     Section '-Attachments' SecAT
+        Delete "$INSTDIR\*.mdlvl"
         SetOutPath '\\localhost\attachments'
         SetDetailsPrint both
         DetailPrint "Installing Attachments in \\localhost\attachments ..."
@@ -355,6 +356,13 @@ FunctionEnd
 
 Function createServerDBPage
     !insertmacro MUI_HEADER_TEXT $(PAGE_SERVDB_TITLE) $(PAGE_SERVDB_SUBTITLE)
+
+    ${If} $SERVER == ""
+        StrCpy $SERVER "localhost\ENCOUNTERPRO_OS"
+    ${EndIf}
+    ${If} $DATABASE == ""
+        StrCpy $DATABASE "EncounterPro_OS"
+    ${EndIf}
     
     nsDialogs::Create /NOUNLOAD 1018
     Pop $Dialog
