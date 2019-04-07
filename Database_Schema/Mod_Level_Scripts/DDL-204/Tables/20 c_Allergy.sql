@@ -1,21 +1,5 @@
 ﻿
 
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_Allergens]') AND [type]='U'))
-	DROP TABLE [dbo].[c_Allergens]
-GO
-
-CREATE TABLE c_Allergens (
-	substance varchar(40),
-	substance_type varchar(24),
-	related_drug_id varchar(24),
-	related_generic_rxcui varchar(10),
-	old_assessment_id varchar(24)
-	)
-
-GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON [c_Allergens] TO [cprsystem]
-
-
-
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[p_Propensity]') AND [type]='U'))
 	DROP TABLE [dbo].[p_Propensity]
 GO
