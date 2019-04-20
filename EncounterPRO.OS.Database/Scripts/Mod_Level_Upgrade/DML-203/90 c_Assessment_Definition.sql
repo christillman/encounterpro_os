@@ -59,7 +59,7 @@ CREATE TABLE #new_assess3 (
 	long_description text,
 	[source] varchar(10))
 
-INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus ', null, 'ApproxSyn')
+INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus', null, 'ApproxSyn')
 INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for meningococcus b', null, 'ApproxSyn')
 INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for respiratory syncytial virus (rsv', null, 'ApproxSyn')
 INSERT INTO #new_assess3 VALUES ('Z23', 'VACCINE', 'VACCINES', 'Vaccination for typhoid (bacteria)', null, 'ApproxSyn')

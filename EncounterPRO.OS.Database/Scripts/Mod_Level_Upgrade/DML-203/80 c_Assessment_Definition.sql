@@ -95,7 +95,7 @@ WHERE assessment_id IN ('SPRARM','SPRWRI','SPRFOO','DEMO10323','DEMO6665Q',
 --   column J description updates
 
 
-update c_Assessment_Definition set last_updated=getdate(), description ='Accessory lacrimal canal', long_description='Accessory lacrimal canal' where assessment_id = 'DEMO5757'
+update c_Assessment_Definition set last_updated=getdate(), description ='Accessory lacrimal canal', long_description='Accessory lacrimal canal' where assessment_id = 'DEMO5757'
 update c_Assessment_Definition set last_updated=getdate(), description ='Acidemia of newborn', long_description='Acidemia of newborn' where assessment_id = 'DEMO6679'
 
 update c_Assessment_Definition set last_updated=getdate(), description ='Acidosis of newborn', long_description='Acidosis of newborn' where assessment_id = 'DEMO6683'
@@ -409,7 +409,7 @@ update c_Assessment_Definition set last_updated=getdate(), description ='Persona
 update c_Assessment_Definition set last_updated=getdate(), description ='Personal history of other specified conditions' where assessment_id = 'DEMO9029'
 update c_Assessment_Definition set last_updated=getdate(), description ='Patient''s noncompliance with other medical treatment and regimen' where assessment_id = 'DEMO1430A'
 update c_Assessment_Definition set last_updated=getdate(), description ='Patient''s noncompliance with other medical treatment and regimen' where assessment_id = 'DEMO1430'
-update c_Assessment_Definition set last_updated=getdate(), description ='Presence (of) contact lens(es)', long_description='Presence (of) contact lens(es)' where assessment_id = 'DEMO9067'
+update c_Assessment_Definition set last_updated=getdate(), description ='Presence (of) contact lens(es)', long_description='Presence (of) contact lens(es)' where assessment_id = 'DEMO9067'
 update c_Assessment_Definition set last_updated=getdate(), description ='Solitary ulcer of anus and rectum', long_description='Solitary ulcer of anus and rectum' where assessment_id = '0^11612'
 update c_Assessment_Definition set last_updated=getdate(), description ='Status postsurgical', long_description='Status postsurgical' where assessment_id = 'DEMO9030A'
 update c_Assessment_Definition set last_updated=getdate(), description ='Personal history of adult physical and sexual abuse' where assessment_id = 'DEMO4850'
@@ -421,7 +421,7 @@ update c_Assessment_Definition set last_updated=getdate(), description ='Persona
 update c_Assessment_Definition set last_updated=getdate(), description ='Personal history of contraception' where assessment_id = 'DEMO9037'
 update c_Assessment_Definition set last_updated=getdate(), description ='Personal history of irradiation' where assessment_id = 'DEMO1432A'
 update c_Assessment_Definition set last_updated=getdate(), description ='Personal history of irradiation' where assessment_id = 'DEMO1432'
-update c_Assessment_Definition set last_updated=getdate(), description ='Torticollis (intermittent) (spastic) due to birth injury ', long_description='Torticollis (intermittent) (spastic) due to birth injury ' where assessment_id = 'DEMO6677Q'
+update c_Assessment_Definition set last_updated=getdate(), description ='Torticollis (intermittent) (spastic) due to birth injury', long_description='Torticollis (intermittent) (spastic) due to birth injury ' where assessment_id = 'DEMO6677Q'
 update c_Assessment_Definition set last_updated=getdate(), description ='Presence of spectacles and contact lenses' where assessment_id = 'DEMO1448'
 update c_Assessment_Definition set last_updated=getdate(), description ='Vaccination for diphtheria, tetanus and acellular pertussis (dtap)', long_description='Vaccination for diphtheria, tetanus and acellular pertussis (dtap)' where assessment_id = '0^V03.5'
 update c_Assessment_Definition set last_updated=getdate(), description ='Vaccination for tetanus and diphtheria', long_description='Vaccination for tetanus and diphtheria' where assessment_id = 'DEMO9396'
@@ -485,15 +485,15 @@ update c_Assessment_Definition set last_updated=getdate(), description ='Hyperca
 update c_Assessment_Definition set last_updated=getdate(), description ='Hypoxemia of newborn', long_description='Hypoxemia of newborn', [source]='IncT' where assessment_id = 'DEMO6679Q'
 update c_Assessment_Definition set last_updated=getdate(), description ='Other problems with newborn' where assessment_id = 'DEMO6678Q'
 update c_Assessment_Definition set last_updated=getdate(), description ='Malformation (congenital) lacrimal apparatus', long_description='Malformation (congenital) lacrimal apparatus', [source]='Dx' where assessment_id = 'DEMO5756'
-update c_Assessment_Definition set last_updated=getdate(), description ='Accessory lacrimal canal', long_description='Accessory lacrimal canal', [source]='Dx' where assessment_id = 'DEMO5757'
-update c_Assessment_Definition set last_updated=getdate(), description ='Supernumerary lacrimonasal duct ', long_description='Supernumerary lacrimonasal duct ', [source]='Dx' where assessment_id = 'DEMO5758'
+update c_Assessment_Definition set last_updated=getdate(), description ='Accessory lacrimal canal', long_description='Accessory lacrimal canal', [source]='Dx' where assessment_id = 'DEMO5757'
+update c_Assessment_Definition set last_updated=getdate(), description ='Supernumerary lacrimonasal duct', long_description='Supernumerary lacrimonasal duct', [source]='Dx' where assessment_id = 'DEMO5758'
 update c_Assessment_Definition set last_updated=getdate(), description ='Congenital diverticulum of left ventricle', long_description='Congenital diverticulum of left ventricle', [source]='IncT' where assessment_id = 'DEMO128'
 update c_Assessment_Definition set last_updated=getdate(), description ='Other specified congenital malformations of heart' where assessment_id = 'DEMO128'
 update c_Assessment_Definition set last_updated=getdate(), description ='Congenital malformation of pericardium', long_description='Congenital malformation of pericardium', [source]='IncT' where assessment_id = 'DEMO2037'
 update c_Assessment_Definition set last_updated=getdate(), description ='Malposition of heart', long_description='Malposition of heart', [source]='IncT' where assessment_id = 'DEMO2038'
 update c_Assessment_Definition set last_updated=getdate(), description ='Congenital malformation of myocardium', long_description='Congenital malformation of myocardium', [source]='IncT' where assessment_id = 'DEMO2039'
 update c_Assessment_Definition set last_updated=getdate(), description ='Other specified congenital malformations of heart' where assessment_id = 'DEMO2040'
-update c_Assessment_Definition set last_updated=getdate(), description ='Cyst pericardial ', long_description='Cyst pericardial ', [source]='IncT' where assessment_id = 'DEMO2041'
+update c_Assessment_Definition set last_updated=getdate(), description ='Cyst pericardial', long_description='Cyst pericardial', [source]='IncT' where assessment_id = 'DEMO2041'
 update c_Assessment_Definition set last_updated=getdate(), description ='Stenosis heart valve congenital', long_description='Stenosis heart valve congenital', [source]='IncT' where assessment_id = 'DEMO2042'
 
 
@@ -554,14 +554,14 @@ INSERT INTO #new_assess VALUES ('P031', 'OB', 'OBP', 'Jaundice symptomatic newbo
 INSERT INTO #new_assess VALUES ('P036', 'OB', 'OBP', 'Neonatal (idiopathic) hepatitis', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P036', 'OB', 'OBP', 'Neonatal giant cell hepatitis', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P036', 'OB', 'OBP', 'Neonatal physiological jaundice (intense)(prolonged) NOS', null, 'Dx')
-INSERT INTO #new_assess VALUES ('P03810', 'OB', 'OBP', 'Neuritis cranial nerve seventh or facial newborn', null, 'Dx')
+INSERT INTO #new_assess VALUES ('P03810', 'OB', 'OBP', 'Neuritis cranial nerve seventh or facial newborn', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P03810', 'OB', 'OBP', 'Newborn affected by abdominal pregnancy', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P03810', 'OB', 'OBP', 'Newborn affected by abruptio placenta', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P03811', 'OB', 'OBP', 'Newborn affected by accidental hemorrhage', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P03811', 'OB', 'OBP', 'Newborn affected by antepartum hemorrhage', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P03811', 'OB', 'OBP', 'Newborn affected by breech presentation before labor', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by contracted pelvis', null, 'Dx')
-INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by damage to placenta from amniocentesis, cesarean delivery …',  'Newborn affected by damage to placenta from amniocentesis, cesarean delivery or surgical induction', 'Dx')
+INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by damage to placenta from amniocentesis, cesarean delivery …',  'Newborn affected by damage to placenta from amniocentesis, cesarean delivery or surgical induction', 'Dx')
 INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by external version before labor', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by face presentation before labor', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P040', 'OB', 'OBP', 'Newborn affected by hypertonic labor', null, 'Dx')
@@ -590,8 +590,8 @@ INSERT INTO #new_assess VALUES ('P590', 'OB', 'OBP', 'Newborn affected by uterin
 INSERT INTO #new_assess VALUES ('P5929', 'OB', 'OBP', 'Newborn hyperbilirubinemia', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P5929', 'OB', 'OBP', 'Newborn jaundice', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P5929', 'OB', 'OBP', 'Newborn jaundice due to or associated with hepatocellular damage specified NEC', null, 'Dx')
-INSERT INTO #new_assess VALUES ('P598', 'OB', 'OBP', 'Newborn affected by heart rate abnormalities intrauterine before onset of labor', null, 'Dx')
-INSERT INTO #new_assess VALUES ('P598', 'OB', 'OBP', 'Newborn affected by heart rate abnormalities intrauterine during labor', null, 'Dx')
+INSERT INTO #new_assess VALUES ('P598', 'OB', 'OBP', 'Newborn affected by heart rate abnormalities intrauterine before onset of labor', null, 'Dx')
+INSERT INTO #new_assess VALUES ('P598', 'OB', 'OBP', 'Newborn affected by heart rate abnormalities intrauterine during labor', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P599', 'OB', 'OBP', 'Noxious substances transmitted through placenta or breast milk', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P599', 'OB', 'OBP', 'Palsy facial newborn', null, 'Dx')
 INSERT INTO #new_assess VALUES ('P599', 'OB', 'OBP', 'Palsy, brachial plexus newborn', null, 'Dx')
@@ -611,7 +611,7 @@ INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Rhythm atrioventricu
 INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Sinus arrhythmia', null, 'Dx')
 INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Flutter heart', null, 'Dx')
 INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Wandering pacemaker', null, 'Dx')
-INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Arrhythmia specified NEC', null, 'Dx')
+INSERT INTO #new_assess VALUES ('I498', 'SICK', 'OCARDIO', 'Arrhythmia specified NEC', null, 'Dx')
 INSERT INTO #new_assess VALUES ('Q248', 'SICK', 'OCARDIO', 'Atresia, heart valve NEC', null, 'Dx')
 INSERT INTO #new_assess VALUES ('Q248', 'SICK', 'OCARDIO', 'Hypoplasia cardiac', null, 'Dx')
 INSERT INTO #new_assess VALUES ('Q248', 'SICK', 'OCARDIO', 'Hemicardia', null, 'Dx')
