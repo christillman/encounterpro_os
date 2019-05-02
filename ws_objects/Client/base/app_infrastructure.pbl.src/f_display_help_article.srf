@@ -29,9 +29,10 @@ lstr_article.user_may_edit = false
 // validate that user can edit/map
 if sqlca.customer_id < 1000 then
 	//if lower(gnv_app.computername) = "testingv5" or lower(computername) = "dev-mc" then
+	// check if permission to edit help (mark and beth)
 		SELECT count(*)
 		INTO :ll_count
-		FROM eproupdates.dbo.c_Domain
+		FROM c_Domain
 		WHERE domain_id = 'Help Edit User'
 		AND domain_item = :gnv_app.windows_logon_id;
 		if tf_check() and ll_count > 0 then
