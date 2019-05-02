@@ -27,6 +27,7 @@ string attachment_folder
 string attached_by
 datetime created
 string created_by
+string common_dir
 string status
 //string id
 u_user originator
@@ -281,7 +282,7 @@ CHOOSE CASE lower(ls_display_how)
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
 			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
-			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
+			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_dir)
 			
 			ls_file = get_attachment()
 			if isnull(ls_arguments) then
@@ -470,7 +471,7 @@ CHOOSE CASE lower(ls_edit_how)
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
 			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
-			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
+			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_dir)
 			
 			if isnull(ls_arguments) then
 				ls_arguments = ls_file
@@ -1130,7 +1131,7 @@ CHOOSE CASE lower(ls_print_how)
 		if len(ls_executable) > 0 then
 			// Substitute the file and description into the command
 			ls_executable = f_string_substitute(ls_executable, "%ProgramDir%", gnv_app.program_directory)
-			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_thread.common_dir)
+			ls_executable = f_string_substitute(ls_executable, "%EproCommon%", common_dir)
 			
 			ls_file = get_attachment()
 			if isnull(ls_arguments) then
@@ -1271,8 +1272,34 @@ on u_component_attachment.destroy
 call super::destroy
 end on
 
-event constructor;call super::constructor;attachment_progress = CREATE u_ds_data
+event constructor;call super::constructor;integer li_sts
+environment lo_env
+unsignedlong ll_ppidl
+boolean lb_sts
+string ls_common_files
+
+attachment_progress = CREATE u_ds_data
 attachment_progress.set_dataobject("dw_p_attachment_progress")
+
+li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
+																windows_api.shell32.CSIDL_COMMONFILES , &
+																ll_ppidl)
+if li_sts = 0 then
+	ls_common_files = space(500)
+	lb_sts = windows_api.shell32.shgetpathfromidlist(ll_ppidl, ls_common_files)
+	if lb_sts then
+		ls_common_files = trim(ls_common_files)
+		if right(ls_common_files, 1) <> "\" then ls_common_files += "\"
+		common_dir = ls_common_files + "EncounterPRO-OS"
+	else
+		openwithparm(w_pop_message, "An error occured getting windows environment information (shgetpathfromidlist).")
+		return -1
+	end if
+	windows_api.shell32.CoTaskMemFree(ll_ppidl)
+else
+	openwithparm(w_pop_message, "An error occured getting windows environment information (shgetspecialfolderlocation - " + string(li_sts) + ").")
+	return -1
+end if
 
 end event
 
