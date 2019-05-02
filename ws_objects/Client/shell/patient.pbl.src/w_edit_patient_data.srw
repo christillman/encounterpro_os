@@ -430,6 +430,7 @@ li_locality_count = lds_selected_localities.retrieve("Locality")
 
 li_item_count = UpperBound(new_patient.list_item)
 
+set_all_locality_visibility(false)
 FOR li_locality_index = 1 TO li_locality_count	
 	CHOOSE CASE li_locality_index
 		CASE 1
@@ -1828,6 +1829,8 @@ li_rc = set_patient_list_item("Country", popup_return.items[1], ls_empty)
 if li_rc < 0 then
 	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
+// Edited country, clear out document number
+sle_id_number.text = ""
 text = popup_return.items[1]
 highlight_st(this, false)
 
