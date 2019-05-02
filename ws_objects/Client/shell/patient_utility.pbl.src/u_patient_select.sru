@@ -25,8 +25,8 @@ end type
 end forward
 
 global type u_patient_select from u_main_tabpage_base
-integer width = 2414
-integer height = 1704
+integer width = 2976
+integer height = 1868
 long tabbackcolor = 16777215
 event select_patient ( string ps_cpr_id )
 event new_patient ( string ps_cpr_id )
@@ -69,8 +69,8 @@ public function integer refresh ()
 public subroutine hotkey (keycode pe_key, unsignedlong pul_flags)
 end prototypes
 
-event resized();if width > 2500 then
-	dw_patients.width = width - 887
+event resized();if width > 3000 then
+	dw_patients.width = width - 1455
 else
 	dw_patients.width = 1417
 end if
@@ -263,9 +263,9 @@ destroy(this.dw_patients)
 end on
 
 type cb_import_chart from commandbutton within u_patient_select
-integer x = 1527
-integer y = 1568
-integer width = 366
+integer x = 2039
+integer y = 1740
+integer width = 439
 integer height = 112
 integer taborder = 40
 integer textsize = -10
@@ -333,8 +333,8 @@ end event
 
 type uo_search_criteria from u_patient_search_criteria within u_patient_select
 event destroy ( )
-integer x = 1527
-integer y = 284
+integer x = 1545
+integer y = 280
 integer taborder = 10
 end type
 
@@ -364,8 +364,8 @@ boolean focusrectangle = false
 end type
 
 type cb_search from commandbutton within u_patient_select
-integer x = 1682
-integer y = 1416
+integer x = 2011
+integer y = 1576
 integer width = 448
 integer height = 112
 integer taborder = 20
@@ -386,7 +386,7 @@ end event
 
 type st_page from statictext within u_patient_select
 integer x = 1669
-integer y = 204
+integer y = 116
 integer width = 274
 integer height = 64
 integer textsize = -8
@@ -402,7 +402,7 @@ boolean focusrectangle = false
 end type
 
 type pb_up from u_picture_button within u_patient_select
-integer x = 1522
+integer x = 1509
 integer y = 32
 integer width = 137
 integer height = 116
@@ -424,7 +424,7 @@ pb_down.enabled = true
 end event
 
 type pb_down from u_picture_button within u_patient_select
-integer x = 1522
+integer x = 1509
 integer y = 156
 integer width = 137
 integer height = 116
@@ -448,10 +448,10 @@ pb_up.enabled = true
 end event
 
 type st_title from statictext within u_patient_select
-integer x = 1673
-integer y = 24
-integer width = 613
-integer height = 152
+integer x = 1851
+integer y = 192
+integer width = 850
+integer height = 88
 integer textsize = -12
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -465,9 +465,9 @@ boolean focusrectangle = false
 end type
 
 type cb_new_patient from commandbutton within u_patient_select
-integer x = 1970
-integer y = 1568
-integer width = 366
+integer x = 2537
+integer y = 1740
+integer width = 411
 integer height = 112
 integer taborder = 30
 integer textsize = -10
@@ -530,7 +530,7 @@ type dw_patients from u_dw_pick_list within u_patient_select
 integer x = 14
 integer y = 24
 integer width = 1495
-integer height = 1656
+integer height = 1824
 integer taborder = 0
 string dataobject = "dw_jmj_patient_search2"
 boolean vscrollbar = true

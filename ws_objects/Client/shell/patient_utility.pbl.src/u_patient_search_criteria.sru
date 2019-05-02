@@ -2,13 +2,17 @@
 forward
 global type u_patient_search_criteria from userobject
 end type
+type st_dob from statictext within u_patient_search_criteria
+end type
+type st_id_number from statictext within u_patient_search_criteria
+end type
 type st_id_document from statictext within u_patient_search_criteria
 end type
 type st_country from statictext within u_patient_search_criteria
 end type
 type sle_id_number from singlelineedit within u_patient_search_criteria
 end type
-type st_6 from statictext within u_patient_search_criteria
+type st_last_name from statictext within u_patient_search_criteria
 end type
 type cb_clear from commandbutton within u_patient_search_criteria
 end type
@@ -20,21 +24,19 @@ type st_patient_status from statictext within u_patient_search_criteria
 end type
 type sle_employeeid from singlelineedit within u_patient_search_criteria
 end type
-type st_7 from statictext within u_patient_search_criteria
+type st_status from statictext within u_patient_search_criteria
 end type
 type st_ssn_t from statictext within u_patient_search_criteria
 end type
-type st_5 from statictext within u_patient_search_criteria
+type st_employee_id from statictext within u_patient_search_criteria
 end type
-type st_1 from statictext within u_patient_search_criteria
+type st_employer from statictext within u_patient_search_criteria
 end type
 type sle_employer from singlelineedit within u_patient_search_criteria
 end type
-type st_2 from statictext within u_patient_search_criteria
-end type
 type sle_last_name from singlelineedit within u_patient_search_criteria
 end type
-type st_3 from statictext within u_patient_search_criteria
+type st_first_name from statictext within u_patient_search_criteria
 end type
 type sle_first_name from singlelineedit within u_patient_search_criteria
 end type
@@ -44,7 +46,7 @@ type cb_abc_firstname from commandbutton within u_patient_search_criteria
 end type
 type sle_billing_id from singlelineedit within u_patient_search_criteria
 end type
-type st_4 from statictext within u_patient_search_criteria
+type st_billing_id from statictext within u_patient_search_criteria
 end type
 type em_dob from editmask within u_patient_search_criteria
 end type
@@ -55,8 +57,8 @@ end type
 end forward
 
 global type u_patient_search_criteria from userobject
-integer width = 850
-integer height = 1116
+integer width = 1417
+integer height = 1288
 boolean border = true
 long backcolor = 12632256
 long tabtextcolor = 33554432
@@ -65,28 +67,29 @@ long picturemaskcolor = 536870912
 event select_patient ( string ps_cpr_id )
 event new_patient ( string ps_cpr_id )
 event search_criteria_changed ( )
+st_dob st_dob
+st_id_number st_id_number
 st_id_document st_id_document
 st_country st_country
 sle_id_number sle_id_number
-st_6 st_6
+st_last_name st_last_name
 cb_clear cb_clear
 st_phone_title st_phone_title
 sle_phone_number sle_phone_number
 st_patient_status st_patient_status
 sle_employeeid sle_employeeid
-st_7 st_7
+st_status st_status
 st_ssn_t st_ssn_t
-st_5 st_5
-st_1 st_1
+st_employee_id st_employee_id
+st_employer st_employer
 sle_employer sle_employer
-st_2 st_2
 sle_last_name sle_last_name
-st_3 st_3
+st_first_name st_first_name
 sle_first_name sle_first_name
 cb_abc_lastname cb_abc_lastname
 cb_abc_firstname cb_abc_firstname
 sle_billing_id sle_billing_id
-st_4 st_4
+st_billing_id st_billing_id
 em_dob em_dob
 em_ssn em_ssn
 gb_id_document gb_id_document
@@ -232,81 +235,84 @@ employeeid = ""
 end subroutine
 
 on u_patient_search_criteria.create
+this.st_dob=create st_dob
+this.st_id_number=create st_id_number
 this.st_id_document=create st_id_document
 this.st_country=create st_country
 this.sle_id_number=create sle_id_number
-this.st_6=create st_6
+this.st_last_name=create st_last_name
 this.cb_clear=create cb_clear
 this.st_phone_title=create st_phone_title
 this.sle_phone_number=create sle_phone_number
 this.st_patient_status=create st_patient_status
 this.sle_employeeid=create sle_employeeid
-this.st_7=create st_7
+this.st_status=create st_status
 this.st_ssn_t=create st_ssn_t
-this.st_5=create st_5
-this.st_1=create st_1
+this.st_employee_id=create st_employee_id
+this.st_employer=create st_employer
 this.sle_employer=create sle_employer
-this.st_2=create st_2
 this.sle_last_name=create sle_last_name
-this.st_3=create st_3
+this.st_first_name=create st_first_name
 this.sle_first_name=create sle_first_name
 this.cb_abc_lastname=create cb_abc_lastname
 this.cb_abc_firstname=create cb_abc_firstname
 this.sle_billing_id=create sle_billing_id
-this.st_4=create st_4
+this.st_billing_id=create st_billing_id
 this.em_dob=create em_dob
 this.em_ssn=create em_ssn
 this.gb_id_document=create gb_id_document
-this.Control[]={this.st_id_document,&
+this.Control[]={this.st_dob,&
+this.st_id_number,&
+this.st_id_document,&
 this.st_country,&
 this.sle_id_number,&
-this.st_6,&
+this.st_last_name,&
 this.cb_clear,&
 this.st_phone_title,&
 this.sle_phone_number,&
 this.st_patient_status,&
 this.sle_employeeid,&
-this.st_7,&
+this.st_status,&
 this.st_ssn_t,&
-this.st_5,&
-this.st_1,&
+this.st_employee_id,&
+this.st_employer,&
 this.sle_employer,&
-this.st_2,&
 this.sle_last_name,&
-this.st_3,&
+this.st_first_name,&
 this.sle_first_name,&
 this.cb_abc_lastname,&
 this.cb_abc_firstname,&
 this.sle_billing_id,&
-this.st_4,&
+this.st_billing_id,&
 this.em_dob,&
 this.em_ssn,&
 this.gb_id_document}
 end on
 
 on u_patient_search_criteria.destroy
+destroy(this.st_dob)
+destroy(this.st_id_number)
 destroy(this.st_id_document)
 destroy(this.st_country)
 destroy(this.sle_id_number)
-destroy(this.st_6)
+destroy(this.st_last_name)
 destroy(this.cb_clear)
 destroy(this.st_phone_title)
 destroy(this.sle_phone_number)
 destroy(this.st_patient_status)
 destroy(this.sle_employeeid)
-destroy(this.st_7)
+destroy(this.st_status)
 destroy(this.st_ssn_t)
-destroy(this.st_5)
-destroy(this.st_1)
+destroy(this.st_employee_id)
+destroy(this.st_employer)
 destroy(this.sle_employer)
-destroy(this.st_2)
 destroy(this.sle_last_name)
-destroy(this.st_3)
+destroy(this.st_first_name)
 destroy(this.sle_first_name)
 destroy(this.cb_abc_lastname)
 destroy(this.cb_abc_firstname)
 destroy(this.sle_billing_id)
-destroy(this.st_4)
+destroy(this.st_billing_id)
 destroy(this.em_dob)
 destroy(this.em_ssn)
 destroy(this.gb_id_document)
@@ -325,10 +331,45 @@ else
 end if
 end event
 
+type st_dob from statictext within u_patient_search_criteria
+integer x = 133
+integer y = 764
+integer width = 453
+integer height = 56
+integer textsize = -9
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 12632256
+boolean enabled = false
+string text = "DOB"
+alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type st_id_number from statictext within u_patient_search_criteria
+integer x = 855
+integer y = 544
+integer width = 343
+integer height = 60
+integer textsize = -9
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 12632256
+boolean enabled = false
+string text = "ID Number"
+boolean focusrectangle = false
+end type
+
 type st_id_document from statictext within u_patient_search_criteria
-integer x = 14
-integer y = 476
-integer width = 370
+integer x = 87
+integer y = 564
+integer width = 530
 integer height = 80
 integer taborder = 140
 boolean bringtotop = true
@@ -372,9 +413,9 @@ end if
 end event
 
 type st_country from statictext within u_patient_search_criteria
-integer x = 14
-integer y = 564
-integer width = 370
+integer x = 87
+integer y = 652
+integer width = 530
 integer height = 76
 integer taborder = 150
 boolean bringtotop = true
@@ -386,7 +427,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 67108864
-string text = "Country"
+string text = "Issuing Country"
 alignment alignment = center!
 boolean border = true
 borderstyle borderstyle = styleraised!
@@ -419,9 +460,9 @@ end if
 end event
 
 type sle_id_number from singlelineedit within u_patient_search_criteria
-integer x = 393
-integer y = 472
-integer width = 434
+integer x = 718
+integer y = 604
+integer width = 594
 integer height = 88
 integer taborder = 30
 boolean bringtotop = true
@@ -440,11 +481,11 @@ event modified;
 document_number = text + "%"
 end event
 
-type st_6 from statictext within u_patient_search_criteria
-integer x = 23
-integer y = 88
-integer width = 123
-integer height = 56
+type st_last_name from statictext within u_patient_search_criteria
+integer x = 343
+integer y = 12
+integer width = 430
+integer height = 60
 integer textsize = -9
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -453,13 +494,13 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 12632256
 boolean enabled = false
-string text = "Last"
+string text = "Last Name"
 boolean focusrectangle = false
 end type
 
 type cb_clear from commandbutton within u_patient_search_criteria
-integer x = 18
-integer y = 996
+integer x = 151
+integer y = 1116
 integer width = 325
 integer height = 100
 integer taborder = 100
@@ -477,10 +518,10 @@ event clicked;clear()
 end event
 
 type st_phone_title from statictext within u_patient_search_criteria
-integer x = 347
-integer y = 672
-integer width = 82
-integer height = 64
+integer x = 782
+integer y = 764
+integer width = 434
+integer height = 60
 integer textsize = -9
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -489,14 +530,14 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 12632256
 boolean enabled = false
-string text = "Ph"
+string text = "Phone Number"
 boolean focusrectangle = false
 end type
 
 type sle_phone_number from singlelineedit within u_patient_search_criteria
-integer x = 425
-integer y = 664
-integer width = 411
+integer x = 718
+integer y = 824
+integer width = 571
 integer height = 80
 integer taborder = 60
 integer textsize = -9
@@ -518,8 +559,8 @@ parent.postevent("search_criteria_changed")
 end event
 
 type st_patient_status from statictext within u_patient_search_criteria
-integer x = 361
-integer y = 920
+integer x = 754
+integer y = 1084
 integer width = 453
 integer height = 176
 integer taborder = 90
@@ -567,9 +608,9 @@ parent.postevent("search_criteria_changed")
 end event
 
 type sle_employeeid from singlelineedit within u_patient_search_criteria
-integer x = 393
-integer y = 812
-integer width = 421
+integer x = 718
+integer y = 972
+integer width = 581
 integer height = 92
 integer taborder = 80
 integer textsize = -10
@@ -586,9 +627,9 @@ parent.postevent("search_criteria_changed")
 
 end event
 
-type st_7 from statictext within u_patient_search_criteria
-integer x = 123
-integer y = 920
+type st_status from statictext within u_patient_search_criteria
+integer x = 512
+integer y = 1128
 integer width = 210
 integer height = 72
 integer textsize = -10
@@ -604,9 +645,9 @@ boolean focusrectangle = false
 end type
 
 type st_ssn_t from statictext within u_patient_search_criteria
-integer x = 407
-integer y = 264
-integer width = 421
+integer x = 864
+integer y = 336
+integer width = 453
 integer height = 56
 integer textsize = -9
 integer weight = 400
@@ -617,13 +658,14 @@ string facename = "Arial"
 long backcolor = 12632256
 boolean enabled = false
 string text = "SSN"
+alignment alignment = center!
 boolean focusrectangle = false
 end type
 
-type st_5 from statictext within u_patient_search_criteria
-integer x = 393
-integer y = 748
-integer width = 421
+type st_employee_id from statictext within u_patient_search_criteria
+integer x = 795
+integer y = 912
+integer width = 393
 integer height = 56
 integer textsize = -9
 integer weight = 400
@@ -637,11 +679,11 @@ string text = "Employee ID"
 boolean focusrectangle = false
 end type
 
-type st_1 from statictext within u_patient_search_criteria
-integer x = 14
-integer y = 748
-integer width = 334
-integer height = 56
+type st_employer from statictext within u_patient_search_criteria
+integer x = 215
+integer y = 908
+integer width = 306
+integer height = 60
 integer textsize = -9
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -655,9 +697,9 @@ boolean focusrectangle = false
 end type
 
 type sle_employer from singlelineedit within u_patient_search_criteria
-integer x = 14
-integer y = 812
-integer width = 334
+integer x = 69
+integer y = 972
+integer width = 585
 integer height = 92
 integer taborder = 70
 integer textsize = -10
@@ -674,27 +716,10 @@ parent.postevent("search_criteria_changed")
 
 end event
 
-type st_2 from statictext within u_patient_search_criteria
-integer x = 14
-integer y = 12
-integer width = 206
-integer height = 56
-integer textsize = -9
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 12632256
-boolean enabled = false
-string text = "Names"
-boolean focusrectangle = false
-end type
-
 type sle_last_name from singlelineedit within u_patient_search_criteria
 integer x = 146
 integer y = 72
-integer width = 549
+integer width = 699
 integer height = 92
 integer taborder = 10
 integer textsize = -10
@@ -711,11 +736,11 @@ parent.postevent("search_criteria_changed")
 
 end event
 
-type st_3 from statictext within u_patient_search_criteria
-integer x = 18
-integer y = 188
-integer width = 123
-integer height = 56
+type st_first_name from statictext within u_patient_search_criteria
+integer x = 334
+integer y = 172
+integer width = 343
+integer height = 60
 integer textsize = -9
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -724,14 +749,14 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 12632256
 boolean enabled = false
-string text = "First"
+string text = "First Name"
 boolean focusrectangle = false
 end type
 
 type sle_first_name from singlelineedit within u_patient_search_criteria
 integer x = 146
-integer y = 172
-integer width = 549
+integer y = 232
+integer width = 699
 integer height = 92
 integer taborder = 20
 integer textsize = -10
@@ -750,8 +775,8 @@ end event
 
 type cb_abc_lastname from commandbutton within u_patient_search_criteria
 event clicked pbm_bnclicked
-integer x = 690
-integer y = 68
+integer x = 896
+integer y = 76
 integer width = 146
 integer height = 96
 integer textsize = -9
@@ -778,8 +803,8 @@ end event
 
 type cb_abc_firstname from commandbutton within u_patient_search_criteria
 event clicked pbm_bnclicked
-integer x = 690
-integer y = 168
+integer x = 896
+integer y = 228
 integer width = 146
 integer height = 96
 integer textsize = -9
@@ -805,9 +830,9 @@ parent.postevent("search_criteria_changed")
 end event
 
 type sle_billing_id from singlelineedit within u_patient_search_criteria
-integer x = 23
-integer y = 320
-integer width = 334
+integer x = 146
+integer y = 396
+integer width = 699
 integer height = 92
 integer taborder = 30
 integer textsize = -10
@@ -825,10 +850,10 @@ parent.postevent("search_criteria_changed")
 
 end event
 
-type st_4 from statictext within u_patient_search_criteria
-integer x = 23
-integer y = 264
-integer width = 283
+type st_billing_id from statictext within u_patient_search_criteria
+integer x = 206
+integer y = 336
+integer width = 558
 integer height = 56
 integer textsize = -9
 integer weight = 400
@@ -839,13 +864,14 @@ string facename = "Arial"
 long backcolor = 12632256
 boolean enabled = false
 string text = "Billing ID"
+alignment alignment = center!
 boolean focusrectangle = false
 end type
 
 type em_dob from editmask within u_patient_search_criteria
-integer x = 14
-integer y = 664
-integer width = 334
+integer x = 69
+integer y = 824
+integer width = 585
 integer height = 80
 integer taborder = 50
 integer textsize = -9
@@ -877,9 +903,9 @@ parent.postevent("search_criteria_changed")
 end event
 
 type em_ssn from editmask within u_patient_search_criteria
-integer x = 407
-integer y = 320
-integer width = 421
+integer x = 864
+integer y = 396
+integer width = 453
 integer height = 92
 integer taborder = 40
 integer textsize = -9
@@ -907,9 +933,10 @@ parent.postevent("search_criteria_changed")
 end event
 
 type gb_id_document from groupbox within u_patient_search_criteria
-integer y = 416
-integer width = 841
-integer height = 236
+integer x = 32
+integer y = 500
+integer width = 1326
+integer height = 252
 integer taborder = 40
 integer textsize = -9
 integer weight = 400
