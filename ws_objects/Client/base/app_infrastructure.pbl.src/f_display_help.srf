@@ -118,7 +118,7 @@ if pb_edit or isnull(lstr_article.article) then
 		datalist.xml_add_mapping(lstr_xml_code)
 		
 		// Copy the code to the EproUpdates c_XML_Code table
-		INSERT INTO eproupdates.dbo.c_XML_Code (
+		INSERT INTO c_XML_Code (
 				  owner_id
 				  ,code_domain
 				  ,code_version
