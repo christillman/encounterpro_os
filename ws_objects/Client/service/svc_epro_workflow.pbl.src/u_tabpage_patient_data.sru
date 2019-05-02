@@ -610,6 +610,8 @@ li_rc = w_container.set_patient_list_item("Country", popup_return.items[1], ls_e
 if li_rc < 0 then
 	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
+// Edited country, clear out document number
+sle_id_number.text = ""
 text = popup_return.items[1]
 highlight_st(this, false)
 
