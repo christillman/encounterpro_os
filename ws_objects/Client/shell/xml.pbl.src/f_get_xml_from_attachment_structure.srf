@@ -1,0 +1,82 @@
+﻿$PBExportHeader$f_get_xml_from_attachment_structure.srf
+global type f_get_xml_from_attachment_structure from function_object
+end type
+
+forward prototypes
+global function string f_get_xml_from_attachment_structure (str_external_observation_attachment pstr_attachment)
+end prototypes
+
+global function string f_get_xml_from_attachment_structure (str_external_observation_attachment pstr_attachment);string ls_xml
+long i, j, k
+integer li_sts
+PBDOM_Element lo_root
+PBDOM_Document lo_document
+string ls_null
+long ll_set
+string ls_root
+string ls_encoded_file
+string ls_encoding
+
+setnull(ls_null)
+
+ls_root = lower(pstr_attachment.extension) + "File"
+ls_encoding = "base64"
+
+CHOOSE CASE lower(ls_encoding)
+	CASE "base64"
+		// Convert the base64 attachment into a blob
+		TRY
+			ls_encoded_file = common_thread.eprolibnet4.convertbinarytobase64(pstr_attachment.attachment)
+		CATCH (throwable lt_error)
+			log.log(po_null, "f_get_xml_from_attachment_structure:0023", "Error calling binary to base64 conversion (" + lt_error.text + ")", 4)
+			return ls_null
+		END TRY
+	CASE ELSE
+		// Convert the hexbinary attachment into a blob
+		TRY
+			ls_encoded_file = common_thread.eprolibnet4.convertbinarytohex(pstr_attachment.attachment)
+		CATCH (throwable lt_error2)
+			log.log(po_null, "f_get_xml_from_attachment_structure:0031", "Error calling binary to hex conversion (" + lt_error2.text + ")", 4)
+			return ls_null
+		END TRY
+END CHOOSE
+
+
+TRY
+	lo_document = CREATE PBDOM_Document
+	lo_document.newdocument(ls_root)
+
+	lo_root = CREATE PBDOM_Element
+	lo_root.setname(ls_root)
+	lo_root.addcontent(ls_encoded_file)
+
+	if len(pstr_attachment.extension) > 0 then
+		lo_root.setattribute("extension", pstr_attachment.extension)
+	end if
+
+	if len(pstr_attachment.attachment_comment_title) > 0 then
+		lo_root.setattribute("description", pstr_attachment.attachment_comment_title)
+	end if
+
+	if len(pstr_attachment.filename) > 0 then
+		lo_root.setattribute("filename", pstr_attachment.filename)
+	end if
+
+	if len(ls_encoding) > 0 then
+		lo_root.setattribute("encoding", ls_encoding)
+	end if
+
+	lo_document.setrootelement(lo_root)
+CATCH (throwable lo_error)
+	log.log(po_null, "f_get_xml_from_attachment_structure:0063", "Error creating wrapper (" + lo_error.text + ")", 4)
+	return ls_null
+END TRY
+
+ls_xml = lo_document.savedocumentintostring( )
+
+
+return ls_xml
+
+
+end function
+
