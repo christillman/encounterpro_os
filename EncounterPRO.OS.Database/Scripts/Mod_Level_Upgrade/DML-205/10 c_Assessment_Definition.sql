@@ -373,3 +373,11 @@ update c_Assessment_Definition set description ='Encounter for screening for spi
 
 update c_Assessment_Definition set assessment_id = replace(assessment_id,'DX','Dx') 
 where assessment_id like 'DX%'
+
+-- leading BOM was inserted into first field
+UPDATE icd10_who 
+SET code = 'A00'
+where len(code) > 4
+
+
+ 
