@@ -167,6 +167,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
@@ -262,22 +263,10 @@ windows_api = CREATE u_windows_api
 string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
 RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
 
-// Create the log object
-log = CREATE u_event_log
-// log.log(this, "cpr.open", "Starting up", 1)
-
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
-
-// Logging system must be initialized after common thread,
-// to reference EncounterPro.OS.Utilities for event logging
-log.initialize("EncounterPro-OS")
-if li_sts <= 0 then
-	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
-end if
 
 // Get the value of %APPDATA%
 this.GetContextService("Keyword", lcxk_base)
@@ -295,13 +284,26 @@ if not fileexists(ls_Appdata + "\EncounterPro_OS") then
 	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
 end if
 
+// Create the log object
+log = CREATE u_event_log
+
 // If the INI file doesn't exist, then create an empty one
 if not fileexists(ini_file) then
 	lbl_file = blob("")
 	log.file_write(lbl_file, ini_file)
 end if
 
-// Initialize the logging system
+// Initialize the logging system; the log system uses the ini file
+
+// Logging system must be initialized after common thread,
+// so it can reference EncounterPro.OS.Utilities for event logging
+log.initialize("EncounterPro-OS")
+if li_sts <= 0 then
+	openwithparm(w_pop_message, "Unable to initialize logging system")
+	halt
+end if
+
+// log.log(this, "cpr.open", "Starting up", 1)
 
 // If no command-line param is supplied, then check the registry
 if isnull(ls_parm) or trim(ls_parm) = "" then
