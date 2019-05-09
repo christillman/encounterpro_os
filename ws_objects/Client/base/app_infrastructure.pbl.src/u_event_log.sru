@@ -182,14 +182,8 @@ constant integer EVENTLOG_INFORMATION_TYPE = 4 // 0x0004
 constant integer EVENTLOG_AUDIT_SUCCESS = 8 // 0x0008
 constant integer EVENTLOG_AUDIT_FAILURE = 16 // 0x0010 
 
-constant integer LOGLEVEL_ANNOYANCE = 1
-constant integer LOGLEVEL_INFORMATION = 2
-constant integer LOGLEVEL_WARNING = 3
-constant integer LOGLEVEL_ERROR = 4
-constant integer LOGLEVEL_REDALERT = 5
-
-
 end variables
+
 forward prototypes
 public function integer shutdown ()
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity)

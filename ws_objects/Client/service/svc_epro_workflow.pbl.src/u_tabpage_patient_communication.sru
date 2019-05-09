@@ -190,7 +190,6 @@ li_locality_count = lds_selected_localities.retrieve("Locality")
 
 li_item_count = UpperBound(current_patient.list_item)
 
-set_all_locality_visibility(false)
 FOR li_locality_index = 1 TO li_locality_count	
 	CHOOSE CASE li_locality_index
 		CASE 1

@@ -3847,8 +3847,8 @@ ll_modification_level = modification_level + 1
 		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, ls_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
 		If li_sts <= 0 Then return -1
 		
-		ll_material_id = load_schema_file(ls_filepath, ll_modification_level, ls_filename)
-		if ll_material_id <= 0 then
+		li_sts = load_schema_file(ls_filepath, ll_modification_level, ls_filename)
+		if li_sts <= 0 then
 			openwithparm(w_pop_message, "Error loading schema file")
 			return -1
 		end if

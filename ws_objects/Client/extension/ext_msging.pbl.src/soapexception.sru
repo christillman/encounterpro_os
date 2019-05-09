@@ -4,7 +4,7 @@ global type soapexception from runtimeerror
 end type
 end forward
 
-global type soapexception from runtimeerror native "pbwsclient170.pbx"
+global type soapexception from runtimeerror native "pbsoapclient170.pbx"
 public function  string getFaultCode()
 public function  string getFaultString()
 public function  string getDetailMessage()

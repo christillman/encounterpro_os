@@ -481,7 +481,7 @@ integer x = 2249
 integer y = 820
 integer width = 558
 integer height = 108
-integer taborder = 140
+integer taborder = 110
 integer textsize = -10
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -499,11 +499,11 @@ event modified;current_patient.ssn = text
 end event
 
 type sle_id_number from singlelineedit within u_tabpage_patient_data
-integer x = 2034
-integer y = 572
+integer x = 594
+integer y = 576
 integer width = 768
 integer height = 108
-integer taborder = 90
+integer taborder = 110
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 400
@@ -532,8 +532,8 @@ end if
 end event
 
 type st_id_number_t from statictext within u_tabpage_patient_data
-integer x = 1659
-integer y = 588
+integer x = 219
+integer y = 592
 integer width = 343
 integer height = 76
 boolean bringtotop = true
@@ -552,7 +552,7 @@ boolean focusrectangle = false
 end type
 
 type st_country_t from statictext within u_tabpage_patient_data
-integer x = 105
+integer x = 1495
 integer y = 588
 integer width = 457
 integer height = 80
@@ -570,11 +570,11 @@ boolean focusrectangle = false
 end type
 
 type st_country from statictext within u_tabpage_patient_data
-integer x = 594
+integer x = 2043
 integer y = 576
 integer width = 768
 integer height = 104
-integer taborder = 80
+integer taborder = 150
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -610,8 +610,6 @@ li_rc = w_container.set_patient_list_item("Country", popup_return.items[1], ls_e
 if li_rc < 0 then
 	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
-// Edited country, clear out document number
-sle_id_number.text = ""
 text = popup_return.items[1]
 highlight_st(this, false)
 
@@ -622,7 +620,7 @@ integer x = 594
 integer y = 452
 integer width = 681
 integer height = 104
-integer taborder = 60
+integer taborder = 140
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -686,7 +684,7 @@ integer x = 594
 integer y = 332
 integer width = 443
 integer height = 104
-integer taborder = 30
+integer taborder = 80
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -739,7 +737,7 @@ type cb_make_test from commandbutton within u_tabpage_patient_data
 boolean visible = false
 integer width = 462
 integer height = 64
-integer taborder = 200
+integer taborder = 190
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -808,7 +806,7 @@ integer x = 594
 integer y = 452
 integer width = 526
 integer height = 108
-integer taborder = 50
+integer taborder = 20
 integer textsize = -9
 integer weight = 700
 fontpitch fontpitch = variable!
@@ -831,7 +829,7 @@ integer x = 1157
 integer y = 1124
 integer width = 165
 integer height = 72
-integer taborder = 180
+integer taborder = 130
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -891,7 +889,7 @@ integer x = 1399
 integer y = 704
 integer width = 581
 integer height = 104
-integer taborder = 110
+integer taborder = 100
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -933,7 +931,7 @@ integer x = 1618
 integer y = 452
 integer width = 544
 integer height = 108
-integer taborder = 70
+integer taborder = 10
 integer textsize = -9
 integer weight = 700
 fontpitch fontpitch = variable!
@@ -973,7 +971,7 @@ integer x = 594
 integer y = 208
 integer width = 1573
 integer height = 104
-integer taborder = 20
+integer taborder = 160
 integer textsize = -9
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1011,7 +1009,7 @@ integer x = 594
 integer y = 704
 integer width = 443
 integer height = 104
-integer taborder = 100
+integer taborder = 110
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1056,7 +1054,7 @@ integer x = 1417
 integer y = 80
 integer width = 151
 integer height = 104
-integer taborder = 190
+integer taborder = 180
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1141,7 +1139,7 @@ integer x = 1618
 integer y = 336
 integer width = 544
 integer height = 100
-integer taborder = 40
+integer taborder = 120
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1198,7 +1196,7 @@ integer x = 1618
 integer y = 76
 integer width = 544
 integer height = 104
-integer taborder = 10
+integer taborder = 170
 integer textsize = -9
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1271,7 +1269,7 @@ end type
 type st_primary_provider from u_st_primary_provider within u_tabpage_patient_data
 integer x = 594
 integer y = 956
-integer taborder = 150
+integer taborder = 140
 integer textsize = -9
 long backcolor = 67108864
 end type
@@ -1375,7 +1373,7 @@ integer x = 594
 integer y = 824
 integer width = 946
 integer height = 108
-integer taborder = 130
+integer taborder = 30
 integer textsize = -9
 integer weight = 700
 fontpitch fontpitch = variable!
@@ -1415,7 +1413,7 @@ integer x = 2062
 integer y = 956
 integer width = 750
 integer height = 104
-integer taborder = 160
+integer taborder = 150
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1547,7 +1545,7 @@ integer x = 2249
 integer y = 700
 integer width = 562
 integer height = 108
-integer taborder = 120
+integer taborder = 130
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -1572,7 +1570,7 @@ integer x = 594
 integer y = 1088
 integer width = 553
 integer height = 108
-integer taborder = 170
+integer taborder = 120
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!

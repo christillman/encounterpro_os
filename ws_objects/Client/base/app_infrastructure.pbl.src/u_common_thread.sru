@@ -41,6 +41,8 @@ string change_scribe_context_service = "Change Scribe Context"
 
 string epcompinfo
 
+string common_dir
+
 string name_format_full  // full name for standalone situations - First Middle Last
 string name_format_list  // Name format in list of names - last, first MI
 
@@ -276,26 +278,34 @@ return 1
 end function
 
 public function integer initialize ();integer li_sts
+string ls_temp
+long ll_count
+string ls_description
 environment lo_env
+string ls_common_files
+unsignedlong ll_ppidl
 boolean lb_sts
-ContextKeyword lcxk_base
-string ls_Appdata
-string ls_values[]
 
-// Get the value of %APPDATA%
-this.GetContextService("Keyword", lcxk_base)
-lcxk_base.GetContextKeywords("APPDATA", ls_values)
-IF Upperbound(ls_values) > 0 THEN
-   ls_Appdata = ls_values[1]
-ELSE
-   ls_Appdata = "* APPDATA UNDEFINED *"
-END IF
 
-epcompinfo = ls_Appdata + "\EncounterPro_OS\EPCompInfo.ini"
-
-// If the INI directory doesn't exist, then create it
-if not fileexists(ls_Appdata + "\EncounterPro_OS") then
-	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
+li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
+																windows_api.shell32.CSIDL_COMMONFILES , &
+																ll_ppidl)
+if li_sts = 0 then
+	ls_common_files = space(500)
+	lb_sts = windows_api.shell32.shgetpathfromidlist(ll_ppidl, ls_common_files)
+	if lb_sts then
+		ls_common_files = trim(ls_common_files)
+		if right(ls_common_files, 1) <> "\" then ls_common_files += "\"
+		common_dir = ls_common_files + "EncounterPRO-OS"
+		epcompinfo = common_dir + "\EPCompInfo.ini"
+	else
+		openwithparm(w_pop_message, "An error occured getting windows environment information (shgetpathfromidlist).")
+		return -1
+	end if
+	windows_api.shell32.CoTaskMemFree(ll_ppidl)
+else
+	openwithparm(w_pop_message, "An error occured getting windows environment information (shgetspecialfolderlocation - " + string(li_sts) + ").")
+	return -1
 end if
 
 default_database = "<Default>"

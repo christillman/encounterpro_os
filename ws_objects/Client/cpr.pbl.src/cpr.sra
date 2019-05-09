@@ -217,7 +217,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -239,9 +238,6 @@ ulong lul_hinst, lul_maxpath, lul_rc
 blob lbl_file
 string ls_msg
 string ls_arg
-ContextKeyword lcxk_base
-string ls_Appdata
-string ls_values[]
 
 cpr_mode = "CLIENT"
 
@@ -263,29 +259,36 @@ windows_api = CREATE u_windows_api
 string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
 RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
 
+// Create the log object
+log = CREATE u_event_log
+// log.log(this, "cpr.open", "Starting up", 1)
+
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
 
-// Get the value of %APPDATA%
-this.GetContextService("Keyword", lcxk_base)
-lcxk_base.GetContextKeywords("APPDATA", ls_values)
-IF Upperbound(ls_values) > 0 THEN
-   ls_Appdata = ls_values[1]
-ELSE
-   ls_Appdata = "* APPDATA UNDEFINED *"
-END IF
-
-ini_file = ls_Appdata + "\EncounterPro_OS\EncounterPro.ini"
-
-// If the INI directory doesn't exist, then create it
-if not fileexists(ls_Appdata + "\EncounterPro_OS") then
-	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
+// Logging system must be initialized after common thread,
+// to reference EncounterPro.OS.Utilities for event logging
+log.initialize("EncounterPro-OS")
+if li_sts <= 0 then
+	openwithparm(w_pop_message, "Unable to initialize logging system")
+	halt
 end if
 
-// Create the log object
-log = CREATE u_event_log
+// Get our application path so we can set the INI file
+lul_hinst = Handle( GetApplication() )
+lul_maxpath = 260
+ls_apppath = Space( lul_maxpath )    // pre-allocate memory
+lul_rc = GetModuleFilenameA( lul_hinst, ls_apppath, lul_maxpath )
+IF lul_rc > 0 THEN
+	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)
+	program_directory = ls_drive + ls_dir
+	ini_file = program_directory + "\EncounterPRO.ini"
+else
+	program_directory = ""
+	ini_file = "EncounterPRO.ini"
+END IF
 
 // If the INI file doesn't exist, then create an empty one
 if not fileexists(ini_file) then
@@ -293,17 +296,7 @@ if not fileexists(ini_file) then
 	log.file_write(lbl_file, ini_file)
 end if
 
-// Initialize the logging system; the log system uses the ini file
-
-// Logging system must be initialized after common thread,
-// so it can reference EncounterPro.OS.Utilities for event logging
-log.initialize("EncounterPro-OS")
-if li_sts <= 0 then
-	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
-end if
-
-// log.log(this, "cpr.open", "Starting up", 1)
+// Initialize the logging system
 
 // If no command-line param is supplied, then check the registry
 if isnull(ls_parm) or trim(ls_parm) = "" then

@@ -22,8 +22,30 @@ string ls_mybuild
 string ls_newversion
 string ls_sqlversion
 string ls_message
+string ls_compinfo
+string ls_common_files
+unsignedlong ll_ppidl
 boolean lb_sts
 string ls_filename
+
+li_sts = windows_api.shell32.shgetspecialfolderlocation( handle(main_window), &
+																windows_api.shell32.CSIDL_COMMONFILES , &
+																ll_ppidl)
+																
+if li_sts = 0 then
+	ls_common_files = space(500)
+	lb_sts = windows_api.shell32.shgetpathfromidlist(ll_ppidl, ls_common_files)
+	if lb_sts then
+		ls_common_files = trim(ls_common_files)
+		if right(ls_common_files, 1) <> "\" then ls_common_files += "\"
+		ls_compinfo = ls_common_files + "JMJTech Common\EPCompInfo.ini"
+	end if
+	windows_api.shell32.CoTaskMemFree(ll_ppidl)
+end if
+
+if not fileexists(ls_compinfo) then
+	ls_compinfo = gnv_app.program_directory + "\EPCompInfo.ini"
+end if
 
 f_check_attachment_location()
 ls_epro_setup_dir = f_default_attachment_path() + "\Install\"
