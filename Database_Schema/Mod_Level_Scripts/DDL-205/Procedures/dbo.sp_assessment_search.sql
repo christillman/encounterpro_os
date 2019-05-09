@@ -67,7 +67,10 @@ IF [dbo].[fn_icd_version]() = 'ICD10-CM'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_code like @ps_icd_code OR a.icd10_code is null)
+		AND (a.icd10_code like @ps_icd_code
+			-- special exception needed for EncounterPro allergy assessments
+			-- (there are very few in ICD10)
+			OR (a.assessment_type = 'ALLERGY' AND a.icd10_code IS NULL) )
 		
 	ELSE
 		SELECT a.assessment_id,
@@ -91,7 +94,10 @@ IF [dbo].[fn_icd_version]() = 'ICD10-CM'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_code like @ps_icd_code OR a.icd10_code is null)
+		AND (a.icd10_code like @ps_icd_code
+			-- special exception needed for EncounterPro allergy assessments
+			-- (there are very few in ICD10)
+			OR (a.assessment_type = 'ALLERGY' AND a.icd10_code IS NULL) )
 	end
 
 IF [dbo].[fn_icd_version]() = 'ICD10-WHO' 
@@ -117,7 +123,7 @@ IF [dbo].[fn_icd_version]() = 'ICD10-WHO'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_who_code like @ps_icd_code OR a.icd10_who_code is null)
+		AND (a.icd10_who_code like @ps_icd_code)
 		AND w.active = 'Y'
 		
 	ELSE
@@ -144,7 +150,7 @@ IF [dbo].[fn_icd_version]() = 'ICD10-WHO'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_who_code like @ps_icd_code OR a.icd10_who_code is null)
+		AND (a.icd10_who_code like @ps_icd_code)
 		AND w.active = 'Y'
 	end
 
@@ -171,7 +177,7 @@ IF [dbo].[fn_icd_version]() = 'Rwanda'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_who_code like @ps_icd_code OR a.icd10_who_code is null)
+		AND (a.icd10_who_code like @ps_icd_code)
 		
 	ELSE
 		SELECT a.assessment_id,
@@ -197,7 +203,7 @@ IF [dbo].[fn_icd_version]() = 'Rwanda'
 		AND a.status like @ps_status
 		AND a.description like @ps_description
 		AND (@ps_assessment_category_id IS NULL OR a.assessment_category_id = @ps_assessment_category_id)
-		AND (a.icd10_who_code like @ps_icd_code OR a.icd10_who_code is null)
+		AND (a.icd10_who_code like @ps_icd_code)
 	end
 
 GO
