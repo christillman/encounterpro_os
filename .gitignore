@@ -17,6 +17,7 @@ Client/extension/*.pbl
 Client/server/*.pbl
 Client/service/*.pbl
 Client/*.pbl
+Client/*.opt
 Client/base/*.pbd
 Client/shell/*.pbd
 Client/chart/*.pbd
