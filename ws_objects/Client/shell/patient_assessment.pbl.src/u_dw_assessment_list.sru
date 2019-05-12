@@ -59,6 +59,7 @@ public function integer sort_rows ()
 public function string pick_top_20_code ()
 public function integer set_assessment_specialty (long pl_row, string ps_flag)
 public subroutine assessment_menu (long pl_row)
+public function integer search_icd_list ()
 end prototypes
 
 public function integer search_top_20 ();str_popup popup
@@ -112,7 +113,7 @@ CHOOSE CASE current_search
 		li_sts = retrieve_short_list(top_20_user_id)
 	CASE "CATEGORY"
 		li_sts = retrieve_assessments(assessment_category_id, ls_null, ls_null)
-	CASE "ICD"
+	CASE "ICD", "ICD_LIST"
 		li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
 	CASE "DESCRIPTION"
 		li_sts = retrieve_assessments(ls_null, description, ls_null)
@@ -539,6 +540,29 @@ END CHOOSE
 return
 
 end subroutine
+
+public function integer search_icd_list ();str_popup_return popup_return
+string ls_null
+integer li_sts
+
+setnull(ls_null)
+
+open(w_pop_assessment_icd_list)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return 0
+
+icd_code = popup_return.items[1]
+search_description = popup_return.descriptions[1]
+
+current_search = "ICD_LIST"
+
+li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
+if li_sts < 0 then return -1
+
+return li_sts
+
+
+end function
 
 on u_dw_assessment_list.create
 call super::create

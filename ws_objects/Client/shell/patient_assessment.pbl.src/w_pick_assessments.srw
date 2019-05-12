@@ -50,6 +50,8 @@ type st_common_flag from statictext within w_pick_assessments
 end type
 type dw_assessments from u_dw_assessment_list within w_pick_assessments
 end type
+type st_icd_list from statictext within w_pick_assessments
+end type
 end forward
 
 global type w_pick_assessments from w_window_base
@@ -79,6 +81,7 @@ st_description st_description
 cb_new_assessment cb_new_assessment
 st_common_flag st_common_flag
 dw_assessments dw_assessments
+st_icd_list st_icd_list
 end type
 global w_pick_assessments w_pick_assessments
 
@@ -120,7 +123,7 @@ end prototypes
 public subroutine picked_assessment_menu (long pl_row);str_popup popup
 str_popup_return popup_return
 string buttons[]
-integer button_pressed, li_sts, li_service_count
+integer button_pressed, li_sts
 window lw_pop_buttons
 string ls_description
 string ls_assessment_id
@@ -376,6 +379,7 @@ this.st_description=create st_description
 this.cb_new_assessment=create cb_new_assessment
 this.st_common_flag=create st_common_flag
 this.dw_assessments=create dw_assessments
+this.st_icd_list=create st_icd_list
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_search_title
 this.Control[iCurrent+2]=this.st_assessment_type_title
@@ -401,6 +405,7 @@ this.Control[iCurrent+21]=this.st_description
 this.Control[iCurrent+22]=this.cb_new_assessment
 this.Control[iCurrent+23]=this.st_common_flag
 this.Control[iCurrent+24]=this.dw_assessments
+this.Control[iCurrent+25]=this.st_icd_list
 end on
 
 on w_pick_assessments.destroy
@@ -429,6 +434,7 @@ destroy(this.st_description)
 destroy(this.cb_new_assessment)
 destroy(this.st_common_flag)
 destroy(this.dw_assessments)
+destroy(this.st_icd_list)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_pick_assessments
@@ -439,7 +445,7 @@ end type
 
 type st_search_title from statictext within w_pick_assessments
 integer x = 1883
-integer y = 380
+integer y = 352
 integer width = 558
 integer height = 88
 integer textsize = -12
@@ -528,7 +534,7 @@ end event
 
 type pb_down_sel from u_picture_button within w_pick_assessments
 integer x = 2679
-integer y = 996
+integer y = 1032
 integer width = 137
 integer height = 116
 integer taborder = 10
@@ -552,7 +558,7 @@ end event
 
 type pb_up_sel from u_picture_button within w_pick_assessments
 integer x = 2679
-integer y = 868
+integer y = 904
 integer width = 137
 integer height = 116
 integer taborder = 10
@@ -574,7 +580,7 @@ end event
 
 type st_page_sel from statictext within w_pick_assessments
 integer x = 2542
-integer y = 800
+integer y = 836
 integer width = 274
 integer height = 64
 integer textsize = -8
@@ -656,7 +662,7 @@ end type
 
 type st_category from statictext within w_pick_assessments
 integer x = 2514
-integer y = 492
+integer y = 544
 integer width = 329
 integer height = 108
 integer taborder = 80
@@ -682,7 +688,7 @@ end event
 
 type st_top_20 from statictext within w_pick_assessments
 integer x = 1486
-integer y = 492
+integer y = 548
 integer width = 329
 integer height = 108
 integer taborder = 80
@@ -721,7 +727,7 @@ end event
 
 type st_icd_code from statictext within w_pick_assessments
 integer x = 2171
-integer y = 492
+integer y = 548
 integer width = 329
 integer height = 108
 integer taborder = 80
@@ -747,9 +753,9 @@ end event
 
 type st_search_status from statictext within w_pick_assessments
 integer x = 1481
-integer y = 628
+integer y = 664
 integer width = 1353
-integer height = 88
+integer height = 108
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -803,7 +809,7 @@ end type
 
 type dw_selected_items from u_dw_pick_list within w_pick_assessments
 integer x = 1509
-integer y = 864
+integer y = 900
 integer width = 1157
 integer height = 596
 integer taborder = 20
@@ -904,7 +910,7 @@ end event
 
 type st_selected_items from statictext within w_pick_assessments
 integer x = 1509
-integer y = 768
+integer y = 804
 integer width = 1157
 integer height = 92
 integer textsize = -14
@@ -921,7 +927,7 @@ end type
 
 type st_description from statictext within w_pick_assessments
 integer x = 1829
-integer y = 492
+integer y = 548
 integer width = 329
 integer height = 108
 integer taborder = 80
@@ -979,12 +985,12 @@ select_assessment(lstr_assessment)
 end event
 
 type st_common_flag from statictext within w_pick_assessments
-integer x = 2574
-integer y = 388
-integer width = 270
-integer height = 76
+integer x = 2514
+integer y = 432
+integer width = 329
+integer height = 108
 boolean bringtotop = true
-integer textsize = -8
+integer textsize = -10
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -1029,6 +1035,7 @@ search_type = current_search
 st_top_20.backcolor = color_object
 st_category.backcolor = color_object
 st_icd_code.backcolor = color_object
+st_icd_list.backcolor = color_object
 st_description.backcolor = color_object
 
 st_search_status.text = ps_description
@@ -1042,6 +1049,9 @@ CHOOSE CASE current_search
 		st_common_flag.visible = true
 	CASE "ICD"
 		st_icd_code.backcolor = color_object_selected
+		st_common_flag.visible = true
+	CASE "ICD_LIST"
+		st_icd_list.backcolor = color_object_selected
 		st_common_flag.visible = true
 	CASE "DESCRIPTION"
 		st_description.backcolor = color_object_selected
@@ -1060,6 +1070,32 @@ lstr_assessment = datalist.get_assessment(ls_assessment_id)
 if isnull(lstr_assessment.assessment_id) then return
 
 select_assessment(lstr_assessment)
+
+end event
+
+type st_icd_list from statictext within w_pick_assessments
+integer x = 2171
+integer y = 432
+integer width = 329
+integer height = 108
+integer taborder = 80
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+string text = "ICD List"
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
+end type
+
+event clicked;dw_assessments.search_icd_list()
 
 end event
 
