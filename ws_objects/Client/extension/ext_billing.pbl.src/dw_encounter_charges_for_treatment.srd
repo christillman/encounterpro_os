@@ -8,7 +8,7 @@ detail(height=84 color="536870912" transparency="0" gradient.color="8421504" gra
 table(column=(type=long updatewhereclause=yes name=problem_id dbname="problem_id" )
  column=(type=long updatewhereclause=yes name=assessment_sequence dbname="assessment_sequence" )
  column=(type=char(24) updatewhereclause=yes name=assessment_id dbname="assessment_id" )
- column=(type=char(80) updatewhereclause=yes name=assessment_description dbname="assessment_description" )
+ column=(type=char(255) updatewhereclause=yes name=assessment_description dbname="assessment_description" )
  column=(type=char(12) updatewhereclause=yes name=icd10_code dbname="icd10_code" )
  column=(type=long updatewhereclause=yes name=encounter_charge_id dbname="encounter_charge_id" )
  column=(type=long updatewhereclause=yes name=treatment_id dbname="treatment_id" )
@@ -103,4 +103,3 @@ export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0 )
 import.xml()
 export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" )
 export.xhtml()
- 
