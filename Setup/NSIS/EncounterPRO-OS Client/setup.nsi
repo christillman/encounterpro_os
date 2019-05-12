@@ -12,13 +12,13 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.3
+  !define VERSION   7.0.3.1
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3
+  !define EproClient_VERSION   7.0.3.1
   !define Database_Mod_Level   204
   !define PBRuntime_VERSION   17.3.1858
   !define EncounterPRO_OS_Utilities_VERSION   1.0.1.0
@@ -47,6 +47,7 @@
 
   ; Installing the help file
   !define COMMONFILES_TARGET "EncounterPRO-OS"
+  !define APPDATA_TARGET "EncounterPRO-OS"
 
 ; ------------------------------------------
 ; Variables
@@ -197,14 +198,14 @@
         File "${SRC_EPRO}\*.*"
         DetailPrint "Setting ini SERVER to $SERVER"
         DetailPrint "Setting ini DATABASE to $DATABASE"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
         File "${SOURCE_ROOT}\Icons\epmanos.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
-        WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
-        WriteINIStr "$INSTDIR\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
         SetDetailsPrint both
     SectionEnd
     
@@ -416,10 +417,11 @@ Function SetInstallDir
 FunctionEnd
 
 Function cpServerAndDatabase
+  SetOutPath "$APPDATA\${APPDATA_TARGET}"
   ; if EncounterPRO.ini doesn't exist, don't try to get its data
-  IfFileExists "$INSTDIR\EncounterPRO.ini" 0 lbl_?servdbdone
+  IfFileExists "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" 0 lbl_?servdbdone
   ; Read Server and Database from EncounterPRO.ini
-  ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
-  ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
+  ReadINIStr $SERVER "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver"
+  ReadINIStr $DATABASE "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname"
   lbl_?servdbdone:
 FunctionEnd
