@@ -196,16 +196,7 @@
         SetOverwrite on
         SetDetailsPrint both
         File "${SRC_EPRO}\*.*"
-        DetailPrint "Setting ini SERVER to $SERVER"
-        DetailPrint "Setting ini DATABASE to $DATABASE"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
         File "${SOURCE_ROOT}\Icons\epmanos.ico"
-        ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
         SetDetailsPrint both
     SectionEnd
     
@@ -218,6 +209,22 @@
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
+
+    Section '-Ini Files' SecHelp
+        SetOutPath '$APPDATA\${APPDATA_TARGET}'
+        File "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\EncounterPRO.ini"
+        DetailPrint "Setting ini SERVER to $SERVER"
+        DetailPrint "Setting ini DATABASE to $DATABASE"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
+        ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
+        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
+        SetDetailsPrint both
+    SectionEnd
+
 
 ; Just put it into attachments
 ;    Section '-Mod Level Script' SecML
