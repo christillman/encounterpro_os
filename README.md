@@ -3,8 +3,12 @@ EncounterPro Open Source Electronic Health Record EHR/EMR and Physician Workflow
 
 IDE / app dev notes
 
-Use  the latest binary installer to install the compiled EncounterPro (currently 6.2.2). 
-That will install SQL Server Express and the database. The SQL Server name will be 
+The Release Notes for EncounterPro_OS are linked in the Wiki homepage: 
+
+https://github.com/christillman/encounterpro_os/wiki
+
+Use  the latest binary installer to install the compiled EncounterPro. 
+The "Full" installer will install SQL Server Express and the database. The SQL Server name will be 
 
 localhost\encounterpro_os
 
@@ -30,5 +34,6 @@ development, I use localhost and a file share named attachments.
 UPDATE c_Attachment_Location 
 SET attachment_server = 'localhost', attachment_share = 'attachments'
 WHERE attachment_location_id = 2
+
 
 
