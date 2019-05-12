@@ -82,7 +82,6 @@ end forward
 
 global type w_pick_user from w_window_base
 integer height = 1836
-boolean controlmenu = false
 windowtype windowtype = response!
 st_search_title st_search_title
 pb_down_sel pb_down_sel
@@ -204,7 +203,7 @@ if not allow_multiple then
 			FROM c_1_Record;
 			if not tf_check() then ls_patient_name = "this patient"
 
-			// Mark - Nobody likes this prompt to until we smarten up the preferences just automatically add the selection to the care team
+			// Mark - Nobody likes this prompt so until we smarten up the preferences just automatically add the selection to the care team
 //			ls_message = "Would you like to add "
 //			ls_message += lstr_users.user[1].user_full_name
 //			ls_message += " to the Care Team for "
