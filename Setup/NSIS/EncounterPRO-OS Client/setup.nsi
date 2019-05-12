@@ -19,9 +19,9 @@
   
 ; Included Versions
   !define EproClient_VERSION   7.0.3.1
-  !define Database_Mod_Level   204
+  !define Database_Mod_Level   205
   !define PBRuntime_VERSION   17.3.1858
-  !define EncounterPRO_OS_Utilities_VERSION   1.0.1.0
+  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
@@ -210,7 +210,7 @@
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
 
-    Section '-Ini Files' SecHelp
+    Section '-Ini Files' SecIni
         SetOutPath '$APPDATA\${APPDATA_TARGET}'
         File "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\EncounterPRO.ini"
         DetailPrint "Setting ini SERVER to $SERVER"
