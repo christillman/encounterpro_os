@@ -54,3 +54,4 @@ GRANT EXECUTE
 	ON [dbo].[sp_get_char_key_resultset]
 	TO [cprsystem]
 GO
+-- EXEC sp_get_char_key_resultset 'c_Authority', 'authority_id', 'Guardian'
