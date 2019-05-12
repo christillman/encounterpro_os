@@ -220,6 +220,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -265,29 +266,44 @@ windows_api = CREATE u_windows_api
 string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
 RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
 
+// Create the log object
+log = CREATE u_event_log
+
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
 
-// Get the value of %APPDATA%
-this.GetContextService("Keyword", lcxk_base)
-lcxk_base.GetContextKeywords("APPDATA", ls_values)
-IF Upperbound(ls_values) > 0 THEN
-   ls_Appdata = ls_values[1]
-ELSE
-   ls_Appdata = "* APPDATA UNDEFINED *"
+//// Get the value of %APPDATA%
+//this.GetContextService("Keyword", lcxk_base)
+//lcxk_base.GetContextKeywords("APPDATA", ls_values)
+//IF Upperbound(ls_values) > 0 THEN
+//   ls_Appdata = ls_values[1]
+//ELSE
+//   ls_Appdata = "* APPDATA UNDEFINED *"
+//END IF
+//
+//ini_file = ls_Appdata + "\EncounterPro_OS\EncounterPro.ini"
+//
+//// If the INI directory doesn't exist, then create it
+//if not fileexists(ls_Appdata + "\EncounterPro_OS") then
+//	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
+//end if
+//
+
+// Get our application path so we can set the INI file
+lul_hinst = Handle( GetApplication() )
+lul_maxpath = 260
+ls_apppath = Space( lul_maxpath )    // pre-allocate memory
+lul_rc = GetModuleFilenameA( lul_hinst, ls_apppath, lul_maxpath )
+IF lul_rc > 0 THEN
+	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)
+	program_directory = ls_drive + ls_dir
+	ini_file = program_directory + "\EncounterPRO.ini"
+else
+	program_directory = ""
+	ini_file = "EncounterPRO.ini"
 END IF
-
-ini_file = ls_Appdata + "\EncounterPro_OS\EncounterPro.ini"
-
-// If the INI directory doesn't exist, then create it
-if not fileexists(ls_Appdata + "\EncounterPro_OS") then
-	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
-end if
-
-// Create the log object
-log = CREATE u_event_log
 
 // If the INI file doesn't exist, then create an empty one
 if not fileexists(ini_file) then

@@ -47,7 +47,7 @@
 
   ; Installing the help file
   !define COMMONFILES_TARGET "EncounterPRO-OS"
-  !define APPDATA_TARGET "EncounterPRO-OS"
+  !define APPDATA_TARGET "EncounterPRO_OS"
 
 ; ------------------------------------------
 ; Variables
@@ -196,7 +196,16 @@
         SetOverwrite on
         SetDetailsPrint both
         File "${SRC_EPRO}\*.*"
+        DetailPrint "Setting ini SERVER to $SERVER"
+        DetailPrint "Setting ini DATABASE to $DATABASE"
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
         File "${SOURCE_ROOT}\Icons\epmanos.ico"
+        ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
+        WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
+        WriteINIStr "$INSTDIR\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
         SetDetailsPrint both
     SectionEnd
     
@@ -210,20 +219,22 @@
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
 
-    Section '-Ini Files' SecIni
-        SetOutPath '$APPDATA\${APPDATA_TARGET}'
-        File "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\EncounterPRO.ini"
-        DetailPrint "Setting ini SERVER to $SERVER"
-        DetailPrint "Setting ini DATABASE to $DATABASE"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
-        ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
-        WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
-        SetDetailsPrint both
-    SectionEnd
+    ; Section '-Ini Files' SecIni
+    ;     SetOutPath "$APPDATA\${APPDATA_TARGET}"
+    ;     SetDetailsPrint both
+    ;     DetailPrint "Installing EncounterPro.ini to $APPDATA\${APPDATA_TARGET}"
+    ;     File "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\EncounterPRO.ini"
+    ;     DetailPrint "Setting ini SERVER to $SERVER"
+    ;     DetailPrint "Setting ini DATABASE to $DATABASE"
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
+    ;     ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
+    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
+    ;     SetDetailsPrint both
+    ; SectionEnd
 
 
 ; Just put it into attachments
@@ -426,9 +437,9 @@ FunctionEnd
 Function cpServerAndDatabase
   SetOutPath "$APPDATA\${APPDATA_TARGET}"
   ; if EncounterPRO.ini doesn't exist, don't try to get its data
-  IfFileExists "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" 0 lbl_?servdbdone
+  IfFileExists "$INSTDIR\EncounterPRO.ini" 0 lbl_?servdbdone
   ; Read Server and Database from EncounterPRO.ini
-  ReadINIStr $SERVER "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver"
-  ReadINIStr $DATABASE "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname"
+  ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
+  ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
   lbl_?servdbdone:
 FunctionEnd
