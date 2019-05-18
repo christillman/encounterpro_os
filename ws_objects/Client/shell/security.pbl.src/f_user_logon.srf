@@ -19,6 +19,7 @@ if isnull(current_scribe) then
 		// Do these things when a user logs on
 		current_scribe.get_preferences()
 		datalist.clear_cache("display_scripts")  // force a display_script reload
+		datalist.clear_cache("menus")  // force menu reload
 		common_thread.default_display_style = datalist.get_preference("PREFERENCES", "default_display_style")
 	end if
 	
