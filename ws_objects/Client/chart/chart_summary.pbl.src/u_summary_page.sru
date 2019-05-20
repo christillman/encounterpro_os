@@ -1452,31 +1452,31 @@ window lw_parent
 w_window_base lw_window
 powerobject lo_object
 integer li_iterations
-
-// A bug in PowerBuilder is causing the parent window of the w_pop_time_interval popup
-// to sometimes be incorrect, which causes encounterpro to freeze when the popup closes.
-// This sections attempts to identify the current active window and uses it as the
-// parent of the popup
-li_iterations = 0
-lo_object = getfocus()
-DO WHILE isvalid(lo_object) and li_iterations < 20
-	if left(lo_object.classname(), 2) = "w_" then
-		lw_parent = lo_object
-		exit
-	end if
-	li_iterations += 1
-	lo_object = lo_object.getparent()
-LOOP
-
-if not isvalid(lw_parent) then
-	lw_parent = w_main
-end if
+//
+//// A bug in PowerBuilder is causing the parent window of the w_pop_time_interval popup
+//// to sometimes be incorrect, which causes encounterpro to freeze when the popup closes.
+//// This sections attempts to identify the current active window and uses it as the
+//// parent of the popup
+//li_iterations = 0
+//lo_object = getfocus()
+//DO WHILE isvalid(lo_object) and li_iterations < 20
+//	if left(lo_object.classname(), 2) = "w_" then
+//		lw_parent = lo_object
+//		exit
+//	end if
+//	li_iterations += 1
+//	lo_object = lo_object.getparent()
+//LOOP
+//
+//if not isvalid(lw_parent) then
+//	lw_parent = w_main
+//end if
 
 popup.title = "Past Encounters"
 popup.data_row_count = 2
 popup.items[1] = current_patient.cpr_id
 popup.items[2] = "SHOW"
-openwithparm(lw_window, popup, "w_encounter_list_pick", lw_parent)
+openwithparm(lw_window, popup, "w_encounter_list_pick", f_getparentwindow(this))
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
