@@ -136,7 +136,6 @@ private str_reentry_state reentry_state
  
 
 end variables
-
 forward prototypes
 public function string workplan_item_attribute (u_ds_data puo_workplan_items, string ps_which_item, string ps_attribute)
 public function string treatment_workplan_attribute (long pl_treatment_id, string ps_attribute)
@@ -3792,6 +3791,7 @@ DO
 	CATCH (throwable lt_error2)
 		lb_error = true
 		ls_error = lt_error2.text
+		// debugbreak() // If window is closing, error_retries_max becomes null
 		if li_retries >= error_retries_max OR ll_len > 0 then
 			THROW lt_error2
 			return ls_null
