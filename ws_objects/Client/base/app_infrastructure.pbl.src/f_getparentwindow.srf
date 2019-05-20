@@ -1,0 +1,32 @@
+﻿$PBExportHeader$f_getparentwindow.srf
+global type f_getparentwindow from function_object
+end type
+
+forward prototypes
+global function window f_getparentwindow (readonly powerobject myself)
+end prototypes
+
+global function window f_getparentwindow (readonly powerobject myself);window lw_active_window
+powerobject lo_object
+integer li_iterations
+
+lw_active_window = w_main
+li_iterations = 0
+lo_object = myself
+DO WHILE isvalid(lo_object) and li_iterations < 20
+	if left(lo_object.classname(), 2) = "w_" then
+		lw_active_window = lo_object
+		exit
+	end if
+	li_iterations += 1
+	lo_object = lo_object.getparent()
+LOOP
+
+return lw_active_window
+
+
+
+
+
+end function
+
