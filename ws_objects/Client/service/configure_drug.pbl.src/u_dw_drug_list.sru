@@ -560,21 +560,22 @@ else
 end if
 
 settransobject(sqlca)
-
-// A bug in PowerBuilder is causing the parent window of the w_pop_time_interval popup
-// to sometimes be incorrect, which causes encounterpro to freeze when the popup closes.
-// This sections attempts to identify the current active window and uses it as the
-// parent of the popup
-li_iterations = 0
-lo_object = this
-DO WHILE isvalid(lo_object) and li_iterations < 20
-	if left(lo_object.classname(), 2) = "w_" then
-		myparentwindow = lo_object
-		exit
-	end if
-	li_iterations += 1
-	lo_object = lo_object.getparent()
-LOOP
+myparentwindow = f_getparentwindow(this)
+//
+//// A bug in PowerBuilder is causing the parent window of the w_pop_time_interval popup
+//// to sometimes be incorrect, which causes encounterpro to freeze when the popup closes.
+//// This sections attempts to identify the current active window and uses it as the
+//// parent of the popup
+//li_iterations = 0
+//lo_object = this
+//DO WHILE isvalid(lo_object) and li_iterations < 20
+//	if left(lo_object.classname(), 2) = "w_" then
+//		myparentwindow = lo_object
+//		exit
+//	end if
+//	li_iterations += 1
+//	lo_object = lo_object.getparent()
+//LOOP
 
 return 1
 
