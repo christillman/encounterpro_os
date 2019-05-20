@@ -15,7 +15,6 @@ end type
 end forward
 
 global type w_svc_rtf from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -33,9 +32,7 @@ type variables
 u_component_service	service
 
 long display_script_id
-
 end variables
-
 forward prototypes
 public function integer refresh ()
 end prototypes
@@ -169,7 +166,15 @@ postevent("post_open")
 end event
 
 event post_open;call super::post_open;
+// The rtf gets very upset when we try to close it as it's still drawing
+// (it hates having its references removed) so wait for it finish.
+
+cb_finished.enabled = False
+cb_be_back.enabled = False
 refresh()
+cb_finished.enabled = True
+cb_be_back.enabled = True
+
 
 // Make sure the focus stays here
 enable_window()
@@ -179,8 +184,6 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_svc_rtf
 integer x = 2857
 integer y = 0
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_svc_rtf
@@ -204,12 +207,15 @@ string facename = "Arial"
 string text = "Finished"
 end type
 
-event clicked;str_popup_return popup_return
+event clicked;
+
+str_popup_return popup_return
 
 popup_return.item_count = 1
 popup_return.items[1] = "OK"
 
 closewithreturn(parent, popup_return)
+
 end event
 
 type cb_be_back from commandbutton within w_svc_rtf
