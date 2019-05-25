@@ -136,6 +136,7 @@ private str_reentry_state reentry_state
  
 
 end variables
+
 forward prototypes
 public function string workplan_item_attribute (u_ds_data puo_workplan_items, string ps_which_item, string ps_attribute)
 public function string treatment_workplan_attribute (long pl_treatment_id, string ps_attribute)
@@ -429,6 +430,8 @@ parent_command_index = command_count
 
 command_error = false
 command_error_text = ""
+
+//log.log_db(this, "display_script_command", "Script command " + lower(current_context_object) + ": " + pstr_command.display_command, 3)
 
 TRY
 	CHOOSE CASE lower(current_context_object)
@@ -3743,6 +3746,17 @@ string ls_text
 
 setnull(ls_null)
 
+log.log_db(this, "display_script_command", "Script id " + string(pl_display_script_id), 2)
+
+RETURN display_script_a( pl_display_script_id, &
+											pstr_encounter, &
+											pstr_assessment, &
+											pstr_treatment, &
+											false)
+
+// Skipping the get_text, which is quite slow, and the retry loop, hoping this bug has been 
+// fixed in the interim 10 years ... CDT 25/5/2019
+
 // This wrapper puts the RTF display script function inside a TRY/CATCH structure
 // because of the incidents where the TX Text Control appears to breifly stop working
 // at times on a terminal server.  The basic idea is that if the text control is empty,
@@ -3859,10 +3873,9 @@ if not nested then
 	process_header_footer = f_string_to_boolean(ls_temp)
 end if
 
-
+//setredraw(false)
 display_script(pl_display_script_id, lstr_encounter, lstr_assessment, lstr_treatment)
-
-
+//setredraw(true)
 end subroutine
 
 public subroutine display_treatment (long pl_treatment_id, long pl_display_script_id);str_treatment_description lstr_treatment
@@ -3882,9 +3895,9 @@ if isnull(pl_display_script_id) then
 	pl_display_script_id = datalist.get_display_script_id("Treatment", lstr_treatment.treatment_type)
 end if
 
-setredraw(false)
+//setredraw(false)
 display_script(pl_display_script_id, last_encounter, last_assessment, lstr_treatment)
-setredraw(true)
+//setredraw(true)
 
 // Restore treatment context
 if lstr_last_treatment.treatment_id > 0 then
@@ -3916,9 +3929,9 @@ if isnull(pl_display_script_id) or pl_display_script_id <= 0 then
 	return
 end if
 
-setredraw(false)
+//setredraw(false)
 display_script(pl_display_script_id, lstr_encounter, last_assessment, last_treatment)
-setredraw(true)
+//setredraw(true)
 
 // Restore encounter context
 if lstr_last_encounter.encounter_id > 0 then
@@ -4644,9 +4657,9 @@ if isnull(pl_display_script_id) then
 	if isnull(pl_display_script_id) or pl_display_script_id <= 0 then log_error("No display script_id")
 end if
 
-setredraw(false)
+//setredraw(false)
 display_script(pl_display_script_id, last_encounter, pstr_assessment, last_treatment)
-setredraw(true)
+//setredraw(true)
 
 // Restore the last assessment
 if lstr_last_assessment.problem_id > 0 then
@@ -6857,7 +6870,6 @@ else
 	end if
 	
 	if not lb_nested then
-		//if auto_redraw_off then set_redraw(false)
 		// initialize some state
 		signature_object_id = 0
 		command_count = 0
@@ -6939,7 +6951,6 @@ for i = ll_first_command_index to lstr_display_script.display_command_count
 			
 			SetPointer(Arrow!)
 			//if auto_redraw_off then set_redraw(true)
-			this.setredraw(true)
 			return ls_rtf
 		end if
 
