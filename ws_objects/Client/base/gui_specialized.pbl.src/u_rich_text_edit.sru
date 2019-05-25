@@ -3748,14 +3748,11 @@ setnull(ls_null)
 
 log.log_db(this, "display_script_command", "Script id " + string(pl_display_script_id), 2)
 
-RETURN display_script_a( pl_display_script_id, &
-											pstr_encounter, &
-											pstr_assessment, &
-											pstr_treatment, &
-											false)
-
-// Skipping the get_text, which is quite slow, and the retry loop, hoping this bug has been 
-// fixed in the interim 10 years ... CDT 25/5/2019
+//RETURN display_script_a( pl_display_script_id, &
+//											pstr_encounter, &
+//											pstr_assessment, &
+//											pstr_treatment, &
+//											false)
 
 // This wrapper puts the RTF display script function inside a TRY/CATCH structure
 // because of the incidents where the TX Text Control appears to breifly stop working
@@ -3768,14 +3765,14 @@ RETURN display_script_a( pl_display_script_id, &
 // reference to the underlying ActiveX control for a given service.
 
 
-// First get the length of the text in the control so we know whether or not we can
-// auto-retry on error
+// First get the number of lines in the control so we know 
+// whether or not we can auto-retry on error
 li_retries = 0
 DO
 	li_retries += 1
 	lb_error = false
 	TRY
-		ll_len = len(get_text())
+		ll_len =linecount()
 	CATCH (throwable lt_error)
 		lb_error = true
 		ls_error = lt_error.text
