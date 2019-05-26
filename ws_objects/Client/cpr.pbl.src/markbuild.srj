@@ -809,7 +809,6 @@ OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_attachments
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\patient_utility.pbl,f_create_new_patient,f
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\security.pbl,f_log_security_event,f
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\svc_procedure.pbl,tf_get_procedure_charge,f
-OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\configure_assessment.pbl,u_dw_assessment_list,u
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_xml.pbl,str_authority_type,s
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\base\database_infrastructure.pbl,tf_begin_transaction,f
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\shortlist.pbl,f_copy_top_20_common_list,f
@@ -883,6 +882,7 @@ OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\svc_procedure.pbl
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\observation_tree.pbl,w_pick_result_severity,w
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\configure_drug.pbl,w_pick_drug_cocktail,w
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\drug_administration.pbl,w_new_package,w
+OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\base\app_infrastructure.pbl,f_getparentwindow,f
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_xml.pbl,str_informationsystem_type,s
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_xml.pbl,str_patientid_type,s
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\progress.pbl,f_set_progress3,f
@@ -1097,6 +1097,7 @@ OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_observation
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_pbreports.pbl,u_component_report_external_source,u
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\svc_get_refills.pbl,u_component_service_get_refills,u
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\drug_administration.pbl,u_drug_package,u
+OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\patient_assessment.pbl,u_dw_assessment_list,u
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\service\configure_assessment.pbl,u_tabpage_assessment_info,u
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\extension\ext_xml.pbl,str_ccr_testtype,s
 OBJ:C:\Users\tofft\EncounterPro\encounterpro_os\Client\shell\room.pbl,str_room,s
