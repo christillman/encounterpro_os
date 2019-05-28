@@ -40,8 +40,6 @@ type cb_cancel from commandbutton within w_find_assessment
 end type
 type st_title from statictext within w_find_assessment
 end type
-type st_icd_list from statictext within w_find_assessment
-end type
 end forward
 
 global type w_find_assessment from w_window_base
@@ -66,7 +64,6 @@ dw_assessments dw_assessments
 cb_ok cb_ok
 cb_cancel cb_cancel
 st_title st_title
-st_icd_list st_icd_list
 end type
 global w_find_assessment w_find_assessment
 
@@ -187,7 +184,6 @@ this.dw_assessments=create dw_assessments
 this.cb_ok=create cb_ok
 this.cb_cancel=create cb_cancel
 this.st_title=create st_title
-this.st_icd_list=create st_icd_list
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_search_title
 this.Control[iCurrent+2]=this.st_assessment_type_title
@@ -208,7 +204,6 @@ this.Control[iCurrent+16]=this.dw_assessments
 this.Control[iCurrent+17]=this.cb_ok
 this.Control[iCurrent+18]=this.cb_cancel
 this.Control[iCurrent+19]=this.st_title
-this.Control[iCurrent+20]=this.st_icd_list
 end on
 
 on w_find_assessment.destroy
@@ -232,7 +227,6 @@ destroy(this.dw_assessments)
 destroy(this.cb_ok)
 destroy(this.cb_cancel)
 destroy(this.st_title)
-destroy(this.st_icd_list)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_find_assessment
@@ -653,7 +647,6 @@ search_type = current_search
 st_top_20.backcolor = color_object
 st_category.backcolor = color_object
 st_icd_code.backcolor = color_object
-st_icd_list.backcolor = color_object
 st_description.backcolor = color_object
 
 st_search_status.text = ps_description
@@ -667,9 +660,6 @@ CHOOSE CASE current_search
 		st_common_flag.visible = true
 	CASE "ICD"
 		st_icd_code.backcolor = color_object_selected
-		st_common_flag.visible = true
-	CASE "ICD_LIST"
-		st_icd_list.backcolor = color_object_selected
 		st_common_flag.visible = true
 	CASE "DESCRIPTION"
 		st_description.backcolor = color_object_selected
@@ -773,30 +763,4 @@ boolean enabled = false
 alignment alignment = center!
 boolean focusrectangle = false
 end type
-
-type st_icd_list from statictext within w_find_assessment
-integer x = 2162
-integer y = 688
-integer width = 334
-integer height = 108
-integer taborder = 80
-boolean bringtotop = true
-integer textsize = -10
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long textcolor = 33554432
-long backcolor = 67108864
-string text = "ICD List"
-alignment alignment = center!
-boolean border = true
-borderstyle borderstyle = styleraised!
-boolean focusrectangle = false
-end type
-
-event clicked;dw_assessments.search_icd_list()
-
-end event
 
