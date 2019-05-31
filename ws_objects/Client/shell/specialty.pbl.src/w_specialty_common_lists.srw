@@ -26,7 +26,6 @@ end forward
 
 global type w_specialty_common_lists from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -192,6 +191,9 @@ event close;if not isnull(common_data_list) and isvalid(common_data_list) then D
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_specialty_common_lists
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_specialty_common_lists
 end type
 
 type cb_clear_all from commandbutton within w_specialty_common_lists
@@ -389,8 +391,8 @@ type pb_up from u_picture_button within w_specialty_common_lists
 boolean visible = false
 integer x = 2217
 integer y = 396
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 11
 boolean bringtotop = true
 string picturename = "icon_up.bmp"
