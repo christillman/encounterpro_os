@@ -19,7 +19,7 @@ end forward
 
 global type u_help_bar from userobject
 integer width = 2491
-integer height = 80
+integer height = 50
 long backcolor = 12632256
 long tabtextcolor = 33554432
 event documentation pbm_custom75
@@ -359,7 +359,6 @@ end on
 
 type st_clock from statictext within u_help_bar
 integer x = 1961
-integer y = 8
 integer width = 521
 integer height = 60
 integer textsize = -8
@@ -375,7 +374,6 @@ end type
 
 type st_msg from statictext within u_help_bar
 integer x = 96
-integer y = 8
 integer width = 1166
 integer height = 60
 integer textsize = -8
@@ -390,7 +388,6 @@ boolean focusrectangle = false
 end type
 
 type p_alert from picture within u_help_bar
-integer y = 8
 integer width = 96
 integer height = 60
 string picturename = "result_0.bmp"
@@ -408,7 +405,6 @@ end event
 
 type st_progress_back from statictext within u_help_bar
 integer x = 1239
-integer y = 8
 integer width = 699
 integer height = 60
 integer textsize = -10
@@ -426,7 +422,7 @@ end type
 
 type st_progress_fill from statictext within u_help_bar
 integer x = 1243
-integer y = 12
+integer y = 4
 integer width = 247
 integer height = 52
 integer textsize = -10
@@ -442,7 +438,6 @@ end type
 
 type st_about from statictext within u_help_bar
 integer x = 1239
-integer y = 8
 integer width = 699
 integer height = 60
 boolean bringtotop = true
