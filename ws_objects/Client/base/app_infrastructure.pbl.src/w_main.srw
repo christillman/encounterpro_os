@@ -392,13 +392,13 @@ end if
 end event
 
 event activate;call super::activate;
-//window lw_active_window
-//
-//lw_active_window = f_active_window()
-//
-//if not isnull(lw_active_window) and isvalid(lw_active_window) then
-//	if lw_active_window.visible then lw_active_window.show()
-//end if
+window lw_active_window
+
+lw_active_window = f_active_window()
+
+if not isnull(lw_active_window) and isvalid(lw_active_window) then
+	if lw_active_window.visible then lw_active_window.show()
+end if
 
 end event
 
