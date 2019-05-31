@@ -29,7 +29,7 @@ boolean allow_editing
 
 // Other states
 string current_search = "TOP20"
-// Values = TOP20, CATEGORY, ICD, DESCRIPTION
+// Values = TOP20, CATEGORY, ICD, ICD_LIST, DESCRIPTION
 
 string top_20_code
 
@@ -62,17 +62,12 @@ public subroutine assessment_menu (long pl_row)
 public function integer search_icd_list ()
 end prototypes
 
-public function integer search_top_20 ();str_popup popup
-str_popup_return popup_return
-string ls_null
+public function integer search_top_20 ();
 integer li_sts
-
-setnull(ls_null)
-
-current_search = "TOP20"
 
 top_20_user_id = current_user.user_id
 search_description = "Personal List"
+current_search = "TOP20"
 
 li_sts = retrieve_short_list(top_20_user_id)
 if li_sts < 0 then return -1
@@ -107,16 +102,17 @@ string ls_null
 
 setnull(ls_null)
 
-
 CHOOSE CASE current_search
 	CASE "TOP20"
 		li_sts = retrieve_short_list(top_20_user_id)
 	CASE "CATEGORY"
 		li_sts = retrieve_assessments(assessment_category_id, ls_null, ls_null)
-	CASE "ICD", "ICD_LIST"
+	CASE "ICD"
 		li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
 	CASE "DESCRIPTION"
 		li_sts = retrieve_assessments(ls_null, description, ls_null)
+	CASE "ICD_LIST"
+		li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
 END CHOOSE
 
 
@@ -154,20 +150,35 @@ return li_sts
 
 end function
 
-public function integer retrieve_assessments (string ps_assessment_category_id, string ps_description, string ps_icd_code);string ls_temp
+public function integer retrieve_assessments (string ps_assessment_category_id, string ps_description, string ps_icd_code);string ls_temp, ls_null
 long ll_count
+
+setnull(ls_null)
 
 dataobject = "dw_sp_assessment_search"
 settransobject(sqlca)
 
-ll_count = retrieve( &
+IF current_search = "ICD" OR current_search = "ICD_LIST" THEN
+
+	ll_count = retrieve( &
+						assessment_type, &
+						ps_assessment_category_id, &
+						ps_description, &
+						ps_icd_code, &
+						ls_null, &
+						status )
+						
+ELSE
+	
+	ll_count = retrieve( &
 						assessment_type, &
 						ps_assessment_category_id, &
 						ps_description, &
 						ps_icd_code, &
 						specialty_id, &
 						status )
-
+END IF
+					
 last_page = 0
 set_page(1, ls_temp)
 
@@ -254,6 +265,7 @@ integer li_sts
 
 setnull(ls_null)
 
+current_search = "TOP20"
 if pb_personal_list then
 	top_20_user_id = current_user.user_id
 	search_description = "Personal List"
@@ -262,13 +274,11 @@ else
 	search_description = "Common List"
 end if
 
-current_search = "TOP20"
-
 li_sts = retrieve_short_list(top_20_user_id)
 if li_sts < 0 then return -1
 
 if li_sts = 0 and pb_personal_list then
-	openwithparm(w_pop_yes_no, "Your personal list is empty.  Do you wish to start with a copy of the common list?")
+	openwithparm(w_pop_yes_no, "Your personal list is empty.  Do you wish to start with a copy of the common list (Recommended: No)?")
 	popup_return = message.powerobjectparm
 	if popup_return.item = "YES" then
 		f_copy_top_20_common_list(current_user.user_id, current_user.specialty_id, top_20_code)
@@ -285,7 +295,7 @@ end function
 
 public function integer remove_top_20 (long pl_row);integer li_sts
 
-if current_search <> "TOP20" then return 0
+if left(current_search,5) <> "TOP20" then return 0
 
 deleterow(pl_row)
 li_sts = update()
@@ -358,7 +368,7 @@ setnull(ll_null)
 
 if pl_row <= 0 then return 0
 
-if current_search <> "TOP20" then return 0
+if left(current_search,5) <> "TOP20" then return 0
 
 ll_row = get_selected_row()
 if ll_row <= 0 then
@@ -382,7 +392,7 @@ end function
 public function integer sort_rows ();integer li_sts
 integer i
 
-if current_search <> "TOP20" then return 0
+if left(current_search,5) <> "TOP20" then return 0
 
 clear_selected()
 
@@ -547,15 +557,25 @@ integer li_sts
 
 setnull(ls_null)
 
-open(w_pop_assessment_icd_list)
-popup_return = message.powerobjectparm
-if popup_return.item_count <> 1 then return 0
-
-icd_code = popup_return.items[1]
-search_description = popup_return.descriptions[1]
-
 current_search = "ICD_LIST"
 
+//open(w_pop_assessment_icd_list)
+//popup_return = message.powerobjectparm
+//if popup_return.item_count <> 1 then return 0
+//
+//icd_code = popup_return.items[1]
+//search_description = popup_return.descriptions[1]
+//
+//li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
+//if li_sts < 0 then return -1
+//
+
+if isnull(specialty_id) then
+	search_description = "browsed assessments"
+else
+	search_description = "browsed specialty assessments"
+end if
+	
 li_sts = retrieve_assessments(ls_null, ls_null, icd_code)
 if li_sts < 0 then return -1
 
@@ -612,7 +632,8 @@ end event
 event constructor;original_assessment_type = "!!!"
 end event
 
-event retrieveend;call super::retrieveend;object.description.width = width - 260
+event retrieveend;call super::retrieveend;
+object.description.width = width - 260
 
 end event
 

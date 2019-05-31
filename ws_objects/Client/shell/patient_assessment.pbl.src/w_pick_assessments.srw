@@ -46,11 +46,17 @@ type st_description from statictext within w_pick_assessments
 end type
 type cb_new_assessment from commandbutton within w_pick_assessments
 end type
+type st_browse_icd from statictext within w_pick_assessments
+end type
+type dw_icd_right from u_dw_pick_list within w_pick_assessments
+end type
+type dw_icd_left from u_dw_pick_list within w_pick_assessments
+end type
 type st_common_flag from statictext within w_pick_assessments
 end type
 type dw_assessments from u_dw_assessment_list within w_pick_assessments
 end type
-type st_icd_list from statictext within w_pick_assessments
+type st_dev_hint from statictext within w_pick_assessments
 end type
 end forward
 
@@ -79,9 +85,12 @@ pb_cancel pb_cancel
 st_selected_items st_selected_items
 st_description st_description
 cb_new_assessment cb_new_assessment
+st_browse_icd st_browse_icd
+dw_icd_right dw_icd_right
+dw_icd_left dw_icd_left
 st_common_flag st_common_flag
 dw_assessments dw_assessments
-st_icd_list st_icd_list
+st_dev_hint st_dev_hint
 end type
 global w_pick_assessments w_pick_assessments
 
@@ -268,6 +277,8 @@ str_popup		popup
 str_picked_assessments lstr_assessments
 string ls_encounter_status
 
+st_dev_hint.visible = false
+
 popup = message.powerobjectparm
 If popup.data_row_count = 2 Then
 	assessment_type = popup.items[1]
@@ -311,6 +322,8 @@ dw_assessments.mode = "PICK"
 pb_down_sel.visible = false
 pb_up_sel.visible = false
 st_page_sel.visible = false
+dw_icd_left.visible = false
+dw_icd_right.visible = false
 
 dw_assessments.object.description.width = dw_assessments.width - 150
 
@@ -377,9 +390,12 @@ this.pb_cancel=create pb_cancel
 this.st_selected_items=create st_selected_items
 this.st_description=create st_description
 this.cb_new_assessment=create cb_new_assessment
+this.st_browse_icd=create st_browse_icd
+this.dw_icd_right=create dw_icd_right
+this.dw_icd_left=create dw_icd_left
 this.st_common_flag=create st_common_flag
 this.dw_assessments=create dw_assessments
-this.st_icd_list=create st_icd_list
+this.st_dev_hint=create st_dev_hint
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_search_title
 this.Control[iCurrent+2]=this.st_assessment_type_title
@@ -403,9 +419,12 @@ this.Control[iCurrent+19]=this.pb_cancel
 this.Control[iCurrent+20]=this.st_selected_items
 this.Control[iCurrent+21]=this.st_description
 this.Control[iCurrent+22]=this.cb_new_assessment
-this.Control[iCurrent+23]=this.st_common_flag
-this.Control[iCurrent+24]=this.dw_assessments
-this.Control[iCurrent+25]=this.st_icd_list
+this.Control[iCurrent+23]=this.st_browse_icd
+this.Control[iCurrent+24]=this.dw_icd_right
+this.Control[iCurrent+25]=this.dw_icd_left
+this.Control[iCurrent+26]=this.st_common_flag
+this.Control[iCurrent+27]=this.dw_assessments
+this.Control[iCurrent+28]=this.st_dev_hint
 end on
 
 on w_pick_assessments.destroy
@@ -432,9 +451,12 @@ destroy(this.pb_cancel)
 destroy(this.st_selected_items)
 destroy(this.st_description)
 destroy(this.cb_new_assessment)
+destroy(this.st_browse_icd)
+destroy(this.dw_icd_right)
+destroy(this.dw_icd_left)
 destroy(this.st_common_flag)
 destroy(this.dw_assessments)
-destroy(this.st_icd_list)
+destroy(this.st_dev_hint)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_pick_assessments
@@ -444,11 +466,11 @@ type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pick_as
 end type
 
 type st_search_title from statictext within w_pick_assessments
-integer x = 1883
-integer y = 352
+integer x = 1966
+integer y = 468
 integer width = 558
-integer height = 88
-integer textsize = -12
+integer height = 80
+integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -463,10 +485,10 @@ boolean focusrectangle = false
 end type
 
 type st_assessment_type_title from statictext within w_pick_assessments
-integer x = 1582
-integer y = 252
-integer width = 594
-integer height = 76
+integer x = 1696
+integer y = 260
+integer width = 466
+integer height = 80
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -476,7 +498,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 33538240
 boolean enabled = false
-string text = "Assessment Type:"
+string text = "Diagnosis Type:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -485,7 +507,7 @@ type st_assessment_type from statictext within w_pick_assessments
 integer x = 2176
 integer y = 252
 integer width = 695
-integer height = 76
+integer height = 88
 integer textsize = -10
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -526,14 +548,13 @@ else
 end if
 
 dw_assessments.initialize(assessment_type)
-
 dw_assessments.search_top_20()
 
-
+st_title.text = "Select " + text + " Assessment(s)"
 end event
 
 type pb_down_sel from u_picture_button within w_pick_assessments
-integer x = 2679
+integer x = 2775
 integer y = 1032
 integer width = 137
 integer height = 116
@@ -557,7 +578,7 @@ pb_up_sel.enabled = true
 end event
 
 type pb_up_sel from u_picture_button within w_pick_assessments
-integer x = 2679
+integer x = 2775
 integer y = 904
 integer width = 137
 integer height = 116
@@ -579,8 +600,8 @@ pb_down_sel.enabled = true
 end event
 
 type st_page_sel from statictext within w_pick_assessments
-integer x = 2542
-integer y = 836
+integer x = 2629
+integer y = 824
 integer width = 274
 integer height = 64
 integer textsize = -8
@@ -597,7 +618,7 @@ boolean focusrectangle = false
 end type
 
 type pb_up from u_picture_button within w_pick_assessments
-integer x = 1435
+integer x = 1577
 integer y = 116
 integer width = 137
 integer height = 116
@@ -607,19 +628,34 @@ string picturename = "icon_up.bmp"
 string disabledname = "icon_upx.bmp"
 end type
 
-event clicked;call super::clicked;integer li_page
+event clicked;call super::clicked;integer li_page_ass, li_page_left, li_page_right
 
-li_page = dw_assessments.current_page
+if dw_icd_left.visible then
+	li_page_left = dw_icd_left.current_page
+	li_page_right = dw_icd_right.current_page
 
-dw_assessments.set_page(li_page - 1, st_page.text)
+	if li_page_left > 1 then
+		dw_icd_left.set_page(li_page_left - 1, st_page.text)
+	end if
+	if li_page_right > 1 then
+		dw_icd_right.set_page(li_page_right - 1, st_page.text)
+	end if
 
-if li_page <= 2 then enabled = false
+	if li_page_left <= 2 AND li_page_right <= 2 then enabled = false
+else
+	
+	li_page_ass = dw_assessments.current_page
+	dw_assessments.set_page(li_page_ass - 1, st_page.text)
+	
+	if li_page_ass <= 2 then enabled = false
+end if
+
 pb_down.enabled = true
 
 end event
 
 type pb_down from u_picture_button within w_pick_assessments
-integer x = 1435
+integer x = 1577
 integer y = 240
 integer width = 137
 integer height = 116
@@ -629,24 +665,40 @@ string picturename = "icon_down.bmp"
 string disabledname = "icon_downx.bmp"
 end type
 
-event clicked;integer li_page
-integer li_last_page
+event clicked;integer li_page_ass, li_page_left, li_page_right
+integer li_last_page_ass,  li_last_page_left,  li_last_page_right
 
-li_page = dw_assessments.current_page
-li_last_page = dw_assessments.last_page
+if dw_icd_left.visible then
+	li_page_left = dw_icd_left.current_page
+	li_page_right = dw_icd_right.current_page
 
-dw_assessments.set_page(li_page + 1, st_page.text)
+	li_last_page_left = dw_icd_left.last_page
+	li_last_page_right = dw_icd_right.last_page
+	
+	if li_page_left < li_last_page_left then
+		dw_icd_left.set_page(li_page_left + 1, st_page.text)
+	end if
+	if li_page_right < li_last_page_right then
+		dw_icd_right.set_page(li_page_right + 1, st_page.text)
+	end if
+	if li_page_left >= li_last_page_left - 1 AND li_page_right >= li_last_page_right - 1 then enabled = false
+else
+	li_page_ass = dw_assessments.current_page
+	li_last_page_ass = dw_assessments.last_page
+	
+	dw_assessments.set_page(li_page_ass + 1, st_page.text)
+	
+	if li_page_ass >= li_last_page_ass - 1 then enabled = false
+end if
 
-if li_page >= li_last_page - 1 then enabled = false
 pb_up.enabled = true
-
 end event
 
 type st_page from statictext within w_pick_assessments
-integer x = 1573
+integer x = 1714
 integer y = 116
 integer width = 274
-integer height = 64
+integer height = 60
 integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -661,10 +713,10 @@ boolean focusrectangle = false
 end type
 
 type st_category from statictext within w_pick_assessments
-integer x = 2514
-integer y = 544
-integer width = 329
-integer height = 108
+integer x = 2395
+integer y = 552
+integer width = 379
+integer height = 96
 integer taborder = 80
 boolean bringtotop = true
 integer textsize = -10
@@ -682,15 +734,20 @@ borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;dw_assessments.search_category()
+event clicked;
+dw_icd_left.visible = false
+dw_icd_right.visible = false
+dw_assessments.visible = true
+
+dw_assessments.search_category()
 
 end event
 
 type st_top_20 from statictext within w_pick_assessments
-integer x = 1486
-integer y = 548
-integer width = 329
-integer height = 108
+integer x = 1609
+integer y = 552
+integer width = 379
+integer height = 96
 integer taborder = 80
 boolean bringtotop = true
 integer textsize = -10
@@ -708,7 +765,12 @@ borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;if search_type = "TOP20" then
+event clicked;
+dw_icd_left.visible = false
+dw_icd_right.visible = false
+dw_assessments.visible = true
+
+if left(search_type,5) = "TOP20" then
 	if dw_assessments.search_description = "Personal List" then
 		dw_assessments.search_top_20(false)
 	else
@@ -726,10 +788,10 @@ end if
 end event
 
 type st_icd_code from statictext within w_pick_assessments
-integer x = 2171
-integer y = 548
-integer width = 329
-integer height = 108
+integer x = 1125
+integer y = 1596
+integer width = 690
+integer height = 96
 integer taborder = 80
 boolean bringtotop = true
 integer textsize = -10
@@ -740,22 +802,27 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 67108864
-string text = "ICD Code"
+string text = "Search by ICD Code"
 alignment alignment = center!
 boolean border = true
 borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;dw_assessments.search_icd()
+event clicked;
+dw_icd_left.visible = false
+dw_icd_right.visible = false
+dw_assessments.visible = true
+
+dw_assessments.search_icd()
 
 end event
 
 type st_search_status from statictext within w_pick_assessments
-integer x = 1481
+integer x = 1614
 integer y = 664
-integer width = 1353
-integer height = 108
+integer width = 1157
+integer height = 120
 integer textsize = -10
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -765,6 +832,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 12632256
 boolean enabled = false
+string text = "Search Status"
 alignment alignment = center!
 boolean border = true
 boolean focusrectangle = false
@@ -772,9 +840,9 @@ end type
 
 type st_specialty from statictext within w_pick_assessments
 integer x = 2176
-integer y = 140
+integer y = 164
 integer width = 695
-integer height = 76
+integer height = 80
 integer textsize = -10
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -789,8 +857,8 @@ boolean focusrectangle = false
 end type
 
 type st_specialty_title from statictext within w_pick_assessments
-integer x = 1874
-integer y = 140
+integer x = 1865
+integer y = 168
 integer width = 297
 integer height = 76
 integer textsize = -10
@@ -808,10 +876,10 @@ boolean focusrectangle = false
 end type
 
 type dw_selected_items from u_dw_pick_list within w_pick_assessments
-integer x = 1509
-integer y = 900
+integer x = 1618
+integer y = 888
 integer width = 1157
-integer height = 596
+integer height = 600
 integer taborder = 20
 string dataobject = "dw_selected_assessments"
 end type
@@ -847,8 +915,8 @@ end event
 
 type pb_done from u_picture_button within w_pick_assessments
 event clicked pbm_bnclicked
-integer x = 2569
-integer y = 1496
+integer x = 2597
+integer y = 1520
 integer taborder = 80
 boolean enabled = false
 boolean originalsize = false
@@ -891,8 +959,8 @@ boolean focusrectangle = false
 end type
 
 type pb_cancel from u_picture_button within w_pick_assessments
-integer x = 2217
-integer y = 1496
+integer x = 14
+integer y = 1520
 integer taborder = 100
 boolean originalsize = false
 string picturename = "button11.bmp"
@@ -909,8 +977,8 @@ closewithreturn(parent, lstr_assessments)
 end event
 
 type st_selected_items from statictext within w_pick_assessments
-integer x = 1509
-integer y = 804
+integer x = 1618
+integer y = 796
 integer width = 1157
 integer height = 92
 integer textsize = -14
@@ -926,10 +994,10 @@ boolean focusrectangle = false
 end type
 
 type st_description from statictext within w_pick_assessments
-integer x = 1829
-integer y = 548
-integer width = 329
-integer height = 108
+integer x = 329
+integer y = 1596
+integer width = 745
+integer height = 96
 integer taborder = 80
 integer textsize = -10
 integer weight = 400
@@ -939,20 +1007,25 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 67108864
-string text = "Description"
+string text = "Search by Description"
 alignment alignment = center!
 boolean border = true
 borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
 end type
 
-event clicked;dw_assessments.search_description()
+event clicked;
+dw_icd_left.visible = false
+dw_icd_right.visible = false
+dw_assessments.visible = true
+
+dw_assessments.search_description()
 
 end event
 
 type cb_new_assessment from commandbutton within w_pick_assessments
-integer x = 1536
-integer y = 1548
+integer x = 1874
+integer y = 1580
 integer width = 521
 integer height = 112
 integer taborder = 90
@@ -971,6 +1044,10 @@ long ll_row
 string ls_find
 str_c_assessment_definition lstr_assessment
 
+dw_icd_left.visible = false
+dw_icd_right.visible = false
+dw_assessments.visible = true
+
 ls_assessment_id = f_new_assessment(assessment_type, true)
 if isnull(ls_assessment_id) then return
 
@@ -984,13 +1061,181 @@ select_assessment(lstr_assessment)
 
 end event
 
-type st_common_flag from statictext within w_pick_assessments
-integer x = 2514
-integer y = 432
-integer width = 329
-integer height = 108
+type st_browse_icd from statictext within w_pick_assessments
+integer x = 2002
+integer y = 552
+integer width = 379
+integer height = 96
 boolean bringtotop = true
-integer textsize = -10
+integer textsize = -9
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 12632256
+string text = "Browse Diagnoses"
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
+end type
+
+event clicked;
+if common_flag = "N" then
+	dw_icd_left.dataobject = "dw_icd_chapter"
+	dw_icd_left.settransobject(sqlca)
+	dw_icd_left.retrieve(assessment_type)
+	st_search_status.text = "browsing all diagnoses"
+else
+	dw_icd_left.dataobject = "dw_icd_chapter_specialty"
+	dw_icd_left.settransobject(sqlca)
+	dw_icd_left.retrieve(assessment_type, specialty_id)
+	st_search_status.text = "browsing diagnoses within specialty"	
+end if
+
+dw_icd_left.visible = true
+dw_icd_right.visible = false
+dw_assessments.visible = false
+
+st_top_20.backcolor = color_object
+st_category.backcolor = color_object
+st_icd_code.backcolor = color_object
+st_description.backcolor = color_object
+st_common_flag.visible = true
+
+this.backcolor = color_object_selected
+
+dw_icd_left.set_page(1, pb_up, pb_down, st_page)
+end event
+
+type dw_icd_right from u_dw_pick_list within w_pick_assessments
+integer x = 800
+integer y = 100
+integer width = 777
+integer height = 1384
+integer taborder = 21
+string dataobject = "dw_icd_block_descr"
+boolean border = false
+boolean select_computed = false
+end type
+
+event selected;call super::selected;string ls_selected, ls_chapter, ls_range, ls_null
+int li_sts
+
+setnull(ls_null)
+
+if selected_row < 1 then
+	return
+end if
+
+if left(this.dataobject, 18) = "dw_icd_block_descr" then
+	ls_range = this.object.range[selected_row]
+	if dw_icd_left.dataobject <> "dw_icd_block_descr" then
+		dw_icd_left.dataobject = "dw_icd_block_descr"
+		dw_icd_left.SetTransObject(sqlca)
+		dw_icd_left.Reset()
+		dw_icd_right.RowsCopy(1, dw_icd_right.rowcount(), Primary!, dw_icd_left, 1, Primary!)
+		dw_icd_left.set_row(selected_row)
+		dw_icd_left.SelectRow(0,false)
+		dw_icd_left.SelectRow(selected_row, true)
+	end if
+	
+	if common_flag = "N" then
+		this.dataobject = "dw_icd_level_3"
+		this.settransobject(sqlca)
+		this.retrieve(ls_range, assessment_type)
+	else
+		this.dataobject = "dw_icd_level_3_specialty"
+		this.settransobject(sqlca)
+		this.retrieve(ls_range, assessment_type, specialty_id)
+	end if
+	if dw_icd_left.rowcount() > dw_icd_right.rowcount() then
+		dw_icd_left.set_page(last_page, pb_up, pb_down, st_page)
+	else
+		this.set_page(1, pb_up, pb_down, st_page)
+	end if
+	
+elseif left(this.dataobject, 14) = "dw_icd_level_3" then
+	ls_selected = this.object.icd10_code[selected_row]
+	this.visible = false
+	dw_icd_left.visible = false
+	dw_assessments.visible = true
+	dw_assessments.icd_code = ls_selected + "%"
+	if common_flag = "N" then
+		st_search_status.text = "showing browsed diagnoses"
+	else
+		st_search_status.text = "showing browsed specialty diagnoses"
+	end if
+	li_sts = dw_assessments.search_icd_list()
+end if
+end event
+
+type dw_icd_left from u_dw_pick_list within w_pick_assessments
+integer x = 14
+integer y = 100
+integer width = 777
+integer height = 1384
+integer taborder = 21
+string dataobject = "dw_icd_chapter"
+boolean border = false
+string icon = "AppIcon!"
+borderstyle borderstyle = StyleLowered!
+boolean select_computed = false
+end type
+
+event selected;call super::selected;string ls_chapter, ls_range
+int li_sts
+
+if selected_row < 1 then
+	return
+end if
+
+if left(this.dataobject,14) = "dw_icd_chapter" then
+	ls_chapter = object.chapter[selected_row]
+	SelectRow(0,false)
+	SelectRow(selected_row, true)
+	dw_icd_right.visible = true
+	if common_flag = "N" then
+		dw_icd_right.dataobject = "dw_icd_block_descr"
+		dw_icd_right.settransobject(sqlca)
+		dw_icd_right.retrieve(ls_chapter, assessment_type)
+	else
+		dw_icd_right.dataobject = "dw_icd_block_descr_specialty"
+		dw_icd_right.settransobject(sqlca)
+		dw_icd_right.retrieve(ls_chapter, assessment_type, specialty_id)
+	end if
+	
+elseif left(this.dataobject, 18) = "dw_icd_block_descr" then
+	ls_range = object.range[selected_row]
+	SelectRow(0,false)
+	SelectRow(selected_row, true)
+	if common_flag = "N" then
+		dw_icd_right.dataobject = "dw_icd_level_3"
+		dw_icd_right.settransobject(sqlca)
+		dw_icd_right.retrieve(ls_range, assessment_type)
+	else
+		dw_icd_right.dataobject = "dw_icd_level_3_specialty"
+		dw_icd_right.settransobject(sqlca)
+		dw_icd_right.retrieve(ls_range, assessment_type, specialty_id)
+	end if
+end if
+
+dw_icd_right.set_page(1, pb_up, pb_down, st_page)
+if dw_icd_right.last_page = 1 then
+	// only if not needed for the right side, allow scrolling on left
+	dw_icd_left.set_page(1, pb_up, pb_down, st_page)
+end if
+end event
+
+type st_common_flag from statictext within w_pick_assessments
+integer x = 2601
+integer y = 388
+integer width = 270
+integer height = 76
+boolean bringtotop = true
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -1015,15 +1260,21 @@ else
 	dw_assessments.specialty_id = specialty_id
 end if
 
-dw_assessments.search()
+// Resetting Specialty to All or vice versa, when browsing
+// implies going back to the beginning to browse again
+if Pos(st_search_status.text, "brows") > 0 then
+	st_browse_icd.event clicked()
+else
+	dw_assessments.search()
+end if
 
 end event
 
 type dw_assessments from u_dw_assessment_list within w_pick_assessments
 integer x = 14
 integer y = 108
-integer width = 1408
-integer height = 1592
+integer width = 1559
+integer height = 1376
 integer taborder = 11
 boolean vscrollbar = true
 boolean select_computed = false
@@ -1035,10 +1286,10 @@ search_type = current_search
 st_top_20.backcolor = color_object
 st_category.backcolor = color_object
 st_icd_code.backcolor = color_object
-st_icd_list.backcolor = color_object
 st_description.backcolor = color_object
+st_browse_icd.backcolor = color_object
 
-st_search_status.text = ps_description
+st_search_status.text = "showing " + ps_description
 
 CHOOSE CASE current_search
 	CASE "TOP20"
@@ -1049,9 +1300,9 @@ CHOOSE CASE current_search
 		st_common_flag.visible = true
 	CASE "ICD"
 		st_icd_code.backcolor = color_object_selected
-		st_common_flag.visible = true
+		st_common_flag.visible = false
 	CASE "ICD_LIST"
-		st_icd_list.backcolor = color_object_selected
+		st_browse_icd.backcolor = color_object_selected
 		st_common_flag.visible = true
 	CASE "DESCRIPTION"
 		st_description.backcolor = color_object_selected
@@ -1073,29 +1324,23 @@ select_assessment(lstr_assessment)
 
 end event
 
-type st_icd_list from statictext within w_pick_assessments
-integer x = 2171
-integer y = 432
-integer width = 329
-integer height = 108
-integer taborder = 80
+type st_dev_hint from statictext within w_pick_assessments
+integer x = 411
+integer y = 1504
+integer width = 713
+integer height = 64
 boolean bringtotop = true
-integer textsize = -10
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long textcolor = 33554432
-long backcolor = 67108864
-string text = "ICD List"
+long textcolor = 134217857
+long backcolor = 15780518
+string text = "(dw_assessments is behind)"
 alignment alignment = center!
-boolean border = true
-borderstyle borderstyle = styleraised!
+borderstyle borderstyle = StyleBox!
 boolean focusrectangle = false
 end type
-
-event clicked;dw_assessments.search_icd_list()
-
-end event
 
