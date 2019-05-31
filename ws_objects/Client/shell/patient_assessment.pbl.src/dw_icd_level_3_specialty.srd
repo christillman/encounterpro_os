@@ -1,0 +1,35 @@
+﻿$PBExportHeader$dw_icd_level_3_specialty.srd
+release 17;
+datawindow(units=0 timer_interval=0 color=33538240 brushmode=0 transparency=0 gradient.angle=0 gradient.color=8421504 gradient.focus=0 gradient.repetition.count=0 gradient.repetition.length=100 gradient.repetition.mode=0 gradient.scale=100 gradient.spread=100 gradient.transparency=0 picture.blur=0 picture.clip.bottom=0 picture.clip.left=0 picture.clip.right=0 picture.clip.top=0 picture.mode=0 picture.scale.x=100 picture.scale.y=100 picture.transparency=0 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.background=no print.preview.background=no print.preview.outline=yes hidegrayline=no showbackcoloronxp=no picture.file="" )
+header(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+summary(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+footer(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+detail(height=136 color="553648127" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
+table(column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
+ column=(type=char(10) updatewhereclause=yes name=icd10_code dbname="icd10_who.icd10_code" dbalias=".icd10_code" )
+ column=(type=char(500) updatewhereclause=yes name=description dbname="icd10_who.description" dbalias=".description" )
+ retrieve="  SELECT DISTINCT selected_flag=0,   
+         code as icd10_code,   
+         descr as description
+from icd10_who w /* to get the 3rd level consistently */
+where code between left(:ps_range,3) and right(:ps_range,3) + 'z'
+and len(code) = 3
+and EXISTS (SELECT 1 FROM c_Assessment_Definition d 
+			INNER JOIN c_Common_Assessment c
+				ON d.assessment_id = c.assessment_id
+			WHERE d.assessment_type = :ps_assessment_type
+			AND c.specialty_id = :ps_specialty_id
+			AND d.icd10_code between left(:ps_range,3) and right(:ps_range,3) + 'z' )" arguments=(("ps_range", string),("ps_assessment_type", string),("ps_specialty_id", string)) )
+column(band=detail id=3 alignment="0" tabsequence=32766 border="6" color="0" x="242" y="12" height="116" width="1426" format="[general]" html.valueishtml="0"  name=description visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10~tif(len(description) < 46, -10, -8)" font.weight="700~tif(len(description) < 39, 700, 400)"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+column(band=detail id=2 alignment="0" tabsequence=32766 border="6" color="0" x="18" y="12" height="116" width="197" format="[general]" html.valueishtml="0"  name=icd10_code visible="1" edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )
+xhtmlgen() cssgen(sessionspecific="0" )
+xmlgen(inline="0" )
+xsltgen()
+jsgen()
+export.xml(headgroups="1" includewhitespace="0" metadatatype=0 savemetadata=0  template=(comment="" encoding="UTF-16LE" name="dw_icd_chapter" xml="<?xml version=~"1.0~" encoding=~"UTF-16LE~" standalone=~"no~"?><dw_icd_chapter><dw_icd_chapter_row __pbband=~"detail~"><assessment_type>assessment_type</assessment_type><description/><button>button</button><icon_open>icon_open</icon_open><icon_closed>icon_closed</icon_closed><selected_flag>selected_flag</selected_flag></dw_icd_chapter_row></dw_icd_chapter>"))
+import.xml()
+export.pdf(method=0 distill.custompostscript="0" xslfop.print="0" nativepdf.customsize=0 nativepdf.customorientation=0 nativepdf.pdfstandard=0 nativepdf.useprintspec=no )
+export.xhtml()
+ 
