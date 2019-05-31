@@ -288,8 +288,8 @@ else
 end if
 
 li_x = li_pointerx - (li_width/2)
-//if li_x < 1 then li_x = 1
-//if li_x + li_width > ll_screenwidth then li_x = ll_screenwidth - li_width
+if li_x < 1 then li_x = 1
+if li_x + li_width > ll_screenwidth then li_x = ll_screenwidth - li_width
 
 li_y = li_pointery - (li_height/2)
 if li_y < 1 then li_y = 1
