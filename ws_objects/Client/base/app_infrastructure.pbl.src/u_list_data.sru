@@ -6309,15 +6309,15 @@ if li_sts < 0 then
 	return lstr_menu
 end if
 
-// Add menu to cache
-menu_cache_count += 1
-menu_cache[menu_cache_count] = lstr_menu
-
 // If we're supposed to only show the authorized menu items, then
 // call the user object to filter the menu
 if pb_authorized_only and not isnull(current_user) then
 	current_user.check_menu(lstr_menu)
 end if
+
+// Add menu to cache
+menu_cache_count += 1
+menu_cache[menu_cache_count] = lstr_menu
 
 return lstr_menu
 
