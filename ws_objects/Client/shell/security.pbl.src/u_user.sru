@@ -439,7 +439,10 @@ for i = pstr_menu.menu_item_count to 1 step -1
 	// If the user is authorized to use the service, see if the user is
 	// authorized to use this menu item
 	if lb_ok then
-		if isnull(pstr_menu.menu_item[i].authorized_user_id) then
+		// Check to see if the current user is certifed to prescribe, if this is a prescription menu
+		if pstr_menu.menu_item[i].menu_item = "MEDICATION" AND (IsNull(current_user.certified) OR current_user.certified <> "Y") then
+			lb_ok = false
+		elseif isnull(pstr_menu.menu_item[i].authorized_user_id) then
 			// Null authorized_user_id means anyone can use it
 			lb_ok = true
 		else
