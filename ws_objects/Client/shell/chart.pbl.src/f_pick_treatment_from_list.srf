@@ -33,6 +33,10 @@ if ll_treatment_count <= 0 then return ll_treatment_count
 
 for i = 1 to ll_treatment_count
 	ls_treatment_type = luo_treatments.object.treatment_type[i]
+	// Check to see if the current user is certifed to prescribe, if this is a prescription treatment type
+	if ls_treatment_type = "MEDICATION" AND (IsNull(current_user.certified) OR current_user.certified <> "Y") then
+		continue
+	end if
 	ls_button = datalist.treatment_type_define_button(ls_treatment_type)
 	If Not Isnull(ls_button) And Len(ls_button) > 0 Then
 		ls_help = datalist.treatment_type_description(ls_treatment_type)
