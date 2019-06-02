@@ -1,7 +1,7 @@
 ﻿$PBExportHeader$markbuild.srj
 $PBExportComments$Generated Application Executable Project
 EXE:EncounterPRO.OS.Client.exe,encounterpro.os.pbr,0,1,1
-CMP:1,0,0,2,0,0,0
+CMP:0,0,0,2,0,0,0
 COM:EncounterPRO Healthcare Resources, Inc.
 DES:Electronic Medical Record System
 CPY:(c) 1994-2009 EncounterPRO Healthcare Resources, Inc.  All Rights Reserved
