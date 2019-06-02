@@ -1,5 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncounterPRO.OS.ServerService", "EncounterPROService\EncounterPRO.OS.ServerService.csproj", "{0D15E719-02A8-4F6B-BB64-5C47C7ECF924}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncounterPRO.OS.ServerService.Client", "EPSROClient\EncounterPRO.OS.ServerService.Client.csproj", "{F862B8BA-2FF2-4D70-A556-2AF6F39C6193}"
@@ -27,5 +29,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DB7F6AC-2010-4D1F-83F9-8F210E86AA6E}
 	EndGlobalSection
 EndGlobal

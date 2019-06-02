@@ -15,3 +15,4 @@ C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.CoreCompileInputs.cache
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csproj.CopyComplete
 C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\EncounterPRO.OS.Utilities.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities\obj\Release\Utilities.csprojAssemblyReference.cache

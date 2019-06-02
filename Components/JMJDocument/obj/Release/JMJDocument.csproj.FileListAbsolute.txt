@@ -1,0 +1,5 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\bin\Release\EncounterPRO.OS.Component.JMJDocument.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\bin\Release\EncounterPRO.OS.Component.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Release\JMJDocument.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Release\JMJDocument.csproj.CopyComplete
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Release\EncounterPRO.OS.Component.JMJDocument.dll

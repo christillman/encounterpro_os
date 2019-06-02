@@ -1,0 +1,11 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\bin\Debug\EncounterPRO.OS.ServerService.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\bin\Debug\EncounterPRO.OS.ServerService.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\bin\Debug\EncounterPRO.OS.ServerService.Lib.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\bin\Debug\EncounterPRO.OS.ServerService.Lib.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.csprojAssemblyReference.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.EncounterPROService.resources
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.csproj.GenerateResource.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.csproj.CopyComplete
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Server\EncounterPRO.OS.ServerService\EncounterPROService\obj\Debug\EncounterPRO.OS.ServerService.pdb

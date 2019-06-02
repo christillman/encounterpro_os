@@ -1,0 +1,149 @@
+sqlce.exe Help
+SQL Command Execution
+---------------------
+Usage: sqlce.exe <connection string> [OPTIONS] [sql text]
+
+Connection String:
+---------------------
+The format of a connection string is a semicolon-delimited list of key/value parameter pairs:
+keyword1=value; keyword2=value; 
+
+Typical connection string:
+"Persist Security Info=False;Integrated Security=true;Initial Catalog=Northwind;server=(local)"
+
+These are valid keywords for the connection string:
+
+Application Name 
+The name of the application, or '.NET SQLClient Data Provider' if no application name is provided. 
+
+Connect Timeout -or- Connection Timeout 
+default: 15
+The length of time (in seconds) to wait for a connection to the server before terminating the attempt and generating an error. 
+
+Context Connection
+default: 'false'
+true if an in-process connection to SQL Server should be made.
+
+Data Source -or- Server -or- Address -or- Addr -or- Network Address 
+The name or network address of the instance of SQL Server to which to connect. The port number can be specified after the server name:
+server=tcp:servername, portnumber 
+When specifying a local instance, always use (local). To force a protocol, add one of the following prefixes:
+np:(local), tcp:(local), lpc:(local) 
+
+Encrypt 
+default: 'false'
+When true, SQL Server uses SSL encryption for all data sent between the client and server if the server has a certificate installed. Recognized values are true, false, yes, and no. 
+
+Enlist
+default: 'false'
+true indicates that the SQL Server connection pooler automatically enlists the connection in the creation thread's current transaction context.
+
+Failover Partner
+The name of the failover partner server where database mirroring is configured.
+
+Initial Catalog -or- Database 
+The name of the database. 
+
+Integrated Security -or- Trusted_Connection 
+default: 'false'
+When false, User ID and Password are specified in the connection. When true, the current Windows account credentials are used for authentication.
+Recognized values are true, false, yes, no, and sspi (strongly recommended), which is equivalent to true.
+
+MultipleActiveResultSets
+default: 'false'
+When true, an application can maintain multiple active result sets (MARS). When false, an application must process or cancel all result sets from one batch before it can execute any other batch on that connection.
+Recognized values are true and false.
+
+Network Library -or- Net
+default: 'dbmssocn'
+The network library used to establish a connection to an instance of SQL Server. Supported values include dbnmpntw (Named Pipes), dbmsrpcn (Multiprotocol), dbmsadsn (Apple Talk), dbmsgnet (VIA), dbmslpcn (Shared Memory) and dbmsspxn (IPX/SPX), and dbmssocn (TCP/IP).
+The corresponding network DLL must be installed on the system to which you connect. If you do not specify a network and you use a local server (for example, "." or "(local)"), shared memory is used. 
+
+Packet Size 
+default: 8192
+Size in bytes of the network packets used to communicate with an instance of SQL Server.
+
+Password -or- Pwd 
+The password for the SQL Server account logging on. Not recommended. To maintain a high level of security, we strongly recommend that you use the Integrated Security or Trusted_Connection keyword instead. 
+
+Persist Security Info 
+default: 'false'
+When set to false or no (strongly recommended), security-sensitive information, such as the password, is not returned as part of the connection if the connection is open or has ever been in an open state. Resetting the connection string resets all connection string values including the password. Recognized values are true, false, yes, and no. 
+
+Replication
+default: 'false'
+true if replication is supported using the connection. 
+
+TrustServerCertificate
+default: 'false'
+When set to true, SSL is used to encrypt the channel when bypassing walking the certificate chain to validate trust. If TrustServerCertificate is set to true and Encrypt is set to false, the channel is not encrypted. Recognized values are true, false, yes, and no. For more information, see "Encryption Hierarchy" and "Using Encryption Without Validation" in SQL Server 2005 Books Online.
+
+Type System Version
+A string value that indicates the type system the application expects. Possible values are:
+Type System Version=SQL Server 2000; 
+Type System Version=SQL Server 2005; 
+Type System Version=Latest; 
+When set to SQL Server 2000, the SQL Server 2000 type system is used. The following conversions are performed when connecting to a SQL Server 2005 instance:
+XML to NTEXT
+UDT to VARBINARY
+VARCHAR(MAX), NVARCHAR(MAX) and VARBINARY(MAX) to TEXT, NEXT and IMAGE respectively.
+When set to SQL Server 2005, the SQL Server 2005 type system is used. No conversions are made for the current version of ADO.NET.
+When set to Latest, the latest version than this client-server pair can handle is used. This will automatically move forward as the client and server components are upgraded.
+
+User ID -or- Uid
+The SQL Server login account. Not recommended. To maintain a high level of security, we strongly recommend that you use the Integrated Security or Trusted_Connection keywords instead. 
+
+User Instance
+default: 'false'
+A value that indicates whether to redirect the connection from the default SQL Server Express instance to a runtime-initiated instance running under the account of the caller.
+
+Workstation ID 
+default: the local computer name
+The name of the workstation connecting to SQL Server. 
+
+Connection Lifetime 
+default: 0
+When a connection is returned to the pool, its creation time is compared with the current time, and the connection is destroyed if that time span (in seconds) exceeds the value specified by Connection Lifetime. This is useful in clustered configurations to force load balancing between a running server and a server just brought online.
+A value of zero (0) causes pooled connections to have the maximum connection timeout. 
+
+Connection Reset 
+default: 'true'
+Determines whether the database connection is reset when being drawn from the pool. For SQL Server version 7.0, setting to false avoids making an additional server round trip when obtaining a connection, but you must realize that the connection state, such as database context, is not being reset.
+The connection pooler is not influenced by the ChangeDatabase method as long you do not set Connection Reset to false. As the connection comes out of the pool the connection is reset with the server moving back to the login time database. There are no new connections created or reauthentications. If you set Connection Reset to false, connections in the pool to different databases might result. 
+
+Enlist 
+default: 'true'
+When true, the pooler automatically enlists the connection in the creation thread's current transaction context. Recognized values are true, false, yes, and no. 
+
+Load Balance Timeout
+default: 0
+The minimum time, in seconds, for the connection to live in the connection pool before being destroyed.
+
+Max Pool Size
+default: 100
+The maximum number of connections allowed in the pool. 
+
+Min Pool Size
+default: 0
+The minimum number of connections allowed in the pool. 
+
+Pooling
+default: 'true'
+When true, the SQLConnection object is drawn from the appropriate pool, or if it is required, is created and added to the appropriate pool. Recognized values are true, false, yes, and no. 
+
+OPTIONS:
+
+-xml
+Output results in XML format.
+
+-o <filename>
+Print output to a file instead of to stdout.
+
+-i <filename>
+Read sql text from a file rather than from the execution arguments
+
+-v
+Detailed (verbose) output. Does not apply when output is XML.
+
+EXAMPLE:
+sqlce.exe "Integrated Security=sspi;Database=master;server=(local)" -xml -o C:\sqlout.xml "SELECT * FROM sysdatabases"

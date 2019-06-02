@@ -1,0 +1,7 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\bin\Debug\EncounterPRO.OS.Component.JMJDocument.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\bin\Debug\EncounterPRO.OS.Component.JMJDocument.pdb
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\bin\Debug\EncounterPRO.OS.Component.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Debug\JMJDocument.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Debug\JMJDocument.csproj.CopyComplete
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Debug\EncounterPRO.OS.Component.JMJDocument.dll
+C:\Users\tofft\EncounterPro\encounterpro_os\Components\JMJDocument\obj\Debug\EncounterPRO.OS.Component.JMJDocument.pdb

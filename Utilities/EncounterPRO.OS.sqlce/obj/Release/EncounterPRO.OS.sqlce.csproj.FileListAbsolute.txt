@@ -1,0 +1,3 @@
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\bin\Release\EncounterPRO.OS.sqlce.exe
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Release\EncounterPRO.OS.sqlce.csproj.CoreCompileInputs.cache
+C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Release\EncounterPRO.OS.sqlce.exe
