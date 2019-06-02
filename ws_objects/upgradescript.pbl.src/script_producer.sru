@@ -245,6 +245,9 @@ If li_sts <= 0 Then return
 ls_output_path = "C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\Database\Upgrade"
 li_sts = GetFolder ("Select Output Folder", ls_output_path)
 If li_sts <= 0 Then return
+IF Not FileExists(ls_output_path + "\Attachments") THEN
+	li_sts = CreateDirectory(ls_output_path + "\Attachments")
+END IF
 li_sts = produce_upgrade_file(ls_ddl_path, ls_dml_path, ls_output_path + "\Attachments")
 
 if li_sts < 0 then
