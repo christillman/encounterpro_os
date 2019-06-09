@@ -8,6 +8,8 @@
   SET description = 'Neonatal/Newborn'
   WHERE assessment_category_id = 'OBP'
 
+IF NOT EXISTS (SELECT 1 FROM c_Assessment_Category WHERE assessment_category_id = 'ACCTRANS')
+BEGIN
 -- Add more specific categories for V codes, email 1/6/2019
 INSERT INTO [c_Assessment_Category]
            ([assessment_type]
@@ -318,7 +320,7 @@ INSERT INTO [c_Assessment_Category]
            ,'Y98'
            ,'Y98'
            ,'Y')
-
+END
 
 DELETE FROM c_Assessment_Category WHERE assessment_category_id = 'Z'
 

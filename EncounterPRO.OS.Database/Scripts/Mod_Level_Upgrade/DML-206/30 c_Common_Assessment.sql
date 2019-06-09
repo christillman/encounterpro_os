@@ -84,7 +84,8 @@ END
 )
 -- 6628
 */
-
+IF NOT EXISTS (SELECT 1 FROM c_Common_Assessment WHERE specialty_id = '$AAAPRIMARY' AND assessment_id = 'DEMO10462')
+BEGIN
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$AAAPRIMARY', 'DEMO10462')
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$AAAPRIMARY', 'DEMO10498')
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$AUDIO', '0^11656')
@@ -6708,7 +6709,7 @@ INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$DERM', '
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$EMERG', 'ICD-N3080')
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$EMERG', 'ICD-S069X6D')
 INSERT INTO c_Common_Assessment (specialty_id, assessment_id) VALUES ('$EMERG', 'ICD-S61356S')
-
+END
 
 /* Now, insert any other assessments with the same icd codes as those already in for a given specialty. */
 
