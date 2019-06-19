@@ -3748,12 +3748,6 @@ setnull(ls_null)
 
 log.log_db(this, "display_script_command", "Script id " + string(pl_display_script_id), 2)
 
-//RETURN display_script_a( pl_display_script_id, &
-//											pstr_encounter, &
-//											pstr_assessment, &
-//											pstr_treatment, &
-//											false)
-
 // This wrapper puts the RTF display script function inside a TRY/CATCH structure
 // because of the incidents where the TX Text Control appears to breifly stop working
 // at times on a terminal server.  The basic idea is that if the text control is empty,
