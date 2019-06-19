@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.3.1
+  !define VERSION   7.0.3.2
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3.1
-  !define Database_Mod_Level   205
+  !define EproClient_VERSION   7.0.3.2
+  !define Database_Mod_Level   206
   !define PBRuntime_VERSION   17.3.1858
   !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
   !define ConfigObjectManager_VERSION   2.1.3.2
@@ -174,8 +174,8 @@
       DetailPrint "Installing Powerbuilder Runtime Files..."
       SetDetailsPrint textonly
       File "${SRC_PBR}\PBCLTRT170.msi"
-      nsExec::Exec 'msiexec /i "$INSTDIR\PBCLTRT170.msi" /passive /norestart'
-      Delete '$INSTDIR\PBCLTRT170.msi'
+      nsExec::Exec 'msiexec /i "$INSTDIR\PBCLTRT170.msi" /passive /norestart /l*v "$INSTDIR\PBCLTRT170.log"'
+      ; Delete '$INSTDIR\PBCLTRT170.msi'
 
       SetDetailsPrint both
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
