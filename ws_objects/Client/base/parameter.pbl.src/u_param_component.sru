@@ -159,7 +159,7 @@ end if
 
 // If we still don't have a component_type then prompt the user for one
 if isnull(component_type) then
-	popup.dataobject = "dw_component_type_pick_list"
+	popup.dataobject = "dw_components_of_type_pick_list"
 	popup.datacolumn = 1
 	popup.displaycolumn = 2
 	openwithparm(w_pop_pick, popup)
