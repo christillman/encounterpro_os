@@ -15,6 +15,9 @@ global type u_richtextedit from richtextedit
 integer width = 901
 integer height = 540
 integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean init_wordwrap = true
 long init_inputfieldbackcolor = 15780518
@@ -44,10 +47,9 @@ private long last_backcolor
 private long field_backcolor
 private str_font_settings current_font_settings
 
-private string default_font_name = "Times New Roman"
-private integer default_font_size = 11
+private string default_font_name = "Arial"
+private integer default_font_size = 10
 end variables
-
 forward prototypes
 public subroutine prev_level ()
 public subroutine delete_last_line ()
@@ -1707,7 +1709,7 @@ leftmargin = 500
 rightmargin = 500
 
 DisplayOnly = false
-facename = default_rtf_font_name
+facename = default_font_name
 textsize = 9
 
 //object.fontsize = 9
@@ -1746,7 +1748,7 @@ current_font_settings = get_font_settings()
 //
 //
 if isvalid(datalist) and not isnull(datalist) then
-	field_backcolor = datalist.get_preference_int("COLOR", "RTF Field Backcolor", rgb(128,128,128))
+	field_backcolor = datalist.get_preference_int("COLOR", "RTF Field Backcolor", rgb(216,216,216))
 	inputfieldbackcolor = field_backcolor
 end if
 
@@ -2274,11 +2276,14 @@ font_settings_caching = lb_font_settings_caching
 	
 end subroutine
 
-public subroutine set_fontname (string ps_fontname);if font_settings_caching then
+public subroutine set_fontname (string ps_fontname);
+if IsNull(ps_fontname) or ps_fontname = "" THEN RETURN
+
+if font_settings_caching then
 	if lower(ps_fontname) = lower(current_font_settings.fontname) then return
 end if
 
-FaceName = ps_fontname
+this.FaceName = ps_fontname
 current_font_settings.fontname = ps_fontname
 
 return
