@@ -1,0 +1,14 @@
+﻿$PBExportHeader$f_nullstring.srf
+global type f_nullstring from function_object
+end type
+
+forward prototypes
+global function string f_nullstring (string ps_in)
+end prototypes
+
+global function string f_nullstring (string ps_in);
+IF IsNull(ps_in) THEN RETURN "NULL"
+RETURN ps_in
+
+end function
+
