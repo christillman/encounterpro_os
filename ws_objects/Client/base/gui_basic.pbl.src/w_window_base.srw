@@ -486,6 +486,7 @@ end function
 public subroutine resize_and_move ();long i
 
 if isnull(main_window) or not isvalid(main_window) then return
+// MessageBox("Resizing " + this.classname(),"From " + string(width) + " x " + string(height) )
 
 if this.windowstate = maximized! then return
 
@@ -511,7 +512,7 @@ y_factor = main_window.service_window_height / height
 // don't resize the window
 if x_factor <= 1.01 and y_factor <= 1.01 then return
 
-
+// MessageBox("Resizing " + this.classname(),"From " + string(width) + " x " + string(height) + " to " +string(main_window.service_window_width) + " x " + string(main_window.service_window_height))
 width = main_window.service_window_width
 height = main_window.service_window_height
 
