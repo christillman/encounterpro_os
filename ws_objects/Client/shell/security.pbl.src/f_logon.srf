@@ -9,6 +9,7 @@ end prototypes
 global subroutine f_logon ();
 
 if main_window.windowstate = Minimized! then return
+if Not IsValid(datalist) then return
 
 if not datalist.get_preference_boolean("PREFERENCES", "computer_secure", false) then
 	setnull(viewed_room)
