@@ -34,13 +34,13 @@ public function integer initialize ()
 end prototypes
 
 public subroutine refresh ();string ls_user_id
-string ls_audit_date
+date ldt_audit_date
 integer li_sts
 string ls_include_object_updates
 string ls_include_patient_info
 
 setnull(ls_user_id)
-setnull(ls_audit_date)
+setnull(ldt_audit_date)
 
 if first_time then
 	li_sts = current_patient.encounters.encounter(encounter, parent_tab.service.encounter_id)
@@ -66,7 +66,7 @@ else
 	ls_include_patient_info = "N"
 end if
 
-dw_audit.retrieve(current_patient.cpr_id, encounter.encounter_id, ls_audit_date, ls_audit_date, ls_user_id, ls_include_object_updates, ls_include_patient_info)
+dw_audit.retrieve(current_patient.cpr_id, encounter.encounter_id, ldt_audit_date, ldt_audit_date, ls_user_id, ls_include_object_updates, ls_include_patient_info)
 
 return
 
