@@ -74,7 +74,7 @@ else
 end if
 
 dw_audit.settransobject(sqlca)
-dw_audit.retrieve(ls_cpr_id, ll_encounter_id, st_audit_date.text, st_audit_date.text, user.user_id, ls_include_object_updates, ls_include_patient_info)
+dw_audit.retrieve(ls_cpr_id, ll_encounter_id, date(st_audit_date.text), date(st_audit_date.text), user.user_id, ls_include_object_updates, ls_include_patient_info)
 
 cb_prev_day.x = st_audit_date.x - cb_prev_day.width - 20
 cb_prev_day.y = st_audit_date.y
