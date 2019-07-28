@@ -30,7 +30,6 @@ global type w_svc_audit from w_window_base
 integer width = 2935
 integer height = 1912
 string title = "Outstanding Labs/Tests"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -144,7 +143,7 @@ dw_audit.object.compute_object.width = width - 662
 dw_audit.object.l_header.x2 = width
 
 dw_audit.settransobject(sqlca)
-dw_audit.retrieve(service.cpr_id, ll_encounter_id, st_from_date.text, st_to_date.text, ls_user_id, ls_include_object_updates, ls_include_patient_info)
+dw_audit.retrieve(service.cpr_id, ll_encounter_id, date(st_from_date.text), date(st_to_date.text), ls_user_id, ls_include_object_updates, ls_include_patient_info)
 
 
 return 1
