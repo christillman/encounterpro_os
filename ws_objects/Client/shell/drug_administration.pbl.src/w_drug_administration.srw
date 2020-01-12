@@ -44,7 +44,6 @@ end forward
 
 global type w_drug_administration from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -338,6 +337,8 @@ end type
 type pb_done from u_picture_button within w_drug_administration
 integer x = 2592
 integer y = 1556
+integer width = 256
+integer height = 224
 integer taborder = 30
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -413,6 +414,8 @@ end event
 type pb_cancel from u_picture_button within w_drug_administration
 integer x = 82
 integer y = 1556
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean bringtotop = true
 boolean cancel = true
@@ -611,6 +614,8 @@ end type
 type pb_1 from u_pb_help_button within w_drug_administration
 integer x = 1330
 integer y = 1608
+integer width = 256
+integer height = 128
 integer taborder = 20
 boolean bringtotop = true
 end type
