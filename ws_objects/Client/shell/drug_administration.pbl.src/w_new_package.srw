@@ -40,7 +40,6 @@ end forward
 
 global type w_new_package from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -472,6 +471,8 @@ end type
 type pb_done from u_picture_button within w_new_package
 integer x = 2574
 integer y = 1536
+integer width = 256
+integer height = 224
 integer taborder = 40
 boolean default = true
 string picturename = "button26.bmp"
@@ -544,6 +545,8 @@ end event
 type pb_cancel from u_picture_button within w_new_package
 integer x = 128
 integer y = 1528
+integer width = 256
+integer height = 224
 integer taborder = 0
 boolean bringtotop = true
 boolean cancel = true
@@ -662,6 +665,8 @@ end event
 type pb_1 from u_pb_help_button within w_new_package
 integer x = 1330
 integer y = 1568
+integer width = 256
+integer height = 128
 integer taborder = 20
 boolean bringtotop = true
 end type
