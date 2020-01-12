@@ -70,7 +70,6 @@ end forward
 
 global type w_drug_admin_edit from w_window_base
 integer height = 1840
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 2
@@ -983,6 +982,8 @@ end type
 type pb_1 from u_pb_help_button within w_drug_admin_edit
 integer x = 2624
 integer y = 24
+integer width = 256
+integer height = 128
 end type
 
 type cb_done from commandbutton within w_drug_admin_edit
