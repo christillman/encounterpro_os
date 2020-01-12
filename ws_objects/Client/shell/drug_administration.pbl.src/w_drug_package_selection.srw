@@ -28,7 +28,6 @@ end forward
 
 global type w_drug_package_selection from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -169,6 +168,8 @@ end type
 type pb_done from u_picture_button within w_drug_package_selection
 integer x = 2578
 integer y = 1552
+integer width = 256
+integer height = 224
 integer taborder = 10
 boolean enabled = false
 string picturename = "button26.bmp"
@@ -193,6 +194,8 @@ end event
 type pb_cancel from u_picture_button within w_drug_package_selection
 integer x = 1358
 integer y = 1552
+integer width = 256
+integer height = 224
 integer taborder = 70
 boolean bringtotop = true
 boolean cancel = true
@@ -403,6 +406,8 @@ end event
 type pb_1 from u_pb_help_button within w_drug_package_selection
 integer x = 1975
 integer y = 1596
+integer width = 256
+integer height = 128
 integer taborder = 20
 boolean bringtotop = true
 end type
