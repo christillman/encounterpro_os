@@ -5383,7 +5383,7 @@ long ll_row
 string ls_null
 string ls_value
 string ls_city
-string ls_state
+string ls_state, ls_country
 string ls_zip
 string ls_zip_plus4
 
@@ -5397,11 +5397,11 @@ ls_find = "office_id='" + ps_office_id + "'"
 ll_row = offices.find(ls_find, 1, offices.rowcount())
 if ll_row <= 0 or isnull(ll_row) then return ls_null
 
-
 CHOOSE CASE lower(trim(ps_field_name))
 	CASE "city_state_zip"
 		ls_city = offices.get_field_value(ll_row, "city")
 		ls_state = offices.get_field_value(ll_row, "state")
+		ls_country = offices.get_field_value(ll_row, "country")
 		ls_zip = offices.get_field_value(ll_row, "zip")
 		ls_zip_plus4 = offices.get_field_value(ll_row, "zip_plus4")
 		if len(ls_city) > 0 then
@@ -5412,6 +5412,13 @@ CHOOSE CASE lower(trim(ps_field_name))
 				ls_value += ", " + ls_state
 			else
 				ls_value = ls_state
+			end if
+		end if
+		if len(ls_country) > 0 then
+			if len(ls_value) > 0 then
+				ls_value += ", " + ls_country
+			else
+				ls_value = ls_country
 			end if
 		end if
 		if len(ls_zip) > 0 then
@@ -5566,6 +5573,7 @@ pstr_office.address1 = offices.object.address1[ll_row]
 pstr_office.address2 = offices.object.address2[ll_row]
 pstr_office.city = offices.object.city[ll_row]
 pstr_office.state = offices.object.state[ll_row]
+pstr_office.country = offices.object.country[ll_row]
 pstr_office.zip = offices.object.zip[ll_row]
 pstr_office.zip_plus4 = offices.object.zip_plus4[ll_row]
 pstr_office.phone = offices.object.phone[ll_row]
@@ -5860,27 +5868,9 @@ if len(ls_temp) > 0 then
 	ls_address += ls_temp
 end if
 
-ls_temp = office_field(ps_office_id, "city")
+ls_temp = office_field(ps_office_id, "city_state_zip")
 if len(ls_temp) > 0 then
 	if len(ls_address) > 0 then ls_address += ", "
-	ls_address += ls_temp
-end if
-
-ls_temp = office_field(ps_office_id, "state")
-if len(ls_temp) > 0 then
-	if len(ls_address) > 0 then ls_address += ", "
-	ls_address += ls_temp
-end if
-
-ls_temp = office_field(ps_office_id, "zip")
-if len(ls_temp) > 0 then
-	if len(ls_address) > 0 then ls_address += "  "
-	ls_address += ls_temp
-end if
-
-ls_temp = office_field(ps_office_id, "zip_plus4")
-if len(ls_temp) > 0 then
-	if len(ls_address) > 0 then ls_address += "-"
 	ls_address += ls_temp
 end if
 
@@ -7020,6 +7010,7 @@ for i = 1 to ll_office_count
 		pstr_office[ll_row].address2 = offices.object.address2[i]
 		pstr_office[ll_row].city = offices.object.city[i]
 		pstr_office[ll_row].state = offices.object.state[i]
+		pstr_office[ll_row].country = offices.object.country[i]
 		pstr_office[ll_row].zip = offices.object.zip[i]
 		pstr_office[ll_row].zip_plus4 = offices.object.zip_plus4[i]
 		pstr_office[ll_row].phone = offices.object.phone[i]
