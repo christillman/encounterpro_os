@@ -17,6 +17,7 @@ string 	ls_address1
 string 	ls_address2
 string 	ls_city
 string 	ls_state
+string 	ls_country
 string 	ls_zip
 string 	ls_zip_plus4
 string 	ls_phone
@@ -58,6 +59,7 @@ SELECT description,
        address2,   
        city,   
        state,   
+       country,   
        zip,   
        zip_plus4,   
        phone,   
@@ -67,6 +69,7 @@ INTO	:ls_office_description,
       :ls_address2,   
       :ls_city,   
       :ls_state,   
+      :ls_country,   
       :ls_zip,   
       :ls_zip_plus4,   
       :ls_phone,   
@@ -102,7 +105,7 @@ If ll_bitmap_height <= 0 Then setnull(ll_bitmap_height)
 
 report_datastore.Modify("practice.text='" + ls_office_description + "'")
 report_datastore.Modify("address.text='" + ls_address1 + "'")
-report_datastore.Modify("city_state_zip.text='" + ls_city + ", " + ls_state + "  " + ls_zip + "'")
+report_datastore.Modify("city_state_zip.text='" + ls_city + ", " + ls_state + ",  " + ls_country + "  " + ls_zip + "'")
 report_datastore.Modify("phone_fax.text='" + ls_phone + "'")
 
 report_datastore.Modify("patient.text='Patient: " + current_patient.name() + "'")
