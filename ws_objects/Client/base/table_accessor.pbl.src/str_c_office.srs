@@ -12,5 +12,6 @@ global type str_c_office from structure
 	string		fax
 	string		status
 	string		office_nickname
+	string		country
 end type
 
