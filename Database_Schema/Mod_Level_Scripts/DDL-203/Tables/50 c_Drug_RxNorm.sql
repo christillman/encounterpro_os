@@ -28,10 +28,16 @@ CREATE TABLE c_Drug_Brand (
 	dea_class varchar(10)
 	)
 
+GRANT DELETE, INSERT, SELECT, UPDATE ON c_Drug_Brand TO [cprsystem] AS [dbo]
+GO
+
 CREATE TABLE c_Drug_Brand_Ingredient (
 	brand_name_rxcui varchar(10) not null,
 	generic_rxcui_ingredient varchar(10) not null
 	)
+
+GRANT DELETE, INSERT, SELECT, UPDATE ON c_Drug_Brand_Ingredient TO [cprsystem] AS [dbo]
+GO
 
 CREATE TABLE c_Drug_Generic (
 	generic_name varchar(900),
@@ -44,7 +50,13 @@ CREATE TABLE c_Drug_Generic (
 	dea_class varchar(10)
 	)
 
+GRANT DELETE, INSERT, SELECT, UPDATE ON c_Drug_Generic TO [cprsystem] AS [dbo]
+GO
+
 CREATE TABLE c_Drug_Generic_Ingredient (
 	generic_rxcui varchar(10) not null,
 	generic_rxcui_ingredient varchar(10) not null
 	)
+
+GRANT DELETE, INSERT, SELECT, UPDATE ON c_Drug_Generic_Ingredient TO [cprsystem] AS [dbo]
+GO
