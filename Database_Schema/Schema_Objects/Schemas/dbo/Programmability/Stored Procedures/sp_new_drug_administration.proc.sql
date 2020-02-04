@@ -1,9 +1,12 @@
-﻿/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 7/25/2000 8:43:59 AM ******/
-/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 2/16/99 12:00:59 PM ******/
-/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 10/26/98 2:20:44 PM ******/
-/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 10/4/98 6:28:16 PM ******/
-/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 9/24/98 3:06:09 PM ******/
-/****** Object:  Stored Procedure dbo.sp_new_drug_administration    Script Date: 8/17/98 4:16:50 PM ******/
+﻿
+Print 'Drop Procedure sp_new_drug_administration'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'sp_new_drug_administration') AND [type]='P'))
+DROP PROCEDURE sp_new_drug_administration
+GO
+
+Print 'Create Procedure sp_new_drug_administration'
+GO
 CREATE PROCEDURE sp_new_drug_administration (
 	@ps_drug_id varchar(24),
 	@pi_administration_sequence smallint,
@@ -11,7 +14,8 @@ CREATE PROCEDURE sp_new_drug_administration (
 	@pr_administer_amount real,
 	@ps_administer_unit varchar(12), 	@ps_mult_by_what varchar(12),
 	@ps_calc_per varchar(12),
-	@ps_description varchar(40) )
+	@ps_description varchar(40),
+	@ps_form_rxcui varchar(40) )
 AS
 INSERT INTO c_Drug_Administration (
 	drug_id,
@@ -21,7 +25,8 @@ INSERT INTO c_Drug_Administration (
 	administer_unit,
 	mult_by_what,
 	calc_per,
-	description )
+	description,
+	form_rxcui )
 VALUES (
 	@ps_drug_id,
 	@pi_administration_sequence,
@@ -30,5 +35,5 @@ VALUES (
 	@ps_administer_unit,
 	@ps_mult_by_what,
 	@ps_calc_per,
-	@ps_description )
-
+	@ps_description,
+	@ps_form_rxcui )
