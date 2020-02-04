@@ -15,8 +15,6 @@ end type
 end forward
 
 global type w_pop_assessment_icd_list from w_window_base
-integer x = 434
-integer y = 604
 integer width = 3973
 integer height = 2040
 windowtype windowtype = response!
@@ -73,7 +71,9 @@ end on
 type pb_epro_help from w_window_base`pb_epro_help within w_pop_assessment_icd_list
 boolean visible = true
 integer x = 1691
-integer y = 1772
+integer y = 1712
+integer height = 188
+boolean originalsize = false
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pop_assessment_icd_list
