@@ -94,6 +94,7 @@ string time_format_string = "[time]"
 // Necessary to avoid errors if the regional settings are d/m/y
 // because SQL server is always m/d/y
 string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
+string db_date_format = "yyyy-mm-dd"
 string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
 string debug_path = "C:\TEMP\EproDebug"
@@ -171,6 +172,9 @@ end variables
 global type cpr from application
 string appname = "cpr"
 event keydown pbm_keydown
+long richtextedittype = 0
+long richtexteditversion = 0
+string richtexteditkey = ""
 end type
 global cpr cpr
 
@@ -189,13 +193,13 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 206
+long minimum_modification_level = 207
 
-date compile_date = date("12/5/2019")
+date compile_date = date("2020-02-04")
 
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "3.2"
+string build = "3.3"
 ////////////////////////////////////////////////////////////
 
 
