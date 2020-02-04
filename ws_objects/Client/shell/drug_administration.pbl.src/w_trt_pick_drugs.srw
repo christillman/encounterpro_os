@@ -50,7 +50,6 @@ end forward
 
 global type w_trt_pick_drugs from w_window_base
 integer height = 1836
-boolean controlmenu = false
 windowtype windowtype = response!
 st_search_title st_search_title
 pb_down_sel pb_down_sel
@@ -89,6 +88,8 @@ end variables
 
 forward prototypes
 public subroutine select_drug (string ps_drug_id, string ps_description)
+public function string choose_drug_administration (string ps_drug_id, ref str_attributes pstr_attributes, ref str_drug_administration pstra_admin[])
+public function string choose_rxnorm_formulation (string ps_generic_rxcui, string ps_brand_name_rxcui, ref str_attributes pstr_attributes, ref str_drug_administration pstra_admin[])
 end prototypes
 
 public subroutine select_drug (string ps_drug_id, string ps_description);Datetime ldt_begin_date
@@ -96,27 +97,33 @@ Date		ld_begin_date
 Long		ll_row
 Integer	li_count,li_administration_sequence,i
 String	ls_temp,ls_treatment_mode
-String	ls_admin_description,ls_administer_unit
-String	ls_description,ls_drug_id,ls_dosage_form,ls_package_id
-str_attributes lstr_attributes
-str_pick_users lstr_pick_users
-boolean lb_past_med_who_ordered
+String	ls_description, ls_drug_id, ls_treatment_desc
+string ls_common_name, ls_generic_name, ls_brand_name_rxcui, ls_generic_rxcui
+
+boolean lb_past_med_who_ordered, lb_selected_generic
 string ls_ordered_by
 
-str_popup	popup
-str_popup_return popup_return
 str_drug_administration lstra_admin[]
+str_attributes lstr_attributes
+str_pick_users lstr_pick_users
 
 ls_drug_id = ps_drug_id
 ls_description = ps_description
+SetNull(ls_generic_rxcui)
+SetNull(ls_brand_name_rxcui)
+
+f_get_rxnorm(ps_drug_id, ls_generic_rxcui, ls_brand_name_rxcui)
+
+// Perhaps not needed; would just be for messages
+SELECT common_name, generic_name
+INTO :ls_common_name, :ls_generic_name
+FROM c_Drug_Definition
+WHERE drug_id = :ps_drug_id;
+
 
 // Add the drug to the attributes
 f_attribute_add_attribute(lstr_attributes, "drug_id", ls_drug_id)
 
-Setnull(li_administration_sequence)
-Setnull(ls_admin_description)
-Setnull(ls_administer_unit)
-Setnull(ls_package_id)
 Setnull(ld_begin_date)
 		
 // Get the duration & Package if it's past treatment
@@ -146,82 +153,266 @@ If past_treatment Then
 		end if
 	end if
 	f_attribute_add_attribute(lstr_attributes, "ordered_by", ls_ordered_by)
-Else
-	// Make user select administration
-	
-	// This is a hack.  Use some sort of treatment attribute later to determine
-	// the filter for picking the admin sequence
+Else	
+	// Get list of any existing drug administrations for this drug_id
 	if upper(treatment_type) = "OFFICEMED" then
-		li_count = f_get_drug_administration_dose(ls_drug_id, lstra_admin)
+		li_count = f_get_drug_administration_dose(ps_drug_id, lstra_admin)
 	else
-		li_count = f_get_drug_administration(ls_drug_id, lstra_admin)
-	end if
-	if li_count > 0 then
-		popup.data_row_count = li_count
-		for i = 1 to li_count
-			popup.items[i] = lstra_admin[i].description
-		next
-		popup.auto_singleton = true
-		openwithparm(w_pop_pick, popup, this)
-		popup_return = message.powerobjectparm
-		if popup_return.item_count = 1 then
-			li_administration_sequence = lstra_admin[popup_return.item_indexes[1]].administration_sequence
-			ls_admin_description = lstra_admin[popup_return.item_indexes[1]].description
-			ls_administer_unit = lstra_admin[popup_return.item_indexes[1]].administer_unit
-			f_attribute_add_attribute(lstr_attributes, "administration_sequence", string(li_administration_sequence))
-		end if
+		li_count = f_get_drug_administration(ps_drug_id, lstra_admin)
 	end if
 	
-	// The make user select dosage form
-	popup.dataobject = "dw_dosage_form"
-	popup.data_row_count = 0
-	popup.displaycolumn = 2
-	popup.datacolumn = 1
-	popup.argument_count = 2
-	popup.argument[1] = ls_drug_id
-	popup.argument[2] = ls_administer_unit
+	// For RXNORM drugs, display SCDs/SBDs/GPCKs/BPCKs	
+	IF NOT IsNull(ls_generic_rxcui) THEN 
+		// generic_rxcui, and possibly brand_name_rxcui, have been located
+		ls_description = choose_rxnorm_formulation(ls_generic_rxcui, ls_brand_name_rxcui, lstr_attributes, lstra_admin)
+		// lstr_attributes has been populated with a drug_administration, even if
+		// we had to create one matching the RXNORM selections.
+		
+	ELSE
+		// legacy EncounterPro drug, or non-RXNORM
+		ls_description = choose_drug_administration(ls_drug_id, lstr_attributes, lstra_admin)
+	END IF
+End If
+
+IF ls_description <> "Nothing selected" THEN
+	// As in the prevously existing code, ls_description is ignored below.
+	ls_treatment_mode = f_get_default_treatment_mode(treatment_type, ps_drug_id)
+	f_attribute_add_attribute(lstr_attributes, "treatment_mode", ls_treatment_mode)
+	
+	// Calculate the treatment description and it to the attributes
+	ls_treatment_desc = f_attribute_find_attribute(lstr_attributes, "treatment_description")
+	if isnull(ls_treatment_desc) then
+		// attribute only added if it is not already there
+li_administration_sequence = integer(f_attribute_find_attribute(lstr_attributes, "administration_sequence"))
+		ls_treatment_desc = f_drug_treatment_sig(lstr_attributes)
+		f_attribute_add_attribute(lstr_attributes, "treatment_description", ls_treatment_desc)
+	end if
+	
+	// Add to the attributes list
+	selected_attributes_list.attributes_count += 1
+	selected_attributes_list.attributes[selected_attributes_list.attributes_count] = lstr_attributes
+	
+	// Display in the "Selected" window
+	ll_row = dw_selected_items.insertrow(0)
+	dw_selected_items.object.description[ll_row] = ls_treatment_desc
+	dw_selected_items.object.attributes_index[ll_row] = selected_attributes_list.attributes_count
+	dw_selected_items.object.treatment_mode[ll_row] = ls_treatment_mode
+	
+	dw_drugs.clear_selected()
+	
+	cb_finished.enabled = true
+	
+	dw_selected_items.scrolltorow(ll_row)
+	dw_selected_items.recalc_page( pb_up_sel, pb_down_sel, st_page_sel)
+END IF
+
+end subroutine
+
+public function string choose_drug_administration (string ps_drug_id, ref str_attributes pstr_attributes, ref str_drug_administration pstra_admin[]);
+Integer li_count,li_administration_sequence, i
+String	ls_admin_description, ls_administer_unit, ls_administer_frequency
+String	ls_description,ls_dosage_form
+
+str_popup popup
+str_popup_return popup_return
+
+Setnull(li_administration_sequence)
+Setnull(ls_admin_description)
+Setnull(ls_administer_unit)
+
+		
+// Make user select administration
+// This is a hack.  Use some sort of treatment attribute later to determine
+// the filter for picking the admin sequence
+
+li_count = UpperBound(pstra_admin)
+if li_count > 0 then
+	popup.data_row_count = li_count
+	for i = 1 to li_count
+		popup.items[i] = pstra_admin[i].description
+	next
 	popup.auto_singleton = true
 	openwithparm(w_pop_pick, popup, this)
 	popup_return = message.powerobjectparm
-	If popup_return.item_count = 1 Then
-		f_attribute_add_attribute(lstr_attributes, "dosage_form", popup_return.items[1])
-		ls_dosage_form = popup_return.items[1]
-		ls_description += " " + popup_return.descriptions[1]
-	End if
-
-	If Not isnull(ls_admin_description) Then
-		ls_description += " " + ls_admin_description
-	End If
-End If
-
-ls_treatment_mode = f_get_default_treatment_mode(treatment_type, ps_drug_id)
-f_attribute_add_attribute(lstr_attributes, "treatment_mode", ls_treatment_mode)
-
-// Calculate the description and it to the attributes
-ls_description = f_attribute_find_attribute(lstr_attributes, "treatment_description")
-if isnull(ls_description) then
-	ls_description = f_drug_treatment_sig(lstr_attributes)
-	f_attribute_add_attribute(lstr_attributes, "treatment_description", ls_description)
+	if popup_return.item_count = 1 then
+		li_administration_sequence = pstra_admin[popup_return.item_indexes[1]].administration_sequence
+		ls_admin_description = pstra_admin[popup_return.item_indexes[1]].description
+		ls_administer_unit = pstra_admin[popup_return.item_indexes[1]].administer_unit
+		f_attribute_add_attribute(pstr_attributes, "administration_sequence", string(li_administration_sequence))
+	end if
 end if
 
-// Add to the attributes list
-selected_attributes_list.attributes_count += 1
-selected_attributes_list.attributes[selected_attributes_list.attributes_count] = lstr_attributes
+// Then make user select dosage form
+popup.dataobject = "dw_dosage_form"
+popup.data_row_count = 0
+popup.displaycolumn = 2
+popup.datacolumn = 1
+popup.argument_count = 2
+popup.argument[1] = ps_drug_id
+popup.argument[2] = ls_administer_unit
+popup.auto_singleton = true
+openwithparm(w_pop_pick, popup, this)
+popup_return = message.powerobjectparm
+If popup_return.item_count = 1 Then
+	f_attribute_add_attribute(pstr_attributes, "dosage_form", popup_return.items[1])
+	ls_dosage_form = popup_return.items[1]
+	ls_description += " " + popup_return.descriptions[1]
+End if
 
-// Display in the "Selected" window
-ll_row = dw_selected_items.insertrow(0)
-dw_selected_items.object.description[ll_row] = ls_description
-dw_selected_items.object.attributes_index[ll_row] = selected_attributes_list.attributes_count
-dw_selected_items.object.treatment_mode[ll_row] = ls_treatment_mode
+If Not isnull(ls_admin_description) Then
+	ls_description += " " + ls_admin_description
+End If
 
-dw_drugs.clear_selected()
+RETURN ls_description
+end function
 
-cb_finished.enabled = true
+public function string choose_rxnorm_formulation (string ps_generic_rxcui, string ps_brand_name_rxcui, ref str_attributes pstr_attributes, ref str_drug_administration pstra_admin[]);
+string ls_form_rxcui, ls_ingr_rxcui, ls_form_description
+integer li_rc, li_count, li_drug_admin, li_selected_drug_admin
+integer li_administration_sequence
+string ls_administer_frequency, ls_admin_desc
+real lr_administer_amount
+string ls_administer_unit, ls_mult_by_what, ls_calc_per
+// We might choose a generic after having initially searched for a brand, for instance
+string ls_drug_id 
+boolean lb_generic_selected, lb_brand_selected 
 
-dw_selected_items.scrolltorow(ll_row)
-dw_selected_items.recalc_page( pb_up_sel, pb_down_sel, st_page_sel)
+SetNull(lr_administer_amount)
+SetNull(ls_administer_unit)
+SetNull(ls_mult_by_what)
+SetNull(ls_calc_per)
+SetNull(ls_admin_desc)
 
-end subroutine
+str_popup popup
+str_popup_return popup_return
+
+IF IsNull(ps_generic_rxcui) THEN 
+	popup.items[1] = "0"
+ELSE
+	popup.items[1] = ps_generic_rxcui
+END IF
+IF IsNull(ps_brand_name_rxcui) THEN 
+	popup.items[2] = "0"
+ELSE
+	popup.items[2] =ps_brand_name_rxcui
+END IF
+
+li_rc = OpenWithParm(w_pop_formulation_select, popup, this)
+popup_return = message.powerobjectparm
+
+IF popup_return.item_count <> 2 then return "Nothing selected"
+
+ls_form_rxcui = popup_return.items[1]
+ls_ingr_rxcui = popup_return.items[2]
+ls_form_description = popup_return.descriptions[1]
+
+SELECT drug_id
+INTO :ls_drug_id
+FROM c_Drug_Brand
+WHERE brand_name_rxcui = :ls_ingr_rxcui;
+
+if not tf_check() then 
+	log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Database error",2)
+	return "Nothing selected"
+end if
+lb_brand_selected = NOT (sqlca.sqlcode = 100)
+
+IF NOT lb_brand_selected THEN
+	SELECT drug_id
+	INTO :ls_drug_id
+	FROM c_Drug_Generic
+	WHERE generic_rxcui = :ls_ingr_rxcui;
+		
+	if not tf_check() then 
+		log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Database error",2)
+		return "Nothing selected"
+	end if
+	lb_generic_selected = NOT (sqlca.sqlcode = 100)
+END IF
+
+if not (lb_brand_selected OR lb_generic_selected) then 
+	log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Neither brand nor generic were found",2)
+	return "Nothing selected"
+end if
+
+// Instead of picking dosage here, for rxnorm drugs, pick the frequency
+popup.dataobject = "dw_administer_frequency"
+
+popup.datacolumn = 1
+popup.displaycolumn = 4
+
+popup.argument_count = 1
+popup.argument[1] = ls_drug_id
+popup.auto_singleton = true
+openwithparm(w_pop_pick, popup, this)
+
+popup_return = message.powerobjectparm
+
+If popup_return.item_count = 1 Then
+	f_attribute_add_attribute(pstr_attributes, "administer_frequency", popup_return.items[1])
+	ls_administer_frequency = popup_return.items[1]
+	ls_form_description += " " + popup_return.descriptions[1]
+End if
+
+// Determine if these selections match an existing drug_administration
+li_selected_drug_admin = 0
+li_count = UpperBound(pstra_admin)
+FOR li_drug_admin = 1 TO li_count
+	// Check for matching description (including frequency)
+	li_administration_sequence = pstra_admin[li_drug_admin].administration_sequence
+	IF li_administration_sequence > 0 AND pstra_admin[li_drug_admin].description = ls_form_description THEN
+		li_selected_drug_admin = li_drug_admin
+		f_attribute_add_attribute(pstr_attributes, "administration_sequence", string(li_administration_sequence))
+		EXIT
+	END IF
+NEXT
+
+IF li_selected_drug_admin = 0 THEN
+	// Need a new drug_admin
+	
+	SELECT max(administration_sequence)
+	INTO :li_administration_sequence
+	FROM c_Drug_Administration
+	WHERE drug_id = :ls_drug_id;
+	
+	if not tf_check() then return "Drug_id not found!"
+	
+	if isnull(li_administration_sequence) then
+		li_administration_sequence = 1
+	else
+		li_administration_sequence += 1
+	end if
+	
+	// ls_form_rxcui will be used to obtain the strength for the description later
+	// This description in the drug_admin is just an ancillary added comment	
+	sqlca.sp_new_drug_administration(  ls_drug_id,   &
+												li_administration_sequence,   &
+												ls_administer_frequency,   &
+												lr_administer_amount,   &
+												ls_administer_unit,   &
+												ls_mult_by_what,   &
+												ls_calc_per,   &
+												ls_admin_desc,   & 
+												ls_form_rxcui)
+												
+	if not tf_check() then return	"Drug administration creation failed!"	
+	
+	pstra_admin[li_count+1].drug_id = ls_drug_id
+	pstra_admin[li_count+1].administration_sequence = li_administration_sequence
+	pstra_admin[li_count+1].administer_frequency = ls_administer_frequency
+	pstra_admin[li_count+1].description = ls_admin_desc
+	pstra_admin[li_count+1].form_rxcui = ls_form_rxcui
+	f_attribute_add_attribute(pstr_attributes, "administration_sequence", string(li_administration_sequence))
+	
+	// optionally select drug_package (would have been selected in w_drug_admin_edit)
+	// ... not messing with packages at this point
+END IF
+	 
+//f_attribute_add_attribute(pstr_attributes, "dosage_form", popup_return.items[1])
+f_attribute_add_attribute(pstr_attributes, "administer_frequency", ls_administer_frequency)
+	
+RETURN ls_form_description
+end function
 
 event open;call super::open;//////////////////////////////////////////////////////////////////////////////////////
 //
@@ -842,7 +1033,6 @@ integer width = 1408
 integer height = 1592
 integer taborder = 11
 boolean bringtotop = true
-boolean vscrollbar = true
 boolean select_computed = false
 end type
 
