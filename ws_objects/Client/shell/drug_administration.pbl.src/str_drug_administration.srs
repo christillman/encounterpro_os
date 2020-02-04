@@ -9,5 +9,6 @@ global type str_drug_administration from structure
 	string		mult_by_what
 	string		calc_per
 	string		description
+	string		form_rxcui
 end type
 
