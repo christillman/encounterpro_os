@@ -116,6 +116,9 @@ FROM	p_Treatment_Item t
 	--ON t.drug_id = dBrand.drug_id
 	LEFT OUTER JOIN c_Drug_Maker dMaker
 	ON t.maker_id = dMaker.maker_id
+	/* CT: This was commented out before open sourcing, showing that 
+		c_Package was added after c_Drug_Administration?
+		or just that it was unimportant for documentation */
 	--LEFT OUTER JOIN c_Drug_Administration dDrugAdmin
 	--ON t.drug_id = dDrugAdmin.drug_id
 	--AND t.administration_sequence = dDrugAdmin.administration_sequence
