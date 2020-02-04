@@ -1,0 +1,52 @@
+﻿$PBExportHeader$f_get_rxnorm.srf
+global type f_get_rxnorm from function_object
+end type
+
+forward prototypes
+global subroutine f_get_rxnorm (string ps_drug_id, ref string ps_generic_rxcui, ref string ps_brand_name_rxcui)
+end prototypes
+
+global subroutine f_get_rxnorm (string ps_drug_id, ref string ps_generic_rxcui, ref string ps_brand_name_rxcui);
+boolean lb_selected_generic
+
+SetNull(ps_generic_rxcui)
+SetNull(ps_brand_name_rxcui)
+
+if not tf_check() then 
+	log.log(this,"f_get_rxnorm","Database error",2)
+	return
+end if
+if sqlca.sqlcode = 100 then
+	log.log(this,"f_get_rxnorm","Selected drug not found!",4)
+end if
+
+// Is it listed in c_Drug_Generic?
+SELECT generic_rxcui 
+INTO :ps_generic_rxcui
+FROM c_Drug_Generic
+WHERE drug_id = :ps_drug_id;
+
+if not tf_check() then 
+	log.log(this,"f_get_rxnorm","Database error",2)
+	return
+end if
+lb_selected_generic = NOT (sqlca.sqlcode = 100)
+
+IF NOT lb_selected_generic THEN
+	// Is it listed in c_Drug_Brand?
+	SELECT brand_name_rxcui, generic_rxcui 
+	INTO :ps_brand_name_rxcui, :ps_generic_rxcui
+	FROM c_Drug_Brand
+	WHERE drug_id = :ps_drug_id;
+	
+	if not tf_check() then 
+		log.log(this,"f_get_rxnorm","Database error",2)
+		return
+	end if
+	if sqlca.sqlcode = 100 then
+		log.log(this,"f_get_rxnorm","Drug not found in c_Drug_Brand!",2)
+	end if
+END IF
+
+end subroutine
+
