@@ -17,6 +17,7 @@ string ls_calc_per
 string ls_frequency_description
 integer li_times_per_day
 string ls_admin_description
+string ls_form_rxcui
 string ls_item
 string ls_administer_frequency
 string ls_pretty_fraction
@@ -24,6 +25,7 @@ real lr_converted_amount
 real lr_dose_amount
 u_ds_data luo_data
 
+SetNull(ls_form_rxcui)
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_drug_admins_for_drug")
 
@@ -39,8 +41,15 @@ for i = 1 to ll_rows
 	ls_frequency_description = luo_data.object.administer_frequency_description[i]
 	li_times_per_day = luo_data.object.frequency[i]
 	ls_admin_description = luo_data.object.description[i]
+	ls_form_rxcui = luo_data.object.c_drug_administration_form_rxcui[i]
 
-	ls_item = f_pretty_amount_unit(lr_administer_amount, ls_administer_unit)
+	IF IsNull(ls_form_rxcui) THEN
+		ls_item = f_pretty_amount_unit(lr_administer_amount, ls_administer_unit)
+	ELSE
+		// RXNORM formulations don't include an amount and unit separately, 
+		// they have a particular strength embedded in the description
+		ls_item = sqlca.fn_strength(ls_form_rxcui)
+	END IF
 
 	if not (isnull(ls_mult_by_what) or ls_mult_by_what = "") then 
 		ls_item = ls_item + "/" + ls_mult_by_what + "/" + ls_calc_per
@@ -48,6 +57,7 @@ for i = 1 to ll_rows
 
 	ls_item = ls_item + "  " + ls_administer_frequency
 	if not isnull(ls_admin_description) and trim(ls_admin_description) <> "" then
+		// Only an accessory bit of info
 		ls_item = ls_item + "~n" + ls_admin_description
 	end if
 
@@ -60,6 +70,7 @@ for i = 1 to ll_rows
 	pstra_drug_admin[i].calc_per = ls_calc_per
 	pstra_drug_admin[i].administration_sequence = li_administration_sequence
 	pstra_drug_admin[i].description = ls_item
+	pstra_drug_admin[i].form_rxcui = ls_form_rxcui
 next
 
 DESTROY luo_data
