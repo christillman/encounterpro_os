@@ -56,6 +56,10 @@ setnull(ls_null)
 // Get the passed in attribute into the local variables
 
 ls_drug_id = f_attribute_find_attribute(pstr_attributes, "drug_id")
+
+// If we don't have a drug_id then there's nothing we can do so just use the treatment description
+if isnull(ls_drug_id) then return ls_null
+
 ls_package_id = f_attribute_find_attribute(pstr_attributes, "package_id")
 lr_dose_amount = real(f_attribute_find_attribute(pstr_attributes, "dose_amount"))
 ls_dose_unit = f_attribute_find_attribute(pstr_attributes, "dose_unit")
@@ -72,8 +76,6 @@ ls_brand_name_required = f_attribute_find_attribute(pstr_attributes, "brand_name
 li_administration_sequence = integer(f_attribute_find_attribute(pstr_attributes, "administration_sequence"))
 ls_dosage_form = f_attribute_find_attribute(pstr_attributes, "dosage_form")
 
-// If we don't have a drug_id then there's nothing we can do so just use the treatment description
-if isnull(ls_drug_id) then return ls_null
 
 if isnull(ls_package_id) then
 	// If we don't have a package, then generate the description from the dosage_form and admin_sequence
@@ -88,7 +90,12 @@ if isnull(ls_package_id) then
 		li_admin_count = f_get_drug_administration(ls_drug_id, lstra_admin)
 		for i = 1 to li_admin_count
 			if lstra_admin[i].administration_sequence = li_administration_sequence then
-				ls_description += " " + lstra_admin[i].description
+				IF NOT IsNull (lstra_admin[i].form_rxcui) THEN
+					// We want the RXNORM strength to describe the admin sequence
+					ls_description += " " + sqlca.fn_strength(lstra_admin[i].form_rxcui)
+				ELSE
+					ls_description += " " + lstra_admin[i].description
+				END IF
 			end if
 		next
 	end if
