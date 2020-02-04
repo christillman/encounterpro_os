@@ -5,7 +5,6 @@ end type
 end forward
 
 global type u_dose_amount from u_drug_amount_base
-integer height = 69
 end type
 global u_dose_amount u_dose_amount
 
@@ -54,6 +53,8 @@ public function integer calc_dose_amount (real pr_administer_amount, string ps_a
 integer li_sts
 
 if isnull(pr_package_dose_amount) or pr_package_dose_amount <= 0 then pr_package_dose_amount = 1
+// protect against divide by zero
+if isnull(pr_administer_per_dose) or pr_administer_per_dose <= 0 then pr_administer_per_dose = 1
 
 // First, calculate how much of the drug is to be administered per day
 li_sts = f_unit_convert(pr_administer_amount, &
@@ -261,8 +262,10 @@ end if
 end event
 
 on u_dose_amount.create
+call super::create
 end on
 
 on u_dose_amount.destroy
+call super::destroy
 end on
 
