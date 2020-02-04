@@ -40,6 +40,10 @@ type u_amount from u_sle_real_number within w_drug_administration
 end type
 type pb_1 from u_pb_help_button within w_drug_administration
 end type
+type st_strength_t from statictext within w_drug_administration
+end type
+type st_strength from statictext within w_drug_administration
+end type
 end forward
 
 global type w_drug_administration from w_window_base
@@ -67,6 +71,8 @@ sle_description sle_description
 st_description st_description
 u_amount u_amount
 pb_1 pb_1
+st_strength_t st_strength_t
+st_strength st_strength
 end type
 global w_drug_administration w_drug_administration
 
@@ -76,6 +82,7 @@ string drug_id
 boolean mult_by_kg
 string calc_per
 u_unit administer_unit
+string administer_form_rxcui
 end variables
 
 forward prototypes
@@ -88,6 +95,7 @@ long ll_count
 string ls_unit_id
 string ls_find
 
+// Get the possible package unit choices (ref. c_Drug_Package)
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_sp_compatible_admin_units")
 ll_count = luo_data.retrieve(drug_id)
@@ -138,6 +146,8 @@ this.sle_description=create sle_description
 this.st_description=create st_description
 this.u_amount=create u_amount
 this.pb_1=create pb_1
+this.st_strength_t=create st_strength_t
+this.st_strength=create st_strength
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_title
 this.Control[iCurrent+2]=this.st_unit
@@ -158,6 +168,8 @@ this.Control[iCurrent+16]=this.sle_description
 this.Control[iCurrent+17]=this.st_description
 this.Control[iCurrent+18]=this.u_amount
 this.Control[iCurrent+19]=this.pb_1
+this.Control[iCurrent+20]=this.st_strength_t
+this.Control[iCurrent+21]=this.st_strength
 end on
 
 on w_drug_administration.destroy
@@ -181,9 +193,12 @@ destroy(this.sle_description)
 destroy(this.st_description)
 destroy(this.u_amount)
 destroy(this.pb_1)
+destroy(this.st_strength_t)
+destroy(this.st_strength)
 end on
 
 event open;call super::open;integer li_sts
+string ls_generic_rxcui, ls_brand_name_rxcui, ls_form_rxcui
 
 str_popup popup
 str_popup_return popup_return
@@ -192,7 +207,7 @@ popup_return.item_count = 0
 popup = message.powerobjectparm
 
 if popup.data_row_count <> 1 then
-	log.log(this, "w_drug_administration:open", "Invalid Parameters", 4)
+	log.log(this, "w_drug_administration:open", "No drug_id supplied", 4)
 	close(this)
 	return
 end if
@@ -201,17 +216,57 @@ drug_id = popup.items[1]
 
 st_title.text = "Administration for " + popup.title
 
-li_sts = default_admin_unit()
-if li_sts = 0 then
-	openwithparm(w_pop_message, "This drug has no valid administration units")
-	log.log(this, "w_drug_administration:open", "No valid admin units for this drug (" + drug_id + ")", 4)
-	closewithreturn(this, popup_return)
-	return
-elseif li_sts < 0 then
-	log.log(this, "w_drug_administration:open", "Error retrieving default admin unit", 4)
-	closewithreturn(this, popup_return)
-	return
-end if
+
+SetNull(ls_generic_rxcui)
+SetNull(ls_brand_name_rxcui)
+SetNull(administer_form_rxcui)
+
+f_get_rxnorm(drug_id, ls_generic_rxcui, ls_brand_name_rxcui)
+
+IF IsNull(ls_brand_name_rxcui) THEN
+	IF NOT IsNull(ls_generic_rxcui) THEN
+		administer_form_rxcui = ls_generic_rxcui
+	END IF
+ELSE
+	administer_form_rxcui = ls_brand_name_rxcui
+END IF
+
+// For RXNORM drugs, record SCDs/SBDs/GPCKs/BPCKs	
+IF NOT IsNull(ls_generic_rxcui) THEN 
+	// generic_rxcui, and possibly brand_name_rxcui, have been located
+	// Rather than using the amount / units, we refer to the drug's 
+	// formulation description and extract the drug's strength
+	st_duration_unit.visible = false
+	st_unit.visible = false
+	st_duration_amount.visible = false
+	u_amount.visible = false
+	cb_set_amount.visible = false
+	st_strength_t.visible = True
+	st_strength.visible = True
+	
+	st_strength.Text = sqlca.fn_strength(administer_form_rxcui)
+	
+ELSE
+	st_duration_unit.visible = true
+	st_unit.visible = true
+	st_duration_amount.visible = true
+	u_amount.visible = true
+	cb_set_amount.visible = true
+	st_strength_t.visible = false
+	st_strength.visible = false
+	
+	li_sts = default_admin_unit()
+	if li_sts = 0 then
+		openwithparm(w_pop_message, "This drug has no valid administration units")
+		log.log(this, "w_drug_administration:open", "No valid admin units for this drug (" + drug_id + ")", 4)
+		closewithreturn(this, popup_return)
+		return
+	elseif li_sts < 0 then
+		log.log(this, "w_drug_administration:open", "Error retrieving default admin unit", 4)
+		closewithreturn(this, popup_return)
+		return
+	end if
+END IF
 
 uo_calc_per_day.postevent("clicked")
 uo_no.postevent("clicked")
@@ -244,7 +299,7 @@ boolean focusrectangle = false
 end type
 
 type st_unit from statictext within w_drug_administration
-integer x = 1289
+integer x = 978
 integer y = 800
 integer width = 608
 integer height = 100
@@ -281,7 +336,7 @@ end if
 end event
 
 type st_duration_amount from statictext within w_drug_administration
-integer x = 882
+integer x = 571
 integer y = 672
 integer width = 320
 integer height = 72
@@ -299,7 +354,7 @@ boolean focusrectangle = false
 end type
 
 type st_duration_unit from statictext within w_drug_administration
-integer x = 882
+integer x = 571
 integer y = 808
 integer width = 320
 integer height = 72
@@ -352,16 +407,19 @@ string ls_administer_unit
 real lr_administer_amount
 string ls_mult_by_what
 string ls_calc_per
+string ls_form_rxcui
 
-
-if isnull(u_amount.text) or trim(u_amount.text) = "" or real(u_amount.text) = 0 then
-	openwithparm(w_pop_message, "You must supply an administration amount")
-	return
-end if
-
-if isnull(administer_unit) then
-	openwithparm(w_pop_message, "You must supply an administration unit")
-	return
+if isnull(administer_form_rxcui) then
+	
+	if isnull(u_amount.text) or trim(u_amount.text) = "" or real(u_amount.text) = 0 then
+		openwithparm(w_pop_message, "You must supply an administration amount")
+		return
+	end if
+	
+	if isnull(administer_unit) then
+		openwithparm(w_pop_message, "You must supply an administration unit")
+		return
+	end if
 end if
 
 ls_administer_frequency = uo_administer_frequency.administer_frequency
@@ -399,7 +457,8 @@ sqlca.sp_new_drug_administration(drug_id,   &
 											ls_administer_unit,   &
 											ls_mult_by_what,   &
 											ls_calc_per,   &
-											ls_description)
+											ls_description,  &
+											ls_form_rxcui)
 if not tf_check() then return
 
 popup_return.item_count = 1
@@ -536,8 +595,8 @@ event clicked;call super::clicked;calc_per = "DOSE"
 end event
 
 type cb_set_amount from commandbutton within w_drug_administration
-integer x = 1751
-integer y = 656
+integer x = 2368
+integer y = 660
 integer width = 146
 integer height = 100
 integer taborder = 50
@@ -604,9 +663,9 @@ boolean focusrectangle = false
 end type
 
 type u_amount from u_sle_real_number within w_drug_administration
-integer x = 1289
+integer x = 978
 integer y = 656
-integer width = 439
+integer width = 1289
 integer height = 100
 integer taborder = 10
 end type
@@ -618,5 +677,42 @@ integer width = 256
 integer height = 128
 integer taborder = 20
 boolean bringtotop = true
+end type
+
+type st_strength_t from statictext within w_drug_administration
+integer x = 544
+integer y = 532
+integer width = 338
+integer height = 72
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Strength:"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type st_strength from statictext within w_drug_administration
+integer x = 978
+integer y = 532
+integer width = 1280
+integer height = 92
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 12632256
+boolean enabled = false
+alignment alignment = Right!
+boolean border = true
+borderstyle borderstyle = StyleBox!
+boolean focusrectangle = false
 end type
 
