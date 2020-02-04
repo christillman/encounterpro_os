@@ -1617,7 +1617,7 @@ end event
 
 type st_method_description from statictext within w_drug_admin_edit
 integer x = 215
-integer y = 504
+integer y = 492
 integer width = 1070
 integer height = 140
 integer textsize = -12
