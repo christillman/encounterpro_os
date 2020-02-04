@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.3.2
+  !define VERSION   7.0.3.3
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3.2
-  !define Database_Mod_Level   206
+  !define EproClient_VERSION   7.0.3.3
+  !define Database_Mod_Level   207
   !define PBRuntime_VERSION   17.3.1858
   !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
   !define ConfigObjectManager_VERSION   2.1.3.2
