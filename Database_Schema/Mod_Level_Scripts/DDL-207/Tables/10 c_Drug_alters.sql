@@ -25,6 +25,11 @@ if not exists (select * from sys.columns where object_id = object_id('c_Drug_Adm
 	alter table c_Drug_Administration
 		ADD form_rxcui varchar(10) null
 
+if not exists (select * from sys.columns where object_id = object_id('c_Dosage_Form') and
+	 name = 'rxcui')
+	alter table c_Dosage_Form
+		ADD rxcui varchar(10) null
+
 if not exists (select * from sys.columns where object_id = object_id('c_Office') and
 	 name = 'country')
 	alter table c_Office
