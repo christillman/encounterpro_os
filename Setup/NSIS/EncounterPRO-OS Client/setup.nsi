@@ -21,7 +21,9 @@
   !define EproClient_VERSION   7.0.3.3
   !define Database_Mod_Level   207
   !define PBRuntime_VERSION   17.3.1858
-  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
+; Even after rebuilding, there is some kind of virus in Utilities.
+; Leaving it out of the installer, I don't really think it's needed anyway.
+;  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
@@ -34,7 +36,7 @@
 
   ; EproLibNET installer define
   ;*** To change EproLibNET version, change the path below
-  !define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities'
+  ;!define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities'
 
   ;*** If Setup version != Client files version, modify following line ***
   !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
@@ -177,13 +179,13 @@
       nsExec::Exec 'msiexec /i "$INSTDIR\PBCLTRT170.msi" /passive /norestart /l*v "$INSTDIR\PBCLTRT170.log"'
       ; Delete '$INSTDIR\PBCLTRT170.msi'
 
-      SetDetailsPrint both
-      DetailPrint "Installing EncounterPRO.OS.Utilities..."
-      SetDetailsPrint none
-      SetOutPath $INSTDIR
-      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
-      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
-      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
+      ; SetDetailsPrint both
+      ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
+      ; SetDetailsPrint none
+      ; SetOutPath $INSTDIR
+      ; File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
+      ; nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
+      ; Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
       
       SetDetailsPrint both
     SectionEnd
