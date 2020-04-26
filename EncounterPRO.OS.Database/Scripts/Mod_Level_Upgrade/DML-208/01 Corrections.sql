@@ -517,3 +517,47 @@ where drug_id in ('Norco','Percocet')
 DELETE FROM [c_Drug_Package_Archive]
 where drug_id in ('Norco','Percocet')
 
+
+UPDATE c_Drug_Formulation SET RXN_available_strength = '1000 MG' WHERE form_rxcui = '899932' -- Benefiber
+UPDATE c_Drug_Formulation SET RXN_available_strength = '0.5 MG/ML (expressed as Codeine Phosphate) / 15 MG/ML' WHERE form_rxcui = '995226' -- Brontex
+UPDATE c_Drug_Formulation SET RXN_available_strength = '360 MG/ML' WHERE form_rxcui = '702157' -- Calcionate
+UPDATE c_Drug_Formulation SET RXN_available_strength = '4 MG/ML (expressed as Dextromethorphan Hydrobromide)' WHERE form_rxcui = '1190808' -- Entex S
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5.56 MG/ML' WHERE form_rxcui = '392046' -- Fluor a Day
+UPDATE c_Drug_Formulation SET RXN_available_strength = '70 MG (expressed as Alendronic acid) / 5600 UNT' WHERE form_rxcui = '904462' -- Fosamax Plus D
+UPDATE c_Drug_Formulation SET RXN_available_strength = '70 MG (expressed as Alendronic acid) / 2800 UNT' WHERE form_rxcui = '904492' -- Fosamax Plus D
+UPDATE c_Drug_Formulation SET RXN_available_strength = '210000 MG / 740 MG / 2860 MG / 5600 MG' WHERE form_rxcui = '1718983' -- Gavilyte-H
+UPDATE c_Drug_Formulation SET RXN_available_strength = '16.7 MG/ML' WHERE form_rxcui = '1661683' -- Goody's Back & Body Pain Relief
+UPDATE c_Drug_Formulation SET RXN_available_strength = '1000 MG' WHERE form_rxcui = 'KEG418' -- Goody's Back & Body Pain Relief
+UPDATE c_Drug_Formulation SET RXN_available_strength = '40 MG/ML / 0.5 MG/ML (expressed as Hydrocodone Bitartrate) / 6 MG/ML (expressed as Pseudoephedrine Hydrochloride)' WHERE form_rxcui = '1651558' -- Hycofenix
+UPDATE c_Drug_Formulation SET RXN_available_strength = '1.3 MG/ML / 50 MG/ML / 0.0302 MEQ/ML / 0.0155 MEQ/ML' WHERE form_rxcui = '800786' -- Isolyte M
+UPDATE c_Drug_Formulation SET RXN_available_strength = '40 MG/ML / 1 MG/ML (expressed as Phenylephrine Hydrochloride)' WHERE form_rxcui = '1370427' -- J-Max
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG' WHERE form_rxcui = '1294537'	-- Meridia
+UPDATE c_Drug_Formulation SET RXN_available_strength = '10 MG (expressed as SIBUTRAMINE HYDROCHLORIDE)' WHERE form_rxcui = '1294541'	-- Meridia
+UPDATE c_Drug_Formulation SET RXN_available_strength = '15 MG (expressed as SIBUTRAMINE HYDROCHLORIDE)' WHERE form_rxcui = '1294545'	-- Meridia
+UPDATE c_Drug_Formulation SET RXN_available_strength = '500 MG / 25 MG' WHERE form_rxcui = '198449'	-- Midol Teen
+UPDATE c_Drug_Formulation SET RXN_available_strength = '6 MG/ML (expressed as Dextromethorphan Hydrobromide) / 40 MG/ML' WHERE form_rxcui = '1147924'	-- Neotuss
+UPDATE c_Drug_Formulation SET RXN_available_strength = '20 MG/ML (expressed as Chloroprocaine hydrochloride)' WHERE form_rxcui = '992805'	-- Nesacaine
+UPDATE c_Drug_Formulation SET RXN_available_strength = '2 MG/ML (expressed as Codeine Phosphate) / 6 MG/ML (expressed as Pseudoephedrine Hydrochloride) / 0.25 MG/ML (expressed as Triprolidine Hydrochloride)' WHERE form_rxcui = '996640'	-- Pseudodine C
+UPDATE c_Drug_Formulation SET RXN_available_strength = '3 MG / 20 MG' WHERE form_rxcui = '895560'	-- Rescon Jr Reformulated Feb 2010
+UPDATE c_Drug_Formulation SET RXN_available_strength = '1 MG/ML (expressed as Hydrocodone Bitartrate) / 12 MG/ML (expressed as Pseudoephedrine Hydrochloride)' WHERE form_rxcui = '1114334'	-- Rezira
+UPDATE c_Drug_Formulation SET RXN_available_strength = '1000 MG/ML' WHERE form_rxcui = '312541'	-- SSKI brand of Potassium Iodide
+UPDATE c_Drug_Formulation SET RXN_available_strength = '32 MG/ML / 0.5 MG/ML (expressed as Phenylephrine Hydrochloride)' WHERE form_rxcui = '1088546'	-- Tylenol Sinus Congestion and Pain Daytime
+
+
+UPDATE c_Drug_Formulation SET RXN_available_strength = '10 MG (expressed as Doxorubicin Hydrochloride)' WHERE form_rxcui = '1790103'	-- Adriamycin
+UPDATE c_Drug_Formulation SET RXN_available_strength = '200 MG / 10 MG (expressed as Phenylephrine Hydrochloride)' WHERE form_rxcui = '1722333'	-- Advil Sinus Congestion and Pain
+UPDATE c_Drug_Formulation SET RXN_available_strength = '2 MG/ML (expressed as Sodium Hyaluronate)' WHERE form_rxcui = '1593288'	-- Bionect
+UPDATE c_Drug_Formulation SET RXN_available_strength = '0.005 MG/ML / 40 MG/ML (expressed as Prilocaine Hydrochloride)' WHERE form_rxcui = '1993224'	-- Citanest Forte
+UPDATE c_Drug_Formulation SET RXN_available_strength = '100 MG/ML (expressed as Undecylenic Acid)' WHERE form_rxcui = '1482679'	-- Diaderm
+UPDATE c_Drug_Formulation SET RXN_available_strength = '50 MG/ML' WHERE form_rxcui = '200141'	-- Enfamil Glucose
+UPDATE c_Drug_Formulation SET RXN_available_strength = '50 MG (expressed as cyclosporine, modified)' WHERE form_rxcui = '835925'	-- Gengraf
+UPDATE c_Drug_Formulation SET RXN_available_strength = '0.0025 MG / 0.5 MG (expressed as norethindrone acetate)' WHERE form_rxcui = '1722245'	-- Jevantique
+UPDATE c_Drug_Formulation SET RXN_available_strength = '25.5 MG/ML (expressed as Liver derivative complex)' WHERE form_rxcui = '200238'	-- Nexavir
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG/ML' WHERE form_rxcui = '241975'	-- Omnitrope/Saizen
+UPDATE c_Drug_Formulation SET RXN_available_strength = '10 MG / 1000 MG (expressed as Metformin hydrochloride)' WHERE form_rxcui = '1593775'	-- Xigduo
+UPDATE c_Drug_Formulation SET RXN_available_strength = '10 MG / 500 MG (expressed as Metformin hydrochloride)' WHERE form_rxcui = '1593835'	-- Xigduo
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG / 1000 MG (expressed as Metformin hydrochloride)' WHERE form_rxcui = '1593833'	-- Xigduo
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG / 500 MG (expressed as Metformin hydrochloride)' WHERE form_rxcui = '1593831'	-- Xigduo
+UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG/ML' WHERE form_rxcui = '241975'	-- Zomacton
+UPDATE c_Drug_Formulation SET RXN_available_strength = '2 MG/ML (expressed as Codeine Phosphate) / 1 MG/ML (expressed as Phenylephrine Hydrochloride) / 1 MG/ML (expressed as Pyrilamine Maleate)' WHERE form_rxcui = '996580'	-- Zotex
+
