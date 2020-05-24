@@ -97,7 +97,6 @@ if ll_row > 0 then
 	luo_unit.unit_id = units.object.unit_id[ll_row]
 	luo_unit.description = units.object.description[ll_row]
 	luo_unit.unit_type = units.object.unit_type[ll_row]
-	luo_unit.pretty_fraction = units.object.pretty_fraction[ll_row]
 	luo_unit.plural_flag = units.object.plural_flag[ll_row]
 	luo_unit.print_unit = units.object.print_unit[ll_row]
 	luo_unit.abbreviation = units.object.abbreviation[ll_row]

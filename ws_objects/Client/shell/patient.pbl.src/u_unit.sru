@@ -17,7 +17,6 @@ type variables
 string unit_id
 string description
 string unit_type
-string pretty_fraction
 string plural_flag
 string print_unit
 string abbreviation
@@ -39,7 +38,6 @@ real conversion_factor
 real conversion_difference
 
 end variables
-
 forward prototypes
 public subroutine convert_to_metric (real pr_amount, ref real pr_metric_amount, ref string ps_metric_unit)
 public subroutine convert_from_metric (real pr_metric_amount, ref real pr_amount)
@@ -799,7 +797,7 @@ end subroutine
 
 public function string pretty_number (real pr_amount, string ps_display_mask, boolean pb_use_minor_units);integer li_integer, li_pos, li_sts
 real lr_fraction
-string ls_pretty_fraction, ls_plural_flag
+string ls_plural_flag
 string ls_fraction, ls_amount, ls_unit, ls_null
 real lr_half_unit
 integer i
