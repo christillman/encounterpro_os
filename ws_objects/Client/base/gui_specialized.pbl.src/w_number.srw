@@ -112,6 +112,8 @@ string ls_old_unit, ls_new_unit
 integer li_sts
 integer i
 
+IF IsNull(unit) OR NOT IsValid(unit) THEN RETURN
+
 ls_old_unit = unit.unit_id
 
 if unit_id_count = 1 then
@@ -555,6 +557,8 @@ end event
 type pb_cancel from u_picture_button within w_number
 integer x = 1513
 integer y = 800
+integer width = 256
+integer height = 224
 integer taborder = 60
 boolean cancel = true
 string picturename = "button11.bmp"
@@ -572,6 +576,8 @@ end on
 type pb_done from u_picture_button within w_number
 integer x = 1513
 integer y = 1064
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean default = true
 string picturename = "button26.bmp"
