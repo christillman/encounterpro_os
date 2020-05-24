@@ -18,6 +18,7 @@ alignment alignment = center!
 boolean border = true
 borderstyle borderstyle = styleraised!
 boolean focusrectangle = false
+boolean disabledlook = true
 event newpackage ( )
 end type
 global u_drug_package u_drug_package
@@ -35,18 +36,19 @@ string method_description[]
 string prescription_flag[]
 real default_dispense_amount[]
 string default_dispense_unit[]
-string pretty_fraction[]
+string display_mask[]
 string take_as_directed[]
 string dosage_form[]
+string form_rxcui[]
 
 
 end variables
-
 forward prototypes
 public subroutine selectitem (integer pi_item_number)
 public function integer selectdosageform (string ps_dosage_form)
 public function integer retrieve (string ps_drug_id)
 public function integer selectpackage (string ps_package_id)
+public function integer selectformulation (string ps_form_rxcui)
 end prototypes
 
 public subroutine selectitem (integer pi_item_number);if pi_item_number > 0 and pi_item_number <= package_count then
@@ -95,8 +97,9 @@ for i = 1 to package_count
 	dose_unit[i] = luo_data.object.dose_unit[i]
 	administer_per_dose[i] = luo_data.object.administer_per_dose[i]
 	method_description[i] = luo_data.object.method_description[i]
-	pretty_fraction[i] = luo_data.object.pretty_fraction[i]
+	display_mask[i] = luo_data.object.display_mask[i]
 	dosage_form[i] = luo_data.object.dosage_form[i]
+	form_rxcui[i] = luo_data.object.form_rxcui[i]
 next
 
 DESTROY luo_data
@@ -129,8 +132,9 @@ SELECT c_Package.description,
 		c_Package.dose_unit,
 		c_Package.administer_per_dose,
 		c_Administration_Method.description,
-		c_Unit.pretty_fraction,
-		c_Package.dosage_form
+		c_Unit.display_mask,
+		c_Package.dosage_form,
+		c_Drug_Package.form_rxcui
 INTO		:package_description[package_count + 1],
 			:administer_method[package_count + 1],
 			:pkg_administer_unit[package_count + 1],
@@ -138,13 +142,15 @@ INTO		:package_description[package_count + 1],
 			:dose_unit[package_count + 1],
 			:administer_per_dose[package_count + 1],
 			:method_description[package_count + 1],
-			:pretty_fraction[package_count + 1],
-			:dosage_form[package_count + 1]
+			:display_mask[package_count + 1],
+			:dosage_form[package_count + 1],
+			:form_rxcui[package_count + 1]
  FROM c_Package
- 	LEFT OUTER JOIN 	c_Administration_Method
-	 ON  c_Package.administer_method = c_Administration_Method.administer_method
+ 	JOIN c_Drug_Package ON c_Drug_Package.Package_id = c_Package.Package_id
 	INNER JOIN c_Unit
 	ON c_Package.dose_unit = c_Unit.unit_id
+ 	LEFT OUTER JOIN 	c_Administration_Method
+	 ON  c_Package.administer_method = c_Administration_Method.administer_method
 WHERE c_Package.package_id = :ps_package_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
@@ -164,6 +170,21 @@ if isnull(dose_amount[package_count]) then dose_amount[package_count] = 1
 selectitem(package_count)
 return package_count
 
+end function
+
+public function integer selectformulation (string ps_form_rxcui);integer i
+
+if isnull(ps_form_rxcui) or trim(ps_form_rxcui) = "" then
+	selectitem(0)
+	return 0
+end if
+
+for i = 1 to package_count
+	if form_rxcui[i] = ps_form_rxcui then
+		selectitem(i)
+		return i
+	end if
+next
 end function
 
 on u_drug_package.create
