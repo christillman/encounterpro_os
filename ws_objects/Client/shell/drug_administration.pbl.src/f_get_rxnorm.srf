@@ -17,7 +17,7 @@ if not tf_check() then
 	return
 end if
 if sqlca.sqlcode = 100 then
-	log.log(this,"f_get_rxnorm","Selected drug not found!",4)
+	log.log(this,"f_get_rxnorm","Selected drug not found!",2)
 end if
 
 // Is it listed in c_Drug_Generic?
