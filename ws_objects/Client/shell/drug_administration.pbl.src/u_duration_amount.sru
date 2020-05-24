@@ -5,18 +5,18 @@ end type
 end forward
 
 global type u_duration_amount from statictext
-int Width=613
-int Height=68
-boolean Border=true
-BorderStyle BorderStyle=StyleRaised!
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=12632256
-int TextSize=-12
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer width = 613
+integer height = 68
+integer textsize = -12
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 12632256
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
 end type
 global u_duration_amount u_duration_amount
 
@@ -24,10 +24,8 @@ type variables
 real amount
 string unit
 string prn
-string pretty_fraction
 boolean WasModified
 end variables
-
 forward prototypes
 public subroutine pretty_text ()
 public subroutine set_amount (real pr_amount, string ps_unit, string ps_prn)
@@ -114,4 +112,10 @@ end event
 
 event constructor;unit = "DAY"
 end event
+
+on u_duration_amount.create
+end on
+
+on u_duration_amount.destroy
+end on
 
