@@ -95,7 +95,7 @@ end if
 end function
 
 public function integer retrieve (string ps_drug_id, string ps_which_frequency);integer i, li_sts
-string ls_item, ls_administer_frequency, ls_pretty_fraction
+string ls_item, ls_administer_frequency
 real lr_converted_amount
 real lr_dose_amount
 
