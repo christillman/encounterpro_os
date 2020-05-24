@@ -58,6 +58,7 @@ setnull(lstr_treatment_description.appointment_date_time)
 setnull(lstr_treatment_description.ordered_for)
 setnull(lstr_treatment_description.completed_by)
 setnull(lstr_treatment_description.dispatch_encounter_id)
+setnull(lstr_treatment_description.form_rxcui)
 
 
 return lstr_treatment_description
