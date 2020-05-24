@@ -193,13 +193,13 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 207
+long minimum_modification_level = 208
 
-date compile_date = date("2020-02-04")
+date compile_date = date("2020-05-24")
 
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "3.3"
+string build = "3.4"
 ////////////////////////////////////////////////////////////
 
 
