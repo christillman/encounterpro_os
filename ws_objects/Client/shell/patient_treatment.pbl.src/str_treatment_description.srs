@@ -52,5 +52,6 @@ global type str_treatment_description from structure
 	string		ordered_for
 	string		completed_by
 	long		dispatch_encounter_id
+	string		form_rxcui
 end type
 
