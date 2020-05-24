@@ -64,6 +64,12 @@ type st_frequency_title from statictext within w_drug_treatment
 end type
 type st_duration_title from statictext within w_drug_treatment
 end type
+type st_route from statictext within w_drug_treatment
+end type
+type shl_drug from statichyperlink within w_drug_treatment
+end type
+type st_link from statictext within w_drug_treatment
+end type
 end forward
 
 global type w_drug_treatment from w_window_base
@@ -71,7 +77,6 @@ integer height = 1840
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 2
-event post_open pbm_custom01
 cb_done cb_done
 cb_cancel cb_cancel
 cb_continue cb_continue
@@ -103,6 +108,9 @@ st_brand_name_required_title st_brand_name_required_title
 st_brand_name_required st_brand_name_required
 st_frequency_title st_frequency_title
 st_duration_title st_duration_title
+st_route st_route
+shl_drug shl_drug
+st_link st_link
 end type
 global w_drug_treatment w_drug_treatment
 
@@ -113,6 +121,7 @@ real max_dose_per_day
 
 /* string data types */
 string       drug_id
+string       form_rxcui
 string       default_duration_unit
 string       default_duration_prn
 string       pharmacist_instructions
@@ -161,48 +170,6 @@ public function string get_patient_weight ()
 public subroutine check_max_dose ()
 end prototypes
 
-event post_open;///////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Description: 
-//
-// Created By:Mark																				Creation dt: 
-//
-// Modified By:Sumathi Chinnasamy															Modified On:03/14/2000
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-integer					li_sts
-String					ls_null
-/* user defined */
-u_attachment_list		luo_attachment_list
-
-
-Setnull(ls_null)
-drug_id 		  = treat_medication.drug_id
-if isnull(drug_id) then
-	log.log(this, "w_drug_treatment:post", "Null drug_id", 4)
-	treat_medication.treatment_definition[1].attribute_count = -1
-	Close(This)
-	Return
-End if
-
-li_sts = set_drug()
-
-If li_sts <= 0 Then
-	treat_medication.treatment_definition[1].attribute_count = -1
-	Close(This)
-	Return
-End if
-
-If Isnull(treat_medication.dose_amount) Then
-	load_defaults()
-Else
-	load_medication()
-End if
-
-cb_done.setfocus()
-
-end event
-
 public subroutine recalcdose ();integer i, j
 real lr_dose_amount
 string ls_mult_display
@@ -231,7 +198,7 @@ if drug_admin_index > 0 and package_list_index > 0 then
 elseif package_list_index > 0 then
 	i = package_list_index
 	if isnull(uo_dose.amount) or uo_dose.amount <= 0 then
-		uo_dose.set_amount(1, uo_drug_package.dose_unit[i])
+		uo_dose.set_amount(0, uo_drug_package.dose_unit[i])
 	elseif last_package_list_index > 0 then
 		j = last_package_list_index
 		uo_dose.convert_dose_amount(uo_drug_package.pkg_administer_unit[j], &
@@ -272,6 +239,17 @@ string ls_mult_display
 setnull(ls_mult_display)
 setnull(lr_best_amount)
 li_best_package = 0
+
+// CDT: Override admin selection below for formulation selection
+// Find package matching the selected formulation
+for i = 1 to uo_drug_package.package_count
+	if lower(uo_drug_package.form_rxcui[i]) <> lower(form_rxcui) then continue
+	li_best_package = i
+	exit
+next
+
+if li_best_package > 0 then return li_best_package
+
 
 // If there is no admin selected, then we can't find a best package
 if drug_admin_index <= 0 then return 0
@@ -786,6 +764,12 @@ if li_sts <= 0 then
 	return li_sts
 end if
 
+shl_drug.text = st_drug.text
+// DailyMed link
+shl_drug.url = "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=" + st_drug.text
+// RXNORM link
+// "https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=" + st_drug.text
+
 max_dose_unit = unit_list.find_unit(ls_unit)
 if not isnull(max_dose_unit) then
 	st_max_dose.text = "Max Dose = " + f_pretty_amount_unit(max_dose_per_day, max_dose_unit.unit_id) + " / Day"
@@ -795,13 +779,14 @@ end if
 
 // Get the package list for this drug
 li_count = uo_drug_package.retrieve(drug_id)
-//if li_count <= 0 then
-//	messagebox("w_drug_treatment-set_drug()","This drug (" + st_drug.text + ") has no packages defined.")
-//	return -1
-//end if
+if li_count <= 0 then
+	messagebox("w_drug_treatment-set_drug()","This drug (" + st_drug.text + ") has no packages defined, or the packages have no dose_unit.")
+	return -1
+end if
 
 // Get the admin list for this drug
-li_count = uo_drug_administration.retrieve(drug_id, "ALL")
+// CDT 8/4/2020, Avoid messing with administrations for now
+// li_count = uo_drug_administration.retrieve(drug_id, "ALL")
 
 display_only = false
 
@@ -866,7 +851,9 @@ If isnull(treat_medication.dose_amount) then
 	uo_drug_administration.triggerevent("newadmin")
 Else
 	// If there is a dose amount then load it.
-	uo_dose.set_amount(treat_medication.dose_amount, &
+	// CDT 30/3/2020
+	// Ciru wants the dose blank to start with, to make the clinician enter it.
+	uo_dose.set_amount(0, /* treat_medication.dose_amount, */ &
 									treat_medication.dose_unit)
 	drug_admin_index = uo_drug_administration.selectadminsequence(&
 											treat_medication.administration_sequence)
@@ -948,6 +935,10 @@ If package_list_index > 0 Then
 else
 	lstr_attributes.attribute[lstr_attributes.attribute_count].value = ls_null
 End if
+
+lstr_attributes.attribute_count += 1
+lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = "form_rxcui"
+lstr_attributes.attribute[lstr_attributes.attribute_count].value = form_rxcui
 
 lstr_attributes.attribute_count += 1
 lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = "dose_amount"
@@ -1076,7 +1067,7 @@ public function integer load_defaults ();///////////////////////////////////////
 Integer i, li_sts
 string ls_instruction
 string ls_instruction_for
-string ls_package_id
+string ls_package_id, ls_dispense_unit
 integer li_admin_sequence
 
 brand_name_required = "N"
@@ -1087,50 +1078,72 @@ dispense_selected   = false
 package_list_index  = 0
 drug_admin_index    = 0
 
-If Isnull(treat_medication.administration_sequence) Then
-	If Not Isnull(treat_medication.dosage_form) Then
-		// Set the package from the dosage form and pick a compatible administration
-		package_list_index = uo_drug_package.selectdosageform(treat_medication.dosage_form)
-		If package_list_index > 0 Then
-			drug_admin_index = uo_drug_administration.select_first_compatible(&
-											uo_drug_package.pkg_administer_unit[package_list_index])
-		End if
-	Else
-		// No dosage form supplied, so look for the first
-		// package which has a compatible administration
-		For i = 1 To uo_drug_package.package_count
-			drug_admin_index = uo_drug_administration.select_first_compatible(&
-																	uo_drug_package.pkg_administer_unit[i])
-			If drug_admin_index > 0 Then
-				package_list_index = uo_drug_package.selectpackage(uo_drug_package.package_id[i])
-				Exit
+If uo_drug_package.package_count > 0 Then
+	// CDT 31/3/2020
+	// If we have already selected a formulation (package)
+	// then cut to the chase
+	If Not IsNull(form_rxcui) AND form_rxcui <> "" Then
+		package_list_index = uo_drug_package.selectformulation(form_rxcui)
+		
+	Else	
+		If Isnull(treat_medication.administration_sequence) Then
+			If Not Isnull(treat_medication.dosage_form) Then
+				// Set the package from the dosage form and pick a compatible administration
+				package_list_index = uo_drug_package.selectdosageform(treat_medication.dosage_form)
+				If package_list_index > 0 Then
+					drug_admin_index = uo_drug_administration.select_first_compatible(&
+													uo_drug_package.pkg_administer_unit[package_list_index])
+				End if
+			Else
+				// No dosage form supplied, so look for the first
+				// package which has a compatible administration
+				For i = 1 To uo_drug_package.package_count
+					drug_admin_index = uo_drug_administration.select_first_compatible(&
+																			uo_drug_package.pkg_administer_unit[i])
+					If drug_admin_index > 0 Then
+						package_list_index = uo_drug_package.selectpackage(uo_drug_package.package_id[i])
+						Exit
+					End if
+				Next
+				// If there are no packages with compatible administrations, just pick the first
+				If package_list_index <= 0 Then
+					package_list_index = uo_drug_package.selectpackage(uo_drug_package.package_id[1])
+				End if
 			End if
-		Next
-		// If there are no packages with compatible administrations, just pick the first
-		If package_list_index <= 0 Then
-			package_list_index = uo_drug_package.selectpackage(uo_drug_package.package_id[1])
+		Else
+			drug_admin_index = uo_drug_administration.selectadminsequence(&
+														treat_medication.administration_sequence)
+			package_list_index = select_best_package(treat_medication.dosage_form)
+			uo_drug_package.selectitem(package_list_index)
 		End if
-	End if
-Else
-	drug_admin_index = uo_drug_administration.selectadminsequence(&
-												treat_medication.administration_sequence)
-	package_list_index = select_best_package(treat_medication.dosage_form)
-	uo_drug_package.selectitem(package_list_index)
-End if
+	End If
+End If
 
 If package_list_index = 0 Then
 	uo_drug_package.selectpackage("")
 End if
 
 If drug_admin_index = 0 Then
-	uo_drug_administration.selectadminsequence(0)
+	// CDT 7/4/2020
+	// Disabling this for now, we are selecting a formulation without an administration
+	// uo_drug_administration.selectadminsequence(0)
 End if
 
 uo_duration.set_amount(	default_duration_amount, &
 								default_duration_unit, &
 								default_duration_prn)
+								
+// Determine the dispense amount/unit
+ls_dispense_unit = treat_medication.dispense_unit
+if isnull(ls_dispense_unit) then
+	if package_list_index > 0 then
+		ls_dispense_unit = uo_drug_package.default_dispense_unit[package_list_index]
+	end if
+end if
 
-uo_drug_administration.triggerevent("newadmin")
+// CDT 7/4/2020
+// Disabling this for now, we are selecting a formulation without an administration
+// uo_drug_administration.triggerevent("newadmin")
 uo_drug_package.triggerevent("newpackage")
 recalcdose()
 // By Sumathi Chinnasamy On 12/08/99
@@ -1309,6 +1322,58 @@ end if
 
 end subroutine
 
+event post_open;///////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Description: 
+//
+// Created By:Mark																				Creation dt: 
+//
+// Modified By:Sumathi Chinnasamy															Modified On:03/14/2000
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+integer					li_sts
+String					ls_null
+/* user defined */
+u_attachment_list		luo_attachment_list
+
+
+Setnull(ls_null)
+drug_id = treat_medication.drug_id
+if isnull(drug_id) then
+	log.log(this, "w_drug_treatment:post", "Null drug_id", 4)
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+li_sts = set_drug()
+
+// CDT 31/3/2020
+// Require a formulation has been selected
+form_rxcui = treat_medication.form_rxcui
+if isnull(form_rxcui) or form_rxcui = "" then
+	log.log(this, "w_drug_treatment:post", "Null form_rxcui", 4)
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+If li_sts <= 0 Then
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+If Isnull(treat_medication.dose_amount) Then
+	load_defaults()
+Else
+	load_medication()
+End if
+
+cb_done.setfocus()
+
+end event
+
 event open;call super::open;///////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Description: get a reference of treament component
@@ -1332,6 +1397,12 @@ if service.manual_service then
 	cb_continue.visible = false
 	max_buttons = 4
 end if
+
+// Hide Dose Based on widgets for this release, will add back in later when administrations are available
+// CDT 2020-03-29
+st_dosebase.Visible = False
+uo_drug_administration.Visible = False
+st_mult_display.Visible = False
 
 ll_menu_id = long(service.get_attribute("menu_id"))
 paint_menu(ll_menu_id)
@@ -1376,6 +1447,9 @@ this.st_brand_name_required_title=create st_brand_name_required_title
 this.st_brand_name_required=create st_brand_name_required
 this.st_frequency_title=create st_frequency_title
 this.st_duration_title=create st_duration_title
+this.st_route=create st_route
+this.shl_drug=create shl_drug
+this.st_link=create st_link
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.cb_done
 this.Control[iCurrent+2]=this.cb_cancel
@@ -1408,6 +1482,9 @@ this.Control[iCurrent+28]=this.st_brand_name_required_title
 this.Control[iCurrent+29]=this.st_brand_name_required
 this.Control[iCurrent+30]=this.st_frequency_title
 this.Control[iCurrent+31]=this.st_duration_title
+this.Control[iCurrent+32]=this.st_route
+this.Control[iCurrent+33]=this.shl_drug
+this.Control[iCurrent+34]=this.st_link
 end on
 
 on w_drug_treatment.destroy
@@ -1443,6 +1520,9 @@ destroy(this.st_brand_name_required_title)
 destroy(this.st_brand_name_required)
 destroy(this.st_frequency_title)
 destroy(this.st_duration_title)
+destroy(this.st_route)
+destroy(this.shl_drug)
+destroy(this.st_link)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_drug_treatment
@@ -1478,7 +1558,7 @@ If package_list_index <= 0 Then
 	Return
 End if
 
-If isnull(uo_dose.amount) or isnull(uo_dose.unit) Then
+If isnull(uo_dose.amount) or uo_dose.amount = 0 or isnull(uo_dose.unit) Then
 	openwithparm(w_pop_message, "You must specify a dose")
 	Return
 End if
@@ -1575,8 +1655,8 @@ Closewithreturn(parent, "BEBACK")
 end event
 
 type st_prn from statictext within w_drug_treatment
-integer x = 2258
-integer y = 1120
+integer x = 2199
+integer y = 1304
 integer width = 439
 integer height = 128
 integer textsize = -10
@@ -1600,8 +1680,8 @@ st_refills.backcolor	 = color_object
 end event
 
 type st_refills from statictext within w_drug_treatment
-integer x = 1783
-integer y = 1120
+integer x = 1723
+integer y = 1304
 integer width = 439
 integer height = 128
 integer taborder = 10
@@ -1643,8 +1723,8 @@ st_prn.backcolor	 = color_object
 end event
 
 type dw_instructions from datawindow within w_drug_treatment
-integer x = 69
-integer y = 1188
+integer x = 91
+integer y = 1036
 integer width = 1381
 integer height = 380
 integer taborder = 50
@@ -1731,8 +1811,8 @@ END CHOOSE
 end event
 
 type st_package from statictext within w_drug_treatment
-integer x = 1851
-integer y = 500
+integer x = 1166
+integer y = 212
 integer width = 576
 integer height = 68
 integer textsize = -10
@@ -1742,14 +1822,14 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
-string text = "Package"
+string text = "Drug Formulation"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
 
 type st_dose from statictext within w_drug_treatment
-integer x = 439
-integer y = 192
+integer x = 448
+integer y = 440
 integer width = 576
 integer height = 60
 integer textsize = -10
@@ -1765,8 +1845,8 @@ boolean focusrectangle = false
 end type
 
 type st_mult_display from statictext within w_drug_treatment
-integer x = 1600
-integer y = 412
+integer x = 430
+integer y = 1528
 integer width = 1070
 integer height = 60
 integer textsize = -8
@@ -1801,8 +1881,8 @@ boolean focusrectangle = false
 end type
 
 type st_max_dose from statictext within w_drug_treatment
-integer x = 215
-integer y = 408
+integer x = 224
+integer y = 648
 integer width = 1070
 integer height = 72
 integer textsize = -8
@@ -1817,8 +1897,8 @@ boolean focusrectangle = false
 end type
 
 type pb_whole from picturebutton within w_drug_treatment
-integer x = 64
-integer y = 256
+integer x = 73
+integer y = 504
 integer width = 128
 integer height = 140
 integer taborder = 20
@@ -1868,8 +1948,8 @@ end if
 end event
 
 type uo_drug_administration from u_drug_administration within w_drug_treatment
-integer x = 1605
-integer y = 260
+integer x = 215
+integer y = 1440
 integer width = 1070
 integer height = 140
 boolean enabled = true
@@ -1933,9 +2013,9 @@ end if
 end event
 
 type uo_drug_package from u_drug_package within w_drug_treatment
-integer x = 1605
-integer y = 576
-integer width = 1070
+integer x = 320
+integer y = 284
+integer width = 2267
 integer height = 140
 boolean enabled = true
 end type
@@ -1978,8 +2058,10 @@ if package_list_index > 0 then
 		uo_administer_frequency.visible = true
 		uo_duration.visible = true
 		pb_whole.visible = true
-		st_dosebase.visible = true
-		uo_drug_administration.visible = true
+		// We are suppressing drug_administration activity for the time being
+		// CDT 2020-03-29
+		// st_dosebase.visible = true
+		// uo_drug_administration.visible = true
 	end if
 	ls_package_id = uo_drug_package.package_id[package_list_index]
 	if drug_admin_index > 0 Then
@@ -1996,24 +2078,35 @@ end event
 event clicked;call super::clicked;window w
 integer i
 real lr_temp
+string ls_form_rxcui, ls_ingr_rxcui, ls_form_description, ls_drug_id
 str_popup popup
 str_popup_return popup_return
 
 last_package_list_index = package_list_index
+//
+//popup.items = package_description
+//popup.data_row_count = package_count
+//openwithparm(w_pop_pick, popup)
+//popup_return = message.powerobjectparm
+//if popup_return.item_index <= 0 then return
+//package_list_index = popup_return.item_index
 
-popup.items = package_description
-popup.data_row_count = package_count
-openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_index <= 0 then return
-package_list_index = popup_return.item_index
-selectitem(package_list_index)
+// Replace above popup with new 2-column formulation window
+ls_drug_id = drug_id
+ls_form_description = f_choose_formulation(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
+// This is inherited from u_drug_package, which has a form_rxcui array.
+// We want to assign to the window instance variable.
+parent.form_rxcui = ls_form_rxcui
+package_list_index = uo_drug_package.selectformulation(ls_form_rxcui)
+drug_id = ls_drug_id
+set_drug()
+
 
 if package_list_index <= 0 then return
 
 triggerevent("newpackage")
 
-if     drug_admin_index > 0 AND package_list_index > 0 then
+if drug_admin_index > 0 AND package_list_index > 0 then
 	if f_unit_convert(1, uo_drug_administration.administer_unit[drug_admin_index], &
 							pkg_administer_unit[package_list_index], &
 							lr_temp) <= 0 then
@@ -2039,8 +2132,8 @@ recalcdose()
 end event
 
 type st_4 from statictext within w_drug_treatment
-integer x = 416
-integer y = 1112
+integer x = 439
+integer y = 960
 integer width = 631
 integer height = 72
 integer textsize = -10
@@ -2056,8 +2149,8 @@ boolean focusrectangle = false
 end type
 
 type uo_administer_frequency from u_administer_frequency within w_drug_treatment
-integer x = 215
-integer y = 720
+integer x = 224
+integer y = 788
 integer width = 1070
 integer height = 140
 end type
@@ -2089,8 +2182,8 @@ end if
 end event
 
 type uo_duration from u_duration_amount within w_drug_treatment
-integer x = 215
-integer y = 936
+integer x = 1595
+integer y = 784
 integer width = 1070
 integer height = 140
 end type
@@ -2111,8 +2204,8 @@ end if
 end on
 
 type st_dosebase from statictext within w_drug_treatment
-integer x = 1851
-integer y = 192
+integer x = 73
+integer y = 1448
 integer width = 576
 integer height = 60
 integer textsize = -10
@@ -2128,8 +2221,8 @@ boolean focusrectangle = false
 end type
 
 type st_3 from statictext within w_drug_treatment
-integer x = 1627
-integer y = 924
+integer x = 1696
+integer y = 1108
 integer width = 274
 integer height = 72
 integer textsize = -10
@@ -2144,8 +2237,8 @@ boolean focusrectangle = false
 end type
 
 type st_2 from statictext within w_drug_treatment
-integer x = 1614
-integer y = 820
+integer x = 1682
+integer y = 1004
 integer width = 293
 integer height = 72
 integer textsize = -10
@@ -2160,8 +2253,8 @@ boolean focusrectangle = false
 end type
 
 type st_1 from statictext within w_drug_treatment
-integer x = 1609
-integer y = 764
+integer x = 1678
+integer y = 948
 integer width = 247
 integer height = 72
 integer textsize = -10
@@ -2176,8 +2269,8 @@ boolean focusrectangle = false
 end type
 
 type uo_dispense_office from u_dispense_amount within w_drug_treatment
-integer x = 1925
-integer y = 904
+integer x = 1993
+integer y = 1088
 integer width = 645
 integer height = 120
 integer textsize = -12
@@ -2185,8 +2278,8 @@ integer weight = 700
 end type
 
 type uo_dose from u_dose_amount within w_drug_treatment
-integer x = 215
-integer y = 260
+integer x = 224
+integer y = 508
 integer width = 1070
 integer height = 140
 integer textsize = -12
@@ -2233,8 +2326,8 @@ on constructor;call u_dose_amount::constructor;zero_warning = true
 end on
 
 type uo_dispense from u_dispense_amount within w_drug_treatment
-integer x = 1925
-integer y = 764
+integer x = 1993
+integer y = 948
 integer width = 645
 integer height = 116
 integer textsize = -12
@@ -2246,8 +2339,8 @@ event clicked;call super::clicked;if wasmodified then dispense_selected = true
 end event
 
 type st_method_description from statictext within w_drug_treatment
-integer x = 215
-integer y = 504
+integer x = 1595
+integer y = 508
 integer width = 1070
 integer height = 140
 integer textsize = -12
@@ -2263,8 +2356,8 @@ boolean focusrectangle = false
 end type
 
 type gb_1 from groupbox within w_drug_treatment
-integer x = 1737
-integer y = 1060
+integer x = 1678
+integer y = 1244
 integer width = 978
 integer height = 200
 integer textsize = -8
@@ -2295,8 +2388,8 @@ boolean focusrectangle = false
 end type
 
 type st_brand_name_required_title from statictext within w_drug_treatment
-integer x = 1719
-integer y = 1400
+integer x = 1701
+integer y = 1496
 integer width = 686
 integer height = 64
 boolean bringtotop = true
@@ -2312,8 +2405,8 @@ boolean focusrectangle = false
 end type
 
 type st_brand_name_required from statictext within w_drug_treatment
-integer x = 2427
-integer y = 1384
+integer x = 2409
+integer y = 1480
 integer width = 210
 integer height = 100
 boolean bringtotop = true
@@ -2344,9 +2437,9 @@ end event
 
 type st_frequency_title from statictext within w_drug_treatment
 integer x = 462
-integer y = 648
+integer y = 720
 integer width = 576
-integer height = 68
+integer height = 64
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -2361,8 +2454,8 @@ boolean focusrectangle = false
 end type
 
 type st_duration_title from statictext within w_drug_treatment
-integer x = 462
-integer y = 872
+integer x = 1842
+integer y = 720
 integer width = 576
 integer height = 68
 integer textsize = -10
@@ -2374,6 +2467,65 @@ long backcolor = 33538240
 boolean enabled = false
 string text = "Duration"
 alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type st_route from statictext within w_drug_treatment
+integer x = 1829
+integer y = 440
+integer width = 695
+integer height = 68
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Route of Administration"
+alignment alignment = center!
+boolean focusrectangle = false
+end type
+
+type shl_drug from statichyperlink within w_drug_treatment
+integer x = 2080
+integer y = 156
+integer width = 791
+integer height = 92
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+boolean underline = true
+string pointer = "HyperLink!"
+long textcolor = 134217856
+long backcolor = 12632256
+string text = "Tapentadol"
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
+string url = "https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=Tapentadol"
+end type
+
+type st_link from statictext within w_drug_treatment
+integer x = 1847
+integer y = 164
+integer width = 219
+integer height = 72
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "RxNav:"
+alignment alignment = right!
 boolean focusrectangle = false
 end type
 
