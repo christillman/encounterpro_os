@@ -20,7 +20,6 @@ string ls_admin_description
 string ls_form_rxcui
 string ls_item
 string ls_administer_frequency
-string ls_pretty_fraction
 real lr_converted_amount
 real lr_dose_amount
 u_ds_data luo_data
