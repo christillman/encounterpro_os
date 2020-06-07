@@ -232,6 +232,51 @@ WHERE EXISTS (SELECT 1
 		WHERE a.drug_id = dp.drug_id
 		AND a.package_id = dp.package_id)
 
+-- Update Kenya drugs dosage forms
+
+UPDATE f
+SET dosage_form = d.dosage_form
+FROM c_Drug_Formulation f
+JOIN c_Dosage_Form d ON d.rxcui = dbo.fn_dosage_form_from_descr (form_descr)
+WHERE f.dosage_form IS NULL
+-- 1199
+
+UPDATE f
+SET dosage_form = CASE 
+	WHEN form_descr LIKE '%Oral Caplet%' THEN 'Caplets'
+	WHEN form_descr LIKE '%Dispersible%' THEN 'DisOral Tab'
+	WHEN form_descr LIKE '%Vaginal Pessary%' THEN 'Vag Pessary'
+	WHEN form_descr LIKE '%Vaginal Capsule%' THEN 'Vaginal Tablet'
+	WHEN form_descr LIKE '%Metered Dose Inhaler%' OR form_descr LIKE '%HFA Inhaler%' THEN 'Metered Inhaler'
+	WHEN form_descr LIKE '%Dry Powder Inhaler%' THEN 'DryPwdrInhaler'
+	WHEN form_descr LIKE '%Inhalation Powder%' OR form_descr LIKE '%Inhalant Powder%' THEN 'Inhalant Powder'
+	WHEN form_descr LIKE '%Solution for Injection%' OR form_descr LIKE '%Injection Solution%' THEN 'Injectable Soln'
+	WHEN form_descr LIKE '%Suspension for Injection%' THEN 'Injectable Susp'
+	WHEN form_descr LIKE '%Dry Powder Inhaler%' THEN 'DryPwdrInhaler'
+	WHEN form_descr LIKE '% Syrup%' OR form_descr LIKE '% Elixir%' THEN 'Syrup'
+	WHEN form_descr LIKE '% Patch%' THEN 'Patch'
+	WHEN form_descr LIKE '%Eye Drops%' THEN 'Eye Drops'
+	WHEN form_descr LIKE '%Eye Suspension%' THEN 'Ophthalmic Susp'
+	WHEN form_descr LIKE '%Nasal Inhalant%' THEN 'Nasal Inhalant'
+	WHEN form_descr LIKE '%Ophthalmic Solution%' THEN 'Ophthalmic Soln'
+	WHEN form_descr LIKE '%Opthalmic Solution%' THEN 'Ophthalmic Soln'
+	WHEN form_descr LIKE '%Ear Suspension%' THEN 'Otic Suspension'
+	WHEN form_descr LIKE '%Otic Drops%' THEN 'Drops Ear'
+	WHEN form_descr LIKE '%Eye Ointment%' THEN 'Ophthalmic Oint'
+	WHEN form_descr LIKE '%Oral Suspension%' THEN 'Oral Suspension'
+	WHEN form_descr LIKE '%Effervescent%' THEN 'Effervescent'
+	WHEN form_descr LIKE '%Inhalation Solution%' THEN 'Inhalant Soln'
+	WHEN form_descr LIKE '%Respirator Solution%' THEN 'Inhalant Soln'
+	WHEN form_descr LIKE '%Accuhaler%' OR form_descr LIKE '%Turbuhaler%' THEN 'Metered Inhaler'
+	WHEN form_descr LIKE '% Tablet%' THEN 'Tab'
+	WHEN form_descr LIKE '% Capsule%' THEN 'Cap'
+	WHEN form_descr LIKE '% Retard%' THEN 'SR Caps'
+	WHEN form_descr LIKE '%Neonatal Drops%' THEN 'Drops Or'
+	WHEN form_descr LIKE '%Organogel%' THEN 'Rectal Gel'
+	END
+FROM c_Drug_Formulation f
+WHERE f.dosage_form IS NULL
+-- (172 row(s) affected)
 
 -- This would pick up no records the first time, but would 
 -- delete the records being inserted next for re-entrancy.
@@ -328,7 +373,7 @@ JOIN c_Dosage_Form df ON df.dosage_form = f.dosage_form
 JOIN c_Drug_Brand b ON b.brand_name_rxcui = f.ingr_rxcui
 JOIN c_Drug_Package dp ON dp.drug_id = b.drug_id
 	AND dp.form_rxcui = f.form_rxcui
--- 8085
+-- 8994
 
 INSERT INTO c_Package
 (
@@ -357,7 +402,7 @@ JOIN c_Dosage_Form df ON df.dosage_form = f.dosage_form
 JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 JOIN c_Drug_Package dp ON dp.drug_id = g.drug_id
 	AND dp.form_rxcui = f.form_rxcui
--- 12649
+-- 13086
 
 -- Note some packages are missing for Kenya drugs because of NULL dosage_form columns
 

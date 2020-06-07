@@ -561,3 +561,272 @@ UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG / 500 MG (expressed
 UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG/ML' WHERE form_rxcui = '241975'	-- Zomacton
 UPDATE c_Drug_Formulation SET RXN_available_strength = '2 MG/ML (expressed as Codeine Phosphate) / 1 MG/ML (expressed as Phenylephrine Hydrochloride) / 1 MG/ML (expressed as Pyrilamine Maleate)' WHERE form_rxcui = '996580'	-- Zotex
 
+UPDATE c_Drug_Formulation SET dosage_form = 'InhalantSusp' WHERE form_descr like '%inhalant suspension%'
+
+-- The formulations with dosage form 'Oral or Rectal Suspension' will be duplicated. 
+-- One entry will then have the 'oral suspension' dosage form and the other will have 
+-- the 'rectal suspension' dosage form. 
+
+IF NOT EXISTS ( SELECT 1 
+	FROM c_Drug_Formulation 
+	WHERE form_descr like '%rectal suspension%'
+	AND form_rxcui LIKE 'R%')
+INSERT INTO c_Drug_Formulation (
+		[form_rxcui]
+      ,[form_tty]
+      ,[form_descr]
+      ,[ingr_rxcui]
+      ,[ingr_tty]
+      ,[valid_in]
+      ,[dosage_form]
+      ,[dose_amount]
+      ,[dose_unit]
+      ,[RXN_available_strength]
+	  )
+SELECT 'R' + [form_rxcui]
+      ,[form_tty]
+      ,REPLACE([form_descr],'Oral or Rectal Suspension','Rectal Suspension')
+      ,[ingr_rxcui]
+      ,[ingr_tty]
+      ,[valid_in]
+      ,'Enema'
+      ,[dose_amount]
+      ,[dose_unit]
+      ,[RXN_available_strength]
+  FROM [dbo].[c_Drug_Formulation]
+WHERE form_descr like '%oral or rectal suspension%'
+
+UPDATE [c_Drug_Formulation]
+SET form_descr = REPLACE([form_descr],'Oral or Rectal Suspension','Oral Suspension')
+WHERE form_descr like '%oral or rectal suspension%'
+
+-- Revising Dosage Forms sheet 1
+UPDATE c_Drug_Formulation
+SET valid_in = 'Suppress' 
+WHERE form_descr LIKE '%dental irrigation solution%'
+OR form_descr LIKE '%dental solution%'
+OR form_descr LIKE '%dental cartridge%'
+OR form_descr LIKE '%gas for inhalation%'
+OR form_descr LIKE '%hemodialysis injection%'
+OR form_descr LIKE '%Intracavitary drug implant%'
+OR form_descr LIKE '%intraocular injection%'
+OR form_descr LIKE '%intraperitoneal solution%'
+OR form_descr LIKE '%intrapleural powder%'
+OR form_descr LIKE '%intrapleural powder spray%'
+OR form_descr LIKE '%intrapleural suspension%'
+OR form_descr LIKE '%intrathecal injection%'
+OR form_descr LIKE '%intratracheal suspension%'
+OR form_descr LIKE '%intraventricular injection%'
+OR form_descr LIKE '%intravesical suspension%'
+OR form_descr LIKE '%intravitreal drug implant%'
+OR form_descr LIKE '%Injectable Foam%'
+OR form_descr LIKE '%powder for intrapleural suspension%'
+OR form_descr LIKE '%pentamidine%'
+
+-- Revising Dosage Forms sheet 3
+UPDATE c_Drug_Formulation
+SET valid_in = 'Suppress' 
+WHERE form_rxcui IN (
+'349408'
+,'352211'
+,'1242617'
+,'197435'
+,'198412'
+,'199211'
+,'199408'
+,'199958'
+,'200238'
+,'204536'
+,'206967'
+,'206970'
+,'206972'
+,'207315'
+,'210677'
+,'1858963'
+,'238013'
+,'238082'
+,'238083'
+,'238084'
+,'240738'
+,'1743994'
+,'251272'
+,'251934'
+,'311422'
+,'311935'
+,'311936'
+,'312249'
+,'312736'
+,'315105'
+,'349407'
+,'349409'
+,'349410'
+,'352212'
+,'352213'
+,'352214'
+,'435151'
+,'540930'
+,'597195'
+,'637197'
+,'800584'
+,'800588'
+,'800858'
+,'809871'
+,'832082'
+,'832086'
+,'833532'
+,'853004'
+,'859437'
+,'864714'
+,'867381'
+,'880859'
+,'966768'
+,'990982'
+,'1100742'
+,'1100746'
+,'1190748'
+,'1234995'
+,'1244233'
+,'1244638'
+,'1293443'
+,'1293446'
+,'1293464'
+,'1293466'
+,'1429282'
+,'1429284'
+,'1486165'
+,'1594589'
+,'1594591'
+,'1594593'
+,'1599836'
+,'1599841'
+,'1601982'
+,'1654849'
+,'1666831'
+,'1666837'
+,'1718913'
+,'1729336'
+,'1730194'
+,'1788947'
+,'1747294'
+,'1791721'
+,'1791723'
+,'1799697'
+,'1859009'
+,'1926818'
+,'1926823'
+,'1926825'
+,'1926827'
+,'2003344'
+,'1794440'
+,'562366'
+,'1549678'
+,'542358'
+,'542347'
+,'200243'
+,'997625'
+,'208919'
+,'542355'
+,'541963'
+)
+
+UPDATE c_Drug_Formulation
+SET valid_in = 'TPN Suppress' 
+WHERE form_rxcui IN (
+'262197'
+,'309279'
+,'562675'
+,'800188'
+,'800929'
+,'800933'
+,'800976'
+,'800979'
+,'801133'
+,'801136'
+,'1090635'
+,'1094083'
+,'1293736'
+,'1293739'
+,'1486165'
+,'1547445'
+,'1547450'
+,'1549708'
+,'1667993'
+,'800858'
+,'800862'
+,'801395'
+,'801398'
+,'801403'
+,'801405'
+,'801413'
+,'801417'
+,'801644'
+,'801648'
+,'200317'
+,'200318'
+,'204536'
+,'800563'
+,'800584'
+,'800588'
+,'800611'
+,'801067'
+,'805127'
+,'805131'
+,'807371'
+,'1014427'
+,'1014431'
+,'1189640'
+,'1189645'
+,'1293443'
+,'1293446'
+,'1293464'
+,'1293466'
+,'1429282'
+,'1429284'
+,'1601982'
+)
+
+UPDATE c_Drug_Formulation
+SET valid_in = 'Retired' 
+WHERE form_rxcui IN (
+'604379'
+,'415314'
+,'415379'
+,'151114'
+,'199584'
+,'199585'
+,'199727'
+,'199947'
+,'199965'
+,'205296'
+,'245961'
+,'248009'
+,'248661'
+,'251817'
+,'282533'
+,'315188'
+,'413132'
+,'801024'
+,'801142'
+,'801145'
+,'801391'
+,'807383'
+,'1189657'
+,'1189673'
+,'358992'
+,'1945738'
+,'1362214'
+,'1190803'
+,'1190944'
+,'1362218'
+,'857668'
+,'857666'
+)
+
+-- Previous coding error
+DELETE FROM c_Drug_Generic 
+WHERE generic_rxcui = 'KEGI1600'
+AND generic_name != 'travoprost / timolol maleate'
+
+UPDATE c_Drug_Generic 
+SET  generic_rxcui = 'KEGI1600'
+WHERE generic_name = 'travoprost / timolol maleate'

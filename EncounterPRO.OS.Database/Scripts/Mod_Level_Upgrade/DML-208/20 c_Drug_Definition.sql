@@ -104,3 +104,25 @@ FROM [dbo].[c_Drug_Definition] d
 	AND EXISTS (SELECT drug_id 
 		FROM c_Drug_Definition_Archive a WHERE a.drug_id = d.drug_id)
 -- (1166 row(s) affected)
+
+-- Create drug_definition records for Kenya drugs
+INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
+SELECT generic_rxcui, generic_name, generic_name
+FROM c_Drug_Generic 
+WHERE drug_id is null
+-- (146 row(s) affected)
+
+UPDATE c_Drug_Generic
+SET drug_id = generic_rxcui
+WHERE drug_id is null
+
+INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
+SELECT brand_name_rxcui, brand_name, generic_name
+FROM c_Drug_Brand b
+LEFT JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
+WHERE b.drug_id is null
+-- (938 row(s) affected)
+
+UPDATE c_Drug_Brand
+SET drug_id = brand_name_rxcui
+WHERE drug_id is null
