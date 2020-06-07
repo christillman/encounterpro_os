@@ -31,5 +31,3 @@ ALTER TABLE [dbo].[c_Drug_Pack] ALTER COLUMN [rxcui] VARCHAR(20) NOT NULL
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [description] VARCHAR(600) 
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [dose_unit] VARCHAR(20) 
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [administer_unit] VARCHAR(20) 
-
-ALTER TABLE 
