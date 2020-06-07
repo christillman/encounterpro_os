@@ -3660,24 +3660,3 @@ WHERE b.drug_id is null
 select * FROM c_Drug_Generic g
 JOIN c_Drug_Definition d2 ON d2.generic_name = g.generic_name
 WHERE g.drug_id is null
-
--- Create drug_definition records for Kenya drugs
-INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT generic_rxcui, generic_name, generic_name
-FROM c_Drug_Generic 
-WHERE drug_id is null
-
-UPDATE c_Drug_Generic
-SET drug_id = generic_rxcui
-WHERE drug_id is null
-
-INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT brand_name_rxcui, brand_name, generic_name
-FROM c_Drug_Brand b
-LEFT JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
-WHERE b.drug_id is null
--- (621 row(s) affected)
-
-UPDATE c_Drug_Brand
-SET drug_id = brand_name_rxcui
-WHERE drug_id is null
