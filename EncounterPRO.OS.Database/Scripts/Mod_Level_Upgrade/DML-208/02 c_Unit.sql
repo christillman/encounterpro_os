@@ -20,8 +20,8 @@ UPDATE c_Package_Archive SET administer_unit = 'ML' WHERE administer_unit = 'CC'
 UPDATE c_Package_Archive SET dose_unit = 'UNIT' WHERE dose_unit = 'U'
 UPDATE c_Package_Archive SET dose_unit = 'ML' WHERE dose_unit = 'CC'
 
-
-UPDATE c_Unit SET description = 'Units', unit_id = 'UNIT' WHERE unit_id = 'U'
+DELETE FROM c_Unit WHERE unit_id = 'U'
+UPDATE c_Unit SET description = 'Units' WHERE unit_id = 'UNIT'
 UPDATE c_Unit SET description = 'Intl Unit' WHERE unit_id = 'IU'
 UPDATE c_Unit SET description = 'Units/hr' WHERE unit_id = 'U/HR'
 UPDATE c_Unit SET description = 'Units/l' WHERE unit_id = 'U/l'
