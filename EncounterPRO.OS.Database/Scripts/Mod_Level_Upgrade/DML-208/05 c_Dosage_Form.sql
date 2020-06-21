@@ -148,7 +148,7 @@ UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_unit = 'APPLICATOR' WHERE [dosage_form] = 'Vaginal Oint' AND rxcui = '317010'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'SUPP', default_administer_unit = 'SUPP' WHERE [dosage_form] = 'Rectal Suppos' AND rxcui = '316978'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'PUFF', default_administer_unit = 'PUFF' WHERE [dosage_form] = 'Metered Inhaler' AND rxcui = '721654'
-UPDATE [c_Dosage_Form] SET default_dose_unit = 'TSP', default_administer_unit = 'Mouthwash', default_administer_method] = 'SWISHSPIT' WHERE [dosage_form] = 'Mouthwash' AND rxcui = '7067'
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'TSP', default_administer_unit = 'Mouthwash', default_administer_method = 'SWISHSPIT' WHERE [dosage_form] = 'Mouthwash' AND rxcui = '7067'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'ML' WHERE [dosage_form] = 'MucousMemSoln' AND rxcui = '316956'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLY' WHERE [dosage_form] = 'Oral Foam' AND rxcui = '346284'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLY' WHERE [dosage_form] = 'Oral Gel' AND rxcui = '346169'
