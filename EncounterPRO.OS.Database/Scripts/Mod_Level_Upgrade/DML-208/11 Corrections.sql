@@ -562,7 +562,7 @@ UPDATE c_Drug_Formulation SET RXN_available_strength = '5 MG/ML' WHERE form_rxcu
 UPDATE c_Drug_Formulation SET RXN_available_strength = '2 MG/ML (expressed as Codeine Phosphate) / 1 MG/ML (expressed as Phenylephrine Hydrochloride) / 1 MG/ML (expressed as Pyrilamine Maleate)' WHERE form_rxcui = '996580'	-- Zotex
 
 UPDATE c_Drug_Formulation SET dosage_form = 'InhalantSusp' WHERE form_descr like '%inhalant suspension%'
-
+UPDATE c_Drug_Formulation SET dosage_form = 'InhalantSusp' WHERE form_descr like '%Inhalation suspension%'
 -- The formulations with dosage form 'Oral or Rectal Suspension' will be duplicated. 
 -- One entry will then have the 'oral suspension' dosage form and the other will have 
 -- the 'rectal suspension' dosage form. 
@@ -611,9 +611,7 @@ OR form_descr LIKE '%hemodialysis injection%'
 OR form_descr LIKE '%Intracavitary drug implant%'
 OR form_descr LIKE '%intraocular injection%'
 OR form_descr LIKE '%intraperitoneal solution%'
-OR form_descr LIKE '%intrapleural powder%'
-OR form_descr LIKE '%intrapleural powder spray%'
-OR form_descr LIKE '%intrapleural suspension%'
+OR form_descr LIKE '%intrapleural %'
 OR form_descr LIKE '%intrathecal injection%'
 OR form_descr LIKE '%intratracheal suspension%'
 OR form_descr LIKE '%intraventricular injection%'
@@ -622,6 +620,7 @@ OR form_descr LIKE '%intravitreal drug implant%'
 OR form_descr LIKE '%Injectable Foam%'
 OR form_descr LIKE '%powder for intrapleural suspension%'
 OR form_descr LIKE '%pentamidine%'
+OR form_descr LIKE '%periodontal drug implant%'
 
 -- Revising Dosage Forms sheet 3
 UPDATE c_Drug_Formulation
@@ -727,6 +726,11 @@ WHERE form_rxcui IN (
 ,'208919'
 ,'542355'
 ,'541963'
+,'1048324'
+,'1801824'
+,'1801830'
+,'1946984'
+,'1946986'
 )
 
 UPDATE c_Drug_Formulation
@@ -820,6 +824,14 @@ WHERE form_rxcui IN (
 ,'1362218'
 ,'857668'
 ,'857666'
+,'748308'
+,'1250569'
+,'199651'
+,'582765'
+,'1048407'
+,'253109'
+,'1020400'
+,'1020404'
 )
 
 -- Previous coding error
@@ -830,3 +842,6 @@ AND generic_name != 'travoprost / timolol maleate'
 UPDATE c_Drug_Generic 
 SET  generic_rxcui = 'KEGI1600'
 WHERE generic_name = 'travoprost / timolol maleate'
+
+-- RXNORM Typo (injecton)
+UPDATE c_Drug_Formulation SET form_descr = 'gentamicin sulfate 90 MG in 100 ML Injection' WHERE form_rxcui = '310474'
