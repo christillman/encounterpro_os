@@ -53,8 +53,8 @@ end forward
 global type w_number from window
 integer x = 306
 integer y = 284
-integer width = 1911
-integer height = 1340
+integer width = 2391
+integer height = 1348
 windowtype windowtype = response!
 long backcolor = 33538240
 cb_space cb_space
@@ -111,6 +111,8 @@ real lr_new_amount
 string ls_old_unit, ls_new_unit
 integer li_sts
 integer i
+
+IF IsNull(unit) OR NOT IsValid(unit) THEN RETURN
 
 ls_old_unit = unit.unit_id
 
@@ -256,8 +258,8 @@ if dw_canned.rowcount() <= 0 then
 	st_page.visible = false
 	pb_up.visible = false
 	pb_down.visible = false
-	pb_done.x = 1513
-	width = 1911
+	// pb_done.x = 1513
+	// width = 1911
 else
 	// Eliminate duplicates
 	ll_rows = dw_canned.rowcount()
@@ -283,8 +285,8 @@ else
 		pb_down.enabled = true
 	end if
 	
-	pb_done.x = 1915
-	width = 2263
+	// pb_done.x = 1915
+	// width = 2263
 end if
 
 pb_cancel.x = pb_done.x
@@ -395,6 +397,8 @@ event clicked;add_digit(" ")
 end event
 
 type st_title from statictext within w_number
+integer x = 224
+integer y = 24
 integer width = 1911
 integer height = 132
 integer textsize = -18
@@ -410,7 +414,7 @@ boolean focusrectangle = false
 end type
 
 type pb_down from picturebutton within w_number
-integer x = 1842
+integer x = 2062
 integer y = 496
 integer width = 137
 integer height = 116
@@ -439,7 +443,7 @@ end if
 end event
 
 type pb_up from picturebutton within w_number
-integer x = 1842
+integer x = 2062
 integer y = 372
 integer width = 137
 integer height = 116
@@ -469,7 +473,7 @@ end if
 end event
 
 type st_page from statictext within w_number
-integer x = 1842
+integer x = 2062
 integer y = 300
 integer width = 297
 integer height = 64
@@ -533,7 +537,7 @@ end type
 type st_unit from statictext within w_number
 integer x = 1339
 integer y = 172
-integer width = 517
+integer width = 1001
 integer height = 112
 integer textsize = -12
 integer weight = 700
@@ -553,8 +557,10 @@ event clicked;pick_unit()
 end event
 
 type pb_cancel from u_picture_button within w_number
-integer x = 1513
+integer x = 1733
 integer y = 800
+integer width = 256
+integer height = 224
 integer taborder = 60
 boolean cancel = true
 string picturename = "button11.bmp"
@@ -570,8 +576,10 @@ closewithreturn(parent, popup_return)
 end on
 
 type pb_done from u_picture_button within w_number
-integer x = 1513
+integer x = 1733
 integer y = 1064
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean default = true
 string picturename = "button26.bmp"
@@ -831,7 +839,7 @@ on clicked;add_digit("1")
 end on
 
 type dw_canned from u_dw_pick_list within w_number
-integer x = 1390
+integer x = 1609
 integer y = 364
 integer width = 453
 integer height = 848

@@ -25,4 +25,7 @@ AS BEGIN
 	RETURN 1
 END
 
+
 go
+
+GRANT EXECUTE ON dbo.fn_needs_tallman TO cprsystem

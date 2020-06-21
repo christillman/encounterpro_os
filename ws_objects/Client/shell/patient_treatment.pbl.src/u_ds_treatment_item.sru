@@ -926,6 +926,7 @@ modify_treatment(puo_treatment.treatment_id, "package_id", puo_treatment.package
 modify_treatment(puo_treatment.treatment_id, "specialty_id", puo_treatment.specialty_id)
 modify_treatment(puo_treatment.treatment_id, "procedure_id", puo_treatment.procedure_id)
 modify_treatment(puo_treatment.treatment_id, "drug_id", puo_treatment.drug_id)
+modify_treatment(puo_treatment.treatment_id, "form_rxcui", puo_treatment.form_rxcui)
 modify_treatment(puo_treatment.treatment_id, "observation_id", puo_treatment.observation_id)
 modify_treatment(puo_treatment.treatment_id, "administration_sequence", string(puo_treatment.administration_sequence))
 modify_treatment(puo_treatment.treatment_id, "dose_amount", string(puo_treatment.dose_amount))
@@ -1257,6 +1258,7 @@ CHOOSE CASE lower(ps_property)
 		end if
 	CASE "drug_sig_brief"
 		f_attribute_add_attribute(pstr_attributes, "drug_id", string(object.drug_id[ll_row]))
+		f_attribute_add_attribute(pstr_attributes, "form_rxcui", string(object.form_rxcui[ll_row]))
 		f_attribute_add_attribute(pstr_attributes, "package_id", string(object.package_id[ll_row]))
 		f_attribute_add_attribute(pstr_attributes, "dose_amount", string(real(object.dose_amount[ll_row])))
 		f_attribute_add_attribute(pstr_attributes, "dose_unit", string(object.dose_unit[ll_row]))
@@ -1270,6 +1272,7 @@ CHOOSE CASE lower(ps_property)
 		lstr_property_value.display_value = lstr_property_value.value
 	CASE "drug_sig_full"
 		f_attribute_add_attribute(pstr_attributes, "drug_id", string(object.drug_id[ll_row]))
+		f_attribute_add_attribute(pstr_attributes, "form_rxcui", string(object.form_rxcui[ll_row]))
 		f_attribute_add_attribute(pstr_attributes, "package_id", string(object.package_id[ll_row]))
 		f_attribute_add_attribute(pstr_attributes, "dose_amount", string(real(object.dose_amount[ll_row])))
 		f_attribute_add_attribute(pstr_attributes, "dose_unit", string(object.dose_unit[ll_row]))
@@ -1795,6 +1798,7 @@ f_attribute_add_attribute(lstr_treatment_attributes, "package_id", pstr_treatmen
 f_attribute_add_attribute(lstr_treatment_attributes, "specialty_id", pstr_treatment.specialty_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "procedure_id", pstr_treatment.procedure_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "drug_id", pstr_treatment.drug_id)
+f_attribute_add_attribute(lstr_treatment_attributes, "form_rxcui", pstr_treatment.form_rxcui)
 f_attribute_add_attribute(lstr_treatment_attributes, "observation_id", pstr_treatment.observation_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "administration_sequence", string(pstr_treatment.administration_sequence   ))
 f_attribute_add_attribute(lstr_treatment_attributes, "dose_amount", string(pstr_treatment.dose_amount   ))
@@ -1915,6 +1919,7 @@ puo_treatment.package_id = object.package_id[pl_row]
 puo_treatment.specialty_id = object.specialty_id[pl_row]
 puo_treatment.procedure_id = object.procedure_id[pl_row]
 puo_treatment.drug_id = object.drug_id[pl_row]
+puo_treatment.form_rxcui = object.form_rxcui[pl_row]
 puo_treatment.observation_id = object.observation_id[pl_row]
 // Check for previous bug that set observation_id to empty string
 if trim(puo_treatment.observation_id) = "" then setnull(puo_treatment.observation_id)
@@ -2302,6 +2307,7 @@ else
 	// Check for previous bug that set observation_id to empty string
 	if trim(cache[pl_row].observation_id) = "" then setnull(cache[pl_row].observation_id)
 	cache[pl_row].drug_id = object.drug_id[pl_row]
+	cache[pl_row].form_rxcui = object.form_rxcui[pl_row]
 	cache[pl_row].package_id = object.package_id[pl_row]
 	cache[pl_row].specialty_id = object.specialty_id[pl_row]
 	cache[pl_row].procedure_id = object.procedure_id[pl_row]
@@ -3258,6 +3264,7 @@ f_attribute_add_attribute(lstr_treatment_attributes, "package_id", puo_treatment
 f_attribute_add_attribute(lstr_treatment_attributes, "specialty_id", puo_treatment.specialty_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "procedure_id", puo_treatment.procedure_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "drug_id", puo_treatment.drug_id)
+f_attribute_add_attribute(lstr_treatment_attributes, "form_rxcui", puo_treatment.form_rxcui)
 f_attribute_add_attribute(lstr_treatment_attributes, "observation_id", puo_treatment.observation_id)
 f_attribute_add_attribute(lstr_treatment_attributes, "administration_sequence", string(puo_treatment.administration_sequence   ))
 f_attribute_add_attribute(lstr_treatment_attributes, "dose_amount", string(puo_treatment.dose_amount   ))

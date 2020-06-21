@@ -83,3 +83,6 @@ from c_Drug_Formulation
 where descr like 'actonel%' or descr like 'bleph%' 
 order by dbo.fn_strength_sort(descr)
 */
+
+
+GRANT EXECUTE ON dbo.fn_strength_sort TO cprsystem

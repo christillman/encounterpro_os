@@ -40,6 +40,12 @@ if isnull(treatment.drug_id) then
 	return 2
 end if
 
+// Make sure we have a formulation
+if isnull(treatment.form_rxcui) then
+	log.log(this, "u_component_service_get_medication.xx_do_service:0025", "No formulation selected", 4)
+	return 2
+end if
+
 // If it's a new treatment then use the dosing screen, otherwise use the edit screen
 if treatment.past_treatment or upper(service) <> "GET_MEDICATION" then
 	Openwithparm(service_window, this, "w_svc_drug_treatment_edit")

@@ -216,22 +216,7 @@ else
 end if
 end function
 
-event clicked;call super::clicked;//str_drug_amount drug
-//
-//if isnull(unit) or unit = "" then
-//	openwithparm(w_pop_message, "Please select a package")
-//	return
-//end if
-//
-//drug.amount = amount
-//drug.unit = unit
-//openwithparm(w_pop_dose, drug)
-//if message.doubleparm >= 0 then
-//	set_amount(message.doubleparm, drug.unit)
-//	WasModified = True
-//end if
-//
-
+event clicked;call super::clicked;
 str_popup popup
 str_popup_return popup_return
 u_unit luo_unit
@@ -256,7 +241,7 @@ if popup_return.item = "OK" then
 		ls_unit = luo_unit.unit_id
 	end if
 	set_amount(popup_return.realitem, ls_unit)
-	wasmodified = true
+	WasModified = true
 end if
 
 end event

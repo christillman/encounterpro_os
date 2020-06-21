@@ -84,7 +84,7 @@ FOR i = 1 TO ll_count
 
 	li_sts = drugdb.get_drug_definition( ls_drug_id, lstr_drug_definition)
 	if li_sts <= 0 then
-		log.log(this, "u_current_meds_small.display_meds:0053", "Drug_id not found (" + ls_drug_id + ")", 4)
+		log.log(this, "u_current_meds_small.display_meds:0053", "Drug_id not found (" + ls_drug_id + ")", 2)
 		continue
 	end if
 
@@ -107,7 +107,7 @@ FOR i = 1 TO ll_count
 
 	li_sts = drugdb.get_drug_definition( ls_drug_id, lstr_drug_definition)
 	if li_sts <= 0 then
-		log.log(this, "u_current_meds_small.display_meds:0076", "Drug_id not found (" + ls_drug_id + ")", 4)
+		log.log(this, "u_current_meds_small.display_meds:0076", "Drug_id not found (" + ls_drug_id + ")", 2)
 		continue
 	end if
 

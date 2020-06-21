@@ -103,7 +103,7 @@ AND r.rela = 'ingredient_of'
 AND c1.TTY = 'SCDC'
 AND c1.SAB = 'RXNORM' 
 AND c3.TTY = 'PSN'
-AND c1.SAB = 'RXNORM' 
+AND c3.SAB = 'RXNORM' 
 -- INs duplicate MINs, so avoid any for the same form_rxcui
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = #SCDC.rxcui_scd)
@@ -137,7 +137,7 @@ AND r.rela = 'ingredient_of'
 AND c1.TTY = 'SCDC'
 AND c1.SAB = 'RXNORM' 
 AND c3.TTY = 'SCD'
-AND c1.SAB = 'RXNORM' 
+AND c3.SAB = 'RXNORM' 
 -- INs duplicate MINs, so avoid any for the same form_rxcui
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = #SCDC.rxcui_scd)
@@ -203,6 +203,7 @@ order by c.rxcui
 35255	Cisapride
 5033	Guanabenz
 */
+
 
 DELETE FROM c_Drug_Pack
 

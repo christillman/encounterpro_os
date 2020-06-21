@@ -6,10 +6,8 @@ forward prototypes
 global function string f_pretty_amount (ref real pr_amount, string ps_unit, ref u_unit puo_unit)
 end prototypes
 
-global function string f_pretty_amount (ref real pr_amount, string ps_unit, ref u_unit puo_unit);integer li_integer, li_pos, li_sts
-real lr_fraction, lr_amount
-string ls_pretty_fraction, ls_plural_flag
-string ls_fraction, ls_amount, ls_unit, ls_null
+global function string f_pretty_amount (ref real pr_amount, string ps_unit, ref u_unit puo_unit);
+string ls_null
 
 setnull(ls_null)
 

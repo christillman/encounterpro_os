@@ -44,6 +44,10 @@ ls_country_code =  datalist.office_field(gnv_app.office_id, "country")
 dw_generic.settransobject(sqlca)
 dw_brand.settransobject(sqlca)
 
+IF ls_brand_rxcui <> "0" THEN
+	ls_generic_rxcui = "0" // If a brand was chosen, let the procedure know
+END IF
+
 dw_generic.retrieve(ls_generic_rxcui, ls_brand_rxcui, ls_country_code)
 dw_brand.retrieve(ls_brand_rxcui, ls_generic_rxcui, ls_country_code)
 
@@ -146,12 +150,14 @@ RETURN AncestorReturnValue
 end event
 
 type dw_generic from u_dw_pick_list within w_pop_formulation_select
-integer x = 128
+integer x = 2048
 integer y = 52
 integer width = 1705
 integer height = 1636
 integer taborder = 10
 boolean bringtotop = true
+boolean titlebar = true
+string title = "Generic Drug Formulations"
 string dataobject = "dw_generic_formulations"
 boolean vscrollbar = true
 boolean livescroll = false
@@ -164,12 +170,14 @@ SelectRow(row, true)
 end event
 
 type dw_brand from u_dw_pick_list within w_pop_formulation_select
-integer x = 2016
+integer x = 128
 integer y = 52
 integer width = 1705
 integer height = 1636
 integer taborder = 10
 boolean bringtotop = true
+boolean titlebar = true
+string title = "Branded Drug Formulations"
 string dataobject = "dw_brand_formulations"
 boolean vscrollbar = true
 boolean livescroll = false

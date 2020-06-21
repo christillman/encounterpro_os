@@ -31,6 +31,7 @@ string treatment_key
 string treatment_type,package_id
 string specialty_id,procedure_id
 string drug_id
+String form_rxcui
 string dose_unit
 string administer_frequency
 string duration_unit
@@ -2083,6 +2084,11 @@ For i = 1 To pstr_attributes.attribute_count
 					// as a property in order to persist it to the database
 					set_progress_key("Property", pstr_attributes.attribute[i].attribute, ls_new_value)
 				End If
+			Case 'form_rxcui'
+				If f_is_modified(form_rxcui,ls_new_value) Then
+					form_rxcui = ls_new_value
+					updated = true
+				End If
 			Case 'observation_id'
 				If f_is_modified(observation_id,ls_new_value) Then
 					observation_id = ls_new_value
@@ -3658,6 +3664,7 @@ lstr_treatment.observation_id = observation_id
 // Check for previous bug that set observation_id to empty string
 if trim(lstr_treatment.observation_id) = "" then setnull(lstr_treatment.observation_id)
 lstr_treatment.drug_id = drug_id
+lstr_treatment.form_rxcui = form_rxcui
 lstr_treatment.package_id = package_id
 lstr_treatment.specialty_id = specialty_id
 lstr_treatment.procedure_id = procedure_id

@@ -198,7 +198,7 @@ public function string med_sig (u_component_treatment puo_med);integer i, li_cou
 string ls_duration
 string ls_description
 string ls_specialty_id
-string ls_unit_description, ls_pretty_fraction, ls_plural_flag
+string ls_unit_description, ls_plural_flag
 string ls_procedure_description
 string ls_in_office_flag
 string ls_theraputic_flag
