@@ -1,3 +1,4 @@
+
 -- Remove those that are inserted below
 DELETE FROM [c_Dosage_Form]
 WHERE [description] IN (
@@ -54,7 +55,7 @@ UPDATE [c_Dosage_Form] SET description = 'Oral Capsule' WHERE [dosage_form] = 'C
 UPDATE [c_Dosage_Form] SET description = 'Oral Tablet' WHERE [dosage_form] = 'Tab' AND rxcui = '317541'
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[default_administer_method],default_dose_unit,rxcui) VALUES ('Pack', 'Pack', 'ASDIR', 'PACK','746839')
 UPDATE [c_Dosage_Form] SET rxcui = NULL WHERE [dosage_form] = 'Packet' AND rxcui = '746839'
-INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[default_administer_method],default_dose_unit,rxcui) VALUES ('Pen Injector', 'Pen Injector', 'SQ', 'PEN','1649571')
+INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[default_administer_method],default_dose_unit,rxcui) VALUES ('Pen Injector', 'Pen Injector', 'Subcut', 'PEN','1649571')
 UPDATE [c_Dosage_Form] SET rxcui = NULL WHERE [dosage_form] = 'Pens' AND rxcui = '1649571'
 UPDATE [c_Dosage_Form] SET description = 'Urethral Suppository' WHERE [dosage_form] = 'Urethral Suppos' AND rxcui = '317543'
 UPDATE [c_Dosage_Form] SET description = 'Vaginal Suppository' WHERE [dosage_form] = 'Vaginal Suppos' AND rxcui = '337840'
@@ -96,9 +97,12 @@ OR description LIKE '%Lotion%'
 OR description LIKE '%Mousse%'
 OR description LIKE '%Ointment%'
 OR description LIKE '%Pads%'
-OR description LIKE '%Paste%'
 OR description LIKE '%Topical%'
 OR description LIKE '%Wash%' )
+
+UPDATE [c_Dosage_Form] SET [default_dose_unit] = 'CM' 
+WHERE rxcui IS NOT NULL
+AND description LIKE '%Paste%'
 
 UPDATE [c_Dosage_Form] SET [default_administer_method] = 'ON SKIN', [default_dose_unit] = 'APPLY' 
 WHERE rxcui IS NOT NULL AND [default_administer_method] IS NULL
@@ -120,7 +124,7 @@ UPDATE [c_Dosage_Form] SET [default_dose_unit] = 'SPRAY'
 WHERE rxcui IS NOT NULL AND [default_dose_unit] IS NULL
 AND description LIKE '%Spray%'
 
-UPDATE [c_Dosage_Form] SET [default_administer_method] = 'SQ', [default_dose_unit] = 'ML' 
+UPDATE [c_Dosage_Form] SET [default_administer_method] = 'Subcut', [default_dose_unit] = 'ML' 
 WHERE rxcui IS NOT NULL AND [default_administer_method] IS NULL
 AND description LIKE '%Inj%'
 
@@ -137,24 +141,26 @@ WHERE description LIKE '%Inhal%' AND rxcui IS NOT NULL
 AND [default_dose_unit] IS NULL
 
 
-UPDATE [c_Dosage_Form] SET default_dose_unit = 'FILM', default_administer_unit = 'FILM' WHERE [dosage_form] LIKE '% Film' 
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'STRIP', default_administer_unit = 'STRIP' WHERE [dosage_form] LIKE '% Film' 
 
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'UNIT', default_administer_unit = 'UNIT' WHERE [dosage_form] = 'Inhalant Powder' AND rxcui = '317000'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_unit = 'APPLICATOR' WHERE [dosage_form] = 'Vaginal Foam' AND rxcui = '11107'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_unit = 'APPLICATOR' WHERE [dosage_form] = 'Vaginal Oint' AND rxcui = '317010'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'SUPP', default_administer_unit = 'SUPP' WHERE [dosage_form] = 'Rectal Suppos' AND rxcui = '316978'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'PUFF', default_administer_unit = 'PUFF' WHERE [dosage_form] = 'Metered Inhaler' AND rxcui = '721654'
-UPDATE [c_Dosage_Form] SET default_dose_unit = 'TSP', default_administer_unit = 'Mouthwash' WHERE [dosage_form] = 'Mouthwash' AND rxcui = '7067'
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'TSP', default_administer_unit = 'Mouthwash', default_administer_method] = 'SWISHSPIT' WHERE [dosage_form] = 'Mouthwash' AND rxcui = '7067'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'ML' WHERE [dosage_form] = 'MucousMemSoln' AND rxcui = '316956'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLY' WHERE [dosage_form] = 'Oral Foam' AND rxcui = '346284'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLY' WHERE [dosage_form] = 'Oral Gel' AND rxcui = '346169'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'LOZG' WHERE [dosage_form] = 'Oral Lozenge' AND rxcui = '316992'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLY' WHERE [dosage_form] = 'Oral Ointment' AND rxcui = '346288'
-UPDATE [c_Dosage_Form] SET default_dose_unit = 'VIAL' WHERE [dosage_form] = 'Inhalant Solution' AND rxcui = '346161'
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'VIAL', default_administer_method = 'NEBULIZER' WHERE [dosage_form] = 'Inhalant Soln' AND rxcui = '346161'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'PACKE' WHERE [dosage_form] = 'Pwdr Nasal Soln' AND rxcui = '1540452'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_unit = 'APPLICATOR'  WHERE [dosage_form] = 'Rectal Cream' AND rxcui = '316975'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'APPLICATOR', default_administer_unit = 'APPLICATOR'  WHERE [dosage_form] = 'Rectal Gel' AND rxcui = '346170'
 UPDATE [c_Dosage_Form] SET default_dose_unit = 'MG' WHERE [dosage_form] = 'InhalationSusp' AND rxcui = '2107948'
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'TAB', default_administer_unit = 'TAB' WHERE [dosage_form] = 'Effervescent' AND rxcui = '1535727'
+UPDATE [c_Dosage_Form] SET default_dose_unit = 'TAB', default_administer_unit = 'TAB' WHERE [dosage_form] = 'Sublingual Tab' AND rxcui = '317007'
 
 DELETE FROM c_Dosage_Form
 WHERE dosage_form IN ('VaginalSystem','ChewEROralTab','OralFilm','SublingualFilm',
@@ -195,7 +201,7 @@ INSERT INTO c_Dosage_Form (
       ,[default_administer_unit]
       ,[rxcui]
 	  )
-VALUES ('OralFilm','Oral Film','Oral Film', 'PO', 1, 'FILM', 'N', 'FILM', '2269575')
+VALUES ('OralFilm','Oral Film','Oral Film', 'PO', 1, 'STRIP', 'N', 'STRIP', '2269575')
 INSERT INTO c_Dosage_Form (
 [dosage_form]
       ,[description]
@@ -207,7 +213,7 @@ INSERT INTO c_Dosage_Form (
       ,[default_administer_unit]
       ,[rxcui]
 	  )
-VALUES ('SublingualFilm','Sublingual Film','Subling Film', 'PO', 1, 'FILM', 'N', 'FILM', '2269578')
+VALUES ('SublingualFilm','Sublingual Film','Subling Film', 'PO', 1, 'STRIP', 'N', 'STRIP', '2269578')
 INSERT INTO c_Dosage_Form (
 [dosage_form]
       ,[description]
@@ -255,7 +261,7 @@ INSERT INTO c_Dosage_Form (
       ,[default_administer_unit]
       ,[rxcui]
 	  )
-VALUES ('OralPellet','Oral Pellet','Oral Pellet', 'PO', 1, 'PELLET', 'N', 'FILM', '317691')
+VALUES ('OralPellet','Oral Pellet','Oral Pellet', 'PO', 1, 'PELLET', 'N', 'PELLET', '317691')
 INSERT INTO c_Dosage_Form (
 [dosage_form]
       ,[description]
@@ -292,3 +298,7 @@ INSERT INTO c_Dosage_Form (
       ,[rxcui]
 	  )
 VALUES ('VaginalSponge','Vaginal Sponge','Vaginal Sponge', 'INTRAVAGINAL', 1, 'APPLICATOR', 'N', 'APPLICATOR', '2173190')
+
+UPDATE c_Dosage_Form
+SET [default_administer_method] = 'Subcut'
+WHERE default_administer_method = 'SQ'
