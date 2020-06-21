@@ -148,6 +148,10 @@ else
 	// User selected <Other Amount>, or there were no dispense choices
 	popup.realitem = amount
 	popup.objectparm = unit_list.find_unit(unit)
+	if IsNull(unit) then
+		// Provide a default so the screen can exit
+		popup.objectparm = unit_list.find_unit("UNIT")
+	end if
 	popup.item = "EDITUNIT"
 	for i = 1 to lstr_dispense_list.dispense_count
 		popup.items[i] = lstr_dispense_list.dispense[i].dispense_unit
