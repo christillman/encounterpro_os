@@ -36,9 +36,9 @@ DELETE FROM c_Unit WHERE unit_id IN ('INSERTEYE','INSERTEYEL','INSERTEYER')
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
 	VALUES ('INSERTEYE','Insert in each eye', 'NUMBER', 'N', 'Y', '#')
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
-	VALUES ('INSERTEYEL','Insert in right eye', 'NUMBER', 'N', 'Y', '#')
+	VALUES ('INSERTEYEL','Insert in left eye', 'NUMBER', 'N', 'Y', '#')
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
-	VALUES ('INSERTEYER','Insert in left eye', 'NUMBER', 'N', 'Y', '#')
+	VALUES ('INSERTEYER','Insert in right eye', 'NUMBER', 'N', 'Y', '#')
 DELETE FROM c_Unit WHERE unit_id IN ('DROPEAR','DROPEARL','DROPEARR')
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
 	VALUES ('DROPEAR','Drop(s) in each ear', 'NUMBER', 'N', 'Y', '#')
@@ -54,6 +54,9 @@ INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, di
 DELETE FROM c_Unit WHERE unit_id = 'FILM'
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
 	VALUES ('FILM','Film', 'NUMBER', 'Y', 'Y', '#')
+DELETE FROM c_Unit WHERE unit_id = 'STRIP'
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('STRIP','Strip', 'NUMBER', 'Y', 'Y', '#')
 DELETE FROM c_Unit WHERE unit_id = 'METEREDDOSE'
 INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
 	VALUES ('METEREDDOSE','Metered Dose', 'NUMBER', 'Y', 'Y', '#')
@@ -84,3 +87,44 @@ INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, di
 DELETE FROM c_Unit WHERE unit_id = 'PELLET'
 INSERT INTO c_Unit ( [unit_id], [description], [unit_type], plural_flag, print_unit, display_mask) 
 VALUES ('PELLET','Pellet', 'NUMBER','Y', 'Y', '#')
+
+DELETE FROM c_Unit WHERE unit_id = 'JETINJECT'
+INSERT INTO c_Unit ( [unit_id], [description], [unit_type], plural_flag, print_unit, display_mask) 
+VALUES ('JETINJECT','Jet Injector', 'NUMBER','Y', 'Y', '#')
+DELETE FROM c_Unit WHERE unit_id IN ('SPRAYNOSTRIL','SPRAYNOSTRILL','SPRAYNOSTRILR')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('SPRAYNOSTRIL','Spray in each nostril', 'NUMBER', 'N', 'Y', '#')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('SPRAYNOSTRILL','Spray in left nostril', 'NUMBER', 'N', 'Y', '#')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('SPRAYNOSTRILR','Spray in right nostril', 'NUMBER', 'N', 'Y', '#')
+DELETE FROM c_Unit WHERE unit_id IN ('ACTUATNOSTRIL','ACTUATNOSTRILL','ACTUATNOSTRILR')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('ACTUATNOSTRIL','Actuation in each nostril', 'NUMBER', 'N', 'Y', '#')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('ACTUATNOSTRILL','Actuation in left nostril', 'NUMBER', 'N', 'Y', '#')
+INSERT INTO c_Unit (unit_id, description, unit_type, plural_flag, print_unit, display_mask) 
+	VALUES ('ACTUATNOSTRILR','Actuation in right nostril', 'NUMBER', 'N', 'Y', '#')
+
+-- Accommodate multiple selections in w_number via dw_convertable_units
+INSERT INTO [dbo].[c_Unit_Conversion]
+           ([unit_from]
+           ,[unit_to]
+           ,[conversion_factor]
+           ,[conversion_difference])
+SELECT u.unit_id AS unit_from, u2.unit_id AS unit_to, 1, 0
+FROM c_Unit u 
+JOIN c_Unit u2 ON (u2.unit_id = u.unit_id + 'L' OR u2.unit_id = u.unit_id + 'R')
+WHERE u.description like '%each%'
+AND NOT EXISTS (SELECT 1 FROM [c_Unit_Conversion] uc
+						WHERE unit_from = u.unit_id
+						AND unit_to = u2.unit_id)
+UNION ALL
+SELECT u.unit_id AS unit_from, u2.unit_id AS unit_to, 1, 0
+FROM c_Unit u 
+JOIN c_Unit u2 ON left(u2.unit_id, len(u2.unit_id) - 1) = left(u.unit_id, len(u.unit_id) - 1)
+WHERE u.description like '%left%'
+AND u2.description like '%right%'
+AND NOT EXISTS (SELECT 1 FROM [c_Unit_Conversion] uc
+						WHERE unit_from = u.unit_id
+						AND unit_to = u2.unit_id)
