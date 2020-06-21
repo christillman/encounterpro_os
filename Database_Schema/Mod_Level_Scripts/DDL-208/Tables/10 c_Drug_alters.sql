@@ -31,3 +31,29 @@ ALTER TABLE [dbo].[c_Drug_Pack] ALTER COLUMN [rxcui] VARCHAR(20) NOT NULL
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [description] VARCHAR(600) 
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [dose_unit] VARCHAR(20) 
 ALTER TABLE [dbo].[c_Package] ALTER COLUMN [administer_unit] VARCHAR(20) 
+ALTER TABLE [dbo].[c_Package] ALTER COLUMN [administer_method] VARCHAR(30) 
+
+ALTER TABLE [dbo].[c_Unit] DROP CONSTRAINT [PK_c_Unit_1__10]
+ALTER TABLE [dbo].[c_Unit] ALTER COLUMN [unit_id] VARCHAR(30) NOT NULL
+ALTER TABLE [dbo].[c_Unit] ADD  CONSTRAINT [PK_c_Unit_1__10] PRIMARY KEY CLUSTERED 
+(
+	[unit_id] ASC
+)
+USE [EncounterPro_OS]
+GO
+
+ALTER TABLE [dbo].[c_Unit_Conversion] DROP CONSTRAINT [PK_c_Unit_Conversion_1__10]
+ALTER TABLE [dbo].[c_Unit_Conversion] ALTER COLUMN [unit_from] VARCHAR(30) NOT NULL
+ALTER TABLE [dbo].[c_Unit_Conversion] ALTER COLUMN [unit_to] VARCHAR(30) NOT NULL
+ALTER TABLE [dbo].[c_Unit_Conversion] ADD  CONSTRAINT [PK_c_Unit_Conversion_1__10] PRIMARY KEY CLUSTERED 
+(
+	[unit_from] ASC,
+	[unit_to] ASC
+)
+
+ALTER TABLE [c_Administration_Method] DROP CONSTRAINT PK_c_Administration_Metho1__10
+ALTER TABLE [dbo].[c_Administration_Method] ALTER COLUMN [administer_method] VARCHAR(30) NOT NULL
+ALTER TABLE [dbo].[c_Administration_Method] ADD  CONSTRAINT [PK_c_Administration_Metho1__10] PRIMARY KEY CLUSTERED 
+(
+	[administer_method] ASC
+)
