@@ -244,6 +244,8 @@ WHERE f.dosage_form IS NULL
 UPDATE f
 SET dosage_form = CASE 
 	WHEN form_descr LIKE '%Oral Caplet%' THEN 'Caplets'
+	WHEN form_descr LIKE '%Chewable Tab%' THEN 'Chew Tab'
+	WHEN form_descr LIKE '%Chewable Oral Tab%' THEN 'Chew Tab'
 	WHEN form_descr LIKE '%Dispersible%' THEN 'DisOral Tab'
 	WHEN form_descr LIKE '%Vaginal Pessary%' THEN 'Vag Pessary'
 	WHEN form_descr LIKE '%Vaginal Capsule%' THEN 'Vaginal Tablet'
