@@ -19,13 +19,13 @@ AS
 BEGIN
 
 /* The brand that was picked, if any (0 if unpicked)*/
-SELECT form_descr, form_rxcui, dbo.fn_strength_sort(form_descr)
+SELECT form_descr, form_rxcui, ingr_rxcui, dbo.fn_strength_sort(form_descr) as sort_order
 FROM c_Drug_Formulation
 WHERE ingr_rxcui = @ps_brand_name_rxcui
 AND valid_in LIKE '%' + @country_code + ';%'
 UNION
 /* If no brand picked, then all brands for the generic that was picked */
-SELECT form_descr, form_rxcui, dbo.fn_strength_sort(form_descr)
+SELECT form_descr, form_rxcui, ingr_rxcui, dbo.fn_strength_sort(form_descr) as sort_order
 FROM c_Drug_Formulation f
 JOIN c_Drug_Brand b ON b.generic_rxcui = @ps_generic_ingr_rxcui
 WHERE ingr_rxcui = b.brand_name_rxcui
@@ -40,3 +40,5 @@ GRANT EXECUTE
 	TO [cprsystem]
 GO
 -- EXEC sp_brand_formulations '0', '214186', 'us'
+-- exec sp_brand_formulations '301543', '284635', 'us'
+-- exec sp_brand_formulations '0', '284635', 'us'
