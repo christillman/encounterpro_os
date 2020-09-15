@@ -67,7 +67,7 @@ AS BEGIN
 			SET @strength_str = ''
 			END
 		-- @first_digit_pos is the first digit, so get to char before it to include the space but no digits
-		SET @to_return = @to_return + left(@to_parse, @first_digit_pos - 1) + @strength_str
+		SET @to_return = @to_return + @strength_str + left(@to_parse, @first_digit_pos - 1)
 		-- For the next one, move past the end of the previous last digit to the following space / slash
 		SET @to_parse = substring(@to_parse, @last_digit_pos + 1, 1000)
 		SET @last_digit_pos = patindex('%[0-9][ /]%', @to_parse)
@@ -80,7 +80,7 @@ go
 /* test
 select form_descr, dbo.fn_strength_sort(form_descr) as sort_expression
 from c_Drug_Formulation
-where form_descr like 'actonel%' or form_descr like 'bleph%' 
+where form_descr like 'cyproterone acetate%' '%aceta%' or form_descr like 'bleph%' 
 order by dbo.fn_strength_sort(form_descr)
 */
 
