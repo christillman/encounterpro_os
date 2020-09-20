@@ -16,6 +16,7 @@ forward prototypes
 public function integer convert_dose_amount (string ps_from_pkg_administer_unit, real pr_from_administer_per_dose, string ps_from_dose_unit, string ps_to_pkg_administer_unit, real pr_to_administer_per_dose, real pr_to_package_dose_amount, string ps_to_dose_unit)
 public function integer calc_dose_amount (real pr_administer_amount, string ps_administer_unit, string ps_pkg_administer_unit, string ps_mult_by_what, string ps_calc_per, integer pi_daily_frequency, real pr_administer_per_dose, real pr_package_dose_amount, string ps_dose_unit, real pr_max_dose_per_day, u_unit puo_max_dose_unit, ref string ps_mult_display, ref real pr_dose_amount)
 public function integer get_mult_factor (string ps_mult_by_what, ref real pr_multiplier, ref string ps_mult_display)
+public subroutine set_amount (real pr_amount, string ps_unit)
 end prototypes
 
 public function integer convert_dose_amount (string ps_from_pkg_administer_unit, real pr_from_administer_per_dose, string ps_from_dose_unit, string ps_to_pkg_administer_unit, real pr_to_administer_per_dose, real pr_to_package_dose_amount, string ps_to_dose_unit);real lr_old_amount, lr_new_amount
@@ -215,6 +216,12 @@ else
 	return 1
 end if
 end function
+
+public subroutine set_amount (real pr_amount, string ps_unit);
+super::set_amount(pr_amount,ps_unit)
+// after ancestor code runs, override text to blank if amount is 0 per Ciru
+if pr_amount = 0 then text = ""
+end subroutine
 
 event clicked;call super::clicked;
 str_popup popup
