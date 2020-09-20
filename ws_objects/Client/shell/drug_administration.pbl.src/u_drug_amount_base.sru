@@ -76,6 +76,9 @@ real lr_admin_per_day
 string ls_temp
 real lr_max_dose_per_day
 
+// Ciru says don't display message; max doses to be reviewed later
+RETURN
+
 if not isnull(puo_max_dose_unit) and isvalid(puo_max_dose_unit) then
 	// Calculate the prescribed dose per day
 	lr_dose_per_day = amount * pl_frequency
