@@ -34,6 +34,7 @@ string drug_id
 String form_rxcui
 string dose_unit
 string administer_frequency
+string route
 string duration_unit
 string duration_prn
 string dispense_unit
@@ -102,7 +103,6 @@ string comment_service = "OBSERVATION_COMMENT"
 string attachment_service = "EXTERNAL_SOURCE"
 
 end variables
-
 forward prototypes
 public function string description ()
 public subroutine get_descriptions ()
@@ -2016,6 +2016,11 @@ For i = 1 To pstr_attributes.attribute_count
 					administer_frequency = ls_new_value
 					updated = true
 				End If
+			Case 'route'
+				If f_is_modified(route,ls_new_value) Then
+					route = ls_new_value
+					updated = true
+				End If
 			Case 'brand_name_required'
 				If f_is_modified(brand_name_required,ls_new_value) Then
 					brand_name_required = ls_new_value
@@ -3686,6 +3691,7 @@ lstr_treatment.office_dispense_amount = office_dispense_amount
 lstr_treatment.dispense_unit = dispense_unit
 lstr_treatment.administration_sequence = administration_sequence
 lstr_treatment.administer_frequency = administer_frequency
+lstr_treatment.route = route
 lstr_treatment.refills = refills
 lstr_treatment.brand_name_required = brand_name_required
 
