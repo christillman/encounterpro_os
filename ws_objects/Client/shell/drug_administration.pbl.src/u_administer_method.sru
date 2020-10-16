@@ -22,6 +22,7 @@ global u_administer_method u_administer_method
 
 type variables
 string method
+string package_id
 boolean WasModified
 end variables
 
@@ -30,11 +31,18 @@ public subroutine set_method (string ps_method)
 end prototypes
 
 public subroutine set_method (string ps_method);
-
 if ps_method = "" then
 	setnull(method)
+	text = ""
 else
 	method = ps_method
+	text = ps_method
+end if
+
+if len(text) > 22 then
+	textsize = -10
+else
+	textsize = -12
 end if
 
 end subroutine
@@ -45,6 +53,8 @@ str_popup_return popup_return
 popup.dataobject = "dw_package_administer_method_list"
 popup.datacolumn = 1
 popup.displaycolumn = 1
+popup.argument[1] = package_id
+popup.argument_count = 1
 openwithparm(w_pop_pick, popup)
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
