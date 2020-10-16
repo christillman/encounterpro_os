@@ -1,4 +1,12 @@
 
+DELETE FROM [Kenya_Drugs]
+
+-- Includes 2373 Kenya drugs from 09_18_2020 KenyaRetentionDrugsUpdate (cleaned)
+
+BULK INSERT [Kenya_Drugs]
+FROM '\\localhost\attachments\Kenya_Drugs.txt'
+-- 
+
 delete from c_Drug_Formulation where form_rxcui like 'KE%' or form_rxcui like 'Riv%'  
 -- (2695 row(s) affected)
 delete from c_Drug_Brand where brand_name_rxcui like 'KE%'
@@ -424,16 +432,17 @@ UPDATE c_Drug_Formulation SET ingr_rxcui = '274783' WHERE form_rxcui = 'KEG5916'
 UPDATE c_Drug_Formulation SET ingr_rxcui = 'KEGI281' WHERE form_rxcui = 'KEG1241'
 UPDATE c_Drug_Formulation SET ingr_rxcui = 'KEGI281' WHERE form_rxcui = 'KEG282PF'
 */
-
+/*
 SELECT count(*) FROM c_Drug_Formulation d
 WHERE 
 	NOT EXISTS (SELECT drug_id 
 		FROM c_Drug_Generic g WHERE g.generic_rxcui = d.ingr_rxcui)
 	AND NOT EXISTS (SELECT drug_id 
 		FROM c_Drug_Brand b WHERE b.brand_name_rxcui = d.ingr_rxcui)
-
+*/
+/*
+-- Leave these alone, 428 generics not in Kenya formulations as generics
 DELETE g 
-SELECT * 
 FROM c_Drug_Generic g
 WHERE NOT EXISTS (SELECT ingr_rxcui 
 	FROM c_Drug_Formulation f 
@@ -442,7 +451,8 @@ AND EXISTS (SELECT 1
 	FROM c_Drug_Generic g1 
 	WHERE g1.generic_name = g.generic_name
 )
-
+*/
+/*
 SELECT count(*) FROM c_Drug_Brand g
 WHERE NOT EXISTS (SELECT ingr_rxcui 
 	FROM c_Drug_Formulation f 
@@ -451,7 +461,7 @@ AND EXISTS (SELECT 1
 	FROM c_Drug_Brand g1 
 	WHERE g1.brand_name = g.brand_name
 	AND left(g1.brand_name_rxcui,2) != 'KE')
-
+*/
 
 -- Will need to retrieve these separately (RXNORM full set)
 /*
@@ -478,6 +488,7 @@ select * from c_Drug_Generic where generic_rxcui in ('203218','388053','687386',
 */
 
 -- Generics haven't been duplicated
+/*
 SELECT generic_name, MIN(generic_rxcui) as chosen_generic_rxcui
 FROM c_Drug_Generic g
 WHERE drug_id IS NULL
@@ -485,6 +496,7 @@ AND EXISTS (SELECT 1 FROM c_Drug_Generic g1
 		WHERE g1.generic_name = g.generic_name
 		AND g1.generic_rxcui != g.generic_rxcui)
 GROUP BY generic_name
+*/
 
 -- DELETE FROM c_Drug_Generic WHERE generic_rxcui IN ('KEGI11358','KEGI2067')
 
