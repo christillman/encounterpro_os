@@ -25,17 +25,9 @@ FROM c_Drug_Formulation
 WHERE ingr_rxcui = @ps_generic_ingr_rxcui
 AND valid_in LIKE '%' + @country_code + ';%'
 UNION
-/* If no generic picked, then only the generic formulationss matching 
+/* If no generic picked, then only the generic formulations matching 
 	the available formulations for the brand that was picked */
 SELECT f.form_descr, f.form_rxcui, f.ingr_rxcui, dbo.fn_strength_sort(f.form_descr)
-	/*, CASE WHEN EXISTS (SELECT 1 FROM c_Drug_Formulation f2 
-			WHERE f2.ingr_rxcui = b.brand_name_rxcui
-			AND f2.RXN_available_strength = f.RXN_available_strength
-			AND f2.dosage_form = f.dosage_form
-			AND f2.dose_amount = f.dose_amount
-			AND f2.dose_unit = f.dose_unit)
-			THEN 'Y' 
-			ELSE 'N' END */
 FROM c_Drug_Brand b 
 JOIN c_Drug_Formulation f ON f.ingr_rxcui = b.generic_rxcui
 WHERE b.brand_name_rxcui = @ps_brand_name_rxcui
@@ -43,10 +35,10 @@ AND f.valid_in LIKE '%' + @country_code + ';%'
 AND @ps_generic_ingr_rxcui = '0'
 AND EXISTS (SELECT 1 FROM c_Drug_Formulation f2 
 			WHERE f2.ingr_rxcui = b.brand_name_rxcui
-			AND f2.RXN_available_strength = f.RXN_available_strength
-			AND f2.dosage_form = f.dosage_form
-			AND f2.dose_amount = f.dose_amount
-			AND f2.dose_unit = f.dose_unit)
+			AND IsNull(f2.RXN_available_strength,'') = IsNull(f.RXN_available_strength,'')
+			AND IsNull(f2.dosage_form,'') = IsNull(f.dosage_form,'')
+			AND IsNull(f2.dose_amount,0) = IsNull(f.dose_amount,0)
+			AND IsNull(f2.dose_unit,'') = IsNull(f.dose_unit,''))
 ORDER BY 4
 
 
@@ -57,6 +49,7 @@ GRANT EXECUTE
 	ON [dbo].[sp_generic_formulations]
 	TO [cprsystem]
 GO
+-- EXEC sp_generic_formulations '0', '1366144', 'ke'
 -- EXEC sp_generic_formulations '214186', '0', 'us'
 -- EXEC sp_generic_formulations '284635', '0', 'us'
 -- EXEC sp_generic_formulations '0', '301543', 'us'

@@ -39,6 +39,6 @@ GRANT EXECUTE
 	ON [dbo].[sp_brand_formulations]
 	TO [cprsystem]
 GO
--- EXEC sp_brand_formulations '0', '214186', 'us'
 -- exec sp_brand_formulations '301543', '284635', 'us'
 -- exec sp_brand_formulations '0', '284635', 'us'
+-- exec sp_brand_formulations 'KEBI10367', '0', 'ke'
