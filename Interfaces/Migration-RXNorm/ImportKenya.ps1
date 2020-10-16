@@ -1,0 +1,1 @@
+﻿Import-DbaCsv -Path "C:\Users\tofft\EncounterPro\RXNORM\09_18_2020 KenyaRetentionDrugsUpdate.csv" -SqlInstance "[DESKTOP-GU15HUD\EncounterPro_OS]"  -Database EncounterPro_Os  -Truncate  -KeepNulls  -AutoCreateTable -UseFileNameForSchema  -TrimmingOption All  -Encoding UTF8  -SkipEmptyLine  -SupportsMultiline  -UseColumnDefault  -NoTransaction  -EnableException 

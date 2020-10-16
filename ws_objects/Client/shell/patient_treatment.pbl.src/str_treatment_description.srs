@@ -53,5 +53,6 @@ global type str_treatment_description from structure
 	string		completed_by
 	long		dispatch_encounter_id
 	string		form_rxcui
+	string		route
 end type
 

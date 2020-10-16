@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$u_package_description.sru
 forward
-global type u_package_description from UserObject
+global type u_package_description from userobject
 end type
 type st_admin_title from statictext within u_package_description
 end type
@@ -20,14 +20,13 @@ type st_name_title from statictext within u_package_description
 end type
 end forward
 
-global type u_package_description from UserObject
-int Width=1477
-int Height=800
-boolean Border=true
-long BackColor=33538240
-long PictureMaskColor=536870912
-long TabTextColor=33554432
-long TabBackColor=67108864
+global type u_package_description from userobject
+integer width = 1477
+integer height = 800
+boolean border = true
+long backcolor = 33538240
+long tabtextcolor = 33554432
+long picturemaskcolor = 536870912
 st_admin_title st_admin_title
 st_admin_method st_admin_method
 st_form_title st_form_title
@@ -91,12 +90,10 @@ SELECT c_Package.administer_method,
 		:admin_method_description,   
 		:dosage_form_description,   
 		:dosage_form_abbreviation  
- FROM c_Package,   
-		c_Administration_Method,   
-		c_Dosage_Form  
-WHERE ( c_Package.administer_method = c_Administration_Method.administer_method ) and  
-		( c_Package.dosage_form = c_Dosage_Form.dosage_form ) and  
-		( ( c_Package.package_id = :package_id ) )   ;
+ FROM c_Package   
+LEFT JOIN c_Administration_Method ON c_Package.administer_method = c_Administration_Method.administer_method
+LEFT JOIN c_Dosage_Form  ON c_Package.dosage_form = c_Dosage_Form.dosage_form
+WHERE c_Package.package_id = :package_id   ;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
 	log.log(this, "u_package_description.set_package:0042", "Package not found (" + package_id + ")", 4)
@@ -157,150 +154,150 @@ destroy(this.st_name_title)
 end on
 
 type st_admin_title from statictext within u_package_description
-int X=14
-int Y=604
-int Width=512
-int Height=76
-boolean Enabled=false
-string Text="Admin Method:"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 604
+integer width = 512
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Admin Method:"
+boolean focusrectangle = false
 end type
 
 type st_admin_method from statictext within u_package_description
-int X=14
-int Y=680
-int Width=1426
-int Height=76
-boolean Enabled=false
-boolean Border=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=67108864
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 680
+integer width = 1426
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+boolean enabled = false
+alignment alignment = center!
+boolean border = true
+boolean focusrectangle = false
 end type
 
 type st_form_title from statictext within u_package_description
-int X=14
-int Y=432
-int Width=512
-int Height=76
-boolean Enabled=false
-string Text="Dosage Form:"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 432
+integer width = 512
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Dosage Form:"
+boolean focusrectangle = false
 end type
 
 type st_dosage_form from statictext within u_package_description
-int X=14
-int Y=508
-int Width=1426
-int Height=76
-boolean Enabled=false
-boolean Border=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=67108864
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 508
+integer width = 1426
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+boolean enabled = false
+alignment alignment = center!
+boolean border = true
+boolean focusrectangle = false
 end type
 
 type st_strength_title from statictext within u_package_description
-int X=14
-int Y=168
-int Width=512
-int Height=76
-boolean Enabled=false
-string Text="Strength:"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 168
+integer width = 512
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Strength:"
+boolean focusrectangle = false
 end type
 
 type st_strength from statictext within u_package_description
-int X=14
-int Y=244
-int Width=1426
-int Height=168
-boolean Enabled=false
-boolean Border=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=67108864
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 244
+integer width = 1426
+integer height = 168
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+boolean enabled = false
+alignment alignment = center!
+boolean border = true
+boolean focusrectangle = false
 end type
 
 type st_package_name from statictext within u_package_description
-int X=14
-int Y=80
-int Width=1426
-int Height=76
-boolean Enabled=false
-boolean Border=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=67108864
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 80
+integer width = 1426
+integer height = 76
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 67108864
+boolean enabled = false
+alignment alignment = center!
+boolean border = true
+boolean focusrectangle = false
 end type
 
 type st_name_title from statictext within u_package_description
-int X=14
-int Y=4
-int Width=512
-int Height=72
-boolean Enabled=false
-string Text="Package Name:"
-boolean FocusRectangle=false
-long TextColor=33554432
-long BackColor=33538240
-int TextSize=-10
-int Weight=700
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 14
+integer y = 4
+integer width = 512
+integer height = 72
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 33538240
+boolean enabled = false
+string text = "Package Name:"
+boolean focusrectangle = false
 end type
 

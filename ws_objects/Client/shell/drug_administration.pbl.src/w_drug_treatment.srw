@@ -50,8 +50,6 @@ type uo_dose from u_dose_amount within w_drug_treatment
 end type
 type uo_dispense from u_dispense_amount within w_drug_treatment
 end type
-type st_method_description from statictext within w_drug_treatment
-end type
 type gb_1 from groupbox within w_drug_treatment
 end type
 type st_drug from statictext within w_drug_treatment
@@ -69,6 +67,8 @@ end type
 type shl_drug from statichyperlink within w_drug_treatment
 end type
 type st_link from statictext within w_drug_treatment
+end type
+type uo_route from u_administer_method within w_drug_treatment
 end type
 end forward
 
@@ -101,7 +101,6 @@ st_1 st_1
 uo_dispense_office uo_dispense_office
 uo_dose uo_dose
 uo_dispense uo_dispense
-st_method_description st_method_description
 gb_1 gb_1
 st_drug st_drug
 st_brand_name_required_title st_brand_name_required_title
@@ -111,6 +110,7 @@ st_duration_title st_duration_title
 st_route st_route
 shl_drug shl_drug
 st_link st_link
+uo_route uo_route
 end type
 global w_drug_treatment w_drug_treatment
 
@@ -771,10 +771,10 @@ shl_drug.url = "https://dailymed.nlm.nih.gov/dailymed/search.cfm?query=" + st_dr
 // "https://mor.nlm.nih.gov/RxNav/search?searchBy=String&searchTerm=" + st_drug.text
 
 max_dose_unit = unit_list.find_unit(ls_unit)
+st_max_dose.text = ""
 if not isnull(max_dose_unit) then
-	st_max_dose.text = "Max Dose = " + f_pretty_amount_unit(max_dose_per_day, max_dose_unit.unit_id) + " / Day"
-else
-	st_max_dose.text = ""
+	// Ciru says we should review max doses at some point in the future. For now, don't display
+	// st_max_dose.text = "Max Dose = " + f_pretty_amount_unit(max_dose_per_day, max_dose_unit.unit_id) + " / Day"
 end if
 
 // Get the package list for this drug
@@ -814,6 +814,9 @@ Else
 	package_selected = True
 End if
 
+// Set the route list
+uo_route.package_id = treat_medication.package_id
+
 // Determine the dispense amount/unit
 ls_dispense_unit = treat_medication.dispense_unit
 if isnull(ls_dispense_unit) then
@@ -835,8 +838,9 @@ Else
 	dispense_selected = True
 End if
 
-uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
-uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
+		// Ciru says do not set dispense amount ahead of dose being selected
+//uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
+//uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
 
 // Save the initial dispense_qs setting so we know if it changes
 prev_dispense_qs = uo_dispense.is_qs
@@ -862,6 +866,9 @@ End if
 // Load all the other stuff
 If Not isnull(treat_medication.administer_frequency) Then &
 	uo_administer_frequency.set_frequency(treat_medication.administer_frequency)
+
+If Not isnull(treat_medication.route) Then &
+	uo_route.set_method(treat_medication.route)
 
 uo_duration.set_amount(	treat_medication.duration_amount, &
 								treat_medication.duration_unit, &
@@ -957,6 +964,10 @@ lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = "administ
 lstr_attributes.attribute[lstr_attributes.attribute_count].value = uo_administer_frequency.administer_frequency
 
 lstr_attributes.attribute_count += 1
+lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = "route"
+lstr_attributes.attribute[lstr_attributes.attribute_count].value = uo_route.method
+
+lstr_attributes.attribute_count += 1
 lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = "dispense_amount"
 if uo_dispense.amount <= 0 or isnull(uo_dispense.unit) then
 	lstr_attributes.attribute[lstr_attributes.attribute_count].value = ls_null
@@ -1008,7 +1019,7 @@ lstr_attributes.attribute[lstr_attributes.attribute_count].value = String(refill
 treat_medication.updated = false
 treat_medication.map_attr_to_data_columns(lstr_attributes)
 
-// If the updated flad is true then something changed and we have to update the treatment
+// If the updated flag is true then something changed and we have to update the treatment
 ll_old_treatment_id = treat_medication.treatment_id
 if treat_medication.updated then
 	lstr_treatment = treat_medication.treatment_description()
@@ -1129,15 +1140,17 @@ If drug_admin_index = 0 Then
 	// uo_drug_administration.selectadminsequence(0)
 End if
 
-uo_duration.set_amount(	default_duration_amount, &
-								default_duration_unit, &
-								default_duration_prn)
-								
+// Ciru says don't set duration when window is opening
+// uo_duration.set_amount(	default_duration_amount, &
+//								default_duration_unit, &
+//								default_duration_prn)
+//								
 // Determine the dispense amount/unit
 ls_dispense_unit = treat_medication.dispense_unit
 if isnull(ls_dispense_unit) then
 	if package_list_index > 0 then
-		ls_dispense_unit = uo_drug_package.default_dispense_unit[package_list_index]
+		// Ciru says don't set total dispense when window is opening
+		// ls_dispense_unit = uo_drug_package.default_dispense_unit[package_list_index]
 	end if
 end if
 
@@ -1145,8 +1158,9 @@ end if
 // Disabling this for now, we are selecting a formulation without an administration
 // uo_drug_administration.triggerevent("newadmin")
 uo_drug_package.triggerevent("newpackage")
+
 recalcdose()
-// By Sumathi Chinnasamy On 12/08/99
+
 // Set refills text
 If Isnull(treat_medication.refills) Then treat_medication.refills = 0
 refills = treat_medication.refills
@@ -1179,6 +1193,8 @@ else
 	setnull(li_admin_sequence)
 end if
 load_default_drug_instructions(drug_id, ls_package_id, li_admin_sequence)
+
+uo_route.package_id = ls_package_id
 
 display_instructions()
 
@@ -1294,6 +1310,8 @@ real lr_admin_per_day
 string ls_temp
 real lr_max_dose_per_day
 
+// Ciru says we should review max doses at some point in the future. For now, don't display
+RETURN
 
 i = uo_administer_frequency.current_frequency
 if i > 0 then
@@ -1440,7 +1458,6 @@ this.st_1=create st_1
 this.uo_dispense_office=create uo_dispense_office
 this.uo_dose=create uo_dose
 this.uo_dispense=create uo_dispense
-this.st_method_description=create st_method_description
 this.gb_1=create gb_1
 this.st_drug=create st_drug
 this.st_brand_name_required_title=create st_brand_name_required_title
@@ -1450,6 +1467,7 @@ this.st_duration_title=create st_duration_title
 this.st_route=create st_route
 this.shl_drug=create shl_drug
 this.st_link=create st_link
+this.uo_route=create uo_route
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.cb_done
 this.Control[iCurrent+2]=this.cb_cancel
@@ -1475,16 +1493,16 @@ this.Control[iCurrent+21]=this.st_1
 this.Control[iCurrent+22]=this.uo_dispense_office
 this.Control[iCurrent+23]=this.uo_dose
 this.Control[iCurrent+24]=this.uo_dispense
-this.Control[iCurrent+25]=this.st_method_description
-this.Control[iCurrent+26]=this.gb_1
-this.Control[iCurrent+27]=this.st_drug
-this.Control[iCurrent+28]=this.st_brand_name_required_title
-this.Control[iCurrent+29]=this.st_brand_name_required
-this.Control[iCurrent+30]=this.st_frequency_title
-this.Control[iCurrent+31]=this.st_duration_title
-this.Control[iCurrent+32]=this.st_route
-this.Control[iCurrent+33]=this.shl_drug
-this.Control[iCurrent+34]=this.st_link
+this.Control[iCurrent+25]=this.gb_1
+this.Control[iCurrent+26]=this.st_drug
+this.Control[iCurrent+27]=this.st_brand_name_required_title
+this.Control[iCurrent+28]=this.st_brand_name_required
+this.Control[iCurrent+29]=this.st_frequency_title
+this.Control[iCurrent+30]=this.st_duration_title
+this.Control[iCurrent+31]=this.st_route
+this.Control[iCurrent+32]=this.shl_drug
+this.Control[iCurrent+33]=this.st_link
+this.Control[iCurrent+34]=this.uo_route
 end on
 
 on w_drug_treatment.destroy
@@ -1513,7 +1531,6 @@ destroy(this.st_1)
 destroy(this.uo_dispense_office)
 destroy(this.uo_dose)
 destroy(this.uo_dispense)
-destroy(this.st_method_description)
 destroy(this.gb_1)
 destroy(this.st_drug)
 destroy(this.st_brand_name_required_title)
@@ -1523,6 +1540,7 @@ destroy(this.st_duration_title)
 destroy(this.st_route)
 destroy(this.shl_drug)
 destroy(this.st_link)
+destroy(this.uo_route)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_drug_treatment
@@ -1555,26 +1573,49 @@ treat_medication.treatment_definition[1].attribute_count = -1
 
 If package_list_index <= 0 Then
 	Openwithparm(w_pop_message, "You must select a package")
+	uo_drug_package.backcolor = color_light_yellow
 	Return
+else
+	uo_drug_package.backcolor = color_light_grey
 End if
 
 If isnull(uo_dose.amount) or uo_dose.amount = 0 or isnull(uo_dose.unit) Then
 	openwithparm(w_pop_message, "You must specify a dose")
+	uo_dose.backcolor = color_light_yellow
 	Return
+else
+	uo_dose.backcolor = color_light_grey
+End if
+
+If Isnull(uo_administer_frequency.administer_frequency) And &
+	(IsNull(uo_drug_package.take_as_directed[package_list_index]) Or &
+	uo_drug_package.take_as_directed[package_list_index] = "N") Then
+	openwithparm(w_pop_message, "You must specify an administer frequency")
+	uo_administer_frequency.backcolor = color_light_yellow
+	Return
+else
+	uo_administer_frequency.backcolor = color_light_grey
+End if
+
+If (Isnull(uo_duration.amount) or uo_duration.amount = 0) And &
+	(IsNull(uo_drug_package.take_as_directed[package_list_index]) Or &
+	uo_drug_package.take_as_directed[package_list_index] = "N") Then
+	openwithparm(w_pop_message, "You must specify a duration")
+	uo_duration.backcolor = color_light_yellow
+	Return
+else
+	uo_duration.backcolor = color_light_grey
 End if
 
 if not uo_dispense.allow_qs then
 	if isnull(uo_dispense.amount) or isnull(uo_dispense.unit) or uo_dispense.amount <= 0 then
 		openwithparm(w_pop_message, "You must specify dispense information")
-		return
+		uo_dispense.backcolor = color_light_yellow
+		Return
+	else
+		uo_dispense.backcolor = color_light_grey
 	end if
 end if
-
-If Isnull(uo_administer_frequency.administer_frequency) And &
-	uo_drug_package.take_as_directed[package_list_index] = "N" Then
-	openwithparm(w_pop_message, "You must specify an administer frequency")
-	Return
-End if
 
 li_sts = current_user.check_drug(drug_id, uo_drug_package.package_id[package_list_index])
 If li_sts < 0 Then
@@ -1881,8 +1922,8 @@ boolean focusrectangle = false
 end type
 
 type st_max_dose from statictext within w_drug_treatment
-integer x = 224
-integer y = 648
+integer x = 233
+integer y = 656
 integer width = 1070
 integer height = 72
 integer textsize = -8
@@ -2030,22 +2071,23 @@ if package_list_index > 0 then
 		openwithparm(w_pop_message, "You are not authorized to write a prescription for this drug/package")
 	end if
 	
-	st_method_description.text = method_description[package_list_index]
+	uo_route.set_method(method_description[package_list_index])
 	
 	uo_dispense.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])
 	uo_dispense_office.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])
 	
 	if not dispense_selected then
-		uo_dispense.set_amount(default_dispense_amount[package_list_index], &
-										default_dispense_unit[package_list_index])
-		uo_dispense_office.set_amount(0, default_dispense_unit[package_list_index])
+		// Ciru says do not set dispense amount ahead of dose being selected
+//		uo_dispense.set_amount(default_dispense_amount[package_list_index], &
+//										default_dispense_unit[package_list_index])
+//		uo_dispense_office.set_amount(0, default_dispense_unit[package_list_index])
 	end if
 	
 	
 	if take_as_directed[package_list_index] = "Y" then
 		uo_dose.visible = false
 		st_take_as_directed.visible = true
-		st_method_description.visible = false
+		uo_route.visible = false
 		uo_administer_frequency.visible = false
 		uo_duration.visible = false
 		pb_whole.visible = false
@@ -2054,7 +2096,7 @@ if package_list_index > 0 then
 	else
 		uo_dose.visible = true
 		st_take_as_directed.visible = false
-		st_method_description.visible = true
+		uo_route.visible = true
 		uo_administer_frequency.visible = true
 		uo_duration.visible = true
 		pb_whole.visible = true
@@ -2064,6 +2106,8 @@ if package_list_index > 0 then
 		// uo_drug_administration.visible = true
 	end if
 	ls_package_id = uo_drug_package.package_id[package_list_index]
+	uo_route.package_id = ls_package_id
+	
 	if drug_admin_index > 0 Then
 		li_admin_sequence = uo_drug_administration.administration_sequence[drug_admin_index]
 	else
@@ -2097,9 +2141,10 @@ ls_form_description = f_choose_formulation(ls_drug_id, ls_form_rxcui, ls_ingr_rx
 // This is inherited from u_drug_package, which has a form_rxcui array.
 // We want to assign to the window instance variable.
 parent.form_rxcui = ls_form_rxcui
-package_list_index = uo_drug_package.selectformulation(ls_form_rxcui)
 drug_id = ls_drug_id
 set_drug()
+// set_drug must execute before this can be done.
+package_list_index = uo_drug_package.selectformulation(ls_form_rxcui)
 
 
 if package_list_index <= 0 then return
@@ -2149,8 +2194,8 @@ boolean focusrectangle = false
 end type
 
 type uo_administer_frequency from u_administer_frequency within w_drug_treatment
-integer x = 224
-integer y = 788
+integer x = 251
+integer y = 800
 integer width = 1070
 integer height = 140
 end type
@@ -2278,8 +2323,8 @@ integer weight = 700
 end type
 
 type uo_dose from u_dose_amount within w_drug_treatment
-integer x = 224
-integer y = 508
+integer x = 242
+integer y = 516
 integer width = 1070
 integer height = 140
 integer textsize = -12
@@ -2337,23 +2382,6 @@ end type
 event clicked;call super::clicked;if wasmodified then dispense_selected = true
 
 end event
-
-type st_method_description from statictext within w_drug_treatment
-integer x = 1595
-integer y = 508
-integer width = 1070
-integer height = 140
-integer textsize = -12
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 12632256
-boolean enabled = false
-alignment alignment = center!
-boolean border = true
-boolean focusrectangle = false
-end type
 
 type gb_1 from groupbox within w_drug_treatment
 integer x = 1678
@@ -2471,8 +2499,8 @@ boolean focusrectangle = false
 end type
 
 type st_route from statictext within w_drug_treatment
-integer x = 1829
-integer y = 440
+integer x = 1806
+integer y = 444
 integer width = 695
 integer height = 68
 boolean bringtotop = true
@@ -2527,5 +2555,13 @@ boolean enabled = false
 string text = "RxNav:"
 alignment alignment = right!
 boolean focusrectangle = false
+end type
+
+type uo_route from u_administer_method within w_drug_treatment
+integer x = 1595
+integer y = 516
+integer width = 1070
+integer height = 140
+boolean bringtotop = true
 end type
 

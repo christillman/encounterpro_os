@@ -12,6 +12,7 @@ integer li_rc
 // We might choose a generic after having initially searched for a brand, for instance
 boolean lb_generic_selected, lb_brand_selected 
 string ls_generic_rxcui, ls_brand_name_rxcui
+string ls_list_preference
 
 SetNull(ls_generic_rxcui)
 SetNull(ls_brand_name_rxcui)
@@ -32,7 +33,12 @@ ELSE
 	popup.items[2] =ls_brand_name_rxcui
 END IF
 
-li_rc = OpenWithParm(w_pop_formulation_select, popup)
+ls_list_preference = f_get_global_preference("MEDICATION", "Formulation list") 
+IF ls_list_preference = "Dual" THEN
+	li_rc = OpenWithParm(w_pop_formulation_select, popup)
+ELSE // Single
+	li_rc = OpenWithParm(w_pop_formulation_select_single, popup)
+END IF
 popup_return = message.powerobjectparm
 
 IF popup_return.item_count <> 2 then return "Nothing selected"

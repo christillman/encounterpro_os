@@ -95,10 +95,9 @@ INTO :package_definition[package_count + 1].administer_unit,
 		:package_definition[package_count + 1].method_description,
 		:package_definition[package_count + 1].dose_amount,
 		:package_definition[package_count + 1].dosage_form
-FROM c_Package (NOLOCK),
-		c_Administration_Method (NOLOCK)
+FROM c_Package (NOLOCK) LEFT JOIN
+		c_Administration_Method (NOLOCK) ON  c_Package.administer_method = c_Administration_method.administer_method
 WHERE c_Package.package_id = :ps_package_id
-AND c_Package.administer_method = c_Administration_method.administer_method
 USING cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then return 0
@@ -546,6 +545,11 @@ Else
 		ls_description += ls_administer_method
 	End if
 	
+	If len(pstr_treatment.route) > 0 then
+		if len(ls_description) > 0 then ls_description += " "
+		ls_description += pstr_treatment.route
+	End If
+	
 	If len(pstr_treatment.administer_frequency) > 0 then
 		ls_administer_frequency_code = pstr_treatment.administer_frequency
 		ls_administer_frequency_description = administer_frequency_description(ls_administer_frequency_code)
@@ -608,21 +612,22 @@ str_package_definition 	lstr_package_definition
 
 Setnull(ls_description)
 
-// If we don't have a drug_id then there's nothing we can do so just use the treatment description
-if isnull(pstr_treatment.drug_id) then return pstr_treatment.treatment_description
-
-li_sts = drugdb.get_drug_definition(pstr_treatment.drug_id,lstr_drug_definition)
-if li_sts <= 0 then return pstr_treatment.treatment_description
-
-ls_description = treatment_drug_description(pstr_treatment)
-if isnull(ls_description) then
+if isnull(pstr_treatment.drug_id) then
 	log.log(this, "u_component_drug.treatment_drug_sig:0034", "No drug description available (" + pstr_treatment.drug_id + ")", 4)
-	return ls_description
+	ls_description = pstr_treatment.treatment_description
+else
+	li_sts = drugdb.get_drug_definition(pstr_treatment.drug_id,lstr_drug_definition)
+	if li_sts <= 0 then return pstr_treatment.treatment_description
+	
+	ls_description = treatment_drug_description(pstr_treatment)
 end if
 
 ls_temp = package_description(pstr_treatment.package_id)
 if len(ls_temp) > 0 then
-	ls_description += ", " + ls_temp + ":"
+	// The package description now includes the drug name (from the formulation description)
+	// so don't prepend the drug name 
+	// ls_description += ", " + ls_temp + ":"
+	ls_description = ls_temp + ":"
 end if
 
 ls_temp = treatment_dosing_description(pstr_treatment)

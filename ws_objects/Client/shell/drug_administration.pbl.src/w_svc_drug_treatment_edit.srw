@@ -838,8 +838,9 @@ Else
 	dispense_selected = True
 End if
 
-uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
-uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
+		// Ciru says do not set dispense amount ahead of dose being selected
+//uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
+//uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
 
 // Save the initial dispense_qs setting so we know if it changes
 prev_dispense_qs = uo_dispense.is_qs
