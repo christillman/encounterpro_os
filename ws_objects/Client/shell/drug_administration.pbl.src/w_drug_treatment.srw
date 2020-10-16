@@ -867,8 +867,8 @@ End if
 If Not isnull(treat_medication.administer_frequency) Then &
 	uo_administer_frequency.set_frequency(treat_medication.administer_frequency)
 
-If Not isnull(treat_medication.administer_method) Then &
-	uo_route.set_method(treat_medication.administer_method)
+If Not isnull(treat_medication.route) Then &
+	uo_route.set_method(treat_medication.route)
 
 uo_duration.set_amount(	treat_medication.duration_amount, &
 								treat_medication.duration_unit, &
