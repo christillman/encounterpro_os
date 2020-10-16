@@ -20,7 +20,23 @@ CREATE VIEW v_drug_search AS
 		LEFT OUTER JOIN c_Drug_Drug_Category c
 		ON a.drug_id = c.drug_id
 		LEFT OUTER JOIN c_Common_Drug cd
-		ON a.drug_id = cd.drug_id
+		ON a.drug_id = cd.drug_id 
+	WHERE (
+		EXISTS (SELECT 1 FROM c_Drug_Generic g
+			JOIN c_Drug_Formulation f ON f.ingr_rxcui = g.generic_rxcui
+			CROSS JOIN o_Office oo
+			JOIN c_Office co ON co.office_id = oo.office_id
+			WHERE g.drug_id = a.drug_id
+			AND f.valid_in LIKE '%' + co.country + ';%'
+			)
+		OR EXISTS (SELECT 1 FROM c_Drug_Brand b
+			JOIN c_Drug_Formulation f ON f.ingr_rxcui = b.brand_name_rxcui
+			CROSS JOIN o_Office oo
+			JOIN c_Office co ON co.office_id = oo.office_id
+			WHERE b.drug_id = a.drug_id
+			AND f.valid_in LIKE '%' + co.country + ';%'
+			)
+		)
 
 GO
 
