@@ -35,10 +35,7 @@ AND f.valid_in LIKE '%' + @country_code + ';%'
 AND @ps_generic_ingr_rxcui = '0'
 AND EXISTS (SELECT 1 FROM c_Drug_Formulation f2 
 			WHERE f2.ingr_rxcui = b.brand_name_rxcui
-			AND IsNull(f2.RXN_available_strength,'') = IsNull(f.RXN_available_strength,'')
-			AND IsNull(f2.dosage_form,'') = IsNull(f.dosage_form,'')
-			AND IsNull(f2.dose_amount,0) = IsNull(f.dose_amount,0)
-			AND IsNull(f2.dose_unit,'') = IsNull(f.dose_unit,''))
+			AND IsNull(f2.RXN_available_strength,'') = IsNull(f.RXN_available_strength,''))
 ORDER BY 4
 
 

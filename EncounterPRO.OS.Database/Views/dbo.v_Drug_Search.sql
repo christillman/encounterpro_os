@@ -1,4 +1,8 @@
+Print 'Drop View [dbo].[v_drug_search]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[v_drug_search]') AND [type]='V'))
 DROP VIEW v_drug_search
+Print 'Create View [dbo].[v_drug_search]'
 GO
 CREATE VIEW v_drug_search AS
 	SELECT -- top 10
