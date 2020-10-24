@@ -28,6 +28,7 @@ end variables
 
 forward prototypes
 public subroutine set_method (string ps_method)
+public subroutine set_package (string ps_package_id)
 end prototypes
 
 public subroutine set_method (string ps_method);
@@ -44,6 +45,20 @@ if len(text) > 22 then
 else
 	textsize = -12
 end if
+
+end subroutine
+
+public subroutine set_package (string ps_package_id);
+package_id = ps_package_id
+
+datastore lds
+lds = CREATE datastore
+lds.dataobject = "dw_package_administer_method_list"
+lds.Settransobject(SQLCA)
+lds.Retrieve(package_id)
+IF lds.rowcount( ) = 1 THEN
+	set_method(lds.Object.description[1])
+END IF
 
 end subroutine
 
