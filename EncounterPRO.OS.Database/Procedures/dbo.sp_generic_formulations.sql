@@ -11,8 +11,8 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE sp_generic_formulations (
-	@ps_generic_ingr_rxcui varchar(10),
-	@ps_brand_name_rxcui varchar(10),
+	@ps_generic_ingr_rxcui varchar(20),
+	@ps_brand_name_rxcui varchar(20),
 	@country_code varchar(100) )
 AS
 
@@ -35,9 +35,8 @@ AND f.valid_in LIKE '%' + @country_code + ';%'
 AND @ps_generic_ingr_rxcui = '0'
 AND EXISTS (SELECT 1 FROM c_Drug_Formulation f2 
 			WHERE f2.ingr_rxcui = b.brand_name_rxcui
-			AND IsNull(f2.RXN_available_strength,'') = IsNull(f.RXN_available_strength,''))
+			AND IsNull(dbo.fn_strength(f2.form_descr),'') = IsNull(dbo.fn_strength(f.form_descr),''))
 ORDER BY 4
-
 
 END
 
@@ -50,3 +49,4 @@ GO
 -- EXEC sp_generic_formulations '214186', '0', 'us'
 -- EXEC sp_generic_formulations '284635', '0', 'us'
 -- EXEC sp_generic_formulations '0', '301543', 'us'
+-- exec sp_generic_formulations '0', 'KEB2245', 'KE'
