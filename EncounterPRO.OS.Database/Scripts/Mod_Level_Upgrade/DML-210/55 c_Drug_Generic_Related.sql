@@ -20,7 +20,7 @@ SELECT 'ke',
 FROM Kenya_Drugs k
 JOIN c_Drug_Generic g 
 	ON g.generic_rxcui = 'KEGI' + k.Retention_No
--- (362 row(s) affected)
+-- (359 row(s) affected)
 
 -- Same ingredient wording in c_Drug_Generic
 INSERT INTO [c_Drug_Generic_Related] (
@@ -825,3 +825,4 @@ FROM c_Drug_Generic_Related gr
 WHERE gr.generic_rxcui IS NOT NULL
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g 
 	WHERE g.generic_rxcui = gr.generic_rxcui)
+
