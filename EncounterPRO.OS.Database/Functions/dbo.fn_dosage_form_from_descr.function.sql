@@ -9,25 +9,24 @@ GO
 CREATE FUNCTION dbo.fn_dosage_form_from_descr (@description varchar(1000))
 RETURNS varchar(1000)
 AS BEGIN
-	DECLARE @rxcui varchar(20)
+	DECLARE @dosage_form varchar(30)
 	DECLARE @num_words integer
 	SET @num_words = 4
 
-	WHILE @num_words > 0 AND @rxcui IS NULL
+	WHILE @num_words > 0 AND @dosage_form IS NULL
 		BEGIN
-			SELECT @rxcui = rxcui
+			SELECT @dosage_form = dosage_form
 			FROM c_Dosage_Form
-			WHERE rxcui IS NOT NULL
-			AND [description] = dbo.fn_last_words(@description,@num_words)
+			WHERE [description] = dbo.fn_last_words(@description,@num_words)
 
-			IF @rxcui IS NULL
+			IF @dosage_form IS NULL
 				SET @num_words = @num_words - 1
 		END
 
-	IF @rxcui IS NULL
+	IF @dosage_form IS NULL
 		RETURN 'Not Found'
 
-	RETURN @rxcui
+	RETURN @dosage_form
 END
 
 -- select dbo.fn_dosage_form_from_descr ('one two three four five')
