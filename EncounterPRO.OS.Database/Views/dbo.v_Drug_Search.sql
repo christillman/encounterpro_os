@@ -31,6 +31,7 @@ CREATE VIEW v_drug_search AS
 			CROSS JOIN o_Office oo
 			JOIN c_Office co ON co.office_id = oo.office_id
 			WHERE g.drug_id = a.drug_id
+			AND g.valid_in LIKE '%' + co.country + ';%'
 			AND f.valid_in LIKE '%' + co.country + ';%'
 			)
 		OR EXISTS (SELECT 1 FROM c_Drug_Brand b
@@ -38,6 +39,7 @@ CREATE VIEW v_drug_search AS
 			CROSS JOIN o_Office oo
 			JOIN c_Office co ON co.office_id = oo.office_id
 			WHERE b.drug_id = a.drug_id
+			AND b.valid_in LIKE '%' + co.country + ';%'
 			AND f.valid_in LIKE '%' + co.country + ';%'
 			)
 		)
