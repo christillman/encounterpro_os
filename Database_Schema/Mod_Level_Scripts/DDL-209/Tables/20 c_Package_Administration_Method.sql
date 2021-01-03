@@ -8,7 +8,7 @@ GO
 
 CREATE TABLE c_Package_Administration_Method (
 	package_id varchar(24) NOT NULL,
-	administer_method varchar(30) NOT NULL
+	administer_method varchar(30) NULL
 	)
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON [dbo].[c_Package_Administration_Method] TO CPRSYSTEM
