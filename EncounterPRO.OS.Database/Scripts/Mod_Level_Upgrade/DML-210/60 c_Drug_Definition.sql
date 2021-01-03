@@ -14,7 +14,7 @@ WHERE drug_id IN ('KEBI9849A','RXNG6387')
 
 -- Missing KE generic definitions
 INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT generic_rxcui, 
+SELECT g.drug_id, 
 	CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
 	CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
 FROM c_Drug_Generic g
@@ -23,7 +23,7 @@ AND generic_rxcui LIKE 'KEGI%' -- Only insert rxcui as drug_id for KE drugs, RXN
 -- (17 row(s) affected)
 
 INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT 'RXNG' + generic_rxcui,
+SELECT g.drug_id,
 	CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
 	CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
 FROM c_Drug_Generic g
@@ -33,7 +33,7 @@ AND generic_rxcui NOT LIKE 'KEGI%' -- RXNORM need RXN prefix
 
 -- Missing KE brand definitions
 INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-SELECT b.brand_name_rxcui, 
+SELECT b.drug_id, 
 	CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
 	CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
 FROM c_Drug_Brand b
