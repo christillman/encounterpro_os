@@ -32,7 +32,6 @@ INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) V
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Injectable Soln', 'Injectable Solution', '', '316949')
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Injectable Susp', 'Injectable Suspension', '', '316950')
 UPDATE [c_Dosage_Form] SET rxcui = '1540453' WHERE [dosage_form] = 'Granules'
-INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Inj', 'Injection', '', '1649574')
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Intraperitoneal', 'Intraperitoneal Solution', '', '316951')
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Intratracheal', 'Intratracheal Suspension', '', '1732876')
 INSERT INTO [c_Dosage_Form] ([dosage_form],[description],[abbreviation],rxcui) VALUES ('Intrauterine', 'Intrauterine System', '', '1856271')

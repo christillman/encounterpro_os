@@ -2426,44 +2426,6 @@ AND substring(package_id,3,20) IN (
 '798408',
 '798415')
 
-INSERT INTO c_Package_Administration_Method
-SELECT package_id, m.administer_method
-FROM c_Package p, c_Administration_Method m
-WHERE m.administer_method in ('IV','Subcut')
-AND substring(package_id,3,20) IN (
-'352044',
-'352045',
-'731227',
-'1605172',
-'1605171',
-'349273',
-'731181',
-'349274',
-'352046',
-'352047',
-'352262',
-'730046',
-'731229',
-'731231',
-'731235',
-'731241',
-'731245',
-'731250',
-'1654951',
-'1654955',
-'731176',
-'731167',
-'730044',
-'349276',
-'731171',
-'1654949',
-'731174',
-'1654954',
-'731179',
-'351247',
-'731184',
-'349275')
-
 -- Copy existing methods (in c_Package) to new table
 -- which weren't set above by the spreadsheet
 INSERT INTO c_Package_Administration_Method

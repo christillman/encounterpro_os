@@ -194,6 +194,7 @@ UPDATE b
 SET generic_rxcui = g.generic_rxcui -- select g.generic_rxcui, b.generic_rxcui 
 FROM c_Drug_Brand b
 JOIN Kenya_Drugs k ON k.Retention_No = substring(b.brand_name_rxcui,5,20)
+	AND b.brand_name_rxcui LIKE 'KEBI%'
 JOIN c_Drug_Formulation f ON f.form_rxcui = substring(k.Corresponding_RXCUI,5,20)
 JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 

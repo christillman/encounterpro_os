@@ -815,7 +815,7 @@ Else
 End if
 
 // Set the route list
-uo_route.package_id = treat_medication.package_id
+uo_route.set_package(treat_medication.package_id)
 
 // Determine the dispense amount/unit
 ls_dispense_unit = treat_medication.dispense_unit
@@ -1194,7 +1194,7 @@ else
 end if
 load_default_drug_instructions(drug_id, ls_package_id, li_admin_sequence)
 
-uo_route.package_id = ls_package_id
+uo_route.set_package(ls_package_id)
 
 display_instructions()
 
@@ -2106,7 +2106,7 @@ if package_list_index > 0 then
 		// uo_drug_administration.visible = true
 	end if
 	ls_package_id = uo_drug_package.package_id[package_list_index]
-	uo_route.package_id = ls_package_id
+	uo_route.set_package(ls_package_id)
 	
 	if drug_admin_index > 0 Then
 		li_admin_sequence = uo_drug_administration.administration_sequence[drug_admin_index]

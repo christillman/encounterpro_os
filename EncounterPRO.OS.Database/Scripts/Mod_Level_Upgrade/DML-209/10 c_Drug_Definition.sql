@@ -228,3 +228,10 @@ update c_Drug_Definition set common_name = 'Vastor 20-EZ' where drug_id = 'KEBI5
 update c_Drug_Brand set brand_name = 'Medisart 300H' where brand_name_rxcui = 'KEBI12494'
 update c_Drug_Brand set brand_name = 'Vastor 20-EZ' where brand_name_rxcui = 'KEBI5811'
 
+
+UPDATE d 
+SET generic_name = g.generic_name
+FROM c_Drug_Brand b
+JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
+JOIN c_Drug_Definition d ON d.drug_id = b.drug_id
+WHERE g.generic_name != d.generic_name

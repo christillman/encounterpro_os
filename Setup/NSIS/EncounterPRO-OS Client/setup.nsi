@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.3.4
+  !define VERSION   7.0.3.6
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3.4
-  !define Database_Mod_Level   208
+  !define EproClient_VERSION   7.0.3.6
+  !define Database_Mod_Level   210
   !define PBRuntime_VERSION   17.3.1858
 ; Even after rebuilding, there is some kind of virus in Utilities.
 ; Leaving it out of the installer, I don't really think it's needed anyway.
