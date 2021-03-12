@@ -49,8 +49,6 @@ DELETE FROM c_Package
 WHERE package_id IN (SELECT package_id FROM #remove_brand_pkgs)
 DELETE FROM c_Drug_Package
 WHERE package_id IN (SELECT package_id FROM #remove_brand_pkgs)
-DELETE FROM c_Drug_Formulation
-WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_brand_forms)
 
 SELECT form_rxcui
 INTO #bad_drug_id
@@ -69,8 +67,9 @@ DELETE FROM c_Package
 WHERE package_id IN (SELECT package_id FROM #remove_drugid_pkgs)
 DELETE FROM c_Drug_Package
 WHERE package_id IN (SELECT package_id FROM #remove_drugid_pkgs)
-DELETE FROM c_Drug_Formulation
-WHERE form_rxcui IN (SELECT form_rxcui FROM #bad_drug_id)
+-- No!
+--DELETE FROM c_Drug_Formulation
+--WHERE form_rxcui IN (SELECT form_rxcui FROM #bad_drug_id)
 
 -- Consistency checks, should all return no rows
 /*
