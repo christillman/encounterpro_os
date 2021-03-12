@@ -663,25 +663,25 @@ boolean focusrectangle = false
 end type
 
 event clicked;
-//w_menu_edit lw_window
-//str_popup popup
-//w_menu_display lw_menu_display
-//
+// w_menu_edit lw_window
+str_popup popup
+w_menu_display lw_menu_display
+
 //if menu.menu_id > 0 then
 //	openwithparm(lw_window, menu.menu_id, "w_menu_edit")
 //end if
 
-//SELECT CAST(id AS varchar(38))
-//INTO :popup.items[1]
-//FROM c_menu
-//WHERE menu_id = :menu.menu_id;
-//if not tf_check() then return
-//popup.items[2] = f_boolean_to_string(true)
-//popup.data_row_count = 2
-//openwithparm(lw_menu_display, popup, "w_menu_display")
-//
-//remove_buttons()
-//paint_menu(menu.menu_id)
-//
+SELECT CAST(id AS varchar(38))
+INTO :popup.items[1]
+FROM c_menu
+WHERE menu_id = :menu.menu_id;
+if not tf_check() then return
+popup.items[2] = f_boolean_to_string(true)
+popup.data_row_count = 2
+openwithparm(lw_menu_display, popup, "w_menu_display")
+
+remove_buttons()
+paint_menu(menu.menu_id)
+
 end event
 
