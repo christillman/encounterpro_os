@@ -1052,7 +1052,7 @@ popup.add_blank_row = true
 popup.blank_text = "N/A"
 popup.argument_count = 1
 if package_list_index > 0 then
-	// administer_method no longer part of package
+	// administer_method no longer part of package 
 //	popup.argument[1] = uo_drug_package.administer_method[package_list_index]
 //else
 	popup.argument[1] = "IN OFFICE"
