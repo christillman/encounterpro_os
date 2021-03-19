@@ -526,11 +526,6 @@ ls_take_as_directed = lstr_drug_package.take_as_directed
 If upper(ls_take_as_directed) = "Y" Then
 	// If the drug is "take as directed" then there is no admin component
 	return ls_description
-// Else
-//	If len(ls_administer_method) > 0 then
-//		if len(ls_description) > 0 then ls_description += " "
-//		ls_description += ls_administer_method
-//  End if
 	
 	If len(pstr_treatment.route) > 0 then
 		if len(ls_description) > 0 then ls_description += " "
@@ -749,8 +744,7 @@ return ls_value
 
 end function
 
-public function string get_package_property (string ps_package_id, string ps_property);integer i
-integer li_sts
+public function string get_package_property (string ps_package_id, string ps_property);integer li_sts
 str_package_definition lstr_package
 string ls_null
 string ls_value
