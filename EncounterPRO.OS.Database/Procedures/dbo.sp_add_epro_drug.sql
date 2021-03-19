@@ -18,7 +18,9 @@ CREATE PROCEDURE sp_add_epro_drug (
 	@brand_name_formulation varchar(300),
 	@generic_formulation varchar(300),
 	@corr_scd_rxcui varchar(20),
-	@active_ingredients varchar(200)
+	@active_ingredients varchar(200),
+	@drug_type varchar(20) = 'Single Drug',
+	@notes varchar(200) = NULL
 	)
 AS
 
@@ -37,12 +39,14 @@ DECLARE	@active_ingredients varchar(200) = 'imiquimod'
 DECLARE @new_id int
 
 -- set this before potentially reassigning @country_drug_id
-IF @brand_name_formulation = 'No corresponding brand name drug formulation in kenya drug set'
+IF @brand_name_formulation LIKE 'No %'
 	OR @country_drug_id = '00nobrandfound'
 	SET @generic_only = 1
-
+IF @corr_scd_rxcui LIKE 'No %'
+	SET @corr_scd_rxcui = NULL
+	
 IF @country_drug_id IS NULL 
-	OR @country_drug_id IN ('00nobrandfound','NO RXCUI', 'No Retention No', 'Not in Retention List')
+	OR @country_drug_id IN ('00nobrandfound','NO RXCUI', 'No Retention No', 'No Retention Number', 'Not in Retention List')
 	BEGIN 
 	-- Make up a @country_drug_id
 	SELECT @country_drug_id = dbo.fn_next_country_id(@country_code)
@@ -112,14 +116,16 @@ IF @is_rxnorm = 0
 		[SCD_PSN_Version],
 		[Corresponding_RXCUI],
 		[Ingredient],
-		[generic_only]
+		[generic_only],
+		[Notes]
 		) VALUES (
 		@country_drug_id, 
 		@brand_name_formulation, 
 		@generic_formulation, 
 		@corr_scd_rxcui, 
 		@active_ingredients,
-		@generic_only
+		@generic_only,
+		@notes
 		)
 
 	-- exact wording match for generic
@@ -128,92 +134,102 @@ IF @is_rxnorm = 0
 	WHERE g.generic_name = @active_ingredients
 
 	-- Generic formulation?
-	IF -- there is already a valid generic pointed to by SCD_Version
-		NOT (left(@corr_scd_rxcui,4) IN ('SCD-','PSN-')
-			AND EXISTS (SELECT 1 FROM c_Drug_Formulation 
-						WHERE form_rxcui = substring(@corr_scd_rxcui,5,20)
-						)
+	IF @corr_scd_rxcui IS NULL -- No corresponding rxcui
+		OR ( -- there is not already a valid generic pointed to by SCD_Version
+			@corr_scd_rxcui IS NOT NULL 
+			AND NOT (	left(@corr_scd_rxcui,4) IN ('SCD-','PSN-')
+						AND EXISTS (SELECT 1 FROM c_Drug_Formulation 
+							WHERE form_rxcui = substring(@corr_scd_rxcui,5,20)
+							)
+				)
+			AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
+							WHERE form_descr = @generic_formulation)
 			)
-		-- or the same generic exact spelling 
-		AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
-						WHERE form_descr = @generic_formulation)
-		BEGIN
-		print 'INSERT INTO #new_generic_form'
-		INSERT INTO #new_generic_form (
-			form_rxcui,
-			form_descr, 
-			form_tty, 
-			ingr_tty,
-			ingr_rxcui,
-			valid_in
-			)
-		SELECT @generic_form_rxcui,
-			@generic_formulation,
-			'SCD_' + upper(@country_code), 
-			CASE WHEN @single_ingredient = 0 THEN 'MIN' ELSE 'IN' END 
-				+ CASE WHEN @generic_rxcui IS NULL THEN '_' + upper(@country_code) ELSE '' END,
-			CASE WHEN @generic_rxcui IS NULL THEN @generic_ingr_rxcui
-				ELSE @generic_rxcui END,
-			lower(@country_code) + ';'
-		FROM c_1_record
-		WHERE @generic_formulation NOT LIKE '%{%'
-		AND @generic_formulation NOT LIKE '%GPCK%'
-		-- Exclude where they would duplicate RXNORM ones
-		AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
-						WHERE form_descr = @generic_formulation)
-		AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
-						WHERE form_rxcui = @generic_form_rxcui)
-
-		/* Use passed in @active_ingredients instead
-		-- Derive generic ingredient 
-		SET @generic_name_edited = @generic_formulation
-		IF PATINDEX('% in [0-9]%', @generic_formulation) > 0
-			-- " in " at the end of the name
 			BEGIN
-			IF PATINDEX('% [0-9]%', @generic_formulation) - PATINDEX('% in [0-9]%', @generic_formulation) = 3
-				SET @generic_name_edited = left(@generic_formulation,PATINDEX('% in [0-9]%', @generic_formulation) - 1)
-			ELSE
-				-- " in " at a different place
-				IF @single_ingredient = 1
-					SET @generic_name_edited = left(@generic_formulation,PATINDEX('% [0-9]%', @generic_formulation) - 1)
-			END
-		ELSE IF @single_ingredient = 1 AND PATINDEX('% [0-9]%', @generic_formulation) > 0
-			SET @generic_name_edited = left(@generic_formulation,PATINDEX('% [0-9]%', @generic_formulation) - 1)
-		ELSE IF @single_ingredient = 1 AND charindex(' ', @generic_formulation) > 0
-			SET @generic_name_edited = left(@generic_formulation,charindex(' ', @generic_formulation) - 1)			
-		*/
-
-		IF @generic_rxcui IS NOT NULL
-			BEGIN
-			print @active_ingredients + ' already exists'
-			UPDATE #new_generic_form
-			SET ingr_rxcui = @generic_rxcui
-			UPDATE c_Drug_Generic
-			SET valid_in = valid_in + lower(@country_code) + ';'
-			WHERE generic_rxcui = @generic_rxcui
-			AND valid_in NOT LIKE '%' + @country_code + ';%'
-			END
+			print 'INSERT INTO #new_generic_form'
+			INSERT INTO #new_generic_form (
+				form_rxcui,
+				form_descr, 
+				form_tty, 
+				ingr_tty,
+				ingr_rxcui,
+				valid_in
+				)
+			SELECT @generic_form_rxcui,
+				@generic_formulation,
+				'SCD_' + upper(@country_code), 
+				CASE WHEN @single_ingredient = 0 THEN 'MIN' ELSE 'IN' END 
+					+ CASE WHEN @generic_rxcui IS NULL THEN '_' + upper(@country_code) ELSE '' END,
+				CASE WHEN @generic_rxcui IS NULL THEN @generic_ingr_rxcui
+					ELSE @generic_rxcui END,
+				lower(@country_code) + ';'
+			FROM c_1_record
+			WHERE @generic_formulation NOT LIKE '%{%'
+			AND @generic_formulation NOT LIKE '%GPCK%'
+			-- Exclude where they would duplicate RXNORM ones
+			AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
+							WHERE form_descr = @generic_formulation)
+			AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
+							WHERE form_rxcui = @generic_form_rxcui)
+			END -- 'INSERT INTO #new_generic_form'
 		ELSE
 			BEGIN
-			print 'Inserting ' + @active_ingredients + ' INTO #Drug_Generic'
-			INSERT INTO #Drug_Generic (
-				generic_rxcui,
-				generic_name,
-				is_single_ingredient,
-				valid_in,
-				drug_id
-			)
-			SELECT @generic_ingr_rxcui,
-				@active_ingredients,
-				@single_ingredient,
-				lower(@country_code) + ';',
-				@generic_ingr_rxcui
-			FROM c_1_record
+			-- generic formulation already exists
+			print @generic_formulation + ' already exists'
+			SELECT TOP 1 @generic_form_rxcui = form_rxcui 
+				FROM c_Drug_Formulation 
+				WHERE form_rxcui = substring(ISNULL(@corr_scd_rxcui,'XXXXXXXX'),5,20)
+				OR form_descr = @generic_formulation
 			END
-		END -- 'INSERT INTO #new_generic_form'
+	
+	-- Generic drug?
+
+	/* Use passed in @active_ingredients instead
+	-- Derive generic ingredient 
+	SET @generic_name_edited = @generic_formulation
+	IF PATINDEX('% in [0-9]%', @generic_formulation) > 0
+		-- " in " at the end of the name
+		BEGIN
+		IF PATINDEX('% [0-9]%', @generic_formulation) - PATINDEX('% in [0-9]%', @generic_formulation) = 3
+			SET @generic_name_edited = left(@generic_formulation,PATINDEX('% in [0-9]%', @generic_formulation) - 1)
+		ELSE
+			-- " in " at a different place
+			IF @single_ingredient = 1
+				SET @generic_name_edited = left(@generic_formulation,PATINDEX('% [0-9]%', @generic_formulation) - 1)
+		END
+	ELSE IF @single_ingredient = 1 AND PATINDEX('% [0-9]%', @generic_formulation) > 0
+		SET @generic_name_edited = left(@generic_formulation,PATINDEX('% [0-9]%', @generic_formulation) - 1)
+	ELSE IF @single_ingredient = 1 AND charindex(' ', @generic_formulation) > 0
+		SET @generic_name_edited = left(@generic_formulation,charindex(' ', @generic_formulation) - 1)			
+	*/
+	IF @generic_rxcui IS NOT NULL
+		-- exact wording match for generic
+		BEGIN
+		print @active_ingredients + ' already exists'
+		UPDATE #new_generic_form
+		SET ingr_rxcui = @generic_rxcui
+		UPDATE c_Drug_Generic
+		SET valid_in = valid_in + lower(@country_code) + ';'
+		WHERE generic_rxcui = @generic_rxcui
+		AND valid_in NOT LIKE '%' + @country_code + ';%'
+		END
 	ELSE
-		print @generic_formulation + ' already exists or is a pack'
-	-- END -- @is_rxnorm = 0 
+		BEGIN
+		print 'Inserting ' + @active_ingredients + ' INTO #Drug_Generic'
+		INSERT INTO #Drug_Generic (
+			generic_rxcui,
+			generic_name,
+			is_single_ingredient,
+			valid_in,
+			drug_id
+		)
+		SELECT @generic_ingr_rxcui,
+			@active_ingredients,
+			@single_ingredient,
+			lower(@country_code) + ';',
+			@generic_ingr_rxcui
+		FROM c_1_record
+		END
 
 	-- Brand formulation?
 	IF @generic_only = 0 
@@ -308,20 +324,20 @@ IF @is_rxnorm = 0
 			OR brand_name LIKE '% Oral Suspension%'
 		END -- brand formulation
 
+	IF (SELECT count(*) FROM #new_generic_form) > 0
+	BEGIN
+	print 'INSERT INTO c_Drug_Formulation from #new_generic_form'
+	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui)
+	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, @generic_form_rxcui
+	FROM #new_generic_form
+	END
+
 	IF (SELECT count(*) FROM #new_form) > 0
 	BEGIN
 	print 'INSERT INTO c_Drug_Formulation from #new_form'
 	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in)
 	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in 
 	FROM #new_form
-	END
-
-	IF (SELECT count(*) FROM #new_generic_form) > 0
-	BEGIN
-	print 'INSERT INTO c_Drug_Formulation from #new_generic_form'
-	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in)
-	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in 
-	FROM #new_generic_form
 	END
 
 	IF (SELECT count(*) FROM #Drug_Brand) > 0
@@ -353,6 +369,30 @@ IF @is_rxnorm = 0
 						WHERE g.generic_name = g2.generic_name)
 
 	END
+
+	-- Insert to drug_definition now, to specify @drug_type;
+	-- sp_add_missing_drug_defn_pkg_adm_method will not duplicate
+
+	-- Missing KE brand definitions
+	print 'INSERT INTO c_Drug_Definition brand'
+	INSERT INTO c_Drug_Definition (drug_id, drug_type, common_name, generic_name)
+	SELECT b.drug_id, @drug_type,
+		CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
+		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
+	FROM #Drug_Brand b
+	JOIN #Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
+	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = b.drug_id)
+	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where b.brand_name_rxcui = f.ingr_rxcui)
+
+	-- Missing KE generic definitions
+	print 'INSERT INTO c_Drug_Definition generic'
+	INSERT INTO c_Drug_Definition (drug_id, drug_type, common_name, generic_name)
+	SELECT g.drug_id, @drug_type, 
+		CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
+		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
+	FROM #Drug_Generic g
+	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
+	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
 
 	exec sp_add_missing_drug_defn_pkg_adm_method
 

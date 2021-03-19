@@ -41,14 +41,16 @@ ELSE
 	SET @ls_description = @ps_description
 
 -- Check for the special drug type "Drug" which really means drug_flag='Y'
-IF @ps_drug_type = 'Drug'
+
+IF @ps_drug_type IS NULL
+	SET @ls_drug_type = '%'
+ELSE IF @ps_drug_type = 'Drug'
 	BEGIN
 	SET @ls_drug_type = '%'
 	SET @ls_drug_flag = 'Y'
 	END
-
-IF @ps_drug_type IS NULL
-	SET @ls_drug_type = '%'
+ELSE
+	SET @ls_drug_type = @ps_drug_type
 
 SELECT drug_id,
 	description,
@@ -57,12 +59,12 @@ SELECT drug_id,
 	selected_flag = 0
 FROM v_drug_search
 WHERE status = COALESCE(@ps_status,'OK')
-AND common_name like @ls_description
-AND ISNULL(generic_name, '') like COALESCE(@ps_generic_name,'%')
+	AND common_name like @ls_description
+	AND COALESCE(generic_name, '') like COALESCE(@ps_generic_name,'%')
 	 -- compare to @ps_specialty_id if not null
 	AND COALESCE(specialty_id,'0') = COALESCE(@ps_specialty_id,specialty_id,'0')
-	AND COALESCE(drug_category_id,'') like COALESCE(@ps_drug_category_id,'%')	
-	AND drug_type like @ls_drug_type
+	AND COALESCE(drug_category_id,'') like COALESCE(@ps_drug_category_id,'%')
+	AND drug_type like @ls_drug_type	
 	AND drug_flag like @ls_drug_flag
 UNION
 SELECT drug_id,
@@ -96,10 +98,11 @@ WHERE s.term_type = 'drug_ingredient'
 	AND COALESCE(drug_category_id,'') like COALESCE(@ps_drug_category_id,'%')
 	AND drug_type like @ls_drug_type
 	AND drug_flag like @ls_drug_flag
-
+	
 	 /* exec [sp_drug_search] NULL, NULL, '%Acetaminophen%', NULL, NULL, 'Drug' */
 	 /* exec [sp_drug_search] NULL, NULL, '%Paracetamol%', NULL, NULL, 'Drug' */
 	 /* exec [sp_drug_search] NULL, 'Ziak', NULL, NULL, NULL, 'Drug' */
+	 /* exec [sp_drug_search] NULL, '%', NULL, NULL, NULL, 'Vaccine' */
 GO
 GRANT EXECUTE
 	ON [dbo].[sp_drug_search]
