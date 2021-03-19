@@ -1,7 +1,7 @@
 ﻿$PBExportHeader$str_package_definition.srs
 global type str_package_definition from structure
 	string		package_id
-	string		administer_unit
+	string		administer_unit		descriptor "comment" = "// administer_method no longer part of package"
 	string		dose_unit
 	real		administer_per_dose
 	string		description
