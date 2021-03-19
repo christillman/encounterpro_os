@@ -1385,7 +1385,7 @@ if package_list_index > 0 then
 //		openwithparm(w_pop_message, "You are not authorized to write a prescription for this drug/package")
 //	end if
 	
-	st_method_description.text = "Admin methods are separate from package"
+	st_method_description.text = "Admin methods are separate from package" 
 	uo_dose.set_amount(lr_null, uo_drug_package.dose_unit[package_list_index])
 	uo_dispense.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])
 	uo_dispense_office.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])
