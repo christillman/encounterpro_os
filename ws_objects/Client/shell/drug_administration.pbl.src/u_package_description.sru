@@ -44,6 +44,7 @@ string dosage_form_description
 string dosage_form_abbreviation
 
 end variables
+
 forward prototypes
 public function integer set_package (string ps_package_id)
 end prototypes
@@ -59,7 +60,7 @@ if isnull(package_id) then
 	st_strength.text = ""
 	return 0
 end if
-
+// administer_method no longer part of package
 SELECT c_Package.description,   
 		c_Package.administer_unit,   
 		c_Package.dose_unit,   
