@@ -50,6 +50,8 @@ type st_db_name_title from statictext within w_server_status
 end type
 type st_db_name from statictext within w_server_status
 end type
+type cb_export_log from commandbutton within w_server_status
+end type
 end forward
 
 global type w_server_status from w_window_base
@@ -85,6 +87,7 @@ st_db_server_title st_db_server_title
 st_db_server st_db_server
 st_db_name_title st_db_name_title
 st_db_name st_db_name
+cb_export_log cb_export_log
 end type
 global w_server_status w_server_status
 
@@ -120,6 +123,7 @@ this.st_db_server_title=create st_db_server_title
 this.st_db_server=create st_db_server
 this.st_db_name_title=create st_db_name_title
 this.st_db_name=create st_db_name
+this.cb_export_log=create cb_export_log
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.cb_finished
 this.Control[iCurrent+2]=this.cb_be_back
@@ -145,6 +149,7 @@ this.Control[iCurrent+21]=this.st_db_server_title
 this.Control[iCurrent+22]=this.st_db_server
 this.Control[iCurrent+23]=this.st_db_name_title
 this.Control[iCurrent+24]=this.st_db_name
+this.Control[iCurrent+25]=this.cb_export_log
 end on
 
 on w_server_status.destroy
@@ -173,6 +178,7 @@ destroy(this.st_db_server_title)
 destroy(this.st_db_server)
 destroy(this.st_db_name_title)
 destroy(this.st_db_name)
+destroy(this.cb_export_log)
 end on
 
 event open;call super::open;integer ll_menu_id
@@ -708,4 +714,46 @@ alignment alignment = center!
 boolean border = true
 boolean focusrectangle = false
 end type
+
+type cb_export_log from commandbutton within w_server_status
+integer x = 247
+integer y = 1604
+integer width = 567
+integer height = 112
+integer taborder = 60
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Export System Log"
+end type
+
+event clicked;
+long ll_computer_id, ll_min_severity
+string ls_cpr_id, ls_user_id
+datetime ldt_begin_date, ldt_end_date
+long ll_rc
+
+datastore lds_log_items
+lds_log_items = CREATE datastore
+lds_log_items.dataobject = "dw_jmj_log_search"
+lds_log_items.settransobject(SQLCA)
+
+ll_computer_id = gnv_app.computer_id
+
+setnull(ll_computer_id)
+setnull(ll_min_severity)
+setnull(ls_cpr_id)
+setnull(ls_user_id)
+setnull(ldt_end_date)
+ldt_begin_date = datetime("2020-01-01")
+
+ll_rc = lds_log_items.retrieve(ll_computer_id, ll_min_severity, ls_cpr_id, ls_user_id, ldt_begin_date, ldt_end_date)
+
+f_export_datawindow(lds_log_items)
+
+end event
 

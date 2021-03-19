@@ -11,8 +11,8 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE sp_brand_formulations (
-	@ps_brand_name_rxcui varchar(10),
-	@ps_generic_ingr_rxcui varchar(10),
+	@ps_brand_name_rxcui varchar(20),
+	@ps_generic_ingr_rxcui varchar(20),
 	@country_code varchar(100) )
 AS
 
@@ -39,6 +39,6 @@ GRANT EXECUTE
 	ON [dbo].[sp_brand_formulations]
 	TO [cprsystem]
 GO
--- EXEC sp_brand_formulations '0', '214186', 'us'
 -- exec sp_brand_formulations '301543', '284635', 'us'
 -- exec sp_brand_formulations '0', '284635', 'us'
+-- exec sp_brand_formulations 'KEBI10367', '0', 'ke'

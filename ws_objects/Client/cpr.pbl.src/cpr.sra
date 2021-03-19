@@ -175,6 +175,7 @@ event keydown pbm_keydown
 long richtextedittype = 0
 long richtexteditversion = 0
 string richtexteditkey = ""
+string appruntimeversion = "19.2.0.2670"
 end type
 global cpr cpr
 
@@ -224,6 +225,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 

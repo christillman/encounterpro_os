@@ -45,7 +45,6 @@ end type
 end forward
 
 global type w_office_drug_treatment from w_window_base
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 event post_open pbm_custom01
@@ -1006,12 +1005,13 @@ recalcdose()
 
 end event
 
-on newpackage;call u_drug_package::newpackage;if package_list_index > 0 then
-	st_method_description.text = method_description[package_list_index]
-	uo_procedure.get_default(administer_method[package_list_index])
+event newpackage;call super::newpackage;if package_list_index > 0 then
+	// administer_method no longer part of the package
+//	st_method_description.text = method_description[package_list_index]
+//	uo_procedure.get_default(administer_method[package_list_index])
 end if
 
-end on
+end event
 
 type st_procedure from statictext within w_office_drug_treatment
 integer x = 1870
@@ -1052,8 +1052,9 @@ popup.add_blank_row = true
 popup.blank_text = "N/A"
 popup.argument_count = 1
 if package_list_index > 0 then
-	popup.argument[1] = uo_drug_package.administer_method[package_list_index]
-else
+	// administer_method no longer part of package
+//	popup.argument[1] = uo_drug_package.administer_method[package_list_index]
+//else
 	popup.argument[1] = "IN OFFICE"
 end if
 

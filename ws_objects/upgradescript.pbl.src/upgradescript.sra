@@ -16,6 +16,7 @@ end variables
 
 global type upgradescript from application
 string appname = "upgradescript"
+string appruntimeversion = "19.2.0.2670"
 end type
 global upgradescript upgradescript
 

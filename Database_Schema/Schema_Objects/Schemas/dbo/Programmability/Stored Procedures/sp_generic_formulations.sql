@@ -11,8 +11,8 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE PROCEDURE sp_generic_formulations (
-	@ps_generic_ingr_rxcui varchar(10),
-	@ps_brand_name_rxcui varchar(10),
+	@ps_generic_ingr_rxcui varchar(20),
+	@ps_brand_name_rxcui varchar(20),
 	@country_code varchar(100) )
 AS
 

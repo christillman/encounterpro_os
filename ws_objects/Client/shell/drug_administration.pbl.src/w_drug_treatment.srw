@@ -2071,7 +2071,8 @@ if package_list_index > 0 then
 		openwithparm(w_pop_message, "You are not authorized to write a prescription for this drug/package")
 	end if
 	
-	uo_route.set_method(method_description[package_list_index])
+	// administer_method no longer part of package
+	// uo_route.set_method(method_description[package_list_index])
 	
 	uo_dispense.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])
 	uo_dispense_office.set_drug_package(drug_id, uo_drug_package.package_id[package_list_index])

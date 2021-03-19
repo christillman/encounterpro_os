@@ -83,20 +83,15 @@ SELECT c_Package.administer_unit,
 		c_Package.dose_unit,
 		c_Package.administer_per_dose,
 		c_Package.description,
-		c_Package.administer_method,
-		c_Administration_Method.description,
 		c_Package.dose_amount,
 		c_Package.dosage_form
 INTO :package_definition[package_count + 1].administer_unit,
 		:package_definition[package_count + 1].dose_unit,
 		:package_definition[package_count + 1].administer_per_dose,
 		:package_definition[package_count + 1].description,
-		:package_definition[package_count + 1].administer_method,
-		:package_definition[package_count + 1].method_description,
 		:package_definition[package_count + 1].dose_amount,
 		:package_definition[package_count + 1].dosage_form
-FROM c_Package (NOLOCK) LEFT JOIN
-		c_Administration_Method (NOLOCK) ON  c_Package.administer_method = c_Administration_method.administer_method
+FROM c_Package (NOLOCK) 
 WHERE c_Package.package_id = :ps_package_id
 USING cprdb;
 if not cprdb.check() then return -1
@@ -274,10 +269,6 @@ integer li_count
 string ls_i
 
 // First, make sure the required fields are present
-if isnull(pstr_package.administer_method) or trim(pstr_package.administer_method) = "" then
-	log.log(this, "u_component_drug.new_package:0008", "administer_menthod required", 4)
-	return -1
-end if
 if isnull(pstr_package.description) or trim(pstr_package.description) = "" then
 	log.log(this, "u_component_drug.new_package:0012", "description required", 4)
 	return -1
@@ -324,7 +315,6 @@ end if
 
 INSERT INTO c_Package (
 	package_id,
-	administer_method,
 	description,
 	administer_unit,
 	dose_unit,
@@ -333,7 +323,6 @@ INSERT INTO c_Package (
 	dose_amount)
 VALUES (
 	:ls_package_id,
-	:pstr_package.administer_method,
 	:pstr_package.description,
 	:pstr_package.administer_unit,
 	:pstr_package.dose_unit,
@@ -515,7 +504,6 @@ String	ls_unit
 string ls_dose_text
 string ls_amount
 integer li_sts
-string ls_administer_method
 string ls_duration
 string ls_administer_frequency_code
 string ls_administer_frequency_description
@@ -534,16 +522,15 @@ if li_sts <= 0 then return ls_description
 
 // We have a package
 ls_take_as_directed = lstr_drug_package.take_as_directed
-ls_administer_method = lstr_package_definition.administer_method
 
 If upper(ls_take_as_directed) = "Y" Then
 	// If the drug is "take as directed" then there is no admin component
 	return ls_description
-Else
-	If len(ls_administer_method) > 0 then
-		if len(ls_description) > 0 then ls_description += " "
-		ls_description += ls_administer_method
-	End if
+// Else
+//	If len(ls_administer_method) > 0 then
+//		if len(ls_description) > 0 then ls_description += " "
+//		ls_description += ls_administer_method
+//  End if
 	
 	If len(pstr_treatment.route) > 0 then
 		if len(ls_description) > 0 then ls_description += " "
@@ -597,13 +584,9 @@ public function string treatment_drug_sig (str_treatment_description pstr_treatm
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 String	ls_description
-String	ls_take_as_directed
-
-String	ls_administer_method
-String	ls_temp,ls_duration,ls_brand_necessary
-String	ls_rx_number_to_text,ls_unit,ls_dose_text,ls_dispense_text
+String	ls_temp
+String ls_brand_necessary
 integer li_sts
-Boolean	lb_rx_number_to_text
 
 u_unit						luo_unit
 str_drug_definition 		lstr_drug_definition
@@ -803,10 +786,6 @@ CHOOSE CASE lower(ps_property)
 		ls_value = lstr_package.dose_unit
 	CASE "description"
 		ls_value = lstr_package.description
-	CASE "administer_method"
-		ls_value = lstr_package.administer_method
-	CASE "method_description"
-		ls_value = lstr_package.method_description
 	CASE "dosage_form"
 		ls_value = lstr_package.dosage_form
 END CHOOSE
