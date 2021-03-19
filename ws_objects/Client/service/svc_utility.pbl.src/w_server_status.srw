@@ -716,7 +716,7 @@ boolean focusrectangle = false
 end type
 
 type cb_export_log from commandbutton within w_server_status
-integer x = 247
+integer x = 242
 integer y = 1604
 integer width = 567
 integer height = 112
