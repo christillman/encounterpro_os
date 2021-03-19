@@ -142,23 +142,7 @@ IF @is_rxnorm = 0
 
 		END
 
-	IF @generic_rxcui IS NULL AND @brand_name_rxcui IS NULL
-		BEGIN
-
-		-- only remove specified formulations with their packages
-		SELECT package_id
-		INTO #remove_pkgs
-		FROM c_Drug_Package
-		WHERE form_rxcui IN (@brand_form_rxcui, @generic_form_rxcui)
-		DELETE FROM c_Package_Administration_Method
-		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
-		DELETE FROM c_Package
-		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
-		DELETE FROM c_Drug_Package
-		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
-
-		END
-	ELSE IF @brand_name_rxcui IS NOT NULL
+	IF @brand_name_rxcui IS NOT NULL
 		BEGIN
 		-- remove brands with their formulations and packages
 			SELECT form_rxcui
@@ -264,6 +248,24 @@ IF @is_rxnorm = 0
 			WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
 
+		END
+
+		
+	IF @generic_form_rxcui IS NOT NULL OR @brand_form_rxcui IS NOT NULL
+		BEGIN
+		-- remove the specified formulations with their packages
+		SELECT package_id
+		INTO #remove_pkgs
+		FROM c_Drug_Package
+		WHERE form_rxcui IN (@brand_form_rxcui, @generic_form_rxcui)
+		DELETE FROM c_Package_Administration_Method
+		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
+		DELETE FROM c_Package
+		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
+		DELETE FROM c_Drug_Package
+		WHERE package_id IN (SELECT package_id FROM #remove_pkgs)
+		DELETE FROM c_Drug_Formulation
+		WHERE form_rxcui IN (@brand_form_rxcui, @generic_form_rxcui)
 		END
 
 	IF @country_drug_id IS NOT NULL
