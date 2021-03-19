@@ -70,6 +70,7 @@ boolean description_modified = false
 
 
 end variables
+
 forward prototypes
 public function string description ()
 public function integer get_defaults ()
@@ -117,7 +118,7 @@ li_sts = tf_get_dosage_form_detail( &
 				
 if li_sts <= 0 then return li_sts
 
-// administer methods defined separately; default not used
+// administer methods defined separately; default not used 
 
 dose_unit = unit_list.find_unit(ls_dose_unit)
 if not isnull(dose_unit) then
