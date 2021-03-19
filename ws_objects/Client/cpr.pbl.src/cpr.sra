@@ -171,11 +171,18 @@ end variables
 
 global type cpr from application
 string appname = "cpr"
-event keydown pbm_keydown
+string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
+string themename = "Do Not Use Themes"
+boolean nativepdfvalid = false
+boolean nativepdfincludecustomfont = false
+string nativepdfappname = ""
 long richtextedittype = 0
+long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
+string appicon = "L:\Common\icons\epro40.ico"
 string appruntimeversion = "19.2.0.2670"
+event keydown pbm_keydown
 end type
 global cpr cpr
 
@@ -194,13 +201,15 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 210
+long minimum_modification_level = 211
 
-date compile_date = date("2021-01-04")
+date compile_date = date("2021-03-20")
 
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "3.6"
+string build = "3.7"
+// Resulting in 7.0.3.7
+
 ////////////////////////////////////////////////////////////
 
 
@@ -225,7 +234,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
