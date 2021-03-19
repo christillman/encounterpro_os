@@ -15,7 +15,7 @@ AS BEGIN
 	-- Missing KE brand definitions
 	print 'INSERT INTO c_Drug_Definition brand'
 	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-	SELECT b.brand_name_rxcui, 
+	SELECT b.drug_id, 
 		CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
 		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
 	FROM c_Drug_Brand b
@@ -26,7 +26,7 @@ AS BEGIN
 	-- Missing KE generic definitions
 	print 'INSERT INTO c_Drug_Definition generic'
 	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
-	SELECT generic_rxcui, 
+	SELECT g.drug_id, 
 		CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
 		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
 	FROM c_Drug_Generic g
@@ -176,7 +176,18 @@ AS BEGIN
 
 	-- Package_admin_method (null)	
 	INSERT INTO c_Package_Administration_Method
-	select package_id, administer_method
+	select package_id, 
+		CASE
+		WHEN dose_unit = 'ACTUATNASAL' THEN NULL
+		WHEN dose_unit = 'APPLYEAR' THEN NULL
+		WHEN dose_unit = 'APPLYEYE' THEN NULL
+		WHEN dose_unit = 'CARTRIDGEM' THEN NULL
+		WHEN dose_unit = 'DROPEAR' THEN NULL
+		WHEN dose_unit = 'DROPEYE' THEN NULL
+		WHEN dose_unit = 'DROPNOSTRIL' THEN NULL
+		WHEN dose_unit = 'INSERTEYE' THEN 'IN OFFICE'
+		WHEN dose_unit = 'SPRAYNOSTRIL' THEN NULL 
+		ELSE NULL END
 	from c_Package p
 	where not exists (select 1 
 		from c_Package_Administration_Method m
