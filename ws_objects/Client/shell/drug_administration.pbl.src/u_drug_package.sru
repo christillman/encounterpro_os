@@ -121,7 +121,7 @@ for i = 1 to package_count
 next
 
 // If we didn't find the specified package, then add it
-
+// administer_method no longer part of package
 SELECT c_Package.description,
 		c_Package.administer_unit,
 		c_Package.dose_amount,
