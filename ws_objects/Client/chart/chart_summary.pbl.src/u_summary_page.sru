@@ -242,7 +242,7 @@ else
 			ls_description += "  " + ls_temp
 		end if
 		
-		// administer_method is no longer part of the package
+		// administer_method is no longer part of the package 
 //		ls_temp = lower(lstr_package.administer_method)
 //		if not isnull(ls_temp) then
 //			ls_description += " " + ls_temp
