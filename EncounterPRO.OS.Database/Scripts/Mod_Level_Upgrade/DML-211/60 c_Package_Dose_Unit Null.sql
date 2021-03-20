@@ -13,7 +13,7 @@ join c_Package_Administration_Method pm on dp.package_id = pm.package_id
 GO
 
 SELECT form_rxcui 
-INTO #insulin
+INTO #insulin_null
 FROM c_Drug_Formulation f
 JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 where g.generic_name like '%insulin%'
@@ -26,7 +26,7 @@ where g.generic_name like '%insulin%'
 --(131 row(s) affected)
 
 SELECT form_rxcui
-INTO #oral_multi
+INTO #oral_multi_null
 FROM c_Drug_Formulation f
 JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 where g.generic_name like '%/%'
@@ -41,7 +41,7 @@ and f.form_descr like '%Oral s%'
 -- (659 row(s) affected)
 
 SELECT form_rxcui
-INTO #oral_single
+INTO #oral_single_null
 FROM c_Drug_Formulation f
 JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 where g.generic_name not like '%/%'
@@ -59,38 +59,38 @@ and f.form_descr like '%Oral s%'
 -- with reference to 08_14_2020_Injectables Present and Not Present in KE_Formulary.xlsx
 
 UPDATE vw_dose_unit SET dose_unit = 'UNIT',	dosage_form = 'Pen Injector'
-where form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 AND (form_descr like '%pen injector%' OR form_descr like '%prefilled pen%')
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Cartridge'
-where form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 AND form_descr like '%inhalation powder%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Cartridge'
-where form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 AND form_descr not like '%inhalation powder%'
 and form_descr  like '%cartridge%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Injectable Soln'
-where  form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where  form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr like '%Injectable solution%'	
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Injectable Susp'
-where  form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where  form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr like '%Injectable suspension%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Injectable Susp'
-where form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr  like '%suspension for injection%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Injectable Soln'
-where form_rxcui IN (SELECT form_rxcui FROM #insulin)
+where form_rxcui IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr  like '%solution for injection%'
 and dose_unit is null
 
@@ -110,7 +110,7 @@ and form_descr not like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drops%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -120,7 +120,7 @@ and form_descr not like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drops%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -130,7 +130,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -140,7 +140,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -151,7 +151,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -162,7 +162,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -173,7 +173,7 @@ and form_descr not like '%MG%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -183,7 +183,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -193,7 +193,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -203,7 +203,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
@@ -212,7 +212,7 @@ and form_descr like '%ML%'
 and form_descr not like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%drop%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'MG', dosage_form = 'Pwdr Oral Soln'
@@ -220,7 +220,7 @@ where form_descr like '%Oral Solution%'
 and form_descr like '%MG%'
 and form_descr like '%powder%'
 and form_descr not like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'MEQ', dosage_form = 'Pwdr Oral Soln'
@@ -228,7 +228,7 @@ where form_descr like '%Oral Solution%'
 and form_descr like '%MEQ%'
 and form_descr like '%powder%'
 and form_descr not like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'GRAM', dosage_form = 'Pwdr Oral Soln'
@@ -238,14 +238,14 @@ and form_descr like '%GM%'
 and form_descr not like '%MG%'
 and form_descr not like '%MEQ%'
 and form_descr not like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Pwdr Oral Soln'
 where form_descr like '%oral Solution%'
 and form_descr like '%powder%'
 and form_descr like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Pwdr Oral Soln'
@@ -255,7 +255,7 @@ and form_descr like '%MG%'
 and form_descr like '%ML%'
 and form_descr not like '%GM%'
 and form_descr not like '%MCG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'PACKE', dosage_form = 'Pwdr Oral Soln'
@@ -265,7 +265,7 @@ and form_descr like '%MG%'
 and form_descr not like '%GM%'
 and form_descr not like '%MCG%'
 and form_descr not like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'PACKE', dosage_form = 'Pwdr Oral Soln'
@@ -274,7 +274,7 @@ and form_descr like '%powder%'
 and form_descr like '%MG%'
 and form_descr like '%MCG%'
 and form_descr not like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'PACKE', dosage_form = 'Pwdr Oral Soln'
@@ -282,7 +282,7 @@ where form_descr like '%oral Solution%'
 and form_descr like '%powder%'
 and form_descr like '%GM%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'LITER', dosage_form = 'Pwdr Oral Soln'
@@ -290,7 +290,7 @@ where form_descr like '%oral Solution%'
 and form_descr like '%powder%'
 and form_descr like '%GM%'
 and form_descr not like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE p SET dose_unit = 'PACKE', dosage_form = 'Pwdr Oral Soln'
@@ -312,7 +312,7 @@ and form_descr like '%IU%'
 and form_descr not like '%MG%'
 and form_descr not like '%GM%'
 and form_descr not like '%MCG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'GRAM', dosage_form = 'Granules'
@@ -322,7 +322,7 @@ and form_descr like '%GM%'
 and form_descr not like '%MG%'
 and form_descr not like '%GM%'
 and form_descr not like '%MCG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 -- 0
 
@@ -330,7 +330,7 @@ UPDATE vw_dose_unit  SET dose_unit = 'MG', dosage_form = 'Granules'
 where form_descr like '%oral solution%'
 and form_descr like '%GRANULES%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'TSP', dosage_form = 'Granules'
@@ -338,7 +338,7 @@ where form_descr like '%oral solution%'
 and form_descr like '%GRANULES%'
 and form_descr like '%GM%'
 and form_descr not like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'PACKE', dosage_form = 'Granules'
@@ -346,7 +346,7 @@ where form_descr like '%oral solution%'
 and form_descr like '%GRANULES%'
 and form_descr like '%MG%'
 and form_descr like '%GM%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'DROP', dosage_form = 'Oral Solution'
@@ -365,7 +365,7 @@ and form_descr not like '%UNITS%'
 and form_descr not like '%IU%'
 and form_descr not like '%[%]%'
 and form_descr like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Suspension'
@@ -374,7 +374,7 @@ and form_descr like '%MG%'
 and form_descr not like '%powder%'
 and form_descr not like '%GRANULES%'
 and form_descr not like '%TABLET%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Suspension'
@@ -383,7 +383,7 @@ and form_descr like '%GM%'
 and form_descr not like '%powder%'
 and form_descr not like '%GRANULES%'
 and form_descr not like '%TABLET%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Suspension'
@@ -392,7 +392,7 @@ and form_descr like '%UNITS%'
 and form_descr not like '%powder%'
 and form_descr not like '%GRANULES%'
 and form_descr not like '%TABLET%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Oral Suspension'
@@ -401,7 +401,7 @@ and form_descr like '%UNT%'
 and form_descr not like '%powder%'
 and form_descr not like '%GRANULES%'
 and form_descr not like '%TABLET%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Suspension'
@@ -414,7 +414,7 @@ and form_descr not like '%UNT%'
 and form_descr not like '%MG%'
 and form_descr not like '%GM%'
 and form_descr not like '%UNIT%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Pwdrr Oral Susp'
@@ -422,7 +422,7 @@ where form_descr like '%oral suspension%'
 and form_descr not like '%powder%'
 and form_descr not like '%GRANULES%'
 and form_descr not like '%TABLET%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Pwdrr Oral Susp'
@@ -431,7 +431,7 @@ and form_descr like '%powder%'
 and form_descr not like '%granules%'
 and form_descr not like '%tablet%'
 and form_descr  like '%ML%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'MG', dosage_form = 'Pwdrr Oral Susp'
@@ -441,7 +441,7 @@ and form_descr not like '%granules%'
 and form_descr not like '%tablet%'
 and form_descr  not like '%ML%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'TAB', dosage_form = 'TabletOralSusp'
@@ -451,41 +451,41 @@ where form_descr like '%tablet oral suspension%'
 UPDATE vw_dose_unit  SET dose_unit = 'MG', dosage_form = 'Pwdrr Oral Susp'
 where form_descr like '%DRY suspension%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 -- 0
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Pwdrr Oral Susp'
 where form_descr like '%DRY suspension%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 -- 0
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
 where form_descr like '%oral syrup%'
 and form_descr not like '%oral solution%'
 and form_descr like '%MG%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
 where form_descr like '%ORAL Syrup%'
 and form_descr not like '%oral solution%'
 and form_descr like '%mg%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_multi)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_multi_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
 where form_descr like '%ORAL Syrup%'
 and form_descr not like '%oral solution%'
 and form_descr not like '%mg%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Oral Solution'
 where form_descr like '%oral syrup%'
 and form_descr not like '%oral solution%'
 and form_descr like '%[%]%'
-and form_rxcui IN (SELECT form_rxcui FROM #oral_single)
+and form_rxcui IN (SELECT form_rxcui FROM #oral_single_null)
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'TAB', dosage_form = 'DisOral Tab'
@@ -517,21 +517,21 @@ and dose_unit is null
 UPDATE vw_dose_unit  SET dose_unit = 'UNIT', dosage_form = 'Pen Injector'
 where (form_descr like '% pen injector%'
 or form_descr like '%prefilled pen%')
-and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin)
+and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr like '%UNT%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'MG', dosage_form = 'Pen Injector'
 where (form_descr like '% pen injector%'
 or form_descr like '%prefilled pen%')
-and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin)
+and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr like '%MG%'
 and dose_unit is null
 
 UPDATE vw_dose_unit  SET dose_unit = 'MCG', dosage_form = 'Pen Injector'
 where (form_descr like '% pen injector%'
 or form_descr like '%prefilled pen%')
-and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin)
+and form_rxcui NOT IN (SELECT form_rxcui FROM #insulin_null)
 and form_descr like '%MCG%'
 and dose_unit is null
 
