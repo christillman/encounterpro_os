@@ -255,6 +255,8 @@ if li_sts < 0 then
 else
 	MessageBox("Success", "Upgrade file written in " + ls_output_path)
 end if
+// copy in my own attachments folder for debugging
+li_sts = produce_upgrade_file(ls_ddl_path, ls_dml_path,"C:\Attachments")
 
 end subroutine
 
