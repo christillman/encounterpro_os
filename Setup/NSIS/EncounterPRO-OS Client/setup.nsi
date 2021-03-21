@@ -12,15 +12,16 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.0.3.6
+  !define VERSION   7.0.3.7
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3.6
-  !define Database_Mod_Level   210
-  !define PBRuntime_VERSION   17.3.1858
+  !define EproClient_VERSION   7.0.3.7
+  !define Database_Mod_Level   211
+  !define PBRuntime_VERSION   19.2.0.2670
+  !define PBRuntime_FILENAME   PBCLTRT19.2.0.2670.msi
 ; Even after rebuilding, there is some kind of virus in Utilities.
 ; Leaving it out of the installer, I don't really think it's needed anyway.
 ;  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
@@ -175,9 +176,9 @@
       SetOutPath $INSTDIR
       DetailPrint "Installing Powerbuilder Runtime Files..."
       SetDetailsPrint textonly
-      File "${SRC_PBR}\PBCLTRT170.msi"
-      nsExec::Exec 'msiexec /i "$INSTDIR\PBCLTRT170.msi" /passive /norestart /l*v "$INSTDIR\PBCLTRT170.log"'
-      ; Delete '$INSTDIR\PBCLTRT170.msi'
+      File "${SRC_PBR}\${PBRuntime_FILENAME}"
+      nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
+      Delete '$INSTDIR\PBCLTRT170.msi'
 
       ; SetDetailsPrint both
       ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
