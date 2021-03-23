@@ -105,7 +105,8 @@ else
 	
 	ls_take_as_directed = lstr_drug_package.take_as_directed
 	ls_prescription_flag = lstr_drug_package.prescription_flag
-	ls_administer_method = lstr_package_definition.administer_method
+	// administer method no longer part of the package 
+	// ls_administer_method = lstr_package_definition.administer_method
 	
 	// Check whether it's prescription drug
 	ls_description = ""

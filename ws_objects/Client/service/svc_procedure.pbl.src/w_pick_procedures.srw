@@ -289,8 +289,6 @@ destroy(this.cb_cancel)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_pick_procedures
-integer width = 247
-integer height = 120
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pick_procedures

@@ -114,3 +114,6 @@ REM move /Y "Client\eprodbmaint.exe" %build_folder%
 
 REM -- only for IDE builds
 move /Y "Client\encounterpro.os.client.exe" %build_folder%
+
+copy %build_folder%\..\pb.ini %build_folder%
+copy %build_folder%\..\EncounterPRO.ini %build_folder%

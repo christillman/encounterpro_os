@@ -15,10 +15,15 @@ AS BEGIN
 	DECLARE @needs_tallman_version bit
 	IF NOT EXISTS (SELECT 1
 				FROM c_Drug_Tall_Man tm
-		WHERE (@drug_description COLLATE SQL_Latin1_General_CP1_CI_AS LIKE tm.spelling + '%'
+		WHERE 
+		-- avoid infinite loop when a term matches two spellings i.e. cyclosporin / cyclosporine
+		LEN(@drug_description) = LEN(tm.spelling)
+		and (
+		 (@drug_description COLLATE SQL_Latin1_General_CP1_CI_AS LIKE tm.spelling + '%'
 				and @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE tm.spelling + '%')
 			or (@drug_description COLLATE SQL_Latin1_General_CP1_CI_AS LIKE '% ' + tm.spelling + '%'
 				and @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '% ' + tm.spelling + '%')
+			)
 	)
 		RETURN 0
 

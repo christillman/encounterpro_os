@@ -4,13 +4,9 @@ global type w_new_package from w_window_base
 end type
 type st_title from statictext within w_new_package
 end type
-type st_administer_method from statictext within w_new_package
-end type
 type st_administer_unit from statictext within w_new_package
 end type
 type st_dose_unit from statictext within w_new_package
-end type
-type st_administer_method_title from statictext within w_new_package
 end type
 type st_2 from statictext within w_new_package
 end type
@@ -45,10 +41,8 @@ boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
 st_title st_title
-st_administer_method st_administer_method
 st_administer_unit st_administer_unit
 st_dose_unit st_dose_unit
-st_administer_method_title st_administer_method_title
 st_2 st_2
 st_3 st_3
 st_4 st_4
@@ -71,7 +65,6 @@ string dosage_form_description
 u_unit dose_unit
 u_unit administer_unit
 string dose_in_name_flag
-string administer_method
 
 boolean description_modified = false
 
@@ -107,6 +100,7 @@ return ls_description
 end function
 
 public function integer get_defaults ();integer li_sts
+string ls_administer_method
 string ls_administer_method_description
 real lr_dose_amount
 string ls_dose_unit
@@ -115,7 +109,7 @@ string ls_administer_unit
 li_sts = tf_get_dosage_form_detail( &
 				dosage_form, &
 				dosage_form_description, &
-				administer_method, &
+				ls_administer_method, &
 				ls_administer_method_description, &
 				lr_dose_amount, &
 				ls_dose_unit, &
@@ -124,7 +118,7 @@ li_sts = tf_get_dosage_form_detail( &
 				
 if li_sts <= 0 then return li_sts
 
-st_administer_method.text = ls_administer_method_description
+// administer methods defined separately; default not used 
 
 dose_unit = unit_list.find_unit(ls_dose_unit)
 if not isnull(dose_unit) then
@@ -155,10 +149,8 @@ on w_new_package.create
 int iCurrent
 call super::create
 this.st_title=create st_title
-this.st_administer_method=create st_administer_method
 this.st_administer_unit=create st_administer_unit
 this.st_dose_unit=create st_dose_unit
-this.st_administer_method_title=create st_administer_method_title
 this.st_2=create st_2
 this.st_3=create st_3
 this.st_4=create st_4
@@ -173,31 +165,27 @@ this.cb_1=create cb_1
 this.pb_1=create pb_1
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_title
-this.Control[iCurrent+2]=this.st_administer_method
-this.Control[iCurrent+3]=this.st_administer_unit
-this.Control[iCurrent+4]=this.st_dose_unit
-this.Control[iCurrent+5]=this.st_administer_method_title
-this.Control[iCurrent+6]=this.st_2
-this.Control[iCurrent+7]=this.st_3
-this.Control[iCurrent+8]=this.st_4
-this.Control[iCurrent+9]=this.st_5
-this.Control[iCurrent+10]=this.pb_done
-this.Control[iCurrent+11]=this.pb_cancel
-this.Control[iCurrent+12]=this.sle_administer_per_dose
-this.Control[iCurrent+13]=this.sle_dose_amount
-this.Control[iCurrent+14]=this.st_description_title
-this.Control[iCurrent+15]=this.sle_description
-this.Control[iCurrent+16]=this.cb_1
-this.Control[iCurrent+17]=this.pb_1
+this.Control[iCurrent+2]=this.st_administer_unit
+this.Control[iCurrent+3]=this.st_dose_unit
+this.Control[iCurrent+4]=this.st_2
+this.Control[iCurrent+5]=this.st_3
+this.Control[iCurrent+6]=this.st_4
+this.Control[iCurrent+7]=this.st_5
+this.Control[iCurrent+8]=this.pb_done
+this.Control[iCurrent+9]=this.pb_cancel
+this.Control[iCurrent+10]=this.sle_administer_per_dose
+this.Control[iCurrent+11]=this.sle_dose_amount
+this.Control[iCurrent+12]=this.st_description_title
+this.Control[iCurrent+13]=this.sle_description
+this.Control[iCurrent+14]=this.cb_1
+this.Control[iCurrent+15]=this.pb_1
 end on
 
 on w_new_package.destroy
 call super::destroy
 destroy(this.st_title)
-destroy(this.st_administer_method)
 destroy(this.st_administer_unit)
 destroy(this.st_dose_unit)
-destroy(this.st_administer_method_title)
 destroy(this.st_2)
 destroy(this.st_3)
 destroy(this.st_4)
@@ -261,40 +249,6 @@ string text = "New Package"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
-
-type st_administer_method from statictext within w_new_package
-integer x = 1225
-integer y = 872
-integer width = 978
-integer height = 100
-integer taborder = 20
-boolean bringtotop = true
-integer textsize = -10
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 12632256
-alignment alignment = center!
-boolean border = true
-borderstyle borderstyle = styleraised!
-boolean focusrectangle = false
-end type
-
-event clicked;str_popup popup
-str_popup_return popup_return
-
-popup.dataobject = "dw_administer_method_list"
-popup.datacolumn = 1
-popup.displaycolumn = 2
-openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_count <= 0 then return
-
-administer_method = popup_return.items[1]
-text = popup_return.descriptions[1]
-
-end event
 
 type st_administer_unit from statictext within w_new_package
 integer x = 1285
@@ -377,24 +331,6 @@ if not isnull(administer_unit) &
 	sle_description.text = description()
 
 end event
-
-type st_administer_method_title from statictext within w_new_package
-integer x = 622
-integer y = 888
-integer width = 576
-integer height = 76
-boolean bringtotop = true
-integer textsize = -10
-integer weight = 700
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 33538240
-boolean enabled = false
-string text = "Administer Method:"
-alignment alignment = right!
-boolean focusrectangle = false
-end type
 
 type st_2 from statictext within w_new_package
 integer x = 539
@@ -485,11 +421,6 @@ str_popup_return popup_return
 str_package_definition lstr_package
 integer li_sts
 
-if isnull(administer_method) then
-	openwithparm(w_pop_message, "You must select an Administer Method")
-	return
-end if
-
 if isnull(dose_unit) then
 	openwithparm(w_pop_message, "You must select a Dose Unit")
 	return
@@ -521,7 +452,6 @@ if isnull(ls_description) or trim(ls_description) = "" then
 	return
 end if
 
-lstr_package.administer_method = administer_method
 lstr_package.description = ls_description
 lstr_package.administer_unit = administer_unit.unit_id
 lstr_package.dose_unit = dose_unit.unit_id
@@ -603,8 +533,8 @@ event modified;if not isnull(administer_unit) &
 end event
 
 type st_description_title from statictext within w_new_package
-integer x = 297
-integer y = 1152
+integer x = 229
+integer y = 812
 integer width = 649
 integer height = 76
 boolean bringtotop = true
@@ -621,8 +551,8 @@ boolean focusrectangle = false
 end type
 
 type sle_description from singlelineedit within w_new_package
-integer x = 960
-integer y = 1140
+integer x = 891
+integer y = 800
 integer width = 1454
 integer height = 92
 integer taborder = 30
@@ -643,8 +573,8 @@ event modified;description_modified = true
 end event
 
 type cb_1 from commandbutton within w_new_package
-integer x = 2432
-integer y = 1136
+integer x = 2363
+integer y = 796
 integer width = 192
 integer height = 104
 boolean bringtotop = true

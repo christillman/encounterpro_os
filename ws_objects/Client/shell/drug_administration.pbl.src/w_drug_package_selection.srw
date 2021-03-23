@@ -373,11 +373,8 @@ end type
 event clicked;integer li_sts
 str_popup popup
 str_popup_return popup_return
-string ls_administer_method_description
 real lr_dose_amount
 string ls_dose_unit
-string ls_administer_unit
-
 
 popup.dataobject = "dw_dosage_form_list"
 popup.title = "Select Dosage Form"

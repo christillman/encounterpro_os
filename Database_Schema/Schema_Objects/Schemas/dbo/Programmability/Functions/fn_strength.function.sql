@@ -9,29 +9,24 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION dbo.fn_strength (@ps_form_rxcui varchar(30))
-RETURNS varchar(30)
+CREATE FUNCTION dbo.fn_strength (@ps_drug_description varchar(1000))
+RETURNS varchar(100)
 AS BEGIN
-	declare @drug_description varchar(1000)
 	declare @last_digit_pos integer, @num_rev integer, @num_rev2 integer, @first_digit_pos integer
 	declare @strength_str varchar(30)
 	declare @to_return varchar(1000), @to_parse varchar(1000)
 	declare @units integer
 
-	SELECT @drug_description = form_descr 
-	FROM c_Drug_Formulation 
-	WHERE form_rxcui = @ps_form_rxcui
-
-	IF @drug_description IS NULL
-		RETURN @ps_form_rxcui
+	IF @ps_drug_description IS NULL
+		RETURN NULL
 
 	-- space is usually after the last digit, but also allow slash for e.g. 
-	SET @last_digit_pos = patindex('%[0-9][ /]%', @drug_description)
+	SET @last_digit_pos = patindex('%[^-a-zA-Z][0-9][ /]%', @ps_drug_description)
 	IF @last_digit_pos = 0
-		RETURN @drug_description
+		RETURN @ps_drug_description
 
 	SET @to_return = ''
-	SET @to_parse = @drug_description
+	SET @to_parse = @ps_drug_description
 
 	WHILE @last_digit_pos > 0
 		BEGIN
@@ -48,7 +43,7 @@ AS BEGIN
 			IF @first_digit_pos > 1
 				BEGIN
 				-- get the numbers, from the first digit to the last digit inclusive
-				SET @strength_str = substring(@to_parse, @first_digit_pos, @last_digit_pos - @first_digit_pos + 1)
+				SET @strength_str = substring(@to_parse, @first_digit_pos, @last_digit_pos - @first_digit_pos + 2)
 				END
 			END
 		ELSE
@@ -61,10 +56,13 @@ AS BEGIN
 		IF Len(@to_return) > 0
 			SET @to_return = @to_return + ' / ' 
 		SET @units = charindex(' ', @to_parse, @last_digit_pos + 2) - @last_digit_pos
-		SET @to_return = @to_return + @strength_str  + substring(@to_parse, @last_digit_pos + 1, @units)
+		SET @to_return = @to_return + @strength_str -- + substring(@to_parse, @last_digit_pos + 1, @units)
 		-- For the next one, move past the end of the previous last digit to the following space / slash
 		SET @to_parse = substring(@to_parse, @last_digit_pos + 1, 1000)
-		SET @last_digit_pos = patindex('%[0-9][ /]%', @to_parse)
+		IF @to_parse NOT LIKE '% / %'
+			SET @last_digit_pos = 0
+		ELSE
+			SET @last_digit_pos = patindex('%[^-a-zA-Z][0-9][ /]%', @to_parse)
 	END
 
 	RETURN @to_return
@@ -72,10 +70,7 @@ END
 
 go
 /* test
-select form_descr, dbo.fn_strength(form_rxcui) as sort_expression
-from c_Drug_Formulation
-where form_descr like 'bleph%' or form_descr like 'actonel%' 
-*/
 
+*/
 
 GRANT EXECUTE ON dbo.fn_strength TO cprsystem

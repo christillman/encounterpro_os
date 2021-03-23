@@ -1,0 +1,28 @@
+﻿$PBExportHeader$f_export_datawindow.srf
+global type f_export_datawindow from function_object
+end type
+
+forward prototypes
+global function integer f_export_datawindow (readonly datastore pds_to_export)
+end prototypes
+
+global function integer f_export_datawindow (readonly datastore pds_to_export);
+
+string ls_path, ls_filename, ls_filter, ls_title
+
+ls_title = "Save " + pds_to_export.DataObject + " To File"
+ls_filter = "HTML Files (*.html), *.html"
+ls_path = ""
+ls_filename = pds_to_export.DataObject
+
+GetFileSaveName( ls_title, ls_path, ls_filename, "html", ls_filter)
+if isnull(ls_path) then return -1
+
+if lower(right(ls_path, 5)) <> ".html" then
+	ls_path += ".html"
+end if
+
+pds_to_export.saveas(ls_path, HTMLTable!, true, EncodingUTF8!)
+
+end function
+

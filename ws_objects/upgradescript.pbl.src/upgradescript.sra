@@ -16,6 +16,17 @@ end variables
 
 global type upgradescript from application
 string appname = "upgradescript"
+string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
+string themename = "Do Not Use Themes"
+boolean nativepdfvalid = false
+boolean nativepdfincludecustomfont = false
+string nativepdfappname = ""
+long richtextedittype = 0
+long richtexteditx64type = 0
+long richtexteditversion = 0
+string richtexteditkey = ""
+string appicon = ""
+string appruntimeversion = "19.2.0.2670"
 end type
 global upgradescript upgradescript
 
@@ -44,6 +55,7 @@ event open;
 script_producer sp
 line_number_updater lnu
 
+// Upgraded to PB 2019 R3
 //lnu = CREATE line_number_updater
 //lnu.update_line_numbers()
 

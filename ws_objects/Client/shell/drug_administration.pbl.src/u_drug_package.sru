@@ -27,12 +27,10 @@ type variables
 integer package_count
 string package_id[]
 string package_description[]
-string administer_method[]
 string pkg_administer_unit[]
 real dose_amount[]
 string dose_unit[]
 real administer_per_dose[]
-string method_description[]
 string prescription_flag[]
 real default_dispense_amount[]
 string default_dispense_unit[]
@@ -43,6 +41,7 @@ string form_rxcui[]
 
 
 end variables
+
 forward prototypes
 public subroutine selectitem (integer pi_item_number)
 public function integer selectdosageform (string ps_dosage_form)
@@ -91,12 +90,10 @@ for i = 1 to package_count
 	default_dispense_unit[i] = luo_data.object.default_dispense_unit[i]
 	take_as_directed[i] = luo_data.object.take_as_directed[i]
 	package_description[i] = luo_data.object.package_description[i]
-	administer_method[i] = luo_data.object.administer_method[i]
 	pkg_administer_unit[i] = luo_data.object.administer_unit[i]
 	dose_amount[i] = luo_data.object.dose_amount[i]
 	dose_unit[i] = luo_data.object.dose_unit[i]
 	administer_per_dose[i] = luo_data.object.administer_per_dose[i]
-	method_description[i] = luo_data.object.method_description[i]
 	display_mask[i] = luo_data.object.display_mask[i]
 	dosage_form[i] = luo_data.object.dosage_form[i]
 	form_rxcui[i] = luo_data.object.form_rxcui[i]
@@ -124,24 +121,20 @@ for i = 1 to package_count
 next
 
 // If we didn't find the specified package, then add it
-
+// administer_method no longer part of package
 SELECT c_Package.description,
-		c_Package.administer_method,
 		c_Package.administer_unit,
 		c_Package.dose_amount,
 		c_Package.dose_unit,
 		c_Package.administer_per_dose,
-		c_Administration_Method.description,
 		c_Unit.display_mask,
 		c_Package.dosage_form,
 		c_Drug_Package.form_rxcui
 INTO		:package_description[package_count + 1],
-			:administer_method[package_count + 1],
 			:pkg_administer_unit[package_count + 1],
 			:dose_amount[package_count + 1],
 			:dose_unit[package_count + 1],
 			:administer_per_dose[package_count + 1],
-			:method_description[package_count + 1],
 			:display_mask[package_count + 1],
 			:dosage_form[package_count + 1],
 			:form_rxcui[package_count + 1]
@@ -149,8 +142,6 @@ INTO		:package_description[package_count + 1],
  	JOIN c_Drug_Package ON c_Drug_Package.Package_id = c_Package.Package_id
 	INNER JOIN c_Unit
 	ON c_Package.dose_unit = c_Unit.unit_id
- 	LEFT OUTER JOIN 	c_Administration_Method
-	 ON  c_Package.administer_method = c_Administration_Method.administer_method
 WHERE c_Package.package_id = :ps_package_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then

@@ -242,10 +242,11 @@ else
 			ls_description += "  " + ls_temp
 		end if
 		
-		ls_temp = lower(lstr_package.administer_method)
-		if not isnull(ls_temp) then
-			ls_description += " " + ls_temp
-		end if
+		// administer_method is no longer part of the package 
+//		ls_temp = lower(lstr_package.administer_method)
+//		if not isnull(ls_temp) then
+//			ls_description += " " + ls_temp
+//		end if
 		
 		if not isnull(puo_med.administer_frequency) then
 			ls_description += " " + puo_med.administer_frequency
