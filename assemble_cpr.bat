@@ -117,3 +117,8 @@ move /Y "Client\encounterpro.os.client.exe" %build_folder%
 
 copy %build_folder%\..\pb.ini %build_folder%
 copy %build_folder%\..\EncounterPRO.ini %build_folder%
+
+REM Now building pbdom / pbsoap separately as of PB 2019 R3
+
+copy %build_folder%\..\pbdom.pbd %build_folder%
+copy %build_folder%\..\pbsoapclient.pbd %build_folder%
