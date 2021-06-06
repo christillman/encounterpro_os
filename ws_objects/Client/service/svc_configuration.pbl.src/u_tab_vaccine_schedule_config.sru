@@ -13,11 +13,10 @@ end type
 end forward
 
 global type u_tab_vaccine_schedule_config from u_tab_manager
-integer width = 1719
-integer height = 1092
+integer width = 2702
+integer height = 1364
 boolean raggedright = false
 boolean boldselectedtext = true
-boolean createondemand = false
 tabpage_disease_groups tabpage_disease_groups
 tabpage_schedule tabpage_schedule
 end type
@@ -74,11 +73,9 @@ end function
 on u_tab_vaccine_schedule_config.create
 this.tabpage_disease_groups=create tabpage_disease_groups
 this.tabpage_schedule=create tabpage_schedule
-int iCurrent
 call super::create
-iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.tabpage_disease_groups
-this.Control[iCurrent+2]=this.tabpage_schedule
+this.Control[]={this.tabpage_disease_groups,&
+this.tabpage_schedule}
 end on
 
 on u_tab_vaccine_schedule_config.destroy
@@ -89,17 +86,17 @@ end on
 
 type tabpage_disease_groups from u_tabpage_vaccine_schedule_disease_groups within u_tab_vaccine_schedule_config
 integer x = 18
-integer y = 112
-integer width = 1682
-integer height = 964
+integer y = 116
+integer width = 2665
+integer height = 1232
 string text = "Disease Groups"
 end type
 
 type tabpage_schedule from u_tabpage_vaccine_schedule_schedule within u_tab_vaccine_schedule_config
 integer x = 18
-integer y = 112
-integer width = 1682
-integer height = 964
+integer y = 116
+integer width = 2665
+integer height = 1232
 string text = "Schedule"
 end type
 

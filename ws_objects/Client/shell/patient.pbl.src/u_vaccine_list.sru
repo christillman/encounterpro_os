@@ -47,11 +47,13 @@ string ls_vaccine_id
 integer i
 boolean lb_loop
 
+// Revised to stop referencing c_Vaccine, CT 2021-06-06
  DECLARE lc_schedule CURSOR FOR  
-  SELECT c_Vaccine.vaccine_id,
-			c_Vaccine.description
-    FROM c_Vaccine
- ORDER BY	c_Vaccine.vaccine_id;
+  SELECT drug_id,
+			common_name
+    FROM c_Drug_Definition
+	WHERE drug_type = 'Vaccine'
+ ORDER BY common_name;
 
 log.log(this, "u_vaccine_list.load_vaccines:0012", "Loading vaccines...", 1)
 
@@ -113,10 +115,12 @@ vaccine[vaccine_count].description = ps_description
 end subroutine
 
 on u_vaccine_list.create
+call super::create
 TriggerEvent( this, "constructor" )
 end on
 
 on u_vaccine_list.destroy
 TriggerEvent( this, "destructor" )
+call super::destroy
 end on
 

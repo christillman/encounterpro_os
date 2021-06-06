@@ -12,7 +12,6 @@ end forward
 
 global type w_svc_config_vaccine_schedule from w_window_base
 integer height = 1836
-boolean controlmenu = false
 windowtype windowtype = response!
 boolean auto_resize_objects = false
 boolean nested_user_object_resize = false
@@ -124,7 +123,7 @@ str_popup popup
 integer li_sts
 
 if tab_vaccine_schedule.rule_changes then
-	popup.title = "There are rule changes that have not beed saved"
+	popup.title = "There are rule changes that have not been saved"
 	popup.data_row_count = 2
 	popup.items[1] = "Save Changes and Exit"
 	popup.items[2] = "Exit WITHOUT saving changes"
@@ -134,7 +133,7 @@ if tab_vaccine_schedule.rule_changes then
 	if popup_return.item_count <> 1 then return
 	
 	if popup_return.item_indexes[1] = 2 then
-		openwithparm(w_pop_yes_no, "Are you sure you wish to exit WITHOUT saveing the rule changes?")
+		openwithparm(w_pop_yes_no, "Are you sure you wish to exit WITHOUT saving the rule changes?")
 		popup_return = message.powerobjectparm
 		if popup_return.item <> "YES" then return
 	end if
