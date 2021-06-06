@@ -168,7 +168,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -181,7 +180,7 @@ long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = "L:\Common\icons\epro40.ico"
-string appruntimeversion = "19.2.0.2670"
+string appruntimeversion = "19.2.0.2703"
 event keydown pbm_keydown
 end type
 global cpr cpr
@@ -234,6 +233,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
