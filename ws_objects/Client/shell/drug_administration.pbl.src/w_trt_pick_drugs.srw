@@ -294,58 +294,7 @@ str_popup_return popup_return
 ls_drug_id = ps_drug_id
 
 ls_form_description = f_choose_formulation(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
-//
-//f_get_rxnorm(ps_drug_id, ls_generic_rxcui, ls_brand_name_rxcui)
-//
-//IF IsNull(ls_generic_rxcui) THEN 
-//	popup.items[1] = "0"
-//ELSE
-//	popup.items[1] = ls_generic_rxcui
-//END IF
-//IF IsNull(ls_brand_name_rxcui) THEN 
-//	popup.items[2] = "0"
-//ELSE
-//	popup.items[2] =ls_brand_name_rxcui
-//END IF
-//
-//li_rc = OpenWithParm(w_pop_formulation_select, popup, this)
-//popup_return = message.powerobjectparm
-//
-//IF popup_return.item_count <> 2 then return "Nothing selected"
-//
-//ls_form_rxcui = popup_return.items[1]
-//ls_ingr_rxcui = popup_return.items[2]
-//ls_form_description = popup_return.descriptions[1]
-//
-//SELECT drug_id
-//INTO :ls_drug_id
-//FROM c_Drug_Brand
-//WHERE brand_name_rxcui = :ls_ingr_rxcui;
-//
-//if not tf_check() then 
-//	log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Database error",2)
-//	return "Nothing selected"
-//end if
-//lb_brand_selected = NOT (sqlca.sqlcode = 100)
-//
-//IF NOT lb_brand_selected THEN
-//	SELECT drug_id
-//	INTO :ls_drug_id
-//	FROM c_Drug_Generic
-//	WHERE generic_rxcui = :ls_ingr_rxcui;
-//		
-//	if not tf_check() then 
-//		log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Database error",2)
-//		return "Nothing selected"
-//	end if
-//	lb_generic_selected = NOT (sqlca.sqlcode = 100)
-//END IF
-//
-//if not (lb_brand_selected OR lb_generic_selected) then 
-//	log.log(this,"w_trt_pick_drugs.choose_rxnorm_formulation","Neither brand nor generic were found",2)
-//	return "Nothing selected"
-//end if
-//
+
 // Instead of picking dosage here, for rxnorm drugs, pick the frequency
 // Disable both frequency picking and adminstration creation 
 // for now, pick the frequency later on in the drug treatment window
