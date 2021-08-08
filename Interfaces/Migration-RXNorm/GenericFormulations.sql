@@ -8,8 +8,14 @@
 -- and all packs which include those formulations
 
 -- Tall man updates will take place later
+SELECT * 
+INTO Form_Generic
+FROM c_Drug_Formulation 
+WHERE form_tty IN ('SCD','SCD_PSN')
+--(12706 rows affected)
 
-DELETE FROM c_Drug_Formulation WHERE form_tty NOT LIKE '%B%'
+DELETE FROM c_Drug_Formulation WHERE form_tty IN ('SCD','SCD_PSN')
+--(12706 rows affected)
 
 -- Intermediate table for SCDC
 SELECT c.rxcui as rxcui_scdc, 
@@ -25,20 +31,22 @@ AND c.SAB = 'RXNORM'
 AND r.rela = 'constitutes'
 AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
--- (18022 row(s) affected)
+-- (15966 row(s) affected)
 
 INSERT INTO c_Drug_Formulation (
 	form_rxcui, 
 	form_tty, 
 	form_descr,
 	ingr_rxcui,
-	ingr_tty
+	ingr_tty,
+	valid_in
 	)
 SELECT c1.rxcui, 
 	c1.tty + '_' + c3.tty, 
 	c3.[str],
 	c.rxcui,
-	'MIN' AS TTY
+	'MIN' AS TTY,
+	'us;'
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -52,20 +60,22 @@ AND c1.SAB = 'RXNORM'
 AND c3.SAB = 'RXNORM' 
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = c1.rxcui)
--- 2699
+-- 2369
 
 INSERT INTO c_Drug_Formulation (
 	form_rxcui, 
 	form_tty, 
 	form_descr,
 	ingr_rxcui,
-	ingr_tty
+	ingr_tty,
+	valid_in
 	)
 SELECT c1.rxcui, 
 	c1.tty, 
 	rtrim(CASE WHEN LEN(c1.[str]) <= 1000 THEN c1.[str] ELSE left(c1.[str],997) + '...' END) as str_scd,
 	c.rxcui,
-	'MIN' AS TTY
+	'MIN' AS TTY,
+	'us;'
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -76,7 +86,7 @@ AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = c1.rxcui)
--- 184
+-- (137 rows affected)
 
 -- single-ingredient SCDs
 INSERT INTO c_Drug_Formulation (
@@ -84,14 +94,16 @@ INSERT INTO c_Drug_Formulation (
 	form_tty, 
 	form_descr,
 	ingr_rxcui,
-	ingr_tty
+	ingr_tty,
+	valid_in
 	)
 SELECT 
 	#SCDC.rxcui_scd, 
 	'SCD_PSN', 
 	c3.[str],
 	c.rxcui, 
-	'IN' AS TTY
+	'IN' AS TTY,
+	'us;'
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -111,21 +123,23 @@ AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 order by c.rxcui, 
 	#SCDC.rxcui_scd
 	*/
--- (9564 row(s) affected)
+-- (8674 row(s) affected)
 
 INSERT INTO c_Drug_Formulation (
 	form_rxcui, 
 	form_tty, 
 	form_descr,
 	ingr_rxcui,
-	ingr_tty
+	ingr_tty,
+	valid_in
 	)
 SELECT 
 	#SCDC.rxcui_scd, 
 	'SCD', 
 	c3.[str],
 	c.rxcui, 
-	'IN' AS TTY
+	'IN' AS TTY,
+	'us;'
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -141,16 +155,43 @@ AND c3.SAB = 'RXNORM'
 -- INs duplicate MINs, so avoid any for the same form_rxcui
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = #SCDC.rxcui_scd)
--- (202 row(s) affected)
+-- (8 row(s) affected)
+
+UPDATE f 
+SET valid_in = saved.valid_in
+-- select distinct f.valid_in, saved.valid_in
+FROM c_Drug_Formulation f
+JOIN Form_Generic saved ON saved.form_rxcui = f.form_rxcui
+WHERE f.valid_in != saved.valid_in
+-- (1444 rows affected)
+
+-- Re-insert obsolete ones which were used for Kenya
+INSERT INTO c_Drug_Formulation (
+	form_rxcui, 
+	form_tty, 
+	form_descr,
+	ingr_rxcui,
+	ingr_tty,
+	valid_in,
+	generic_form_rxcui
+	)
+SELECT saved.* 
+FROM Form_Generic saved
+LEFT JOIN c_Drug_Formulation f ON saved.form_rxcui = f.form_rxcui
+WHERE f.form_rxcui IS NULL
+AND saved.valid_in like '%ke;%'
+-- 133
+
 
 /*
 -- These are in RXNCONSO as ingredients, but their single-ingredient
 -- SCDs are missing from RXNCONSO ... they are in RXNCONSO_FULL (CVF='')
 
-select distinct c.rxcui,c.[STR] 
+select distinct c.rxcui, c.[STR] 
 FROM interfaces..rxnconso_full c
 JOIN interfaces..rxnrel_full r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso_full c1 ON c1.rxcui = r.rxcui1
+JOIN #SCDC ON #SCDC.rxcui_scdc = c1.rxcui
 WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Formulation f
 	WHERE f.form_rxcui = #SCDC.rxcui_scd)
 AND c.TTY = 'IN'
@@ -205,7 +246,11 @@ order by c.rxcui
 */
 
 
-DELETE FROM c_Drug_Pack
+DELETE FROM c_Drug_Pack WHERE tty IN ('GPCK','GPCK_PSN')
+-- (291 rows affected)
+
+DELETE FROM c_Drug_Pack_Formulation WHERE form_tty IN ('GPCK_SCD','GPCK_PSN')
+-- (543 rows affected)
 
 -- GPCK
 INSERT INTO c_Drug_Pack (rxcui, tty, descr)
@@ -214,17 +259,15 @@ FROM interfaces..rxnconso c1
 JOIN interfaces..rxnconso c3 
 	ON c3.rxcui = c1.rxcui and c3.tty = 'PSN'
 where c1.tty = 'GPCK'
--- 270
+-- (382 rows affected)
 
 INSERT INTO c_Drug_Pack (rxcui, tty, descr)
-SELECT c1.rxcui, c1.tty, c1.[str]
+SELECT c1.rxcui, c1.tty + '_SCD', c1.[str]
 FROM interfaces..rxnconso c1
 where c1.tty = 'GPCK'
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack f
 	WHERE f.rxcui = c1.rxcui)
--- 21
-
-DELETE FROM c_Drug_Pack_Formulation
+-- (3 rows affected)
 
 -- GPCK Formulations
 INSERT INTO c_Drug_Pack_Formulation (
@@ -248,7 +291,7 @@ AND c1.SAB = 'RXNORM'
 order by c.rxcui, 
 	c1.rxcui,  
 	rtrim(c.[str])
--- (541 row(s) affected)
+-- (681 row(s) affected)
 
 INSERT INTO c_Drug_Pack_Formulation (
 	form_rxcui,
@@ -273,10 +316,42 @@ AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack_Formulation f
 order by c.rxcui, 
 	c1.rxcui,  
 	rtrim(c.[str])
--- 2
+-- (4 rows affected)
 
 -- Export to text files
 -- See DDL-207/20 c_Drug_RXNORM
+
+USE [EncounterPro_OS]
+GO
+
+INSERT INTO [c_Drug_Generic] 
+( [generic_name]
+      ,[generic_rxcui]
+      ,[is_single_ingredient]
+      ,[drug_id]
+      ,[mesh_definition]
+      ,[mesh_source]
+      ,[scope_note]
+      ,[dea_class]
+      ,[valid_in]
+	  )
+SELECT
+from c_Drug_Formulation f
+where not exists (select 1 
+	from c_Drug_Generic g where g.generic_rxcui = f.ingr_rxcui)
+and not exists (select 1 
+	from c_Drug_Brand b where b.brand_name_rxcui = f.ingr_rxcui)
+
+select *
+from c_Drug_Generic g
+join Form_Generic g2 on g2.ingr_rxcui = g.generic_rxcui
+where not exists (select 1 
+	from c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
+	
+select *
+from c_Drug_Brand b 
+where not exists (select 1 
+	from c_Drug_Formulation f where b.brand_name_rxcui = f.ingr_rxcui)
 
 /*
 SET PATH_TO_BCP="C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\bcp.exe"
