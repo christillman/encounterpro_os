@@ -1152,7 +1152,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_r_count
 															lsa_title_sep, &
 															lsa_item_sep, &
 															ls_format_command)
-	// Find the "R" constituent
+	// Find the "C" constituent
 	for i = 1 to li_constituent_count
 		if lsa_constituent[i] = "C" then
 			lb_found = true
