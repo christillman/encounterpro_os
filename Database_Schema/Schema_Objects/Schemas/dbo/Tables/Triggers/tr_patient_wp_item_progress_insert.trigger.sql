@@ -1,4 +1,7 @@
-﻿CREATE TRIGGER [dbo].[tr_patient_wp_item_progress_insert]
+﻿DROP TRIGGER [dbo].[tr_patient_wp_item_progress_insert]
+
+GO
+CREATE TRIGGER [dbo].[tr_patient_wp_item_progress_insert]
     ON [dbo].[p_Patient_WP_Item_Progress]
     AFTER INSERT
     AS 

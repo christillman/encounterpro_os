@@ -1,4 +1,6 @@
-﻿CREATE TRIGGER [dbo].[tr_p_patient_encounter_insert]
+﻿DROP TRIGGER [dbo].[tr_p_patient_encounter_insert]
+GO
+CREATE TRIGGER [dbo].[tr_p_patient_encounter_insert]
     ON [dbo].[p_Patient_Encounter]
     AFTER INSERT
     AS 
