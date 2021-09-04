@@ -92,7 +92,11 @@ FROM c_Immunization_Dose_Schedule s
 	INNER JOIN c_Disease_Group_Item i
 	ON s.disease_id = i.disease_id
 	INNER JOIn c_Disease d
-	ON s.disease_id = d.disease_id
+	ON s.disease_id = d.disease_id			
+	CROSS JOIN o_Office oo
+	JOIN c_Office co ON co.office_id = oo.office_id
+WHERE s.valid_in LIKE '%' + co.country + ';%'
+
 WHERE s.disease_id = @ll_disease_id
 AND i.disease_group = @ps_disease_group
 

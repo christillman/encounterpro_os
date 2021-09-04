@@ -283,6 +283,6 @@ IF @is_rxnorm = 0
 		END
 	END -- @is_rxnorm = 0
 	ELSE
-		print 'removing rxnorm DRUG'
+		print 'Use sp_remove_rxnorm drug'
 	
 END

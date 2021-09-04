@@ -13,11 +13,11 @@ GO
 CREATE PROCEDURE sp_add_epro_drug (
 	@is_rxnorm bit,
 	@generic_only bit,
-	@country_code varchar(100),
-	@country_drug_id varchar(21),
+	@country_code varchar(100), -- ('us' for rxnorm drug )
+	@country_drug_id varchar(21), -- (rxcui for rxnorm brand ingredient)
 	@brand_name_formulation varchar(300),
 	@generic_formulation varchar(300),
-	@corr_scd_rxcui varchar(20),
+	@corr_scd_rxcui varchar(20), -- (rxcui for rxnorm generic formulation)
 	@active_ingredients varchar(200),
 	@drug_type varchar(20) = 'Single Drug',
 	@notes varchar(200) = NULL
@@ -29,8 +29,8 @@ BEGIN
 /*
 DECLARE	@is_rxnorm bit = 0
 DECLARE	@generic_only bit = 0
-DECLARE	@country_code varchar(100) = 'KE'
-DECLARE	@country_drug_id varchar(21) = '517'
+DECLARE	@country_code varchar(100) = 'KE' ( 'us' for rxnorm drug )
+DECLARE	@country_drug_id varchar(21) = '517' (rxcui for rxnorm brand ingredient)
 DECLARE	@brand_name_formulation varchar(300) = 'Aldara 5 % Topical Cream'
 DECLARE	@generic_formulation varchar(300) = 'imiquimod 5 % Topical Cream'
 DECLARE	@corr_scd_rxcui varchar(20) = 'PSN-310982'
@@ -90,7 +90,8 @@ CREATE TABLE #new_form (
 	form_tty varchar(20), 
 	ingr_tty varchar(20),
 	ingr_rxcui varchar(20),
-	valid_in varchar(100)
+	valid_in varchar(100),
+	generic_form_rxcui varchar(20)
 	)
 	
 CREATE TABLE #new_generic_form (
@@ -241,18 +242,20 @@ IF @is_rxnorm = 0
 			form_tty, 
 			ingr_tty,
 			ingr_rxcui,
-			valid_in
+			valid_in,
+			generic_form_rxcui
 			)
 		SELECT @brand_form_rxcui,
 			@brand_name_formulation, 
 			'SBD_' + upper(@country_code), 
 			'BN' + '_' + upper(@country_code),
 			@brand_ingr_rxcui,
-			lower(@country_code) + ';' -- select *  
+			lower(@country_code) + ';',
+			@generic_form_rxcui -- select *  
 		FROM c_1_record
 		-- Exclude packs
-		WHERE @generic_formulation NOT LIKE '%{%'
-		AND @generic_formulation NOT LIKE '%GPCK%'
+		WHERE @brand_name_formulation NOT LIKE '%{%'
+		AND @brand_name_formulation NOT LIKE '%BPCK%'
 		-- Exclude if brand name identical to generic
 		AND @brand_name_formulation != @generic_formulation 
 		-- Exclude where they would duplicate RXNORM ones
@@ -327,16 +330,16 @@ IF @is_rxnorm = 0
 	IF (SELECT count(*) FROM #new_generic_form) > 0
 	BEGIN
 	print 'INSERT INTO c_Drug_Formulation from #new_generic_form'
-	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui)
-	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, @generic_form_rxcui
+	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in)
+	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in
 	FROM #new_generic_form
 	END
 
 	IF (SELECT count(*) FROM #new_form) > 0
 	BEGIN
 	print 'INSERT INTO c_Drug_Formulation from #new_form'
-	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in)
-	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in 
+	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui)
+	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, @generic_form_rxcui
 	FROM #new_form
 	END
 
@@ -429,7 +432,8 @@ IF @is_rxnorm = 0
 		WHERE r.[source_id] = @country_drug_id)
 
 	END -- @is_rxnorm = 0
+
 	ELSE
-		print 'adding rxnorm DRUG'
+	print 'use sp_add_rxnorm_drug instead'
 	
 END

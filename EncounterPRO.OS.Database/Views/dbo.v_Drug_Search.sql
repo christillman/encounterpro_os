@@ -25,7 +25,7 @@ CREATE VIEW v_drug_search AS
 		ON a.drug_id = c.drug_id
 		LEFT OUTER JOIN c_Common_Drug cd
 		ON a.drug_id = cd.drug_id 
-	WHERE a.drug_type = 'Vaccine' OR (
+	WHERE -- a.drug_type = 'Vaccine' OR (
 		EXISTS (SELECT 1 FROM c_Drug_Generic g
 			JOIN c_Drug_Formulation f ON f.ingr_rxcui = g.generic_rxcui
 			CROSS JOIN o_Office oo
@@ -42,7 +42,7 @@ CREATE VIEW v_drug_search AS
 			AND b.valid_in LIKE '%' + co.country + ';%'
 			AND f.valid_in LIKE '%' + co.country + ';%'
 			)
-		)
+		-- )
 
 GO
 

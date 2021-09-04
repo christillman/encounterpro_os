@@ -98,8 +98,11 @@ DECLARE lc_dose_rules CURSOR LOCAL FAST_FORWARD FOR
 			s.dose_text
 	FROM c_Immunization_Dose_Schedule s
 		INNER JOIN c_Age_Range a
-		ON s.patient_age_range_id = a.age_range_id
-	WHERE s.disease_id = @pl_disease_id
+		ON s.patient_age_range_id = a.age_range_id		
+	CROSS JOIN o_Office oo
+	JOIN c_Office co ON co.office_id = oo.office_id
+	WHERE s.valid_in LIKE '%' + co.country + ';%'
+	AND s.disease_id = @pl_disease_id
 	AND s.dose_number = @pl_dose_number
 	AND dbo.fn_age_range_compare(s.patient_age_range_id, @pdt_date_of_birth, @pdt_current_date) <= 0
 	AND (first_dose_age_range_id IS NULL OR dbo.fn_age_range_compare(s.first_dose_age_range_id, @pdt_date_of_birth, @pdt_first_dose_date) = 0)
