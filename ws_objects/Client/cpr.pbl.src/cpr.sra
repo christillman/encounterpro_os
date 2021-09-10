@@ -168,6 +168,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -200,14 +201,14 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 211
+long minimum_modification_level = 212
 
-date compile_date = date("2021-03-20")
+date compile_date = date("2021-10-09")
 
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "3.7"
-// Resulting in 7.0.3.7
+string build = "3.8"
+// Resulting in 7.0.3.8
 
 ////////////////////////////////////////////////////////////
 
@@ -233,7 +234,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
