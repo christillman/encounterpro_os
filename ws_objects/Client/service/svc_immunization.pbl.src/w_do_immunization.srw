@@ -1096,7 +1096,7 @@ ls_drug_id = vaccine_id
 ls_form_description = f_choose_vaccine(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
 
 // This is inherited from u_drug_package, which has a form_rxcui array.
-//parent.form_rxcui = ls_form_rxcui
+selectformulation(ls_form_rxcui)
 
 // We want to assign to the window instance variable.
 vaccine_id = ls_drug_id
