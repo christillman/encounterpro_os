@@ -138,20 +138,26 @@ select count(*) from c_Drug_Brand where valid_in = 'us;'
 INSERT INTO c_Drug_Brand (
 		brand_name, 
 		brand_name_rxcui, 
+		generic_rxcui, 
 		is_single_ingredient,
 		scope_note,
-		mesh_source
+		mesh_source,
+		drug_id
       ,[valid_in])
-SELECT c1.[str], c1.RXCUI, 
+SELECT c1.[str], c1.RXCUI, fg.ingr_rxcui,
 	0, 
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
 		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS'),
 	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
-		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC') 
+		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC'),
+	'RXNB' + c1.RXCUI
 	,'us;'
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
+JOIN #brand_forms bf ON bf.rxcui_sbd = c.rxcui
+-- Must already have generics in place!!
+JOIN [c_Drug_Formulation] fg ON fg.form_rxcui = bf.rxcui_scd
 WHERE c.RXCUI IN (SELECT form_rxcui 
 				FROM [c_Drug_Formulation]
 				WHERE form_tty LIKE 'SBD%')
@@ -163,9 +169,16 @@ AND c1.TTY = 'BN'
 AND c1.SAB = 'RXNORM' 
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Brand b
 	WHERE b.brand_name_rxcui = c1.RXCUI)
-and c1.[str] like 'Flu%'
-GROUP BY c1.[str], c1.RXCUI
+GROUP BY c1.[str], c1.RXCUI, fg.ingr_rxcui
 
+UPDATE b
+SET generic_rxcui = fg.ingr_rxcui
+from c_Drug_Brand b 
+join [c_Drug_Formulation] fb ON fb.ingr_rxcui = b.brand_name_rxcui
+-- Must already have generics in place!!
+JOIN [c_Drug_Formulation] fg ON fg.form_rxcui = fb.generic_form_rxcui
+WHERE b.generic_rxcui IS NULL
+-- (445 row(s) affected)
 
 /*
 select * from c_Drug_Brand_Related r
@@ -177,10 +190,10 @@ and not exists( select 1 from c_Drug_Formulation f
 */
 
 DELETE FROM c_Drug_Pack WHERE tty IN ('BPCK','BPCK_PSN')
--- (419 rows affected)
+-- (498 rows affected)
 
 DELETE FROM c_Drug_Pack_Formulation WHERE form_tty IN ('BPCK_SCD','BPCK_PSN')
--- (842 rows affected)
+-- (943 rows affected)
 
 -- BPCK
 INSERT INTO c_Drug_Pack (rxcui, tty, descr)

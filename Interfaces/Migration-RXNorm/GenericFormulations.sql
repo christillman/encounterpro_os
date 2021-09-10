@@ -259,6 +259,8 @@ FROM interfaces..rxnconso c1
 JOIN interfaces..rxnconso c3 
 	ON c3.rxcui = c1.rxcui and c3.tty = 'PSN'
 where c1.tty = 'GPCK'
+AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack f
+	WHERE f.rxcui = c1.rxcui)
 -- (382 rows affected)
 
 INSERT INTO c_Drug_Pack (rxcui, tty, descr)
@@ -331,16 +333,32 @@ INSERT INTO [c_Drug_Generic]
       ,[drug_id]
       ,[mesh_definition]
       ,[mesh_source]
-      ,[scope_note]
-      ,[dea_class]
+      -- ,[scope_note]
+      -- ,[dea_class]
       ,[valid_in]
 	  )
-SELECT
-from c_Drug_Formulation f
-where not exists (select 1 
-	from c_Drug_Generic g where g.generic_rxcui = f.ingr_rxcui)
-and not exists (select 1 
-	from c_Drug_Brand b where b.brand_name_rxcui = f.ingr_rxcui)
+SELECT c1.[str], c1.RXCUI, 
+	CASE WHEN c1.[str] LIKE ' / ' THEN 0 ELSE 1 END,
+	'RXNG' + c1.RXCUI,
+	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
+		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS'),
+	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
+		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC') 
+	,'us;' -- select count(*)
+FROM interfaces..rxnconso c
+JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
+JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
+WHERE c.RXCUI IN (SELECT form_rxcui 
+				FROM [c_Drug_Formulation]
+				WHERE form_tty LIKE 'SCD%')
+AND c.SAB = 'RXNORM'
+AND c.tty = 'SCD'
+AND c.SUPPRESS = 'N'
+AND r.rela = 'has_ingredients'
+AND c1.TTY IN ('MIN', 'IN', 'PSN')
+AND c1.SAB = 'RXNORM' 
+AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g where g.generic_rxcui = c1.RXCUI)
+GROUP BY c1.[str], c1.RXCUI
 
 select *
 from c_Drug_Generic g
