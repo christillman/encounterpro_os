@@ -46,17 +46,22 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TRIGGER [dbo].[tr_c_vaccine_all] ON [dbo].[c_Vaccine]
-FOR INSERT, UPDATE
-AS
-BEGIN
-IF @@ROWCOUNT = 0
-	RETURN
+if exists (select * from sys.objects where object_id = object_id('tr_c_Vaccine_all') and
+	 type = 'TR')
+	DROP TRIGGER [dbo].[tr_c_Vaccine_all]
+GO
 
-UPDATE c_Table_Update
-SET last_updated = getdate()
-WHERE table_name = 'c_vaccine'
-END
+	CREATE TRIGGER [dbo].[tr_c_Vaccine_all] ON [dbo].[c_Vaccine]
+	FOR INSERT, UPDATE
+	AS
+	BEGIN
+	IF @@ROWCOUNT = 0
+		RETURN
+
+	UPDATE c_Table_Update
+	SET last_updated = getdate()
+	WHERE table_name = 'c_vaccine'
+	END
 
 GO
 
