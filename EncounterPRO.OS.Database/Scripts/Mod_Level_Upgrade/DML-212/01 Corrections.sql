@@ -53,19 +53,3 @@ VALUES
 ('DTAPHIB', 'Vaccine', 'DTaP and Hib', 'DTaP and Hib', 'OK'),
 ('Comvax', 'Vaccine', 'Comvax', 'Comvax', 'OK'),
 ('Quadracel', 'Vaccine', 'Quadracel', 'Quadracel', 'OK')
-
-UPDATE c_Drug_Formulation
-SET form_rxcui = '313072'
-WHERE form_rxcui = 'R313072'
-
-UPDATE c_Drug_Package
-SET form_rxcui = '313072', package_id = 'PK313072'
-WHERE form_rxcui = 'R313072'
-
-UPDATE c_Package
-SET package_id = 'PK313072'
-WHERE package_id = 'PKR313072'
-
-UPDATE c_Package_Administration_Method
-SET package_id = 'PK313072'
-WHERE package_id = 'PKR313072'

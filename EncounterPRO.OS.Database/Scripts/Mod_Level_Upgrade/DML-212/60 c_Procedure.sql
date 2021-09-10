@@ -23,6 +23,19 @@ UPDATE c_Procedure
 SET vaccine_id = NULL, procedure_type = 'TESTPERFORM', procedure_category_id = 'CHEMISTRY'
 WHERE procedure_id IN ('DEMO7179','DEMO8060')
 
+DELETE FROM c_Drug_Maker
+WHERE maker_id IN (
+'AstraZeneca','BavNordic','BioNTech','Dynavax','Emergent',
+'Janssen','Moderna','Pfizer','Seqirus','Valneva'
+)
+
+DELETE FROM [c_Vaccine_Maker]
+WHERE maker_id IN (
+'AstraZeneca','BavNordic','BioNTech','Dynavax','Emergent',
+'Janssen','Moderna','Pfizer','Seqirus','Valneva'
+)
+
+
 INSERT INTO c_Drug_Maker ([maker_id], [maker_name]) VALUES
 ('AstraZeneca','AstraZeneca'),
 ('BavNordic','Bavarian Nordic'),
@@ -39,6 +52,47 @@ UPDATE [c_Drug_Maker] SET maker_name = 'GSK Vaccines' WHERE maker_id = 'GSK'
 UPDATE [c_Drug_Maker] SET maker_name = 'Merck' WHERE maker_id = 'Merck'
 
 UPDATE [c_Vaccine_Maker] SET maker_id = 'Pfizer' WHERE maker_id = 'Wyeth'
+
+DELETE FROM [c_Vaccine_Maker]
+WHERE
+(maker_id = 'AstraZeneca' AND vaccine_id = 'FluMist')
+OR (maker_id = 'AstraZeneca' AND vaccine_id = 'Covid-19')
+OR (maker_id = 'BavNordic' AND vaccine_id = 'Jynneos')
+OR (maker_id = 'BioNTech' AND vaccine_id = 'Covid-19')
+OR (maker_id = 'Dynavax' AND vaccine_id = 'Heplisav-B')
+OR (maker_id = 'Emergent' AND vaccine_id = 'BioThrax')
+OR (maker_id = 'Emergent' AND vaccine_id = 'Vaxchora')
+OR (maker_id = 'Emergent' AND vaccine_id = 'ACAM 2000')
+OR (maker_id = 'Emergent' AND vaccine_id = 'Vivotif')
+OR (maker_id = 'GSK' AND vaccine_id = 'Infanrix')
+OR (maker_id = 'GSK' AND vaccine_id = 'Havrix')
+OR (maker_id = 'GSK' AND vaccine_id = 'Engerix-B')
+OR (maker_id = 'GSK' AND vaccine_id = 'Twinrix')
+OR (maker_id = 'GSK' AND vaccine_id = 'Fluarix')
+OR (maker_id = 'GSK' AND vaccine_id = 'FluLaval')
+OR (maker_id = 'GSK' AND vaccine_id = 'Menveo')
+OR (maker_id = 'GSK' AND vaccine_id = 'Bexsero')
+OR (maker_id = 'GSK' AND vaccine_id = 'RabAvert')
+OR (maker_id = 'GSK' AND vaccine_id = 'Shingrix')
+OR (maker_id = 'Merck' AND vaccine_id = 'ERVEBO')
+OR (maker_id = 'Merck' AND vaccine_id = 'Pneumovax23')
+OR (maker_id = 'Merck' AND vaccine_id = 'Zostavax')
+OR (maker_id = 'Janssen' AND vaccine_id = 'Covid-19')
+OR (maker_id = 'Moderna' AND vaccine_id = 'Covid-19')
+OR (maker_id = 'Pfizer' AND vaccine_id = 'Covid-19')
+OR (maker_id = 'Pfizer' AND vaccine_id = 'Trumenba')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'ActHIB')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'Fluzone')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'Flublok')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'Fluzone High-Dose')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'IPOL')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'Imovax')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'TYPHIM Vi')
+OR (maker_id = 'Sanofi' AND vaccine_id = 'YF-Vax')
+OR (maker_id = 'Seqirus' AND vaccine_id = 'Afluria Quadrivalent')
+OR (maker_id = 'Seqirus' AND vaccine_id = 'Flucelvax Quadrivalent')
+OR (maker_id = 'Seqirus' AND vaccine_id = 'Fluad')
+OR (maker_id = 'Valneva' AND vaccine_id = 'IXIARO')
 
 -- Some of these vaccines are not in c_drug_definition yet
 INSERT INTO [c_Vaccine_Maker] (maker_id, vaccine_id) VALUES
@@ -407,10 +461,6 @@ where vaccine_id is not null
 group by description, status
 having count(*) > 1
 
-select * from c_Procedure p
-join c_Vaccine v on v.vaccine_id = p.procedure_id
-where p.vaccine_id = 'RXNG797752'
-
 /*
 SELECT distinct '(''' + min(IsNULL(drug_id,[original_cpt_code]))+ ''',''' 
 	+ min(IsNULL(drug_id,[original_cpt_code])) + ''',''' 
@@ -457,7 +507,7 @@ WHERE NOT EXISTS (SELECT 1
 
 -- Check that all vaccine type drug_ids connect back to c_Vaccine
 SELECT * FROM c_Drug_Definition d
-JOIN c_Vaccine v ON v.description = d.generic_name
+--JOIN c_Vaccine v ON v.description = d.generic_name
 WHERE d.drug_type = 'Vaccine'
 AND NOT EXISTS (SELECT 1 
 	FROM c_Vaccine v
@@ -473,6 +523,91 @@ where not exists (select 1
 	where v.vaccine_id = d.vaccine_id)
 order by description
 */
+/*
+select * from c_Drug_Brand where brand_name like '%quadri%' order by brand_name
 
+brand_name	brand_name_rxcui	generic_rxcui
+Afluria Quadrivalent 2019-2020	2178781	2177392
+Afluria Quadrivalent 2020-2021	2380596	2380594
+Fluad Quadrivalent 2020-2021	2382435	2380594
+Fluarix Quadrivalent 2019-2020	2177394	2177392
+Fluarix Quadrivalent 2020-2021	2379634	2379632
+Flublok Quadrivalent 2019-2020	2178082	2177392
+Flublok Quadrivalent 2020-2021	2380859	2380857
+Flucelvax Quadrivalent 2016-2017	1801607	1801605
+Flucelvax Quadrivalent 2019-2020	2180402	2180400
+Flucelvax Quadrivalent 2020-2021	2380844	2380842
+Flulaval Quadrivalent 2019-2020	2177790	2177392
+Flulaval Quadrivalent 2020-2021	2379732	2379632
+Flumist Quadrivalent 2016-2017	1801825	1801823
+Flumist Quadrivalent 2017-2018	1946970	1946968
+Flumist Quadrivalent 2020-2021	2389314	2389311
+Fluzone Quadrivalent 2019-2020	2177491	2177392
+Fluzone Quadrivalent 2020 Southern Hemisphere	2280743	2280741
+Fluzone Quadrivalent 2020-2021	2380577	2379632
+Fluzone Quadrivalent 2021 Southern Hemisphere	2479031	2479044
+Gardasil Human Papillomavirus Quadrivalent (types	KEBI7058	KEGI7058
 
-	
+SELECT drug_id, common_name FROM c_Drug_Definition d
+JOIN c_Vaccine v ON v.description = d.generic_name
+WHERE d.drug_type = 'Vaccine'
+and d.common_name like '%flu%'
+AND NOT EXISTS (SELECT 1 
+	FROM c_Vaccine v
+	WHERE d.drug_id = v.drug_id)
+order by common_name
+
+RXNB2178781	Afluria Quadrivalent 2019-2020
+RXNB2380596	Afluria Quadrivalent 2020-2021
+RXNB2178358	Fluad 2019-2020
+RXNB2381146	Fluad 2020-2021
+RXNB2382435	Fluad Quadrivalent 2020-2021
+RXNB2177394	Fluarix Quadrivalent 2019-2020
+RXNB2379634	Fluarix Quadrivalent 2020-2021
+RXNB2178082	Flublok Quadrivalent 2019-2020
+RXNB2380859	Flublok Quadrivalent 2020-2021
+RXNB1801607	Flucelvax Quadrivalent 2016-2017
+RXNB2180402	Flucelvax Quadrivalent 2019-2020
+RXNB2380844	Flucelvax Quadrivalent 2020-2021
+RXNB2177790	Flulaval Quadrivalent 2019-2020
+RXNB2379732	Flulaval Quadrivalent 2020-2021
+RXNB1801825	Flumist Quadrivalent 2016-2017
+RXNB1946970	Flumist Quadrivalent 2017-2018
+RXNB2389314	Flumist Quadrivalent 2020-2021
+RXNB2177693	Fluzone 2019-2020
+RXNB2177491	Fluzone Quadrivalent 2019-2020
+RXNB2280743	Fluzone Quadrivalent 2020 Southern Hemisphere
+RXNB2380577	Fluzone Quadrivalent 2020-2021
+RXNB2479031	Fluzone Quadrivalent 2021 Southern Hemisphere
+RXNG2177392	influenza A virus A/Brisbane/02/2018 (H1N1) antigen / influenza A virus A/Kan...
+RXNG2280741	influenza A virus A/Brisbane/02/2018 (H1N1) antigen / influenza A virus A/Sou...
+RXNG2380842	influenza A virus A/Delaware/39/2019 (H3N2) antigen / influenza A virus A/Neb...
+RXNG2379632	influenza A virus A/Guangdong-Maonan/SWL1536/2019 (H1N1) antigen / influenza ...
+RXNG2389311	influenza A virus A/Hawaii/66/2019 (H1N1) antigen / influenza A virus A/Hong ...
+RXNG2380857	influenza A virus A/Hawaii/70/2019 (H1N1) antigen / influenza A virus A/Minne...
+RXNG2479044	influenza A virus A/Hong Kong/2671/2019 (H3N2) antigen / influenza A virus A/...
+RXNG2380594	influenza A virus A/Hong Kong/2671/2019 (H3N2) antigen / influenza A virus A/...
+RXNG2180400	influenza A virus A/Idaho/07/2018 (H1N1) antigen / influenza A virus A/Indian...
+RXNG830457	rabies virus vaccine flury-lep strain
+
+SELECT v.drug_id, v.description
+FROM c_Vaccine v
+--JOIN c_Drug_Brand b ON b.drug_id = v.drug_id
+WHERE NOT EXISTS (SELECT 1 
+	FROM c_Drug_Definition d
+	WHERE d.drug_id = v.drug_id
+	AND d.drug_type = 'Vaccine')
+and v.description like '%flu%'
+order by v.description
+
+RXNB1801071	Influenza (IIV4) Quadrivalent, Preservative free
+RXNG1801605	influenza A virus A/Brisbane/10/2010 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) / Hong Kong/259/2010 / Utah/9/2014 antigen
+RXNG1794433	influenza A virus A/California/7/2009 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) / Brisbane/60/2008 / Phuket/3073/2013 antigen
+RXNG1942160	influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza A virus A/Singapore/GP1908/2015 (H1N1) / Brisbane/46/2015 / Phuket/3073/2013 antigen
+RXNG1946968	influenza A virus A/New Caledonia/71/2014 (H3N2) antigen / influenza A virus A/Slovenia/2903/2015 (H1N1) / Brisbane/60/2008 / Phuket/3073/2013 antigen
+RXNG1928531	influenza A virus A/Singapore/GP1908/2015 (H1N1) antigen / influenza A virus A/Singapore/GP2050/2015 (H3N2) / Hong Kong/259/2010 / Utah/9/2014 antigen
+RXNB1803020	Influenza RIV3 (Recombinant HA Trivalent) Preservative free Injection
+RXNG1928311	Influenza, Quadrivalent, Preservative free, Intradermal
+RXNG1928311	Influenza, recombinant quadrivalent Injection
+RXNB1801078	Influenza, trivalent, adjuvanted, preservative free
+*/

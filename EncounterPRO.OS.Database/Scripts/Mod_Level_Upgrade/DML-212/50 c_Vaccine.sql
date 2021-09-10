@@ -259,7 +259,7 @@ INSERT INTO [c_Vaccine] ([vaccine_id],[drug_id],[description],[status],[sort_seq
 ('RXNB1801078','RXNB1801078','Influenza, trivalent, adjuvanted, preservative free','OK',0),
 ('RXNB1803020','RXNB1803020','Influenza RIV3 (Recombinant HA Trivalent) Preservative free Injection','OK',0),
 ('90674','RXNG1928531','influenza A virus A/Singapore/GP1908/2015 (H1N1) antigen / influenza A virus A/Singapore/GP2050/2015 (H3N2) / Hong Kong/259/2010 / Utah/9/2014 antigen','OK',0),
-('90674-IM','RXNG1801605','influenza A virus A/Brisbane/10/2010 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) / Hong Kong/259/2010 / Utah/9/2014 antigen','OK',0),
+('90674-IM','RXNG2177392','influenza A virus A/Brisbane/10/2010 (H1N1) antigen / influenza A virus A/Hong Kong/4801/2014 (H3N2) / Hong Kong/259/2010 / Utah/9/2014 antigen','OK',0),
 ('90674-S','RXNG1942160','influenza A virus A/Hong Kong/4801/2014 (H3N2) antigen / influenza A virus A/Singapore/GP1908/2015 (H1N1) / Brisbane/46/2015 / Phuket/3073/2013 antigen','OK',0),
 ('RXNB1928313','RXNG1928311','Influenza, Quadrivalent, Preservative free, Intradermal','OK',0),
 ('RXNB1928347','RXNG1928311','Influenza, recombinant quadrivalent Injection','OK',0),
