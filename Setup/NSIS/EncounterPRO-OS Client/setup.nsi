@@ -18,13 +18,14 @@
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
-  !define EproClient_VERSION   7.0.3.7
-  !define Database_Mod_Level   211
-  !define PBRuntime_VERSION   19.2.0.2670
-  !define PBRuntime_FILENAME   PBCLTRT19.2.0.2670.msi
-; Even after rebuilding, there is some kind of virus in Utilities.
-; Leaving it out of the installer, I don't really think it's needed anyway.
-;  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
+  !define EproClient_VERSION   7.0.3.8
+  !define Database_Mod_Level   212
+  ; Get this from the folder name in e.g.
+  ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2703
+  !define PBRuntime_VERSION   19.2.0.2703
+  !define PBRuntime_FILENAME   PBCLTRT{$PBRuntime_VERSION}.msi
+; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
+  !define EncounterPRO_OS_Utilities_VERSION   1.0.2.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
@@ -180,13 +181,13 @@
       nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
       Delete '$INSTDIR\${PBRuntime_FILENAME}'
       
-      ; SetDetailsPrint both
-      ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
-      ; SetDetailsPrint none
-      ; SetOutPath $INSTDIR
-      ; File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
-      ; nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
-      ; Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
+      SetDetailsPrint both
+      DetailPrint "Installing EncounterPRO.OS.Utilities..."
+      SetDetailsPrint none
+      SetOutPath $INSTDIR
+      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
+      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
+      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
       
       SetDetailsPrint both
     SectionEnd
