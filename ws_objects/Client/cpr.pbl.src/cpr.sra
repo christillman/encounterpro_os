@@ -181,7 +181,7 @@ long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = "L:\Common\icons\epro40.ico"
-string appruntimeversion = "19.2.0.2670"
+string appruntimeversion = "19.2.0.2703"
 event keydown pbm_keydown
 end type
 global cpr cpr
@@ -201,14 +201,14 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 211
+long minimum_modification_level = 212
 
-date compile_date = date("2021-03-20")
+date compile_date = date("2021-10-09")
 
 integer major_release = 7
 string database_version = "0" // this is really minor release
-string build = "3.7"
-// Resulting in 7.0.3.7
+string build = "3.8"
+// Resulting in 7.0.3.8
 
 ////////////////////////////////////////////////////////////
 

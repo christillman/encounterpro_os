@@ -4,16 +4,16 @@ SET PATH_TO_BCP="C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools
 
 REM The server designation, this one is a local SQL SERVER Express 
 REM I access through Windows user permisson
-SET MSSQLSERVER=DESKTOP-GU15HUD\ENCOUNTERPRO
+SET MSSQLSERVER=localhost\ENCOUNTERPRO
 
-SET IMPORT_FILE_PATH=C:\Users\tofft\EncounterPro\RXNORM\RxNorm_full_06042018\prescribe\rrf
+SET IMPORT_FILE_PATH=C:\Users\tofft\EncounterPro\RXNORM\RxNorm_full_prescribe_07062021\rrf
 
 SET UTILITY_PATH=C:\Users\tofft\source\repos\RRF2TabDel\RRF2TabDel\bin\Debug
 
 SET SCRIPT_PATH=C:\Users\tofft\EncounterPro\encounter_pro_os\Interfaces
 
 REM Execute the table setup script. 
-sqlcmd -i "%SCRIPT_PATH%\create_rxnorm_tables.sql" -S %MSSQLSERVER% -d interfaces -E
+REM sqlcmd -i "%SCRIPT_PATH%\create_rxnorm_tables.sql" -S %MSSQLSERVER% -d interfaces -E
 
 "%UTILITY_PATH%\RRF2TabDel.exe" "%IMPORT_FILE_PATH%\RXNCONSO.RRF"
 "%UTILITY_PATH%\RRF2TabDel.exe" "%IMPORT_FILE_PATH%\RXNSAT.RRF"
@@ -41,8 +41,10 @@ REM %PATH_TO_BCP% RXNSAB in "%IMPORT_FILE_PATH%\RXNSAB.RRF.tabdel" -S %MSSQLSERV
 REM %PATH_TO_BCP% RXNSTY in "%IMPORT_FILE_PATH%\RXNSTY.RRF.tabdel" -S %MSSQLSERVER% -d interfaces -T -c
 
 REM Index afterwards to save time and space!. 
-sqlcmd -i "%SCRIPT_PATH%\create_rxnorm_indexes.sql" -S %MSSQLSERVER% -d interfaces -E
+REM sqlcmd -i "%SCRIPT_PATH%\create_rxnorm_indexes.sql" -S %MSSQLSERVER% -d interfaces -E
 
 rem RXTerms from https://wwwcf.nlm.nih.gov/umlslicense/rxtermApp/rxTermData.cfm
-SET IMPORT_FILE_PATH=E:\EncounterPro\RXNORM
-%PATH_TO_BCP% RXTERMS in "%IMPORT_FILE_PATH%\RxTerms201806.txt" -S %MSSQLSERVER% -d interfaces -T -t | -c
+REM SET IMPORT_FILE_PATH=E:\EncounterPro\RXNORM
+REM %PATH_TO_BCP% RXTERMS in "%IMPORT_FILE_PATH%\RxTerms201806.txt" -S %MSSQLSERVER% -d interfaces -T -t | -c
+
+pause

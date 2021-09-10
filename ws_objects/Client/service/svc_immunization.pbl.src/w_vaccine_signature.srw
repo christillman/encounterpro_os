@@ -20,7 +20,6 @@ end forward
 
 global type w_vaccine_signature from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false

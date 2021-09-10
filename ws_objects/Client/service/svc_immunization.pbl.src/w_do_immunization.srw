@@ -40,6 +40,10 @@ type st_reference_ndc_code from statictext within w_do_immunization
 end type
 type st_ndc_title from statictext within w_do_immunization
 end type
+type uo_drug_package from u_drug_package within w_do_immunization
+end type
+type st_package from statictext within w_do_immunization
+end type
 end forward
 
 global type w_do_immunization from w_window_base
@@ -63,6 +67,8 @@ cb_beback cb_beback
 cb_edit_reference_ndc_code cb_edit_reference_ndc_code
 st_reference_ndc_code st_reference_ndc_code
 st_ndc_title st_ndc_title
+uo_drug_package uo_drug_package
+st_package st_package
 end type
 global w_do_immunization w_do_immunization
 
@@ -211,6 +217,8 @@ this.cb_beback=create cb_beback
 this.cb_edit_reference_ndc_code=create cb_edit_reference_ndc_code
 this.st_reference_ndc_code=create st_reference_ndc_code
 this.st_ndc_title=create st_ndc_title
+this.uo_drug_package=create uo_drug_package
+this.st_package=create st_package
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_exp_t
 this.Control[iCurrent+2]=this.cb_lit
@@ -231,6 +239,8 @@ this.Control[iCurrent+16]=this.cb_beback
 this.Control[iCurrent+17]=this.cb_edit_reference_ndc_code
 this.Control[iCurrent+18]=this.st_reference_ndc_code
 this.Control[iCurrent+19]=this.st_ndc_title
+this.Control[iCurrent+20]=this.uo_drug_package
+this.Control[iCurrent+21]=this.st_package
 end on
 
 on w_do_immunization.destroy
@@ -254,6 +264,8 @@ destroy(this.cb_beback)
 destroy(this.cb_edit_reference_ndc_code)
 destroy(this.st_reference_ndc_code)
 destroy(this.st_ndc_title)
+destroy(this.uo_drug_package)
+destroy(this.st_package)
 end on
 
 event close;// Destroy the component
@@ -419,7 +431,7 @@ if isnull(treat_immun.drug_id) then
 		Return
 	End if
 	
-	vaccine_id = vaccine_list.vaccine[li_vaccine_index].vaccine_id
+	vaccine_id = vaccine_list.vaccine[li_vaccine_index].drug_id
 else
 	vaccine_id = treat_immun.drug_id
 end if
@@ -443,7 +455,7 @@ end type
 
 type st_exp_t from statictext within w_do_immunization
 integer x = 311
-integer y = 676
+integer y = 796
 integer width = 581
 integer height = 72
 integer textsize = -12
@@ -460,7 +472,7 @@ end type
 
 type cb_lit from commandbutton within w_do_immunization
 integer x = 2158
-integer y = 824
+integer y = 944
 integer width = 603
 integer height = 112
 integer taborder = 20
@@ -482,7 +494,7 @@ end event
 
 type sle_lit_date from singlelineedit within w_do_immunization
 integer x = 933
-integer y = 824
+integer y = 944
 integer width = 1193
 integer height = 112
 integer taborder = 10
@@ -499,7 +511,7 @@ end type
 
 type st_lit_title from statictext within w_do_immunization
 integer x = 334
-integer y = 844
+integer y = 964
 integer width = 558
 integer height = 72
 integer textsize = -12
@@ -516,7 +528,7 @@ end type
 
 type cb_edit_location_domain from commandbutton within w_do_immunization
 integer x = 2158
-integer y = 992
+integer y = 1112
 integer width = 169
 integer height = 112
 integer taborder = 20
@@ -757,7 +769,7 @@ end event
 
 type st_location from statictext within w_do_immunization
 integer x = 933
-integer y = 992
+integer y = 1112
 integer width = 1193
 integer height = 112
 integer textsize = -10
@@ -802,7 +814,7 @@ end event
 
 type st_vaccine_maker from statictext within w_do_immunization
 integer x = 933
-integer y = 320
+integer y = 440
 integer width = 1193
 integer height = 112
 integer textsize = -10
@@ -836,7 +848,7 @@ popup_return = message.powerobjectparm
 if popup_return.item_count = 0 then return
 
 if popup_return.items[1] = "" then
-	setnull(maker_id)
+	setnull(maker_id)	
 else
 	maker_id = popup_return.items[1]
 end if
@@ -849,7 +861,7 @@ end event
 
 type st_5 from statictext within w_do_immunization
 integer x = 539
-integer y = 1012
+integer y = 1132
 integer width = 352
 integer height = 72
 integer textsize = -12
@@ -880,7 +892,7 @@ end type
 
 type st_3 from statictext within w_do_immunization
 integer x = 338
-integer y = 508
+integer y = 628
 integer width = 553
 integer height = 72
 integer textsize = -12
@@ -897,7 +909,7 @@ end type
 
 type sle_lot_number from singlelineedit within w_do_immunization
 integer x = 933
-integer y = 488
+integer y = 608
 integer width = 1193
 integer height = 112
 integer taborder = 10
@@ -914,7 +926,7 @@ end type
 
 type st_2 from statictext within w_do_immunization
 integer x = 338
-integer y = 340
+integer y = 460
 integer width = 553
 integer height = 72
 integer textsize = -12
@@ -931,7 +943,7 @@ end type
 
 type st_expiration_date from statictext within w_do_immunization
 integer x = 933
-integer y = 656
+integer y = 776
 integer width = 1193
 integer height = 112
 integer taborder = 50
@@ -998,7 +1010,7 @@ end event
 
 type cb_edit_reference_ndc_code from commandbutton within w_do_immunization
 integer x = 2158
-integer y = 1160
+integer y = 1280
 integer width = 169
 integer height = 112
 integer taborder = 30
@@ -1024,7 +1036,7 @@ end event
 
 type st_reference_ndc_code from statictext within w_do_immunization
 integer x = 933
-integer y = 1160
+integer y = 1280
 integer width = 1193
 integer height = 112
 boolean bringtotop = true
@@ -1043,7 +1055,7 @@ end type
 
 type st_ndc_title from statictext within w_do_immunization
 integer x = 69
-integer y = 1180
+integer y = 1300
 integer width = 823
 integer height = 72
 boolean bringtotop = true
@@ -1055,6 +1067,56 @@ string facename = "Arial"
 long backcolor = 33538240
 boolean enabled = false
 string text = "Reference NDC Code:"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type uo_drug_package from u_drug_package within w_do_immunization
+integer x = 933
+integer y = 288
+integer width = 1193
+integer height = 112
+boolean bringtotop = true
+integer textsize = -10
+long textcolor = 33554432
+long backcolor = 67108864
+boolean enabled = true
+boolean disabledlook = false
+end type
+
+event clicked;call super::clicked;window w
+integer i
+real lr_temp
+string ls_form_rxcui, ls_ingr_rxcui, ls_form_description, ls_drug_id
+str_popup popup
+str_popup_return popup_return
+
+// Replace above popup with new 2-column formulation window
+ls_drug_id = vaccine_id
+ls_form_description = f_choose_vaccine(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
+
+// This is inherited from u_drug_package, which has a form_rxcui array.
+selectformulation(ls_form_rxcui)
+
+// We want to assign to the window instance variable.
+vaccine_id = ls_drug_id
+
+end event
+
+type st_package from statictext within w_do_immunization
+integer x = 315
+integer y = 316
+integer width = 576
+integer height = 68
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Formulation:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

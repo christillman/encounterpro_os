@@ -1,56 +1,4 @@
 
-select * from rxnconso_full c
-where (tty = 'PSN' OR (tty = 'SCD' 
-						and not exists (select 1 from rxnconso_full f2
-							where f2.rxcui = c.rxcui and f2.tty = 'PSN')))
-and rxcui in (
-'1549372',
-'1000978',
-'411846',
-'1088455',
-'1236182',
-'198229',
-'251135',
-'836466',
-'849329',
-'854872',
-'857705',
-'992898',
-'997550'
-)
-order by rxcui,tty,[str]
-
-select c1.*
-from rxnconso_full c
-join RXNREL_FULL r ON r.RXCUI2 = c.rxcui
-join rxnconso_full c1 ON r.RXCUI1 = c1.rxcui
-where c.rxcui in (
-'2284',
-'257844',
-'5542')
-and c1.SAB = 'RXNORM'
-and c.SAB = 'RXNORM'
-and r.SAB = 'RXNORM'
-
-
-select c1.*
-from rxnconso c
-join RXNREL r ON r.RXCUI2 = c.rxcui
-join rxnconso c1 ON r.RXCUI1 = c1.rxcui
-where c.rxcui in (
-'2284',
-'257844',
-'5542')
-and c1.SAB = 'RXNORM'
-and c.SAB = 'RXNORM'
-and r.SAB = 'RXNORM'
-
-
-Cetrimides
-Mefenamate
-17-alpha-Hydroxyprogesterone
-order by rxcui
-
 
 CREATE VIEW vw_SCDC AS
 SELECT c.rxcui as rxcui_scdc, 
@@ -67,6 +15,7 @@ AND r.SAB = 'RXNORM'
 AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
 
+GO
 CREATE VIEW vw_SCDC_full AS
 SELECT c.rxcui as rxcui_scdc, 
 	c1.rxcui as rxcui_scd, 
@@ -83,6 +32,7 @@ AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
 
 
+GO
 
 CREATE VIEW vw_form_MIN AS
 SELECT c1.rxcui AS form_rxcui, 
@@ -115,8 +65,7 @@ AND c.SAB = 'RXNORM'
 AND r.rela = 'ingredients_of'
 AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
-
-select count(*) from vw_form_min where form_tty like '%PSN'
+GO
 
 CREATE VIEW vw_form_MIN_full AS
 SELECT c1.rxcui AS form_rxcui, 
@@ -150,6 +99,7 @@ AND r.rela = 'ingredients_of'
 AND c1.TTY = 'SCD'
 AND c1.SAB = 'RXNORM'
 
+GO
 create view vw_form_psn_in AS
 SELECT 
 	vw_SCDC.rxcui_scd as form_rxcui, 
@@ -174,6 +124,7 @@ AND NOT EXISTS (SELECT 1 FROM vw_form_min f
 	WHERE f.form_rxcui = vw_SCDC.rxcui_scd)
 
 
+GO
 create view vw_form_psn_in_full AS
 SELECT 
 	vw_SCDC_full.rxcui_scd as form_rxcui, 
@@ -197,15 +148,7 @@ AND c3.SAB = 'RXNORM'
 AND NOT EXISTS (SELECT 1 FROM vw_form_min_full f
 	WHERE f.form_rxcui = vw_SCDC_full.rxcui_scd)
 
-
-select * 
-into c_drug_Formulation3
-from vw_form_psn_in_full
-where ingr_rxcui in (
-'2284',
-'257844',
-'5542')
-
+GO
 create view vw_form_scd_in AS
 SELECT 
 	vw_SCDC.rxcui_scd as form_rxcui, 
@@ -229,6 +172,7 @@ AND c3.SAB = 'RXNORM'
 AND NOT EXISTS (SELECT 1 FROM vw_form_min f
 	WHERE f.form_rxcui = vw_SCDC.rxcui_scd)
 
+GO
 create view vw_brand_forms as
 SELECT r.RXCUI2 as rxcui_sbd, r.RXCUI1 as rxcui_scd
 FROM interfaces..rxnconso c
@@ -243,6 +187,7 @@ AND c.SUPPRESS = 'N'
 AND c1.SUPPRESS = 'N'
 
 
+GO
 create view vw_brand_forms_full as
 SELECT r.RXCUI2 as rxcui_sbd, r.RXCUI1 as rxcui_scd
 FROM interfaces..rxnconso_full c
@@ -257,6 +202,7 @@ AND c.SUPPRESS = 'N'
 AND c1.SUPPRESS = 'N'
 
 
+GO
 create view vw_form_psn_bn AS
 SELECT c1.rxcui as form_rxcui, 
 	c1.tty + '_' + c3.tty as form_tty, 
@@ -277,6 +223,7 @@ AND c1.SAB = 'RXNORM'
 AND c3.SAB = 'RXNORM' 
 
 
+GO
 create view vw_form_sbd_bn AS
 SELECT c1.rxcui as form_rxcui, 
 	c1.tty as form_tty, 
@@ -293,6 +240,7 @@ AND r.rela = 'ingredient_of'
 AND c1.TTY = 'SBD'
 AND c1.SAB = 'RXNORM' 
 
+GO
 create view vw_form_psn_bn_full AS
 SELECT c1.rxcui as form_rxcui, 
 	c1.tty + '_' + c3.tty as form_tty, 
@@ -312,6 +260,7 @@ AND c1.TTY = 'SBD'
 AND c1.SAB = 'RXNORM' 
 AND c3.SAB = 'RXNORM' 
 
+GO
 create view vw_form_sbd_bn_full AS
 SELECT c1.rxcui as form_rxcui, 
 	c1.tty as form_tty, 
@@ -328,59 +277,6 @@ AND r.rela = 'ingredient_of'
 AND c1.TTY = 'SBD'
 AND c1.SAB = 'RXNORM' 
 
-insert into c_drug_Formulation3
-select * from vw_form_psn_bn
-where ingr_rxcui IN (
-'218486',
-'727279')
-
-insert into c_drug_Formulation3
-select * from vw_form_sbd_bn
-where ingr_rxcui IN (
--- '218486',
--- '727279'),
-'1086383',
-'1087205',
-'1087246',
-'1087282',
-'1087299',
-'1087396',
-'1088927',
-'1090912',
-'1095605',
-'1293415',
-'1372721',
-'1423388',
-'219298',
-'219301',
-'404991',
-'404993',
-'68728',
-'802647',
-'802648',
-'826624',
-'877478',
-'881173',
-'92573',
-'978677',
-'999736')
-order by ingr_rxcui
-
-insert into c_drug_Formulation3
-select * from vw_form_sbd_bn_full
-where ingr_rxcui IN (
-'215824')
-
---(4 row(s) affected)
-
---(26 row(s) affected)
-
---(1 row(s) affected)
-1372721 Hematogen
-
-
-select '''' + form_rxcui + ''','
-from c_drug_Formulation3
 
 /*
 SET PATH_TO_BCP="C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\bcp.exe"
@@ -389,10 +285,3 @@ SET MSSQLSERVER=DESKTOP-GU15HUD\ENCOUNTERPRO
 %PATH_TO_BCP% c_Drug_Formulation3 out c_Drug_Formulation3.txt -S %MSSQLSERVER% -d interfaces -T -c
 
 */
-
-select * from vw_form_psn_in_full
-where ingr_rxcui in('87636')
-
-select * from RXNCONSO_FULL
-where rxcui = '199534'
-and sab = 'RXNORM'

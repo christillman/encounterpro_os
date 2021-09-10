@@ -54,7 +54,6 @@ end forward
 
 global type w_trt_pick_procedures from w_window_base
 integer height = 1836
-boolean controlmenu = false
 windowtype windowtype = response!
 st_search_title st_search_title
 st_procedure_type_title st_procedure_type_title
@@ -109,7 +108,9 @@ public subroutine select_procedure (string ps_procedure_type, string ps_procedur
 end prototypes
 
 public subroutine select_procedure (string ps_procedure_type, string ps_procedure_id, string ps_description);long ll_row
-string ls_preference_id,ls_treatment_mode
+string ls_preference_id,ls_treatment_mode, ls_drug_id, ls_ingr_rxcui, ls_form_rxcui
+string ls_form_description
+integer li_vaccine_index
 
 ll_row = dw_selected_items.insertrow(0)
 dw_selected_items.object.procedure_id[ll_row] = ps_procedure_id
@@ -118,6 +119,16 @@ dw_selected_items.object.description[ll_row] = ps_description
 ls_treatment_mode = f_get_default_treatment_mode(treatment_type, ps_procedure_id)
 
 dw_selected_items.object.treatment_mode[ll_row] = ls_treatment_mode
+
+li_vaccine_index = vaccine_list.get_vaccine_from_proc(ps_procedure_id)
+If li_vaccine_index > 0 Then
+	// We are working with a vaccine, need to define the formulation
+	ls_drug_id = vaccine_list.vaccine[li_vaccine_index].drug_id
+	
+	ls_form_description = f_choose_vaccine(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
+	dw_selected_items.object.drug_id[ll_row] = ls_drug_id
+	dw_selected_items.object.form_rxcui[ll_row] = ls_form_rxcui
+End if
 
 dw_procedures.clear_selected()
 
@@ -925,6 +936,7 @@ for i = 1 to lstr_procedures.procedure_count
 	lstr_procedures.procedures[i].procedure_id = dw_selected_items.object.procedure_id[i]
 	lstr_procedures.procedures[i].description = dw_selected_items.object.description[i]
 	lstr_procedures.procedures[i].treatment_mode = dw_selected_items.object.treatment_mode[i]
+	lstr_procedures.procedures[i].drug_id = dw_selected_items.object.drug_id[i]
 next
 
 closewithreturn(parent, lstr_procedures)
@@ -958,7 +970,7 @@ end event
 
 type cb_new from commandbutton within w_trt_pick_procedures
 integer x = 1833
-integer y = 1470
+integer y = 1472
 integer width = 549
 integer height = 88
 integer taborder = 100

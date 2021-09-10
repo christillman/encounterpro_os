@@ -22,7 +22,6 @@ end forward
 
 global type w_procedure_extra_charges_edit from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -130,8 +129,6 @@ end on
 type pb_epro_help from w_window_base`pb_epro_help within w_procedure_extra_charges_edit
 integer x = 0
 integer y = 0
-integer width = 247
-integer height = 120
 boolean enabled = false
 end type
 

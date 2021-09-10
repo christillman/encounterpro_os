@@ -608,36 +608,8 @@ luo_data.set_database(cprdb)
 for j = 1 to ll_rows
 	// For each fkey in reverse order, load the records from the message table and look up the foreign key
 	for i = pstr_part.fkey_count to 1 step -1
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		// Houston we have a problem.  We were going to unify the c_Drug_Definition and c_Vaccine tables
-		// so we used p_Treatment_Item.drug_id as a foreign key for both tables.  Unfortunately we
-		// didn't get the tables unified before this release so we have to decide at run time which
-		// table the field really points to.  The criteria are simple: if p_Treatment_Item.treatment_type
-		// is "IMMUNIZATION" or "PASTIMMUN" then drug_id is really a vaccine_id.  Otherwise drug_id
-		// is really a drug_id.  In the c_Message_Fkey mapping, for now, we will list both relationships
-		// but it is important that only one key translation actually take place.  So, as much as
-		// I hate to do it, I'm hardcoding a temporary solution here to detect when we're using the
-		// wrong foreign key and ignore it.
-		//
-		// Here's how:  First we see if we're working with a foreign key from p_treatment_item into
-		// c_Drug_Definition
-		if lower(pstr_part.fkey[i].target_table) = "c_drug_definition" and lower(pstr_part.part_table) = "p_treatment_item" then
-			ls_treatment_type = luo_data.object.treatment_type[j]
-			if ls_treatment_type = "IMMUNIZATION" or ls_treatment_type = "PASTIMMUN" then continue
-		end if
-		
-		// Now check for a foreign key from p_treatment_item into c_Vaccine
-		if lower(pstr_part.fkey[i].target_table) = "c_vaccine" and lower(pstr_part.part_table) = "p_treatment_item" then
-			ls_treatment_type = luo_data.object.treatment_type[j]
-			if ls_treatment_type <> "IMMUNIZATION" and ls_treatment_type <> "PASTIMMUN" then continue
-		end if
-		//
-		//
-		// This section lf code will be deleted when the c_drug_definition and c_vaccine tables are unified
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		
-		
+		// Remove c_vaccine workaround CT 2021-06-06; assume we are  
+		// now working with vaccines only in c_drug_definition
 
 		lb_xlate_where = true
 		

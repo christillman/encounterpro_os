@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$w_schedule_item_edit.srw
 forward
-global type w_schedule_item_edit from Window
+global type w_schedule_item_edit from window
 end type
 type st_3 from statictext within w_schedule_item_edit
 end type
@@ -24,13 +24,13 @@ type pb_close from u_picture_button within w_schedule_item_edit
 end type
 end forward
 
-global type w_schedule_item_edit from Window
-int X=498
-int Y=200
-int Width=1902
-int Height=1400
-long BackColor=33538240
-WindowType WindowType=response!
+global type w_schedule_item_edit from window
+integer x = 498
+integer y = 200
+integer width = 1902
+integer height = 1400
+windowtype windowtype = response!
+long backcolor = 33538240
 st_3 st_3
 st_2 st_2
 cb_warning_days cb_warning_days
@@ -115,49 +115,49 @@ destroy(this.pb_close)
 end on
 
 type st_3 from statictext within w_schedule_item_edit
-int Width=1893
-int Height=148
-boolean Enabled=false
-string Text="Immunization Schedule Item"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=33538240
-int TextSize=-14
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer width = 1893
+integer height = 148
+integer textsize = -14
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 33538240
+boolean enabled = false
+string text = "Immunization Schedule Item"
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
 type st_2 from statictext within w_schedule_item_edit
-int X=795
-int Y=284
-int Width=306
-int Height=112
-boolean Enabled=false
-string Text="Age"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=33538240
-int TextSize=-14
-int Weight=700
-string FaceName="Arial"
-boolean Underline=true
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 795
+integer y = 284
+integer width = 306
+integer height = 112
+integer textsize = -14
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+boolean underline = true
+long backcolor = 33538240
+boolean enabled = false
+string text = "Age"
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
 type cb_warning_days from commandbutton within w_schedule_item_edit
-int X=960
-int Y=868
-int Width=146
-int Height=104
-string Text="..."
-int TextSize=-16
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 960
+integer y = 868
+integer width = 146
+integer height = 104
+integer textsize = -16
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "..."
 end type
 
 event clicked;str_popup popup
@@ -176,50 +176,50 @@ sle_warning_days.text = string(popup_return.realitem)
 end event
 
 type sle_warning_days from singlelineedit within w_schedule_item_edit
-int X=695
-int Y=868
-int Width=247
-int Height=104
-int TabOrder=20
-BorderStyle BorderStyle=StyleLowered!
-boolean AutoHScroll=false
-long BackColor=16777215
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 695
+integer y = 868
+integer width = 247
+integer height = 104
+integer taborder = 20
+integer textsize = -10
+integer weight = 400
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+boolean autohscroll = false
+borderstyle borderstyle = stylelowered!
 end type
 
 type st_1 from statictext within w_schedule_item_edit
-int X=471
-int Y=736
-int Width=901
-int Height=112
-boolean Enabled=false
-string Text="Warning Days"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=33538240
-int TextSize=-14
-int Weight=700
-string FaceName="Arial"
-boolean Underline=true
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 471
+integer y = 736
+integer width = 901
+integer height = 112
+integer textsize = -14
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+boolean underline = true
+long backcolor = 33538240
+boolean enabled = false
+string text = "Warning Days"
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
 type cb_age from commandbutton within w_schedule_item_edit
-int X=809
-int Y=420
-int Width=146
-int Height=104
-string Text="..."
-int TextSize=-16
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 809
+integer y = 420
+integer width = 146
+integer height = 104
+integer textsize = -16
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "..."
 end type
 
 event clicked;str_popup popup
@@ -239,21 +239,21 @@ sle_age.text = string(popup_return.realitem)
 end event
 
 type st_age_unit from statictext within w_schedule_item_edit
-int X=1015
-int Y=420
-int Width=370
-int Height=104
-boolean Border=true
-BorderStyle BorderStyle=StyleRaised!
-string Text="Month"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=12632256
-int TextSize=-12
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 1015
+integer y = 420
+integer width = 370
+integer height = 104
+integer textsize = -12
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 12632256
+string text = "Month"
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
 end type
 
 event clicked;str_popup popup
@@ -289,28 +289,30 @@ text = luo_unit.description
 end event
 
 type sle_age from singlelineedit within w_schedule_item_edit
-int X=507
-int Y=420
-int Width=279
-int Height=104
-int TabOrder=10
-BorderStyle BorderStyle=StyleLowered!
-boolean AutoHScroll=false
-long BackColor=16777215
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 507
+integer y = 420
+integer width = 279
+integer height = 104
+integer taborder = 10
+integer textsize = -10
+integer weight = 400
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+boolean autohscroll = false
+borderstyle borderstyle = stylelowered!
 end type
 
 type pb_cancel from u_picture_button within w_schedule_item_edit
-int X=59
-int Y=1112
-int TabOrder=0
-string PictureName="button11.bmp"
-string DisabledName="button11.bmp"
-boolean Cancel=true
+integer x = 59
+integer y = 1112
+integer width = 256
+integer height = 224
+integer taborder = 0
+boolean cancel = true
+string picturename = "button11.bmp"
+string disabledname = "button11.bmp"
 end type
 
 event clicked;call super::clicked;str_popup_return popup_return
@@ -325,12 +327,14 @@ on mouse_move;f_cpr_set_msg("Cancel")
 end on
 
 type pb_close from u_picture_button within w_schedule_item_edit
-int X=1554
-int Y=1112
-int TabOrder=0
-string PictureName="button26.bmp"
-string DisabledName="b_push26.bmp"
-boolean Default=true
+integer x = 1554
+integer y = 1112
+integer width = 256
+integer height = 224
+integer taborder = 0
+boolean default = true
+string picturename = "button26.bmp"
+string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;str_popup_return popup_return

@@ -1,0 +1,83 @@
+﻿$PBExportHeader$f_choose_vaccine.srf
+global type f_choose_vaccine from function_object
+end type
+
+forward prototypes
+global function string f_choose_vaccine (ref string ps_drug_id, ref string ps_form_rxcui, ref string ps_ingr_rxcui)
+end prototypes
+
+global function string f_choose_vaccine (ref string ps_drug_id, ref string ps_form_rxcui, ref string ps_ingr_rxcui);
+string ls_form_description
+integer li_rc
+// We might choose a generic after having initially searched for a brand, for instance
+boolean lb_generic_selected, lb_brand_selected 
+string ls_generic_rxcui, ls_brand_name_rxcui
+string ls_list_preference
+
+SetNull(ls_generic_rxcui)
+SetNull(ls_brand_name_rxcui)
+
+str_popup popup
+str_popup_return popup_return
+
+f_get_rxnorm(ps_drug_id, ls_generic_rxcui, ls_brand_name_rxcui)
+
+IF IsNull(ls_generic_rxcui) THEN 
+	popup.items[1] = "0"
+ELSE
+	popup.items[1] = ls_generic_rxcui
+END IF
+IF IsNull(ls_brand_name_rxcui) THEN 
+	popup.items[2] = "0"
+ELSE
+	popup.items[2] =ls_brand_name_rxcui
+END IF
+
+// For vaccines we only want to show brands, or generics if no brand
+ls_list_preference = "Single" // f_get_global_preference("MEDICATION", "Formulation list") 
+//IF ls_list_preference = "Dual" THEN
+//	li_rc = OpenWithParm(w_pop_formulation_select, popup)
+//ELSE // Single
+	li_rc = OpenWithParm(w_pop_formulation_select_single, popup)
+//END IF
+popup_return = message.powerobjectparm
+
+IF popup_return.item_count <> 2 then return "Nothing selected"
+
+ps_form_rxcui = popup_return.items[1]
+ps_ingr_rxcui = popup_return.items[2]
+ls_form_description = popup_return.descriptions[1]
+
+SELECT drug_id
+INTO :ps_drug_id
+FROM c_Drug_Brand
+WHERE brand_name_rxcui = :ps_ingr_rxcui;
+
+if not tf_check() then 
+	log.log(this,"f_choose_formulation","Database error",2)
+	return "Nothing selected"
+end if
+lb_brand_selected = NOT (sqlca.sqlcode = 100)
+
+IF NOT lb_brand_selected THEN
+	SELECT drug_id
+	INTO :ps_drug_id
+	FROM c_Drug_Generic
+	WHERE generic_rxcui = :ps_ingr_rxcui;
+		
+	if not tf_check() then 
+		log.log(this,"f_choose_formulation","Database error",2)
+		return "Nothing selected"
+	end if
+	lb_generic_selected = NOT (sqlca.sqlcode = 100)
+END IF
+
+if not (lb_brand_selected OR lb_generic_selected) then 
+	log.log(this,"f_choose_formulation","Neither brand nor generic were found",2)
+	return "Nothing selected"
+end if
+
+return ls_form_description
+
+end function
+

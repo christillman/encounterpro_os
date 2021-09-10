@@ -196,7 +196,8 @@ IF @is_rxnorm = 0
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 
 		END
-	ELSE IF @generic_rxcui IS NOT NULL
+		
+	IF @generic_rxcui IS NOT NULL
 		BEGIN
 		-- remove generics with their formulations and packages
 

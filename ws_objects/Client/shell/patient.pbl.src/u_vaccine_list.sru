@@ -17,11 +17,11 @@ forward prototypes
 public function integer get_vaccine_index (string ps_vaccine_id)
 public function integer load_vaccines ()
 public function integer get_vaccine_from_proc (string ps_procedure_id)
-public subroutine add_vaccine (string ps_vaccine_id, string ps_description)
+public subroutine add_vaccine (string ps_vaccine_id, string ps_description, string ps_drug_id)
 end prototypes
 
 public function integer get_vaccine_index (string ps_vaccine_id);integer i
-string ls_description
+string ls_description, ls_drug_id
 
 for i = 1 to vaccine_count
 	if vaccine[i].vaccine_id = ps_vaccine_id then
@@ -29,14 +29,14 @@ for i = 1 to vaccine_count
 	end if
 next
 
-SELECT c_Vaccine.description
-INTO :ls_description
+SELECT description, drug_id
+INTO :ls_description, :ls_drug_id
 FROM c_Vaccine
 WHERE vaccine_id = :ps_vaccine_id;
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then return 0
 
-add_vaccine(ps_vaccine_id, ls_description)
+add_vaccine(ps_vaccine_id, ls_description, ls_drug_id)
 
 return vaccine_count
 
@@ -44,12 +44,14 @@ end function
 
 public function integer load_vaccines ();string ls_description
 string ls_vaccine_id
+string ls_drug_id
 integer i
 boolean lb_loop
 
  DECLARE lc_schedule CURSOR FOR  
-  SELECT c_Vaccine.vaccine_id,
-			c_Vaccine.description
+  SELECT vaccine_id,
+			description,
+			drug_id
     FROM c_Vaccine
  ORDER BY	c_Vaccine.vaccine_id;
 
@@ -66,12 +68,14 @@ vaccine_count = 0
 DO
 	FETCH lc_schedule
 	INTO	:ls_vaccine_id,
-			:ls_description;
+			:ls_description,
+			:ls_drug_id;
 	if not tf_check() then return -1
 
 	if sqlca.sqlcode = 0 and sqlca.sqlnrows > 0 then
 		add_vaccine	(	ls_vaccine_id, &
-							ls_description &
+							ls_description, &
+							ls_drug_id &
 						)
 	else
 		lb_loop = false
@@ -104,19 +108,22 @@ return get_vaccine_index(ls_vaccine_id)
 
 end function
 
-public subroutine add_vaccine (string ps_vaccine_id, string ps_description);vaccine_count = vaccine_count + 1
+public subroutine add_vaccine (string ps_vaccine_id, string ps_description, string ps_drug_id);vaccine_count = vaccine_count + 1
 vaccine[vaccine_count] = CREATE u_str_vaccine
 
 vaccine[vaccine_count].vaccine_id = ps_vaccine_id
 vaccine[vaccine_count].description = ps_description
+vaccine[vaccine_count].drug_id = ps_drug_id
 
 end subroutine
 
 on u_vaccine_list.create
+call super::create
 TriggerEvent( this, "constructor" )
 end on
 
 on u_vaccine_list.destroy
 TriggerEvent( this, "destructor" )
+call super::destroy
 end on
 
