@@ -178,8 +178,8 @@
       SetDetailsPrint textonly
       File "${SRC_PBR}\${PBRuntime_FILENAME}"
       nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
-      Delete '$INSTDIR\PBCLTRT170.msi'
-
+      Delete '$INSTDIR\${PBRuntime_FILENAME}'
+      
       ; SetDetailsPrint both
       ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
       ; SetDetailsPrint none
