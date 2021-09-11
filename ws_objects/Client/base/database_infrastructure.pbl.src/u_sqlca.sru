@@ -3750,13 +3750,6 @@ END TRY
 
 begin_transaction(this, "Upgrade Mod Level")
 
-UPDATE c_Database_Status
-SET modification_level = :ll_modification_level
-USING this;
-if not check() then
-	rollback_transaction()
-	return -1
-end if
 lo_root.GetChildElements(ref pbdom_element_array)
 li_num_scripts = UpperBound(pbdom_element_array)
 
@@ -3767,19 +3760,27 @@ for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
 	
-	log.log(this, "u_sqlca.upgrade_database:0076", "Executing " + ls_element, 1)
+	log.log(this, "u_sqlca.upgrade_database:0076", "Executing " + ls_element, 3)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
 		rollback_transaction()
 		f_please_wait_close(li_please_wait_index)
-		log.log(this, "u_sqlca.upgrade_database:0082", "Failed executing " + ls_element, 5)
+		log.log(this, "u_sqlca.upgrade_database:0082", "Failed executing " + ls_script, 5)
 		DESTROY pbdombuilder_new
 		return -1
 	end if
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
+
+UPDATE c_Database_Status
+SET modification_level = :ll_modification_level
+USING this;
+if not check() then
+	rollback_transaction()
+	return -1
+end if
 
 commit_transaction()
 DESTROY pbdombuilder_new
