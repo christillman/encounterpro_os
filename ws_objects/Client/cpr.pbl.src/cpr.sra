@@ -168,7 +168,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -234,6 +233,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -369,6 +369,25 @@ CHOOSE CASE ls_parm
 		// Assume the parameter is a database
 		common_thread.default_database = ls_parm
 END CHOOSE
+
+li_sts = f_initialize_common("EncounterPRO")
+if li_sts < 0 then
+	if NOT IsNull(log) AND IsValid(log) then
+		log.log(this, "cpr:open", "Error initializing EncounterPRO", 5)
+	end if
+	halt
+end if
+
+// Enable the display of log events
+log.display_enabled = true
+
+f_cpr_set_msg("Database Connected")
+
+// Check the versions
+if f_check_version() < 0 then
+	// After an upgrade, we don't want an error message but rather a nice quiet exit
+	halt
+end if
 
 open(w_main)
 
