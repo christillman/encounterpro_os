@@ -36,12 +36,6 @@ end if
 // Load the initial preference values
 f_get_preferences()
 
-// Check the versions
-if f_check_version() < 0 then
-	// After an upgrade, we don't want an error message but rather a nice quiet exit
-	return 0
-end if
-
 // Instantiate Global Objects
 log.log(po_null, "f_initialize_objects:0037", "Instantiate and Initialize Global Objects", 1)
 vaccine_list = CREATE u_vaccine_list
