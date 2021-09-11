@@ -110,7 +110,6 @@ else
 	ls_mod_level = Right(ps_ddl_path,3)
 end if
 
-
 ld_upgrade_script = CREATE pbdom_document
 ld_upgrade_script.NewDocument("EproDBSchema")
 le_root = ld_upgrade_script.GetRootElement()
@@ -182,7 +181,9 @@ do while FindNextFileA( ll_handle,  lpFindFileData)
 		FileReadEx(ll_input, ps_scripts[li_script_count])	
 		FileClose(ll_input)
 	end if
-
+	// Make sure there's a go at the end of every script,
+	// Sometimes alter table doesn't take effect etc.
+	ps_scripts[li_script_count] = ps_scripts[li_script_count] + "~r~ngo"
    lpFindFileData = lst_FindData //reset the structure
 loop
 
@@ -239,9 +240,9 @@ ls_dml_path = "C:\Users\tofft\EncounterPro\encounterpro_os\EncounterPRO.OS.Datab
 li_sts = GetFolder ("Select DML Mod Folder", ls_dml_path)
 If li_sts <= 0 Then return
 
-ls_mod_level = right(ls_dml_path,3)
+ls_mod_level = Right(ls_dml_path,3)
 
-ls_ddl_path = "C:\Users\tofft\EncounterPro\encounterpro_os\Database_Schema\Mod_Level_Scripts" + ls_mod_level
+ls_ddl_path = "C:\Users\tofft\EncounterPro\encounterpro_os\Database_Schema\Mod_Level_Scripts\DDL-" + ls_mod_level
 IF Not FileExists(ls_ddl_path) THEN
 	li_sts = CreateDirectory(ls_ddl_path)
 END IF
