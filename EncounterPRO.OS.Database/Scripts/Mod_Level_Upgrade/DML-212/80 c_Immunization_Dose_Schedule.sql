@@ -15,10 +15,6 @@ from [dbo].[08_01_2021_Kenya_US_Immunizationschedule]
 where [c_age_range.age_range_id] like 'This%'
 */
 
-UPDATE [c_Immunization_Dose_Schedule]
-SET valid_in = 'us;'
-WHERE valid_in IS NULL
-
 DELETE -- select * 
 FROM [c_Immunization_Dose_Schedule]
 WHERE valid_in = 'ke;'
