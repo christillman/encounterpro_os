@@ -471,7 +471,7 @@ WHERE [legacy application "vaccine_id"] like 'NA%'
 group by [Vaccine/Immunization Display Name]
 order by 1
 */
-
+/*
 -- Check that procedure vaccine_ids connect to c_Vaccine where drug_id used as vaccine_id
 SELECT distinct '(''' + p.procedure_id + ''',''' + p.vaccine_id + ''',''' 
 	+ g.generic_name + ''',''' 
@@ -513,7 +513,7 @@ AND NOT EXISTS (SELECT 1
 	FROM c_Vaccine v
 	WHERE d.drug_id = v.drug_id)
 -- 5, might be Ok
-
+*/
 /*
 -- 5 shown, commented in 50 c_Vaccine
 select '(,'''+vaccine_id+''',1), -- ' + description 
