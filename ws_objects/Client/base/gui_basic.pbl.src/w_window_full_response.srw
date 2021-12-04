@@ -9,10 +9,6 @@ end type
 end forward
 
 global type w_window_full_response from w_window_base
-integer x = 0
-integer y = 0
-integer height = 1832
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -45,8 +41,11 @@ type pb_epro_help from w_window_base`pb_epro_help within w_window_full_response
 boolean visible = true
 end type
 
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_window_full_response
+end type
+
 type pb_done from u_picture_button within w_window_full_response
-integer x = 2595
+integer x = 2597
 integer y = 1480
 boolean originalsize = false
 string picturename = "button26.bmp"
@@ -56,6 +55,8 @@ end type
 type pb_cancel from u_picture_button within w_window_full_response
 integer x = 55
 integer y = 1480
+integer width = 256
+integer height = 224
 boolean bringtotop = true
 boolean cancel = true
 string picturename = "button11.bmp"
