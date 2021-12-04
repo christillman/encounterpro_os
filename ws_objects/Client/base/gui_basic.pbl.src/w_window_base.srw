@@ -564,7 +564,7 @@ st_config_mode_menu.height = 48
 st_config_mode_menu.y =	button_top - st_config_mode_menu.height - 4
 
 
-if backcolor <> color_background then
+//if backcolor <> color_background then
 	ll_windowbackcolor = backcolor
 	backcolor = color_background
 	
@@ -604,7 +604,7 @@ if backcolor <> color_background then
 				end if
 		END CHOOSE
 	next
-end if
+//end if
 
 lo_x = message.powerobjectparm
 if isvalid(lo_x) and not isnull(lo_x) then
