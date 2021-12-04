@@ -17,16 +17,16 @@ global function boolean f_fkey_handler2 (keycode key, unsignedlong keyflags, str
 // F2 = Configuration Help
 // 		Ctrl-F2 = Edit Configuration Help
 // F3 = Display Current Context
-// F4 = ????
+// F4 = Toggle Configuration Mode
 // F5 = Refresh Current Screen
 // 		Ctrl-F5 = Reset cache object
-// F6 = ???
+// F6 = Copy window to clipboard
 // F7 = Run Report
 // F8 = Display Documents for Current Encounter
 //
-// F9 - F12 User Definable
+// F9 - F11 User Definable
 //
-// Returns:  True if key was pressed that might need a screen refresh
+// F12 - Refresh?
 //
 //
 str_complete_context lstr_complete_context
