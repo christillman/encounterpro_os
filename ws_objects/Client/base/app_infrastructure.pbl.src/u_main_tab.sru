@@ -325,6 +325,7 @@ luo_data = CREATE u_ds_data
 page_count = upperbound(control)
 for i = 1 to page_count
 	pages[i] = control[i]
+	pages[i].backcolor = color_background
 next
 
 // Close any office tabs
@@ -742,6 +743,7 @@ string tag = "CHARTS"
 integer x = 18
 integer y = 16
 integer width = 2391
+integer height = 1704
 string text = "Charts"
 long tabbackcolor = 12632256
 end type
