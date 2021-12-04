@@ -98,8 +98,9 @@ string db_date_format = "yyyy-mm-dd"
 string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
 string debug_path = "C:\TEMP\EproDebug"
-
-long COLOR_BACKGROUND = rgb(192,192,255)
+ // rgb(192,192,255) classic purple
+ // 7191717 // 23968933 greenolive background
+long COLOR_BACKGROUND = rgb(165,188,109) 
 long COLOR_TEXT_NORMAL
 long COLOR_TEXT_WARNING
 long COLOR_TEXT_ERROR
