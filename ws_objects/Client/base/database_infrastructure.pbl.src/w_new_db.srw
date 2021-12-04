@@ -98,8 +98,6 @@ sle_dbms.text = "SQL Native Client"
 end event
 
 type pb_epro_help from w_window_full_response`pb_epro_help within w_new_db
-integer width = 247
-integer height = 120
 integer taborder = 50
 end type
 
@@ -250,7 +248,6 @@ string facename = "Arial"
 long textcolor = 33554432
 boolean enabled = false
 string text = "MSS"
-borderstyle borderstyle = StyleBox!
 end type
 
 type st_office_title from statictext within w_new_db
