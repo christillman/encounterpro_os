@@ -257,7 +257,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "None"
 end type
 
@@ -278,7 +278,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Clock"
 boolean checked = true
 end type
@@ -300,7 +300,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Process"
 end type
 
@@ -322,7 +322,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Thread"
 end type
 
@@ -343,7 +343,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Routine Entry/Exit"
 end type
 
@@ -364,7 +364,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Routine Line Hits"
 boolean checked = true
 end type
@@ -386,7 +386,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Embedded SQL"
 boolean checked = true
 end type
@@ -408,7 +408,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Object Creation"
 boolean checked = true
 end type
@@ -430,7 +430,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "User Defined Activities"
 boolean checked = true
 end type
@@ -452,7 +452,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "System Errors"
 boolean checked = true
 end type
@@ -474,7 +474,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Garbage Collection"
 boolean checked = true
 end type
@@ -600,7 +600,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Object Destruction"
 boolean checked = true
 end type
@@ -622,7 +622,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Tracing is OFF"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -641,7 +641,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Timer Kind"
 borderstyle borderstyle = styleraised!
 end type
@@ -659,7 +659,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Trace Activities"
 borderstyle borderstyle = styleraised!
 end type

@@ -553,7 +553,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Display Completed"
 boolean checked = true
 end type
@@ -819,7 +819,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Display Cancelled"
 end type
 

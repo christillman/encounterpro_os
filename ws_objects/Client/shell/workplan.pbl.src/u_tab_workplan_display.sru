@@ -7,7 +7,7 @@ end forward
 global type u_tab_workplan_display from u_tab_manager
 integer width = 2071
 integer height = 1216
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 end type
 global u_tab_workplan_display u_tab_workplan_display
 

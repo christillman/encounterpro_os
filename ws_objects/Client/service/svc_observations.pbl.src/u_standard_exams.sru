@@ -19,7 +19,7 @@ end forward
 global type u_standard_exams from userobject
 integer width = 457
 integer height = 1096
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "none"
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912

@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$dw_office_status.srd
 release 11;
-datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+datawindow(units=0 timer_interval=0 color=7191717 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
 header(height=0 color="536870912" )
 summary(height=0 color="536870912" )
 footer(height=0 color="536870912" )
@@ -50,10 +50,10 @@ column(band=detail id=29 alignment="0" tabsequence=32766 border="0" color="0~t a
 + if(isnull(alert_bitmap), -25, 45)" y="4" height="48" width="32" format="[general]" html.valueishtml="0"  name=in_use visible="1~tif(isnull(alert_color), 0, 1)" edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="553648127" )
 compute(band=detail alignment="0" expression="bitmap( alert_bitmap )"border="0" color="0" x="1125" y="4" height="56" width="69" format="[GENERAL]" html.valueishtml="0"  name=compute_alert_bitmap visible="1"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
 column(band=detail id=17 alignment="0" tabsequence=32766 border="0" color="0" x="9" y="4" height="56" width="475~tlong(describe(~"description.x~")) - 
-if(document_status=0, 18, 87)" format="[general]" html.valueishtml="0"  name=pretty_name visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8~t if(len( pretty_name ) >= 23, -7, -8)" font.weight="400~tif(pretty_name = ~"DIRTY~", 700, 400)"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="33538240~tpatient_color" )
+if(document_status=0, 18, 87)" format="[general]" html.valueishtml="0"  name=pretty_name visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.autoselect=yes  font.face="Arial" font.height="-8~t if(len( pretty_name ) >= 23, -7, -8)" font.weight="400~tif(pretty_name = ~"DIRTY~", 700, 400)"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="7191717~tpatient_color" )
 compute(band=detail alignment="0" expression="bitmap(if(document_status=1, ~"icon_docs_ok.bmp~", ~"icon_docs_pending.bmp~"))
 "border="0" color="0" x="485~tlong(describe(~"description.x~")) - 77" y="4" height="56" width="69" format="[GENERAL]" html.valueishtml="0"  name=compute_document_status visible="1~tif(document_status=0, 0, 1)"  font.face="Arial" font.height="-12" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="16777215" )
-line(band=trailer.1 x1="0" y1="12" x2="1102" y2="12"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="33538240" )
+line(band=trailer.1 x1="0" y1="12" x2="1102" y2="12"  name=l_1 visible="1" pen.style="0" pen.width="9" pen.color="0"  background.mode="2" background.color="7191717" )
 
 sparse(names="pretty_name")htmltable(border="1" )
 htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" encodeselflinkargs="1" netscapelayers="0" pagingmethod=0 generatedddwframes="1" )

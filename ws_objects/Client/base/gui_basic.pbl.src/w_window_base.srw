@@ -47,7 +47,7 @@ string title = "EncounterPRO"
 boolean minbox = true
 boolean maxbox = true
 boolean resizable = true
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string icon = "epman.ico"
 event post_open pbm_custom01
 event button_pressed ( integer button_index )
@@ -658,7 +658,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean focusrectangle = false
 end type
 

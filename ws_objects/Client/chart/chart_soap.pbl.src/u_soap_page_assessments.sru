@@ -220,6 +220,9 @@ destroy(this.st_page)
 destroy(this.st_include_cancelled)
 end on
 
+type cb_configure_tab from u_soap_page_base`cb_configure_tab within u_soap_page_assessments
+end type
+
 type st_encounter_id from u_soap_page_base`st_encounter_id within u_soap_page_assessments
 end type
 
@@ -353,8 +356,8 @@ end if
 end event
 
 type dw_soap_display from u_soap_display within u_soap_page_assessments
-integer x = 14
-integer y = 148
+integer x = 69
+integer y = 228
 integer width = 1874
 integer height = 1024
 integer taborder = 10
@@ -536,7 +539,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = 7191717
 boolean focusrectangle = false
 end type
 

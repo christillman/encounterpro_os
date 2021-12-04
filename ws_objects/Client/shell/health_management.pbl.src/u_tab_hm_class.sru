@@ -7,7 +7,7 @@ end forward
 global type u_tab_hm_class from u_tab_manager
 integer width = 3369
 integer height = 1580
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean boldselectedtext = true
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!

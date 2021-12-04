@@ -11,7 +11,7 @@ end forward
 global type u_tab_todo_lists from u_tab_manager
 integer width = 2875
 integer height = 1908
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean boldselectedtext = true
 tabpage_my_todo tabpage_my_todo
 end type

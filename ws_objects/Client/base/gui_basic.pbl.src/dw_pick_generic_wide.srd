@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$dw_pick_generic_wide.srd
 release 6;
-datawindow(units=0 timer_interval=0 color=33538240 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+datawindow(units=0 timer_interval=0 color=7191717 processing=0 print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 97 print.margin.bottom = 97 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
 summary(height=0 color="536870912" )
 footer(height=0 color="536870912" )
 detail(height=120 color="553648127" )

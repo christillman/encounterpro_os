@@ -301,7 +301,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "No Signature Stamp On File"
 boolean focusrectangle = false
 end type
@@ -344,7 +344,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Signature Stamp"
 alignment alignment = right!
 boolean focusrectangle = false
@@ -358,7 +358,7 @@ integer width = 2176
 integer height = 540
 integer taborder = 30
 boolean bringtotop = true
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 end type
 
 on uo_signature_stamp_display.destroy
@@ -418,7 +418,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Create New Signature"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -435,7 +435,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "User Signature Stamp"
 alignment alignment = center!
 boolean focusrectangle = false

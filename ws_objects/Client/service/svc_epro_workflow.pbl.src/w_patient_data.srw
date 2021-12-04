@@ -401,7 +401,7 @@ end event
 type tab_patient_data from u_tab_patient_data within w_patient_data
 integer width = 2917
 integer height = 1300
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 tabposition tabposition = tabsonbottom!
 end type
 

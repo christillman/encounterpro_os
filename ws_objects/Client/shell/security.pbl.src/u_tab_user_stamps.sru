@@ -7,7 +7,7 @@ end forward
 global type u_tab_user_stamps from u_tab_manager
 integer width = 3447
 integer height = 2124
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!
 end type

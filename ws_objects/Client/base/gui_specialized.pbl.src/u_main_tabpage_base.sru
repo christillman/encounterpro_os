@@ -7,7 +7,7 @@ end forward
 global type u_main_tabpage_base from userobject
 integer width = 411
 integer height = 432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "none"
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912

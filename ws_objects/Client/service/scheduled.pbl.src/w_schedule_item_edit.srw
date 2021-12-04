@@ -30,7 +30,7 @@ integer y = 200
 integer width = 1902
 integer height = 1400
 windowtype windowtype = response!
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 st_3 st_3
 st_2 st_2
 cb_warning_days cb_warning_days
@@ -122,7 +122,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Immunization Schedule Item"
 alignment alignment = center!
@@ -140,7 +140,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Age"
 alignment alignment = center!
@@ -202,7 +202,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Warning Days"
 alignment alignment = center!

@@ -7,7 +7,7 @@ end forward
 global type u_dummy_tab from u_main_tabpage_base
 int Width=2533
 int Height=1517
-long BackColor=33538240
+long BackColor=COLOR_BACKGROUND
 long PictureMaskColor=536870912
 long TabBackColor=16777215
 end type

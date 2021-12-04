@@ -251,7 +251,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Include EncounterPRO Users"
 end type
 
@@ -346,7 +346,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Patient Care Team"
 alignment alignment = center!

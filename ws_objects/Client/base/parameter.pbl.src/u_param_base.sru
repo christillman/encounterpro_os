@@ -19,7 +19,7 @@ end forward
 global type u_param_base from userobject
 integer width = 2697
 integer height = 1120
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912
 event type integer ue_required ( string ps_data )
@@ -553,7 +553,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Preference"
 boolean focusrectangle = false
 end type
@@ -598,7 +598,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 255
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "*"
 boolean focusrectangle = false
@@ -635,7 +635,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Param Title"
 alignment alignment = right!

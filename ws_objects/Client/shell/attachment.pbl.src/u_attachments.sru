@@ -17,7 +17,7 @@ end forward
 global type u_attachments from userobject
 integer width = 2862
 integer height = 1352
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "none"
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912
@@ -469,7 +469,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 string text = "Page 99/99"
 boolean focusrectangle = false
 end type

@@ -15,7 +15,7 @@ end forward
 global type u_tab_em_type_rules from u_tab_manager
 integer width = 3127
 integer height = 1556
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean boldselectedtext = true
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!

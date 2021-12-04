@@ -28,7 +28,7 @@ global type w_pop_duration from window
 integer width = 2926
 integer height = 1832
 windowtype windowtype = response!
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 cb_prn cb_prn
 st_prn st_prn
 sle_prn sle_prn
@@ -150,7 +150,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "PRN:"
 boolean focusrectangle = false
@@ -180,7 +180,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Duration"
 alignment alignment = center!

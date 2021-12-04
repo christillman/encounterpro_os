@@ -19,7 +19,7 @@ end forward
 global type u_tab_history_parents from u_tab_manager
 integer width = 1179
 integer height = 1264
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean boldselectedtext = true
 tabposition tabposition = tabsonbottom!
 integer selectedtab = 3

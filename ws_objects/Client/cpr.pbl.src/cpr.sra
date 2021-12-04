@@ -99,8 +99,11 @@ string default_encounter_type = "WELL"
 string temp_path = "C:\TEMP"
 string debug_path = "C:\TEMP\EproDebug"
  // rgb(192,192,255) classic purple
- // 7191717 // 23968933 greenolive background
-long COLOR_BACKGROUND = rgb(165,188,109) 
+  // 23968933 greenolive background
+ // You can change most of the objects in the app by setting this.
+ // But you need to change datawindows with global-replace in the
+ // text source files, and then Refresh at the root of the app.
+long COLOR_BACKGROUND = rgb(165,188,109) // 7191717
 long COLOR_TEXT_NORMAL
 long COLOR_TEXT_WARNING
 long COLOR_TEXT_ERROR

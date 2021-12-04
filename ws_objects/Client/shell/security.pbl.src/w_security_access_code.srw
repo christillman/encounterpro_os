@@ -44,7 +44,7 @@ integer y = 120
 integer width = 978
 integer height = 1640
 windowtype windowtype = response!
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 st_sticky st_sticky
 st_sticky_title st_sticky_title
 st_prompt st_prompt
@@ -248,7 +248,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Stay Logged On:"
 alignment alignment = right!
@@ -264,7 +264,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 alignment alignment = center!
 boolean focusrectangle = false
@@ -335,7 +335,7 @@ integer weight = 700
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 alignment alignment = center!
 boolean focusrectangle = false

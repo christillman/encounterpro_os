@@ -1,6 +1,6 @@
 ﻿$PBExportHeader$dw_route_web_upload_files.srd
 release 11;
-datawindow(units=0 timer_interval=0 color=33538240 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
+datawindow(units=0 timer_interval=0 color=7191717 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.preview.outline=yes hidegrayline=no showbackcoloronxp=no )
 header(height=0 color="536870912" )
 summary(height=0 color="536870912" )
 footer(height=0 color="536870912" )
@@ -9,7 +9,7 @@ table(column=(type=char(255) updatewhereclause=no name=description dbname="descr
  column=(type=char(100) updatewhereclause=no name=filename dbname="filename" )
  column=(type=number updatewhereclause=yes name=done dbname="done" initial="0" )
  )
-column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="8" height="100" width="1403" format="[general]" html.valueishtml="0"  name=description visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-10" font.weight="700~tif(done = 0, 700, 400)"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="33538240" )
+column(band=detail id=1 alignment="0" tabsequence=32766 border="0" color="0" x="18" y="8" height="100" width="1403" format="[general]" html.valueishtml="0"  name=description visible="1" height.autosize=yes edit.limit=0 edit.case=any edit.focusrectangle=no edit.autoselect=no  font.face="Tahoma" font.height="-10" font.weight="700~tif(done = 0, 700, 400)"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="7191717" )
 bitmap(band=detail filename="button_copy.bmp" x="1445" y="12" height="96" width="110" border="6"  name=p_copy_filename visible="1~t1 - done" )
 bitmap(band=detail filename="button_save.bmp" x="1595" y="12" height="96" width="110" border="6"  name=p_save_as visible="1~t1 - done" )
 bitmap(band=detail filename="button26.bmp" x="1897" y="12" height="96" width="110" border="6"  name=p_done visible="1~t1 - done" )

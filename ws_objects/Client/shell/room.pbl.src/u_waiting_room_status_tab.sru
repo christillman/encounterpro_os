@@ -11,7 +11,7 @@ end forward
 global type u_waiting_room_status_tab from u_main_tabpage_base
 integer width = 2162
 integer height = 1704
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 long tabtextcolor = 33554432
 long tabbackcolor = 16777215
 long picturemaskcolor = 536870912
@@ -125,7 +125,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = COLOR_BACKGROUND
 boolean enabled = false
 string text = "Empty"
 alignment alignment = center!
