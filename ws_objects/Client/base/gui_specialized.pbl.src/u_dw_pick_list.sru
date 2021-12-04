@@ -681,3 +681,11 @@ event updateend;tf_commit()
 
 end event
 
+event constructor;
+this.object.datawindow.header.color = color_background
+this.object.datawindow.detail.color = color_background
+this.object.datawindow.footer.color = color_background
+this.object.datawindow.color = color_background
+
+end event
+
