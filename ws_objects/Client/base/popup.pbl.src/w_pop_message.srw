@@ -101,70 +101,10 @@ BEEP(1)
 end event
 
 type pb_epro_help from w_pop_window_base`pb_epro_help within w_pop_message
-unsignedlong __hwnd = 0
-boolean visible = false
-accessiblerole accessiblerole = defaultrole!
-integer x = 2651
-integer y = 20
-integer width = 256
-integer height = 128
 integer taborder = 0
-boolean dragauto = false
-boolean bringtotop = false
-integer transparency = 0
-integer textsize = -10
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-boolean italic = false
-boolean underline = false
-boolean enabled = true
-boolean cancel = false
-boolean default = false
-boolean flatstyle = false
-boolean originalsize = true
-string picturename = "buttonhelp.bmp"
-string disabledname = "buttonhelp.bmp"
-alignment htextalign = left!
-vtextalign vtextalign = bottom!
-boolean map3dcolors = false
-long textcolor = 0
-long backcolor = 1073741824
 end type
 
 type st_config_mode_menu from w_pop_window_base`st_config_mode_menu within w_pop_message
-unsignedlong __hwnd = 0
-boolean visible = false
-accessiblerole accessiblerole = defaultrole!
-integer x = 55
-integer y = 1468
-integer width = 997
-integer height = 48
-integer taborder = 0
-boolean dragauto = false
-boolean bringtotop = false
-integer transparency = 0
-integer textsize = -7
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-boolean italic = false
-boolean underline = false
-long textcolor = 33554432
-long backcolor = 33538240
-boolean enabled = true
-alignment alignment = left!
-boolean border = false
-long bordercolor = 0
-fillpattern fillpattern = solid!
-borderstyle borderstyle = stylebox!
-boolean focusrectangle = false
-boolean righttoleft = false
-boolean disabledlook = false
 end type
 
 type dw_message from w_pop_window_base`dw_message within w_pop_message
