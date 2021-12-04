@@ -25,8 +25,8 @@ end forward
 global type w_about_encounterpro from w_window_base
 integer x = 69
 integer y = 256
-integer width = 3451
-integer height = 2100
+integer width = 4690
+integer height = 3080
 boolean titlebar = false
 string title = ""
 boolean minbox = false
@@ -88,17 +88,17 @@ end on
 
 event open;call super::open;st_build_number.text = f_app_version()
 
-
-phl_logo.x = (width - phl_logo.width) / 2
-st_build_number.x = (width - st_build_number.width) / 2
-rte_license.x = (width - rte_license.width) / 2
-shl_source.x = (width - shl_source.width) / 2
-shl_foundation.x = (width - shl_foundation.width) / 2
-shl_gnu_affero.x = (width - shl_gnu_affero.width) / 2
-phl_agpl.x = (width - phl_agpl.width) / 2
-
-st_license_title.x = rte_license.x
-
+//
+//phl_logo.x = (width - phl_logo.width) / 2
+//st_build_number.x = (width - st_build_number.width) / 2
+//rte_license.x = (width - rte_license.width) / 2
+//shl_source.x = (width - shl_source.width) / 2
+//shl_foundation.x = (width - shl_foundation.width) / 2
+//shl_gnu_affero.x = (width - shl_gnu_affero.width) / 2
+//phl_agpl.x = (width - phl_agpl.width) / 2
+//
+//st_license_title.x = rte_license.x
+//
 rte_license.InsertDocument(gnv_app.program_directory + "\Open Source License.rtf", true)
 rte_license.displayonly = true
 
@@ -116,25 +116,25 @@ type st_config_mode_menu from w_window_base`st_config_mode_menu within w_about_e
 end type
 
 type st_build_number from statictext within w_about_encounterpro
-integer x = 965
-integer y = 444
-integer width = 1262
-integer height = 72
+integer x = 1184
+integer y = 1036
+integer width = 1001
+integer height = 60
 integer textsize = -8
 integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = 33538240
+long backcolor = 19650013
 boolean enabled = false
-string text = "Build 159"
+string text = "Build 7.0.3.8"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
 
 type st_license_title from statictext within w_about_encounterpro
-integer x = 96
-integer y = 892
+integer x = 169
+integer y = 1072
 integer width = 402
 integer height = 76
 boolean bringtotop = true
@@ -144,15 +144,15 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = roman!
 string facename = "Times New Roman"
-long backcolor = 33538240
+long backcolor = 553648127
 string text = "License"
 boolean focusrectangle = false
 end type
 
 type rte_license from richtextedit within w_about_encounterpro
-integer x = 91
-integer y = 968
-integer width = 3241
+integer x = 151
+integer y = 1172
+integer width = 2181
 integer height = 952
 integer taborder = 20
 integer textsize = -12
@@ -168,10 +168,10 @@ borderstyle borderstyle = stylelowered!
 end type
 
 type shl_source from statichyperlink within w_about_encounterpro
-integer x = 329
-integer y = 1976
-integer width = 1792
-integer height = 76
+integer x = 535
+integer y = 2220
+integer width = 1422
+integer height = 64
 boolean bringtotop = true
 integer textsize = -12
 integer weight = 400
@@ -182,16 +182,16 @@ string facename = "Times New Roman"
 boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
-long backcolor = 33538240
-string text = "EncounterPRO-OS on SourceForge"
+long backcolor = 19650013
+string text = "EncounterPRO-OS on BitHub"
 alignment alignment = center!
 boolean focusrectangle = false
-string url = "https://sourceforge.net/projects/encounterpro-os/"
+string url = "https://github.com/christillman/encounterpro_os"
 end type
 
 type cb_ok from commandbutton within w_about_encounterpro
-integer x = 2912
-integer y = 1956
+integer x = 992
+integer y = 2304
 integer width = 421
 integer height = 108
 integer taborder = 30
@@ -209,9 +209,31 @@ event clicked;close(parent)
 end event
 
 type shl_foundation from statichyperlink within w_about_encounterpro
-integer x = 969
-integer y = 548
-integer width = 1280
+integer x = 530
+integer y = 2144
+integer width = 1422
+integer height = 64
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = roman!
+string facename = "Times New Roman"
+boolean underline = true
+string pointer = "HyperLink!"
+long textcolor = 134217856
+long backcolor = 19650013
+string text = "Copyright 2010-2021 The EncounterPRO Foundation, Inc."
+alignment alignment = center!
+boolean focusrectangle = false
+string url = "https://github.com/christillman/encounterpro_os"
+end type
+
+type shl_gnu_affero from statichyperlink within w_about_encounterpro
+integer x = 1184
+integer y = 1100
+integer width = 1001
 integer height = 60
 boolean bringtotop = true
 integer textsize = -10
@@ -223,29 +245,7 @@ string facename = "Times New Roman"
 boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
-long backcolor = 33538240
-string text = "Copyright 2010 The EncounterPRO Foundation, Inc."
-alignment alignment = center!
-boolean focusrectangle = false
-string url = "http://encounterpro.org/"
-end type
-
-type shl_gnu_affero from statichyperlink within w_about_encounterpro
-integer x = 1303
-integer y = 648
-integer width = 846
-integer height = 76
-boolean bringtotop = true
-integer textsize = -10
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = roman!
-string facename = "Times New Roman"
-boolean underline = true
-string pointer = "HyperLink!"
-long textcolor = 134217856
-long backcolor = 33538240
+long backcolor = 19650013
 string text = "Gnu Affero General Public License"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -253,8 +253,8 @@ string url = "http://www.gnu.org/licenses/agpl.html"
 end type
 
 type phl_agpl from picturehyperlink within w_about_encounterpro
-integer x = 1559
-integer y = 768
+integer x = 507
+integer y = 1036
 integer width = 402
 integer height = 124
 boolean bringtotop = true
@@ -266,13 +266,12 @@ string url = "http://www.gnu.org/licenses/agpl.html"
 end type
 
 type phl_logo from picturehyperlink within w_about_encounterpro
-integer x = 960
-integer y = 24
-integer width = 1454
-integer height = 404
+integer width = 4681
+integer height = 3072
 string pointer = "HyperLink!"
-string picturename = "Epro-OS-logo-blk-grn-Transparent.png"
+boolean originalsize = true
+string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolive-splash-screen-05-1024.png"
 boolean focusrectangle = false
-string url = "http://encounterpro.org/"
+string url = "https://github.com/christillman/encounterpro_os"
 end type
 
