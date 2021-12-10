@@ -112,7 +112,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 boolean focusrectangle = false
 end type

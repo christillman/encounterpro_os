@@ -7,7 +7,7 @@ end forward
 global type u_tab_vials_for_injection from u_tab_manager
 integer width = 2921
 integer height = 1576
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!

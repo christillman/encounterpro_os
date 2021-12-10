@@ -149,7 +149,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "99 of 99"
 boolean focusrectangle = false
 end type

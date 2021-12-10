@@ -267,7 +267,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean focusrectangle = false
 end type
 
@@ -284,7 +284,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Document Purpose:"
 alignment alignment = right!
 boolean focusrectangle = false

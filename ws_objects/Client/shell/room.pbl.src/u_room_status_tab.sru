@@ -226,8 +226,8 @@ uo_room.object.compute_alert_bitmap.x = uo_room.width - 155
 //uo_room.object.in_use.x = uo_room.width - 1316 - 36
 
 // Set the colors if they're different
-if backcolor <> color_background then backcolor = color_background
-if long(uo_room.object.datawindow.color) <> color_background then uo_room.object.datawindow.color = color_background
+if backcolor <> 7191717 then backcolor = 7191717
+if long(uo_room.object.datawindow.color) <> 7191717 then uo_room.object.datawindow.color = 7191717
 
 uo_room.refresh()
 
@@ -342,7 +342,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Empty"
 alignment alignment = center!

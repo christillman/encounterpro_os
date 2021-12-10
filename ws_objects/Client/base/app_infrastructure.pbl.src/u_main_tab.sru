@@ -67,7 +67,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean perpendiculartext = true
 tabposition tabposition = tabsonright!
@@ -325,7 +325,7 @@ luo_data = CREATE u_ds_data
 page_count = upperbound(control)
 for i = 1 to page_count
 	pages[i] = control[i]
-	pages[i].backcolor = color_background
+	pages[i].backcolor = 7191717
 next
 
 // Close any office tabs
@@ -444,8 +444,8 @@ check_logon()
 
 set_tab_visibility()
 
-if backcolor <> color_background then
-	backcolor = color_background
+if backcolor <> 7191717 then
+	backcolor = 7191717
 end if
 
 

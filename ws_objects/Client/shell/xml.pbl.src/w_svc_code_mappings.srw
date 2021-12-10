@@ -595,7 +595,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Mappings"
 end type
 
@@ -610,7 +610,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Interface Service ###"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -629,7 +629,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Code Domain     Filter:"
 boolean focusrectangle = false
 end type
@@ -725,7 +725,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Failed Document Mappings"
 end type
 
@@ -746,7 +746,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "All Mappings"
 end type
 
@@ -767,7 +767,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "All Document Mappings"
 end type
 
@@ -799,7 +799,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Unmapped Only"
 end type
 
@@ -820,7 +820,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "All Mappings"
 end type
 
@@ -841,7 +841,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Domains"
 end type
 

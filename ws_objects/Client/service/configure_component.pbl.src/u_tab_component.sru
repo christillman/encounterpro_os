@@ -7,7 +7,7 @@ end forward
 global type u_tab_component from u_tab_manager
 integer width = 2926
 integer height = 1416
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean perpendiculartext = true
 boolean createondemand = false

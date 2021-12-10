@@ -128,7 +128,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Document Field Mappings"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -163,6 +163,6 @@ integer width = 2894
 integer height = 1444
 integer taborder = 20
 boolean bringtotop = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 end type
 

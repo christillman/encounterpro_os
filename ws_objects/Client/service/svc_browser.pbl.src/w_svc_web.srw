@@ -36,7 +36,7 @@ boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
 windowstate windowstate = maximized!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 ole_browser ole_browser
 cb_cancel cb_cancel
 cb_close cb_close
@@ -376,7 +376,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean focusrectangle = false
 end type
 

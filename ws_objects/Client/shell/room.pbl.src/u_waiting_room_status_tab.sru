@@ -11,7 +11,7 @@ end forward
 global type u_waiting_room_status_tab from u_main_tabpage_base
 integer width = 2162
 integer height = 1704
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 long tabtextcolor = 33554432
 long tabbackcolor = 16777215
 long picturemaskcolor = 536870912
@@ -78,7 +78,7 @@ public subroutine refresh ();integer li_waiting_count
 
 f_set_background_color(this)
 
-uo_waiting_rooms.object.datawindow.color = color_background
+uo_waiting_rooms.object.datawindow.color = 7191717
 
 if not visible then return
 
@@ -125,7 +125,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Empty"
 alignment alignment = center!

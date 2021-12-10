@@ -39,7 +39,7 @@ boolean visible = false
 integer width = 2926
 integer height = 1832
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 pb_1 pb_1
 cb_2 cb_2
 cb_therapy2 cb_therapy2
@@ -435,7 +435,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Touch Phrase to Return It to EncounterPRO"
 boolean focusrectangle = false
@@ -453,7 +453,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Touch ~'+~' to Expand Options"
 boolean focusrectangle = false

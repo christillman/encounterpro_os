@@ -15,7 +15,7 @@ end forward
 global type u_tab_allergy_abnormal_results from u_tab_manager
 integer width = 1728
 integer height = 1352
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean raggedright = false
 tabpage_tests tabpage_tests
 tabpage_history tabpage_history

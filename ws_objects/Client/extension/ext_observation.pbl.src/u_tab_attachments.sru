@@ -15,7 +15,7 @@ end forward
 global type u_tab_attachments from u_tab_manager
 integer width = 2277
 integer height = 1312
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 tabposition tabposition = tabsonbottom!
 tabpage_patient_attachments tabpage_patient_attachments

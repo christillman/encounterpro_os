@@ -18,7 +18,7 @@ integer y = 604
 integer width = 2034
 integer height = 736
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 sle_string sle_string
 pb_cancel pb_cancel
 st_prompt st_prompt
@@ -97,7 +97,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Enter the CPT code of the procedure"
 alignment alignment = center!

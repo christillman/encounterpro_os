@@ -7,7 +7,7 @@ end forward
 global type u_tabpage from userobject
 integer width = 2569
 integer height = 1516
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912
 event initialize ( )

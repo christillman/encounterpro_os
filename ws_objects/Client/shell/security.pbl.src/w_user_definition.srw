@@ -133,7 +133,7 @@ integer width = 2926
 integer height = 1456
 integer taborder = 20
 boolean bringtotop = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean raggedright = false
 end type
 
@@ -175,7 +175,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "User Definition"
 alignment alignment = center!

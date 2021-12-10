@@ -204,7 +204,7 @@ integer height = 1492
 boolean bringtotop = true
 boolean enabled = false
 grgraphtype graphtype = piegraph!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 long shadecolor = 4210688
 integer spacing = 100
 integer elevation = 20
@@ -376,7 +376,7 @@ ll_job = printopen()
 gr_data.print(ll_job, 0, 0)
 printclose(ll_job)
 
-gr_data.backcolor = color_background
+gr_data.backcolor = 7191717
 
 //gr_data.setredraw(true)
 

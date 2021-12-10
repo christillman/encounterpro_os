@@ -7,7 +7,7 @@ end forward
 global type u_tab_todo_items from u_tab_manager
 integer width = 2839
 integer height = 1716
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean perpendiculartext = true
 tabposition tabposition = tabsonright!

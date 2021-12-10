@@ -141,9 +141,9 @@ string ls_priority_bitmap
 string ls_new_tabtext
 long ll_new_tabtextcolor
 
-if backcolor <> color_background then backcolor = color_background
-if long(uo_office_status_1.object.datawindow.color) <> color_background then uo_office_status_1.object.datawindow.color = color_background
-if long(uo_office_status_2.object.datawindow.color) <> color_background then uo_office_status_2.object.datawindow.color = color_background
+if backcolor <> 7191717 then backcolor = 7191717
+if long(uo_office_status_1.object.datawindow.color) <> 7191717 then uo_office_status_1.object.datawindow.color = 7191717
+if long(uo_office_status_2.object.datawindow.color) <> 7191717 then uo_office_status_2.object.datawindow.color = 7191717
 
 this.event TRIGGER resized()
 

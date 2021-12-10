@@ -15,7 +15,7 @@ end forward
 global type u_tab_vial_list from u_tab_manager
 integer width = 2139
 integer height = 1180
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean raggedright = false
 boolean boldselectedtext = true
 tabposition tabposition = tabsonbottom!

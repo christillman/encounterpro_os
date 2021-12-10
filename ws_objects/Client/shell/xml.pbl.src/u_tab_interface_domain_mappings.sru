@@ -15,7 +15,7 @@ end forward
 global type u_tab_interface_domain_mappings from u_tab_manager
 integer width = 2053
 integer height = 1308
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!

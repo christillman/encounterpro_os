@@ -1113,7 +1113,7 @@ next
 //ole_series.object.Graphframecolor = ole_series.object.colortable(21) 
 //ole_series.object.GraphBorderColor = ole_series.object.colortable(20) 
 //ole_series.object.Graphbackcolor = ole_series.object.colortable(15)
-//ole_series.object.backcolor = COLOR_BACKGROUND
+//ole_series.object.backcolor = 7191717
 //
 //ole_series.object.FontOpen("Times New Roman,10,B")
 //
@@ -1254,7 +1254,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean focusonbuttondown = true
 boolean boldselectedtext = true
 tabposition tabposition = tabsonbottom!
@@ -1754,7 +1754,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Encounters"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -1825,7 +1825,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Include Data From"
 alignment alignment = center!
 boolean focusrectangle = false

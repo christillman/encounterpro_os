@@ -25,7 +25,7 @@ boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 pb_done pb_done
 pb_cancel pb_cancel
 uo_display uo_display
@@ -160,7 +160,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "none"
 alignment alignment = center!

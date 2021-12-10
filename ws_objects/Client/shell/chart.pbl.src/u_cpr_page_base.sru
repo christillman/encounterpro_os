@@ -9,7 +9,7 @@ end forward
 global type u_cpr_page_base from userobject
 integer width = 2875
 integer height = 1272
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 long tabtextcolor = 33554432
 long tabbackcolor = 16777215
 long picturemaskcolor = 536870912

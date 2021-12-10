@@ -296,8 +296,8 @@ elseif not isnull(pstr_room.room_id) then
 		object.pretty_name[ll_row] = pstr_room.room_status
 	END IF
 	object.description[ll_row] = ""
-	object.patient_color[ll_row] = color_background
-	object.service_color[ll_row] = color_background
+	object.patient_color[ll_row] = 7191717
+	object.service_color[ll_row] = 7191717
 end if
 	
 RETURN 1

@@ -47,7 +47,7 @@ end forward
 global type u_tab_drug_config from u_tab_manager
 integer width = 2967
 integer height = 1500
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean boldselectedtext = true
 boolean createondemand = false
 tabposition tabposition = tabsonbottom!

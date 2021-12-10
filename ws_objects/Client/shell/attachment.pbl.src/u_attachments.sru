@@ -17,7 +17,7 @@ end forward
 global type u_attachments from userobject
 integer width = 2862
 integer height = 1352
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "none"
 long tabtextcolor = 33554432
 long picturemaskcolor = 536870912
@@ -405,8 +405,8 @@ end on
 type pb_new_attachments from u_picture_button within u_attachments
 integer x = 2537
 integer y = 428
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 50
 string picturename = "icon_new.bmp"
 string disabledname = "icon_new.bmp"
@@ -469,7 +469,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Page 99/99"
 boolean focusrectangle = false
 end type
@@ -502,8 +502,8 @@ type pb_up from u_picture_button within u_attachments
 boolean visible = false
 integer x = 2537
 integer y = 12
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 20
 string picturename = "icon_up.bmp"
 string disabledname = "icon_upx.bmp"

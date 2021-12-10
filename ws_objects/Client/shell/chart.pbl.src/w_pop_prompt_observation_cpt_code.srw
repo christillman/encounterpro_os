@@ -22,7 +22,7 @@ integer y = 604
 integer width = 2034
 integer height = 736
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 st_collect st_collect
 st_perform st_perform
 sle_string sle_string
@@ -169,7 +169,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean underline = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Enter the CPT code of the observation"
 alignment alignment = center!

@@ -4,7 +4,7 @@ datawindow(units=0 timer_interval=0 color=7191717 processing=0 HTMLDW=no print.p
 header(height=0 color="536870912" )
 summary(height=0 color="536870912" )
 footer(height=0 color="536870912" )
-detail(height=156 color="COLOR_BACKGROUND" height.autosize=yes )
+detail(height=156 color="7191717" height.autosize=yes )
 table(column=(type=char(12) updatewhereclause=no name=cpr_id dbname="cpr_id" )
  column=(type=number updatewhereclause=no name=encounter_id dbname="encounter_id" )
  column=(type=char(24) updatewhereclause=no name=billing_id dbname="billing_id" )

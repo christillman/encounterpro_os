@@ -47,7 +47,7 @@ string title = "EncounterPRO"
 boolean minbox = true
 boolean maxbox = true
 boolean resizable = true
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string icon = "epman.ico"
 event post_open pbm_custom01
 event button_pressed ( integer button_index )
@@ -308,7 +308,7 @@ else
 			pbuttons[button_count].button_help = ps_help
 			openuserobject(titles[button_count], ((button_count - 1) * (button_width + spacing)) + spacing, button_top + button_height + title_gap )
 			titles[button_count].text = ps_title
-			titles[button_count].backcolor = color_background
+			titles[button_count].backcolor = 7191717
 		else
 			log.log(this, "w_window_base.add_button:0043", "Error opening object for button (" + ps_title + ")", 4)
 		end if
@@ -564,9 +564,9 @@ st_config_mode_menu.height = 48
 st_config_mode_menu.y =	button_top - st_config_mode_menu.height - 4
 
 
-//if backcolor <> color_background then
+//if backcolor <> 7191717 then
 	ll_windowbackcolor = backcolor
-	backcolor = color_background
+	backcolor = 7191717
 	
 	for i = 1 to upperbound(control)
 	
@@ -575,31 +575,31 @@ st_config_mode_menu.y =	button_top - st_config_mode_menu.height - 4
 			CASE statictext!
 				lo_statictext = control[i]
 				if lo_statictext.backcolor = ll_windowbackcolor then
-					lo_statictext.backcolor = color_background
+					lo_statictext.backcolor = 7191717
 				end if
 			CASE tab!
 				lo_tab = control[i]
 				if lo_tab.backcolor = ll_windowbackcolor then
-					lo_tab.backcolor = color_background
+					lo_tab.backcolor = 7191717
 				end if
 			CASE datawindow!
 				lo_dw = control[i]
 				if len(lo_dw.dataobject) > 0 then
 					ll_dw_backcolor = long(lo_dw.object.datawindow.header.color)
 					if ll_dw_backcolor = ll_windowbackcolor then
-						lo_dw.object.datawindow.header.color = color_background
+						lo_dw.object.datawindow.header.color = 7191717
 					end if
 					ll_dw_backcolor = long(lo_dw.object.datawindow.detail.color)
 					if ll_dw_backcolor = ll_windowbackcolor then
-						lo_dw.object.datawindow.detail.color = color_background
+						lo_dw.object.datawindow.detail.color = 7191717
 					end if
 					ll_dw_backcolor = long(lo_dw.object.datawindow.footer.color)
 					if ll_dw_backcolor = ll_windowbackcolor then
-						lo_dw.object.datawindow.footer.color = color_background
+						lo_dw.object.datawindow.footer.color = 7191717
 					end if
 					ll_dw_backcolor = long(lo_dw.object.datawindow.color)
 					if ll_dw_backcolor = ll_windowbackcolor then
-						lo_dw.object.datawindow.color = color_background
+						lo_dw.object.datawindow.color = 7191717
 					end if
 				end if
 		END CHOOSE
@@ -658,7 +658,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean focusrectangle = false
 end type
 

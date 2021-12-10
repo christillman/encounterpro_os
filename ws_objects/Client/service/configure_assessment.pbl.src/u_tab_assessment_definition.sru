@@ -27,7 +27,7 @@ end forward
 global type u_tab_assessment_definition from u_tab_manager
 integer width = 2587
 integer height = 1548
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean raggedright = false
 tabposition tabposition = tabsonbottom!
 tabpage_info tabpage_info

@@ -77,7 +77,7 @@ end forward
 global type u_time_interval from UserObject
 int Width=2194
 int Height=1088
-long BackColor=COLOR_BACKGROUND
+long backcolor = 7191717
 long PictureMaskColor=536870912
 long TabTextColor=33554432
 long TabBackColor=67108864

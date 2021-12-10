@@ -27,7 +27,7 @@ boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 dw_severity dw_severity
 st_title st_title
 pb_cancel pb_cancel
@@ -157,7 +157,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Followup Severity"
 alignment alignment = center!
@@ -223,7 +223,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "Select the minimum result severity which will cause the followup observation to display"
 alignment alignment = center!

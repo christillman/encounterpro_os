@@ -374,7 +374,8 @@ unit_preference = original_unit_preference
 
 date_format_string = datalist.get_preference("PREFERENCES", "date_format_string", "[shortdate]")
 
-COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_BACKGROUND)
+// background must be set with global-replace because PB rewrites it hard coded when saving
+//COLOR_BACKGROUND = datalist.get_preference_int("PREFERENCES", "color_background", COLOR_BACKGROUND)
 
 
 ls_temp = datalist.get_preference("PREFERENCES", "abnormal_result_font_settings")

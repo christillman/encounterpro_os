@@ -20,7 +20,7 @@ integer y = 484
 integer width = 2066
 integer height = 952
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 cb_allergies cb_allergies
 st_1 st_1
 dw_message dw_message
@@ -96,7 +96,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 boolean enabled = false
 string text = "! Drug Alert  !"
 alignment alignment = center!

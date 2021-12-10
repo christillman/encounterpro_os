@@ -18,7 +18,7 @@ integer y = 604
 integer width = 2359
 integer height = 1108
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 st_title st_title
 cb_ok cb_ok
 cb_override cb_override
@@ -79,7 +79,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Security Alert"
 alignment alignment = center!
 boolean focusrectangle = false

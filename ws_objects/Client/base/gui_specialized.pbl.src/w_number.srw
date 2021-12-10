@@ -56,7 +56,7 @@ integer y = 284
 integer width = 2391
 integer height = 1348
 windowtype windowtype = response!
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 cb_space cb_space
 st_title st_title
 pb_down pb_down
@@ -408,7 +408,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 alignment alignment = center!
 boolean focusrectangle = false
 end type
@@ -484,7 +484,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Page 99/99"
 boolean focusrectangle = false
 end type

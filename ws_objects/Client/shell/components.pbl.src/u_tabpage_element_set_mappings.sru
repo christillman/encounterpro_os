@@ -13,7 +13,7 @@ end forward
 global type u_tabpage_element_set_mappings from u_tabpage
 integer width = 3182
 integer height = 2084
-long tabbackcolor = COLOR_BACKGROUND
+long tabbackcolor = 7191717
 st_collection st_collection
 st_collection_title st_collection_title
 dw_elements dw_elements
@@ -707,7 +707,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = COLOR_BACKGROUND
+long backcolor = 7191717
 string text = "Repeat element set for each object/record in:"
 alignment alignment = right!
 boolean focusrectangle = false
