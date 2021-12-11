@@ -78,7 +78,7 @@ if selectedtab <= 0 then li_sts = 0
 
 if section_count < selectedtab then li_sts = 0
 
-if not isvalid(w_main) then li_sts = 0
+if not IsValid(main_window) then li_sts = 0
 
 if li_sts > 0 then
 	if pl_height < minheight then

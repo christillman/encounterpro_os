@@ -178,7 +178,7 @@ else
 	popup_return.items[1] = ps_status
 end if
 
-if isvalid(w_main) then w_main.postevent("refresh")
+if IsValid(main_window) then w_main.postevent("refresh")
 
 closewithreturn(this, popup_return)
 
