@@ -15,7 +15,6 @@ integer x = 69
 integer y = 256
 integer width = 2670
 integer height = 1652
-boolean enabled = false
 boolean titlebar = false
 string title = ""
 boolean minbox = false
@@ -23,7 +22,6 @@ boolean maxbox = false
 boolean resizable = false
 boolean border = false
 windowtype windowtype = child!
-long backcolor = 7191717 // 23968933 // 165 + 256*188 + 256*256*109
 boolean show_more_buttons = false
 boolean auto_resize_objects = false
 boolean nested_user_object_resize = false
@@ -85,10 +83,9 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = roman!
 string facename = "Times New Roman"
-long backcolor = 7191717 // 23968933 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "Build 159"
-alignment alignment = Left!
 boolean focusrectangle = false
 end type
 
@@ -103,7 +100,7 @@ integer weight = 400
 fontpitch fontpitch = variable!
 fontfamily fontfamily = roman!
 string facename = "Times New Roman"
-long backcolor = 7191717 // 23968933 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "Copyright 2010-2022 The EncounterPRO Foundation, Inc."
 alignment alignment = center!
@@ -111,8 +108,8 @@ boolean focusrectangle = false
 end type
 
 type p_logo from picture within w_splash
-integer width = 2673
-integer height = 1650
+integer width = 2674
+integer height = 1652
 string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolivehr-background.png"
 boolean focusrectangle = false
 end type
