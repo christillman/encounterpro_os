@@ -6,7 +6,7 @@ forward prototypes
 global subroutine f_cpr_set_msg (string ps_message)
 end prototypes
 
-global subroutine f_cpr_set_msg (string ps_message);if isvalid(w_main) and not isnull(w_main) then
+global subroutine f_cpr_set_msg (string ps_message);if IsValid(main_window) and not IsNull(main_window) then
 	if isvalid(w_main.uo_help_bar) and not isnull(w_main.uo_help_bar) then
 		if w_main.uo_help_bar.st_msg.text <> &
 		 " " + ps_message then w_main.uo_help_bar.uf_set_msg(ps_message)
