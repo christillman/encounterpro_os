@@ -25,8 +25,8 @@ end forward
 global type w_about_encounterpro from w_window_base
 integer x = 69
 integer y = 256
-integer width = 4690
-integer height = 3080
+integer width = 2583
+integer height = 1700
 boolean titlebar = false
 string title = ""
 boolean minbox = false
@@ -116,16 +116,17 @@ type st_config_mode_menu from w_window_base`st_config_mode_menu within w_about_e
 end type
 
 type st_build_number from statictext within w_about_encounterpro
-integer x = 1184
-integer y = 1036
+integer x = 160
+integer y = 592
 integer width = 1001
 integer height = 60
-integer textsize = -8
+integer textsize = -10
 integer weight = 400
+fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 19650013
+fontfamily fontfamily = roman!
+string facename = "Times New Roman"
+long backcolor = 27041863
 boolean enabled = false
 string text = "Build 7.0.3.8"
 alignment alignment = center!
@@ -133,13 +134,13 @@ boolean focusrectangle = false
 end type
 
 type st_license_title from statictext within w_about_encounterpro
-integer x = 169
-integer y = 1072
+integer x = 69
+integer y = 1032
 integer width = 402
-integer height = 76
+integer height = 64
 boolean bringtotop = true
-integer textsize = -12
-integer weight = 700
+integer textsize = -9
+integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = roman!
@@ -150,10 +151,10 @@ boolean focusrectangle = false
 end type
 
 type rte_license from richtextedit within w_about_encounterpro
-integer x = 151
-integer y = 1172
-integer width = 2181
-integer height = 952
+integer x = 50
+integer y = 1096
+integer width = 1253
+integer height = 432
 integer taborder = 20
 integer textsize = -12
 integer weight = 700
@@ -168,12 +169,12 @@ borderstyle borderstyle = stylelowered!
 end type
 
 type shl_source from statichyperlink within w_about_encounterpro
-integer x = 535
-integer y = 2220
-integer width = 1422
+integer x = 46
+integer y = 784
+integer width = 1280
 integer height = 64
 boolean bringtotop = true
-integer textsize = -12
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -182,7 +183,7 @@ string facename = "Times New Roman"
 boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
-long backcolor = 19650013
+long backcolor = 27041863
 string text = "EncounterPRO-OS on BitHub"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -190,13 +191,13 @@ string url = "https://github.com/christillman/encounterpro_os"
 end type
 
 type cb_ok from commandbutton within w_about_encounterpro
-integer x = 992
-integer y = 2304
+integer x = 471
+integer y = 1556
 integer width = 421
 integer height = 108
 integer taborder = 30
 boolean bringtotop = true
-integer textsize = -12
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -209,12 +210,12 @@ event clicked;close(parent)
 end event
 
 type shl_foundation from statichyperlink within w_about_encounterpro
-integer x = 530
-integer y = 2144
-integer width = 1422
+integer x = 46
+integer y = 716
+integer width = 1280
 integer height = 64
 boolean bringtotop = true
-integer textsize = -10
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -223,7 +224,7 @@ string facename = "Times New Roman"
 boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
-long backcolor = 19650013
+long backcolor = 27041863
 string text = "Copyright 2010-2021 The EncounterPRO Foundation, Inc."
 alignment alignment = center!
 boolean focusrectangle = false
@@ -231,12 +232,12 @@ string url = "https://github.com/christillman/encounterpro_os"
 end type
 
 type shl_gnu_affero from statichyperlink within w_about_encounterpro
-integer x = 1184
-integer y = 1100
-integer width = 1001
+integer x = 242
+integer y = 956
+integer width = 809
 integer height = 60
 boolean bringtotop = true
-integer textsize = -10
+integer textsize = -8
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -245,7 +246,7 @@ string facename = "Times New Roman"
 boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
-long backcolor = 19650013
+long backcolor = 27041863
 string text = "Gnu Affero General Public License"
 alignment alignment = center!
 boolean focusrectangle = false
@@ -253,23 +254,21 @@ string url = "http://www.gnu.org/licenses/agpl.html"
 end type
 
 type phl_agpl from picturehyperlink within w_about_encounterpro
-integer x = 507
-integer y = 1036
-integer width = 402
-integer height = 124
+integer x = 1010
+integer y = 1008
+integer width = 300
+integer height = 93
 boolean bringtotop = true
 string pointer = "HyperLink!"
-boolean originalsize = true
 string picturename = "agplv3-88x31.png"
 boolean focusrectangle = false
 string url = "http://www.gnu.org/licenses/agpl.html"
 end type
 
 type phl_logo from picturehyperlink within w_about_encounterpro
-integer width = 4681
-integer height = 3072
+integer width = 2574
+integer height = 1690
 string pointer = "HyperLink!"
-boolean originalsize = true
 string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolive-splash-screen-05-1024.png"
 boolean focusrectangle = false
 string url = "https://github.com/christillman/encounterpro_os"
