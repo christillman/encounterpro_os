@@ -555,7 +555,7 @@ end if
 
 // If the w_main window is valid, then tell it we're in a service so it won't
 // keep refreshing itself
-IF isvalid(w_main) THEN w_main.doing_service()
+IF IsValid(main_window) THEN w_main.doing_service()
 
 doing_service = true
 
@@ -744,7 +744,7 @@ USING cprdb;
 if not cprdb.check() then return -1
 
 
-IF isvalid(w_main) THEN w_main.not_doing_service()
+IF IsValid(main_window) THEN w_main.not_doing_service()
 
 // Save the attributes again in case any were added by the descendent class
 li_sts = save_wp_item_attributes()
