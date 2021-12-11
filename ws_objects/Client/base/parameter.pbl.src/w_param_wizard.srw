@@ -170,10 +170,6 @@ str_params lstr_params
 // Get the new params list
 lstr_params = f_get_component_params(ps_id, param_mode)
 if lstr_params.param_count < 0 then return -1
-//lstr_params.id = ps_id
-//lstr_params.param_mode = param_mode
-//li_sts = f_get_param_list(lstr_params)
-//if li_sts < 0 then return -1
 
 // If we have no params and we're not in config mode then exit
 if lstr_params.param_count <= 0 then return 0
