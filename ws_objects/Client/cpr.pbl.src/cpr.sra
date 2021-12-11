@@ -393,7 +393,11 @@ if f_check_version() < 0 then
 	halt
 end if
 
-open(w_main)
+open(w_splash)
+
+f_logon()
+
+open(main_window, w_main)
 
 end event
 
@@ -412,7 +416,7 @@ if not isnull(common_thread) and isvalid(common_thread) then
 	common_thread.shutdown()
 end if
 
-if isvalid(w_main) and not isnull(w_main) then
+if IsValid(main_window) and not IsNull(main_window) then
 	close(w_main)
 end if
 
