@@ -736,7 +736,7 @@ string application_role = "cprsystem"
 
 string adodb_connectstring
 
-string remote_server = "jmjtech"
+string remote_server = "greenolive"
 
 string remote_database = "epro_40_synch"
 
@@ -747,7 +747,6 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
-
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -1241,7 +1240,11 @@ if not connected and windows_authentication then
 		CASE ELSE
 	END CHOOSE
 	
-	CONNECT USING luo_this; 
+	CONNECT USING luo_this;
+	if SQLCode <> 0 THEN 
+		// retry once
+		CONNECT USING luo_this;
+	end if
 	if SQLCode = 0 then
 		autocommit = true
 		connected = true
