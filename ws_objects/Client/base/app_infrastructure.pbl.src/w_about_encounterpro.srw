@@ -170,7 +170,7 @@ end type
 
 type shl_source from statichyperlink within w_about_encounterpro
 integer x = 46
-integer y = 784
+integer y = 780
 integer width = 1280
 integer height = 64
 boolean bringtotop = true
@@ -256,8 +256,8 @@ end type
 type phl_agpl from picturehyperlink within w_about_encounterpro
 integer x = 1010
 integer y = 1008
-integer width = 300
-integer height = 93
+integer width = 302
+integer height = 92
 boolean bringtotop = true
 string pointer = "HyperLink!"
 string picturename = "agplv3-88x31.png"
@@ -267,10 +267,9 @@ end type
 
 type phl_logo from picturehyperlink within w_about_encounterpro
 integer width = 2574
-integer height = 1690
+integer height = 1692
 string pointer = "HyperLink!"
 string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolive-splash-screen-05-1024.png"
 boolean focusrectangle = false
-string url = "https://github.com/christillman/encounterpro_os"
 end type
 
