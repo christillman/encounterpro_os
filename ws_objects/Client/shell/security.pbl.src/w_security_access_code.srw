@@ -138,9 +138,9 @@ end if
 
 sticky_logon = false
 
-if not isnull(main_window) and isvalid(main_window) then
-	x = main_window.x + (main_window.width - width) / 2
-	y = main_window.y + (main_window.height - height) / 2
+if not isnull(w_logon) and isvalid(w_logon) then
+	x = w_logon.x + (w_logon.width - width) / 2
+	y = w_logon.y + (w_logon.height - height) / 2
 end if
 
 timer(li_logon_timeout, this)
