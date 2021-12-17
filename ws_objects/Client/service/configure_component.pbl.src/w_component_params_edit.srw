@@ -29,7 +29,6 @@ integer width = 3511
 integer height = 1956
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -502,6 +501,15 @@ CHOOSE CASE lower(dwo.name)
 //		end if
 END CHOOSE
 
+end event
+
+event itemchanged;
+IF dwo.Name = "param_class" THEN
+	CHOOSE CASE data
+		CASE "Menu"
+			this.object.token1[row] = "menu_id"
+	END CHOOSE
+END IF
 end event
 
 type cb_copy_from from commandbutton within w_component_params_edit
