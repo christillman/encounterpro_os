@@ -178,7 +178,7 @@ else
 	popup_return.items[1] = ps_status
 end if
 
-if IsValid(main_window) then w_main.postevent("refresh")
+if IsValid(main_window) then main_window.postevent("refresh")
 
 closewithreturn(this, popup_return)
 
@@ -243,7 +243,7 @@ public subroutine refresh_screen ();
 // This function refreshes the objects on the Chart screen, not including the tab
 
 title = current_patient.id_line()
-if current_patient.display_only then w_main.title += " (Display Only)"
+if current_patient.display_only then main_window.title += " (Display Only)"
 
 display_portrait()
 
