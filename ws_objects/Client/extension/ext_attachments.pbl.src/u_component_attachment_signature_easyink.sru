@@ -46,8 +46,8 @@ log.file_write(lbl_attachment, ls_tempfile)
 //	li_sts = get_attachment_blob(lbl_attachment)
 //	If li_sts <= 0 Then Return -1
 //
-//	w_main.ole_signature_easyink.object.imagedata = lbl_attachment
-//	w_main.ole_signature_easyink.object.saveimage(ls_tempfile)
+//	main_window.ole_signature_easyink.object.imagedata = lbl_attachment
+//	main_window.ole_signature_easyink.object.saveimage(ls_tempfile)
 //else
 //	popup.data_row_count = 3
 //	popup.items[1] = ls_tempfile

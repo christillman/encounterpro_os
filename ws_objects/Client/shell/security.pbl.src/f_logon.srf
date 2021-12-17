@@ -3,18 +3,24 @@ global type f_logon from function_object
 end type
 
 forward prototypes
-global subroutine f_logon ()
+global function long f_logon ()
 end prototypes
 
-global subroutine f_logon ();
+global function long f_logon ();long ll_sts
 
-if main_window.windowstate = Minimized! then return
-if Not IsValid(datalist) then return
+If IsValid(main_window) Then
+	if main_window.windowstate = Minimized! then return 1
+End If
+
+if Not IsValid(datalist) then return -1
 
 if not datalist.get_preference_boolean("PREFERENCES", "computer_secure", false) then
 	setnull(viewed_room)
-	open(w_logon, w_main)
+	open(w_logon)
+	ll_sts = long(Message.DoubleParm)
+	RETURN ll_sts
 end if
 
-end subroutine
+RETURN 1
+end function
 

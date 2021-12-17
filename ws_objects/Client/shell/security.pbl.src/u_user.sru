@@ -202,7 +202,7 @@ if not tf_check() then return -1
 
 if sqlca.sqlcode = 100 then return 0
 
-if IsValid(main_window) then w_main.doing_service()
+if IsValid(main_window) then main_window.doing_service()
 
 
 return 1
@@ -219,7 +219,7 @@ if not tf_check() then return -1
 
 if sqlca.sqlcode = 100 then return 0
 
-if IsValid(main_window) then w_main.not_doing_service()
+if IsValid(main_window) then main_window.not_doing_service()
 
 return 1
 
@@ -292,7 +292,7 @@ elseif not sticky_logon then
 	return
 end if
 
-if IsValid(main_window) then w_main.tab_main.refresh()
+if IsValid(main_window) then main_window.tab_main.refresh()
 
 end subroutine
 
@@ -722,7 +722,7 @@ setnull(current_patient)
 sticky_logon = false
 
 if IsValid(main_window) and not pb_shutting_down then
-	w_main.tab_main.logonoff_refresh()
+	main_window.tab_main.logonoff_refresh()
 
 	if left(user_id, 8) = "Patient " then
 		user_id = "!PATIENT"

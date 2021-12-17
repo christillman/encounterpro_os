@@ -304,7 +304,7 @@ elseif li_index > 0 and isnull(current_scribe) then
 	close_page(li_index)
 end if
 
-w_main.refresh_main()
+main_window.refresh_main()
 
 end subroutine
 

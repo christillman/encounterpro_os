@@ -7,8 +7,8 @@ global subroutine f_progress_close ()
 end prototypes
 
 global subroutine f_progress_close ();if IsValid(main_window) and not IsNull(main_window) then
-	if isvalid(w_main.uo_help_bar) and not isnull(w_main.uo_help_bar) then
-		w_main.uo_help_bar.close_progress()
+	if isvalid(main_window.uo_help_bar) and not isnull(main_window.uo_help_bar) then
+		main_window.uo_help_bar.close_progress()
 	end if
 end if
 

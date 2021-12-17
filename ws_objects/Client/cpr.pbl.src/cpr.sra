@@ -172,6 +172,7 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -393,11 +394,36 @@ if f_check_version() < 0 then
 	halt
 end if
 
-open(w_splash)
+li_sts = f_crash_clean_up()
+if li_sts < 0 then
+	log.log(po_null, "cpr.open:155","crash clean up failed", 5)
+end if
 
-f_logon()
+li_sts = f_logon()
+if li_sts < 0 then
+	// user clicked X
+	return
+end if
+if li_sts = 0 then
+	// user clicked minimize
+	// If we allow it to continue, 
+	// invalid main window will be shown.
+	return
+end if
 
-open(main_window, w_main)
+li_sts = f_initialize_objects()
+if li_sts < 0 then
+	if NOT IsNull(log) AND IsValid(log) then
+		log.log(this, "cpr.open:169", "Error initializing objects", 5)
+	end if
+	return
+end if
+//if li_sts <= 0 then
+//	close(this)
+//	return
+//end if
+
+open(main_window, "w_main")
 
 end event
 
@@ -417,7 +443,7 @@ if not isnull(common_thread) and isvalid(common_thread) then
 end if
 
 if IsValid(main_window) and not IsNull(main_window) then
-	close(w_main)
+	close(main_window)
 end if
 
 SetNull(datalist)

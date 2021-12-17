@@ -21,6 +21,10 @@ if isnull(current_scribe) then
 		datalist.clear_cache("display_scripts")  // force a display_script reload
 		datalist.clear_cache("menus")  // force menu reload
 		common_thread.default_display_style = datalist.get_preference("PREFERENCES", "default_display_style")
+	else
+		if IsValid(main_window) then
+			main_window.Hide()
+		end if
 	end if
 	
 	// Determine which user the logged in person is scribing for
@@ -52,20 +56,18 @@ if isnull(current_scribe) then
 		end if
 	
 		log.log_db( po_null, "f_user_logon:0045", "User " + current_scribe.user_short_name + " has logged on", 2)
-	end if
 
-	// Refresh the main window	
-	main_window.function POST refresh()
-	
-	// If this is EncounterPRO, then set the visible screen
-	if isvalid(w_main) then
-		if NOT isnull(current_user) then
-			if not current_user.sticky_logon AND NOT isnull(viewed_room) then
-				w_main.tab_main.set_tab_room(viewed_room)
+		if IsValid(main_window) then
+			// Refresh the main window	
+			main_window.show()
+			main_window.function POST refresh()
+			if NOT isnull(current_user) then
+				if not current_user.sticky_logon AND NOT isnull(viewed_room) then
+					main_window.tab_main.set_tab_room(viewed_room)
+				end if
 			end if
 		end if
 	end if
-
 
 elseif isnull(current_user) then
 	current_user = current_scribe

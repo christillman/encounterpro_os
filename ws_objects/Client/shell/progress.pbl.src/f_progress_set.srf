@@ -7,8 +7,8 @@ global subroutine f_progress_set (long pl_value)
 end prototypes
 
 global subroutine f_progress_set (long pl_value);if IsValid(main_window) and not IsNull(main_window) then
-	if isvalid(w_main.uo_help_bar) and not isnull(w_main.uo_help_bar) then
-		w_main.uo_help_bar.set_progress(pl_value)
+	if isvalid(main_window.uo_help_bar) and not isnull(main_window.uo_help_bar) then
+		main_window.uo_help_bar.set_progress(pl_value)
 	end if
 end if
 

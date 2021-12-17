@@ -84,7 +84,7 @@ if li_sts > 0 then
 	if pl_height < minheight then
 		section[selectedtab].section_object.minimize()
 	else
-		if w_main.windowstate = Minimized! then
+		if main_window.windowstate = Minimized! then
 			section[selectedtab].section_object.postevent("refresh")
 		else
 			li_sts = section[selectedtab].section_object.size_and_position_window()
@@ -295,8 +295,8 @@ string ls_text
 
 
 for i = 1 to section_count
-	section[i].page_x = section[i].my_cpr_main.WorkSpaceX() + x + 15 - w_main.x
-	section[i].page_y = section[i].my_cpr_main.WorkSpaceY() + y + 10 - w_main.y
+	section[i].page_x = section[i].my_cpr_main.WorkSpaceX() + x + 15 - main_window.x
+	section[i].page_y = section[i].my_cpr_main.WorkSpaceY() + y + 10 - main_window.y
 	if section[i].page_count = 1 then
 		TRY
 			opentab(section[i].section_object, section[i].page[1].page_class, 0)

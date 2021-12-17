@@ -20,11 +20,11 @@ if not isnull(current_scribe) then current_scribe.check_logon()
 
 if isnull(viewed_room) then
 	if isnull(current_scribe) or just_logged_on then
-		w_main.tab_main.set_tab(default_group_id)
+		main_window.tab_main.set_tab(default_group_id)
 	end if
 	just_logged_on = false
 else
-	w_main.tab_main.set_tab_room(viewed_room)
+	main_window.tab_main.set_tab_room(viewed_room)
 end if
 
 

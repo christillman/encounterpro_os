@@ -27,8 +27,8 @@ if pb_change_default then
 end if
 
 if gnv_app.cpr_mode = "CLIENT" then
-	w_main.tab_main.initialize()
-	w_main.tab_main.selecttab(2)
+	main_window.tab_main.initialize()
+	main_window.tab_main.selecttab(2)
 end if
 
 return 1
