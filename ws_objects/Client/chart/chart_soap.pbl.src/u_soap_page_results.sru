@@ -17,6 +17,8 @@ type pb_up from picturebutton within u_soap_page_results
 end type
 type uo_attachments from u_letter_attachments within u_soap_page_results
 end type
+type uo_letter_type from u_dw_pick_list within u_soap_page_results
+end type
 end forward
 
 global type u_soap_page_results from u_soap_page_base_large
@@ -27,6 +29,7 @@ st_format_4 st_format_4
 pb_down pb_down
 pb_up pb_up
 uo_attachments uo_attachments
+uo_letter_type uo_letter_type
 end type
 global u_soap_page_results u_soap_page_results
 
@@ -39,6 +42,8 @@ long display_script_id_4
 
 long current_display_script_id
 
+string attachment_folder = "Lab Reports"
+
 end variables
 
 forward prototypes
@@ -47,6 +52,7 @@ public subroutine xx_initialize ()
 public subroutine prev_encounter ()
 public subroutine next_encounter ()
 public subroutine key_down (keycode key, unsignedlong keyflags)
+public subroutine attachment_menu (long pl_attachment_id, string ps_attachment_type)
 end prototypes
 
 public subroutine xx_refresh ();integer li_sts
@@ -58,8 +64,10 @@ setredraw(false)
 ll_page = uo_attachments.dw_attachments.current_page
 if ll_page <= 0 then ll_page = 1
 
+// this would look something like filtering to choose attachments
+// which are dated between the chosen encounter date and the next one
 //li_sts = uo_attachments.load_encounter(display_mode, new_data)
-if li_sts <= 0 then return
+//if li_sts <= 0 then return
 
 uo_attachments.dw_attachments.last_page = 0
 uo_attachments.dw_attachments.set_page(ll_page, ls_text)
@@ -165,9 +173,11 @@ if dw_encounters.visible then
 	uo_attachments.width = content_width
 	uo_attachments.height = st_format_1.y - uo_attachments.y - 20
 	
-	// Initially pull out all the patient results
-	uo_attachments.initialize("Patient", "Tag", ll_null, "Lab Results")
-
+	// Initially pull out just lab results
+	uo_attachments.initialize("Patient", "Attachment_Tag", ll_null, attachment_folder)
+	// for all attachments
+	// uo_attachments.initialize("Patient", ll_null)
+	uo_attachments.refresh()
 else
 	pb_up.visible = false
 	pb_down.visible = false
@@ -250,6 +260,11 @@ return
 
 end subroutine
 
+public subroutine attachment_menu (long pl_attachment_id, string ps_attachment_type);current_patient.attachments.menu(pl_attachment_id, uo_attachments.context_object, uo_attachments.object_key)
+refresh()
+
+end subroutine
+
 on u_soap_page_results.create
 int iCurrent
 call super::create
@@ -260,6 +275,7 @@ this.st_format_4=create st_format_4
 this.pb_down=create pb_down
 this.pb_up=create pb_up
 this.uo_attachments=create uo_attachments
+this.uo_letter_type=create uo_letter_type
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_format_1
 this.Control[iCurrent+2]=this.st_format_2
@@ -268,6 +284,7 @@ this.Control[iCurrent+4]=this.st_format_4
 this.Control[iCurrent+5]=this.pb_down
 this.Control[iCurrent+6]=this.pb_up
 this.Control[iCurrent+7]=this.uo_attachments
+this.Control[iCurrent+8]=this.uo_letter_type
 end on
 
 on u_soap_page_results.destroy
@@ -279,6 +296,7 @@ destroy(this.st_format_4)
 destroy(this.pb_down)
 destroy(this.pb_up)
 destroy(this.uo_attachments)
+destroy(this.uo_letter_type)
 end on
 
 type cb_configure_tab from u_soap_page_base_large`cb_configure_tab within u_soap_page_results
@@ -538,14 +556,14 @@ alignment htextalign = left!
 end type
 
 event clicked;string ls_text
-//uo_attachments.dw_attachments.set_page(uo_attachments.dw_attachments.current_page + 1, ls_text)
-//pb_up.enabled = true
-//
-//if uo_attachments.dw_attachments.current_page >= uo_attachments.dw_attachments.last_page then
-//	enabled = false
-//else
-//	enabled = true
-//end if
+uo_attachments.dw_attachments.set_page(uo_attachments.dw_attachments.current_page + 1, ls_text)
+pb_up.enabled = true
+
+if uo_attachments.dw_attachments.current_page >= uo_attachments.dw_attachments.last_page then
+	enabled = false
+else
+	enabled = true
+end if
 end event
 
 type pb_up from picturebutton within u_soap_page_results
@@ -567,14 +585,14 @@ alignment htextalign = left!
 end type
 
 event clicked;string ls_text
-//uo_attachments.dw_attachments.set_page(uo_attachments.dw_attachments.current_page - 1, ls_text)
+uo_attachments.dw_attachments.set_page(uo_attachments.dw_attachments.current_page - 1, ls_text)
 pb_down.enabled = true
 
-//if uo_attachments.dw_attachments.current_page <= 1 then
+if uo_attachments.dw_attachments.current_page <= 1 then
 	enabled = false
-//else
+else
 	enabled = true
-//end if
+end if
 
 end event
 
@@ -588,4 +606,37 @@ end type
 on uo_attachments.destroy
 call u_letter_attachments::destroy
 end on
+
+event ue_attachment_clicked;call super::ue_attachment_clicked;attachment_menu(pl_attachment_id,ps_attachment_type)
+end event
+
+type uo_letter_type from u_dw_pick_list within u_soap_page_results
+boolean visible = false
+integer x = 402
+integer y = 240
+integer width = 855
+integer height = 1128
+integer taborder = 20
+boolean bringtotop = true
+boolean enabled = false
+string title = "Invisible folder list"
+string dataobject = "dw_sp_get_patient_folder_list"
+boolean border = false
+boolean livescroll = false
+end type
+
+event constructor;call super::constructor;active_header = true
+end event
+
+event selected;call super::selected;String ls_null
+
+Setnull(ls_null)
+
+// invisible object cannot be selected?
+attachment_folder = object.folder[selected_row]
+If attachment_folder = '<All>' Then attachment_folder = ls_null
+
+Refresh()
+
+end event
 
