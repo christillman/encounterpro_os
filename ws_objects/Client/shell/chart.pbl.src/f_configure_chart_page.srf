@@ -53,6 +53,9 @@ next
 
 li_sts = luo_data.update()
 
+if li_sts <= 0 then messagebox("data update failed", string(li_sts))
+
+
 DESTROY luo_data
 
 
