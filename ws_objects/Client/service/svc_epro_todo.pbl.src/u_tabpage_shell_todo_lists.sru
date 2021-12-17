@@ -44,6 +44,8 @@ end event
 public subroutine refresh ();long i
 u_tabpage_shell_todo_items luo_tabpage
 
+if isnull(current_user) then return
+
 if isnull(user_id) or current_user.user_id <> user_id then
 	initialize_user(current_user.user_id)
 	tab_todo.selecttab(1)
@@ -254,7 +256,6 @@ integer taborder = 20
 boolean multiline = true
 boolean showpicture = false
 boolean perpendiculartext = false
-boolean createondemand = false
 tabposition tabposition = tabsontop!
 end type
 
