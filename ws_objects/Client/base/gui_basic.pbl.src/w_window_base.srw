@@ -521,7 +521,7 @@ if auto_resize_objects then f_resize_objects(control, x_factor, y_factor, zoom_d
 end subroutine
 
 public subroutine center_popup ();
-if isnull(main_window) then return
+if isnull(main_window) or NOT IsValid(main_window) then return
 
 x = main_window.x + (main_window.width - width) / 2
 y = main_window.y + (main_window.height - height) / 2
