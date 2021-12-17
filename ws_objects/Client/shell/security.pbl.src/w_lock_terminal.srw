@@ -80,7 +80,7 @@ end event
 
 event timer;integer li_sts
 
-w_main.uo_help_bar.uf_set_clock()
+main_window.uo_help_bar.uf_set_clock()
 
 // See if the database is OK
 li_sts = f_check_system_status()
