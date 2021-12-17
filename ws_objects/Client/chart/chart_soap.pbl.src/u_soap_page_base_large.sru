@@ -126,7 +126,6 @@ end type
 global u_soap_page_base_large u_soap_page_base_large
 
 type variables
-boolean first_time = true
 boolean showing_complaint
 
 string button_type[]
@@ -167,7 +166,6 @@ string indirect_flag
 
 
 end variables
-
 forward prototypes
 public subroutine refresh_subjective ()
 public subroutine xx_initialize ()
@@ -264,10 +262,6 @@ else
 	ll_current_display_encounter_id = current_display_encounter.encounter_id
 end if
 
-//if first_time then
-//	li_sts = load_encounters()
-//end if
-
 ll_count = dw_encounters.rowcount()
 if ll_count > 0 then
 	// Set the encounter counter
@@ -313,7 +307,6 @@ this_section.refresh_other_tabs(this_page)
 
 st_config_mode_menu.setposition(ToTop!)
 
-first_time = false
 
 end subroutine
 
