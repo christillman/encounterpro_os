@@ -15,13 +15,14 @@ integer x = 69
 integer y = 256
 integer width = 2670
 integer height = 1652
+boolean enabled = false
 boolean titlebar = false
 string title = ""
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 boolean border = false
-windowtype windowtype = child!
+windowtype windowtype = popup!
 boolean show_more_buttons = false
 boolean auto_resize_objects = false
 boolean nested_user_object_resize = false
@@ -57,6 +58,24 @@ event open;call super::open;st_build_number.text = f_app_version()
 //st_build_number.x = (width - st_build_number.width) / 2
 //st_copyright.x = (width - st_copyright.width) / 2
 //p_agpl.x = (width - p_agpl.width) / 2
+
+timer( 5 ) // 35 seconds
+this.bringtotop = TRUE
+end event
+
+event timer;call super::timer;
+close( this )
+return 0
+end event
+
+event close;call super::close;
+timer( 0, w_splash )
+return 0
+end event
+
+event closequery;call super::closequery;
+timer( 0, w_splash )
+return 0
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_splash
