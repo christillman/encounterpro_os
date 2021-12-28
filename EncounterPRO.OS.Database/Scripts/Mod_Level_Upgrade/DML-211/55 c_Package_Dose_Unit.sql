@@ -642,11 +642,11 @@ and dose_unit != 'DROPNOSTRIL'
 
 UPDATE vw_dose_unit  SET dose_unit = 'DROPNOSTRIL', dosage_form = 'Nasal Solution'
 where form_descr like '%nasal solution%'
-and dose_unit is null
+and dose_unit != 'DROPNOSTRIL'
 
 UPDATE vw_dose_unit  SET dose_unit = 'SPRAYNOSTRIL', dosage_form = 'Nasal Spray'
 where form_descr like '%nasal spray%'
-and dose_unit is null
+and dose_unit != 'SPRAYNOSTRIL'
 
 UPDATE vw_dose_unit  SET dose_unit = 'ML', dosage_form = 'Injectable Soln'
 where form_descr like '%solution for infusion%'
