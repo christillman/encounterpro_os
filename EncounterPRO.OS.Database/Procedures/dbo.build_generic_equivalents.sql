@@ -5,7 +5,7 @@ GO
 
 CREATE PROCEDURE build_generic_equivalents AS BEGIN
 
-DECLARE @bn_rxcui varchar(10), @last_bn_rxcui varchar(10)
+DECLARE @bn_rxcui varchar(20), @last_bn_rxcui varchar(20)
 DECLARE @ingredient_name varchar(500), @generic_equiv varchar(900)
 DECLARE @trial_count int, @trial_length int
 
