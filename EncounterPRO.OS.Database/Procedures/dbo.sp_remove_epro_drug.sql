@@ -8,10 +8,9 @@ GO
 Print 'Create Procedure [dbo].[sp_remove_epro_drug]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_remove_epro_drug (
-	@is_rxnorm bit,
 	@country_code varchar(100),
 	@country_drug_id varchar(21),
 	@brand_name_rxcui varchar(20) = NULL,
@@ -24,8 +23,6 @@ AS
 BEGIN
 
 /*
-	@is_rxnorm bit,
-	@generic_only bit,
 	@country_code varchar(100), 
 	-- specifying @country_drug_id also removes from Kenya_Drugs and _Related tables
 	@country_drug_id varchar(21),
@@ -42,9 +39,6 @@ BEGIN
 DECLARE @msg varchar(100)
 DECLARE @replacement_generic_rxcui varchar(20)
 DECLARE @replacement_brand_name_rxcui varchar(20)
-
-IF @is_rxnorm = 0 
-	BEGIN
 
 	IF @brand_name_rxcui IS NULL
 		AND @generic_rxcui IS NULL 
@@ -151,6 +145,11 @@ IF @is_rxnorm = 0
 			WHERE form_rxcui LIKE @country_code + 'B%'
 				AND form_rxcui = replace(@brand_name_rxcui,
 				@country_code + 'BI', @country_code + 'B')
+			UNION
+			SELECT form_rxcui
+			FROM c_Drug_Formulation
+			WHERE form_rxcui LIKE @country_code + 'B%'
+				AND ingr_rxcui = @brand_name_rxcui
 
 			SELECT @msg = 'Removing ' + convert(varchar(2), count(*)) 
 				+ ' brand formulations for ' 
@@ -178,6 +177,8 @@ IF @is_rxnorm = 0
 				WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 				)
+			IF @@rowcount = 0
+				SET @msg = 'c_Drug_Definition ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
 			WHERE drug_id = (
@@ -190,13 +191,16 @@ IF @is_rxnorm = 0
 			FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
+			IF @@rowcount = 0
+				SET @msg = 'c_Drug_Brand ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 
 		END
-	ELSE IF @generic_rxcui IS NOT NULL
+
+	IF @generic_rxcui IS NOT NULL
 		BEGIN
 		-- remove generics with their formulations and packages
 
@@ -206,6 +210,11 @@ IF @is_rxnorm = 0
 			WHERE form_rxcui LIKE @country_code + 'G%'
 				AND form_rxcui = replace(@generic_rxcui,
 				@country_code + 'GI', @country_code + 'G')
+			UNION
+			SELECT form_rxcui
+			FROM c_Drug_Formulation
+			WHERE form_rxcui LIKE @country_code + 'G%'
+				AND ingr_rxcui = @generic_rxcui
 			SELECT @msg = 'Removing ' + convert(varchar(2), count(*)) 
 				+ ' generic formulations for ' + @generic_rxcui
 			FROM #remove_generic_forms
@@ -224,13 +233,15 @@ IF @is_rxnorm = 0
 			DELETE FROM c_Drug_Formulation
 			WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_generic_forms)
 
-			SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + common_name 
+			SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + generic_name 
 			FROM c_Drug_Definition
 			WHERE drug_id = (
 				SELECT drug_id FROM c_Drug_Generic
 				WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
 				)
+			IF @@rowcount = 0
+				SET @msg = 'c_Drug_Definition ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
 			WHERE drug_id = (
@@ -243,6 +254,8 @@ IF @is_rxnorm = 0
 			FROM c_Drug_Generic 
 			WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
+			IF @@rowcount = 0
+				SET @msg = 'c_Drug_Generic ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Generic
 			WHERE generic_rxcui = @generic_rxcui
@@ -281,8 +294,4 @@ IF @is_rxnorm = 0
 		WHERE Retention_No = @country_drug_id
 
 		END
-	END -- @is_rxnorm = 0
-	ELSE
-		print 'Use sp_remove_rxnorm drug'
-	
 END
