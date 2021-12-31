@@ -60,7 +60,8 @@ GO
 
 IF OBJECT_ID ('tr_c_Drug_Formulation_insert_update', 'TR') IS NOT NULL
      DROP TRIGGER tr_c_Drug_Formulation_insert_update
-  GO
+
+GO
   CREATE TRIGGER tr_c_Drug_Formulation_insert_update
   ON c_Drug_Formulation
   FOR INSERT, UPDATE 
@@ -77,7 +78,7 @@ IF OBJECT_ID ('tr_c_Drug_Formulation_insert_update', 'TR') IS NOT NULL
 		JOIN inserted i ON i.form_descr = f.form_descr
 		END
 	END
-  GO
+GO
   
   /*
   insert into c_Drug_Formulation (
@@ -160,7 +161,7 @@ WHERE form_rxcui IN ('KEG7884A', 'KEG7884B')
 
 DELETE FROM c_Drug_Generic 
 	WHERE generic_rxcui IN ('KEGI7884B','KEGI7697A','KEGI10093','KEGI12367','KEGI6896','KEGI2911')
-
+GO
 -- Because a unique index fails if the column is over 900 bytes, 
 -- create a checksum column and a unique index on that.
 if exists (select * from sys.columns where object_id = object_id('c_Drug_Generic') and
@@ -181,4 +182,5 @@ if exists (select * from sys.indexes where object_id = object_id('c_Drug_Brand')
 	 DROP INDEX c_Drug_Brand.uq_brand_name
 
 CREATE UNIQUE INDEX uq_brand_name ON c_Drug_Brand (brand_name)
+GO
 
