@@ -176,5 +176,9 @@ ALTER TABLE c_Drug_Generic ADD uq_name_checksum AS (CHECKSUM(generic_name)
 	CONSTRAINT uq_generic_name UNIQUE (uq_name_checksum)
 GO
 
+if exists (select * from sys.indexes where object_id = object_id('c_Drug_Brand') and
+	 name = 'uq_brand_name')
+	 DROP INDEX c_Drug_Brand.uq_brand_name
+
 CREATE UNIQUE INDEX uq_brand_name ON c_Drug_Brand (brand_name)
 
