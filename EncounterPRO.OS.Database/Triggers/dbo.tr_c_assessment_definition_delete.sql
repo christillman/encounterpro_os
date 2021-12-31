@@ -62,7 +62,7 @@ GO
 Print 'Create Trigger [dbo].[tr_c_assessment_definition_delete]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE TRIGGER tr_c_assessment_definition_delete ON dbo.c_assessment_definition
 FOR DELETE

@@ -5,13 +5,15 @@ if exists (select * from sys.objects where object_id = object_id('tr_c_Drug_Defi
 	DROP TRIGGER [dbo].[tr_c_Drug_Definition_update]
 
 -- remove c_Vaccine linkage
-DROP TRIGGER [dbo].[tr_c_Drug_Definition_insert]
+if exists (select * from sys.objects where object_id = object_id('tr_c_Drug_Definition_insert') and
+	 type = 'TR')
+	DROP TRIGGER [dbo].[tr_c_Drug_Definition_insert]
 
 GO
 SET ANSI_NULLS ON
 GO
 
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TRIGGER [dbo].[tr_c_Drug_Definition_insert] ON [dbo].[c_Drug_Definition]

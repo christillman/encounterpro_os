@@ -62,7 +62,7 @@ GO
 Print 'Create Trigger [dbo].[tr_o_Service_insert]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE TRIGGER tr_o_Service_insert ON dbo.o_Service
 FOR INSERT
