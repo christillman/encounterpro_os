@@ -8,7 +8,7 @@ GO
 Print 'Create Procedure [dbo].[sp_remove_rxnorm_drug]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_remove_rxnorm_drug (
 	@drug_id varchar(21),
@@ -49,7 +49,7 @@ IF @brand_name_rxcui IS NULL
 	FROM c_Drug_Brand_Related r
 	WHERE 'RXNB' + brand_name_rxcui = @drug_id
 
-	IF @brand_name_rxcui IS NULL
+	IF @@rowcount = 0
 		SELECT @brand_name_rxcui = brand_name_rxcui
 		FROM c_Drug_Brand b
 		WHERE drug_id = @drug_id
@@ -57,9 +57,9 @@ IF @brand_name_rxcui IS NULL
 	SELECT @generic_rxcui = generic_rxcui
 		FROM c_Drug_Generic_Related r 
 		WHERE source_id = @drug_id
-		AND 'RXNB' + generic_rxcui = @drug_id
+		AND 'RXNG' + generic_rxcui = @drug_id
 
-	IF @generic_rxcui IS NULL
+	IF @@rowcount = 0
 		SELECT @generic_rxcui = generic_rxcui
 		FROM c_Drug_Generic g
 		WHERE drug_id = @drug_id
@@ -103,6 +103,9 @@ IF @brand_name_rxcui IS NOT NULL
 			SELECT drug_id FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 			)
+		OR drug_id = @drug_id
+		IF @@rowcount = 0
+			SET @msg = 'c_Drug_Definition for ' + @brand_name_rxcui + ' not found'
 		print @msg
 
 		DELETE FROM c_Drug_Definition
@@ -110,10 +113,13 @@ IF @brand_name_rxcui IS NOT NULL
 			SELECT drug_id FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 			)
+		OR drug_id = @drug_id
 
 		SELECT @msg = 'Removing brand ' + brand_name_rxcui + ', ' + brand_name 
 		FROM c_Drug_Brand
 		WHERE brand_name_rxcui = @brand_name_rxcui
+		IF @@rowcount = 0
+			SET @msg = 'c_Drug_Brand ' + @brand_name_rxcui + ' not found'
 		print @msg
 
 		DELETE FROM c_Drug_Brand
@@ -147,22 +153,28 @@ IF @generic_rxcui IS NOT NULL
 		DELETE FROM c_Drug_Formulation
 		WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_generic_forms1)
 
-		SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + common_name 
+		SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + generic_name 
 		FROM c_Drug_Definition
 		WHERE drug_id = (
 			SELECT drug_id FROM c_Drug_Generic
 			WHERE generic_rxcui = @generic_rxcui
 			)
+		OR drug_id = @drug_id
+		IF @@rowcount = 0
+			SET @msg = 'c_Drug_Definition for ' + @generic_rxcui + ' not found'
 		print @msg
 		DELETE FROM c_Drug_Definition
 		WHERE drug_id = (
 			SELECT drug_id FROM c_Drug_Generic
 			WHERE generic_rxcui = @generic_rxcui
 			)
+		OR drug_id = @drug_id
 
 		SELECT @msg = 'Removing generic ' + generic_rxcui + ', ' + generic_name 
 		FROM c_Drug_Generic 
 		WHERE generic_rxcui = @generic_rxcui
+		IF @@rowcount = 0
+			SET @msg = 'c_Drug_Generic ' + @generic_rxcui + ' not found'
 		print @msg
 		DELETE FROM c_Drug_Generic
 		WHERE generic_rxcui = @generic_rxcui
