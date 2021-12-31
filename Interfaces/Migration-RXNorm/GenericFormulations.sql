@@ -41,12 +41,12 @@ INSERT INTO c_Drug_Formulation (
 	ingr_tty,
 	valid_in
 	)
-SELECT c1.rxcui, 
-	c1.tty + '_' + c3.tty, 
-	c3.[str],
-	c.rxcui,
-	'MIN' AS TTY,
-	'us;'
+SELECT c1.rxcui as form_rxcui, 
+	c1.tty + '_' + c3.tty AS form_tty, 
+	c3.[str] as form_descr,
+	c.rxcui as ingr_rxcui,
+	'MIN' AS ingr_tty,
+	'us;' AS valid_in
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -70,12 +70,12 @@ INSERT INTO c_Drug_Formulation (
 	ingr_tty,
 	valid_in
 	)
-SELECT c1.rxcui, 
-	c1.tty, 
-	rtrim(CASE WHEN LEN(c1.[str]) <= 1000 THEN c1.[str] ELSE left(c1.[str],997) + '...' END) as str_scd,
-	c.rxcui,
-	'MIN' AS TTY,
-	'us;'
+SELECT c1.rxcui as form_rxcui, 
+	c1.tty AS form_tty, 
+	rtrim(CASE WHEN LEN(c1.[str]) <= 1000 THEN c1.[str] ELSE left(c1.[str],997) + '...' END) as form_descr,
+	c.rxcui AS ingr_rxcui,
+	'MIN' AS ingr_tty,
+	'us;' AS valid_in
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -337,14 +337,15 @@ INSERT INTO [c_Drug_Generic]
       -- ,[dea_class]
       ,[valid_in]
 	  )
-SELECT c1.[str], c1.RXCUI, 
-	CASE WHEN c1.[str] LIKE ' / ' THEN 0 ELSE 1 END,
-	'RXNG' + c1.RXCUI,
+SELECT c1.[str] AS [generic_name], 
+	c1.RXCUI AS [generic_rxcui], 
+	CASE WHEN c1.[str] LIKE ' / ' THEN 0 ELSE 1 END AS [is_single_ingredient],
+	'RXNG' + c1.RXCUI AS [drug_id],
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
-		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS'),
+		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS') AS [mesh_definition],
 	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
-		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC') 
-	,'us;' -- select count(*)
+		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC') AS  [mesh_source]
+	,'us;' AS valid_in -- select count(*)
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
@@ -359,6 +360,7 @@ AND c1.TTY IN ('MIN', 'IN', 'PSN')
 AND c1.SAB = 'RXNORM' 
 AND NOT EXISTS (SELECT 1 FROM c_Drug_Generic g where g.generic_rxcui = c1.RXCUI)
 GROUP BY c1.[str], c1.RXCUI
+
 
 select *
 from c_Drug_Generic g

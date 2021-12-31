@@ -144,14 +144,16 @@ INSERT INTO c_Drug_Brand (
 		mesh_source,
 		drug_id
       ,[valid_in])
-SELECT c1.[str], c1.RXCUI, fg.ingr_rxcui,
-	0, 
+SELECT c1.[str] AS brand_name, 
+	c1.RXCUI AS brand_name_rxcui, 
+	fg.ingr_rxcui AS generic_rxcui,
+	0 AS is_single_ingredient, 
 	(SELECT min(sn.ATV) FROM interfaces..rxnsat_full sn
-		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS'),
+		WHERE sn.RXCUI = c1.RXCUI AND sn.ATN = 'SOS') AS scope_note,
 	(SELECT min(ss.ATV) FROM interfaces..rxnsat_full ss
-		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC'),
-	'RXNB' + c1.RXCUI
-	,'us;'
+		WHERE ss.RXCUI = c1.RXCUI AND ss.ATN = 'SRC') AS mesh_source,
+	'RXNB' + c1.RXCUI AS drug_id
+	,'us;' AS [valid_in]
 FROM interfaces..rxnconso c
 JOIN interfaces..rxnrel r ON r.RXCUI2 = c.RXCUI
 JOIN interfaces..rxnconso c1 ON c1.rxcui = r.rxcui1
