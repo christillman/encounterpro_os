@@ -205,14 +205,14 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 212
+long minimum_modification_level = 213
 
-date compile_date = date("2021-10-09")
+date compile_date = date("2021-12-31")
 
 integer major_release = 7
-string database_version = "0" // this is really minor release
-string build = "3.8"
-// Resulting in 7.0.3.8
+string database_version = "1" // this is really minor release
+string build = "0.0"
+// Resulting in 7.1.0.0
 
 ////////////////////////////////////////////////////////////
 
@@ -238,7 +238,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
