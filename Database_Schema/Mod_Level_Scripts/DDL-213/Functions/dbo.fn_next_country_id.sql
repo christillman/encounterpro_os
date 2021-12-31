@@ -10,7 +10,7 @@ GO
 Print 'Create Function dbo.fn_next_country_id'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE FUNCTION dbo.fn_next_country_id (
