@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_process_ICD_Code_Change]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_process_ICD_Code_Change
 	@ps_icd10_code varchar(12),

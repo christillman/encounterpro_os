@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_immunization_rules]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_immunization_rules (
 	@ps_disease_group varchar(24) = NULL,
@@ -96,8 +96,7 @@ FROM c_Immunization_Dose_Schedule s
 	CROSS JOIN o_Office oo
 	JOIN c_Office co ON co.office_id = oo.office_id
 WHERE s.valid_in LIKE '%' + co.country + ';%'
-
-WHERE s.disease_id = @ll_disease_id
+AND s.disease_id = @ll_disease_id
 AND i.disease_group = @ps_disease_group
 
 

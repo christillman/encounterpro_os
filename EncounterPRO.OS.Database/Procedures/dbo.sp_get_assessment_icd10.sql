@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_assessment_icd10]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_assessment_icd10 (
 	@ps_cpr_id varchar(12),

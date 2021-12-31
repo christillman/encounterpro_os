@@ -8,7 +8,7 @@ GO
 Print 'Create Procedure [dbo].[sp_brand_formulations]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_brand_formulations (
 	@ps_brand_name_rxcui varchar(20),

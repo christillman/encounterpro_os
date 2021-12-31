@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_encounter_charges]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_encounter_charges (
 	@ps_cpr_id varchar(12),

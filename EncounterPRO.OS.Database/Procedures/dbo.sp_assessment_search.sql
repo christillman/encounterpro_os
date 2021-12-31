@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_assessment_search]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_assessment_search (
 	@ps_assessment_type varchar(24) = NULL,

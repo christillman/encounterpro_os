@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_treatment_list]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_treatment_list (
 	@ps_cpr_id varchar(12),

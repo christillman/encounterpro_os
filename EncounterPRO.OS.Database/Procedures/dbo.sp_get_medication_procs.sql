@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_medication_procs]'
 GO
 SET ANSI_NULLS OFF
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_medication_procs (
 	@ps_drug_id varchar(24),

@@ -8,7 +8,7 @@ GO
 Print 'Create Procedure [dbo].[sp_add_rxnorm_drug]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_add_rxnorm_drug (
 	@generic_only bit,

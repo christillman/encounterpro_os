@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[sp_update_assessment_def]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_update_assessment_def (
 	@ps_assessment_id varchar(24),

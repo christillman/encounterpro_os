@@ -8,18 +8,17 @@ GO
 Print 'Create Procedure [dbo].[sp_get_char_key]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_char_key (
 	@ps_table varchar(24),
 	@ps_column varchar(24),
-	@ps_seed varchar(24),
-	@ps_new_key varchar(24) OUTPUT )
+	@ps_seed varchar(24) )
 AS
 
 BEGIN
 
-DECLARE @ls_new_suffix varchar(24)
+DECLARE @ll_last_key int
 DECLARE @ls_sql varchar(500)
 DECLARE @suffix smallint
 
@@ -31,21 +30,18 @@ SET @ls_sql = 'INSERT INTO #tempkey (maxkey) SELECT max(' + @ps_column + ') '
 
 EXECUTE (@ls_sql)
 
-IF (SELECT ISNULL(maxkey,'X') FROM #tempkey) = 'X'
-	SET @ps_new_key = @ps_seed
-ELSE IF (SELECT ISNULL(maxkey,'X') FROM #tempkey) = @ps_seed
-	SET @ps_new_key = @ps_seed + '01'
+IF (SELECT count(*) FROM #tempkey) = 0 
+	SELECT @ps_seed
+ELSE IF (SELECT maxkey FROM #tempkey) = @ps_seed
+	SELECT @ps_seed + '01'
 ELSE
 	BEGIN
 		SELECT @suffix = convert(smallint,substring(maxkey, len(@ps_seed) + 1, 24))
 		FROM #tempkey
 
-		SET @ps_new_key =  @ps_seed + CASE WHEN @suffix < 10 
-							THEN '0' + convert(varchar(2),@suffix + 1)
-							ELSE  convert(varchar(2),@suffix + 1)
-							END
+		SELECT @ps_seed + CASE WHEN @suffix < 10 THEN '0' + convert(varchar(2),@suffix + 1)
+			ELSE  convert(varchar(2),@suffix + 1) END
 	END
-
 END
 
 GO
@@ -54,3 +50,4 @@ GRANT EXECUTE
 	TO [cprsystem]
 GO
 
+-- EXEC sp_get_char_key 'c_Authority', 'authority_id', 'Guardian'

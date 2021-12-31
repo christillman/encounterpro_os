@@ -11,7 +11,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_administer_method_list]'
 GO
 SET ANSI_NULLS OFF
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 /****** Object:  Stored Procedure dbo.sp_get_administer_method_list    Script Date: 7/25/2000 8:43:50 AM ******/
 CREATE PROCEDURE sp_get_administer_method_list (

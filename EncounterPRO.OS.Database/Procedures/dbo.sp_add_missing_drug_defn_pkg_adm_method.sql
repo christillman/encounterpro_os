@@ -7,7 +7,7 @@ GO
 Print 'Create Procedure [dbo].[sp_add_missing_drug_defn_pkg_adm_method]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_add_missing_drug_defn_pkg_adm_method
 AS BEGIN

@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_assessments]'
 GO
 SET ANSI_NULLS OFF
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 /****** Object:  Stored Procedure dbo.sp_get_assessments    Script Date: 7/25/2000 8:44:14 AM ******/
 /****** Object:  Stored Procedure dbo.sp_get_assessments    Script Date: 2/16/99 12:00:44 PM ******/

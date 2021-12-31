@@ -62,7 +62,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_patient_search2]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE   PROCEDURE jmj_patient_search2
 (

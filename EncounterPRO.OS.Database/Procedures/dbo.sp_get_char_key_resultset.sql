@@ -8,7 +8,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_char_key_resultset]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_char_key_resultset (
 	@ps_table varchar(24),

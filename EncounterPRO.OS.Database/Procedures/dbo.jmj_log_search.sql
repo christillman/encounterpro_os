@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_log_search]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE dbo.jmj_log_search (
 	@pl_computer_id int = NULL,
