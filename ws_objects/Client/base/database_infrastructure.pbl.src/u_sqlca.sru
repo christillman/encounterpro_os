@@ -511,7 +511,6 @@ FUNCTION long sp_new_observation_branch(long pl_parent_node_id, integer pi_paren
 FUNCTION long sp_new_observation_category(string ps_treatment_type, string ps_observation_category_id, string ps_description, integer pi_sort_sequence, string ps_observation_id) RPCFUNC ALIAS FOR "dbo.sp_new_observation_category"
 FUNCTION long sp_new_observation_node(string ps_observation_id, string ps_root_flag, ref long pl_node_id) RPCFUNC ALIAS FOR "dbo.sp_new_observation_node"
 FUNCTION long sp_new_observation_result(string ps_observation_id, string ps_result_type, string ps_result_unit, string ps_result, string ps_result_amount_flag, string ps_print_result_flag, string ps_specimen_type, string ps_abnormal_flag, integer pi_severity, string ps_external_source, long pl_property_id, string ps_service, string ps_unit_preference, string ps_status, ref integer pi_result_sequence) RPCFUNC ALIAS FOR "dbo.sp_new_observation_result"
-FUNCTION long sp_new_package(ref string ps_package_id, string ps_administer_method, string ps_description, string ps_administer_unit, string ps_dose_unit, real pr_administer_per_dose, string ps_dosage_form, real pr_dose_amount) RPCFUNC ALIAS FOR "dbo.sp_new_package"
 FUNCTION long sp_new_patient_address(string ps_cpr_id, string ps_description, string ps_address_line_1, string ps_address_line_2, string ps_city, string ps_state, string ps_zip, string ps_country, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_new_patient_address"
 FUNCTION long sp_new_patient_communication(string ps_cpr_id, string ps_communication_type, string ps_communication_value, string ps_note, string ps_created_by, string ps_communication_name) RPCFUNC ALIAS FOR "dbo.sp_new_patient_communication"
 FUNCTION long sp_new_procedure(string ps_procedure_type, string ps_cpt_code, decimal pdc_charge, string ps_procedure_category_id, string ps_description, string ps_service, string ps_vaccine_id, real pr_units, string ps_modifier, string ps_other_modifiers, string ps_billing_id, string ps_location_domain, long pi_risk_level, string ps_default_bill_flag) RPCFUNC ALIAS FOR "dbo.sp_new_procedure"
@@ -747,6 +746,7 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
+
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -3763,7 +3763,7 @@ for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
 	
-	log.log(this, "u_sqlca.upgrade_database:0076", "Executing " + ls_element, 3)
+	log.log_db(this, "u_sqlca.upgrade_database:0076", "Executing " + ls_element, 2)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
