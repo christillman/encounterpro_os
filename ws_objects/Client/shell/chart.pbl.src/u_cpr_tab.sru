@@ -346,6 +346,7 @@ event selectionchanging;integer li_sts
 long ll_null
 string ls_null
 integer li_null
+w_cpr_main lw_cpr
 
 setnull(ll_null)
 setnull(ls_null)
@@ -382,8 +383,14 @@ li_sts = f_set_progress3( current_patient.cpr_id, &
 section[newindex].section_selected()
 
 if section[newindex].section_object.tag = "EXIT" and current_service.manual_service then
-	section[newindex].my_cpr_main.close("CLOSE")
+	// Determined this is causing a crash; but without it we get an invalid service bookmark
+	// Added post, seems to have fixed it
+	lw_cpr = section[newindex].my_cpr_main
+	lw_cpr.post close("CLOSE")
 end if
+
+li_sts = 0
+
 //if section[newindex].section_object.tag = "EXIT" then
 //	yield()
 //	li_sts = w_cpr_main.close()
