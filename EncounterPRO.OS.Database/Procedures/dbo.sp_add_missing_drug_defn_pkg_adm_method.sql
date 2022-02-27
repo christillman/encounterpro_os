@@ -171,23 +171,11 @@ AS BEGIN
 	AND NOT EXISTS (SELECT 1 
 		FROM c_Package_Administration_Method m
 		WHERE m.package_id = p.package_id
-		AND m.administer_method = df.default_administer_method
 		)
 
 	-- Package_admin_method (null)	
 	INSERT INTO c_Package_Administration_Method
-	select package_id, 
-		CASE
-		WHEN dose_unit = 'ACTUATNASAL' THEN NULL
-		WHEN dose_unit = 'APPLYEAR' THEN NULL
-		WHEN dose_unit = 'APPLYEYE' THEN NULL
-		WHEN dose_unit = 'CARTRIDGEM' THEN NULL
-		WHEN dose_unit = 'DROPEAR' THEN NULL
-		WHEN dose_unit = 'DROPEYE' THEN NULL
-		WHEN dose_unit = 'DROPNOSTRIL' THEN NULL
-		WHEN dose_unit = 'INSERTEYE' THEN 'IN OFFICE'
-		WHEN dose_unit = 'SPRAYNOSTRIL' THEN NULL 
-		ELSE NULL END
+	select package_id, NULL
 	from c_Package p
 	where not exists (select 1 
 		from c_Package_Administration_Method m
