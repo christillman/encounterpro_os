@@ -380,7 +380,7 @@ CREATE TABLE #new_generic_form (
 	BEGIN
 	print 'INSERT INTO c_Drug_Formulation from #new_form'
 	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui)
-	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, @generic_form_rxcui
+	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui
 	FROM #new_form
 	END
 
@@ -466,8 +466,7 @@ CREATE TABLE #new_generic_form (
 		@country_drug_id,
 		@generic_formulation,
 		@active_ingredients,
-		CASE WHEN @generic_rxcui IS NULL THEN @generic_ingr_rxcui
-				ELSE @generic_rxcui END,
+		IsNull(@generic_rxcui, @generic_ingr_rxcui),
 		@single_ingredient		
 	WHERE NOT EXISTS (SELECT 1 FROM [c_Drug_Generic_Related] r
 		WHERE r.[source_id] = @country_drug_id
