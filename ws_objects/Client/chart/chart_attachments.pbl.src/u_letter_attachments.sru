@@ -34,10 +34,8 @@ End If
 end event
 
 type pb_new_attachments from u_attachments`pb_new_attachments within u_letter_attachments
-integer x = 1746
+integer x = 1723
 integer y = 32
-integer width = 146
-integer height = 124
 end type
 
 event pb_new_attachments::clicked;call super::clicked;If dw_attachments.rowcount() > 0 Then
@@ -53,15 +51,18 @@ integer y = 568
 end type
 
 type pb_down from u_attachments`pb_down within u_letter_attachments
-integer x = 1783
+integer x = 1728
 integer y = 440
+integer width = 142
+integer height = 120
 end type
 
 type pb_up from u_attachments`pb_up within u_letter_attachments
-integer x = 1787
+integer x = 1728
 integer y = 300
-integer width = 146
-integer height = 124
+integer width = 142
+integer height = 120
+boolean originalsize = false
 end type
 
 type dw_attachments from u_attachments`dw_attachments within u_letter_attachments
