@@ -457,7 +457,6 @@ refresh()
 end event
 
 type st_page from statictext within u_attachments
-boolean visible = false
 integer x = 2537
 integer y = 260
 integer width = 142
@@ -475,7 +474,6 @@ boolean focusrectangle = false
 end type
 
 type pb_down from u_picture_button within u_attachments
-boolean visible = false
 integer x = 2537
 integer y = 136
 integer width = 137
@@ -499,7 +497,6 @@ pb_up.enabled = true
 end event
 
 type pb_up from u_picture_button within u_attachments
-boolean visible = false
 integer x = 2537
 integer y = 12
 integer width = 146
