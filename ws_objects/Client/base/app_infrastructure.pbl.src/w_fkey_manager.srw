@@ -11,7 +11,6 @@ end type
 end forward
 
 global type w_fkey_manager from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -59,7 +58,7 @@ dw_fkey_assignment.object.assignment[ll_row] = "Display EDAS Property Browser"
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F3"
 dw_fkey_assignment.object.flags[ll_row] = 3
-dw_fkey_assignment.object.assignment[ll_row] = "Exit EncouterPRO"
+dw_fkey_assignment.object.assignment[ll_row] = "Exit EncounterPRO"
 
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F4"
