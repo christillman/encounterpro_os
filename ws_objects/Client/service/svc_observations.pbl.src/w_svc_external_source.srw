@@ -675,9 +675,10 @@ for i = 1 to external_source.observation_count
 				ls_this_attachment_context_object = lstr_attachment_context.context_object
 				ll_this_attachment_object_key = lstr_attachment_context.object_key
 				lstr_new_attachment.attachment_folder = lstr_attachment_context.folder
-				if len(lstr_new_attachment.attachment_tag) = 0 or isnull(lstr_new_attachment.attachment_tag) then
+				// Ciru prefers that the context description override the file name tag
+				//if len(lstr_new_attachment.attachment_tag) = 0 or isnull(lstr_new_attachment.attachment_tag) then
 					lstr_new_attachment.attachment_tag = lstr_attachment_context.description
-				end if
+				//end if
 			end if
 			
 			// Set the individual field based on the object key
