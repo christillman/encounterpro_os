@@ -23,12 +23,7 @@ DECLARE @new_code varchar(7)
  
 ;WITH no_listings AS (
 	SELECT source_id
-	FROM c_Drug_Generic_Related 
-	WHERE source_id like 'NL%'
-	AND [country_code] = @country_code
-	UNION
-	SELECT source_id
-	FROM c_Drug_Brand_Related 
+	FROM c_Drug_Source_Formulation
 	WHERE source_id like 'NL%'
 	AND [country_code] = @country_code
 )

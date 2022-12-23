@@ -13,7 +13,7 @@ GO
 CREATE PROCEDURE sp_add_epro_drug (
 	@generic_only bit,
 	@country_code varchar(100), 
-	@country_drug_id varchar(21), 
+	@country_source_id varchar(21), 
 	@brand_name_formulation varchar(300),
 	@corr_sbd_rxcui varchar(20),
 	@generic_formulation varchar(300),
@@ -21,6 +21,7 @@ CREATE PROCEDURE sp_add_epro_drug (
 	@active_ingredients varchar(200),
 	@generic_ingr_rxcui varchar(20),
 	@brand_name varchar(200),
+	@brand_rxcui varchar(20),
 	@drug_type varchar(20) = 'Single Drug',
 	@notes varchar(200) = NULL
 	)
@@ -33,7 +34,7 @@ DECLARE @new_id int
 /*
 DECLARE	@generic_only bit = 0
 DECLARE	@country_code varchar(100) = 'KE' 
-DECLARE	@country_drug_id varchar(21) = '517' 
+DECLARE	@country_source_id varchar(21) = '517' 
 DECLARE	@brand_name_formulation varchar(300) = 'Aldara 5 % Topical Cream'
 DECLARE	@corr_sbd_rxcui varchar(20),
 DECLARE	@generic_formulation varchar(300) = 'imiquimod 5 % Topical Cream'
@@ -55,23 +56,24 @@ DECLARE @generic_rxcui varchar(20)
 DECLARE @brand_name_rxcui varchar(20)
 DECLARE @sbd_rxcui varchar(20)
 DECLARE @scd_rxcui varchar(20)
+DECLARE @generic_ingr_exists bit
 
 DECLARE @brand_name_edited varchar(300)
 -- DECLARE @generic_name_edited varchar(300)
 
--- set this before potentially reassigning @country_drug_id
+-- set this before potentially reassigning @country_source_id
 IF @brand_name_formulation LIKE 'No %'
-	OR @country_drug_id = '00nobrandfound'
+	OR @country_source_id = '00nobrandfound'
 	SET @generic_only = 1
 	
 IF @corr_sbd_rxcui LIKE 'No %' OR @corr_sbd_rxcui = '' OR @corr_sbd_rxcui IS NULL
 	SET @sbd_rxcui = NULL
 
 IF @corr_sbd_rxcui LIKE 'SBD_PSN-%'
-	SET @sbd_rxcui = 'PSN-' + substring(@corr_sbd_rxcui, 9, 20)
+	SET @sbd_rxcui = substring(@corr_sbd_rxcui, 9, 20)
 
-IF @corr_sbd_rxcui NOT LIKE 'PSN-%' AND @corr_sbd_rxcui NOT LIKE 'SBD-%'
-	SET @sbd_rxcui = 'SBD-' + @corr_sbd_rxcui
+IF @corr_sbd_rxcui LIKE 'PSN-%' OR @corr_sbd_rxcui LIKE 'SBD-%'
+	SET @sbd_rxcui = substring(@corr_sbd_rxcui, 5, 20)
 
 IF @corr_scd_rxcui LIKE 'No %' OR @corr_scd_rxcui = '' OR @corr_scd_rxcui IS NULL
 	SET @scd_rxcui = NULL
@@ -82,25 +84,56 @@ IF @corr_scd_rxcui LIKE 'SCD_PSN-%'
 IF @corr_scd_rxcui NOT LIKE 'PSN-%' AND @corr_scd_rxcui NOT LIKE 'SCD-%'
 	SET @scd_rxcui = 'SCD-' + @corr_scd_rxcui
 	
-IF @country_drug_id IS NULL 
-	OR @country_drug_id IN ('00nobrandfound','NO RXCUI', 'No Retention No', 
+IF @country_source_id IS NULL 
+	OR @country_source_id IN ('00nobrandfound','NO RXCUI', 'No Retention No', 
 		'No Retention Number', 'Not in Retention List', 'None')
 	BEGIN 
-	-- Make up a @country_drug_id
-	SELECT @country_drug_id = dbo.fn_next_country_id(@country_code)
+	-- Check to see it hasn't already been executed
+	SELECT @country_source_id = source_id 
+	FROM c_Drug_Source_Formulation
+	WHERE source_brand_form_descr = @brand_name_formulation
+		AND country_code = @country_code
+
+	IF @@ROWCOUNT > 0
+		BEGIN
+		print 'source_id already exists: ' + @country_source_id
+		print 'Aborting'
+		RETURN
+		END
+	-- Make up a @country_source_id
+	SELECT @country_source_id = dbo.fn_next_country_id(@country_code)
 
 	END
 
-SET @brand_form_rxcui = upper(@country_code) + 'B' + @country_drug_id
-SET @generic_form_rxcui = upper(@country_code) + 'G' + @country_drug_id
-SET @brand_ingr_rxcui = upper(@country_code) + 'BI' + @country_drug_id
+SET @brand_form_rxcui = upper(@country_code) + 'B' + @country_source_id
+SET @generic_form_rxcui = upper(@country_code) + 'G' + @country_source_id
+SET @brand_ingr_rxcui = upper(@country_code) + 'BI' + @country_source_id
 
--- If a generic rxcui had been supplied, use it, otherwise make
--- a new one up
-IF @generic_ingr_rxcui IS NOT NULL AND @generic_ingr_rxcui != ''
-	SET @generic_rxcui = @generic_ingr_rxcui
+-- If a generic rxcui had been supplied, or can be found using ingredients, 
+-- use it, otherwise make a new one up
+IF @generic_ingr_rxcui IS NULL OR @generic_ingr_rxcui = ''
+	BEGIN
+	-- exact wording match for generic?
+	SELECT @generic_rxcui = generic_rxcui
+	FROM c_Drug_Generic g 
+	WHERE g.generic_name = @active_ingredients
+	SET @generic_ingr_exists = CASE WHEN @generic_rxcui IS NULL THEN 0 ELSE 1 END
+
+	IF @generic_ingr_exists = 0
+		SET @generic_rxcui = upper(@country_code) + 'GI' + @country_source_id
+	END
 ELSE
-	SET @generic_ingr_rxcui = upper(@country_code) + 'GI' + @country_drug_id
+	BEGIN
+	SELECT @generic_rxcui = generic_rxcui
+	FROM c_Drug_Generic g 
+	WHERE g.generic_rxcui = @generic_ingr_rxcui
+	SET @generic_ingr_exists = CASE WHEN @generic_rxcui IS NULL THEN 0 ELSE 1 END
+
+	IF @generic_ingr_exists = 0
+		SET @generic_rxcui = upper(@country_code) + 'GI' + @country_source_id
+	ELSE
+		SET @generic_rxcui = @generic_ingr_rxcui
+	END
 
 CREATE TABLE #Drug_Brand (
 	brand_name_rxcui varchar(20),
@@ -139,7 +172,7 @@ CREATE TABLE #new_generic_form (
 	)
 
 /*
-	-- In case @country_drug_id had to be made up above, use this 
+	-- In case @country_source_id had to be made up above, use this 
 	-- which should be unique to locate the records to delete
 	DELETE FROM Kenya_Drugs
 	WHERE [SBD_Version] = @brand_name_formulation
@@ -154,7 +187,7 @@ CREATE TABLE #new_generic_form (
 		[generic_only],
 		[Notes]
 		) VALUES (
-		@country_drug_id, 
+		@country_source_id, 
 		@brand_name_formulation, 
 		@generic_formulation, 
 		@corr_scd_rxcui, 
@@ -163,12 +196,6 @@ CREATE TABLE #new_generic_form (
 		@notes
 		)
 */
-
-	-- exact wording match for generic
-	IF @generic_rxcui IS NULL
-		SELECT @generic_rxcui = generic_rxcui
-		FROM c_Drug_Generic g 
-		WHERE g.generic_name = @active_ingredients
 
 	-- Generic formulation?
 	IF (	@scd_rxcui IS NULL -- No corresponding rxcui
@@ -199,9 +226,9 @@ CREATE TABLE #new_generic_form (
 				@generic_formulation,
 				'SCD_' + upper(@country_code), 
 				CASE WHEN @single_ingredient = 0 THEN 'MIN' ELSE 'IN' END 
-					+ CASE WHEN @generic_rxcui IS NULL THEN '_' + upper(@country_code) ELSE '' END,
-				CASE WHEN @generic_rxcui IS NULL THEN @generic_ingr_rxcui
-					ELSE @generic_rxcui END,
+					+ CASE WHEN @generic_rxcui LIKE upper(@country_code) + '%'
+						 THEN '_' + upper(@country_code) ELSE '' END,
+				@generic_rxcui,
 				lower(@country_code) + ';'
 			FROM c_1_record
 			WHERE @generic_formulation NOT LIKE '%{%'
@@ -237,8 +264,7 @@ CREATE TABLE #new_generic_form (
 	ELSE IF @single_ingredient = 1 AND charindex(' ', @generic_formulation) > 0
 		SET @generic_name_edited = left(@generic_formulation,charindex(' ', @generic_formulation) - 1)			
 	*/
-	IF @generic_rxcui IS NOT NULL
-		-- exact wording match for generic
+	IF @generic_ingr_exists = 1
 		BEGIN
 		print @active_ingredients + ' already exists'
 		UPDATE #new_generic_form
@@ -258,11 +284,11 @@ CREATE TABLE #new_generic_form (
 			valid_in,
 			drug_id
 		)
-		SELECT @generic_ingr_rxcui,
+		SELECT @generic_rxcui,
 			@active_ingredients,
 			@single_ingredient,
 			lower(@country_code) + ';',
-			@generic_ingr_rxcui
+			@generic_rxcui
 		FROM c_1_record
 		END
 
@@ -322,12 +348,14 @@ CREATE TABLE #new_generic_form (
 			END
 
 		IF EXISTS (SELECT 1 FROM c_Drug_Brand b
-						WHERE brand_name = @brand_name_edited)
+						WHERE brand_name = @brand_name_edited
+						OR brand_name_rxcui = @brand_rxcui)
 			BEGIN
 			print @brand_name_edited + ' Brand already exists'
 			SELECT @brand_name_rxcui = b.brand_name_rxcui
 				FROM c_Drug_Brand b 
 				WHERE b.brand_name = @brand_name_edited
+					OR brand_name_rxcui = @brand_rxcui
 			UPDATE #new_form
 			SET ingr_rxcui = @brand_name_rxcui
 			UPDATE c_Drug_Brand
@@ -348,8 +376,7 @@ CREATE TABLE #new_generic_form (
 			)
 			SELECT @brand_ingr_rxcui,
 				@brand_name_edited,
-				CASE WHEN @generic_rxcui IS NULL THEN @generic_ingr_rxcui
-				ELSE @generic_rxcui END,
+				@generic_rxcui,
 				@single_ingredient,
 				lower(@country_code) + ';',
 				@brand_ingr_rxcui
@@ -438,39 +465,31 @@ CREATE TABLE #new_generic_form (
 	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
 
-	INSERT INTO [c_Drug_Brand_Related] (
+	print 'INSERT INTO c_Drug_Source_Formulation'
+	INSERT INTO c_Drug_Source_Formulation (
 		[country_code],
 		[source_id],
 		[source_brand_form_descr],
 		[brand_name_rxcui],
-		[is_single_ingredient])
-	SELECT lower(@country_code),
-		@country_drug_id,
-		@brand_name_formulation,
-		CASE WHEN @brand_name_rxcui IS NULL THEN @brand_ingr_rxcui
-				ELSE @brand_name_rxcui END,
-		@single_ingredient
-	WHERE NOT EXISTS (SELECT 1 FROM [c_Drug_Brand_Related] r
-		WHERE r.[source_id] = @country_drug_id
-		AND r.country_code = @country_code)
-	AND @generic_only = 0
-
-	INSERT INTO [c_Drug_Generic_Related] (
-		[country_code],
-		[source_id],
 		source_generic_form_descr,
 		[active_ingredients],
 		[generic_rxcui],
-		[is_single_ingredient])
+		[is_single_ingredient],
+		generic_form_rxcui,
+		brand_form_rxcui)
 	SELECT lower(@country_code),
-		@country_drug_id,
+		@country_source_id,
+		@brand_name_formulation,
+		COALESCE(@brand_name_rxcui, @brand_ingr_rxcui),
 		@generic_formulation,
 		@active_ingredients,
-		IsNull(@generic_rxcui, @generic_ingr_rxcui),
-		@single_ingredient		
-	WHERE NOT EXISTS (SELECT 1 FROM [c_Drug_Generic_Related] r
-		WHERE r.[source_id] = @country_drug_id
+		@generic_rxcui,
+		@single_ingredient,
+		@generic_form_rxcui,
+		@brand_form_rxcui
+	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Source_Formulation r
+		WHERE r.[source_id] = @country_source_id
 		AND r.country_code = @country_code)
-		
+
 	exec sp_add_missing_drug_defn_pkg_adm_method
 END

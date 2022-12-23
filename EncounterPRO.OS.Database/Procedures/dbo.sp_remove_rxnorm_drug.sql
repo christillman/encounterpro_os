@@ -46,7 +46,7 @@ IF @brand_name_rxcui IS NULL
 	-- remove all brands and generics related to this @drug_id (rxcui)
 	-- (if not used by related records)
 	SELECT @brand_name_rxcui = brand_name_rxcui
-	FROM c_Drug_Brand_Related r
+	FROM c_Drug_Source_Formulation r
 	WHERE 'RXNB' + brand_name_rxcui = @drug_id
 
 	IF @@rowcount = 0
@@ -55,9 +55,8 @@ IF @brand_name_rxcui IS NULL
 		WHERE drug_id = @drug_id
 
 	SELECT @generic_rxcui = generic_rxcui
-		FROM c_Drug_Generic_Related r 
-		WHERE source_id = @drug_id
-		AND 'RXNG' + generic_rxcui = @drug_id
+		FROM c_Drug_Source_Formulation r 
+		WHERE 'RXNG' + generic_rxcui = @drug_id
 
 	IF @@rowcount = 0
 		SELECT @generic_rxcui = generic_rxcui

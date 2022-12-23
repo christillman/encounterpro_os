@@ -12,7 +12,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_remove_epro_drug (
 	@country_code varchar(100),
-	@country_drug_id varchar(21),
+	@country_source_id varchar(21),
 	@brand_name_rxcui varchar(20) = NULL,
 	@generic_rxcui varchar(20) = NULL,
 	@brand_form_rxcui varchar(20) = NULL,
@@ -24,8 +24,8 @@ BEGIN
 
 /*
 	@country_code varchar(100), 
-	-- specifying @country_drug_id also removes from Kenya_Drugs and _Related tables
-	@country_drug_id varchar(21),
+	-- specifying @country_source_id also removes from Kenya_Drugs and c_Drug_Source_Formulation tables
+	@country_source_id varchar(21),
 	-- if only brand is specified, will leave generic in place
 	@brand_name_rxcui varchar(20),
 	-- if generic is used by other countries, it will not be removed
@@ -46,23 +46,23 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 		AND @generic_form_rxcui IS NULL
 		BEGIN
 
-		-- remove all brands and generics related to this @country_drug_id
+		-- remove all brands and generics related to this @country_source_id
 		-- (if not used by other related records)
 		SELECT @brand_name_rxcui = brand_name_rxcui
-		FROM c_Drug_Brand_Related r
-		WHERE source_id = @country_drug_id
+		FROM c_Drug_Source_Formulation r
+		WHERE source_id = @country_source_id
 		AND brand_name_rxcui LIKE @country_code + 'BI%'
 		AND country_code = @country_code
 
 		IF @brand_name_rxcui IS NULL
 			SELECT @brand_name_rxcui = brand_name_rxcui
 			FROM c_Drug_Brand b
-			WHERE brand_name_rxcui = @country_code + 'BI' + @country_drug_id
+			WHERE brand_name_rxcui = @country_code + 'BI' + @country_source_id
 
 		SELECT @replacement_brand_name_rxcui 
 				= upper(@country_code) + 'BI' + min(source_id) 
-			FROM c_Drug_Brand_Related r2
-			WHERE source_id != @country_drug_id
+			FROM c_Drug_Source_Formulation r2
+			WHERE source_id != @country_source_id
 			AND brand_name_rxcui = @brand_name_rxcui
 			AND country_code = @country_code
 
@@ -84,25 +84,25 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			UPDATE c_Drug_Brand
 			SET drug_id = @replacement_brand_name_rxcui
 			WHERE drug_id = @brand_name_rxcui
-			UPDATE c_Drug_Brand_Related 
+			UPDATE c_Drug_Source_Formulation 
 			SET brand_name_rxcui = @replacement_brand_name_rxcui
-			WHERE source_id != @country_drug_id
+			WHERE source_id != @country_source_id
 			AND brand_name_rxcui = @brand_name_rxcui
 
 			END
 
 		SELECT @generic_rxcui = generic_rxcui
-			FROM c_Drug_Generic_Related r 
-			WHERE source_id = @country_drug_id
+			FROM c_Drug_Source_Formulation r 
+			WHERE source_id = @country_source_id
 			AND generic_rxcui LIKE @country_code + 'GI%'
 		IF @generic_rxcui IS NULL
 			SELECT @generic_rxcui = generic_rxcui
 			FROM c_Drug_Generic g
-			WHERE generic_rxcui = @country_code + 'GI' + @country_drug_id
+			WHERE generic_rxcui = @country_code + 'GI' + @country_source_id
 		SELECT @replacement_generic_rxcui 
 				= upper(@country_code) + 'GI' + min(source_id) 
-			FROM c_Drug_Generic_Related r2
-			WHERE source_id != @country_drug_id
+			FROM c_Drug_Source_Formulation r2
+			WHERE source_id != @country_source_id
 			AND generic_rxcui = @generic_rxcui
 			AND country_code = @country_code
 
@@ -127,9 +127,9 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			UPDATE c_Drug_Generic
 			SET drug_id = @replacement_generic_rxcui
 			WHERE drug_id = @generic_rxcui
-			UPDATE c_Drug_Generic_Related 
+			UPDATE c_Drug_Source_Formulation 
 			SET generic_rxcui = @replacement_generic_rxcui
-			WHERE source_id != @country_drug_id
+			WHERE source_id != @country_source_id
 			AND generic_rxcui = @generic_rxcui
 
 			END
@@ -281,17 +281,18 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 		WHERE form_rxcui IN (@brand_form_rxcui, @generic_form_rxcui)
 		END
 
-	IF @country_drug_id IS NOT NULL
+	IF @country_source_id IS NOT NULL
 		BEGIN
 
-		DELETE FROM [c_Drug_Brand_Related]
-		WHERE source_id = @country_drug_id
-		AND country_code = @country_code
-		DELETE FROM [c_Drug_Generic_Related]
-		WHERE source_id = @country_drug_id
+		DELETE FROM c_Drug_Source_Formulation
+		WHERE source_id = @country_source_id
 		AND country_code = @country_code
 		DELETE FROM Kenya_Drugs
-		WHERE Retention_No = @country_drug_id
+		WHERE Retention_No = @country_source_id
+		AND @country_code = 'ke'
+		DELETE FROM Uganda_Drugs
+		WHERE NDA_MAL_HDP = @country_source_id
+		AND @country_code = 'ug'
 
 		END
 END

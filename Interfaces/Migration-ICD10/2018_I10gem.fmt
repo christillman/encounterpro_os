@@ -1,0 +1,5 @@
+13.0
+3
+1       SQLCHAR             0       8      ""   1     icd10_code               SQL_Latin1_General_CP1_CI_AS
+2       SQLCHAR             0       6      ""   2     icd9_code                SQL_Latin1_General_CP1_CI_AS
+3       SQLCHAR             0       5       "\r\n"   3     flags                    SQL_Latin1_General_CP1_CI_AS
