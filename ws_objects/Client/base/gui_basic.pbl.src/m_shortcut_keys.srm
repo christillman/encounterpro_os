@@ -1,0 +1,948 @@
+﻿$PBExportHeader$m_shortcut_keys.srm
+forward
+global type m_shortcut_keys from menu
+end type
+type m_f1 from menu within m_shortcut_keys
+end type
+type m_ctrlf1 from menu within m_shortcut_keys
+end type
+type m_shiftf1 from menu within m_shortcut_keys
+end type
+type m_ctrlshiftf1 from menu within m_shortcut_keys
+end type
+type m_f2 from menu within m_shortcut_keys
+end type
+type m_ctrlf2 from menu within m_shortcut_keys
+end type
+type m_f3 from menu within m_shortcut_keys
+end type
+type m_0 from menu within m_shortcut_keys
+end type
+type m_ctrlshiftf3 from menu within m_shortcut_keys
+end type
+type m_f4 from menu within m_shortcut_keys
+end type
+type m_f5 from menu within m_shortcut_keys
+end type
+type m_ctrlf5 from menu within m_shortcut_keys
+end type
+type m_f7 from menu within m_shortcut_keys
+end type
+type m_f8 from menu within m_shortcut_keys
+end type
+type m_ctrlf8 from menu within m_shortcut_keys
+end type
+type m_ctrlshiftf8 from menu within m_shortcut_keys
+end type
+type m_f9 from menu within m_shortcut_keys
+end type
+type m_f10 from menu within m_shortcut_keys
+end type
+type m_shiftf10 from menu within m_shortcut_keys
+end type
+type m_f11 from menu within m_shortcut_keys
+end type
+type m_shiftf11 from menu within m_shortcut_keys
+end type
+type m_f12 from menu within m_shortcut_keys
+end type
+global type m_shortcut_keys from menu
+m_f1 m_f1
+m_ctrlf1 m_ctrlf1
+m_shiftf1 m_shiftf1
+m_ctrlshiftf1 m_ctrlshiftf1
+m_f2 m_f2
+m_ctrlf2 m_ctrlf2
+m_f3 m_f3
+m_0 m_0
+m_ctrlshiftf3 m_ctrlshiftf3
+m_f4 m_f4
+m_f5 m_f5
+m_ctrlf5 m_ctrlf5
+m_f7 m_f7
+m_f8 m_f8
+m_ctrlf8 m_ctrlf8
+m_ctrlshiftf8 m_ctrlshiftf8
+m_f9 m_f9
+m_f10 m_f10
+m_shiftf10 m_shiftf10
+m_f11 m_f11
+m_shiftf11 m_shiftf11
+m_f12 m_f12
+end type
+end forward
+
+global type m_shortcut_keys from menu
+m_f1 m_f1
+m_ctrlf1 m_ctrlf1
+m_shiftf1 m_shiftf1
+m_ctrlshiftf1 m_ctrlshiftf1
+m_f2 m_f2
+m_ctrlf2 m_ctrlf2
+m_f3 m_f3
+m_0 m_0
+m_ctrlshiftf3 m_ctrlshiftf3
+m_f4 m_f4
+m_f5 m_f5
+m_ctrlf5 m_ctrlf5
+m_f7 m_f7
+m_f8 m_f8
+m_ctrlf8 m_ctrlf8
+m_ctrlshiftf8 m_ctrlshiftf8
+m_f9 m_f9
+m_f10 m_f10
+m_shiftf10 m_shiftf10
+m_f11 m_f11
+m_shiftf11 m_shiftf11
+m_f12 m_f12
+end type
+global m_shortcut_keys m_shortcut_keys
+
+forward prototypes
+public subroutine mf_act (keycode pk_key)
+end prototypes
+
+public subroutine mf_act (keycode pk_key);
+int li_keyflags
+
+// same identifiers as pbm_keydown event (which is now unreliable)
+IF KeyDown(KeyControl!) AND KeyDown(KeyShift!) THEN
+	li_keyflags = 3
+ELSEIF KeyDown(KeyShift!) THEN
+	li_keyflags = 1
+ELSEIF KeyDown(KeyControl!) THEN
+	li_keyflags = 2
+END IF
+
+if f_fkey_handler2(pk_key, li_keyflags, parentwindow.classname()) then 
+	parentwindow.dynamic post refresh()
+end if
+
+end subroutine
+
+on m_shortcut_keys.create
+m_shortcut_keys=this
+call super::create
+this.text = "m_shortcut_keys"
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+this.m_f1=create m_f1
+this.m_ctrlf1=create m_ctrlf1
+this.m_shiftf1=create m_shiftf1
+this.m_ctrlshiftf1=create m_ctrlshiftf1
+this.m_f2=create m_f2
+this.m_ctrlf2=create m_ctrlf2
+this.m_f3=create m_f3
+this.m_0=create m_0
+this.m_ctrlshiftf3=create m_ctrlshiftf3
+this.m_f4=create m_f4
+this.m_f5=create m_f5
+this.m_ctrlf5=create m_ctrlf5
+this.m_f7=create m_f7
+this.m_f8=create m_f8
+this.m_ctrlf8=create m_ctrlf8
+this.m_ctrlshiftf8=create m_ctrlshiftf8
+this.m_f9=create m_f9
+this.m_f10=create m_f10
+this.m_shiftf10=create m_shiftf10
+this.m_f11=create m_f11
+this.m_shiftf11=create m_shiftf11
+this.m_f12=create m_f12
+this.Item[UpperBound(this.Item)+1]=this.m_f1
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlf1
+this.Item[UpperBound(this.Item)+1]=this.m_shiftf1
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlshiftf1
+this.Item[UpperBound(this.Item)+1]=this.m_f2
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlf2
+this.Item[UpperBound(this.Item)+1]=this.m_f3
+this.Item[UpperBound(this.Item)+1]=this.m_0
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlshiftf3
+this.Item[UpperBound(this.Item)+1]=this.m_f4
+this.Item[UpperBound(this.Item)+1]=this.m_f5
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlf5
+this.Item[UpperBound(this.Item)+1]=this.m_f7
+this.Item[UpperBound(this.Item)+1]=this.m_f8
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlf8
+this.Item[UpperBound(this.Item)+1]=this.m_ctrlshiftf8
+this.Item[UpperBound(this.Item)+1]=this.m_f9
+this.Item[UpperBound(this.Item)+1]=this.m_f10
+this.Item[UpperBound(this.Item)+1]=this.m_shiftf10
+this.Item[UpperBound(this.Item)+1]=this.m_f11
+this.Item[UpperBound(this.Item)+1]=this.m_shiftf11
+this.Item[UpperBound(this.Item)+1]=this.m_f12
+end on
+
+on m_shortcut_keys.destroy
+call super::destroy
+destroy(this.m_f1)
+destroy(this.m_ctrlf1)
+destroy(this.m_shiftf1)
+destroy(this.m_ctrlshiftf1)
+destroy(this.m_f2)
+destroy(this.m_ctrlf2)
+destroy(this.m_f3)
+destroy(this.m_0)
+destroy(this.m_ctrlshiftf3)
+destroy(this.m_f4)
+destroy(this.m_f5)
+destroy(this.m_ctrlf5)
+destroy(this.m_f7)
+destroy(this.m_f8)
+destroy(this.m_ctrlf8)
+destroy(this.m_ctrlshiftf8)
+destroy(this.m_f9)
+destroy(this.m_f10)
+destroy(this.m_shiftf10)
+destroy(this.m_f11)
+destroy(this.m_shiftf11)
+destroy(this.m_f12)
+end on
+
+event clicked;
+mf_act(Keyf2!)
+
+end event
+
+type m_f1 from menu within m_shortcut_keys
+end type
+
+event clicked;
+
+mf_act(KeyF1!)
+
+end event
+
+on m_f1.create
+call super::create
+this.visible = false
+this.text = "f1~tF1"
+this.shortcut = 112
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f1.destroy
+call super::destroy
+end on
+
+type m_ctrlf1 from menu within m_shortcut_keys
+end type
+
+on m_ctrlf1.create
+call super::create
+this.visible = false
+this.text = "ctrlf1~tCtrl+F1"
+this.shortcut = 368
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlf1.destroy
+call super::destroy
+end on
+
+event clicked;
+mf_act(KeyF1!)
+
+end event
+
+type m_shiftf1 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF1!)
+end event
+
+on m_shiftf1.create
+call super::create
+this.visible = false
+this.text = "shiftf1~tShift+F1"
+this.shortcut = 1136
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_shiftf1.destroy
+call super::destroy
+end on
+
+type m_ctrlshiftf1 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF1!)
+
+end event
+
+on m_ctrlshiftf1.create
+call super::create
+this.visible = false
+this.text = "ctrlshiftf1~tCtrl+Shift+F1"
+this.shortcut = 1392
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlshiftf1.destroy
+call super::destroy
+end on
+
+type m_f2 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(Keyf2!)
+end event
+
+on m_f2.create
+call super::create
+this.visible = false
+this.text = "f2~tF2"
+this.shortcut = 113
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f2.destroy
+call super::destroy
+end on
+
+type m_ctrlf2 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(Keyf2!)
+
+end event
+
+on m_ctrlf2.create
+call super::create
+this.visible = false
+this.text = "ctrlF2~tCtrl+F2"
+this.shortcut = 369
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlf2.destroy
+call super::destroy
+end on
+
+type m_f3 from menu within m_shortcut_keys
+end type
+
+on m_f3.create
+call super::create
+this.visible = false
+this.text = "F3~tF3"
+this.shortcut = 114
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f3.destroy
+call super::destroy
+end on
+
+type m_0 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF3!)
+end event
+
+on m_0.create
+call super::create
+this.visible = false
+this.text = "ctrlF3~tCtrl+F3"
+this.shortcut = 370
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_0.destroy
+call super::destroy
+end on
+
+type m_ctrlshiftf3 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF3!)
+
+end event
+
+on m_ctrlshiftf3.create
+call super::create
+this.visible = false
+this.text = "ctrlShiftF3~tCtrl+Shift+F3"
+this.shortcut = 1394
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlshiftf3.destroy
+call super::destroy
+end on
+
+type m_f4 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF4!)
+end event
+
+on m_f4.create
+call super::create
+this.visible = false
+this.text = "F4~tF4"
+this.shortcut = 115
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f4.destroy
+call super::destroy
+end on
+
+type m_f5 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF5!)
+end event
+
+on m_f5.create
+call super::create
+this.visible = false
+this.text = "F5~tF5"
+this.shortcut = 116
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f5.destroy
+call super::destroy
+end on
+
+type m_ctrlf5 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF5!)
+end event
+
+on m_ctrlf5.create
+call super::create
+this.text = "CtrlF5~tCtrl+F5"
+this.enabled = false
+this.shortcut = 372
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlf5.destroy
+call super::destroy
+end on
+
+type m_f7 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF7!)
+end event
+
+on m_f7.create
+call super::create
+this.visible = false
+this.text = "F7~tF7"
+this.shortcut = 118
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f7.destroy
+call super::destroy
+end on
+
+type m_f8 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF8!)
+end event
+
+on m_f8.create
+call super::create
+this.text = "F8~tF8"
+this.enabled = false
+this.shortcut = 119
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f8.destroy
+call super::destroy
+end on
+
+type m_ctrlf8 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF8!)
+end event
+
+on m_ctrlf8.create
+call super::create
+this.visible = false
+this.text = "CtrlF8~tCtrl+F8"
+this.shortcut = 375
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlf8.destroy
+call super::destroy
+end on
+
+type m_ctrlshiftf8 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF8!)
+
+end event
+
+on m_ctrlshiftf8.create
+call super::create
+this.visible = false
+this.text = "CtrlShiftF8~tCtrl+Shift+F8"
+this.shortcut = 1399
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_ctrlshiftf8.destroy
+call super::destroy
+end on
+
+type m_f9 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF9!)
+end event
+
+on m_f9.create
+call super::create
+this.visible = false
+this.text = "F9~tF9"
+this.shortcut = 120
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f9.destroy
+call super::destroy
+end on
+
+type m_f10 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF10!)
+end event
+
+on m_f10.create
+call super::create
+this.visible = false
+this.text = "F10~tF10"
+this.shortcut = 121
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f10.destroy
+call super::destroy
+end on
+
+type m_shiftf10 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF10!)
+
+end event
+
+on m_shiftf10.create
+call super::create
+this.visible = false
+this.text = "ShiftF10~tShift+F10"
+this.shortcut = 1145
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_shiftf10.destroy
+call super::destroy
+end on
+
+type m_f11 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF11!)
+end event
+
+on m_f11.create
+call super::create
+this.visible = false
+this.text = "F11~tF11"
+this.shortcut = 122
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f11.destroy
+call super::destroy
+end on
+
+type m_shiftf11 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF11!)
+end event
+
+on m_shiftf11.create
+call super::create
+this.visible = false
+this.text = "ShiftF11~tShift+F11"
+this.shortcut = 1146
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_shiftf11.destroy
+call super::destroy
+end on
+
+type m_f12 from menu within m_shortcut_keys
+end type
+
+event clicked;
+mf_act(KeyF12!)
+end event
+
+on m_f12.create
+call super::create
+this.visible = false
+this.text = "F12~tF12"
+this.shortcut = 123
+this.menutextcolor = 134217735
+this.menubackcolor = 134217732
+this.menuhighlightcolor = 134217741
+this.textsize = 8
+this.weight = 400
+this.facename = "Tahoma"
+this.titlebackcolor = 134217730
+this.bitmapbackcolor = 12632256
+this.menubitmaps = true
+this.titlegradient = true
+this.toolbartextcolor = 134217746
+this.toolbarbackcolor = 67108864
+this.toolbarhighlightcolor = 134217741
+this.toolbargradient = true
+this.bitmapgradient = true
+end on
+
+on m_f12.destroy
+call super::destroy
+end on
+
