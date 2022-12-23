@@ -84,7 +84,7 @@ u_button_title titles[]
 
 string button_type = "PICTURE"
 
-str_menu menu
+str_menu istr_menu
 
 str_buttons buttons_base
 
@@ -134,6 +134,7 @@ public subroutine click_button (string ps_auto_close_flag)
 public function integer window_to_clipboard ()
 public subroutine resize_and_move ()
 public subroutine center_popup ()
+public subroutine shortcut_menus ()
 end prototypes
 
 event button_pressed(integer button_index);integer li_menu_index
@@ -208,16 +209,16 @@ li_sts = 0
 CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 	CASE "MENU"
 		// Check for a valid menu
-		if isnull(menu.menu_id) or menu.menu_id <= 0 then return 0
+		if isnull(istr_menu.menu_id) or istr_menu.menu_id <= 0 then return 0
 		
 		// Get the menu index from the button argument
 		li_menu_index = integer(buttons_base.button[pi_button_index].argument)
-		if isnull(li_menu_index) or li_menu_index <= 0 or li_menu_index > menu.menu_item_count then return 0
+		if isnull(li_menu_index) or li_menu_index <= 0 or li_menu_index > istr_menu.menu_item_count then return 0
 
 		// Perform the menu item
-		li_sts = f_do_menu_item_with_attributes(menu.menu_id, menu.menu_item[li_menu_index].menu_item_id, state_attributes)
+		li_sts = f_do_menu_item_with_attributes(istr_menu.menu_id, istr_menu.menu_item[li_menu_index].menu_item_id, state_attributes)
 		
-		ls_auto_close_flag = menu.menu_item[li_menu_index].auto_close_flag
+		ls_auto_close_flag = istr_menu.menu_item[li_menu_index].auto_close_flag
 		
 		// If the auto_close_flag is not "N" then see if we need to click a button
 		// on this window
@@ -328,19 +329,19 @@ end function
 public function integer paint_menu (long pl_menu_id);long i
 integer li_sts
 
-menu = datalist.get_menu(pl_menu_id)
+istr_menu = datalist.get_menu(pl_menu_id)
 buttons_base.button_count = 0
 
-for i = 1 to menu.menu_item_count
-	li_sts = add_button(menu.menu_item[i].button, &
-								menu.menu_item[i].button_title, &
-								menu.menu_item[i].button_help, &
+for i = 1 to istr_menu.menu_item_count
+	li_sts = add_button(istr_menu.menu_item[i].button, &
+								istr_menu.menu_item[i].button_title, &
+								istr_menu.menu_item[i].button_help, &
 								"MENU", &
 								string(i))
 next
 
-st_config_mode_menu.text = menu.description
-st_config_mode_menu.text += " (" + string(menu.menu_id) + ")"
+st_config_mode_menu.text = istr_menu.description
+st_config_mode_menu.text += " (" + string(istr_menu.menu_id) + ")"
 
 if len(st_config_mode_menu.text) > 0 then
 	st_config_mode_menu.visible = config_mode
@@ -528,6 +529,34 @@ y = main_window.y + (main_window.height - height) / 2
 
 end subroutine
 
+public subroutine shortcut_menus ();
+menu lm
+integer li_i
+// In order to make keyboard shortcuts available, create a hidden menu
+
+If Not IsValid(This.menuId) Then
+
+	// Instantiate the menu
+	
+	if This.ChangeMenu( m_shortcut_keys ) = -1 then	
+		return // must be the mdi frame ?	
+	end if
+	
+	lm = This.menuId
+	
+	// Hide the menu and it's first level items 
+	lm.visible = False
+	
+	For li_i = 1 To UpperBound(lm.item)
+		if lm.item[li_i].visible then	
+			lm.item[li_i].visible = False	
+		end if	
+	Next
+
+End if
+
+end subroutine
+
 on w_window_base.create
 this.pb_epro_help=create pb_epro_help
 this.st_config_mode_menu=create st_config_mode_menu
@@ -550,6 +579,8 @@ long ll_dw_backcolor
 boolean lb_full_screen
 u_component_service luo_service
 string ls_temp
+
+shortcut_menus()
 
 pb_epro_help.visible = false
 
@@ -618,19 +649,24 @@ if isvalid(lo_x) and not isnull(lo_x) then
 	end if
 end if
 
-
 end event
 
-event key;if NOT IsNull(key) AND NOT ISNull(keyflags) then
-	if f_fkey_handler2(key, keyflags, classname()) then 
-		post refresh()
-	end if
+event key;
+// replaced by menus (m_shortcut_keys)
+// attached by shortcut_menus function here
 
-	// Handle F6 here
-	if key = KeyF6! AND keyflags = 0 then
-		window_to_clipboard()
-	end if		
-end if
+// messagebox("Class", classname())
+
+//if NOT IsNull(key) AND NOT ISNull(keyflags) then
+//	if f_fkey_handler2(key, keyflags, classname()) then 
+//		refresh()
+//	end if
+//
+//	// Handle F6 here
+//	if key = KeyF6! AND keyflags = 0 then
+//		window_to_clipboard()
+//	end if		
+//end if
 end event
 
 event close;remove_buttons()
@@ -674,14 +710,14 @@ w_menu_display lw_menu_display
 SELECT CAST(id AS varchar(38))
 INTO :popup.items[1]
 FROM c_menu
-WHERE menu_id = :menu.menu_id;
+WHERE menu_id = :istr_menu.menu_id;
 if not tf_check() then return
 popup.items[2] = f_boolean_to_string(true)
 popup.data_row_count = 2
 openwithparm(lw_menu_display, popup, "w_menu_display")
 
 remove_buttons()
-paint_menu(menu.menu_id)
+paint_menu(istr_menu.menu_id)
 
 end event
 
