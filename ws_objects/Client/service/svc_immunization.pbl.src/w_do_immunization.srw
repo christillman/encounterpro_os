@@ -73,7 +73,7 @@ end type
 global w_do_immunization w_do_immunization
 
 type variables
-String vaccine_id
+String vaccine_drug_id
 String param_class
 String location_domain
 String location
@@ -87,7 +87,6 @@ date expiration_date
 
 
 end variables
-
 forward prototypes
 public function integer save_changes ()
 public subroutine display_expiration_date ()
@@ -99,7 +98,7 @@ public function integer save_changes ();integer li_sts
 treat_immun.maker_id = maker_id
 treat_immun.lot_number = trim(sle_lot_number.text)
 treat_immun.location = location
-treat_immun.drug_id = vaccine_id
+treat_immun.drug_id = vaccine_drug_id
 treat_immun.duration_prn = trim(sle_lit_date.text)
 treat_immun.expiration_date = datetime(expiration_date, time(""))
 treat_immun.treatment_office_id = gnv_app.office_id
@@ -282,7 +281,7 @@ popup_return.item_count = 0
 //treat_immun.maker_id = maker_id
 //treat_immun.lot_number = sle_lot_number.text
 //treat_immun.location = location
-//treat_immun.drug_id = vaccine_id
+//treat_immun.drug_id = vaccine_drug_id
 //treat_immun.duration_prn = sle_lit_date.text
 //treat_immun.expiration_date = datetime(expiration_date, time(""))
 //treat_immun.treatment_office_id = office_id
@@ -419,21 +418,21 @@ Else
 	End If
 End If
 
-if isnull(treat_immun.drug_id) then
-	li_vaccine_index = vaccine_list.get_vaccine_from_proc(treat_immun.procedure_id)
-	If li_vaccine_index <= 0 Then
-		ls_message = "The immunization procedure (" + st_description.text &
-						 + ") is not configured with a corresponding vaccine.  Please select a vaccine for this procedure " &
-						 + " on the procedure definition screen."
-		openwithparm(w_pop_message, ls_message)
-		log.log(this, "w_do_immunization:post", "Unable to locate vaccine for procedure " + treat_immun.procedure_id, 3)
-		closewithreturn(this, popup_return)
-		Return
-	End if
-	
-	vaccine_id = vaccine_list.vaccine[li_vaccine_index].drug_id
+li_vaccine_index = vaccine_list.get_vaccine_from_proc(treat_immun.procedure_id)
+If li_vaccine_index <= 0 Then
+	ls_message = "The immunization procedure (" + st_description.text &
+					 + ") is not configured with a corresponding vaccine.  Please select a vaccine for this procedure " &
+					 + " on the procedure definition screen."
+	openwithparm(w_pop_message, ls_message)
+	log.log(this, "w_do_immunization:post", "Unable to locate vaccine for procedure " + treat_immun.procedure_id, 3)
+	closewithreturn(this, popup_return)
+	Return
+End if
+
+if isnull(treat_immun.drug_id) then	
+	vaccine_drug_id = vaccine_list.vaccine[li_vaccine_index].drug_id
 else
-	vaccine_id = treat_immun.drug_id
+	vaccine_drug_id = treat_immun.drug_id
 end if
 
 display_ndc()
@@ -838,7 +837,7 @@ str_popup_return popup_return
 
 popup.dataobject = "dw_maker_pick"
 popup.argument_count = 1
-popup.argument[1] = vaccine_id
+popup.argument[1] = vaccine_drug_id
 popup.datacolumn = 2
 popup.displaycolumn = 1
 popup.add_blank_row = true
@@ -1073,7 +1072,7 @@ end type
 
 type uo_drug_package from u_drug_package within w_do_immunization
 integer x = 933
-integer y = 288
+integer y = 292
 integer width = 1193
 integer height = 112
 boolean bringtotop = true
@@ -1085,21 +1084,21 @@ boolean disabledlook = false
 end type
 
 event clicked;call super::clicked;window w
-integer i
+integer li_vaccine_index
 real lr_temp
 string ls_form_rxcui, ls_ingr_rxcui, ls_form_description, ls_drug_id
 str_popup popup
 str_popup_return popup_return
 
 // Replace above popup with new 2-column formulation window
-ls_drug_id = vaccine_id
+ls_drug_id = vaccine_drug_id
 ls_form_description = f_choose_vaccine(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
 
 // This is inherited from u_drug_package, which has a form_rxcui array.
 selectformulation(ls_form_rxcui)
 
 // We want to assign to the window instance variable.
-vaccine_id = ls_drug_id
+vaccine_drug_id = ls_drug_id
 
 end event
 
