@@ -25,12 +25,6 @@ Long							ll_row
 str_popup					popup
 str_picked_procedures 	lstr_procedures
 
-//popup.data_row_count = 1
-//popup.items[1] = "PROCEDURE"
-//popup.multiselect = true
-//Openwithparm(w_procedure_selection, popup)
-//popup_return = message.powerobjectparm
-
 popup.data_row_count = 2
 popup.items[1] = treatment_type
 popup.items[2] = "PROCEDURE"
