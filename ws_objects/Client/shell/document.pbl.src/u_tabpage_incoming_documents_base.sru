@@ -42,6 +42,7 @@ string list_folder
 boolean default_list
 
 long last_selected_attachment_id
+string attachment_file
 
 boolean initialized = false
 
@@ -93,25 +94,18 @@ if pl_row > ll_rowcount then pl_row = ll_rowcount
 last_selected_attachment_id = dw_holding_list.object.attachment_id[pl_row]
 ls_extension = dw_holding_list.object.extension[pl_row]
 
-// If we haven't extracted this file yet then get it
-ls_rendered_file = dw_holding_list.object.rendered_file[pl_row]
-if isnull(ls_rendered_file) then
-	li_sts = attachments.attachment(luo_displayed_attachment, last_selected_attachment_id)
-	if li_sts <= 0 then
-		setnull(displayed_actual_file)
-		log.log(this, "u_tabpage_incoming_documents_base.select_image:0034", "Error getting attachment object", 3)
-	else
-		displayed_actual_file = luo_displayed_attachment.get_attachment()
-		dw_holding_list.object.attachment_file[pl_row] = displayed_actual_file
-		
-		ls_rendered_file = luo_displayed_attachment.render()
-		dw_holding_list.object.rendered_file[pl_row] = ls_rendered_file
-	end if
-	component_manager.destroy_component(luo_displayed_attachment)
+li_sts = attachments.attachment(luo_displayed_attachment, last_selected_attachment_id)
+if li_sts <= 0 then
+	setnull(displayed_actual_file)
+	log.log(this, "u_tabpage_incoming_documents_base.select_image:0034", "Error getting attachment object", 3)
 else
-	displayed_actual_file = dw_holding_list.object.attachment_file[pl_row]
-end if
+	displayed_actual_file = luo_displayed_attachment.get_attachment()
+	dw_holding_list.object.attachment_file[pl_row] = displayed_actual_file
 	
+	ls_rendered_file = luo_displayed_attachment.render()
+end if
+component_manager.destroy_component(luo_displayed_attachment)
+
 // Display the attachment in the browser object
 uo_picture.display_picture(ls_rendered_file)
 
@@ -426,8 +420,8 @@ for i = 1 to ll_rows
 	dw_holding_list.object.extension[ll_row] = attachments.object.extension[i]
 	dw_holding_list.object.user_full_name[ll_row] = user_list.user_full_name(string(attachments.object.attached_by[i]))
 	dw_holding_list.object.created[ll_row] = attachments.object.created[i]
-	dw_holding_list.object.failed_once[ll_row] = attachments.object.failed_once[i]
-	dw_holding_list.object.failed_mappings[ll_row] = attachments.object.failed_mappings[i]
+//	dw_holding_list.object.failed_once[ll_row] = attachments.object.failed_once[i]
+//	dw_holding_list.object.failed_mappings[ll_row] = attachments.object.failed_mappings[i]
 next
 
 attachments.setfilter("")
@@ -646,7 +640,6 @@ DO WHILE ll_row > 0
 	// from the structure
 	if not lb_tif then
 		ls_file = dw_holding_list.object.attachment_file[ll_row]
-		ls_rendered_file = dw_holding_list.object.rendered_file[ll_row]
 	end if
 
 	// If the file doesn't exist then try to get it
@@ -696,10 +689,10 @@ DO WHILE ll_row > 0
 				AND p.current_flag = 'Y';
 				if not tf_check() then return
 				if ll_count > 0 then
-					dw_holding_list.object.failed_mappings[ll_row] = 1
+					//dw_holding_list.object.failed_mappings[ll_row] = 1
 				end if
 				
-				dw_holding_list.object.failed_once[ll_row] = 1
+				//dw_holding_list.object.failed_once[ll_row] = 1
 				
 				if ll_count > 0 then
 					openwithparm(w_pop_yes_no, "This document contains data elements that do not correspond to EncounterPRO objects.  Do you wish to map these elements now?")
@@ -1064,7 +1057,8 @@ settransobject(sqlca)
 
 end event
 
-event unselected;if lastcolumnname = "t_failed_mappings" then
+event unselected;// t_failed_mappings was removed
+if lastcolumnname = "t_failed_mappings" then
 	edit_mappings(unselected_row)
 end if
 
@@ -1075,6 +1069,7 @@ end event
 
 event selected;select_image(selected_row)
 
+// t_failed_mappings was removed
 if lastcolumnname = "t_failed_mappings" then
 	edit_mappings(selected_row)
 end if
@@ -1087,7 +1082,7 @@ end event
 type uo_picture from u_picture_display within u_tabpage_incoming_documents_base
 event destroy ( )
 integer x = 1486
-integer y = 16
+integer y = 12
 integer width = 1367
 integer height = 1520
 integer taborder = 30
