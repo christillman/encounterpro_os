@@ -13,17 +13,11 @@ end type
 end forward
 
 global type w_maker_select from w_window_base
-int X=0
-int Y=0
-int Width=2926
-int Height=1832
-WindowType WindowType=response!
-boolean TitleBar=false
-long backcolor = 7191717
-boolean ControlMenu=false
-boolean MinBox=false
-boolean MaxBox=false
-boolean Resizable=false
+boolean titlebar = false
+boolean minbox = false
+boolean maxbox = false
+boolean resizable = false
+windowtype windowtype = response!
 pb_done pb_done
 pb_cancel pb_cancel
 dw_makers dw_makers
@@ -160,12 +154,20 @@ end if
 
 end event
 
+type pb_epro_help from w_window_base`pb_epro_help within w_maker_select
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_maker_select
+end type
+
 type pb_done from u_picture_button within w_maker_select
-int X=2569
-int Y=1552
-int TabOrder=10
-string PictureName="button26.bmp"
-string DisabledName="b_push26.bmp"
+integer x = 2569
+integer y = 1552
+integer width = 256
+integer height = 224
+integer taborder = 10
+string picturename = "button26.bmp"
+string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;integer li_sts
@@ -182,13 +184,15 @@ return
 end event
 
 type pb_cancel from u_picture_button within w_maker_select
-int X=82
-int Y=1552
-int TabOrder=20
-boolean BringToTop=true
-string PictureName="button11.bmp"
-string DisabledName="b_push11.bmp"
-boolean Cancel=true
+integer x = 82
+integer y = 1552
+integer width = 256
+integer height = 224
+integer taborder = 20
+boolean bringtotop = true
+boolean cancel = true
+string picturename = "button11.bmp"
+string disabledname = "b_push11.bmp"
 end type
 
 event clicked;call super::clicked;close(parent)
@@ -197,33 +201,32 @@ return
 end event
 
 type dw_makers from u_dw_pick_list within w_maker_select
-int X=942
-int Y=192
-int Width=1179
-int Height=1540
-int TabOrder=10
-boolean BringToTop=true
-string DataObject="dw_maker_pick_list"
-boolean Border=false
-BorderStyle BorderStyle=StyleBox!
-boolean VScrollBar=true
+integer x = 942
+integer y = 192
+integer width = 1179
+integer height = 1540
+integer taborder = 10
+boolean bringtotop = true
+string dataobject = "dw_maker_pick_list"
+boolean vscrollbar = true
+boolean border = false
 end type
 
 type st_title from statictext within w_maker_select
-int Width=2912
-int Height=160
-boolean Enabled=false
-boolean BringToTop=true
-string Text="Rotovirus Makers"
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long TextColor=33554432
+integer width = 2912
+integer height = 160
+boolean bringtotop = true
+integer textsize = -16
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
 long backcolor = 7191717
-int TextSize=-16
-int Weight=400
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+boolean enabled = false
+string text = "Rotovirus Makers"
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 
