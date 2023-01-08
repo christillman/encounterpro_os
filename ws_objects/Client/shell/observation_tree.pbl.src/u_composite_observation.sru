@@ -416,19 +416,22 @@ end function
 
 public function boolean loop_check (string ps_parent_observation_id, string ps_new_observation_id);integer li_loop
 
- DECLARE lsp_observation_loop_check PROCEDURE FOR dbo.sp_observation_loop_check  
-         @ps_parent_observation_id = :ps_parent_observation_id,   
-         @ps_new_observation_id = :ps_new_observation_id,   
-         @pi_loop = :li_loop OUT ;
+// DECLARE lsp_observation_loop_check PROCEDURE FOR dbo.sp_observation_loop_check  
+//         @ps_parent_observation_id = :ps_parent_observation_id,   
+//         @ps_new_observation_id = :ps_new_observation_id,   
+//         @pi_loop = :li_loop OUT ;
 
-
-EXECUTE lsp_observation_loop_check;
+SQLCA.sp_observation_loop_check   ( &
+         ps_parent_observation_id,    &
+         ps_new_observation_id,    &
+         ref li_loop );
+//EXECUTE lsp_observation_loop_check;
 if not tf_check() then return true
 
-FETCH lsp_observation_loop_check INTO :li_loop;
-if not tf_check() then return true
-
-CLOSE lsp_observation_loop_check;
+//FETCH lsp_observation_loop_check INTO :li_loop;
+//if not tf_check() then return true
+//
+//CLOSE lsp_observation_loop_check;
 
 if li_loop = 0 then
 	return false

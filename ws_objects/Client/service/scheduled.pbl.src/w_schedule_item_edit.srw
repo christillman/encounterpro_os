@@ -48,9 +48,7 @@ type variables
 date age
 u_unit age_unit
 
-
 end variables
-
 event open;str_popup popup
 long ll_age
 string ls_age_unit
@@ -340,22 +338,28 @@ end type
 event clicked;call super::clicked;str_popup_return popup_return
 long ll_age
 datetime ldt_age
+long li_rc
 
- DECLARE lsp_get_age_date PROCEDURE FOR dbo.sp_get_age_date
- 			@pdt_from_date = :immunization_date_of_birth,
-         @pl_add_number = :ll_age,   
-         @ps_add_unit = :age_unit.unit_id,   
-         @pdt_date = :ldt_age OUT  ;
-
+// DECLARE lsp_get_age_date PROCEDURE FOR dbo.sp_get_age_date
+// 			@pdt_from_date = :immunization_date_of_birth,
+//         @pl_add_number = :ll_age,   
+//         @ps_add_unit = :age_unit.unit_id,   
+//         @pdt_date = :ldt_age OUT  ;
+//
 ll_age = long(sle_age.text)
 
-EXECUTE lsp_get_age_date;
+datetime ldt_imm_dob
+ldt_imm_dob = datetime(immunization_date_of_birth)
+
+li_rc = sqlca.sp_get_age_date( ldt_imm_dob, ll_age, age_unit.unit_id, ref ldt_age ) ;
+
+//EXECUTE lsp_get_age_date;
 if not tf_check() then return
 
-FETCH lsp_get_age_date INTO :ldt_age;
-if not tf_check() then return
+//FETCH lsp_get_age_date INTO :ldt_age;
+//if not tf_check() then return
 
-CLOSE lsp_get_age_date;
+//CLOSE lsp_get_age_date;
 
 popup_return.items[1] = string(date(ldt_age))
 popup_return.items[2] = string(integer(sle_warning_days.text))

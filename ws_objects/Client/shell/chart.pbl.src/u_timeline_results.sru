@@ -140,19 +140,22 @@ public function string get_default_obj_list ();String ls_observation_id,ls_null
 
 Setnull(ls_null)
 
- DECLARE lsp_get_obj_list_selection PROCEDURE FOR dbo.sp_get_obj_list_selection  
-         @ps_user_id = :current_user.user_id,   
-         @ps_root_category = 'GRAPH',   
-         @ps_observation_id = :ls_observation_id OUT  ;
+// DECLARE lsp_get_obj_list_selection PROCEDURE FOR dbo.sp_get_obj_list_selection  
+//         @ps_user_id = :current_user.user_id,   
+//         @ps_root_category = 'GRAPH',   
+//         @ps_observation_id = :ls_observation_id OUT  ;
 
-
-EXECUTE lsp_get_obj_list_selection;
+SQLCA.sp_get_obj_list_selection   ( &
+         current_user.user_id,    &
+         'GRAPH',   &
+         ref ls_observation_id  );
+//EXECUTE lsp_get_obj_list_selection;
 if not tf_check() then return ls_null
 
-FETCH lsp_get_obj_list_selection INTO :ls_observation_id;
-if not tf_check() then return ls_null
-
-CLOSE lsp_get_obj_list_selection;
+//FETCH lsp_get_obj_list_selection INTO :ls_observation_id;
+//if not tf_check() then return ls_null
+//
+//CLOSE lsp_get_obj_list_selection;
 
 return ls_observation_id
 

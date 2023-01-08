@@ -32,7 +32,6 @@ end forward
 
 global type w_observation_result_edit from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -510,6 +509,8 @@ end type
 type pb_done from u_picture_button within w_observation_result_edit
 integer x = 2569
 integer y = 1556
+integer width = 256
+integer height = 224
 integer taborder = 90
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -662,11 +663,11 @@ event clicked;integer li_result_sequence
 string ls_result
 long ll_row
 
- DECLARE lsp_set_result_na PROCEDURE FOR dbo.sp_set_result_na  
-         @ps_observation_id = :observation_id,   
-         @pi_result_sequence = :li_result_sequence  ;
-
-
+// DECLARE lsp_set_result_na PROCEDURE FOR dbo.sp_set_result_na  
+//         @ps_observation_id = :observation_id,   
+//         @pi_result_sequence = :li_result_sequence  ;
+//
+//
 ll_row = dw_results.get_selected_row()
 if ll_row <= 0 then return
 
@@ -676,7 +677,8 @@ ls_result = dw_results.object.result[ll_row]
 openwithparm(w_pop_ok, "Delete " + ls_result + "?")
 if message.doubleparm <> 1 then return 0
 
-EXECUTE lsp_set_result_na;
+sqlca.sp_set_result_na(observation_id, li_result_sequence);
+//EXECUTE lsp_set_result_na;
 if not tf_check() then return
 
 display_results()
@@ -809,6 +811,8 @@ end event
 type pb_1 from u_pb_help_button within w_observation_result_edit
 integer x = 2569
 integer y = 1328
+integer width = 256
+integer height = 128
 integer taborder = 20
 boolean bringtotop = true
 end type
@@ -835,8 +839,8 @@ type pb_up from u_picture_button within w_observation_result_edit
 boolean visible = false
 integer x = 1573
 integer y = 284
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 11
 boolean bringtotop = true
 string picturename = "icon_up.bmp"

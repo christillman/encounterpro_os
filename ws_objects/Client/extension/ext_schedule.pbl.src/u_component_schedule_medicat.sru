@@ -213,72 +213,74 @@ int li_count = 1
 boolean lb_loop
 lb_loop = true
 
-SELECT patient_id
-INTO :ll_PatientID
-FROM p_Patient
-WHERE cpr_id = :ps_cpr_id using cprdb;
-if not cprdb.check() then return -1
-if sqlca.sqlcode = 100 then return 0
-
-SELECT encounter_date,
-		encounter_billing_id
-INTO :ldt_DateOfservice,
-		:ll_TicketID
-FROM p_Patient_Encounter
-WHERE cpr_id = :ps_cpr_id
-AND encounter_id = :pl_encounter_id using cprdb;
-if not cprdb.check() then return -1
-if sqlca.sqlcode = 100 then return 0
-
-if not isnull(ll_TicketID) then
-	SELECT PatientID
-	INTO :ll_TicketPatientID
-	FROM Ticket
-	WHERE ID = :ll_TicketID
-	USING mydb;
-	if not mydb.check() then return -1
-	if sqlca.sqlcode = 100 then
-		setnull(ll_TicketID)
-	elseif ll_TicketPatientID <> ll_PatientID then
-		setnull(ll_TicketID)
-	end if
-end if
-
-if isnull(ll_TicketID) then
-	Do
-	ls_facility = is_ClinicCodes[li_count]
-	ls_office = is_offices[li_count]
-	DECLARE lsp_epStartTicket PROCEDURE FOR dbo.epStartTicket
-  		@PatientID = :ll_PatientID,
-  		@ClinicCode = :ls_facility,
-  		@DateOfservice = :ldt_DateOfservice
-	USING mydb;
-	
-	EXECUTE lsp_epStartTicket;
-	if not mydb.check() then return -1
-	
-	FETCH lsp_epStartTicket INTO :ll_TicketID;
-	if not mydb.check() then return -1
-	
-	if mydb.sqlcode <> 0 then
-		li_count++
-		if li_count > ii_office_count then
-			lb_loop = false
-		end if
-	else
-		lb_loop = false
-	end if
-	
-	CLOSE lsp_epStartTicket;
-	
-	LOOP	While lb_loop	
-	
-	UPDATE p_Patient_Encounter
-	SET encounter_billing_id = :ll_TicketID
-	WHERE cpr_id = :ps_cpr_id
-	AND encounter_id = :pl_encounter_id using cprdb;
-	if not cprdb.check() then return -1
-end if
+messagebox("Obsolete", "dbo.epStartTicket is no more")
+//
+//SELECT patient_id
+//INTO :ll_PatientID
+//FROM p_Patient
+//WHERE cpr_id = :ps_cpr_id using cprdb;
+//if not cprdb.check() then return -1
+//if sqlca.sqlcode = 100 then return 0
+//
+//SELECT encounter_date,
+//		encounter_billing_id
+//INTO :ldt_DateOfservice,
+//		:ll_TicketID
+//FROM p_Patient_Encounter
+//WHERE cpr_id = :ps_cpr_id
+//AND encounter_id = :pl_encounter_id using cprdb;
+//if not cprdb.check() then return -1
+//if sqlca.sqlcode = 100 then return 0
+//
+//if not isnull(ll_TicketID) then
+//	SELECT PatientID
+//	INTO :ll_TicketPatientID
+//	FROM Ticket
+//	WHERE ID = :ll_TicketID
+//	USING mydb;
+//	if not mydb.check() then return -1
+//	if sqlca.sqlcode = 100 then
+//		setnull(ll_TicketID)
+//	elseif ll_TicketPatientID <> ll_PatientID then
+//		setnull(ll_TicketID)
+//	end if
+//end if
+//
+//if isnull(ll_TicketID) then
+//	Do
+//	ls_facility = is_ClinicCodes[li_count]
+//	ls_office = is_offices[li_count]
+//	DECLARE lsp_epStartTicket PROCEDURE FOR dbo.epStartTicket
+//  		@PatientID = :ll_PatientID,
+//  		@ClinicCode = :ls_facility,
+//  		@DateOfservice = :ldt_DateOfservice
+//	USING mydb;
+//	
+//	EXECUTE lsp_epStartTicket;
+//	if not mydb.check() then return -1
+//	
+//	FETCH lsp_epStartTicket INTO :ll_TicketID;
+//	if not mydb.check() then return -1
+//	
+//	if mydb.sqlcode <> 0 then
+//		li_count++
+//		if li_count > ii_office_count then
+//			lb_loop = false
+//		end if
+//	else
+//		lb_loop = false
+//	end if
+//	
+//	CLOSE lsp_epStartTicket;
+//	
+//	LOOP	While lb_loop	
+//	
+//	UPDATE p_Patient_Encounter
+//	SET encounter_billing_id = :ll_TicketID
+//	WHERE cpr_id = :ps_cpr_id
+//	AND encounter_id = :pl_encounter_id using cprdb;
+//	if not cprdb.check() then return -1
+//end if
 
 return ll_TicketID
 
@@ -383,169 +385,171 @@ string ls_office
 int li_count = 1
 lb_loop = true
 
-Do
-	ls_facility = is_ClinicCodes[li_count]
-	ls_office = is_offices[li_count]
-	
- 	DECLARE lsp_epGetNextCheckedIn PROCEDURE FOR dbo.epGetNextCheckedIn
-         @ClinicCode = :ls_facility
-	USING mydb;
-
-	setnull(ll_null)
-	setnull(ps_new_flag)
-	ldt_three_years_ago = datetime(relativedate(today(), -1095))
-
-	EXECUTE lsp_epGetNextCheckedIn;
-	if not mydb.check() then return -1
-	lb_fetch = true
-	DO 
-	FETCH	lsp_epGetNextCheckedIn INTO
-		:pl_checked_in_id,
-		:ldt_AppointmentDate,
-		:ll_PatientId,
-		:ls_ProviderCode,
-		:ls_ReasonCode;
-	if not mydb.check() then return -1
-		
-	if mydb.sqlcode <> 0 then
-		lb_fetch = false
-		li_sts = 0
-		li_count++
-		if li_count > ii_office_count then
-			lb_loop = false
-		end if
-	else
-		SELECT encounter_id
-		INTO :ll_encounter_id
-		FROM x_medicat_arrived
-		WHERE appointmentid = :pl_checked_in_id
-		And status in ('NA', 'ERROR')
-		USING cprdb;
-		if not cprdb.check() then return -1
-		if not cprdb.sqlcode = 0 then 
-			li_sts = 1
-			lb_fetch = false
-			lb_loop = false
-		end if	
-	end if
-	LOOP While lb_fetch
-	CLOSE lsp_epGetNextCheckedIn;
-LOOP While lb_loop	
-
-if li_sts = 0 then return li_sts
-
-if li_sts > 0 then
-	mylog.log(this, "u_component_schedule_medicat.xx_get_next_checked_in:0072", "Retrieval " + string(pl_checked_in_id), 1)
-	// Check to see if the patient has already been checked in
-	SELECT encounter_id, status
-	INTO :ll_encounter_id, :ls_status
-	FROM x_medicat_arrived
-	WHERE appointmentid = :pl_checked_in_id
-	USING cprdb;
-	if not cprdb.check() then return -1
-		
-	if cprdb.sqlcode = 0 then
-		// If the appointment already exists in the x_medicat_arrived table, then we
-		// shouldn't be here.  
-		// there must be license problem ... has it been cleared up? we will try again to checkin 
-		// Now don't check in this patient
-		return 0
-	end if
-end if
-
-if li_sts = 0 then return li_sts
-if not ls_office = "" then
-	ps_office = ls_office
-end if	
-
-//ps_encounter_date = string(ldt_AppointmentDate, "[shortdate]")
-ps_encounter_Date = ldt_AppointmentDate
-setnull(ps_chief_complaint)
-pl_checked_in_id = pl_checked_in_id
-
-ls_billing_id = string(ll_PatientId)
-
-SELECT name
-INTO :ps_chief_complaint
-FROM AppointmentReason
-WHERE ClinicCode = :ls_facility
-AND Code = :ls_ReasonCode
-USING mydb;
-if not mydb.check() then return -1
-if mydb.sqlcode = 100 then setnull(ps_chief_complaint)
-
-if isnull(ls_ProviderCode) then
-	setnull(ps_attending_doctor)
-else
-	SELECT user_id
-	INTO :ps_attending_doctor
-	FROM c_user
-	WHERE billing_id = :ls_ProviderCode
-	USING cprdb;
-	if not cprdb.check() then return -1
-	if cprdb.sqlcode = 100 then
-		setnull(ps_attending_doctor)
-	end if
-end if
-
-SELECT cpr_id
-INTO :ps_cpr_id
-FROM p_Patient
-WHERE billing_id = :ls_billing_id
-USING cprdb;
-if not cprdb.check() then return -1
-if cprdb.sqlcode = 100 then
-	setnull(ps_cpr_id)
-end if
-
-SELECT encounter_type,
-		 new_flag
-INTO :ps_encounter_type,
-		:ps_new_flag
-FROM b_Appointment_Type
-WHERE appointment_type = :ls_ReasonCode
-USING cprdb;
-if not cprdb.check() then return -1
-if cprdb.sqlcode = 100 then
-	setnull(ps_encounter_type)
-	setnull(ps_new_flag)
-end if
-
-// If appointment_type didn't provide new_flag, then figure it out
-if isnull(ps_new_flag) then
-	SELECT count(*)
-	INTO :ll_count
-	FROM Ticket
-	WHERE PatientId = :ll_PatientId
-	AND TicketDate > :ldt_three_years_ago
-	USING mydb;
-	if not mydb.check() then return -1
-	
-	if ll_count > 0 then
-		ps_new_flag = "N"
-	else
-		ps_new_flag = "Y"
-	end if
-end if
-if isnull(ps_new_flag) then ps_new_flag = "N"
-// If we still don't have an encounter_type, then use the default
-if isnull(ps_encounter_type) then
-	ps_encounter_type = get_attribute("default_encounter_type")
-end if
-
-// If we still don't have an attending_doctor, then set the default role
-if isnull(ps_attending_doctor) then
-	SELECT default_role
-	INTO :ps_attending_doctor
-	FROM c_Encounter_Type
-	WHERE encounter_type = :ps_encounter_type
-	USING cprdb;
-	if not cprdb.check() then return -1
-	if cprdb.sqlcode = 100 then setnull(ps_attending_doctor)
-end if
-
-li_sts = update_patient(pl_checked_in_id, ps_cpr_id)
-if li_sts <= 0 then return -1
+messagebox("Obsolete", "dbo.epGetNextCheckedIn is no more")
+//
+//Do
+//	ls_facility = is_ClinicCodes[li_count]
+//	ls_office = is_offices[li_count]
+//	
+// 	DECLARE lsp_epGetNextCheckedIn PROCEDURE FOR dbo.epGetNextCheckedIn
+//         @ClinicCode = :ls_facility
+//	USING mydb;
+//
+//	setnull(ll_null)
+//	setnull(ps_new_flag)
+//	ldt_three_years_ago = datetime(relativedate(today(), -1095))
+//
+//	EXECUTE lsp_epGetNextCheckedIn;
+//	if not mydb.check() then return -1
+//	lb_fetch = true
+//	DO 
+//	FETCH	lsp_epGetNextCheckedIn INTO
+//		:pl_checked_in_id,
+//		:ldt_AppointmentDate,
+//		:ll_PatientId,
+//		:ls_ProviderCode,
+//		:ls_ReasonCode;
+//	if not mydb.check() then return -1
+//		
+//	if mydb.sqlcode <> 0 then
+//		lb_fetch = false
+//		li_sts = 0
+//		li_count++
+//		if li_count > ii_office_count then
+//			lb_loop = false
+//		end if
+//	else
+//		SELECT encounter_id
+//		INTO :ll_encounter_id
+//		FROM x_medicat_arrived
+//		WHERE appointmentid = :pl_checked_in_id
+//		And status in ('NA', 'ERROR')
+//		USING cprdb;
+//		if not cprdb.check() then return -1
+//		if not cprdb.sqlcode = 0 then 
+//			li_sts = 1
+//			lb_fetch = false
+//			lb_loop = false
+//		end if	
+//	end if
+//	LOOP While lb_fetch
+//	CLOSE lsp_epGetNextCheckedIn;
+//LOOP While lb_loop	
+//
+//if li_sts = 0 then return li_sts
+//
+//if li_sts > 0 then
+//	mylog.log(this, "u_component_schedule_medicat.xx_get_next_checked_in:0072", "Retrieval " + string(pl_checked_in_id), 1)
+//	// Check to see if the patient has already been checked in
+//	SELECT encounter_id, status
+//	INTO :ll_encounter_id, :ls_status
+//	FROM x_medicat_arrived
+//	WHERE appointmentid = :pl_checked_in_id
+//	USING cprdb;
+//	if not cprdb.check() then return -1
+//		
+//	if cprdb.sqlcode = 0 then
+//		// If the appointment already exists in the x_medicat_arrived table, then we
+//		// shouldn't be here.  
+//		// there must be license problem ... has it been cleared up? we will try again to checkin 
+//		// Now don't check in this patient
+//		return 0
+//	end if
+//end if
+//
+//if li_sts = 0 then return li_sts
+//if not ls_office = "" then
+//	ps_office = ls_office
+//end if	
+//
+////ps_encounter_date = string(ldt_AppointmentDate, "[shortdate]")
+//ps_encounter_Date = ldt_AppointmentDate
+//setnull(ps_chief_complaint)
+//pl_checked_in_id = pl_checked_in_id
+//
+//ls_billing_id = string(ll_PatientId)
+//
+//SELECT name
+//INTO :ps_chief_complaint
+//FROM AppointmentReason
+//WHERE ClinicCode = :ls_facility
+//AND Code = :ls_ReasonCode
+//USING mydb;
+//if not mydb.check() then return -1
+//if mydb.sqlcode = 100 then setnull(ps_chief_complaint)
+//
+//if isnull(ls_ProviderCode) then
+//	setnull(ps_attending_doctor)
+//else
+//	SELECT user_id
+//	INTO :ps_attending_doctor
+//	FROM c_user
+//	WHERE billing_id = :ls_ProviderCode
+//	USING cprdb;
+//	if not cprdb.check() then return -1
+//	if cprdb.sqlcode = 100 then
+//		setnull(ps_attending_doctor)
+//	end if
+//end if
+//
+//SELECT cpr_id
+//INTO :ps_cpr_id
+//FROM p_Patient
+//WHERE billing_id = :ls_billing_id
+//USING cprdb;
+//if not cprdb.check() then return -1
+//if cprdb.sqlcode = 100 then
+//	setnull(ps_cpr_id)
+//end if
+//
+//SELECT encounter_type,
+//		 new_flag
+//INTO :ps_encounter_type,
+//		:ps_new_flag
+//FROM b_Appointment_Type
+//WHERE appointment_type = :ls_ReasonCode
+//USING cprdb;
+//if not cprdb.check() then return -1
+//if cprdb.sqlcode = 100 then
+//	setnull(ps_encounter_type)
+//	setnull(ps_new_flag)
+//end if
+//
+//// If appointment_type didn't provide new_flag, then figure it out
+//if isnull(ps_new_flag) then
+//	SELECT count(*)
+//	INTO :ll_count
+//	FROM Ticket
+//	WHERE PatientId = :ll_PatientId
+//	AND TicketDate > :ldt_three_years_ago
+//	USING mydb;
+//	if not mydb.check() then return -1
+//	
+//	if ll_count > 0 then
+//		ps_new_flag = "N"
+//	else
+//		ps_new_flag = "Y"
+//	end if
+//end if
+//if isnull(ps_new_flag) then ps_new_flag = "N"
+//// If we still don't have an encounter_type, then use the default
+//if isnull(ps_encounter_type) then
+//	ps_encounter_type = get_attribute("default_encounter_type")
+//end if
+//
+//// If we still don't have an attending_doctor, then set the default role
+//if isnull(ps_attending_doctor) then
+//	SELECT default_role
+//	INTO :ps_attending_doctor
+//	FROM c_Encounter_Type
+//	WHERE encounter_type = :ps_encounter_type
+//	USING cprdb;
+//	if not cprdb.check() then return -1
+//	if cprdb.sqlcode = 100 then setnull(ps_attending_doctor)
+//end if
+//
+//li_sts = update_patient(pl_checked_in_id, ps_cpr_id)
+//if li_sts <= 0 then return -1
 
 return 1
 

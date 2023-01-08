@@ -288,8 +288,8 @@ end event
 type pb_up from u_picture_button within u_workplan_edit
 integer x = 1527
 integer y = 244
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 20
 string picturename = "icon_up.bmp"
 string disabledname = "icon_upx.bmp"
@@ -486,6 +486,8 @@ type pb_new_observation from u_picture_button within u_workplan_edit
 event clicked pbm_bnclicked
 integer x = 1719
 integer y = 1264
+integer width = 256
+integer height = 224
 integer taborder = 40
 boolean default = true
 string picturename = "b_new02.bmp"
@@ -500,12 +502,12 @@ long ll_workplan_id
 string ls_description
 string ls_treatment_type
 
- DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
-         @ps_workplan_type = :workplan_type,   
-			@ps_treatment_type = :ls_treatment_type,
-			@ps_in_office_flag = :in_office_flag,
-         @ps_description = :ls_description,   
-         @pl_workplan_id = :ll_workplan_id OUT ;
+// DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
+//         @ps_workplan_type = :workplan_type,   
+//			@ps_treatment_type = :ls_treatment_type,
+//			@ps_in_office_flag = :in_office_flag,
+//         @ps_description = :ls_description,   
+//         @pl_workplan_id = :ll_workplan_id OUT ;
 
 if isnull(treatment_type) and workplan_type = 'Treatment' then
 	popup.dataobject = "dw_treatment_type_edit_list"
@@ -528,13 +530,19 @@ if popup_return.item_count <> 1 then return
 
 ls_description = popup_return.items[1]
 
-EXECUTE lsp_new_workplan;
+SQLCA.sp_new_workplan   ( &
+         workplan_type,    &
+			ls_treatment_type, &
+			in_office_flag, &
+         ls_description,    &
+         ref ll_workplan_id );
+//EXECUTE lsp_new_workplan;
 if not tf_check() then return
 
-FETCH lsp_new_workplan INTO :ll_workplan_id;
-if not tf_check() then return
-
-CLOSE lsp_new_workplan;
+//FETCH lsp_new_workplan INTO :ll_workplan_id;
+//if not tf_check() then return
+//
+//CLOSE lsp_new_workplan;
 
 
 popup.data_row_count = 1

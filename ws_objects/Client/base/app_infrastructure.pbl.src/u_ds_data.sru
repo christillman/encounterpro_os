@@ -794,11 +794,11 @@ string ls_item_type
 string ls_observation_id
 integer li_item_sequence
 
- DECLARE lsp_get_next_key PROCEDURE FOR dbo.sp_get_next_key  
-         @ps_cpr_id = :ls_cpr_id,   
-         @ps_key_id = :ls_key_id,   
-         @pl_key_value = :ll_key_value OUT
- USING mydb;
+// DECLARE lsp_get_next_key PROCEDURE FOR dbo.sp_get_next_key  
+//         @ps_cpr_id = :ls_cpr_id,   
+//         @ps_key_id = :ls_key_id,   
+//         @pl_key_value = :ll_key_value OUT
+// USING mydb;
 
 
 CHOOSE CASE lower(ps_table)
@@ -812,18 +812,19 @@ CHOOSE CASE lower(ps_table)
 		object.assessment_id[pl_row] = ls_newkey
 		object.status[pl_row] = "NA"
 	CASE "c_development_item"
-		ls_stage_id = object.stage_id[pl_row]
-		ls_item_type = object.item_type[pl_row]
-		SELECT max(item_sequence)
-		INTO :li_item_sequence
-		FROM c_Development_Item
-		WHERE stage_id = :ls_stage_id
-		AND item_type = :ls_item_type
-		USING mydb;
-		if not sqlca.check() then return -1
-
-		if isnull(li_item_sequence) then li_item_sequence = 0
-		object.item_sequence[pl_row] = li_item_sequence + pl_row
+		// table doesn't exist in Epro_OS
+//		ls_stage_id = object.stage_id[pl_row]
+//		ls_item_type = object.item_type[pl_row]
+//		SELECT max(item_sequence)
+//		INTO :li_item_sequence
+//		FROM c_Development_Item
+//		WHERE stage_id = :ls_stage_id
+//		AND item_type = :ls_item_type
+//		USING mydb;
+//		if not sqlca.check() then return -1
+//
+//		if isnull(li_item_sequence) then li_item_sequence = 0
+//		object.item_sequence[pl_row] = li_item_sequence + pl_row
 	CASE "c_development_stage"
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "stage_id", ls_description)
@@ -850,14 +851,15 @@ CHOOSE CASE lower(ps_table)
 		end if
 		object.maker_id[pl_row] = ls_newkey
 	CASE "c_history_questionnaire"
-		SELECT max(history_questionnaire_id)
-		INTO :li_item_sequence
-		FROM c_History_Questionnaire
-		USING mydb;
-		if not sqlca.check() then return -1
-
-		if isnull(li_item_sequence) then li_item_sequence = 0
-		object.history_questionnaire_id[pl_row] = li_item_sequence + pl_row
+		// table doesn't exist in Epro_OS
+//		SELECT max(history_questionnaire_id)
+//		INTO :li_item_sequence
+//		FROM c_History_Questionnaire
+//		USING mydb;
+//		if not sqlca.check() then return -1
+//
+//		if isnull(li_item_sequence) then li_item_sequence = 0
+//		object.history_questionnaire_id[pl_row] = li_item_sequence + pl_row
 	CASE "c_location"
 		ls_description = object.description[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "location", ls_description)
@@ -946,12 +948,16 @@ CHOOSE CASE lower(ps_table)
 		// If this is a new diagnosis, then generate a new problem_id
 		if li_diagnosis_sequence = 1 then
 			ls_key_id = "PROBLEM_ID"
-			EXECUTE lsp_get_next_key;
+			mydb.sp_get_next_key   ( &
+         ls_cpr_id,    &
+         ls_key_id,    &
+         ref ll_key_value) ;
+// 	EXECUTE lsp_get_next_key;
 			if not sqlca.check() then return -1
-			FETCH lsp_get_next_key INTO :ll_problem_id;
-			if not sqlca.check() then return -1
-			CLOSE lsp_get_next_key;
-			
+//			FETCH lsp_get_next_key INTO :ll_problem_id;
+//			if not sqlca.check() then return -1
+//			CLOSE lsp_get_next_key;
+//			
 			object.problem_id[pl_row] = ll_problem_id
 		else
 			ll_problem_id = object.problem_id[pl_row]
@@ -975,55 +981,61 @@ CHOOSE CASE lower(ps_table)
 			
 	CASE "p_assessment_progress"
 	CASE "p_attachment_header"
-		ls_cpr_id = object.cpr_id[pl_row]
-		ll_attachment_id = object.attachment_id[pl_row]
-
-		SELECT max(attachment_sequence)
-		INTO :li_attachment_sequence
-		FROM p_Attachment_Header
-		WHERE cpr_id = :ls_cpr_id
-		AND attachment_id = :ll_attachment_id
-		USING mydb;
-		if not sqlca.check() then return -1
-		
-		if isnull(li_attachment_sequence) then
-			li_attachment_sequence = 1
-		else
-			li_attachment_sequence += 1
-		end if
-		
-		object.attachment_sequence[pl_row] = li_attachment_sequence
+		// table doesn't exist in Epro_OS
+//		ls_cpr_id = object.cpr_id[pl_row]
+//		ll_attachment_id = object.attachment_id[pl_row]
+//
+//		SELECT max(attachment_sequence)
+//		INTO :li_attachment_sequence
+//		FROM p_Attachment_Header
+//		WHERE cpr_id = :ls_cpr_id
+//		AND attachment_id = :ll_attachment_id
+//		USING mydb;
+//		if not sqlca.check() then return -1
+//		
+//		if isnull(li_attachment_sequence) then
+//			li_attachment_sequence = 1
+//		else
+//			li_attachment_sequence += 1
+//		end if
+//		
+//		object.attachment_sequence[pl_row] = li_attachment_sequence
 	CASE "p_attachment_list"
 		ls_cpr_id = object.cpr_id[pl_row]
 		ls_key_id = "ATTACHMENT_ID"
-		EXECUTE lsp_get_next_key;
+		mydb.sp_get_next_key   ( &
+         ls_cpr_id,    &
+         ls_key_id,    &
+         ref ll_key_value) ;
+// 	EXECUTE lsp_get_next_key;
 		if not sqlca.check() then return -1
-		FETCH lsp_get_next_key INTO :ll_attachment_id;
-		if not sqlca.check() then return -1
-		CLOSE lsp_get_next_key;
-		
+//		FETCH lsp_get_next_key INTO :ll_attachment_id;
+//		if not sqlca.check() then return -1
+//		CLOSE lsp_get_next_key;
+//		
 		object.attachment_id[pl_row] = ll_attachment_id
 	CASE "p_attachment_object"
-		ls_cpr_id = object.cpr_id[pl_row]
-		ll_attachment_id = object.attachment_id[pl_row]
-		li_attachment_sequence = object.attachment_sequence[pl_row]
-
-		SELECT max(object_sequence)
-		INTO :ll_object_sequence
-		FROM p_Attachment_Object
-		WHERE cpr_id = :ls_cpr_id
-		AND attachment_id = :ll_attachment_id
-		AND attachment_sequence = :li_attachment_sequence
-		USING mydb;
-		if not sqlca.check() then return -1
-		
-		if isnull(ll_object_sequence) then
-			ll_object_sequence = 1
-		else
-			ll_object_sequence += 1
-		end if
-		
-		object.object_sequence[pl_row] = ll_object_sequence
+		// table doesn't exist in Epro_OS
+//		ls_cpr_id = object.cpr_id[pl_row]
+//		ll_attachment_id = object.attachment_id[pl_row]
+//		li_attachment_sequence = object.attachment_sequence[pl_row]
+//
+//		SELECT max(object_sequence)
+//		INTO :ll_object_sequence
+//		FROM p_Attachment_Object
+//		WHERE cpr_id = :ls_cpr_id
+//		AND attachment_id = :ll_attachment_id
+//		AND attachment_sequence = :li_attachment_sequence
+//		USING mydb;
+//		if not sqlca.check() then return -1
+//		
+//		if isnull(ll_object_sequence) then
+//			ll_object_sequence = 1
+//		else
+//			ll_object_sequence += 1
+//		end if
+//		
+//		object.object_sequence[pl_row] = ll_object_sequence
 	CASE "p_development"
 	CASE "p_development_stage"
 	CASE "p_encounter_log"
@@ -1046,12 +1058,16 @@ CHOOSE CASE lower(ps_table)
 	CASE "p_patient_encounter"
 		ls_cpr_id = object.cpr_id[pl_row]
 		ls_key_id = "ENCOUNTER_ID"
-		EXECUTE lsp_get_next_key;
+		mydb.sp_get_next_key   ( &
+         ls_cpr_id,    &
+         ls_key_id,    &
+         ref ll_key_value) ;
+// 	EXECUTE lsp_get_next_key;
 		if not sqlca.check() then return -1
-		FETCH lsp_get_next_key INTO :ll_encounter_id;
-		if not sqlca.check() then return -1
-		CLOSE lsp_get_next_key;
-		
+//		FETCH lsp_get_next_key INTO :ll_encounter_id;
+//		if not sqlca.check() then return -1
+//		CLOSE lsp_get_next_key;
+//		
 		object.encounter_id[pl_row] = ll_encounter_id
 	CASE "p_patient_insurance"
 	CASE "p_treatment_item"

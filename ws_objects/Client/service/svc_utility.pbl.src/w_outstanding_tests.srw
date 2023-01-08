@@ -54,7 +54,6 @@ end forward
 
 global type w_outstanding_tests from w_window_base
 string title = "Outstanding Labs/Tests"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -376,6 +375,8 @@ type pb_cancel from u_picture_button within w_outstanding_tests
 boolean visible = false
 integer x = 2171
 integer y = 1464
+integer width = 256
+integer height = 224
 integer taborder = 60
 boolean bringtotop = true
 boolean cancel = true

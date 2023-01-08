@@ -60,7 +60,6 @@ end forward
 
 global type w_observation_result_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -342,24 +341,24 @@ end subroutine
 public function integer save_changes ();str_popup_return popup_return
 string ls_status
 
- DECLARE lsp_new_observation_result PROCEDURE FOR dbo.sp_new_observation_result  
-         @ps_observation_id = :observation_id,
-         @ps_result_type = :result_type,
-         @ps_result_unit = :result_unit,
-         @ps_result = :sle_result.text,
-         @ps_result_amount_flag = :result_amount_flag,
-         @ps_print_result_flag = :print_result_flag,
-         @ps_specimen_type = :specimen_type,
-         @ps_abnormal_flag = :abnormal_flag,
-			@pi_severity = :severity,
-			@ps_external_source = :external_source,
-			@pl_property_id = :property_id,
-			@ps_service = :service,
-         @ps_unit_preference = :result_unit_preference,
-         @ps_status = :ls_status,
-			@pi_result_sequence = :result_sequence OUT;
-
-
+// DECLARE lsp_new_observation_result PROCEDURE FOR dbo.sp_new_observation_result  
+//         @ps_observation_id = :observation_id,
+//         @ps_result_type = :result_type,
+//         @ps_result_unit = :result_unit,
+//         @ps_result = :sle_result.text,
+//         @ps_result_amount_flag = :result_amount_flag,
+//         @ps_print_result_flag = :print_result_flag,
+//         @ps_specimen_type = :specimen_type,
+//         @ps_abnormal_flag = :abnormal_flag,
+//			@pi_severity = :severity,
+//			@ps_external_source = :external_source,
+//			@pl_property_id = :property_id,
+//			@ps_service = :service,
+//         @ps_unit_preference = :result_unit_preference,
+//         @ps_status = :ls_status,
+//			@pi_result_sequence = :result_sequence OUT;
+//
+//
 ls_status = "OK"
 
 if isnull(sle_result.text) or sle_result.text = "" then
@@ -379,13 +378,29 @@ else
 end if
 
 if isnull(result_sequence) then
-	EXECUTE lsp_new_observation_result;
+	sqlca.sp_new_observation_result(  &
+         observation_id, &
+         result_type, &
+         result_unit, &
+         sle_result.text, &
+         result_amount_flag, &
+         print_result_flag, &
+         specimen_type, &
+         abnormal_flag, &
+			severity, &
+			external_source, &
+			property_id, &
+			service, &
+         result_unit_preference, &
+         ls_status, &
+			ref result_sequence);
+//	EXECUTE lsp_new_observation_result;
+//	if not tf_check() then return -1
+//	
+//	FETCH lsp_new_observation_result INTO :result_sequence;
 	if not tf_check() then return -1
 	
-	FETCH lsp_new_observation_result INTO :result_sequence;
-	if not tf_check() then return -1
-	
-	CLOSE lsp_new_observation_result;
+//	CLOSE lsp_new_observation_result;
 end if
 
 

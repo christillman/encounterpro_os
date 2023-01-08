@@ -52,21 +52,21 @@ integer li_age_at_death
 long ll_family_history_sequence
 integer li_age
 
-DECLARE lsp_update_family_history PROCEDURE FOR dbo.sp_update_family_history  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_family_history_sequence = :ll_family_history_sequence,
-         @ps_name = :popup_return.items[2],   
-         @ps_relation = :popup_return.items[1],   
-         @pi_birth_year = :li_birth_year,   
-         @pi_age_at_death = :li_age_at_death,   
-         @ps_cause_of_death = :popup_return.items[5]  ;
+//DECLARE lsp_update_family_history PROCEDURE FOR dbo.sp_update_family_history  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_family_history_sequence = :ll_family_history_sequence,
+//         @ps_name = :popup_return.items[2],   
+//         @ps_relation = :popup_return.items[1],   
+//         @pi_birth_year = :li_birth_year,   
+//         @pi_age_at_death = :li_age_at_death,   
+//         @ps_cause_of_death = :popup_return.items[5]  ;
 
- DECLARE lsp_new_family_illness PROCEDURE FOR dbo.sp_new_family_illness  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :current_patient.open_encounter.encounter_id,   
-         @pl_family_history_sequence = :ll_family_history_sequence,   
-         @ps_assessment_id = :popup_return.items[1],   
-         @pi_age = :li_age  ;
+// DECLARE lsp_new_family_illness PROCEDURE FOR dbo.sp_new_family_illness  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :current_patient.open_encounter.encounter_id,   
+//         @pl_family_history_sequence = :ll_family_history_sequence,   
+//         @ps_assessment_id = :popup_return.items[1],   
+//         @pi_age = :li_age  ;
 
 if isnull(current_patient.open_encounter) then return
 
@@ -141,7 +141,15 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.item_count = 5 then
 			li_birth_year = integer(popup_return.items[3])
 			li_age_at_death = integer(popup_return.items[4])
-			EXECUTE lsp_update_family_history;
+			SQLCA.sp_update_family_history   ( &
+				current_patient.cpr_id,    &
+				ll_family_history_sequence, &
+				popup_return.items[2],    &
+				popup_return.items[1],    &
+				li_birth_year,    &
+				li_age_at_death,    &
+				popup_return.items[5]  );
+//			EXECUTE lsp_update_family_history;
 			if not tf_check() then return
 			refresh()
 		end if
@@ -155,8 +163,13 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.item_count <> 2 then return
 		
 		li_age = integer(popup_return.items[2])
-		
-		EXECUTE lsp_new_family_illness;
+		SQLCA.sp_new_family_illness   ( &
+         current_patient.cpr_id,    &
+         current_patient.open_encounter.encounter_id,    &
+         ll_family_history_sequence,    &
+         popup_return.items[1],    &
+         li_age  );
+//		EXECUTE lsp_new_family_illness;
 		if not tf_check() then return
 		refresh()
 	CASE "EDITILLNESS"
@@ -186,13 +199,14 @@ destroy(this.dw_history)
 destroy(this.cb_new_relation)
 end on
 
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_cpr_family_history
+end type
+
 type dw_history from u_dw_pick_list within u_cpr_family_history
-int X=0
-int Y=0
-int Width=2405
-string DataObject="dw_family_history"
-BorderStyle BorderStyle=StyleLowered!
-boolean VScrollBar=true
+integer width = 2405
+string dataobject = "dw_family_history"
+boolean vscrollbar = true
+borderstyle borderstyle = stylelowered!
 end type
 
 event constructor;call super::constructor;active_header = true
@@ -206,31 +220,31 @@ end event
 
 type cb_new_relation from commandbutton within u_cpr_family_history
 event clicked pbm_bnclicked
-int X=2459
-int Y=24
-int Width=201
-int Height=156
-int TabOrder=2
-string Text="New"
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 2459
+integer y = 24
+integer width = 201
+integer height = 156
+integer taborder = 2
+integer textsize = -10
+integer weight = 400
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "New"
 end type
 
 event clicked;str_popup popup
 str_popup_return popup_return
 integer li_birth_year, li_age_at_death
 
- DECLARE lsp_new_family_history PROCEDURE FOR dbo.sp_new_family_history  
-         @ps_cpr_id = :current_patient.cpr_id,
-			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
-         @ps_name = :popup_return.items[2],   
-         @ps_relation = :popup_return.items[1],   
-         @pi_birth_year = :li_birth_year,   
-         @pi_age_at_death = :li_age_at_death,   
-         @ps_cause_of_death = :popup_return.items[5]  ;
+// DECLARE lsp_new_family_history PROCEDURE FOR dbo.sp_new_family_history  
+//         @ps_cpr_id = :current_patient.cpr_id,
+//			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
+//         @ps_name = :popup_return.items[2],   
+//         @ps_relation = :popup_return.items[1],   
+//         @pi_birth_year = :li_birth_year,   
+//         @pi_age_at_death = :li_age_at_death,   
+//         @ps_cause_of_death = :popup_return.items[5]  ;
 
 setnull(popup.item)
 openwithparm(w_relative, popup)
@@ -239,7 +253,15 @@ popup_return = message.powerobjectparm
 if popup_return.item_count = 5 then
 	li_birth_year = integer(popup_return.items[3])
 	li_age_at_death = integer(popup_return.items[4])
-	EXECUTE lsp_new_family_history;
+	SQLCA.sp_new_family_history   ( &
+         current_patient.cpr_id, &
+			current_patient.open_encounter.encounter_id, &
+         popup_return.items[2],    &
+         popup_return.items[1],    &
+         li_birth_year,    &
+         li_age_at_death,    &
+         popup_return.items[5]  );
+//	EXECUTE lsp_new_family_history;
 	if not tf_check() then return
 	refresh()
 end if

@@ -246,7 +246,6 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-boolean enabled = false
 string text = "MSS"
 end type
 

@@ -50,7 +50,6 @@ end forward
 
 global type w_svc_patient_workplan from w_window_base
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -384,14 +383,14 @@ integer li_count
 string ls_description
 long ll_encounter_id
 
- DECLARE lsp_dispatch_workplan_step PROCEDURE FOR dbo.sp_Dispatch_Workplan_Step  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_patient_workplan_id = :ll_patient_workplan_id,
-         @pi_step_number = :li_step_number,   
-         @ps_dispatched_by = :current_user.user_id,   
-			@pl_encounter_id = :ll_encounter_id,
-         @ps_created_by = :current_scribe.user_id
- USING service.cprdb;
+// DECLARE lsp_dispatch_workplan_step PROCEDURE FOR dbo.sp_Dispatch_Workplan_Step  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_patient_workplan_id = :ll_patient_workplan_id,
+//         @pi_step_number = :li_step_number,   
+//         @ps_dispatched_by = :current_user.user_id,   
+//			@pl_encounter_id = :ll_encounter_id,
+//         @ps_created_by = :current_scribe.user_id
+// USING service.cprdb;
 
 
 ll_row = dw_workplans.get_selected_row()
@@ -441,7 +440,14 @@ AND status IS NULL
 USING service.cprdb;
 if not service.cprdb.check() then return
 
-EXECUTE lsp_dispatch_workplan_step;
+service.cprdb.sp_Dispatch_Workplan_Step   ( &
+         current_patient.cpr_id,    &
+         ll_patient_workplan_id, &
+         li_step_number,    &
+         current_user.user_id,    &
+			ll_encounter_id, &
+         current_scribe.user_id );
+//EXECUTE lsp_dispatch_workplan_step;
 if not service.cprdb.check() then return
 
 openwithparm(w_pop_message, "Workplan '" + ls_description + "' has been dispatched")
@@ -890,7 +896,5 @@ integer width = 1385
 integer height = 892
 integer taborder = 11
 boolean bringtotop = true
-boolean livescroll = true
-boolean select_computed = true
 end type
 

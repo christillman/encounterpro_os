@@ -50,14 +50,16 @@ public subroutine set_vaccine_signature (long pl_attachment_id);// a stored proc
 Integer i
 Long    ll_rows,ll_treatment_id
 
-DECLARE lsp_set_treatment_signature PROCEDURE FOR dbo.sp_set_treatment_signature
-	@pl_treatment_id = :ll_treatment_id,
-	@pl_attachment_id = :pl_attachment_id;
-
+//DECLARE lsp_set_treatment_signature PROCEDURE FOR dbo.sp_set_treatment_signature
+//	@pl_treatment_id = :ll_treatment_id,
+//	@pl_attachment_id = :pl_attachment_id;
+//
 ll_rows = dw_vaccine_list.rowcount()
 For i = 2 to ll_rows
 	ll_treatment_id = dw_vaccine_list.object.treatment_id[i]
-	EXECUTE lsp_set_treatment_signature;
+	sqlca.sp_set_treatment_signature(ll_treatment_id,pl_attachment_id);
+	tf_check()
+//	EXECUTE lsp_set_treatment_signature;
 Next
 Return
 end subroutine

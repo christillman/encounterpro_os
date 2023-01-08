@@ -98,15 +98,14 @@ string 				ls_status
 
 u_ds_data			luo_data
 
-
- DECLARE lsp_log_message PROCEDURE FOR dbo.sp_log_message  
-         @pl_subscription_id = :subscription_id,   
-         @ps_message_type = :message_type,   
-         @pl_message_size = :ll_message_size,   
-         @ps_status = :ls_status,
-			@ps_direction = :ls_direction,
-         @pl_message_id = :ll_message_id OUT
-USING cprdb;
+// DECLARE lsp_log_message PROCEDURE FOR dbo.sp_log_message  
+//         @pl_subscription_id = :subscription_id,   
+//         @ps_message_type = :message_type,   
+//         @pl_message_size = :ll_message_size,   
+//         @ps_status = :ls_status,
+//			@ps_direction = :ls_direction,
+//         @pl_message_id = :ll_message_id OUT
+//USING cprdb;
 
 
 lblb_message = blob(ps_text)
@@ -132,14 +131,21 @@ subscription_id = luo_data.object.subscription_id[1]
 
 
 // First create the log record and get the message_id
-EXECUTE lsp_log_message;
+cprdb.sp_log_message  ( &
+         subscription_id, &
+         message_type, &
+         ll_message_size, &
+         ls_status, &
+			ls_direction, &
+         ref ll_message_id);
+//EXECUTE lsp_log_message;
 if not cprdb.check() then return -1
-
-FETCH lsp_log_message INTO :ll_message_id;
-if not cprdb.check() then return -1
-
-CLOSE lsp_log_message;
-
+//
+//FETCH lsp_log_message INTO :ll_message_id;
+//if not cprdb.check() then return -1
+//
+//CLOSE lsp_log_message;
+//
 if ll_message_id <= 0 then
 	mylog.log(this, "u_component_send_report.log_message:0053", "Error logging report for (" + string(subscription_id) + ")", 4)
 	Return -1

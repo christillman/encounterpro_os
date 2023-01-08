@@ -778,14 +778,14 @@ str_popup_return popup_return
 string ls_message
 datetime ldt_expiration_date
 
-DECLARE lsp_create_allergy_injection PROCEDURE FOR dbo.sp_create_allergy_injection
-			@ps_cpr_id = :current_patient.cpr_id,
-			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
-			@pl_parent_treatment_id = :ll_vial_treatment_id,
-			@ps_ordered_by = :current_user.user_id,
-			@ps_created_by = :current_scribe.user_id,
-			@ps_description = :ls_description,
-			@pl_treatment_id = :ll_treatment_id OUT;
+//DECLARE lsp_create_allergy_injection PROCEDURE FOR dbo.sp_create_allergy_injection
+//			@ps_cpr_id = :current_patient.cpr_id,
+//			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
+//			@pl_parent_treatment_id = :ll_vial_treatment_id,
+//			@ps_ordered_by = :current_user.user_id,
+//			@ps_created_by = :current_scribe.user_id,
+//			@ps_description = :ls_description,
+//			@pl_treatment_id = :ll_treatment_id OUT;
 
 
 setnull(ldt_null)
@@ -844,14 +844,22 @@ if popup_return.item <> "YES" then return
 ls_description = st_title.text + " - " + st_vial.text
 
 // create a new injection
-EXECUTE lsp_create_allergy_injection;
+SQLCA.sp_create_allergy_injection ( &
+			current_patient.cpr_id, &
+			current_patient.open_encounter.encounter_id, &
+			ll_vial_treatment_id, &
+			current_user.user_id, &
+			current_scribe.user_id, &
+			ls_description, &
+			ref ll_treatment_id);
+//EXECUTE lsp_create_allergy_injection;
 if not tf_check() then return -1
 	
 // injection treatment id
-FETCH lsp_create_allergy_injection INTO :ll_treatment_id;
-if not tf_check() then return -1
-	
-CLOSE lsp_create_allergy_injection;
+//FETCH lsp_create_allergy_injection INTO :ll_treatment_id;
+//if not tf_check() then return -1
+//	
+//CLOSE lsp_create_allergy_injection;
 
 // Disable the shot info buttons 
 enabled = false

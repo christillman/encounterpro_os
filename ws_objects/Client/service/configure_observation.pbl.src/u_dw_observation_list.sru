@@ -69,13 +69,13 @@ end prototypes
 
 public function integer delete_observation (long pl_row);string ls_observation_id
 
- DECLARE lsp_delete_observation_definition PROCEDURE FOR dbo.sp_delete_observation_definition  
-         @ps_observation_id = :ls_observation_id  ;
-
-
+// DECLARE lsp_delete_observation_definition PROCEDURE FOR dbo.sp_delete_observation_definition  
+//         @ps_observation_id = :ls_observation_id  ;
+//
+//
 ls_observation_id = object.observation_id[pl_row]
-
-EXECUTE lsp_delete_observation_definition;
+sqlca.sp_delete_observation_definition(ls_observation_id);
+//EXECUTE lsp_delete_observation_definition;
 if not tf_check() then return -1
 
 return 1

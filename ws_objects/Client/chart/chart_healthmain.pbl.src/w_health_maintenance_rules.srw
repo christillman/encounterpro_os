@@ -18,7 +18,6 @@ end forward
 
 global type w_health_maintenance_rules from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -56,10 +55,10 @@ string ls_description
 long ll_maintenance_rule_id
 str_popup popup
 
- DECLARE lsp_maint_primary_assessment PROCEDURE FOR dbo.sp_maint_primary_assessment  
-         @pl_maintenance_rule_id = :ll_maintenance_rule_id,   
-         @ps_assessment_id = :ls_assessment_id OUT,   
-         @ps_assessment_description = :ls_description OUT ;
+// DECLARE lsp_maint_primary_assessment PROCEDURE FOR dbo.sp_maint_primary_assessment  
+//         @pl_maintenance_rule_id = :ll_maintenance_rule_id,   
+//         @ps_assessment_id = :ls_assessment_id OUT,   
+//         @ps_assessment_description = :ls_description OUT ;
 
 ll_maintenance_rule_id = dw_maintenance.object.maintenance_rule_id[pl_row]
 
@@ -68,13 +67,17 @@ popup.items[1] = string(ll_maintenance_rule_id)
 popup.items[2] = dw_maintenance.object.description[pl_row]
 openwithparm(w_health_maintenance_assessments, popup)
 
-EXECUTE lsp_maint_primary_assessment;
+SQLCA.sp_maint_primary_assessment   ( &
+         ll_maintenance_rule_id,    &
+         ref ls_assessment_id,    &
+         ref ls_description );
+//EXECUTE lsp_maint_primary_assessment;
 if not tf_check() then return -1
 
-FETCH lsp_maint_primary_assessment INTO :ls_assessment_id, :ls_description;
-if not tf_check() then return -1
-
-CLOSE lsp_maint_primary_assessment;
+//FETCH lsp_maint_primary_assessment INTO :ls_assessment_id, :ls_description;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_maint_primary_assessment;
 
 dw_maintenance.object.assessment_description[pl_row] = ls_description
 
@@ -87,10 +90,10 @@ string ls_description
 long ll_maintenance_rule_id
 str_popup popup
 
- DECLARE lsp_maint_primary_procedure PROCEDURE FOR dbo.sp_maint_primary_procedure  
-         @pl_maintenance_rule_id = :ll_maintenance_rule_id,   
-         @ps_procedure_id = :ls_procedure_id OUT,   
-         @ps_procedure_description = :ls_description OUT ;
+// DECLARE lsp_maint_primary_procedure PROCEDURE FOR dbo.sp_maint_primary_procedure  
+//         @pl_maintenance_rule_id = :ll_maintenance_rule_id,   
+//         @ps_procedure_id = :ls_procedure_id OUT,   
+//         @ps_procedure_description = :ls_description OUT ;
 
 ll_maintenance_rule_id = dw_maintenance.object.maintenance_rule_id[pl_row]
 
@@ -99,13 +102,17 @@ popup.items[1] = string(ll_maintenance_rule_id)
 popup.items[2] = dw_maintenance.object.description[pl_row]
 openwithparm(w_health_maintenance_procs, popup)
 
-EXECUTE lsp_maint_primary_procedure;
+SQLCA.sp_maint_primary_procedure   ( &
+         ll_maintenance_rule_id,    &
+         ref ls_procedure_id,    &
+         ref ls_description );
+//EXECUTE lsp_maint_primary_procedure;
 if not tf_check() then return -1
 
-FETCH lsp_maint_primary_procedure INTO :ls_procedure_id, :ls_description;
-if not tf_check() then return -1
-
-CLOSE lsp_maint_primary_procedure;
+//FETCH lsp_maint_primary_procedure INTO :ls_procedure_id, :ls_description;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_maint_primary_procedure;
 
 dw_maintenance.object.procedure_description[pl_row] = ls_description
 

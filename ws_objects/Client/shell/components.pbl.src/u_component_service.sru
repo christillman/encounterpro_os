@@ -51,12 +51,12 @@ string ls_error
 u_component_service luo_service
 boolean lb_show_alerts
 u_component_alert luo_alert
-
-DECLARE lsp_get_next_auto_perform_service PROCEDURE FOR dbo.sp_Get_Next_Auto_Perform_Service  
-         @pl_patient_workplan_item_id = :patient_workplan_item_id,   
-         @ps_user_id = :current_user.user_id,   
-         @pl_next_patient_workplan_item_id = :ll_next_patient_workplan_item_id OUT
-USING cprdb;
+//
+//DECLARE lsp_get_next_auto_perform_service PROCEDURE FOR dbo.sp_Get_Next_Auto_Perform_Service  
+//         @pl_patient_workplan_item_id = :patient_workplan_item_id,   
+//         @ps_user_id = :current_user.user_id,   
+//         @pl_next_patient_workplan_item_id = :ll_next_patient_workplan_item_id OUT
+//USING cprdb;
 
 setnull(ldt_progress_date_time)
 
@@ -367,19 +367,22 @@ TRY
 
 	// if we completed or cancelled this service then check for next auto-perform service
 	if do_autoperform and gnv_app.cpr_mode = "CLIENT" and li_sts > 0 and (not manual_service or (visible_flag = "N")) then
-		EXECUTE lsp_get_next_auto_perform_service;
+		
+	cprdb.sp_Get_Next_Auto_Perform_Service (patient_workplan_item_id,current_user.user_id,ref ll_next_patient_workplan_item_id);
+			
+	//	EXECUTE lsp_get_next_auto_perform_service;
 		if not cprdb.check() then
 			restore_service_state(-1)
 			return -1
 		end if
 		
-		FETCH lsp_get_next_auto_perform_service INTO :ll_next_patient_workplan_item_id;
-		if not cprdb.check() then
-			restore_service_state(-1)
-			return -1
-		end if
-		
-		CLOSE lsp_get_next_auto_perform_service;
+//		FETCH lsp_get_next_auto_perform_service INTO :ll_next_patient_workplan_item_id;
+//		if not cprdb.check() then
+//			restore_service_state(-1)
+//			return -1
+//		end if
+//		
+//		CLOSE lsp_get_next_auto_perform_service;
 		
 		if not isnull(ll_next_patient_workplan_item_id) then
 			service_list.do_service(ll_next_patient_workplan_item_id)

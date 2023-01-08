@@ -13,17 +13,13 @@ end type
 end forward
 
 global type w_pick_proc_assessments from w_window_base
-int X=0
-int Y=0
-int Width=1490
-int Height=1200
-WindowType WindowType=response!
-boolean TitleBar=false
-long backcolor = 7191717
-boolean ControlMenu=false
-boolean MinBox=false
-boolean MaxBox=false
-boolean Resizable=false
+integer width = 1490
+integer height = 1200
+boolean titlebar = false
+boolean minbox = false
+boolean maxbox = false
+boolean resizable = false
+windowtype windowtype = response!
 pb_done pb_done
 pb_cancel pb_cancel
 dw_proc_assessments dw_proc_assessments
@@ -133,12 +129,20 @@ end if
 
 end event
 
+type pb_epro_help from w_window_base`pb_epro_help within w_pick_proc_assessments
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_pick_proc_assessments
+end type
+
 type pb_done from u_picture_button within w_pick_proc_assessments
-int X=1198
-int Y=936
-int TabOrder=10
-string PictureName="button26.bmp"
-string DisabledName="b_push26.bmp"
+integer x = 1198
+integer y = 936
+integer width = 256
+integer height = 224
+integer taborder = 10
+string picturename = "button26.bmp"
+string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;long ll_rowcount
@@ -150,20 +154,20 @@ str_popup_return popup_return
 boolean lb_changed
 boolean lb_any
 
- DECLARE lsp_set_assmnt_charge_billing PROCEDURE FOR dbo.sp_set_assmnt_charge_billing  
-         @ps_cpr_id = :cpr_id,   
-         @pl_encounter_id = :encounter_id,   
-         @pl_problem_id = :ll_problem_id,   
-         @pl_encounter_charge_id = :encounter_charge_id,   
-         @ps_bill_flag = :ls_bill_flag,
-			@ps_created_by = :current_scribe.user_id;
+// DECLARE lsp_set_assmnt_charge_billing PROCEDURE FOR dbo.sp_set_assmnt_charge_billing  
+//         @ps_cpr_id = :cpr_id,   
+//         @pl_encounter_id = :encounter_id,   
+//         @pl_problem_id = :ll_problem_id,   
+//         @pl_encounter_charge_id = :encounter_charge_id,   
+//         @ps_bill_flag = :ls_bill_flag,
+//			@ps_created_by = :current_scribe.user_id;
 
- DECLARE lsp_set_charge_billing PROCEDURE FOR dbo.sp_set_charge_billing  
-         @ps_cpr_id = :cpr_id,   
-         @pl_encounter_id = :encounter_id,   
-         @pl_encounter_charge_id = :encounter_charge_id,   
-         @ps_bill_flag = :ls_bill_flag,
-			@ps_created_by = :current_scribe.user_id;
+// DECLARE lsp_set_charge_billing PROCEDURE FOR dbo.sp_set_charge_billing  
+//         @ps_cpr_id = :cpr_id,   
+//         @pl_encounter_id = :encounter_id,   
+//         @pl_encounter_charge_id = :encounter_charge_id,   
+//         @ps_bill_flag = :ls_bill_flag,
+//			@ps_created_by = :current_scribe.user_id;
 
 lb_changed = false
 lb_any = false
@@ -184,8 +188,14 @@ for i = 1 to ll_rowcount
 	else
 		ls_bill_flag = "N"
 	end if
-	
-	EXECUTE lsp_set_assmnt_charge_billing;
+	SQLCA.sp_set_assmnt_charge_billing   ( &
+         cpr_id,    &
+         encounter_id,    &
+         ll_problem_id,    &
+         encounter_charge_id,    &
+         ls_bill_flag, &
+			current_scribe.user_id);
+//	EXECUTE lsp_set_assmnt_charge_billing;
 	if not tf_check() then return
 next
 
@@ -195,7 +205,13 @@ else
 	ls_bill_flag = "N"
 end if
 
-EXECUTE lsp_set_charge_billing;
+SQLCA.sp_set_charge_billing   ( &
+         cpr_id,    &
+         encounter_id,    &
+         encounter_charge_id,    &
+         ls_bill_flag, &
+			current_scribe.user_id);
+//EXECUTE lsp_set_charge_billing;
 if not tf_check() then return
 
 if lb_changed then
@@ -213,13 +229,15 @@ closewithreturn(parent, popup_return)
 end event
 
 type pb_cancel from u_picture_button within w_pick_proc_assessments
-int X=41
-int Y=936
-int TabOrder=20
-boolean BringToTop=true
-string PictureName="button11.bmp"
-string DisabledName="b_push11.bmp"
-boolean Cancel=true
+integer x = 41
+integer y = 936
+integer width = 256
+integer height = 224
+integer taborder = 20
+boolean bringtotop = true
+boolean cancel = true
+string picturename = "button11.bmp"
+string disabledname = "b_push11.bmp"
 end type
 
 event clicked;call super::clicked;str_popup_return popup_return
@@ -232,14 +250,13 @@ closewithreturn(parent, popup_return)
 end event
 
 type dw_proc_assessments from u_dw_pick_list within w_pick_proc_assessments
-int X=110
-int Y=212
-int Width=1353
-int Height=672
-string DataObject="dw_pick_proc_assessments"
-boolean Border=false
-BorderStyle BorderStyle=StyleBox!
-boolean VScrollBar=true
+integer x = 110
+integer y = 212
+integer width = 1353
+integer height = 672
+string dataobject = "dw_pick_proc_assessments"
+boolean vscrollbar = true
+boolean border = false
 end type
 
 event constructor;call super::constructor;multiselect = true
@@ -247,19 +264,19 @@ event constructor;call super::constructor;multiselect = true
 end event
 
 type st_title from statictext within w_pick_proc_assessments
-int X=14
-int Y=12
-int Width=1463
-int Height=180
-boolean Enabled=false
-boolean BringToTop=true
-Alignment Alignment=Center!
-boolean FocusRectangle=false
+integer x = 14
+integer y = 12
+integer width = 1463
+integer height = 180
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
 long backcolor = 7191717
-int TextSize=-12
-int Weight=700
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+boolean enabled = false
+alignment alignment = center!
+boolean focusrectangle = false
 end type
 

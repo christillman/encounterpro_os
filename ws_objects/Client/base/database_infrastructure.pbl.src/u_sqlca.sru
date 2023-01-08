@@ -199,6 +199,7 @@ FUNCTION long jmj_reset_active_services() RPCFUNC ALIAS FOR "dbo.jmj_reset_activ
 FUNCTION long jmj_set_constraints() RPCFUNC ALIAS FOR "dbo.jmj_set_constraints"
 FUNCTION long jmj_set_document_error(long pl_patient_workplan_item_id,string ps_operation, string ps_user_id, long pl_computer_id) RPCFUNC ALIAS FOR "dbo.jmj_set_document_error"
 FUNCTION long jmj_set_menu_selection(string ps_menu_context, string ps_menu_key, string ps_office_id, string ps_user_id, long pl_menu_id) RPCFUNC ALIAS FOR "dbo.jmj_set_menu_selection"
+FUNCTION long jmj_set_property_exception_value(long pl_spid, string ps_datatype, string ps_select) RPCFUNC ALIAS FOR "dbo.jmj_set_property_exception_value"
 FUNCTION long jmj_set_server_printers(long pl_computer_id) RPCFUNC ALIAS FOR "dbo.jmj_set_server_printers"
 FUNCTION long jmj_set_service_error(long pl_patient_workplan_item_id, string ps_user_id, string ps_created_by, string ps_manual_service_flag, long pl_computer_id) RPCFUNC ALIAS FOR "dbo.jmj_set_service_error"
 FUNCTION long jmj_set_username(string ps_user_id, string ps_new_username) RPCFUNC ALIAS FOR "dbo.jmj_set_username"
@@ -258,6 +259,7 @@ FUNCTION long sp_count_room_status(string ps_room_id, ref long pl_patient_count)
 FUNCTION long sp_count_waiting_room_status(string ps_office_id, ref integer pi_waiting_count) RPCFUNC ALIAS FOR "dbo.sp_count_waiting_room_status"
 FUNCTION long sp_count_who_came_office(string ps_office_id, datetime pdt_date, ref integer pi_count) RPCFUNC ALIAS FOR "dbo.sp_count_who_came_office"
 FUNCTION long sp_count_who_came_today(datetime pdt_date, ref integer pi_count) RPCFUNC ALIAS FOR "dbo.sp_count_who_came_today"
+FUNCTION long sp_create_allergy_injection(string ps_cpr_id, long pl_encounter_id, long pl_parent_treatment_id, string ps_ordered_by, string ps_created_by, string ps_description, ref long pl_treatment_id) RPCFUNC ALIAS FOR "dbo.sp_create_allergy_injection"
 FUNCTION long sp_create_exam(string ps_user_id, string ps_description, ref integer pi_exam_sequence) RPCFUNC ALIAS FOR "dbo.sp_create_exam"
 FUNCTION long sp_create_text_document(string ps_title, long pl_category, string ps_document, ref long pl_material_id) RPCFUNC ALIAS FOR "dbo.sp_create_text_document"
 FUNCTION long sp_create_vial_instance(string ps_cpr_id, long pl_encounter_id, long pl_parent_treatment_id, string ps_vial_type, string ps_ordered_by, string ps_created_by, string ps_dilute_from_vial_type, real pr_vial_amount, string ps_vial_unit) RPCFUNC ALIAS FOR "dbo.sp_create_vial_instance"
@@ -590,6 +592,7 @@ FUNCTION long sp_set_default_results_by_loc(string ps_cpr_id, long pl_treatment_
 FUNCTION long sp_set_discussed_by(string ps_cpr_id, long pl_encounter_id, string ps_stage_id, string ps_discussed_by) RPCFUNC ALIAS FOR "dbo.sp_set_discussed_by"
 FUNCTION long sp_set_encounter_posted(string ps_cpr_id, long pl_encounter_id) RPCFUNC ALIAS FOR "dbo.sp_set_encounter_posted"
 FUNCTION long sp_Set_Encounter_Progress(string ps_cpr_id, long pl_encounter_id, long pl_attachment_id, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_patient_workplan_item_id, long pl_risk_level, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_Set_Encounter_Progress"
+FUNCTION long sp_set_encounter_type_specialty(string ps_encounter_type, string ps_specialty_id, string ps_flag) RPCFUNC ALIAS FOR "dbo.sp_set_encounter_type_specialty"
 FUNCTION long sp_set_exam_default_results(integer pi_exam_sequence, string ps_cpr_id, long pl_encounter_id, long pl_treatment_id, string ps_observed_by, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_set_exam_default_results"
 FUNCTION long sp_set_exam_defaults(string ps_user_id, integer pi_exam_sequence, string ps_cpr_id, long pl_encounter_id, long pl_treatment_id) RPCFUNC ALIAS FOR "dbo.sp_set_exam_defaults"
 FUNCTION long sp_set_exam_defaults_from_actuals(string ps_user_id, long pl_exam_sequence, string ps_cpr_id, long pl_observation_sequence, long pl_branch_id) RPCFUNC ALIAS FOR "dbo.sp_set_exam_defaults_from_actuals"
@@ -988,12 +991,12 @@ else
 	end if
 	
 	
-	ls_dbms = "SNC"
-//	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
-//	if ls_dbserver = "" then
-//		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-//		return -1
-//	end if
+	ls_dbms = "ODBC"
+	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
+	if ls_dbserver = "" then
+		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 end if
 
 
@@ -1201,7 +1204,13 @@ CHOOSE CASE ls_dbms
 		end if
 		dbParm += ",DBTextLimit='32000'"
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
-	CASE "ODB"
+	CASE "ODB" // "ODBC Driver 17 for SQL Server"
+		// "ConnectString='Driver={ODBC Driver 13 for SQL Server};QuotedId=No;TrustServerCertificate=Yes;Encrypt=Yes;Trusted_Connection=Yes;SERVER=" + SQLCA.ServerName + ";'"
+		// dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};Trusted_Connection=Yes;SERVER=" + ServerName + ";'"
+		dbparm += "ConnectString='DSN=EncounterPro_OS',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_ON';"
+		//dbparm += "Database='" + ps_dbname + "'"
+		dbparm += "AppName='" + ps_appname + "'"
+		dbparm += ",Identity='SCOPE_IDENTITY()'"
 	CASE "OLE"
 		dbparm += "Provider='SQLNCLI'"
 		dbparm += ",DataSource='" + ps_server + "'"
@@ -1214,6 +1223,7 @@ CHOOSE CASE ls_dbms
 		dbparm += "Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
+	
 	CASE ELSE
 END CHOOSE
 
@@ -1233,6 +1243,7 @@ if not connected and windows_authentication then
 		CASE "MSS"
 			dbparm = ls_dbparm + ",Secure=1"
 		CASE "ODB"
+			dbparm = ls_dbparm + ",TrustedConnection=1"
 		CASE "OLE"
 			dbparm = ls_dbparm + ",IntegratedSecurity='SSPI'"
 		CASE "SNC"

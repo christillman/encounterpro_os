@@ -2,6 +2,8 @@
 forward
 global type u_hcpcs_procedure from statictext
 end type
+type str_hcpcs from structure within u_hcpcs_procedure
+end type
 end forward
 
 type str_hcpcs from structure
@@ -14,18 +16,18 @@ type str_hcpcs from structure
 end type
 
 global type u_hcpcs_procedure from statictext
-int Width=690
-int Height=88
-boolean Border=true
-BorderStyle BorderStyle=StyleRaised!
-Alignment Alignment=Center!
-boolean FocusRectangle=false
-long BackColor=15780004
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer width = 690
+integer height = 88
+integer textsize = -10
+integer weight = 400
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 15780004
+alignment alignment = center!
+boolean border = true
+borderstyle borderstyle = styleraised!
+boolean focusrectangle = false
 end type
 global u_hcpcs_procedure u_hcpcs_procedure
 
@@ -100,44 +102,59 @@ string ls_description
 string ls_cpt_code
 string ls_null
 integer li_selected_flag
+u_ds_data lds 
+integer li_row
+integer li_attribute_count
+
+lds = CREATE u_ds_data
+lds.set_DataObject("dw_sp_get_hcpcs")
 
 setnull(ls_null)
 
 drug_id = ps_drug_id
 
- DECLARE lsp_get_hcpcs PROCEDURE FOR dbo.sp_get_hcpcs  
-         @ps_drug_id = :drug_id  ;
+// DECLARE lsp_get_hcpcs PROCEDURE FOR dbo.sp_get_hcpcs  
+//         @ps_drug_id = :drug_id  ;
 
+//EXECUTE lsp_get_hcpcs;
+//if not tf_check() then return -1
+//
+//lb_loop = true
+//DO
+//	FETCH lsp_get_hcpcs INTO
+//		:ll_hcpcs_sequence,
+//		:lr_administer_amount,
+//		:ls_administer_unit,
+//		:ls_procedure_id,
+//		:ls_description,
+//		:ls_cpt_code,
+//		:li_selected_flag;
+//	if not tf_check() then return -1
+//	
+//	if sqlca.sqlcode = 0 then
+//		hcpcs_count++
+//		hcpcs[hcpcs_count].hcpcs_sequence = ll_hcpcs_sequence
+//		hcpcs[hcpcs_count].administer_amount = lr_administer_amount
+//		hcpcs[hcpcs_count].administer_unit = ls_administer_unit
+//		hcpcs[hcpcs_count].procedure_id = ls_procedure_id
+//		hcpcs[hcpcs_count].description = ls_description
+//		hcpcs[hcpcs_count].cpt_code = ls_cpt_code
+//	else
+//		lb_loop = false
+//	end if
+//LOOP while lb_loop
+//
+//CLOSE lsp_get_hcpcs;
 
-EXECUTE lsp_get_hcpcs;
-if not tf_check() then return -1
-
-lb_loop = true
-DO
-	FETCH lsp_get_hcpcs INTO
-		:ll_hcpcs_sequence,
-		:lr_administer_amount,
-		:ls_administer_unit,
-		:ls_procedure_id,
-		:ls_description,
-		:ls_cpt_code,
-		:li_selected_flag;
-	if not tf_check() then return -1
-	
-	if sqlca.sqlcode = 0 then
-		hcpcs_count++
-		hcpcs[hcpcs_count].hcpcs_sequence = ll_hcpcs_sequence
-		hcpcs[hcpcs_count].administer_amount = lr_administer_amount
-		hcpcs[hcpcs_count].administer_unit = ls_administer_unit
-		hcpcs[hcpcs_count].procedure_id = ls_procedure_id
-		hcpcs[hcpcs_count].description = ls_description
-		hcpcs[hcpcs_count].cpt_code = ls_cpt_code
-	else
-		lb_loop = false
-	end if
-LOOP while lb_loop
-
-CLOSE lsp_get_hcpcs;
+hcpcs_count = lds.Retrieve(drug_id)
+FOR li_row = 1 TO hcpcs_count
+	hcpcs[hcpcs_count].hcpcs_sequence = lds.Object.hcpcs_sequence[li_row]
+	hcpcs[hcpcs_count].administer_amount = lds.Object.administer_amount[li_row]
+	hcpcs[hcpcs_count].administer_unit = lds.Object.administer_unit[li_row]
+	hcpcs[hcpcs_count].procedure_id = lds.Object.hcpcs_procedure_id[li_row]
+	hcpcs[hcpcs_count].description = lds.Object.description[li_row]
+	hcpcs[hcpcs_count].cpt_code = lds.Object.cpt_code[li_row]
+NEXT
 
 set_value(ls_null)
 
@@ -174,4 +191,10 @@ else
 end if
 
 end function
+
+on u_hcpcs_procedure.create
+end on
+
+on u_hcpcs_procedure.destroy
+end on
 

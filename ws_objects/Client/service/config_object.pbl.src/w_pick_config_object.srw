@@ -64,7 +64,6 @@ end forward
 
 global type w_pick_config_object from w_window_base
 integer height = 1836
-boolean controlmenu = false
 windowtype windowtype = response!
 st_search_title st_search_title
 pb_up pb_up
@@ -1260,25 +1259,26 @@ str_popup_return popup_return
 string ls_message
 integer li_idx
 
-ls_message = "Are you sure you want to refresh the library database?  This may take several minutes."
-
-openwithparm(w_pop_yes_no, ls_message)
-popup_return = message.powerobjectparm
-if popup_return.item <> "YES" then return
-
-li_idx = f_please_wait_open()
-
-DECLARE lsp_sync_library PROCEDURE FOR dbo.jmjsys_sync_config_objects;
-
-EXECUTE lsp_sync_library;
-if not tf_check() then
-	f_please_wait_close(li_idx)
-	openwithparm(w_pop_message, "An error occured refreshing the library database.  Please try again later or contact JMJ Customer Support for assistance.")
-	return
-end if
-
-f_please_wait_close(li_idx)
-
+messagebox("Obsolete", "dbo.jmjsys_sync_config_objects is no more")
+//ls_message = "Are you sure you want to refresh the library database?  This may take several minutes."
+//
+//openwithparm(w_pop_yes_no, ls_message)
+//popup_return = message.powerobjectparm
+//if popup_return.item <> "YES" then return
+//
+//li_idx = f_please_wait_open()
+//
+//DECLARE lsp_sync_library PROCEDURE FOR dbo.jmjsys_sync_config_objects;
+//
+//EXECUTE lsp_sync_library;
+//if not tf_check() then
+//	f_please_wait_close(li_idx)
+//	openwithparm(w_pop_message, "An error occured refreshing the library database.  Please try again later or contact JMJ Customer Support for assistance.")
+//	return
+//end if
+//
+//f_please_wait_close(li_idx)
+//
 dw_config_object_list.search()
 
 end event

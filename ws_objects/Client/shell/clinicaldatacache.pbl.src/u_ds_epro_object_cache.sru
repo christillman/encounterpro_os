@@ -1758,18 +1758,18 @@ string ls_filetype
 
 setnull(ls_null)
 
- DECLARE jmj_set_property_exception_value PROCEDURE FOR jmj_set_property_exception_value  
-         @pl_spid = :sqlca.spid,   
-         @ps_datatype = 'binary',   
-         @ps_select = :ls_select  ;
+// DECLARE jmj_set_property_exception_value PROCEDURE FOR jmj_set_property_exception_value  
+//         @pl_spid = :sqlca.spid,   
+//         @ps_datatype = 'binary',   
+//         @ps_select = :ls_select  ;
 
 
 ls_select = "SELECT value = " + property[pl_property_index].property_select_expression
 ls_select += " FROM " + epro_object.base_tablename + " a "
 ls_select += " WHERE " + where_clause
 
-
-EXECUTE jmj_set_property_exception_value;
+sqlca.jmj_set_property_exception_value(sqlca.spid, 'binary', ls_select);
+//EXECUTE jmj_set_property_exception_value;
 if not tf_check() then return -1
 
 SELECTBLOB property_value_binary
@@ -1810,10 +1810,10 @@ boolean lb_get_whole_value
 
 setnull(ls_null)
 
- DECLARE jmj_set_property_exception_value PROCEDURE FOR jmj_set_property_exception_value  
-         @pl_spid = :sqlca.spid,   
-         @ps_datatype = 'text',   
-         @ps_select = :ls_select  ;
+// DECLARE jmj_set_property_exception_value PROCEDURE FOR jmj_set_property_exception_value  
+//         @pl_spid = :sqlca.spid,   
+//         @ps_datatype = 'text',   
+//         @ps_select = :ls_select  ;
 
 if len(property[pl_property_index].property_formula) > 0 then
 	ls_select = "SELECT value = " + property[pl_property_index].property_formula
@@ -1842,7 +1842,8 @@ end if
 
 // if the length of the property value happens to be exactly the length of the cached column, then we assume that there is a larger value out there for us to get
 if lb_get_whole_value then
-	EXECUTE jmj_set_property_exception_value;
+	sqlca.jmj_set_property_exception_value(sqlca.spid, 'text', ls_select);
+//	EXECUTE jmj_set_property_exception_value;
 	if not tf_check() then return -1
 
 	// Get the value directly using embedded SQL because we are limited to only 32767 bytes if we get it through a datawindow column

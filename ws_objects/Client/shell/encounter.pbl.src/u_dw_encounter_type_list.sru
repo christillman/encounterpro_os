@@ -284,18 +284,21 @@ end function
 
 public function integer set_encounter_type_specialty (long pl_row, string ps_flag);string ls_encounter_type
 
- DECLARE lsp_set_encounter_type_specialty PROCEDURE FOR dbo.sp_set_encounter_type_specialty  
-         @ps_encounter_type = :ls_encounter_type,   
-         @ps_specialty_id = :current_user.specialty_id,   
-         @ps_flag = :ps_flag  ;
+// DECLARE lsp_set_encounter_type_specialty PROCEDURE FOR dbo.sp_set_encounter_type_specialty  
+//         @ps_encounter_type = :ls_encounter_type,   
+//         @ps_specialty_id = :current_user.specialty_id,   
+//         @ps_flag = :ps_flag  ;
 
 
 if pl_row <= 0 or isnull(pl_row) then return 0
 if isnull(current_user.specialty_id) then return 0
 
 ls_encounter_type = object.encounter_type[pl_row]
-
-EXECUTE lsp_set_encounter_type_specialty;
+SQLCA.sp_set_encounter_type_specialty   ( &
+         ls_encounter_type,    &
+         current_user.specialty_id,    &
+         ps_flag  );
+//EXECUTE lsp_set_encounter_type_specialty;
 if not tf_check() then return -1
 
 return 1

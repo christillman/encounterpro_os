@@ -415,16 +415,23 @@ string text = "OK"
 end type
 
 event clicked;
- DECLARE lsp_set_loc_as_default PROCEDURE FOR dbo.sp_set_loc_as_default  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :current_patient.open_encounter_id,   
-         @pl_treatment_id = :treatment.treatment_id,   
-         @ps_observation_id = :observation_id,   
-         @ps_location = :location,   
-         @ps_user_id = :current_user.user_id  ;
-
+// DECLARE lsp_set_loc_as_default PROCEDURE FOR dbo.sp_set_loc_as_default  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :current_patient.open_encounter_id,   
+//         @pl_treatment_id = :treatment.treatment_id,   
+//         @ps_observation_id = :observation_id,   
+//         @ps_location = :location,   
+//         @ps_user_id = :current_user.user_id  ;
+//
 if use_as_defaults then
-	EXECUTE lsp_set_loc_as_default;
+	sqlca.sp_set_loc_as_default ( &
+         current_patient.cpr_id, &
+         current_patient.open_encounter_id, &
+         treatment.treatment_id, &
+         observation_id, &
+         location, &
+         current_user.user_id ) ;
+//	EXECUTE lsp_set_loc_as_default;
 	if not tf_check() then close(parent)
 end if
 

@@ -44,7 +44,7 @@ integer y = 160
 integer width = 2962
 integer height = 1472
 windowtype windowtype = response!
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 cb_1 cb_1
 pb_1 pb_1
 st_version st_version
@@ -87,7 +87,7 @@ selected_database = dw_databases.object.database[pl_row]
 
 st_server.text = profilestring(gnv_app.ini_file, selected_database, "dbserver", "")
 st_db.text = profilestring(gnv_app.ini_file, selected_database, "dbname", "")
-//st_dbms.text = profilestring(gnv_app.ini_file, selected_database, "dbms", "")
+st_dbms.text = profilestring(gnv_app.ini_file, selected_database, "dbms", "")
 st_office_id.text = profilestring(gnv_app.ini_file, selected_database, "office_id", "")
 
 if selected_database = default_database then
@@ -140,7 +140,7 @@ long ll_row
 
 SetProfileString ( gnv_app.ini_file, selected_database, "dbserver", ps_dbserver )
 SetProfileString ( gnv_app.ini_file, selected_database, "dbname", ps_dbname )
-//SetProfileString ( gnv_app.ini_file, selected_database, "dbms", ps_dbms )
+SetProfileString ( gnv_app.ini_file, selected_database, "dbms", ps_dbms )
 SetProfileString ( gnv_app.ini_file, selected_database, "office_id", ps_office_id )
 
 get_databases()
@@ -296,7 +296,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 string text = "Version"
 alignment alignment = right!
 boolean focusrectangle = false
@@ -315,7 +315,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "Office ID:"
 alignment alignment = right!
@@ -507,7 +507,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "Database:"
 alignment alignment = right!
@@ -527,7 +527,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "Server:"
 alignment alignment = right!
@@ -603,7 +603,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-long backcolor = 7191717 // 7191717 // 165 + 256*188 + 256*256*109
+long backcolor = 7191717
 boolean enabled = false
 string text = "DBMS:"
 alignment alignment = right!
@@ -624,7 +624,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 12632256
 boolean enabled = false
-string text = "SQL Native Client"
+string text = "ODBC Driver 17 for SQL Server"
 boolean border = true
 boolean focusrectangle = false
 end type

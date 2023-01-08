@@ -71,7 +71,6 @@ end type
 end forward
 
 global type w_svc_encounter_coding from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -404,14 +403,14 @@ string ls_temp
 long ll_menu_id
 string ls_display_only
 
- DECLARE lsp_encounter_level PROCEDURE FOR dbo.sp_encounter_level  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter.encounter_id,   
-			@ps_em_documentation_guide = :em_documentation_guide,
-         @pi_history_level = :calculated_history OUT,   
-         @pi_exam_level = :calculated_exam OUT,   
-         @pi_decision_level = :calculated_decision OUT ;
-
+// DECLARE lsp_encounter_level PROCEDURE FOR dbo.sp_encounter_level  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter.encounter_id,   
+//			@ps_em_documentation_guide = :em_documentation_guide,
+//         @pi_history_level = :calculated_history OUT,   
+//         @pi_exam_level = :calculated_exam OUT,   
+//         @pi_decision_level = :calculated_decision OUT ;
+//
 popup_return.item_count = 0
 
 service = Message.powerobjectparm
@@ -494,14 +493,22 @@ if not tf_check() then
 end if
 
 // Get the calculated levels
-EXECUTE lsp_encounter_level;
+sqlca.sp_encounter_level ( &
+         current_patient.cpr_id, &
+         encounter.encounter_id, &
+			em_documentation_guide, &
+         ref calculated_history, &
+         ref calculated_exam, &
+         ref calculated_decision) ;
+
+//EXECUTE lsp_encounter_level;
 if not tf_check() then closewithreturn(this, popup_return)
 
-FETCH lsp_encounter_level INTO :calculated_history, :calculated_exam, :calculated_decision;
-if not tf_check() then closewithreturn(this, popup_return)
-
-CLOSE lsp_encounter_level;
-
+//FETCH lsp_encounter_level INTO :calculated_history, :calculated_exam, :calculated_decision;
+//if not tf_check() then closewithreturn(this, popup_return)
+//
+//CLOSE lsp_encounter_level;
+//
 calculated_encounter = datalist.visit_level(em_documentation_guide, encounter.new_flag, calculated_history, calculated_exam, calculated_decision)
 
 ls_find = "em_component_level=" + string(calculated_history)

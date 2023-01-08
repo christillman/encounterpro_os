@@ -49,62 +49,70 @@ String			ls_send_out_flag, ls_user_id, ls_find
 /* object declaration */
 u_user								luo_user
 str_treatment_description 		lstra_treatments[]
+u_ds_data lds_performed_history 
+integer li_row
+integer li_row_count
 
-DECLARE	lsp_get_performed_history PROCEDURE FOR dbo.sp_get_performed_history  
-         @ps_cpr_id = :current_patient.cpr_id ;
+lds_performed_history = CREATE u_ds_data
+lds_performed_history.set_DataObject("dw_sp_get_treatment_service_attributes")
 
+//DECLARE	lsp_get_performed_history PROCEDURE FOR dbo.sp_get_performed_history  
+//         @ps_cpr_id = :current_patient.cpr_id ;
+//
 dw_history.setredraw(false)
 dw_history.reset()
 
-EXECUTE lsp_get_performed_history;
-IF not tf_check() THEN RETURN
-
-lb_loop = TRUE
+//EXECUTE lsp_get_performed_history;
+//IF not tf_check() THEN RETURN
+//
+//lb_loop = TRUE
 setnull(ls_last_observation_id)
 setnull(ls_last_location)
 setnull(ll_last_encounter_id)
 
-DO
-	FETCH lsp_get_performed_history INTO
-		:ll_treatment_id,
-		:ls_observation_id,
-		:ls_location,
-		:li_result_sequence,
-		:ll_encounter_id,
-		:ll_result_attachment_id,
-		:lr_result_amount,
-		:ldt_result_date_time,
-		:ls_observation_description,
-		:ls_collection_location_domain,
-		:ls_perform_location_domain,
-		:ls_result_unit,
-		:ls_result,
-		:ls_result_amount_flag,
-		:ls_abnormal_flag,
-		:li_result_sort_sequence,
-		:ls_result_status,
-		:li_location_sort_sequence,
-		:ls_location_description,
-		:ls_observation_type,
-		:li_type_sort_order,
-		:ls_bitmap,
-		:ll_objective_attachment_id,
-		:ls_send_out_flag,
-		:ldt_begin_date,
-		:ls_user_id;
-	IF not tf_check() THEN RETURN
+//DO
+li_row_count = lds_performed_history.Retrieve(current_patient.cpr_id)
+FOR li_row = 1 TO li_row_count
+	ll_treatment_id = lds_performed_history.Object.treatment_id[li_row]
+	ls_observation_id = lds_performed_history.Object.observation_id[li_row]
+	ls_location = lds_performed_history.Object.location[li_row]
+	li_result_sequence = lds_performed_history.Object.result_sequence[li_row]
+	ll_encounter_id = lds_performed_history.Object.encounter_id[li_row]
+	ll_result_attachment_id = lds_performed_history.Object.attachment_id[li_row]
+	lr_result_amount = lds_performed_history.Object.compute_0007[li_row]
+	ldt_result_date_time = lds_performed_history.Object.result_date_time[li_row]
+	ls_observation_description = lds_performed_history.Object.description[li_row]
+	ls_collection_location_domain = lds_performed_history.Object.collection_location_domain[li_row]
+	ls_perform_location_domain = lds_performed_history.Object.perform_location_domain[li_row]
+	ls_result_unit = lds_performed_history.Object.result_unit[li_row]
+	ls_result = lds_performed_history.Object.result[li_row]
+	ls_result_amount_flag = lds_performed_history.Object.result_amount_flag[li_row]
+	ls_abnormal_flag = lds_performed_history.Object.abnormal_flag[li_row]
+	li_result_sort_sequence = lds_performed_history.Object.sort_sequence[li_row]
+	ls_result_status = lds_performed_history.Object.status[li_row]
+	li_location_sort_sequence = lds_performed_history.Object.sort_sequence_1[li_row]
+	ls_location_description = lds_performed_history.Object.description_1[li_row]
+	ls_observation_type = lds_performed_history.Object.treatment_type[li_row]
+	li_type_sort_order = lds_performed_history.Object.sort_sequence_2[li_row]
+	ls_bitmap = lds_performed_history.Object.icon[li_row]
+	ll_objective_attachment_id = lds_performed_history.Object.attachment_id_1[li_row]
+	ls_send_out_flag = lds_performed_history.Object.send_out_flag[li_row]
+	ldt_begin_date = lds_performed_history.Object.begin_date[li_row]
+	ls_user_id = lds_performed_history.Object.ordered_by[li_row]
 
-	IF sqlca.sqlcode = 100 THEN
-		lb_loop = false
-		setnull(ls_observation_id)
-		setnull(ls_location)
-	ELSE
+//	IF not tf_check() THEN RETURN
+//
+//	IF sqlca.sqlcode = 100 THEN
+//		lb_loop = false
+//		setnull(ls_observation_id)
+//		setnull(ls_location)
+//	ELSE
 		IF ls_result_amount_flag = "Y" AND not isnull(lr_result_amount) THEN
 			ls_result_item = ls_result + "=" + f_pretty_amount_unit(lr_result_amount, ls_result_unit)
 		ELSE
 			ls_result_item = ls_result
 		END IF
-	END IF
+//	END IF
 
 	IF ls_observation_id = ls_last_observation_id &
     AND ll_treatment_id = ll_last_treatment_id &
@@ -171,9 +179,12 @@ DO
 		li_location_count = 0
 	END IF
 
-LOOP WHILE lb_loop
+//LOOP WHILE lb_loop
+//
+//CLOSE lsp_get_performed_history;
 
-CLOSE lsp_get_performed_history;
+NEXT
+
 
 /* Included by Sumathi Chinnasamy On 08/04/99 => populate records for treatment status other than 'Closed' */
 
@@ -210,6 +221,9 @@ on u_cpr_test_history.destroy
 call super::destroy
 destroy(this.dw_history)
 end on
+
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_cpr_test_history
+end type
 
 type dw_history from u_dw_pick_list within u_cpr_test_history
 integer width = 2642

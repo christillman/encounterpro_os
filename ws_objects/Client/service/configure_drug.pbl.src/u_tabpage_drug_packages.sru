@@ -50,6 +50,14 @@ public function integer add_package ();str_popup popup
 str_popup_return popup_return
 string ls_package_id
 string ls_description  
+real lr_null
+string ls_null
+int li_null
+
+SetNull(lr_null)
+SetNull(ls_null)
+SetNull(li_null)
+
 
 open(w_drug_package_selection)
 popup_return = message.powerobjectparm
@@ -59,12 +67,12 @@ if popup_return.item_count <> 1 then return 0
 ls_package_id = popup_return.items[1]
 ls_description = popup_return.descriptions[1]
 
- DECLARE lsp_new_drug_package PROCEDURE FOR dbo.sp_new_drug_package  
-         @ps_drug_id = :drug_tab.drug.drug_id,   
-         @ps_package_id = :ls_package_id;
-
-	
-EXECUTE lsp_new_drug_package;
+// DECLARE lsp_new_drug_package PROCEDURE FOR dbo.sp_new_drug_package  
+//         @ps_drug_id = :drug_tab.drug.drug_id,   
+//         @ps_package_id = :ls_package_id;
+//
+sqlca.sp_new_drug_package (drug_tab.drug.drug_id,ls_package_id,'Y',lr_null,ls_null,'N',li_null);
+//EXECUTE lsp_new_drug_package;
 if not tf_check() then return -1
 
 return edit_package(ls_package_id)
@@ -108,13 +116,13 @@ end subroutine
 public function integer remove_package (string ps_package_id);str_popup popup
 str_popup_return popup_return
 
- DECLARE lsp_delete_drug_package PROCEDURE FOR dbo.sp_delete_drug_package 
-         @ps_drug_id = :drug_tab.drug.drug_id,   
-         @ps_package_id = :ps_package_id  ;
+// DECLARE lsp_delete_drug_package PROCEDURE FOR dbo.sp_delete_drug_package 
+//         @ps_drug_id = :drug_tab.drug.drug_id,   
+//         @ps_package_id = :ps_package_id  ;
 
 
-
-EXECUTE lsp_delete_drug_package;
+sqlca.sp_delete_drug_package(drug_tab.drug.drug_id,ps_package_id);
+//EXECUTE lsp_delete_drug_package;
 if not tf_check() then return -1
 
 refresh()

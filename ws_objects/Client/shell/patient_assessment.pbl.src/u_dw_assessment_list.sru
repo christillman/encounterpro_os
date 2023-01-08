@@ -84,13 +84,13 @@ end function
 
 public function integer delete_assessment (long pl_row);string ls_assessment_id
 
- DECLARE lsp_delete_assessment_definition PROCEDURE FOR dbo.sp_delete_assessment_definition  
-         @ps_assessment_id = :ls_assessment_id  ;
-
+// DECLARE lsp_delete_assessment_definition PROCEDURE FOR dbo.sp_delete_assessment_definition  
+//         @ps_assessment_id = :ls_assessment_id  ;
+//
 
 ls_assessment_id = object.assessment_id[pl_row]
-
-EXECUTE lsp_delete_assessment_definition;
+sqlca.sp_delete_assessment_definition(ls_assessment_id);
+//EXECUTE lsp_delete_assessment_definition;
 if not tf_check() then return -1
 
 return 1
@@ -444,18 +444,21 @@ end function
 
 public function integer set_assessment_specialty (long pl_row, string ps_flag);string ls_assessment_id
 
- DECLARE lsp_set_assessment_specialty PROCEDURE FOR dbo.sp_set_assessment_specialty  
-         @ps_assessment_id = :ls_assessment_id,   
-         @ps_specialty_id = :current_user.specialty_id,   
-         @ps_flag = :ps_flag  ;
+// DECLARE lsp_set_assessment_specialty PROCEDURE FOR dbo.sp_set_assessment_specialty  
+//         @ps_assessment_id = :ls_assessment_id,   
+//         @ps_specialty_id = :current_user.specialty_id,   
+//         @ps_flag = :ps_flag  ;
 
 
 if pl_row <= 0 or isnull(pl_row) then return 0
 if isnull(current_user.specialty_id) then return 0
 
 ls_assessment_id = object.assessment_id[pl_row]
-
-EXECUTE lsp_set_assessment_specialty;
+SQLCA.sp_set_assessment_specialty   ( &
+         ls_assessment_id,    &
+         current_user.specialty_id,    &
+         ps_flag  );
+//EXECUTE lsp_set_assessment_specialty;
 if not tf_check() then return -1
 
 return 1

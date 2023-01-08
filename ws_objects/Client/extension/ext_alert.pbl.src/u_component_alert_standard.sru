@@ -38,22 +38,26 @@ protected function integer xx_has_alert ();string ls_cpr_id
 string ls_alert_category_id
 integer li_alert_count
 
- DECLARE lsp_has_alert PROCEDURE FOR dbo.sp_has_alert  
-         @ps_cpr_id = :ls_cpr_id,
-			@ps_alert_category_id = :ls_alert_category_id,
-         @pi_alert_count = :li_alert_count OUT
- USING cprdb;
+// DECLARE lsp_has_alert PROCEDURE FOR dbo.sp_has_alert  
+//         @ps_cpr_id = :ls_cpr_id,
+//			@ps_alert_category_id = :ls_alert_category_id,
+//         @pi_alert_count = :li_alert_count OUT
+// USING cprdb;
 
 ls_cpr_id = get_attribute("CPR_ID")
 ls_alert_category_id = get_attribute("ALERT_CATEGORY_ID")
  
-EXECUTE lsp_has_alert;
+cprdb.sp_has_alert   ( &
+         ls_cpr_id, &
+			ls_alert_category_id, &
+         ref li_alert_count );
+//EXECUTE lsp_has_alert;
 if not cprdb.check() then return -1
 
-FETCH lsp_has_alert INTO :li_alert_count;
-if not cprdb.check() then return -1
-
-CLOSE lsp_has_alert;
+//FETCH lsp_has_alert INTO :li_alert_count;
+//if not cprdb.check() then return -1
+//
+//CLOSE lsp_has_alert;
 
 return li_alert_count
 

@@ -30,7 +30,6 @@ integer y = 272
 integer width = 2213
 integer height = 1264
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -117,6 +116,8 @@ end type
 type pb_done from u_picture_button within w_graph_new_graph
 integer x = 1888
 integer y = 980
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean enabled = false
 string picturename = "button26.bmp"
@@ -126,39 +127,45 @@ end type
 event clicked;call super::clicked;str_popup_return popup_return
 long ll_graph_id
 
- DECLARE lsp_new_graph PROCEDURE FOR dbo.sp_new_graph  
-         @ps_user_id = :user_id,   
-         @ps_graph_folder = :st_graph_folder.text,   
-         @ps_description = :sle_graph_description.text,   
-         @pl_graph_id = :ll_graph_id OUT ;
+// sp_new_graph does not exist in Epro_OS
 
+// DECLARE lsp_new_graph PROCEDURE FOR dbo.sp_new_graph  
+//         @ps_user_id = :user_id,   
+//         @ps_graph_folder = :st_graph_folder.text,   
+//         @ps_description = :sle_graph_description.text,   
+//         @pl_graph_id = :ll_graph_id OUT ;
 
-if isnull(sle_graph_description.text) or trim(sle_graph_description.text) = "" then
-	openwithparm(w_pop_message, "You must enter a description")
-	return
-end if
-
-if isnull(graph_folder) or trim(graph_folder) = "" then
-	openwithparm(w_pop_message, "You must select a folder")
-	return
-end if
-
-
-EXECUTE lsp_new_graph;
-if not tf_check() then return
-
-FETCH lsp_new_graph INTO :ll_graph_id;
-if not tf_check() then return
-
-CLOSE lsp_new_graph;
-
-popup_return.item_count = 3
-popup_return.items[1] = user_id
-popup_return.items[2] = string(ll_graph_id)
-popup_return.items[3] = sle_graph_description.text
-
-closewithreturn(parent, popup_return)
-
+//
+//if isnull(sle_graph_description.text) or trim(sle_graph_description.text) = "" then
+//	openwithparm(w_pop_message, "You must enter a description")
+//	return
+//end if
+//
+//if isnull(graph_folder) or trim(graph_folder) = "" then
+//	openwithparm(w_pop_message, "You must select a folder")
+//	return
+//end if
+//
+//SQLCA.sp_new_graph   ( &
+//         user_id,    &
+//         st_graph_folder.text,    &
+//         sle_graph_description.text,    &
+//         ref ll_graph_id );
+////EXECUTE lsp_new_graph;
+//if not tf_check() then return
+//
+////FETCH lsp_new_graph INTO :ll_graph_id;
+////if not tf_check() then return
+////
+////CLOSE lsp_new_graph;
+//
+//popup_return.item_count = 3
+//popup_return.items[1] = user_id
+//popup_return.items[2] = string(ll_graph_id)
+//popup_return.items[3] = sle_graph_description.text
+//
+//closewithreturn(parent, popup_return)
+//
 end event
 
 type st_2 from statictext within w_graph_new_graph
@@ -216,6 +223,8 @@ end event
 type pb_cancel from u_picture_button within w_graph_new_graph
 integer x = 69
 integer y = 980
+integer width = 256
+integer height = 224
 integer taborder = 30
 boolean bringtotop = true
 boolean cancel = true

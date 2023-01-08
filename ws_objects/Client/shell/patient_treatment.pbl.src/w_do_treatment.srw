@@ -21,7 +21,6 @@ end forward
 global type w_do_treatment from w_window_base
 integer width = 2935
 integer height = 1912
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -159,10 +158,16 @@ integer li_sts
 string ls_service
 string ls_observation_tag
 long ll_patient_workplan_item_id
+u_ds_data lds 
+integer li_row
+integer li_attribute_count
 
-DECLARE lsp_get_treatment_service_attributes PROCEDURE FOR dbo.sp_get_treatment_service_attributes
-		@ps_treatment_type = :treatment.treatment_type,
-		@pl_service_sequence = :ll_service_sequence ;
+lds = CREATE u_ds_data
+lds.set_DataObject("dw_sp_get_treatment_service_attributes")
+
+//DECLARE lsp_get_treatment_service_attributes PROCEDURE FOR dbo.sp_get_treatment_service_attributes
+//		@ps_treatment_type = :treatment.treatment_type,
+//		@pl_service_sequence = :ll_service_sequence ;
 
 
 lstr_attributes = state_attributes
@@ -186,20 +191,26 @@ CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 			return -1
 		end if
 		
-		EXECUTE lsp_get_treatment_service_attributes;
-		if not tf_check() then return -1
-		
-		FETCH lsp_get_treatment_service_attributes INTO :ls_attribute,:ls_value;
-		if not tf_check() then return -1
-
-		Do While Sqlca.Sqlcode = 0
-			lstr_attributes.attribute_count++
-			lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = ls_attribute
-			lstr_attributes.attribute[lstr_attributes.attribute_count].value = ls_value
-			FETCH lsp_get_treatment_service_attributes INTO :ls_attribute,:ls_value;
-			if not tf_check() then return -1
-		Loop
-		CLOSE lsp_get_treatment_service_attributes;
+//		EXECUTE lsp_get_treatment_service_attributes;
+//		if not tf_check() then return -1
+//		
+//		FETCH lsp_get_treatment_service_attributes INTO :ls_attribute,:ls_value;
+//		if not tf_check() then return -1
+//
+//		Do While Sqlca.Sqlcode = 0
+//			lstr_attributes.attribute_count++
+//			lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = ls_attribute
+//			lstr_attributes.attribute[lstr_attributes.attribute_count].value = ls_value
+//			FETCH lsp_get_treatment_service_attributes INTO :ls_attribute,:ls_value;
+//			if not tf_check() then return -1
+//		Loop
+//		CLOSE lsp_get_treatment_service_attributes;
+//
+		li_attribute_count = lds.Retrieve(treatment.treatment_type, ll_service_sequence)
+		FOR li_row = 1 TO li_attribute_count
+			lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = lds.Object.attribute[li_row]
+			lstr_attributes.attribute[lstr_attributes.attribute_count].value = lds.Object.value[li_row]
+		NEXT
 		
 		// Add the observation_tag to the attributes if it's not null
 		if not isnull(ls_observation_tag) then

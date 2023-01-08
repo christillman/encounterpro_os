@@ -165,18 +165,22 @@ end function
 
 public function boolean any_new_rx ();integer li_rx_count
 
- DECLARE lsp_check_new_rx PROCEDURE FOR dbo.sp_check_new_rx  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id,   
-         @pi_new_rx_count = :li_rx_count OUT ;
+// DECLARE lsp_check_new_rx PROCEDURE FOR dbo.sp_check_new_rx  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id,   
+//         @pi_new_rx_count = :li_rx_count OUT ;
 
-EXECUTE lsp_check_new_rx;
+SQLCA.sp_check_new_rx   ( &
+         current_patient.cpr_id,    &
+         encounter_id,    &
+         ref li_rx_count );
+//EXECUTE lsp_check_new_rx;
 if not tf_check() then return false
 	
-FETCH lsp_check_new_rx INTO :li_rx_count;
-if not tf_check() then return false
-	
-CLOSE lsp_check_new_rx;
+//FETCH lsp_check_new_rx INTO :li_rx_count;
+//if not tf_check() then return false
+//	
+//CLOSE lsp_check_new_rx;
 	
 if li_rx_count > 0 then return true
 
@@ -187,19 +191,22 @@ end function
 
 public function boolean any_new_user_rx (string ps_user_id);integer li_rx_count
 
- DECLARE lsp_check_new_user_rx PROCEDURE FOR dbo.sp_check_new_user_rx  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id, 
-			@ps_user_id = :ps_user_id,
-         @pi_new_user_rx_count = :li_rx_count OUT ;
-
-EXECUTE lsp_check_new_user_rx;
+// DECLARE lsp_check_new_user_rx PROCEDURE FOR dbo.sp_check_new_user_rx  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id, 
+//			@ps_user_id = :ps_user_id,
+//         @pi_new_user_rx_count = :li_rx_count OUT ;
+SQLCA.sp_check_new_user_rx   ( &
+         current_patient.cpr_id,    &
+         encounter_id, ps_user_id,   &
+         ref li_rx_count );
+//EXECUTE lsp_check_new_user_rx;
 if not tf_check() then return false
 	
-FETCH lsp_check_new_user_rx INTO :li_rx_count;
-if not tf_check() then return false
-	
-CLOSE lsp_check_new_user_rx;
+//FETCH lsp_check_new_user_rx INTO :li_rx_count;
+//if not tf_check() then return false
+//	
+//CLOSE lsp_check_new_user_rx;
 	
 if li_rx_count > 0 then return true
 
@@ -433,20 +440,24 @@ end function
 public function long find_service (string ps_service);long ll_patient_workplan_item_id
 
 
- DECLARE lsp_Find_Encounter_Service PROCEDURE FOR dbo.sp_Find_Encounter_Service  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id,   
-         @ps_service = :ps_service,   
-         @pl_patient_workplan_item_id = :ll_patient_workplan_item_id OUT;
+// DECLARE lsp_Find_Encounter_Service PROCEDURE FOR dbo.sp_Find_Encounter_Service  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id,   
+//         @ps_service = :ps_service,   
+//         @pl_patient_workplan_item_id = :ll_patient_workplan_item_id OUT;
 
-
-EXECUTE lsp_Find_Encounter_Service;
+SQLCA.sp_Find_Encounter_Service   ( &
+         current_patient.cpr_id,    &
+         encounter_id,    &
+         ps_service,    &
+         ref ll_patient_workplan_item_id);
+//EXECUTE lsp_Find_Encounter_Service;
 if not tf_check() then return -1
 
-FETCH lsp_Find_Encounter_Service INTO :ll_patient_workplan_item_id;
-if not tf_check() then return -1
-
-CLOSE lsp_Find_Encounter_Service;
+//FETCH lsp_Find_Encounter_Service INTO :ll_patient_workplan_item_id;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_Find_Encounter_Service;
 
 
 return ll_patient_workplan_item_id
@@ -456,75 +467,97 @@ end function
 
 public function integer get_numeric_objective_result (long pl_treatment_id, string ps_observation_id, string ps_location, integer pi_result_sequence, ref real pr_result_amount, ref string ps_result_unit);
 
- DECLARE lsp_get_result_loc PROCEDURE FOR dbo.sp_get_result_loc
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_treatment_id = :pl_treatment_id,   
-         @ps_observation_id = :ps_observation_id,
-         @ps_location = :ps_location,
-         @pi_result_sequence = :pi_result_sequence,
-         @pr_result_amount = :pr_result_amount OUT,   
-         @ps_result_unit = :ps_result_unit OUT ;
+// DECLARE lsp_get_result_loc PROCEDURE FOR dbo.sp_get_result_loc
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_treatment_id = :pl_treatment_id,   
+//         @ps_observation_id = :ps_observation_id,
+//         @ps_location = :ps_location,
+//         @pi_result_sequence = :pi_result_sequence,
+//         @pr_result_amount = :pr_result_amount OUT,   
+//         @ps_result_unit = :ps_result_unit OUT ;
+//
+SQLCA.sp_get_result_loc ( &
+         current_patient.cpr_id,    &
+         pl_treatment_id,    &
+         ps_observation_id, &
+         ps_location, &
+         pi_result_sequence, &
+         ref pr_result_amount,    &
+         ref ps_result_unit );
 
-
-EXECUTE lsp_get_result_loc;
+//EXECUTE lsp_get_result_loc;
 if not tf_check() then return -1
 
-FETCH lsp_get_result_loc INTO :pr_result_amount, :ps_result_unit;
-if not tf_check() then return -1
-
-CLOSE lsp_get_result_loc;
+//FETCH lsp_get_result_loc INTO :pr_result_amount, :ps_result_unit;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_get_result_loc;
 
 return 1
 
 end function
 
-public function integer get_assessments (ref str_encounter_assessment pstra_assessment[], ref integer pi_assessment_count);long ll_problem_id
-long ll_assessment_billing_id
-boolean lb_loop
-string ls_assessment_id
-string ls_bill_flag
-string ls_auto_close
-string ls_description
-integer li_treatment_count
-integer li_assessment_sequence
+public function integer get_assessments (ref str_encounter_assessment pstra_assessment[], ref integer pi_assessment_count);
+u_ds_data lds 
+integer li_row
 
- DECLARE lsp_get_encounter_assessments PROCEDURE FOR dbo.sp_get_encounter_assessments  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id  ;
+lds = CREATE u_ds_data
+lds.set_DataObject("dw_sp_get_encounter_assessments")
+pi_assessment_count = lds.Retrieve(current_patient.cpr_id, encounter_id)
 
+// DECLARE lsp_get_encounter_assessments PROCEDURE FOR dbo.sp_get_encounter_assessments  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id  ;
+//
+//
+//pi_assessment_count = 0
+//lb_loop = true
+//SQLCA.sp_get_encounter_assessments   ( &
+//         current_patient.cpr_id,    &
+//         encounter_id  );
+//EXECUTE lsp_get_encounter_assessments;
+//if not tf_check() then return -1
+//
 
-pi_assessment_count = 0
-lb_loop = true
+//DO
+//	FETCH lsp_get_encounter_assessments INTO
+//		:ll_problem_id,
+//		:ls_assessment_id,
+//		:li_assessment_sequence,
+//		:ls_description,
+//		:ll_assessment_billing_id,
+//		:ls_bill_flag,
+//		:ls_auto_close;
+//	if not tf_check() then return -1
+//
+//	if sqlca.sqlcode = 0 then
+//		pi_assessment_count++
+//		pstra_assessment[pi_assessment_count].problem_id = ll_problem_id
+//		pstra_assessment[pi_assessment_count].assessment_id = ls_assessment_id
+//		pstra_assessment[pi_assessment_count].assessment_sequence = li_assessment_sequence
+//		pstra_assessment[pi_assessment_count].description = ls_description
+//		pstra_assessment[pi_assessment_count].assessment_billing_id = ll_assessment_billing_id
+//		pstra_assessment[pi_assessment_count].bill_flag = ls_bill_flag
+//		pstra_assessment[pi_assessment_count].auto_close = ls_auto_close
+//	else
+//		lb_loop = false
+//	end if
+//LOOP WHILE lb_loop
+//
+//CLOSE lsp_get_encounter_assessments;
 
-EXECUTE lsp_get_encounter_assessments;
-if not tf_check() then return -1
-
-DO
-	FETCH lsp_get_encounter_assessments INTO
-		:ll_problem_id,
-		:ls_assessment_id,
-		:li_assessment_sequence,
-		:ls_description,
-		:ll_assessment_billing_id,
-		:ls_bill_flag,
-		:ls_auto_close;
-	if not tf_check() then return -1
-
-	if sqlca.sqlcode = 0 then
-		pi_assessment_count++
-		pstra_assessment[pi_assessment_count].problem_id = ll_problem_id
-		pstra_assessment[pi_assessment_count].assessment_id = ls_assessment_id
-		pstra_assessment[pi_assessment_count].assessment_sequence = li_assessment_sequence
-		pstra_assessment[pi_assessment_count].description = ls_description
-		pstra_assessment[pi_assessment_count].assessment_billing_id = ll_assessment_billing_id
-		pstra_assessment[pi_assessment_count].bill_flag = ls_bill_flag
-		pstra_assessment[pi_assessment_count].auto_close = ls_auto_close
-	else
-		lb_loop = false
-	end if
-LOOP WHILE lb_loop
-
-CLOSE lsp_get_encounter_assessments;
+FOR li_row = 1 TO pi_assessment_count
+		pstra_assessment[li_row].problem_id = lds.Object.problem_id[li_row]
+		pstra_assessment[li_row].assessment_id = lds.Object.assessment_id[li_row]
+		pstra_assessment[li_row].assessment_sequence = lds.Object.assessment_sequence[li_row]
+		pstra_assessment[li_row].description = lds.Object.description[li_row]
+		pstra_assessment[li_row].assessment_billing_id = lds.Object.assessment_billing_id[li_row]
+		pstra_assessment[li_row].bill_flag = lds.Object.bill_flag[li_row]
+		pstra_assessment[li_row].auto_close = lds.Object.auto_close[li_row]
+// columns not in the structure
+//	a.sort_sequence,
+//	a.diagnosis_sequence
+NEXT
 
 return 1
 
@@ -653,15 +686,20 @@ return 1
 
 end function
 
-public function integer cancel_treatment (long pl_treatment_id); DECLARE lsp_cancel_treatment PROCEDURE FOR dbo.sp_cancel_treatment
-         @ps_cpr_id = :current_patient.cpr_id,
-			@pl_treatment_id = :pl_treatment_id,
-			@pl_encounter_id = :encounter_id,
-         @ps_user_id = :current_user.user_id,
-			@ps_created_by = :current_scribe.user_id;
+public function integer cancel_treatment (long pl_treatment_id);// DECLARE lsp_cancel_treatment PROCEDURE FOR dbo.sp_cancel_treatment
+//         @ps_cpr_id = :current_patient.cpr_id,
+//			@pl_treatment_id = :pl_treatment_id,
+//			@pl_encounter_id = :encounter_id,
+//         @ps_user_id = :current_user.user_id,
+//			@ps_created_by = :current_scribe.user_id;
 
-
-EXECUTE lsp_cancel_treatment;
+SQLCA.sp_cancel_treatment ( &
+         current_patient.cpr_id, &
+			pl_treatment_id, &
+			encounter_id, &
+         current_user.user_id, &
+			current_scribe.user_id);
+//EXECUTE lsp_cancel_treatment;
 if not tf_check() then return -1
 
 current_patient.load_treatments()
@@ -830,14 +868,14 @@ tf_begin_transaction(this, "order_service()")
 ll_patient_workplan_item_id = order_service(ps_service, ps_description, ps_ordered_for)
 if ll_patient_workplan_item_id <= 0 then return -1
 
- DECLARE lsp_add_workplan_item_attribute PROCEDURE FOR dbo.sp_add_workplan_item_attribute  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_patient_workplan_id = :ll_patient_workplan_id,   
-         @pl_patient_workplan_item_id = :ll_patient_workplan_item_id,   
-         @ps_attribute = :psa_attributes[i],   
-         @ps_value = :psa_values[i],   
-         @ps_created_by = :current_scribe.user_id  ;
-
+// DECLARE lsp_add_workplan_item_attribute PROCEDURE FOR dbo.sp_add_workplan_item_attribute  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_patient_workplan_id = :ll_patient_workplan_id,   
+//         @pl_patient_workplan_item_id = :ll_patient_workplan_item_id,   
+//         @ps_attribute = :psa_attributes[i],   
+//         @ps_value = :psa_values[i],   
+//         @ps_created_by = :current_scribe.user_id  ;
+//
 for i = 1 to pi_attribute_count
 	sqlca.sp_add_workplan_item_attribute( &
         current_patient.cpr_id,   &
@@ -1141,12 +1179,12 @@ setnull(ldt_progress_date_time)
 setnull(ls_completed_by)
 setnull(ls_owned_by)
 
- DECLARE lsp_Order_Encounter_Workplan PROCEDURE FOR dbo.sp_Order_Encounter_Workplan  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id,   
-         @ps_ordered_by = :current_user.user_id,   
-         @ps_created_by = :current_scribe.user_id,
-			@pl_patient_workplan_id = :patient_workplan_id OUT;
+// DECLARE lsp_Order_Encounter_Workplan PROCEDURE FOR dbo.sp_Order_Encounter_Workplan  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id,   
+//         @ps_ordered_by = :current_user.user_id,   
+//         @ps_created_by = :current_scribe.user_id,
+//			@pl_patient_workplan_id = :patient_workplan_id OUT;
 
 
 ls_status = "CANCELLED"
@@ -1168,13 +1206,19 @@ if patient_workplan_id > 0 then
 end if
 
 // The order the new workplan
-EXECUTE lsp_Order_Encounter_Workplan;
+SQLCA.sp_Order_Encounter_Workplan   ( &
+         current_patient.cpr_id,    &
+         encounter_id,    &
+         current_user.user_id,    &
+         current_scribe.user_id, &
+			ref patient_workplan_id);
+//EXECUTE lsp_Order_Encounter_Workplan;
 if not tf_check() then return -1
 
-FETCH lsp_Order_Encounter_Workplan INTO :patient_workplan_id;
-if not tf_check() then return -1
-
-CLOSE lsp_Order_Encounter_Workplan;
+//FETCH lsp_Order_Encounter_Workplan INTO :patient_workplan_id;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_Order_Encounter_Workplan;
 
 // Refresh the encounter object because ordering the workplan might have changed things
 luo_this = this
@@ -1186,7 +1230,7 @@ if encounter_status = "OPEN" then
 	if not isnull(ls_first_room_id) then
 		li_sts = change_room(ls_first_room_id)
 		if li_sts < 0 then
-			log.log(this, "u_str_encounter.order_encounter_workplan:0060", "Error changeing room (" + ls_first_room_id + ")", 4)
+			log.log(this, "u_str_encounter.order_encounter_workplan:0060", "Error changing room (" + ls_first_room_id + ")", 4)
 		end if
 	end if
 end if
@@ -1198,15 +1242,19 @@ end function
 public function integer close_old ();integer i
 u_str_encounter luo_this
 
- DECLARE lsp_close_encounter PROCEDURE FOR dbo.sp_close_encounter  
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_encounter_id = :encounter_id,
-			@ps_user_id = :current_user.user_id,
-			@ps_created_by = :current_scribe.user_id;
+// DECLARE lsp_close_encounter PROCEDURE FOR dbo.sp_close_encounter  
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_encounter_id = :encounter_id,
+//			@ps_user_id = :current_user.user_id,
+//			@ps_created_by = :current_scribe.user_id;
 
 current_patient.assessments.close_auto_close()
-
-EXECUTE lsp_close_encounter;
+SQLCA.sp_close_encounter   ( &
+         current_patient.cpr_id,    &
+         encounter_id, &
+			current_user.user_id, &
+			current_scribe.user_id);
+//EXECUTE lsp_close_encounter;
 if not tf_check() then return -1
 
 luo_this = this

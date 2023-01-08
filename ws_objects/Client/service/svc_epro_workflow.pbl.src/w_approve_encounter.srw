@@ -53,7 +53,6 @@ type str_billable_tests from structure
 end type
 
 global type w_approve_encounter from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -230,15 +229,17 @@ end subroutine
 public subroutine set_rx_signed (long pl_attachment_id);Integer i
 Long    ll_rows,ll_treatment_id
 
-DECLARE lsp_set_treatment_signature PROCEDURE FOR dbo.sp_set_treatment_signature
-	@pl_treatment_id = :ll_treatment_id,
-	@pl_attachment_id = :pl_attachment_id;
-
+//DECLARE lsp_set_treatment_signature PROCEDURE FOR dbo.sp_set_treatment_signature
+//	@pl_treatment_id = :ll_treatment_id,
+//	@pl_attachment_id = :pl_attachment_id;
+//
 ll_rows = dw_new_rx.rowcount()
 For i = 1 to ll_rows
 	If dw_new_rx.object.signed[i] = 1 Then Continue
 	ll_treatment_id = dw_new_rx.object.treatment_id[i]
-	EXECUTE lsp_set_treatment_signature;
+	sqlca.sp_set_treatment_signature(ll_treatment_id,pl_attachment_id);
+//	EXECUTE lsp_set_treatment_signature;
+	if not tf_check() then return
 Next
 Return
 

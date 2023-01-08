@@ -28,7 +28,6 @@ end forward
 
 global type w_scan_more from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -103,8 +102,8 @@ end function
 public function integer close_box ();string ls_find
 long ll_row, ll_rowcount, ll_box_id
 
- DECLARE lsp_close_box PROCEDURE FOR dbo.sp_close_box  
-         @pl_box_id = :ll_box_id  ;
+// DECLARE lsp_close_box PROCEDURE FOR dbo.sp_close_box  
+//         @pl_box_id = :ll_box_id  ;
 
 
 ll_rowcount = dw_open_boxes.rowcount()
@@ -113,7 +112,8 @@ if ll_rowcount > 0 then
 	ll_row = dw_open_boxes.find(ls_find, 1, ll_rowcount)
 	if ll_row > 0 then
 		ll_box_id = dw_open_boxes.object.box_id[ll_row]
-		EXECUTE lsp_close_box;
+		SQLCA.sp_close_box(ll_box_id);
+//		EXECUTE lsp_close_box;
 		if not tf_check() then return -1
 	else
 		return 0
@@ -147,19 +147,22 @@ end function
 public function long new_box (string ps_box_type, string ps_description);string ls_box_type
 long ll_box_id
 
- DECLARE lsp_new_box PROCEDURE FOR dbo.sp_new_box  
-         @ps_box_type = :ps_box_type,   
-         @ps_description = :ps_description,   
-         @pl_box_id = :ll_box_id OUT ;
+// DECLARE lsp_new_box PROCEDURE FOR dbo.sp_new_box  
+//         @ps_box_type = :ps_box_type,   
+//         @ps_description = :ps_description,   
+//         @pl_box_id = :ll_box_id OUT ;
 
-
-EXECUTE lsp_new_box;
+SQLCA.sp_new_box   ( &
+         ps_box_type,    &
+         ps_description,    &
+         ref ll_box_id );
+//EXECUTE lsp_new_box;
 if not tf_check() then return -1
 
-FETCH lsp_new_box INTO :ll_box_id;
-if not tf_check() then return -1
-
-CLOSE lsp_new_box;
+//FETCH lsp_new_box INTO :ll_box_id;
+//if not tf_check() then return -1
+//
+//CLOSE lsp_new_box;
 
 return ll_box_id
 

@@ -40,7 +40,6 @@ end forward
 
 global type w_physical_exam from w_observation_base
 integer height = 1840
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -1502,12 +1501,12 @@ display_observation()
 
 end event
 
-type pb_epro_help from w_window_base`pb_epro_help within w_physical_exam
+type pb_epro_help from w_observation_base`pb_epro_help within w_physical_exam
 boolean visible = true
 integer x = 2441
 end type
 
-type st_config_mode_menu from w_window_base`st_config_mode_menu within w_physical_exam
+type st_config_mode_menu from w_observation_base`st_config_mode_menu within w_physical_exam
 end type
 
 type st_page from statictext within w_physical_exam
@@ -1883,28 +1882,32 @@ end event
 
 event set_exam_defaults;call super::set_exam_defaults;long ll_branch_id
  
- DECLARE lsp_set_exam_defaults_from_actuals PROCEDURE FOR dbo.sp_set_exam_defaults_from_actuals  
-         @ps_user_id = :ps_user_id,   
-         @pl_exam_sequence = :pl_exam_sequence,   
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_observation_sequence = :observation_sequence[question_number],   
-         @pl_branch_id = :branch_id[question_number]  ;
+sqlca.sp_set_exam_defaults_from_actuals ( &
+         ps_user_id, &
+         pl_exam_sequence, &
+         current_patient.cpr_id, &
+         observation_sequence[question_number], &
+         branch_id[question_number])  ;
 
 
-EXECUTE lsp_set_exam_defaults_from_actuals;
+// EXECUTE lsp_set_exam_defaults_from_actuals;
 if not tf_check() then return
 
 end event
 
 event clear_exam_defaults;call super::clear_exam_defaults;long ll_branch_id
  
- DECLARE lsp_clear_exam_defaults PROCEDURE FOR dbo.sp_clear_exam_defaults  
-         @ps_user_id = :ps_user_id,   
-         @pl_exam_sequence = :pl_exam_sequence,   
-         @pl_branch_id = :branch_id[question_number]  ;
-
-
-EXECUTE lsp_clear_exam_defaults;
+// DECLARE lsp_clear_exam_defaults PROCEDURE FOR dbo.sp_clear_exam_defaults  
+//         @ps_user_id = :ps_user_id,   
+//         @pl_exam_sequence = :pl_exam_sequence,   
+//         @pl_branch_id = :branch_id[question_number]  ;
+//
+//
+//EXECUTE lsp_clear_exam_defaults;
+sqlca.sp_clear_exam_defaults ( &
+         ps_user_id, &
+         pl_exam_sequence, &
+         branch_id[question_number] ) ;
 if not tf_check() then return
 
 end event

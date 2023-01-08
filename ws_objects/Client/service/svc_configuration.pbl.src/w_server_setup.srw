@@ -22,7 +22,6 @@ end forward
 
 global type w_server_setup from w_window_base
 string title = "Practice Management Configuration"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -555,10 +554,10 @@ event clicked;string    ls_message,ls_desc,ls_default_billing_system
 str_popup popup
 str_popup_return popup_return
 
-DECLARE lsp_setup_integration PROCEDURE FOR dbo.sp_setup_practicemanagement
-@ps_billing_system = :default_billing_system,
-@ps_office_id = :gnv_app.office_id
-USING SQLCA; 
+//DECLARE lsp_setup_integration PROCEDURE FOR dbo.sp_setup_practicemanagement
+//@ps_billing_system = :default_billing_system,
+//@ps_office_id = :gnv_app.office_id
+//USING SQLCA; 
 
 popup.dataobject = "dw_pick_integration"
 popup.datacolumn = 1
@@ -578,7 +577,9 @@ If isnull(default_billing_system) OR (popup_return.items[1] <> default_billing_s
 	cb_integration.text = ls_desc
 	cb_mapping.visible = true
 	st_3.visible = true
-	EXECUTE lsp_setup_integration;
+	SQLCA.sp_setup_practicemanagement(default_billing_system,gnv_app.office_id);
+	tf_check()
+//	EXECUTE lsp_setup_integration;
 	Refresh(cb_mapping.text)
 
 End If
@@ -660,6 +661,8 @@ end type
 type pb_1 from u_picture_button within w_server_setup
 integer x = 2523
 integer y = 1472
+integer width = 256
+integer height = 224
 integer taborder = 11
 boolean bringtotop = true
 string picturename = "button26.bmp"

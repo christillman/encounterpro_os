@@ -43,7 +43,6 @@ end type
 end forward
 
 global type w_billing_edit from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -298,17 +297,23 @@ public subroutine dont_bill (long pl_row);long ll_encounter_charge_id
 integer li_treatment_sequence
 string ls_bill_flag
 
- DECLARE lsp_set_charge_billing PROCEDURE FOR dbo.sp_set_charge_billing  
-         @ps_cpr_id = :encounter.parent_patient.cpr_id,   
-         @pl_encounter_id = :encounter.encounter_id,   
-         @pl_encounter_charge_id = :ll_encounter_charge_id,   
-         @ps_bill_flag = :ls_bill_flag,
-			@ps_created_by = :current_scribe.user_id;
-
+// DECLARE lsp_set_charge_billing PROCEDURE FOR dbo.sp_set_charge_billing  
+//         @ps_cpr_id = :encounter.parent_patient.cpr_id,   
+//         @pl_encounter_id = :encounter.encounter_id,   
+//         @pl_encounter_charge_id = :ll_encounter_charge_id,   
+//         @ps_bill_flag = :ls_bill_flag,
+//			@ps_created_by = :current_scribe.user_id;
+//
 ls_bill_flag = "N"
 ll_encounter_charge_id = dw_billing.object.encounter_charge_id[pl_row]
 
-EXECUTE lsp_set_charge_billing;
+sqlca.sp_set_charge_billing ( &
+         encounter.parent_patient.cpr_id, &
+         encounter.encounter_id, &
+         ll_encounter_charge_id, &
+         ls_bill_flag, &
+			current_scribe.user_id);
+//EXECUTE lsp_set_charge_billing;
 if not tf_check() then return
 
 load_billing()

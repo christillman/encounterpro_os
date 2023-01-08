@@ -82,11 +82,10 @@ public function integer post_encounter (string ps_cpr_id, long pl_encounter_id);
 // declare local variables
 long ll_sts
 
-// declare local alias for stored procedure that updates posted status
-DECLARE lsp_set_encounter_posted PROCEDURE FOR dbo.sp_set_encounter_posted  
-   @ps_cpr_id = :ps_cpr_id,   
-   @pl_encounter_id = :pl_encounter_id
-USING cprdb;
+//DECLARE lsp_set_encounter_posted PROCEDURE FOR dbo.sp_set_encounter_posted  
+//   @ps_cpr_id = :ps_cpr_id,   
+//   @pl_encounter_id = :pl_encounter_id
+//USING cprdb;
 
 mylog.log(this, "u_component_billing.post_encounter:0024", "Posting Encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 
@@ -125,8 +124,10 @@ if ll_sts < 0 then
 	mylog.log(this, "u_component_billing.post_encounter:0058", "Posting Encounter-Other Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
-
-EXECUTE lsp_set_encounter_posted;
+cprdb.sp_set_encounter_posted   ( &
+   ps_cpr_id,    &
+   pl_encounter_id );
+//EXECUTE lsp_set_encounter_posted;
 if not cprdb.check() then return -1
 
 mylog.log(this, "u_component_billing.post_encounter:0065", "Encounter Successfully Posted (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)

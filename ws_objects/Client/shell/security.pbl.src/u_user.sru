@@ -687,14 +687,14 @@ end function
 
 public subroutine logoff (boolean pb_shutting_down);string ls_services_waiting
 
- DECLARE lsp_primary_service_check PROCEDURE FOR dbo.sp_primary_service_check  
-         @ps_room_id = :viewed_room.room_id,   
-         @ps_user_id = :user_id,   
-         @ps_services_waiting = :ls_services_waiting OUT ;
-
- DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
-         @ps_user_id = :user_id,
-			@pl_computer_id = :gnv_app.computer_id;
+// DECLARE lsp_primary_service_check PROCEDURE FOR dbo.sp_primary_service_check  
+//         @ps_room_id = :viewed_room.room_id,   
+//         @ps_user_id = :user_id,   
+//         @ps_services_waiting = :ls_services_waiting OUT ;
+//
+// DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
+//         @ps_user_id = :user_id,
+//			@pl_computer_id = :gnv_app.computer_id;
 
 
 log.log(this, "u_user.logoff:0013", "User " + user_short_name + " logging off...", 2)
@@ -712,7 +712,8 @@ elseif current_user.user_id <> user_id then
 	log.log(this, "u_user.logoff:0025", "current_user is " + current_user.user_short_name, 3)
 end if
 
-EXECUTE lsp_user_logoff;
+sqlca.sp_user_logoff (user_id, gnv_app.computer_id);
+
 if not tf_check() then return
 
 setnull(current_user)
@@ -729,15 +730,12 @@ if IsValid(main_window) and not pb_shutting_down then
 		viewed_room = current_room
 	else
 		if not isnull(viewed_room) then
-	//		EXECUTE lsp_primary_service_check;
-	//		if not tf_check() then return
-	//	
-	//		FETCH lsp_primary_service_check INTO :ls_services_waiting;
-	//		if not tf_check() then return
-	//	
-	//		CLOSE lsp_primary_service_check;
-	//	
-	//		if ls_services_waiting <> "Y" then viewed_room = current_room
+			SQLCA.sp_primary_service_check   ( &
+         viewed_room.room_id,    &
+         user_id,    &
+         ref ls_services_waiting );
+			if not tf_check() then return
+			if ls_services_waiting <> "Y" then viewed_room = current_room
 		else
 			viewed_room = current_room
 		end if

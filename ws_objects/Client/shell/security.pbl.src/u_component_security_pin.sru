@@ -79,10 +79,10 @@ str_popup popup
 str_popup_return popup_return
 string ls_user_id
 
- DECLARE lsp_change_access_id PROCEDURE FOR dbo.sp_change_access_id  
-         @ps_user_id = :ls_user_id,   
-         @ps_access_id = :ls_access_id,   
-         @pi_success = :li_success OUT ;
+// DECLARE lsp_change_access_id PROCEDURE FOR dbo.sp_change_access_id  
+//         @ps_user_id = :ls_user_id,   
+//         @ps_access_id = :ls_access_id,   
+//         @pi_success = :li_success OUT ;
 
 
 SELECT user_id
@@ -120,20 +120,23 @@ if ls_access_id <> popup_return.items[1] then
 end if
 
 tf_begin_transaction(this, "change_access_id()")
-
-EXECUTE lsp_change_access_id;
+SQLCA.sp_change_access_id   ( &
+         ls_user_id,    &
+         ls_access_id,    &
+         ref li_success );
+//EXECUTE lsp_change_access_id;
 if not tf_check() then
 	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
 	return 0
 end if
 
-FETCH lsp_change_access_id INTO :li_success;
-if not tf_check() then
-	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
-	return 0
-end if
+//FETCH lsp_change_access_id INTO :li_success;
+//if not tf_check() then
+//	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
+//	return 0
+//end if
 
-CLOSE lsp_change_access_id;
+//CLOSE lsp_change_access_id;
 
 tf_commit()
 
@@ -154,11 +157,11 @@ str_popup popup
 str_popup_return popup_return
 string ls_user_id
 
- DECLARE lsp_change_access_id PROCEDURE FOR dbo.sp_change_access_id  
-         @ps_user_id = :ls_user_id,   
-         @ps_access_id = :ls_access_id,   
-         @pi_success = :li_success OUT ;
-
+// DECLARE lsp_change_access_id PROCEDURE FOR dbo.sp_change_access_id  
+//         @ps_user_id = :ls_user_id,   
+//         @ps_access_id = :ls_access_id,   
+//         @pi_success = :li_success OUT ;
+//
 
 SELECT user_id
 INTO :ls_user_id
@@ -195,20 +198,23 @@ if ls_access_id <> popup_return.items[1] then
 end if
 
 tf_begin_transaction(this, "change_access_id()")
-
-EXECUTE lsp_change_access_id;
+SQLCA.sp_change_access_id   ( &
+         ls_user_id,    &
+         ls_access_id,    &
+         ref li_success );
+//EXECUTE lsp_change_access_id;
 if not tf_check() then
 	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
 	return 0
 end if
 
-FETCH lsp_change_access_id INTO :li_success;
-if not tf_check() then
-	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
-	return 0
-end if
+//FETCH lsp_change_access_id INTO :li_success;
+//if not tf_check() then
+//	openwithparm(w_pop_message, "Error Updating Access Code.  Access Code Not Changed")
+//	return 0
+//end if
 
-CLOSE lsp_change_access_id;
+//CLOSE lsp_change_access_id;
 
 tf_commit()
 

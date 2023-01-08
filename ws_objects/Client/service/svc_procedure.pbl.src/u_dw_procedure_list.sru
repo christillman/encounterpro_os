@@ -108,13 +108,16 @@ end function
 
 public function integer delete_procedure (long pl_row);string ls_procedure_id
 
- DECLARE lsp_delete_procedure_definition PROCEDURE FOR dbo.sp_delete_procedure_definition  
-         @ps_procedure_id = :ls_procedure_id  ;
-
-
+// DECLARE lsp_delete_procedure_definition PROCEDURE FOR dbo.sp_delete_procedure_definition  
+//         @ps_procedure_id = :ls_procedure_id  ;
+//
+//
 ls_procedure_id = object.procedure_id[pl_row]
 
-EXECUTE lsp_delete_procedure_definition;
+//EXECUTE lsp_delete_procedure_definition;
+
+sqlca.sp_delete_procedure_definition( ls_procedure_id)  ;
+			
 if not tf_check() then return -1
 
 return 1

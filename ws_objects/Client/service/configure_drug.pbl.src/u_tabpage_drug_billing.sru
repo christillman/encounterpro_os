@@ -110,12 +110,12 @@ end function
 public function integer remove_hcpcs (long pl_hcpcs_sequence);str_popup popup
 str_popup_return popup_return
 
- DECLARE lsp_delete_drug_hcpcs PROCEDURE FOR dbo.sp_delete_drug_hcpcs
-         @ps_drug_id = :drug_tab.drug.drug_id,   
-         @pl_hcpcs_sequence = :pl_hcpcs_sequence;
-
-
-EXECUTE lsp_delete_drug_hcpcs;
+// DECLARE lsp_delete_drug_hcpcs PROCEDURE FOR dbo.sp_delete_drug_hcpcs
+//         @ps_drug_id = :drug_tab.drug.drug_id,   
+//         @pl_hcpcs_sequence = :pl_hcpcs_sequence;
+//
+sqlca.sp_delete_drug_hcpcs(drug_tab.drug.drug_id, pl_hcpcs_sequence);
+//EXECUTE lsp_delete_drug_hcpcs;
 if not tf_check() then return -1
 
 refresh()

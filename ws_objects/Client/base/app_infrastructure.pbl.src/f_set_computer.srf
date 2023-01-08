@@ -17,11 +17,11 @@ boolean lb_computer_not_found
 string ls_null
 long ll_null
 
- DECLARE lsp_register_computer PROCEDURE FOR dbo.sp_register_computer  
- 			@ps_office_id = :gnv_app.office_id,
-         @ps_logon_id = :gnv_app.windows_logon_id,   
-         @ps_computername = :gnv_app.computername,   
-         @pl_computer_id = :gnv_app.computer_id OUT ;
+// DECLARE lsp_register_computer PROCEDURE FOR dbo.sp_register_computer  
+// 			@ps_office_id = :gnv_app.office_id,
+//         @ps_logon_id = :gnv_app.windows_logon_id,   
+//         @ps_computername = :gnv_app.computername,   
+//         @pl_computer_id = :gnv_app.computer_id OUT ;
 
 
 setnull(ls_null)
@@ -101,13 +101,18 @@ if lb_computer_not_found then
 //	ls_allow_new_computer = upper(datalist.get_preference("SYSTEM", "AllowNewComputer"))
 	ls_allow_new_computer = sqlca.fn_get_preference("SYSTEM", "AllowNewComputer", ls_null, ll_null)
 	if isnull(ls_allow_new_computer) or ls_allow_new_computer <> "N" then
-		EXECUTE lsp_register_computer;
+	SQLCA.sp_register_computer   ( &
+ 			gnv_app.office_id, &
+         gnv_app.windows_logon_id,    &
+         gnv_app.computername,    &
+         ref gnv_app.computer_id );
+//			EXECUTE lsp_register_computer;
 		if not sqlca.check() then return -1
 		
-		FETCH lsp_register_computer INTO :gnv_app.computer_id;
-		if not sqlca.check() then return -1
-		
-		CLOSE lsp_register_computer;
+//		FETCH lsp_register_computer INTO :gnv_app.computer_id;
+//		if not sqlca.check() then return -1
+//		
+//		CLOSE lsp_register_computer;
 	else
 		log.log(po_null, "f_set_computer:0102", "Computer is not registered and new computeres are not allowed", 5)
 		gnv_app.event close()

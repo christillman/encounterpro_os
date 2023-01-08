@@ -63,13 +63,13 @@ end prototypes
 
 public function integer delete_drug (long pl_row);string ls_drug_id
 
- DECLARE lsp_delete_drug_definition PROCEDURE FOR dbo.sp_delete_drug_definition  
-         @ps_drug_id = :ls_drug_id  ;
-
-
+// DECLARE lsp_delete_drug_definition PROCEDURE FOR dbo.sp_delete_drug_definition  
+//         @ps_drug_id = :ls_drug_id  ;
+//
+//
 ls_drug_id = object.drug_id[pl_row]
-
-EXECUTE lsp_delete_drug_definition;
+sqlca.sp_delete_drug_definition(ls_drug_id);
+//EXECUTE lsp_delete_drug_definition;
 if not tf_check() then return -1
 
 return 1

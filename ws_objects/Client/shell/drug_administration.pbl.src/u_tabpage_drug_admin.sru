@@ -104,12 +104,14 @@ public function integer remove_admin (long pl_administration_sequence);str_popup
 str_popup_return popup_return
 integer i
 
- DECLARE lsp_delete_drug_administration PROCEDURE FOR dbo.sp_delete_drug_administration  
-         @ps_drug_id = :drug_tab.drug.drug_id,   
-         @pi_administration_sequence = :pl_administration_sequence  ;
+// DECLARE lsp_delete_drug_administration PROCEDURE FOR dbo.sp_delete_drug_administration  
+//         @ps_drug_id = :drug_tab.drug.drug_id,   
+//         @pi_administration_sequence = :pl_administration_sequence  ;
 
-
-EXECUTE lsp_delete_drug_administration;
+SQLCA.sp_delete_drug_administration   ( &
+         drug_tab.drug.drug_id,    &
+         pl_administration_sequence  );
+//EXECUTE lsp_delete_drug_administration;
 if not tf_check() then return -1
 
 refresh()

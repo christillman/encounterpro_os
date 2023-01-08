@@ -11,10 +11,7 @@ end forward
 global type u_waiting_room_status_tab from u_main_tabpage_base
 integer width = 2162
 integer height = 1704
-long backcolor = 7191717
-long tabtextcolor = 33554432
 long tabbackcolor = 16777215
-long picturemaskcolor = 536870912
 st_empty st_empty
 uo_waiting_rooms uo_waiting_rooms
 end type
@@ -38,21 +35,32 @@ end subroutine
 public subroutine initialize ();string ls_room_type
 string ls_room_name
 string ls_room_id
+string ls_rooms[]
 boolean lb_loop
  
- DECLARE lsp_get_rooms_in_type PROCEDURE FOR dbo.sp_get_rooms_in_type  
-         @ps_room_type = :ls_room_type  ;
-
-
-uo_waiting_rooms.initialize()
-
 ls_room_type = "WAITING"
 room_count = 0
 lb_loop = true
 
-EXECUTE lsp_get_rooms_in_type;
-if not tf_check() then return
 
+DECLARE lsp_get_rooms_in_type CURSOR FOR
+SELECT room_id,
+	room_name 
+FROM o_Rooms
+WHERE room_type = :ls_room_type;
+
+//PROCEDURE FOR dbo.sp_get_rooms_in_type  
+//         @ps_room_type = :ls_room_type  ;
+//
+//
+uo_waiting_rooms.initialize()
+
+OPEN lsp_get_rooms_in_type;
+if not tf_check() then return
+//
+//EXECUTE lsp_get_rooms_in_type;
+//if not tf_check() then return
+//
 DO
 	FETCH lsp_get_rooms_in_type INTO
 		:ls_room_id,
@@ -103,13 +111,17 @@ end if
 end subroutine
 
 on u_waiting_room_status_tab.create
+int iCurrent
+call super::create
 this.st_empty=create st_empty
 this.uo_waiting_rooms=create uo_waiting_rooms
-this.Control[]={this.st_empty,&
-this.uo_waiting_rooms}
+iCurrent=UpperBound(this.Control)
+this.Control[iCurrent+1]=this.st_empty
+this.Control[iCurrent+2]=this.uo_waiting_rooms
 end on
 
 on u_waiting_room_status_tab.destroy
+call super::destroy
 destroy(this.st_empty)
 destroy(this.uo_waiting_rooms)
 end on

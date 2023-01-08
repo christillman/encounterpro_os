@@ -108,14 +108,14 @@ integer li_sts
 string ls_direction
 string ls_message_file
 
- DECLARE lsp_log_message PROCEDURE FOR dbo.sp_log_message  
-         @pl_subscription_id = :subscription_id,   
-         @ps_message_type = :message_type,   
-         @pl_message_size = :ll_message_size,   
-         @ps_status = :ls_status,
-			@ps_direction = :ls_direction,
-         @pl_message_id = :ll_message_id OUT
-USING cprdb;
+// DECLARE lsp_log_message PROCEDURE FOR dbo.sp_log_message  
+//         @pl_subscription_id = :subscription_id,   
+//         @ps_message_type = :message_type,   
+//         @pl_message_size = :ll_message_size,   
+//         @ps_status = :ls_status,
+//			@ps_direction = :ls_direction,
+//         @pl_message_id = :ll_message_id OUT
+//USING cprdb;
 
 ls_direction = "I"
 ll_message_size = filelength(ps_file)
@@ -134,13 +134,20 @@ IF Fileexists(ls_message_file) THEN
 	END IF
 END IF
 // First create the log record and get the message_id
-EXECUTE lsp_log_message;
+cprdb.sp_log_message   ( &
+         subscription_id,    &
+         message_type,    &
+         ll_message_size,    &
+         ls_status, &
+			ls_direction, &
+         ref ll_message_id );
+//EXECUTE lsp_log_message;
 if not cprdb.check() then return -1
 
-FETCH lsp_log_message INTO :ll_message_id;
-if not cprdb.check() then return -1
-
-CLOSE lsp_log_message;
+//FETCH lsp_log_message INTO :ll_message_id;
+//if not cprdb.check() then return -1
+//
+//CLOSE lsp_log_message;
 
 // Then save the message file in the log record
 UPDATEBLOB o_Message_Log

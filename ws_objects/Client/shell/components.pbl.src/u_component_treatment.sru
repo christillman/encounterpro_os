@@ -103,6 +103,7 @@ string comment_service = "OBSERVATION_COMMENT"
 string attachment_service = "EXTERNAL_SOURCE"
 
 end variables
+
 forward prototypes
 public function string description ()
 public subroutine get_descriptions ()
@@ -329,22 +330,31 @@ public function string bitmap ();return datalist.treatment_type_icon(treatment_t
 end function
 
 public function integer show_followup_treatments ();long ll_patient_workplan_id
+long ll_null
+string ls_null
+SetNull(ll_null)
+SetNull(ls_null)
 
- DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
-			@ps_cpr_id = :current_patient.cpr_id,
-			@pl_treatment_id = :treatment_id,
-			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
+// I converted this, but it doesn't do anything with the result ll_patient_workplan_id 
+
+// DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
+//			@ps_cpr_id = :current_patient.cpr_id,
+//			@pl_treatment_id = :treatment_id,
+//			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
 
 //Setredraw(false)
 //Reset()
-
-EXECUTE lsp_get_treatment_followup_workplan;
+SQLCA.sp_get_treatment_followup_workplan ( &
+			current_patient.cpr_id, &
+			treatment_id, ll_null, ls_null, ls_null, 'General', &
+			ref ll_patient_workplan_id);
+//EXECUTE lsp_get_treatment_followup_workplan;
 If Not tf_check() then Return -1
 
-FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
-If Not tf_check() then Return -1
-
-CLOSE lsp_get_treatment_followup_workplan;
+//FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
+//If Not tf_check() then Return -1
+//
+//CLOSE lsp_get_treatment_followup_workplan;
 
 If Not isnull(ll_patient_workplan_id) Then
 //	retrieve(current_patient.cpr_id,ll_patient_workplan_id)
@@ -925,21 +935,33 @@ public function integer do_autoperform_services ();/////////////////////////////
 // Modified By:															Modified On:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Long		ll_workplan_item_id
-
-DECLARE lsp_treatment_auto_perform_services PROCEDURE FOR dbo.sp_treatment_auto_perform_services
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_treatment_id = :treatment_id,
-			@ps_user_id = :current_user.user_id;
+Long		ll_workplan_item_id, ll_count
+u_ds_data lds 
 
 Setnull(ll_workplan_item_id)
-Execute lsp_treatment_auto_perform_services;
-If not tf_check() Then Return -1
 
-Fetch lsp_treatment_auto_perform_services into :ll_workplan_item_id;
-If not tf_check() Then Return -1
-Close lsp_treatment_auto_perform_services;
-If not tf_check() Then Return -1
+lds = CREATE u_ds_data
+lds.set_DataObject("dw_treatment_auto_perform_services")
+ll_count = lds.Retrieve(current_patient.cpr_id,    &
+         treatment_id, &
+			current_user.user_id)
+IF ll_count = 1 THEN
+	ll_workplan_item_id = lds.Object.workplan_item_id[1]
+END IF
+
+//DECLARE lsp_treatment_auto_perform_services PROCEDURE FOR dbo.sp_treatment_auto_perform_services
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_treatment_id = :treatment_id,
+//			@ps_user_id = :current_user.user_id;
+
+//Setnull(ll_workplan_item_id)
+//Execute lsp_treatment_auto_perform_services;
+//If not tf_check() Then Return -1
+
+//Fetch lsp_treatment_auto_perform_services into :ll_workplan_item_id;
+//If not tf_check() Then Return -1
+//Close lsp_treatment_auto_perform_services;
+//If not tf_check() Then Return -1
 If Not isnull(ll_workplan_item_id) Then 
 	service_list.do_service(ll_workplan_item_id,this)
 //	service_list.do_service(ll_workplan_item_id)
@@ -1224,9 +1246,9 @@ public function integer add_collection_result (long pl_observation_sequence, str
 integer li_sts
 integer li_result_sequence
 
-DECLARE lsp_add_default_collect_result PROCEDURE FOR dbo.sp_add_default_collect_result
-		@ps_observation_id = :ls_observation_id,
-		@pi_result_sequence = :li_result_sequence OUT;
+//DECLARE lsp_add_default_collect_result PROCEDURE FOR dbo.sp_add_default_collect_result
+//		@ps_observation_id = :ls_observation_id,
+//		@pi_result_sequence = :li_result_sequence OUT;
 
 ls_observation_id = get_observation_id(pl_observation_sequence)
 
@@ -1238,13 +1260,16 @@ AND result_type = 'COLLECT'
 AND status = 'OK';
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 or isnull(li_result_sequence) then
-	EXECUTE lsp_add_default_collect_result;
+	SQLCA.sp_add_default_collect_result ( &
+		ls_observation_id, &
+		ref li_result_sequence);
+//	EXECUTE lsp_add_default_collect_result;
 	if not tf_check() then return -1
 	
-	FETCH lsp_add_default_collect_result INTO :li_result_sequence;
-	if not tf_check() then return -1
-	
-	CLOSE lsp_add_default_collect_result;
+//	FETCH lsp_add_default_collect_result INTO :li_result_sequence;
+//	if not tf_check() then return -1
+//	
+//	CLOSE lsp_add_default_collect_result;
 end if
 
 li_sts = remove_results(pl_observation_sequence, li_result_sequence)
@@ -3062,14 +3087,14 @@ long ll_null
 setnull(ll_null)
 setnull(ldt_created)
 
- DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
-			@ps_cpr_id = :current_patient.cpr_id,
-			@pl_treatment_id = :treatment_id,
-			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
-			@ps_ordered_by = :current_user.user_id,
-			@ps_created_by = :current_scribe.user_id,
-			@ps_workplan_type = :ls_workplan_type,
-			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
+// DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
+//			@ps_cpr_id = :current_patient.cpr_id,
+//			@pl_treatment_id = :treatment_id,
+//			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
+//			@ps_ordered_by = :current_user.user_id,
+//			@ps_created_by = :current_scribe.user_id,
+//			@ps_workplan_type = :ls_workplan_type,
+//			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
 
 
 lc_followup_flag = datalist.treatment_type_followup_flag(treatment_type)
@@ -3080,14 +3105,21 @@ ElseIf lc_followup_flag = "R" Then
 End If
 	
 tf_begin_transaction(this, "add_followup_workplan()")
-
-EXECUTE lsp_get_treatment_followup_workplan;
+SQLCA.sp_get_treatment_followup_workplan ( &
+			current_patient.cpr_id, &
+			treatment_id, &
+			current_patient.open_encounter.encounter_id, &
+			current_user.user_id, &
+			current_scribe.user_id, &
+			ls_workplan_type, &
+			ref ll_patient_workplan_id);
+//EXECUTE lsp_get_treatment_followup_workplan;
 If Not tf_check() then Return -1
 
-FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
-If Not tf_check() then Return -1
-
-CLOSE lsp_get_treatment_followup_workplan;
+//FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
+//If Not tf_check() then Return -1
+//
+//CLOSE lsp_get_treatment_followup_workplan;
 
 If Not isnull(ll_patient_workplan_id) Then
 	ll_new_treatment_id = sqlca.sp_set_treatment_followup_workplan_item(current_patient.cpr_id, &
@@ -3150,9 +3182,9 @@ public function integer remove_collection_results (long pl_observation_sequence)
 integer li_sts
 integer li_result_sequence
 
-DECLARE lsp_add_default_collect_result PROCEDURE FOR dbo.sp_add_default_collect_result
-		@ps_observation_id = :ls_observation_id,
-		@pi_result_sequence = :li_result_sequence OUT;
+//DECLARE lsp_add_default_collect_result PROCEDURE FOR dbo.sp_add_default_collect_result
+//		@ps_observation_id = :ls_observation_id,
+//		@pi_result_sequence = :li_result_sequence OUT;
 
 ls_observation_id = get_observation_id(pl_observation_sequence)
 
@@ -3164,13 +3196,16 @@ AND result_type = 'COLLECT'
 AND status = 'OK';
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 or isnull(li_result_sequence) then
-	EXECUTE lsp_add_default_collect_result;
+	SQLCA.sp_add_default_collect_result ( &
+		ls_observation_id, &
+		ref li_result_sequence);
+//	EXECUTE lsp_add_default_collect_result;
 	if not tf_check() then return -1
 	
-	FETCH lsp_add_default_collect_result INTO :li_result_sequence;
-	if not tf_check() then return -1
-	
-	CLOSE lsp_add_default_collect_result;
+//	FETCH lsp_add_default_collect_result INTO :li_result_sequence;
+//	if not tf_check() then return -1
+//	
+//	CLOSE lsp_add_default_collect_result;
 end if
 
 li_sts = remove_results(pl_observation_sequence, li_result_sequence)

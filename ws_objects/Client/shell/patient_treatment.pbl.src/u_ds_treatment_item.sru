@@ -1398,15 +1398,15 @@ long ll_null
 setnull(ll_null)
 setnull(ldt_created)
 
- DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
-			@ps_cpr_id = :current_patient.cpr_id,
-			@pl_treatment_id = :pl_parent_treatment_id,
-			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
-			@ps_ordered_by = :current_user.user_id,
-			@ps_created_by = :current_scribe.user_id,
-			@ps_workplan_type = :ls_workplan_type,
-			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
-
+// DECLARE lsp_get_treatment_followup_workplan PROCEDURE FOR dbo.sp_get_treatment_followup_workplan
+//			@ps_cpr_id = :current_patient.cpr_id,
+//			@pl_treatment_id = :pl_parent_treatment_id,
+//			@pl_encounter_id = :current_patient.open_encounter.encounter_id,
+//			@ps_ordered_by = :current_user.user_id,
+//			@ps_created_by = :current_scribe.user_id,
+//			@ps_workplan_type = :ls_workplan_type,
+//			@pl_patient_workplan_id = :ll_patient_workplan_id OUT;
+//
 
 ls_parent_treatment_type = treatment_type(pl_parent_treatment_id)
 if isnull(ls_parent_treatment_type) then
@@ -1423,13 +1423,21 @@ End If
 	
 tf_begin_transaction(this, "add_followup_workplan()")
 
-EXECUTE lsp_get_treatment_followup_workplan;
+SQLCA.sp_get_treatment_followup_workplan ( &
+			current_patient.cpr_id, &
+			pl_parent_treatment_id, &
+			current_patient.open_encounter.encounter_id, &
+			current_user.user_id, &
+			current_scribe.user_id, &
+			ls_workplan_type, &
+			ref ll_patient_workplan_id);
+//EXECUTE lsp_get_treatment_followup_workplan;
 If Not tf_check() then Return -1
-
-FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
-If Not tf_check() then Return -1
-
-CLOSE lsp_get_treatment_followup_workplan;
+//
+//FETCH lsp_get_treatment_followup_workplan INTO :ll_patient_workplan_id;
+//If Not tf_check() then Return -1
+//
+//CLOSE lsp_get_treatment_followup_workplan;
 
 If Not isnull(ll_patient_workplan_id) Then
 	ll_new_treatment_id = sqlca.sp_set_treatment_followup_workplan_item( &
@@ -1508,33 +1516,45 @@ public function integer do_autoperform_services (long pl_treatment_id);/////////
 // Modified By:															Modified On:
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Long		ll_patient_workplan_item_id
 string ls_service
+Long		ll_workplan_item_id, ll_count
+u_ds_data lds 
 
-DECLARE lsp_treatment_auto_perform_services PROCEDURE FOR dbo.sp_treatment_auto_perform_services
-         @ps_cpr_id = :current_patient.cpr_id,   
-         @pl_treatment_id = :pl_treatment_id,
-			@ps_user_id = :current_user.user_id;
+Setnull(ll_workplan_item_id)
 
-Setnull(ll_patient_workplan_item_id)
-Execute lsp_treatment_auto_perform_services;
-If not tf_check() Then Return -1
+lds = CREATE u_ds_data
+lds.set_DataObject("dw_treatment_auto_perform_services")
+ll_count = lds.Retrieve(current_patient.cpr_id,    &
+         pl_treatment_id, &
+			current_user.user_id)
+IF ll_count = 1 THEN
+	ll_workplan_item_id = lds.Object.workplan_item_id[1]
+END IF
 
-Fetch lsp_treatment_auto_perform_services into :ll_patient_workplan_item_id;
-If not tf_check() Then Return -1
-Close lsp_treatment_auto_perform_services;
-If not tf_check() Then Return -1
+//DECLARE lsp_treatment_auto_perform_services PROCEDURE FOR dbo.sp_treatment_auto_perform_services
+//         @ps_cpr_id = :current_patient.cpr_id,   
+//         @pl_treatment_id = :pl_treatment_id,
+//			@ps_user_id = :current_user.user_id;
+//
+//Setnull(ll_patient_workplan_item_id)
+//Execute lsp_treatment_auto_perform_services;
+//If not tf_check() Then Return -1
 
-If Not isnull(ll_patient_workplan_item_id) Then
+//Fetch lsp_treatment_auto_perform_services into :ll_patient_workplan_item_id;
+//If not tf_check() Then Return -1
+//Close lsp_treatment_auto_perform_services;
+//If not tf_check() Then Return -1
+
+If Not isnull(ll_workplan_item_id) Then
 	// Make sure the user is authorized to perform this service
 	SELECT ordered_service
 	INTO :ls_service
 	FROM p_Patient_WP_Item
-	WHERE patient_workplan_item_id = :ll_patient_workplan_item_id;
+	WHERE patient_workplan_item_id = :ll_workplan_item_id;
 	if not tf_check() then return -1
 	
 	if user_list.is_user_authorized(current_user.user_id, ls_service, "Treatment") then
-		service_list.do_service(ll_patient_workplan_item_id)
+		service_list.do_service(ll_workplan_item_id)
 	end if
 End If
 

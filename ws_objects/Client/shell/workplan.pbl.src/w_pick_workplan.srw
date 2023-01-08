@@ -722,12 +722,12 @@ long ll_workplan_id
 string ls_description
 string ls_treatment_type
 
- DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
-         @ps_workplan_type = :dw_workplans.workplan_type,   
-			@ps_treatment_type = :ls_treatment_type,
-			@ps_in_office_flag = :dw_workplans.in_office_flag,
-         @ps_description = :ls_description,   
-         @pl_workplan_id = :ll_workplan_id OUT ;
+// DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
+//         @ps_workplan_type = :dw_workplans.workplan_type,   
+//			@ps_treatment_type = :ls_treatment_type,
+//			@ps_in_office_flag = :dw_workplans.in_office_flag,
+//         @ps_description = :ls_description,   
+//         @pl_workplan_id = :ll_workplan_id OUT ;
 
 if isnull(dw_workplans.treatment_type) and dw_workplans.workplan_type = 'Treatment' then
 	popup.dataobject = "dw_treatment_type_edit_list"
@@ -750,13 +750,19 @@ if popup_return.item_count <> 1 then return
 
 ls_description = popup_return.items[1]
 
-EXECUTE lsp_new_workplan;
+SQLCA.sp_new_workplan   ( &
+         dw_workplans.workplan_type,    &
+			ls_treatment_type, &
+			dw_workplans.in_office_flag, &
+         ls_description,    &
+         ref ll_workplan_id );
+//EXECUTE lsp_new_workplan;
 if not tf_check() then return
 
-FETCH lsp_new_workplan INTO :ll_workplan_id;
-if not tf_check() then return
-
-CLOSE lsp_new_workplan;
+//FETCH lsp_new_workplan INTO :ll_workplan_id;
+//if not tf_check() then return
+//
+//CLOSE lsp_new_workplan;
 
 
 popup.data_row_count = 1

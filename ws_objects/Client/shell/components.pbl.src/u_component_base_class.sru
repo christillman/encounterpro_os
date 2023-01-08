@@ -667,20 +667,23 @@ end function
 
 public function long next_component_counter (string ps_counter_name);long ll_next_counter
 
-DECLARE lsp_get_next_component_counter PROCEDURE FOR dbo.sp_get_next_component_counter  
-         @ps_component_id = :component_id,   
-         @ps_attribute = :ps_counter_name,   
-         @pl_next_counter = :ll_next_counter OUT
-USING cprdb;
+//DECLARE lsp_get_next_component_counter PROCEDURE FOR dbo.sp_get_next_component_counter  
+//         @ps_component_id = :component_id,   
+//         @ps_attribute = :ps_counter_name,   
+//         @pl_next_counter = :ll_next_counter OUT
+//USING cprdb;
 
-
-EXECUTE lsp_get_next_component_counter;
+cprdb.sp_get_next_component_counter( &
+         component_id,    &
+         ps_counter_name,    &
+         ref ll_next_counter) ;
+//EXECUTE lsp_get_next_component_counter;
 if not cprdb.check() then return -1
 
-FETCH lsp_get_next_component_counter INTO :ll_next_counter;
-if not cprdb.check() then return -1
-
-CLOSE lsp_get_next_component_counter;
+//FETCH lsp_get_next_component_counter INTO :ll_next_counter;
+//if not cprdb.check() then return -1
+//
+//CLOSE lsp_get_next_component_counter;
 
 return ll_next_counter
 

@@ -58,13 +58,13 @@ end prototypes
 
 public function integer delete_material (long pl_row);long ll_material_id
 
- DECLARE lsp_delete_patient_material PROCEDURE FOR dbo.sp_delete_patient_material
-         @pl_material_id = :ll_material_id  ;
+// DECLARE lsp_delete_patient_material PROCEDURE FOR dbo.sp_delete_patient_material
+//         @pl_material_id = :ll_material_id  ;
 
 
 ll_material_id = object.material_id[pl_row]
-
-EXECUTE lsp_delete_patient_material;
+SQLCA.sp_delete_patient_material(ll_material_id);
+//EXECUTE lsp_delete_patient_material;
 If Not tf_check() Then Return -1
 
 Return 1

@@ -270,18 +270,22 @@ end subroutine
 
 public function integer count_encounters (string ps_office_id, datetime pdt_encounter_date);integer li_patient_count
 
- DECLARE lsp_count_who_came_office PROCEDURE FOR dbo.sp_count_who_came_office
- 			@ps_office_id = :ps_office_id,
-         @pdt_date = :pdt_encounter_date,
-         @pi_count = :li_patient_count OUT ;
+sqlca.sp_count_who_came_office(ps_office_id, pdt_encounter_date, ref li_patient_count)
 
-EXECUTE lsp_count_who_came_office;
+//
+// DECLARE lsp_count_who_came_office PROCEDURE FOR dbo.sp_count_who_came_office
+// 			@ps_office_id = :ps_office_id,
+//         @pdt_date = :pdt_encounter_date,
+//         @pi_count = :li_patient_count OUTPUT;
+//
+//EXECUTE lsp_count_who_came_office;
+//
 if not tf_check() then return -1
+//
+//FETCH lsp_count_who_came_office INTO :li_patient_count;
+//if not tf_check() then return -1
 
-FETCH lsp_count_who_came_office INTO :li_patient_count;
-if not tf_check() then return -1
-
-CLOSE lsp_count_who_came_office;
+// CLOSE lsp_count_who_came_office;
 
 return li_patient_count
 

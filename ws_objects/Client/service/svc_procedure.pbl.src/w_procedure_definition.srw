@@ -82,7 +82,6 @@ end forward
 
 global type w_procedure_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -178,22 +177,23 @@ long ll_next_key
 integer li_sts
 string ls_location_domain
 
- DECLARE lsp_new_location_domain PROCEDURE FOR dbo.sp_new_location_domain  
-         @ps_location_domain = :ls_location_domain OUT,   
-         @ps_description = :popup_return.item  ;
-
+// DECLARE lsp_new_location_domain PROCEDURE FOR dbo.sp_new_location_domain  
+//         @ps_location_domain = :ls_location_domain OUT,   
+//         @ps_description = :popup_return.item  ;
+//
 popup.item = "Enter New Location Domain:"
 openwithparm(w_pop_get_string, popup)
 popup_return = message.powerobjectparm
 if isnull(popup_return.item) or popup_return.item = "" then return
 
-EXECUTE lsp_new_location_domain;
+sqlca.sp_new_location_domain(ref ls_location_domain, popup_return.item);
+//EXECUTE lsp_new_location_domain;
 if not tf_check() then return
 
-FETCH lsp_new_location_domain INTO :ls_location_domain;
-if not tf_check() then return
+//FETCH lsp_new_location_domain INTO :ls_location_domain;
+//if not tf_check() then return
 
-CLOSE lsp_new_location_domain;
+//CLOSE lsp_new_location_domain;
 
 //changed = true
 location_domain = ls_location_domain

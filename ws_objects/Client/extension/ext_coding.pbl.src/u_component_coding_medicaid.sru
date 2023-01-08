@@ -118,14 +118,14 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_procedures_by_age_range_list_id")
 
 
-DECLARE lsp_set_assmnt_charge_billing PROCEDURE FOR dbo.sp_set_assmnt_charge_billing
-			@ps_cpr_id = :cpr_id,
-			@pl_encounter_id = :encounter_id,
-			@pl_problem_id = :ll_problem_id,
-			@pl_encounter_charge_id = :lla_unbilled_charges[i],
-			@ps_bill_flag = 'Y',
-			@ps_created_by = :current_scribe.user_id
-	USING cprdb;
+//DECLARE lsp_set_assmnt_charge_billing PROCEDURE FOR dbo.sp_set_assmnt_charge_billing
+//			@ps_cpr_id = :cpr_id,
+//			@pl_encounter_id = :encounter_id,
+//			@pl_problem_id = :ll_problem_id,
+//			@pl_encounter_charge_id = :lla_unbilled_charges[i],
+//			@ps_bill_flag = 'Y',
+//			@ps_created_by = :current_scribe.user_id
+//	USING cprdb;
 
 setnull(ll_problem_id)
 li_codes = 0
@@ -173,7 +173,14 @@ if is_billed("SICK") then
 	// a billed diagnosis.  Find them and attach them to the first sick diagnosis.
 	li_count = get_unbilled_charges(lla_unbilled_charges)
 	for i = 1 to li_count
-		EXECUTE lsp_set_assmnt_charge_billing;
+		cprdb.sp_set_assmnt_charge_billing ( &
+			cpr_id, &
+			encounter_id, &
+			ll_problem_id, &
+			lla_unbilled_charges[i], &
+			'Y', &
+			current_scribe.user_id );
+//		EXECUTE lsp_set_assmnt_charge_billing;
 		if not cprdb.check() then return -1
 	next
 

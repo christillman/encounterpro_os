@@ -534,11 +534,11 @@ datetime ld_scheduledatetime
 string ls_drive,ls_directory,ls_inifilename,ls_iniextension
 string ls_batch_billing,ls_billable_provider
 
-DECLARE lsp_get_billable_provider PROCEDURE FOR sp_get_billable_provider
-		@ps_attending_doctor = :is_attending_doctor,
-		@ps_supervising_doctor = :is_supervising_doctor,
-		@ps_primary_provider_id = :ls_primary_provider,
-		@ps_billable_provider = :ls_billable_provider OUT Using Sqlca;
+//DECLARE lsp_get_billable_provider PROCEDURE FOR .sp_get_billable_provider
+//		@ps_attending_doctor = :is_attending_doctor,
+//		@ps_supervising_doctor = :is_supervising_doctor,
+//		@ps_primary_provider_id = :ls_primary_provider,
+//		@ps_billable_provider = :ls_billable_provider OUT Using Sqlca;
 
 ls_encounter_id = string(pl_encounter_id)
 setnull(ls_nullcheck)
@@ -697,12 +697,17 @@ end if
 if isnull(ls_patient_class) then ls_patient_class = ""
 
 // Get the billable Provider
-EXECUTE lsp_get_billable_provider;
+SQLCA.sp_get_billable_provider ( &
+		is_attending_doctor, &
+		is_supervising_doctor, &
+		ls_primary_provider, &
+		ref ls_billable_provider);
+//EXECUTE lsp_get_billable_provider;
 if not tf_check() then return -1
-FETCH lsp_get_billable_provider INTO :ls_billable_provider;
-if not tf_check() then return -1
-CLOSE lsp_get_billable_provider;
-if not tf_check() then return -1
+//FETCH lsp_get_billable_provider INTO :ls_billable_provider;
+//if not tf_check() then return -1
+//CLOSE lsp_get_billable_provider;
+//if not tf_check() then return -1
 
 IF isnull(ls_billable_provider) THEN 
 	log.log(this, "u_component_billing_encounterpro.xx_post_other:0209", "BILLING FAILED.Attending doctor ("+is_attending_doctor+" ) for patient("+ps_cpr_id+"," + string(pl_encounter_id)+"  dont have valid billing code and he also dont have valid supervisor's billing code.", 4)

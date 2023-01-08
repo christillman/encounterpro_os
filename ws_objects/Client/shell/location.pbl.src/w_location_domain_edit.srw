@@ -25,11 +25,7 @@ end type
 end forward
 
 global type w_location_domain_edit from w_window_base
-integer x = 0
-integer y = 0
-integer height = 1832
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -308,9 +304,14 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_location_domain_edit
 end type
 
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_location_domain_edit
+end type
+
 type pb_done from u_picture_button within w_location_domain_edit
 integer x = 2569
 integer y = 1556
+integer width = 256
+integer height = 224
 integer taborder = 70
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -323,21 +324,21 @@ integer li_sort_sequence
 string ls_diffuse_flag
 dwItemStatus le_status
 
- DECLARE lsp_new_location PROCEDURE FOR dbo.sp_new_location  
-         @ps_location = :ls_location,   
-         @ps_location_domain = :location_domain,   
-         @ps_description = :ls_description,   
-         @pi_sort_sequence = :li_sort_sequence,   
-         @ps_diffuse_flag = :ls_diffuse_flag  ;
-
- DECLARE lsp_update_location PROCEDURE FOR dbo.sp_update_location  
-         @ps_location = :ls_location,   
-         @pi_sort_sequence = :li_sort_sequence,   
-         @ps_diffuse_flag = :ls_diffuse_flag  ;
-
- DECLARE lsp_delete_location PROCEDURE FOR dbo.sp_delete_location  
-         @ps_location = :ls_location  ;
-
+// DECLARE lsp_new_location PROCEDURE FOR dbo.sp_new_location  
+//         @ps_location = :ls_location,   
+//         @ps_location_domain = :location_domain,   
+//         @ps_description = :ls_description,   
+//         @pi_sort_sequence = :li_sort_sequence,   
+//         @ps_diffuse_flag = :ls_diffuse_flag  ;
+//
+// DECLARE lsp_update_location PROCEDURE FOR dbo.sp_update_location  
+//         @ps_location = :ls_location,   
+//         @pi_sort_sequence = :li_sort_sequence,   
+//         @ps_diffuse_flag = :ls_diffuse_flag  ;
+//
+// DECLARE lsp_delete_location PROCEDURE FOR dbo.sp_delete_location  
+//         @ps_location = :ls_location  ;
+//
 
 for i = 1 to dw_location.rowcount()
 	le_status = dw_location.getitemstatus(i, 0, primary!)
@@ -346,14 +347,24 @@ for i = 1 to dw_location.rowcount()
 			ls_location = dw_location.object.location[i]
 			li_sort_sequence = dw_location.object.sort_sequence[i]
 			ls_diffuse_flag = dw_location.object.diffuse_flag[i]
-			EXECUTE lsp_update_location;
+			sqlca.sp_update_location ( &
+         	ls_location, &
+         	li_sort_sequence, &
+         	ls_diffuse_flag ) ;
+//			EXECUTE lsp_update_location;
 			if not tf_check() then return
 		CASE NewModified!
 			ls_location = dw_location.object.location[i]
 			ls_description = dw_location.object.description[i]
 			li_sort_sequence = dw_location.object.sort_sequence[i]
 			ls_diffuse_flag = dw_location.object.diffuse_flag[i]
-			EXECUTE lsp_new_location;
+			sqlca.sp_new_location ( &
+				ls_location, &
+				location_domain, &
+				ls_description, &
+				li_sort_sequence, &
+				ls_diffuse_flag ) ;
+//			EXECUTE lsp_new_location;
 			if not tf_check() then return
 	END CHOOSE
 next
@@ -362,7 +373,8 @@ for i = 1 to dw_location.deletedcount()
 	le_status = dw_location.getitemstatus(i, 0, delete!)
 	if le_status = NotModified! or le_status = DataModified! then
 		ls_location = dw_location.object.location.Delete.original[i]
-		EXECUTE lsp_delete_location;
+		sqlca.sp_delete_location(ls_location);
+//		EXECUTE lsp_delete_location;
 		if not tf_check() then return
 	end if
 next
@@ -375,6 +387,8 @@ end event
 type pb_cancel from u_picture_button within w_location_domain_edit
 integer x = 82
 integer y = 1552
+integer width = 256
+integer height = 224
 integer taborder = 80
 boolean bringtotop = true
 boolean cancel = true
@@ -546,6 +560,8 @@ end event
 type pb_1 from u_pb_help_button within w_location_domain_edit
 integer x = 2231
 integer y = 1612
+integer width = 256
+integer height = 128
 integer taborder = 20
 boolean bringtotop = true
 end type

@@ -536,6 +536,8 @@ type pb_done from u_picture_button within w_svc_config_workplans
 event clicked pbm_bnclicked
 integer x = 2569
 integer y = 1496
+integer width = 256
+integer height = 224
 integer taborder = 80
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -645,13 +647,13 @@ long ll_workplan_id
 string ls_description
 string ls_treatment_type
 
- DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
-         @ps_workplan_type = :dw_workplans.workplan_type,   
-			@ps_treatment_type = :ls_treatment_type,
-			@ps_in_office_flag = :dw_workplans.in_office_flag,
-         @ps_description = :ls_description,   
-         @pl_workplan_id = :ll_workplan_id OUT ;
-
+// DECLARE lsp_new_workplan PROCEDURE FOR dbo.sp_new_workplan  
+//         @ps_workplan_type = :dw_workplans.workplan_type,   
+//			@ps_treatment_type = :ls_treatment_type,
+//			@ps_in_office_flag = :dw_workplans.in_office_flag,
+//         @ps_description = :ls_description,   
+//         @pl_workplan_id = :ll_workplan_id OUT ;
+//
 if isnull(dw_workplans.treatment_type) and dw_workplans.workplan_type = 'Treatment' then
 	popup.dataobject = "dw_treatment_type_edit_list"
 	popup.datacolumn = 2
@@ -673,14 +675,20 @@ if popup_return.item_count <> 1 then return
 
 ls_description = popup_return.items[1]
 
-EXECUTE lsp_new_workplan;
+sqlca.sp_new_workplan ( &
+         dw_workplans.workplan_type, &
+			ls_treatment_type, &
+			dw_workplans.in_office_flag, &
+         ls_description, &
+        	ref ll_workplan_id );
+//EXECUTE lsp_new_workplan;
 if not tf_check() then return
 
-FETCH lsp_new_workplan INTO :ll_workplan_id;
-if not tf_check() then return
-
-CLOSE lsp_new_workplan;
-
+//FETCH lsp_new_workplan INTO :ll_workplan_id;
+//if not tf_check() then return
+//
+//CLOSE lsp_new_workplan;
+//
 
 popup.data_row_count = 1
 popup.items[1] = string(ll_workplan_id)
