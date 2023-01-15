@@ -687,11 +687,6 @@ end function
 
 public subroutine logoff (boolean pb_shutting_down);string ls_services_waiting
 
-// DECLARE lsp_primary_service_check PROCEDURE FOR dbo.sp_primary_service_check  
-//         @ps_room_id = :viewed_room.room_id,   
-//         @ps_user_id = :user_id,   
-//         @ps_services_waiting = :ls_services_waiting OUT ;
-//
 // DECLARE lsp_user_logoff PROCEDURE FOR dbo.sp_user_logoff  
 //         @ps_user_id = :user_id,
 //			@pl_computer_id = :gnv_app.computer_id;
@@ -730,12 +725,8 @@ if IsValid(main_window) and not pb_shutting_down then
 		viewed_room = current_room
 	else
 		if not isnull(viewed_room) then
-			SQLCA.sp_primary_service_check   ( &
-         viewed_room.room_id,    &
-         user_id,    &
-         ref ls_services_waiting );
-			if not tf_check() then return
-			if ls_services_waiting <> "Y" then viewed_room = current_room
+			// Previous reference to sp_primary_service_check
+			// Removed, there is no longer an o_Patients table
 		else
 			viewed_room = current_room
 		end if
