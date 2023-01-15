@@ -89,7 +89,6 @@ FUNCTION long	 jmj_upload_params(string ps_id) RPCFUNC ALIAS FOR "dbo.jmj_upload
 function long jmjsys_daily_sync() RPCFUNC ALIAS FOR "dbo.jmjsys_daily_sync"
 function long jmjsys_upgrade_mod_level(long pl_modification_level) RPCFUNC ALIAS FOR "dbo.jmjsys_upgrade_mod_level"
 
-
 FUNCTION long sp_new_display_script_command(long pl_display_script_id, string ps_context_object, string ps_display_command, long pl_sort_sequence, string ps_status) RPCFUNC ALIAS FOR "dbo.sp_new_display_script_command"
 
 // Find patient cpr_id from 3rd party ID
@@ -556,7 +555,6 @@ FUNCTION long sp_pick_service(string ps_context_object) RPCFUNC ALIAS FOR "dbo.s
 FUNCTION long sp_post_assessments(string ps_cpr_id, long pl_encounter_id) RPCFUNC ALIAS FOR "dbo.sp_post_assessments"
 FUNCTION long sp_post_billing() RPCFUNC ALIAS FOR "dbo.sp_post_billing"
 FUNCTION long sp_post_encounter_note(string ps_cpr_id, long pl_patient_workplan_id, long pl_encounter_id, string ps_encounter_note, string ps_ordered_by, string ps_ordered_for, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_post_encounter_note"
-FUNCTION long sp_primary_service_check(string ps_room_id, string ps_user_id, ref string ps_services_waiting) RPCFUNC ALIAS FOR "dbo.sp_primary_service_check"
 FUNCTION long sp_procedure_search(string ps_procedure_type, string ps_procedure_category_id, string ps_description, string ps_cpt_code, string ps_specialty_id, string ps_status) RPCFUNC ALIAS FOR "dbo.sp_procedure_search"
 FUNCTION long sp_purge_messages(datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_purge_messages"
 FUNCTION long sp_queue_encounter_report(string ps_cpr_id, long pl_encounter_id, string ps_report_type) RPCFUNC ALIAS FOR "dbo.sp_queue_encounter_report"
@@ -823,13 +821,13 @@ public function string fn_patient_object_progress_value_old (string ps_cpr_id, s
 public function string sysapp (boolean pb_old)
 public function integer set_database (string ps_database)
 public function string temp_proc_name ()
-private subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
 private subroutine execute_sql_script (string ps_string, ref str_sql_script_status pstr_status)
 public function integer upgrade_database ()
 public function string who_called (powerobject po_caller_object)
 public function long upgrade_material_id (ref string as_filename)
 public function long load_schema_file (string ps_rootpath, long pl_modification_level, ref string as_filename)
 public function string fn_strength (string ps_form_rxcui)
+public subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -1205,10 +1203,9 @@ CHOOSE CASE ls_dbms
 		dbParm += ",DBTextLimit='32000'"
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
 	CASE "ODB" // "ODBC Driver 17 for SQL Server"
-		// "ConnectString='Driver={ODBC Driver 13 for SQL Server};QuotedId=No;TrustServerCertificate=Yes;Encrypt=Yes;Trusted_Connection=Yes;SERVER=" + SQLCA.ServerName + ";'"
-		// dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};Trusted_Connection=Yes;SERVER=" + ServerName + ";'"
-		dbparm += "ConnectString='DSN=EncounterPro_OS',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_ON';"
-		//dbparm += "Database='" + ps_dbname + "'"
+		dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
+		//dbparm += "ConnectString='DSN=EncounterPro_OS',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_ON';"
+		dbparm += "Database='" + ps_dbname + "'"
 		dbparm += "AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
 	CASE "OLE"
@@ -1243,7 +1240,6 @@ if not connected and windows_authentication then
 		CASE "MSS"
 			dbparm = ls_dbparm + ",Secure=1"
 		CASE "ODB"
-			dbparm = ls_dbparm + ",TrustedConnection=1"
 		CASE "OLE"
 			dbparm = ls_dbparm + ",IntegratedSecurity='SSPI'"
 		CASE "SNC"
@@ -3612,90 +3608,6 @@ return ls_procname
 
 end function
 
-private subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status);integer li_sts
-string ls_error
-datetime ldt_now
-str_scripts lstr_scripts
-long i
-string ls_err_mes
-blob lbl_script
-string ls_completion_status
-long ll_error_index
-integer li_please_wait_index
-
-setnull(ls_error)
-setnull(ll_error_index)
-
-pstr_status = f_empty_sql_script_status()
-
-ls_completion_status = "OK"
-
-ldt_now = datetime(today(), now())
-
-////////////////////////////////////////////
-// Perform "always available" substitutions
-////////////////////////////////////////////
-
-// If the script contains a reference to "jmjtech.epro_40_synch.", then
-// substitute the actual remote server and database names
-ps_string = f_string_substitute(ps_string, "jmjtech.epro_40_synch.", remote_server + "." + remote_database + ".")
-
-
-
-///////////////////////////////////////////////
-// Parse the script and execute each GO-Block 
-//////////////////////////////////////////////
-
-lstr_scripts = parse_script(ps_string)
-
-for i = 1 to lstr_scripts.script_count
-	CHOOSE CASE lower(lstr_scripts.script[i].script_type)
-		CASE "sql"
-			if pos(lstr_scripts.script[i].script, "tr_Patient_WP_Item_Update") > 0 then
-				ls_error = lstr_scripts.script[i].script
-				ls_error = lstr_scripts.script[i].script
-			end if
-			
-			EXECUTE IMMEDIATE :lstr_scripts.script[i].script USING this ;
-			if sqlcode < 0 then
-				// sqldbcode = 999 and sqlcode = -1 means that a "Print" statement was executed
-				if sqldbcode = 999 and sqlcode = -1 then
-					deadlock = false
-				else
-					ls_error = sqlerrtext
-					ls_completion_status = "Error"
-					ll_error_index = i
-					ls_err_mes = "Error Executing SQL Statement:~r~n"
-					ls_err_mes += lstr_scripts.script[i].script + "~r~n" 
-					ls_err_mes += "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
-					if pb_abort_on_error then
-						exit
-					else
-						// Log a warning but continue
-						log.log(this, "u_sqlca.execute_sql_script:0061", ls_err_mes, 3)
-					end if
-				end if
-			else
-				deadlock = false
-			end if
-		CASE ELSE
-			log.log(this, "u_sqlca.execute_sql_script:0068", "Invalid script_type (" + lstr_scripts.script[i].script_type + ")", 3)
-	END CHOOSE
-next
-
-if isnull(ll_error_index) then
-	pstr_status.status = 1
-else
-	pstr_status.status = -1
-	pstr_status.error_index = ll_error_index
-	pstr_status.error_message = ls_error
-end if
-
-return
-
-
-end subroutine
-
 private subroutine execute_sql_script (string ps_string, ref str_sql_script_status pstr_status);execute_sql_script(ps_string, true, pstr_status)
 
 
@@ -4022,6 +3934,90 @@ if not check() then return ls_null
 return ls_return
 
 end function
+
+public subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status);integer li_sts
+string ls_error
+datetime ldt_now
+str_scripts lstr_scripts
+long i
+string ls_err_mes
+blob lbl_script
+string ls_completion_status
+long ll_error_index
+integer li_please_wait_index
+
+setnull(ls_error)
+setnull(ll_error_index)
+
+pstr_status = f_empty_sql_script_status()
+
+ls_completion_status = "OK"
+
+ldt_now = datetime(today(), now())
+
+////////////////////////////////////////////
+// Perform "always available" substitutions
+////////////////////////////////////////////
+
+// If the script contains a reference to "jmjtech.epro_40_synch.", then
+// substitute the actual remote server and database names
+ps_string = f_string_substitute(ps_string, "jmjtech.epro_40_synch.", remote_server + "." + remote_database + ".")
+
+
+
+///////////////////////////////////////////////
+// Parse the script and execute each GO-Block 
+//////////////////////////////////////////////
+
+lstr_scripts = parse_script(ps_string)
+
+for i = 1 to lstr_scripts.script_count
+	CHOOSE CASE lower(lstr_scripts.script[i].script_type)
+		CASE "sql"
+			if pos(lstr_scripts.script[i].script, "tr_Patient_WP_Item_Update") > 0 then
+				ls_error = lstr_scripts.script[i].script
+				ls_error = lstr_scripts.script[i].script
+			end if
+			
+			EXECUTE IMMEDIATE :lstr_scripts.script[i].script USING this ;
+			if sqlcode < 0 then
+				// sqldbcode = 999 and sqlcode = -1 means that a "Print" statement was executed
+				if sqldbcode = 999 and sqlcode = -1 then
+					deadlock = false
+				else
+					ls_error = sqlerrtext
+					ls_completion_status = "Error"
+					ll_error_index = i
+					ls_err_mes = "Error Executing SQL Statement:~r~n"
+					ls_err_mes += lstr_scripts.script[i].script + "~r~n" 
+					ls_err_mes += "SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
+					if pb_abort_on_error then
+						exit
+					else
+						// Log a warning but continue
+						log.log(this, "u_sqlca.execute_sql_script:0061", ls_err_mes, 3)
+					end if
+				end if
+			else
+				deadlock = false
+			end if
+		CASE ELSE
+			log.log(this, "u_sqlca.execute_sql_script:0068", "Invalid script_type (" + lstr_scripts.script[i].script_type + ")", 3)
+	END CHOOSE
+next
+
+if isnull(ll_error_index) then
+	pstr_status.status = 1
+else
+	pstr_status.status = -1
+	pstr_status.error_index = ll_error_index
+	pstr_status.error_message = ls_error
+end if
+
+return
+
+
+end subroutine
 
 event constructor;
 deadlock = false
