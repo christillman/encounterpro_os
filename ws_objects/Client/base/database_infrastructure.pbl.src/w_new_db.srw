@@ -246,7 +246,8 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
-string text = "MSS"
+boolean enabled = false
+string text = "ODBC Driver 17 for SQL Server"
 end type
 
 type st_office_title from statictext within w_new_db
