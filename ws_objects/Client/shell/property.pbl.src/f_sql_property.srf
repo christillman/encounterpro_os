@@ -14,11 +14,12 @@ datetime ldt_string_result
 string ls_font_settings
 str_property_value lstr_property_value
 str_font_settings lstr_font_settings
+u_ds_data ldw_exec
 
 lstr_property_value = f_empty_property_value()
 
 ls_sql = pstr_property.script
-
+ 
 if pos(ls_sql, "%") > 0 then
 	// First substitute the cpr_id
 	if len(ps_cpr_id) > 0 then
@@ -45,6 +46,45 @@ if pos(ls_sql, "%") > 0 then
 	ls_sql = f_string_substitute_attributes(ls_sql, pstr_attributes)
 end if
 
+// ODBC Driver 17 does not support SQLSA / SQLDA "syntax error WHERE CURRENT"
+// So, implement two substitutes, one for a NUMBER data type and one for STRING
+// These are the only two return_data_type in c_property currently for "SQL" property_type
+// If we get something else, log it
+
+IF NOT (lower(pstr_property.return_data_type) = "string" &
+		OR lower(pstr_property.return_data_type) = "number" &
+		OR lower(pstr_property.return_data_type) = "datetime") THEN
+	log.log(po_null, "f_sql_property:0049", "ODBC Driver 17 not supported (" + ps_cpr_id + ", " + ps_object_key + ", " + pstr_property.property_name + ", " + string(pstr_property.property_id) + ")", 4)
+	return lstr_property_value
+END IF
+
+CHOOSE CASE lower(pstr_property.return_data_type)
+	CASE "string"
+		ldw_exec = CREATE u_ds_data
+		ldw_exec.set_dataobject("dw_sp_exec_ansi_return_string")
+		ldw_exec.retrieve(ls_sql)
+		lstr_property_value.value = ldw_exec.Object.return_string[1]
+	CASE "number"
+		ldw_exec = CREATE u_ds_data
+		ldw_exec.set_dataobject("dw_sp_exec_ansi_return_number")
+		ldw_exec.retrieve(ls_sql)
+		lstr_property_value.value = ldw_exec.Object.return_number[1]
+	CASE "datetime"
+		ldw_exec = CREATE u_ds_data
+		ldw_exec.set_dataobject("dw_sp_exec_ansi_return_datetime")
+		ldw_exec.retrieve(ls_sql)
+		lstr_property_value.value = ldw_exec.Object.return_datetime[1]
+END CHOOSE
+
+return lstr_property_value
+
+
+
+
+// ODBC Driver 17 does not support SQLSA / SQLDA "syntax error WHERE CURRENT"
+// return empty object, and log the script that was asked for
+log.log(po_null, "f_sql_property:0057", "ODBC Driver 17 not supported (" + ps_cpr_id + ", " + ps_object_key + ", " + pstr_property.property_name + ", " + string(pstr_property.property_id) + ")", 2)
+			
 
 PREPARE SQLSA FROM :ls_sql ;
 if not tf_check() then return lstr_property_value
