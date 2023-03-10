@@ -958,6 +958,8 @@ end function
 
 public function integer dbconnect (string ps_appname);string ls_dbserver
 string ls_dbname
+string ls_logid
+string ls_logpass
 string ls_dbms
 integer li_sts
 
@@ -986,20 +988,25 @@ else
 			log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 			return -1
 		end if
-	end if
+		
+		ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "")
+		ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "")
+end if
 	
 	
-	ls_dbms = "ODBC"
-	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
-	if ls_dbserver = "" then
-		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-		return -1
-	end if
+	ls_dbms = "SNC"
+//	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
+//	if ls_dbserver = "" then
+//		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+//		return -1
+//	end if
 end if
 
-
-return dbconnect(ls_dbserver, ls_dbname, ls_dbms, ps_appname)
-
+if len(ls_logid) > 0 and len(ls_logpass) > 0 then
+	return dbconnect(ls_dbserver, ls_dbname, ls_dbms, ps_appname, ls_logid, ls_logpass)
+else
+	return dbconnect(ls_dbserver, ls_dbname, ls_dbms, ps_appname)
+end if
 end function
 
 public function string error_message ();string ls_string
@@ -1203,8 +1210,8 @@ CHOOSE CASE ls_dbms
 		dbParm += ",DBTextLimit='32000'"
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
 	CASE "ODB" // "ODBC Driver 17 for SQL Server"
-		dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
-		//dbparm += "ConnectString='DSN=EncounterPro_OS',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_ON';"
+		//dbparm += "ConnectString='DSN=greenolive_DSN',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
+		dbparm += "ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
 		dbparm += "Database='" + ps_dbname + "'"
 		dbparm += "AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
@@ -1217,7 +1224,12 @@ CHOOSE CASE ls_dbms
 			dbparm += ",Connectstring='" + ps_connectstring + "'"
 		end if
 	CASE "SNC"
-		dbparm += "Database='" + ps_dbname + "'"
+		// This works! It's necessary to use the PB SNC driver, because SELECTBLOB
+		// is broken using the PB ODB driver.
+		dbparm += ",Provider='SQLNCLI11'"
+		//dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};SERVER=" + ps_server + ";'"
+		//dbparm += ",ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
+		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
 	
@@ -1232,7 +1244,37 @@ setnull(ls_sql_error)
 
 SetPointer(HourGlass!)
 
-// First try connecting with windows authentication if it's available
+// First try connecting with sql_authentication if it's available
+if not connected and sql_authentication then
+	if isnull(logpass) then
+		logpass = sys(logid)
+	end if
+
+	// Reset the dbparm
+	dbparm = ls_dbparm
+
+	CONNECT USING luo_this; 
+	if SQLCode = 0 then
+		autocommit = true
+		connected = true
+		connected_using = "SQL"
+		adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
+		// Check the database for EncounterPRO objects and security status
+		li_sts = check_database()
+		if li_sts <= 0 then
+			ls_sql_error = "check_database failed (" + database + ")"
+			if len(sqlerrtext) > 0 then
+				ls_sql_error += " - " + sqlerrtext
+			end if
+			log.log(this, "u_sqlca.dbconnect:0152", "SQL Authentication - " + ls_sql_error, 1)
+			dbdisconnect()
+		end if
+	else
+		ls_sql_error = sqlerrtext
+	end if
+end if
+
+// If we didn't connect with sql authentication, try windows authentication if it's available
 if not connected and windows_authentication then
 	// Reset the dbparm
 	CHOOSE CASE ls_dbms
@@ -1273,36 +1315,6 @@ if not connected and windows_authentication then
 end if
 
 if not connected then DebugBreak()
-
-// If we didn't connect with windows authentication, try sql_authentication if it's available
-if not connected and sql_authentication then
-	if isnull(logpass) then
-		logpass = sys(logid)
-	end if
-
-	// Reset the dbparm
-	dbparm = ls_dbparm
-
-	CONNECT USING luo_this; 
-	if SQLCode = 0 then
-		autocommit = true
-		connected = true
-		connected_using = "SQL"
-		adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
-		// Check the database for EncounterPRO objects and security status
-		li_sts = check_database()
-		if li_sts <= 0 then
-			ls_sql_error = "check_database failed (" + database + ")"
-			if len(sqlerrtext) > 0 then
-				ls_sql_error += " - " + sqlerrtext
-			end if
-			log.log(this, "u_sqlca.dbconnect:0152", "SQL Authentication - " + ls_sql_error, 1)
-			dbdisconnect()
-		end if
-	else
-		ls_sql_error = sqlerrtext
-	end if
-end if
 
 setpointer ( arrow! )
 
@@ -1521,7 +1533,16 @@ elseif lower(ps_user) = lower(application_role) then
 	AND preference_key = 'Global'
 	AND preference_id = 'system_bitmap';
 	if sqlcode = 0 and sqlnrows = 1 then
-		return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+		if common_thread.utilities_ok() then
+			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
+			TRY
+				return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+			CATCH (throwable le_error)
+				log.log(this, "u_sqlca.sys:0028", "Error getting system_bitmap: " + le_error.text, 4)
+			END TRY
+		else
+			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
+		end if		
 	end if
 	ls_temp  = "a"
 	ls_temp  += "p"
@@ -1593,7 +1614,7 @@ public subroutine set_server (string ps_servername);//oleobject DMOServer2
 //END CHOOSE
 
 windows_authentication = true
-sql_authentication = false
+sql_authentication = true
 
 servername = ps_servername
 
@@ -3551,7 +3572,16 @@ if not pb_old then
 	AND preference_id = 'system_bitmap'
 	USING this;
 	if sqlcode = 0 and sqlnrows = 1 then
-		return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+		if common_thread.utilities_ok() then
+			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
+			TRY
+				return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+			CATCH (throwable le_error)
+				log.log(this, "u_sqlca.sysapp:0018", "Error getting system_bitmap: " + le_error.text, 4)
+			END TRY
+		else
+			log.log(this, "u_sqlca.sysapp:0022", "No system_bitmap (Utilities not available)", 3)
+		end if		
 	end if
 end if
 
@@ -3642,7 +3672,7 @@ end if
 
 SELECTBLOB object
 INTO :lbl_script
-FROM dbo.c_Patient_Material
+FROM c_Patient_Material
 WHERE material_id = :ll_material_id;
 if not tf_check() then return -1
 
@@ -3885,9 +3915,9 @@ for i = 1 to ll_file_count
 	USING this;
 	if not check() then return -1
 
-	SELECT scope_identity()
+	SELECT max(material_id)
 	INTO :ll_material_id
-	FROM c_1_record
+	FROM c_Patient_Material
 	USING this;
 	if not check() then return -1
 	
