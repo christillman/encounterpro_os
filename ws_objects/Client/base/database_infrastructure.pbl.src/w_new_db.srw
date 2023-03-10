@@ -81,18 +81,15 @@ event open;str_popup popup
 
 popup = message.powerobjectparm
 if popup.data_row_count <> 4 then
-//	sle_dbms.text = "SQL Native Client"
 	sle_db.text = ""
 	sle_server.text = ""
 	sle_office_id.text = ""
 else
-//	sle_dbms.text = popup.items[1]
 	sle_server.text = popup.items[2]
 	sle_db.text = popup.items[3]
 	sle_office_id.text = popup.items[4]
 end if
 
-sle_dbms.text = "SQL Native Client"
 
 
 end event
