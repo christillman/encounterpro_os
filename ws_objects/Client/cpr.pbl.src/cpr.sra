@@ -207,10 +207,10 @@ type variables
 
 long minimum_modification_level = 213
 
-date compile_date = date("2021-12-31")
+date compile_date = date("2023-03-11")
 
 integer major_release = 7
-string database_version = "1" // this is really minor release
+string database_version = "2" // this is really minor release
 string build = "0.0"
 // Resulting in 7.1.0.0
 
@@ -238,6 +238,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -386,6 +387,19 @@ end if
 log.display_enabled = true
 
 f_cpr_set_msg("Database Connected")
+
+// Check SELECTBLOB works
+//blob lbl_script
+//SELECTBLOB object
+//INTO :lbl_script
+//FROM c_Patient_Material
+//WHERE material_id = 1
+//USING SQLCA;
+//tf_check()
+//
+//if isnull(lbl_script) or len(lbl_script) <= 0 then
+//	log.log(this, "u_sqlca.upgrade_database:0034", "Empty", 4)
+//end if
 
 // Check the versions
 if f_check_version() < 0 then
