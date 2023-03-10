@@ -23,9 +23,13 @@ If trim(ls_comment_title) = "" Then setnull(ls_comment_title)
 ls_audio_file = f_temp_file("wav")
 
 if fileexists(ls_audio_file) then filedelete(ls_audio_file)
-
-li_sts = common_thread.mm.record_audio(ls_audio_file)
-if li_sts <= 0 then return 0
+if common_thread.utilities_ok() then
+	li_sts = common_thread.mm.record_audio(ls_audio_file)
+	if li_sts <= 0 then return 0
+else
+	log.log(this, "u_component_observation_jmj_dictation.xx_do_source:0015", "No Audio Recorded (Utilities not available)", 3)
+	return 0
+end if
 if not fileexists(ls_audio_file) then return 0
 
 observation_count = 1

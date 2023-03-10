@@ -148,9 +148,14 @@ end if
 if isnull(le_saveastype) then
 	puo_graph.clipboard()
 	
-	li_sts = common_thread.eprolibnet4.SaveClipboardToFile(ps_filepath)
-	if li_sts <= 0 then
-		log.log(po_null, "f_save_graph_to_file:0097", "Error converting graph image to file", 4)
+	if common_thread.utilities_ok() then
+		li_sts = common_thread.eprolibnet4.SaveClipboardToFile(ps_filepath)
+		if li_sts <= 0 then
+			log.log(po_null, "f_save_graph_to_file:0097", "Error converting graph image to file", 4)
+			setnull(ps_filepath)
+		end if
+	else
+		log.log(this, "f_save_graph_to_file:0192", "Graph image not saved (Utilities not available)", 3)
 		setnull(ps_filepath)
 	end if
 else

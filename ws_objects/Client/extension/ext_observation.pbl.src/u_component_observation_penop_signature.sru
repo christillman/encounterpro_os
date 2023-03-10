@@ -36,11 +36,17 @@ ls_sig_file = f_temp_file(ls_extension)
 
 If fileexists(ls_sig_file) Then filedelete(ls_sig_file)
 
-li_sts = common_thread.mm.get_signature(ls_claimedid, ls_gravityprompt, ls_sig_file)
-if li_sts <= 0 then
-	log.log(this, "u_component_observation_penop_signature.xx_do_source:0027", "No Signature Captured (" + string(common_thread.mm.error_code) + ")", 3)
-	Return 0
+if common_thread.utilities_ok() then
+	li_sts = common_thread.mm.get_signature(ls_claimedid, ls_gravityprompt, ls_sig_file)
+	if li_sts <= 0 then
+		log.log(this, "u_component_observation_penop_signature.xx_do_source:0028", "No Signature Captured (" + string(common_thread.mm.error_code) + ")", 3)
+		Return 0
+	end if
+else
+	log.log(this, "u_component_observation_penop_signature.xx_do_source:0032", "No Signature Captured (Utilities not available)", 3)
+	return 0
 end if
+
 If Not fileexists(ls_sig_file) Then Return 0
 
 observation_count = 1

@@ -11,8 +11,8 @@ long ll_screen_resolution_y
 long ll_pixels_x
 long ll_pixels_y
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 // pl_inches_x and pl_inches_y are in thousandths of an inch.  Screen resolution is in pixels per inch.
 

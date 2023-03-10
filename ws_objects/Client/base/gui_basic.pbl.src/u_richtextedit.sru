@@ -50,6 +50,7 @@ private str_font_settings current_font_settings
 private string default_font_name = "Arial"
 private integer default_font_size = 10
 end variables
+
 forward prototypes
 public subroutine prev_level ()
 public subroutine delete_last_line ()
@@ -607,7 +608,7 @@ long ll_screen_resolution
 //	\margbN Bottom margin in twips (the default is 1440). 
 // 1 twip = 1/1440 inch
 
-ll_screen_resolution = common_thread.mm.screen_resolution_x()
+ll_screen_resolution = common_thread.screen_resolution_x()
 
 // Get the width of the control in inches
 ll_width = (1000 * UnitsToPixels(width, XUnitsToPixels!)) / ll_screen_resolution
@@ -755,8 +756,8 @@ else
 	ll_text_flow = 2
 end if
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 f_get_picture_info(ps_filename, ll_picture_pixels_x, ll_picture_pixels_y, ll_picture_hresolution, ll_picture_vresolution)
 ll_picture_inches_x = (1000 * ll_picture_pixels_x) / ll_screen_resolution_x
@@ -1319,7 +1320,7 @@ Next
 //else
 //	// If the table width was not supplied then calculate it based on the screen width or page width
 //	if object.viewmode = view_mode_normal_layout  then
-//		ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
+//		ll_screen_resolution_x = common_thread.screen_resolution_x()
 //		ll_viewable = (1440 * UnitsToPixels(width, XUnitsToPixels!)) / ll_screen_resolution_x
 //		// Leave room for the scroll bar
 //		ll_viewable -= 400
@@ -1425,8 +1426,8 @@ end subroutine
 public subroutine convert_inches_to_pixels (long pl_inches_x, long pl_inches_y, ref long pl_pixels_x, ref long pl_pixels_y);long ll_screen_resolution_x
 long ll_screen_resolution_y
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 // pl_inches_x and pl_inches_y are in thousandths of an inch.  Screen resolution is in pixels per inch.
 
@@ -1439,8 +1440,8 @@ end subroutine
 public subroutine convert_pixels_to_inches (long pl_pixels_x, long pl_pixels_y, ref long pl_inches_x, ref long pl_inches_y);long ll_screen_resolution_x
 long ll_screen_resolution_y
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 pl_inches_x = (1000 * pl_pixels_x) / ll_screen_resolution_x
 pl_inches_y = (1000 * pl_pixels_y) / ll_screen_resolution_y
@@ -1698,11 +1699,11 @@ paperheight = 11000 // 11 inches
 paperwidth = 8500 // 8.5 inches
 //
 //// Get the height of the control in twips
-//ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+//ll_screen_resolution_y = common_thread.screen_resolution_y()
 //height_twips = (1440 * UnitsToPixels(height, YUnitsToPixels!)) / ll_screen_resolution_y
 //
-//// Set the right margin, assuming a page width of 8.5 inches
-////rightmargin = 8500 - ll_width
+// Set the right margin, assuming a page width of 8.5 inches
+//rightmargin = 8500 - ll_width
 //
 
 leftmargin = 500

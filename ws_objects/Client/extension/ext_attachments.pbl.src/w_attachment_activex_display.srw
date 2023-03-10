@@ -22,7 +22,6 @@ end forward
 
 global type w_attachment_activex_display from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -352,7 +351,11 @@ boolean bringtotop = true
 string binarykey = "w_attachment_activex_display.win"
 end type
 
-event clicked;common_thread.mm.display_ole_file(working_file)
+event clicked;if common_thread.utilities_ok() then
+	common_thread.mm.display_ole_file(working_file)
+else
+	log.log(this, "w_attachment_activex_display.clicked:0004", "OLE file not displayed (Utilities not available)", 3)
+end if
 
 end event
 

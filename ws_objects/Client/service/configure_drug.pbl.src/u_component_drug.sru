@@ -19,7 +19,6 @@ private str_drug_package drug_package[]
 private long drug_package_count
 
 private boolean rx_allow_qs
-private boolean rx_number_to_text
 private boolean rx_dispense_amount_asterisks
 private boolean include_generic_name
 
@@ -33,7 +32,6 @@ private string administer_frequency_display
 u_ds_data administer_frequency_cache
 
 end variables
-
 forward prototypes
 public function integer get_package_definition (string ps_package_id, ref str_package_definition pstr_package)
 public function integer get_drug_definition (string ps_drug_id, ref str_drug_definition pstr_drug)
@@ -379,16 +377,7 @@ else
 end if
 
 If not isnull(pstr_treatment.dispense_unit) and pstr_treatment.dispense_amount > 0 and not isnull(pstr_treatment.dispense_amount) THEN
-	if rx_number_to_text then // print text representation of numbers
-		luo_unit = unit_list.find_unit(pstr_treatment.dispense_unit)
-		If isvalid(luo_unit) and not isnull(luo_unit) then
-			ls_unit = luo_unit.pretty_unit(pstr_treatment.dispense_amount)
-			ls_dispense_text = common_thread.mm.number_to_text(pstr_treatment.dispense_amount)
-			ls_description += "Dispense: " +ls_dispense_text + " (" + ls_asterisk + string(pstr_treatment.dispense_amount) + ls_asterisk + ") "+ls_unit
-		End If
-	else
-		ls_description += "Dispense: " + ls_asterisk + f_pretty_amount_unit(pstr_treatment.dispense_amount, pstr_treatment.dispense_unit) + ls_asterisk
-	end if
+	ls_description += "Dispense: " + ls_asterisk + f_pretty_amount_unit(pstr_treatment.dispense_amount, pstr_treatment.dispense_unit) + ls_asterisk
 else
 	// If we don't have a valid amount/unit, check for a "Dispense QS" property
 	ls_dispense_qs = f_get_progress_value(current_patient.cpr_id, &
@@ -452,16 +441,7 @@ Else
 	luo_unit = unit_list.find_unit(pstr_treatment.dose_unit)
 	if isnull(luo_unit) then return ls_null
 		
-	if rx_number_to_text then // print text representation of numbers
-		If isvalid(luo_unit) and not isnull(luo_unit) then
-			ls_amount = luo_unit.pretty_amount(pstr_treatment.dose_amount)
-			ls_unit = luo_unit.pretty_unit(pstr_treatment.dose_amount)
-			ls_dose_text = common_thread.mm.number_to_text(pstr_treatment.dose_amount)
-			ls_description = ls_dose_text + " (" + ls_amount + ") "+ls_unit
-		End If
-	else
-		ls_description = f_pretty_amount_unit(pstr_treatment.dose_amount, pstr_treatment.dose_unit)
-	end if
+	ls_description = f_pretty_amount_unit(pstr_treatment.dose_amount, pstr_treatment.dose_unit)
 End if
 
 Return trim(ls_description)
@@ -1048,7 +1028,6 @@ call super::destroy
 end on
 
 event constructor;call super::constructor;
-rx_number_to_text = datalist.get_preference_boolean("PREFERENCES", "rx_show_number_in_text", false)
 rx_dispense_amount_asterisks = datalist.get_preference_boolean("PREFERENCES", "rx_dispense_amount_asterisks", false)
 
 include_generic_name = datalist.get_preference_boolean("PREFERENCES", "rx_include_generic_name", true)

@@ -45,8 +45,13 @@ If fileexists(ls_image_file) Then filedelete(ls_image_file)
 
 li_sts = MessageBox ( "Sony Mavica Digital Camera", "Place the floppy disk from the camera into the floppy drive and press OK." , Information!, OKCancel!)
 If li_sts <> 1 Then Return 0
-li_sts = common_thread.mm.get_image(current_patient.name(), ls_image_file, "a:\", "jpg")
-If li_sts <= 0 Then Return 0
+if common_thread.utilities_ok() then
+	li_sts = common_thread.mm.get_image(current_patient.name(), ls_image_file, "a:\", "jpg")
+	If li_sts <= 0 Then Return 0
+else
+	log.log(this, "u_component_observation_jmj_sonymavica.xx_do_source:0031", "No Image Retrieved (Utilities not available)", 3)
+	return 0
+end if
 If Not fileexists(ls_image_file) Then Return 0
 
 observation_count = 1

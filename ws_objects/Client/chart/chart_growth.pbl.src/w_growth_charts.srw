@@ -58,7 +58,6 @@ global type w_growth_charts from w_window_base
 integer width = 2962
 integer height = 1896
 string title = "Growth Charts"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -316,12 +315,17 @@ END CHOOSE
 
 if isnull(le_saveastype) then
 	gr_growth.clipboard()
-	
-	li_sts = common_thread.eprolibnet4.SaveClipboardToFile(growth_chart_settings.return_file_path)
-	if li_sts <= 0 then
-		log.log(this, "w_growth_charts.save_graph_to_file:0071", "Error converting graph image to file", 4)
+	if common_thread.utilities_ok() then
+		li_sts = common_thread.eprolibnet4.SaveClipboardToFile(growth_chart_settings.return_file_path)
+		if li_sts <= 0 then
+			log.log(this, "w_growth_charts.save_graph_to_file:0071", "Error converting graph image to file", 4)
+			setnull(growth_chart_settings.return_file_path)
+		end if
+	else
+		log.log(this, "w_growth_charts.save_graph_to_file:0075", "Growth chart not saved (Utilities not available)", 3)
 		setnull(growth_chart_settings.return_file_path)
 	end if
+	
 else
 	li_sts = gr_growth.SaveAs(growth_chart_settings.return_file_path, le_saveastype, true)
 	if li_sts <= 0 then

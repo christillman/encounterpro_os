@@ -114,12 +114,18 @@ CHOOSE CASE lower(pstr_property_value.datatype)
 			if lower(pstr_property_suffix.format_string) = "[text]" then
 				if left(pstr_property_suffix.format_string, 2) = "[T" then
 					if right(pstr_property_suffix.format_string, 2) = "T]" then
-						pstr_property_value.display_value = upper(common_thread.mm.number_to_text(ld_decimal))
+						// number_to_text function source not available
+						pstr_property_value.display_value = upper(string(ld_decimal))
+						// pstr_property_value.display_value = upper(common_thread.mm.number_to_text(ld_decimal))
 					else
-						pstr_property_value.display_value = wordcap(common_thread.mm.number_to_text(ld_decimal))
+						// number_to_text function source not available
+						pstr_property_value.display_value = wordcap(string(ld_decimal))
+						// pstr_property_value.display_value = wordcap(common_thread.mm.number_to_text(ld_decimal))
 					end if
 				else
-					pstr_property_value.display_value = common_thread.mm.number_to_text(ld_decimal)
+					// number_to_text function source not available
+					pstr_property_value.display_value = string(ld_decimal)
+					// pstr_property_value.display_value = common_thread.mm.number_to_text(ld_decimal)
 				end if
 			else
 				pstr_property_value.display_value = string(ld_decimal, pstr_property_suffix.format_string)

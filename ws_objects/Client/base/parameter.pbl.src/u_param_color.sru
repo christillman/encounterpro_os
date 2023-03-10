@@ -79,7 +79,6 @@ else
 	ll_color = color
 end if
 
-//ll_color = common_thread.mm.select_color(ll_color)
 li_sts = choosecolor(ll_color)
 if li_sts <= 0 then return 0
 

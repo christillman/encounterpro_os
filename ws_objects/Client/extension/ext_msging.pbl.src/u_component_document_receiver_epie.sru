@@ -63,12 +63,18 @@ if isnull(ls_pwd_e) or ls_pwd_e = "" then
 	return -1
 end if
 
-TRY
-	ls_pwd = common_thread.eprolibnet4.decryptstring(ls_pwd_e, common_thread.key())
-CATCH (throwable le_error)
-	log.log(this, "u_component_document_receiver_epie.xx_get_documents:0045", "Error getting EpIE credentials: " + le_error.text, 4)
+if common_thread.utilities_ok() then
+	// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
+	TRY
+		ls_pwd = common_thread.eprolibnet4.decryptstring(ls_pwd_e, common_thread.key())
+	CATCH (throwable le_error)
+		log.log(this, "u_component_document_receiver_epie.xx_get_documents:0045", "Error getting EpIE credentials: " + le_error.text, 4)
+		return -1
+	END TRY
+else
+	log.log(this, "u_component_document_receiver_epie.xx_get_documents:0051", "No EpIE credentials (Utilities not available)", 3)
 	return -1
-END TRY
+end if
 
 
 ll_sts = conn.SetSoapLogFile (ls_templog) 

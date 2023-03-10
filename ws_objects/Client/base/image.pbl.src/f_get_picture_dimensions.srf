@@ -19,8 +19,8 @@ long ll_pixels_y
 long ll_hresolution
 long ll_vresolution
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 lo_image = CREATE oleobject
 li_sts = lo_image.connecttonewobject("EncounterPRO.OS.ImageManipulation")

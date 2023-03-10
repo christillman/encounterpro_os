@@ -514,8 +514,8 @@ end function
 protected function integer base_initialize ();string ls_error
 
 TRY
-	printer_resolution_x = common_thread.mm.printer_resolution_x()
-	printer_resolution_y = common_thread.mm.printer_resolution_y()
+	printer_resolution_x = 1200 // hardcoded in common_thread.mm.printer_resolution_x()
+	printer_resolution_y = 1200 // hardcoded in common_thread.mm.printer_resolution_y()
 CATCH (throwable lo_error)
 	ls_error = "Error getting printer resolution"
 	if not isnull(lo_error.text) then

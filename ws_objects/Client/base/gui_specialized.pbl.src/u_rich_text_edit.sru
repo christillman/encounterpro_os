@@ -6687,6 +6687,8 @@ string ls_text
 string ls_crlf
 long ll_pos
 str_attributes lstr_attributes
+CoderObject lnv_CoderObject
+lnv_CoderObject = Create CoderObject
 
 f_attribute_add_attribute(lstr_attributes, "width", string(pl_bitmap_width_inches))
 f_attribute_add_attribute(lstr_attributes, "height", string(pl_bitmap_height_inches))
@@ -6701,6 +6703,8 @@ if isnull(ps_property_value.encoding) or ps_property_value.encoding = "" then re
 // Get the property in blob form
 CHOOSE CASE lower(ps_property_value.encoding)
 	CASE "hex"
+		// possibility to replace
+		// lbl_property_data = lnv_CoderObject.HexDecode(ps_property_value.value)
 		lbl_property_data = common_thread.eprolibnet4.converthextobinary(ps_property_value.value)
 	CASE ELSE
 		// Assume hex

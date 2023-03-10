@@ -3482,7 +3482,12 @@ ll_row = preferences.find(ls_find, 1, preferences.rowcount())
 if ll_row > 0 then
 	ls_encrypted = preferences.object.encrypted[ll_row]
 	if f_string_to_boolean(ls_encrypted) then
-		ls_preference_d = common_thread.eprolibnet4.decryptstring(ls_preference_value, common_thread.key())
+		if common_thread.utilities_ok() then
+			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
+			ls_preference_d = common_thread.eprolibnet4.decryptstring(ls_preference_value, common_thread.key())
+		else
+			log.log(this, "u_list_data.get_preference:0033", "Password not decrypted (Utilities not available)", 3)
+		end if
 		if ls_preference_d = "" then
 			setnull(ls_preference_value)
 		else
@@ -5879,18 +5884,7 @@ return ls_address
 
 end function
 
-public function string get_preference_d (string ps_preference_type, string ps_preference_id);//string ls_preference
-//string ls_preference_d
-//
-//ls_preference = get_preference(ps_preference_type, ps_preference_id)
-//if isnull(ls_preference) then return ls_preference
-//
-//ls_preference_d = common_thread.eprolibnet4.decryptstring(ls_preference, common_thread.key())
-//if ls_preference_d = "" then setnull(ls_preference_d)
-//
-//return ls_preference_d
-//
-
+public function string get_preference_d (string ps_preference_type, string ps_preference_id);
 return get_preference(ps_preference_type, ps_preference_id)
 
 end function
@@ -7361,9 +7355,20 @@ if len(ps_preference_value) > 0 then
 	if ll_row > 0 then
 		ls_encrypted = preferences.object.encrypted[ll_row]
 		if f_string_to_boolean(ls_encrypted) then
-			ls_preference_value_e = common_thread.eprolibnet4.encryptstring(ps_preference_value, common_thread.key())
-			if ls_preference_value_e = "" then
-				setnull(ls_preference_value_e)
+			if common_thread.utilities_ok() then
+				// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
+				TRY
+					ls_preference_value_e = common_thread.eprolibnet4.encryptstring(ps_preference_value, common_thread.key())
+					if ls_preference_value_e = "" then
+						setnull(ls_preference_value_e)
+					end if
+				CATCH (throwable le_error)
+					log.log(this, "u_list_data.set_preference:0044", "Error getting encrypting password: " + le_error.text, 4)
+					return -1
+				END TRY
+			else
+				log.log(this, "u_list_data.set_preference:0048", "Password not encrypted (Utilities not available)", 3)
+				return -1	
 			end if
 		else
 			ls_preference_value_e = ps_preference_value

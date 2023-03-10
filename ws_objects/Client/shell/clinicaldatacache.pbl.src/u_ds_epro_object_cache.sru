@@ -1999,7 +1999,7 @@ CHOOSE CASE lower(ps_property)
 		pstr_property_value.value = ps_number
 		return 1
 	CASE "text"
-		pstr_property_value.value = common_thread.mm.number_to_text(ld_number)
+		pstr_property_value.value = string(ld_number)
 		return 1
 END CHOOSE
 

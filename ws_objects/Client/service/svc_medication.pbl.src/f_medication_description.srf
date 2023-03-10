@@ -31,9 +31,8 @@ return drugdb.treatment_drug_sig(lstr_treatment)
 //String	ls_administer_method
 //String	ls_temp,ls_duration,ls_brand_necessary
 //String	ls_pharmacist_instructions,ls_patient_instructions
-//String	ls_rx_number_to_text,ls_unit,ls_dose_text,ls_dispense_text
+//String	ls_unit,ls_dose_text,ls_dispense_text
 //integer li_sts
-//Boolean	lb_rx_number_to_text
 //
 //u_unit						luo_unit
 //str_drug_definition 		lstr_drug_definition
@@ -41,12 +40,6 @@ return drugdb.treatment_drug_sig(lstr_treatment)
 //str_package_definition 	lstr_package_definition
 //
 //Setnull(ls_description)
-//ls_rx_number_to_text = datalist.get_preference("PREFERENCES", "rx_show_number_in_text")
-//if lower(left(ls_rx_number_to_text, 1)) = "t" or lower(left(ls_rx_number_to_text, 1)) = "y" then
-//	lb_rx_number_to_text = true
-//else
-//	lb_rx_number_to_text = false
-//end if
 //
 //// If we don't have a drug_id then there's nothing we can do so just use the treatment description
 //if isnull(puo_treatment.drug_id) then return puo_treatment.treatment_description
@@ -89,19 +82,10 @@ return drugdb.treatment_drug_sig(lstr_treatment)
 //	If ls_take_as_directed = "Y" Then
 //		ls_description += "  Take As Directed"
 //	Else
-//		if lb_rx_number_to_text then // print text representation of numbers
-//			luo_unit = unit_list.find_unit(puo_treatment.dose_unit)
-//			If isvalid(luo_unit) and not isnull(luo_unit) then
-//				ls_unit = luo_unit.pretty_unit(puo_treatment.dose_amount)
-//				ls_dose_text = common_thread.mm.number_to_text(puo_treatment.dose_amount)
-//				ls_description += "  " +ls_dose_text + " ("+string(puo_treatment.dose_amount)+") "+ls_unit
-//			End If
-//		else
 //			ls_temp = f_pretty_amount_unit(puo_treatment.dose_amount, puo_treatment.dose_unit)
 //			if not isnull(ls_temp) then
 //				ls_description += "  " + ls_temp
 //			end if
-//		end if
 ////		If not isnull(puo_treatment.dose_amount) Then
 ////			ls_temp = f_pretty_amount_unit(puo_treatment.dose_amount, puo_treatment.dose_unit)
 ////			if not isnull(ls_temp) then
@@ -133,17 +117,7 @@ return drugdb.treatment_drug_sig(lstr_treatment)
 //	End if
 //	
 //	If not isnull(puo_treatment.dispense_unit) and puo_treatment.dispense_amount > 0 and not isnull(puo_treatment.dispense_amount) THEN
-////		ls_description += "~r~nDispense: " + f_pretty_amount_unit(puo_treatment.dispense_amount, puo_treatment.dispense_unit)
-//		if lb_rx_number_to_text then // print text representation of numbers
-//			luo_unit = unit_list.find_unit(puo_treatment.dispense_unit)
-//			If isvalid(luo_unit) and not isnull(luo_unit) then
-//				ls_unit = luo_unit.pretty_unit(puo_treatment.dispense_amount)
-//				ls_dispense_text = common_thread.mm.number_to_text(puo_treatment.dispense_amount)
-//				ls_description += "~r~nDispense: " +ls_dispense_text + " ("+string(puo_treatment.dispense_amount)+") "+ls_unit
-//			End If
-//		else
-//			ls_description += "~r~nDispense: " + f_pretty_amount_unit(puo_treatment.dispense_amount, puo_treatment.dispense_unit)
-//		end if
+//		ls_description += "~r~nDispense: " + f_pretty_amount_unit(puo_treatment.dispense_amount, puo_treatment.dispense_unit)
 //		if not isnull(puo_treatment.refills) then
 //			IF puo_treatment.refills = 0 THEN
 //				ls_description += "~r~nNo Refills"

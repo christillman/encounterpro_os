@@ -31,11 +31,14 @@ if fileexists(ps_file) then filedelete(ps_file)
 li_resx = 600
 li_resy = 600
 
-li_sts = common_thread.mm.render_bmp(ls_filename, ps_file, li_resx, li_resy)
-
-If li_sts <= 0 Then
-	log.log(this, "u_component_attachment_signature_penop.xx_render:0014", "Unable to render signature", 3)
-End If
+if common_thread.utilities_ok() then
+	li_sts = common_thread.mm.render_bmp(ls_filename, ps_file, li_resx, li_resy)
+	If li_sts <= 0 Then
+		log.log(this, "u_component_attachment_signature_penop.xx_render:0014", "Unable to render signature", 3)
+	End If
+else
+	log.log(this, "u_component_attachment_signature_penop.xx_render:0017", "Unable to render signature (Utilities not available)", 3)
+end if
 
 filedelete(ls_filename)
 

@@ -14,8 +14,8 @@ long ll_pixels_y
 ll_pixels_x = unitstopixels(pl_pbunits_x, XUnitsToPixels!)
 ll_pixels_y = unitstopixels(pl_pbunits_y, YUnitsToPixels!)
 
-ll_screen_resolution_x = common_thread.mm.screen_resolution_x()
-ll_screen_resolution_y = common_thread.mm.screen_resolution_y()
+ll_screen_resolution_x = common_thread.screen_resolution_x()
+ll_screen_resolution_y = common_thread.screen_resolution_y()
 
 pl_inches_x = (1000 * ll_pixels_x) / ll_screen_resolution_x
 pl_inches_y = (1000 * ll_pixels_y) / ll_screen_resolution_y

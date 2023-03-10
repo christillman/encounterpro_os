@@ -199,6 +199,9 @@ public function string chart_alert_component ()
 public function integer set_chart_alert_component (string ps_component_id)
 public function string drugdb_component ()
 public function integer sendtoepie (string ps_message, boolean pb_test_message, ref string ps_response)
+public function boolean utilities_ok ()
+public function integer screen_resolution_x ()
+public function integer screen_resolution_y ()
 end prototypes
 
 public subroutine shutdown ();if default_printer_set and lower(current_printer.printername) <> lower(default_printer.printername) then
@@ -318,8 +321,9 @@ setnull(adodb)
 eprolibnet4 = CREATE oleobject
 li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
 if li_sts < 0 then
+	SetNull(eprolibnet4)
 	openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall EncounterPRO-OS or contact your system administrator for assistance.")
-	return -1
+	// return -1
 else
 	eprolibnet4.EPVersion = f_app_version()
 end if
@@ -412,11 +416,16 @@ if osversion <= 4 then
 		log.log(this, "u_common_thread.set_printer:0030", "Error setting default printer in registry (" + current_printer.printername + ")", 4)
 	end if
 else
-	TRY
-		eprolibnet4.SetDefaultPrinter(current_printer.printername)
-	CATCH (oleruntimeerror lt_error)
-		log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
-	END TRY
+	if this.utilities_ok() then
+		TRY
+			eprolibnet4.SetDefaultPrinter(current_printer.printername)
+		CATCH (oleruntimeerror lt_error)
+			log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+		END TRY
+	else
+		log.log(this, "u_common_thread.set_printer:0040", "SetDefaultPrinter failed (Utilities not available)", 3)
+	end if
+
 end if
 
 // Then we'll set the default printer with the powerbuilder system command.  This will affect the PowerBuild "Print" functions
@@ -447,11 +456,15 @@ if not default_printer_set then
 				f_split_string(ls_default_printer, ",", ls_printer, ls_temp)
 			end if
 		else
-			TRY
-				ls_printer = eprolibnet4.GetDefaultPrinter()
-			CATCH (oleruntimeerror lt_error)
-				log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
-			END TRY
+			if this.utilities_ok() then
+				TRY
+					ls_printer = eprolibnet4.GetDefaultPrinter()
+				CATCH (oleruntimeerror lt_error)
+					log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+				END TRY
+			else
+				log.log(this, "u_common_thread.get_default_printer:0028", "GetDefaultPrinter failed (Utilities not available)", 3)
+			end if
 		end if
 		
 		if len(ls_printer) > 0 then
@@ -1693,6 +1706,21 @@ end if
 return 0
 
 
+end function
+
+public function boolean utilities_ok ();
+
+RETURN (Not IsNull(this.eprolibnet4))
+end function
+
+public function integer screen_resolution_x ();
+// was hard coded in Utilities
+RETURN 96
+end function
+
+public function integer screen_resolution_y ();
+// was hard coded in Utilities
+RETURN 96
 end function
 
 on u_common_thread.create

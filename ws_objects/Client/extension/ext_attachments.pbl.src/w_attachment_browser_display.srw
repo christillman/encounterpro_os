@@ -20,7 +20,6 @@ end forward
 
 global type w_attachment_browser_display from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -169,6 +168,9 @@ end if
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_attachment_browser_display
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_attachment_browser_display
 end type
 
 type st_title from statictext within w_attachment_browser_display
@@ -330,7 +332,11 @@ borderstyle borderstyle = styleraised!
 string binarykey = "w_attachment_browser_display.win"
 end type
 
-event clicked;call super::clicked;common_thread.mm.display_ole_file(working_file)
+event clicked;call super::clicked;if common_thread.utilities_ok() then
+	common_thread.mm.display_ole_file(working_file)
+else
+	log.log(this, "w_attachment_browser_display.clicked:0004", "OLE file not displayed (Utilities not available)", 3)
+end if
 
 end event
 
