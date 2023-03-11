@@ -7,11 +7,11 @@
 !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
 
 ; Component Versions
-!define EncounterPRO_Utilities_VERSION   1.0.2.0
+!define EncounterPRO_Utilities_VERSION   1.0.4.0
 ; This has a virus in it
 ; !define TPS_Foxit_Version 2.3
 !define EventLogInstaller_Version 1.2
-!define CSharpGACTool_Version 1.0.0.2
+!define CSharpGACTool_Version 1.0.0.3
 !define ICSharpCode_SharpZipLib_Version 0.84.0.0
 
 ; Other definitions
@@ -93,21 +93,23 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "EncounterPRO.OS.Utilities ${EncounterPRO_Utilities_VERSION} Install.exe"
 InstallDir "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities"
 ShowInstDetails show
-AutoCloseWindow true
+AutoCloseWindow false
 
   !macro CSharpGacToolInstall Assembly
-    nsExec::Exec '"${gacutil}" /r "${Assembly}"'
+    nsExec::ExecToStack /MBCS 'cmd /c "${gacutil}" /r "${Assembly}"'
     Pop $0
-    StrCmp $0 "error" 0 +2
+    Pop $1
+    StrCmp $0 "error" 0 +3
     DetailPrint "Failed to register ${Assembly} in GAC."
+	DetailPrint "$1"
+  !macroend
     ; ngen.exe fails to compile if assemblies have dependencies that
     ; have not yet been installed.  We might re-implement this feature later,
     ; but for now we will rely on JIT-compiling
     ;ExecWait '"$WINDIR\Microsoft.NET\Framework\${DotNetVersion}\ngen.exe" "$R0"'
-  !macroend
 
   !macro REGASM Assembly
-    nsExec::Exec '"${regasm}" /codebase /tlb "${Assembly}"'
+    nsExec::Exec 'cmd /c "${regasm}" /codebase /tlb "${Assembly}"'
     Pop $0
     StrCmp $0 "error" 0 +2
     DetailPrint "Failed to register $R0 for COM-Interop."
@@ -148,11 +150,11 @@ Section "EncounterPRO.OS.Utilities"
 
   ; Start by making sure that some .Net utilities are installed
       
-  ; Get the running .net versoin
-  Call GetDotNETVersion
+  ; Get the running .net version
+  Call Net4Version
   Pop $RunningDotNetVersion
       
-  DetailPrint "$RunningDotNetVersion"
+  DetailPrint "DotNetVersion: $RunningDotNetVersion"
 
   ; Set the outpath to the windows .Net directory for the running .net version 
   ReadRegStr $NETInstallLoc HKLM "SOFTWARE\Microsoft\.NETFramework" "InstallRoot"
@@ -185,9 +187,9 @@ Section "EncounterPRO.OS.Utilities"
   File "${EncounterPRO_Utilities_SOURCE}\EncounterPRO.OS.Utilities.dll"
   
   ; Register the assemblies in the GAC
-  !insertmacro CSharpGacToolInstall "$$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\ICSharpCode.SharpZipLib.dll"
+  !insertmacro CSharpGacToolInstall "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\ICSharpCode.SharpZipLib.dll"
 ;  !insertmacro CSharpGacToolInstall "$$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\ProgressBars.dll"
-  !insertmacro CSharpGacToolInstall "$$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
+  !insertmacro CSharpGacToolInstall "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
   
   ; Register the EncounterPRO.OS.Utilities.dll Type Library.  This is needed for 32/64 bit support.
   !insertmacro REGASM "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
@@ -227,7 +229,8 @@ Function GetDotNETVersion
   Push $0
   Push $1
 
-  System::Call "mscoree::GetCORVersion(w .r0, i 1024, *i r2) i .r1"
+  ; System::Call "mscoree::GetCORVersion(w .r0, i 1024, *i r2) i .r1"
+  System::Call "Runtime::FrameworkDescription"
   StrCmp $1 0 +2
     StrCpy $0 0
   
