@@ -55,12 +55,12 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EncounterPRO.ORG")]
 [assembly: AssemblyProduct("EncounterPRO-OS")]
-[assembly: AssemblyCopyright("2010 The EncounterPRO Foundation, Inc.")]
+[assembly: AssemblyCopyright("2023 The EncounterPRO Foundation, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
 // Version Information
 //
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyVersion("1.0.1.0")]
-[assembly: AssemblyFileVersionAttribute("1.0.1.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
+[assembly: AssemblyFileVersion("1.0.3.0")]
