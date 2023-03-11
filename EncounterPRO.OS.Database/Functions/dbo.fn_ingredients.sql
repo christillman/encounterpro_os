@@ -14,7 +14,7 @@ RETURNS varchar(1000)
 AS BEGIN
 	declare @last_digit_pos integer, @num_rev integer, @num_rev2 integer, @first_digit_pos integer
 	declare @next_ingr_pos integer
-	declare @ingredient varchar(30)
+	declare @ingredient varchar(100)
 	declare @to_return varchar(1000), @to_parse varchar(1000)
 
 	-- space is usually after the last digit, but also allow slash for e.g. 
@@ -66,16 +66,24 @@ AS BEGIN
 		SET @last_digit_pos = patindex('%[0-9][ /]%', @to_parse)
 	END
 
-	RETURN @to_return + @to_parse
+	RETURN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
+		@to_return + @to_parse, ' CREAM',''),
+		' CAPSULES',''),
+		' GEL',''),
+		' INFUSION',''),
+		' INTRAVENOUS',''),
+		' TABLETS',''),
+		' TABLET',''),
+		' Variable Concentration Multi-Use Injectable Solution','')
 END
 
 go
 /* test
 select form_descr, dbo.fn_ingredients(form_descr) as sort_expression
 from c_Drug_Formulation
-where form_descr like 'cyproterone acetate%' '%aceta%' or form_descr like 'bleph%' 
+where form_descr like 'cyproterone acetate%' or form_descr like 'bleph%' 
 order by dbo.fn_ingredients(form_descr)
-select dbo.fn_ingredients('activated attapulgite 300 MG / aluminium hydroxide 100 MG Oral Tablet')
+select dbo.fn_ingredients('methylPREDNISolone sodium succinate 2 GM Injection')
 select dbo.fn_ingredients('ferrous fumarate 300 MG / folic acid 2.5 MG / vitamin B6 10 MG / vitamin B12 50 MCG / vitamin C 100 MG Oral Capsule')
 */
 
