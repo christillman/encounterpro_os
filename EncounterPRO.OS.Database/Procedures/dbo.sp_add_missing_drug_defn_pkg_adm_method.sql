@@ -116,12 +116,13 @@ AS BEGIN
 		  ,NULL AS [administer_per_dose]
 		  ,df.[dosage_form]
 		  ,NULL
-		  ,'OK'
+		  ,'OK' -- select ''''+v.package_id+''','
 	FROM c_Drug_Formulation f
-	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_dosage_form_from_descr(f.form_descr)
 	JOIN c_Drug_Brand b ON b.brand_name_rxcui = f.ingr_rxcui
 	JOIN c_Drug_Package dp ON dp.drug_id = b.drug_id
 		AND dp.form_rxcui = f.form_rxcui
+	LEFT JOIN vw_dose_unit v ON v.form_rxcui = f.form_rxcui AND v.package_id = dp.package_id
+	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_std_dosage_form(v.form_descr, v.generic_form_descr)
 	WHERE NOT EXISTS (SELECT 1 
 			FROM [c_Package] a 
 			WHERE a.package_id = dp.[package_id]
@@ -147,12 +148,13 @@ AS BEGIN
 		  ,df.[dosage_form]
 		  ,CASE WHEN df.[default_dose_unit] IN ('MG', 'ML', 'MG/ML') 
 			THEN NULL ELSE 1 END
-		  ,'OK' 
+		  ,'OK' -- select ''''+v.package_id+''','
 	FROM c_Drug_Formulation f
-	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_dosage_form_from_descr(f.form_descr)
 	JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
 	JOIN c_Drug_Package dp ON dp.drug_id = g.drug_id
 		AND dp.form_rxcui = f.form_rxcui
+	LEFT JOIN vw_dose_unit v ON v.form_rxcui = f.form_rxcui AND v.package_id = dp.package_id
+	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_std_dosage_form(v.form_descr, v.generic_form_descr)
 	WHERE NOT EXISTS (SELECT 1 
 			FROM [c_Package] a 
 			WHERE a.package_id = dp.[package_id]
