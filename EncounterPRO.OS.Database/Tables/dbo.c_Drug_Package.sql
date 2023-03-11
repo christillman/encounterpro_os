@@ -69,7 +69,7 @@ CREATE TABLE [dbo].[c_Drug_Package] (
 		[sort_order]                  [smallint] NULL,
 		[prescription_flag]           [varchar](1) NULL,
 		[default_dispense_amount]     [real] NULL,
-		[default_dispense_unit]       [varchar](12) NULL,
+		[default_dispense_unit]       [varchar](15) NULL,
 		[take_as_directed]            [char](1) NULL,
 		[hcpcs_procedure_id]          [varchar](24) NULL
 ) ON [PRIMARY]
