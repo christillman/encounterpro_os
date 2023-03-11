@@ -205,7 +205,7 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 213
+long minimum_modification_level = 214
 
 date compile_date = date("2023-03-11")
 
@@ -238,7 +238,6 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
