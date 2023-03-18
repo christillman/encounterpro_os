@@ -16,7 +16,7 @@ BEGIN
 	declare @ingredient varchar(100), @strg varchar(100)
 	declare @dosage_form varchar(1000), @to_parse varchar(1000)
 
-	SET @dosage_form = dbo.fn_std_dosage_form_descr (@form_descr, @form_descr)
+	SET @dosage_form = dbo.fn_std_dosage_form_descr (@form_descr)
 	IF @dosage_form IS NULL
 		SET @to_parse = @form_descr
 	ELSE
