@@ -45,10 +45,6 @@ SET form_descr = REPLACE(form_descr, 'Distintegrating Oral Tablet', 'Disintegrat
 WHERE form_descr LIKE '%Distintegrating Oral Tablet%'
 -- (12 row(s) affected)
 
-UPDATE c_Drug_Formulation
-SET form_descr = REPLACE(form_descr, ' HCI', ' HCl')
-WHERE form_descr LIKE '% HCI%'
-
 -- Missing generic_rxcui
 UPDATE c_Drug_Formulation SET ingr_rxcui ='136411' WHERE form_rxcui =  'KEG9757'
 UPDATE c_Drug_Formulation SET ingr_rxcui ='8745' WHERE form_rxcui =  'KEG3929'
@@ -108,11 +104,66 @@ UPDATE c_Drug_Formulation SET generic_form_rxcui = 'KEG4015' WHERE generic_form_
 UPDATE c_Drug_Formulation SET generic_form_rxcui = 'KEG4495' WHERE generic_form_rxcui = 'KEG9133' 
 UPDATE c_Drug_Formulation SET generic_form_rxcui = 'KEG5916' WHERE generic_form_rxcui = 'KEG9632B' 
 
-UPDATE c_Drug_Formulation
-SET form_descr = REPLACE(form_descr,'  ','')
-WHERE form_descr LIKE '%  %'
-
 -- stray slash in RXNORM RXNCONSO
 UPDATE c_Drug_Formulation
 SET form_descr = 'acetaminophen 325 MG / caffeine 30 MG / dihydrocodeine bitartrate 16 MG Oral Tablet'
 WHERE form_rxcui = '1812164'
+
+update c_Drug_Formulation set form_descr = 'aminophylline 25 MG/ML in 10 ML Injection'
+where form_descr = 'aminophylline 250 MG in 10 ML Injection'
+update c_Drug_Formulation set form_descr = 'fluconazole 2 MG/ML in 100 ML Injection'
+where form_descr = 'fluconazole 200 MG per 100 ML Injection'
+update c_Drug_Formulation set form_descr = 'levoFLOXacin 5 MG/ML in 100 ML Injection'
+where form_descr = 'levofloxacin 500 MG in 100 ML Injection'
+update c_Drug_Formulation set form_descr = 'levoFLOXacin 5 MG/ML in 50 ML Injection'
+where form_descr = 'levofloxacin 250 MG in 50 ML Injection'
+update c_Drug_Formulation set form_descr = 'potassium chloride 150 MG/ML in 10 mL Injection'
+where form_descr = '10 ML potassium chloride 15 % (150 MG/ML) Injectable Solution'
+update c_Drug_Formulation set form_descr = 'potassium chloride 100 MG/ML in 10 mL Injection'
+where form_descr = '10 ML potassium chloride 10 % (100 MG/ML) Injectable Solution'
+
+update c_Drug_Formulation set form_descr = 'testosterone 16.2 MG/GM in 1.25 GM Transdermal Gel'
+where form_descr = 'testosterone 1.62 % (20.25MG / 1.25GM) Transdermal Gel'
+update c_Drug_Formulation set form_descr = 'testosterone 16.2 MG/GM in 2.5 GM Transdermal Gel'
+where form_descr = 'testosterone 1.62 % (40.5MG / 2.5GM) Transdermal Gel'
+update c_Drug_Formulation set form_descr = 'testosterone 10 MG/GM in 2.5 GM Transdermal Gel'
+where form_descr = 'testosterone 1 % (25 MG / 2.5 GM) Transdermal Gel'
+update c_Drug_Formulation set form_descr = 'testosterone 10 MG/GM in 5 GM Transdermal Gel'
+where form_descr = 'testosterone 1 % (50 MG / 5 GM) Transdermal Gel'
+update c_Drug_Formulation set form_descr = 'ancrod 70 UNT/mL Injectable Solution'
+where form_descr = 'ancrod 70 UNT / mL Injectable Solution'
+
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, ' hydrochloride ', ' HCl ')
+WHERE form_descr like '% hydrochloride %'
+
+UPDATE f 
+SET form_descr = replace(replace(replace(replace(replace(form_descr,
+	' MG', ' mG'),  
+	' MCG', ' mcG'),  
+	'/MG', '/mG'),  
+	'/ML', '/mL'),  
+	' ML', ' mL'
+	)
+from c_Drug_Formulation f
+where form_descr like '% MG%'
+or form_descr like '% MCG%'
+or form_descr like '% ML%'
+or form_descr like '%/MG%'
+or form_descr like '%/ML%'
+
+
+UPDATE c_Drug_Formulation
+SET form_descr = REPLACE(form_descr, ' HCI', ' HCl')
+WHERE form_descr LIKE '% HCI%'
+
+UPDATE c_Drug_Formulation
+SET form_descr = REPLACE(form_descr,'  ','')
+WHERE form_descr LIKE '%  %'
+
+update c_Drug_Formulation 
+set form_descr = replace(form_descr, ' per ', ' in ')
+where (form_descr like '% per % ML%' or form_descr like '% per % OZ%')
+and form_descr not like '% per 24%'
+and form_tty like 'SCD%'

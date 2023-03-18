@@ -63,7 +63,7 @@ WHEN @dosage_form = 'Enema'
 	THEN 'BOTTLE' ELSE 'ENEMA' END
 
 WHEN @dosage_form IN ('GranuleOralSusp')
-	THEN CASE WHEN ISNULL(@generic_descr, @form_descr) LIKE 'ML' THEN 'ML'
+	THEN CASE WHEN ISNULL(@generic_descr, @form_descr) LIKE 'ML' THEN 'mL'
 		ELSE 'PACKE' END
 
 WHEN @form_descr like '%granules for oral solution%'
@@ -78,7 +78,7 @@ WHEN @dosage_form = 'Inhalant Powder'
 	THEN 'CAP'
 
 WHEN @dosage_form = 'Susp'
-	THEN CASE WHEN @form_descr like '%enteral%' THEN 'ML'
+	THEN CASE WHEN @form_descr like '%enteral%' THEN 'mL'
 		ELSE 'APPLY' END
 		
 WHEN @dosage_form = 'Oral Gel'
@@ -86,9 +86,9 @@ WHEN @dosage_form = 'Oral Gel'
 
 WHEN @dosage_form = 'Oral Solution'
 	THEN CASE WHEN @form_descr like '%MG%' 
-		AND @form_descr NOT like '%ML%' THEN 'MG'
+		AND @form_descr NOT like '%ML%' THEN 'mG'
 	WHEN @form_descr like '%DROPS%' THEN 'DROP'
-	ELSE 'ML' END
+	ELSE 'mL' END
 
 WHEN @dosage_form = 'Oral Suspension'
 	THEN CASE WHEN @form_descr like '%DROPS%'
@@ -96,11 +96,11 @@ WHEN @dosage_form = 'Oral Suspension'
 			THEN 'DROP' 
 		WHEN @form_descr like '%UNT%' OR @form_descr like '%UNITS%'
 			THEN 'UNIT'
-		ELSE 'ML' END
+		ELSE 'mL' END
 		
 WHEN @dosage_form IN ('MucousMemSoln')
 	THEN CASE WHEN @form_descr like '%mouth paint%' THEN 'DROP'
-	ELSE 'ML' END
+	ELSE 'mL' END
 
 WHEN @dosage_form IN ('Nasal Gel')
 	AND @form_descr like '%ACTUAT%'
@@ -109,12 +109,12 @@ WHEN @dosage_form IN ('Nasal Gel')
 WHEN @dosage_form IN ('Pen Injector')
 	-- insulin handled above
 	THEN CASE WHEN @form_descr like '%UNT%' THEN 'UNIT' 
-		WHEN @form_descr like '%MCG%' THEN 'MCG' 
-		ELSE 'MG' END
+		WHEN @form_descr like '%MCG%' THEN 'mcG' 
+		ELSE 'mG' END
 		
 WHEN @dosage_form IN ('Pwdr Oral Soln')
 	-- insulin handled above
-	THEN CASE WHEN @form_descr like '%ML%' THEN 'ML' 
+	THEN CASE WHEN @form_descr like '%ML%' THEN 'mL' 
 		WHEN @form_descr like '%GM%' 
 			AND @form_descr NOT LIKE '%MG%' 
 			AND IsNull(@generic_descr,@form_descr) LIKE '& / %' THEN 'LITER'
@@ -125,7 +125,7 @@ WHEN @dosage_form IN ('Pwdr Oral Soln')
 WHEN @dosage_form IN ('Pwdrr Oral Susp')
 	THEN CASE WHEN @form_descr not like '%ML%'
 		and @form_descr like '%MG%'
-		THEN 'MG' ELSE 'ML' END
+		THEN 'mG' ELSE 'mL' END
 
 WHEN @form_descr like '%dental cream%'
 	THEN 'APPLY'
@@ -197,10 +197,10 @@ WHEN @form_descr like '%oral ointment%'
 	THEN 'APPLY'
 
 WHEN @form_descr like '%rectal suspension%'
-	THEN 'ML'
+	THEN 'mL'
 
 WHEN @form_descr like '%oral paste%'
-	THEN 'CM'
+	THEN 'cM'
 
 WHEN @form_descr like '%oral powder%'
 AND @form_descr like '%GM %'
@@ -216,7 +216,7 @@ OR @form_descr like '%mouthwash%'
 
 WHEN @form_descr like '%Powder for Inhalant Solution%'
 OR @form_descr like '%Powder for Inhalation Solution%'
-	THEN 'MG'
+	THEN 'mG'
 	
 WHEN @dosage_form = 'Inhalant Soln'
 	OR @form_descr like '%inhalant suspension%'
@@ -224,7 +224,7 @@ WHEN @dosage_form = 'Inhalant Soln'
 	OR @form_descr like '%inhalant solution%'
 	OR @form_descr like '%inhalation solution%'
 	THEN CASE WHEN IsNull(@generic_descr,@form_descr) like '%nicotine%' THEN 'CARTRIDGE'
-		WHEN IsNull(@generic_descr,@form_descr) like '%Nebuli%er%' THEN 'ML' 
+		WHEN IsNull(@generic_descr,@form_descr) like '%Nebuli%er%' THEN 'mL' 
 		ELSE 'VIAL' END
 
 WHEN @form_descr like '%Powder for Nasal Solution%'
@@ -244,10 +244,10 @@ OR @form_descr like '%rectal spray%'
 	THEN 'APPLY'
 
 WHEN @form_descr like '%rectal solution%'
-	THEN 'ML'
+	THEN 'mL'
 
 WHEN @form_descr like '%sublingual powder%'
-	THEN 'MCG'
+	THEN 'mcG'
 
 WHEN @form_descr like '%Topical solution%'
 AND @form_descr like '%ACTUAT%'
@@ -261,7 +261,7 @@ AND (@form_descr like '%wart%'
 
 WHEN @form_descr like '%Topical solution%'
 AND (@form_descr like '%rogaine%' OR @form_descr like '%minoxidil%')
-	THEN 'ML'
+	THEN 'mL'
  
 -- this case must come after wart remover case above
 WHEN @form_descr like '% film%'
@@ -301,7 +301,7 @@ WHEN @form_descr like '% spray%'
 -- Injection forms are tricky; use caution if applying these
 WHEN @dosage_form = 'Injectable Soln'
 	AND @form_descr like '%extract%'
-	THEN 'ML'
+	THEN 'mL'
 
 WHEN @form_descr like '%UNT Injection%'
 	THEN 'UNIT'
@@ -315,7 +315,7 @@ WHEN @form_descr like '%Injection%'
 and  @form_descr like '%MCG%'
 and @form_descr not like '%ML%' 
 and @form_descr not like '%extract%'
-	THEN 'MCG'
+	THEN 'mcG'
 
 WHEN @form_descr like '%inje%'
   and @form_descr like '%cells%'
@@ -325,19 +325,19 @@ WHEN @form_descr like '%inje%'
 WHEN @form_descr like '%inje%'
 and @form_descr like '%immune globulin%'
 AND @form_descr like '%MG%'
-	THEN 'MG'
+	THEN 'mG'
 
 WHEN @form_descr like '%injection%'
 and @form_descr like '%immune globulin%'
 and (@form_descr like '%UNT in%' 
 or @form_descr like '%UNT/ML%')
-	THEN 'ML'
+	THEN 'mL'
 
 WHEN @form_descr like '%injection%'
 and @form_descr like '%MG%' 
 and @form_descr not like '%extract%' 
 and @form_descr not like '%ML%'
-	THEN 'MG'
+	THEN 'mG'
 
 WHEN @form_descr like '%prefilled%'
 and @form_descr like '% UNT %' 
@@ -350,7 +350,7 @@ and @form_descr not like '%MCG%'
 WHEN @form_descr like '%prefilled%'
 and @form_descr like '%immune globulin%'
 and @form_descr like '%MCG%'
-	THEN 'MCG'
+	THEN 'mcG'
 
 WHEN @form_descr like '%UNT prefilled%'
 or @form_descr like '%UNT (%' 
@@ -360,13 +360,13 @@ WHEN @form_descr like '%prefilled%'
 and @form_descr like '%MG%' 
 and @form_descr not like '%extract%' 
 and @form_descr not like '%ML%'
-	THEN 'MG'
+	THEN 'mG'
 
 WHEN @form_descr like '%prefilled%'
 and @form_descr like '%MCG%' 
 and @form_descr not like '%extract%' 
 and @form_descr not like '%ML%'
-	THEN 'MCG'
+	THEN 'mcG'
 
 
 
