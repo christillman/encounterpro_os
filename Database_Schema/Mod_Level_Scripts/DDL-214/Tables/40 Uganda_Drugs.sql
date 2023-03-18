@@ -5,7 +5,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [Uganda_Drugs](
 	[NDA_MAL_HDP] [varchar](20) NOT NULL,
-	[ug_NAME OF DRUG] varchar(500) NOT NULL,
+	[ug_NAME OF DRUG] varchar(500) NULL,
 	[ug_GENERIC_NAME OF DRUG] varchar(500) NOT NULL,
 	[ug_STRENGTH OF DRUG] varchar(500) NOT NULL,
 	[SBD_Version] [varchar](400) NULL,
