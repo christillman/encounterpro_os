@@ -33,13 +33,13 @@ BEGIN
 DECLARE @new_id int
 /*
 DECLARE	@generic_only bit = 0
-DECLARE	@country_code varchar(100) = 'KE' 
-DECLARE	@country_source_id varchar(21) = '517' 
-DECLARE	@brand_name_formulation varchar(300) = 'Aldara 5 % Topical Cream'
-DECLARE	@corr_sbd_rxcui varchar(20),
-DECLARE	@generic_formulation varchar(300) = 'imiquimod 5 % Topical Cream'
-DECLARE	@corr_scd_rxcui varchar(20) = 'PSN-310982'
-DECLARE	@active_ingredients varchar(200) = 'imiquimod'
+DECLARE	@country_code varchar(100) = 'UG' 
+DECLARE	@country_source_id varchar(21) = '0669' 
+DECLARE	@brand_name_formulation varchar(300) = 'Axcel Fungicort 2 % / 1 % Topical Cream'
+DECLARE	@corr_sbd_rxcui varchar(20)
+DECLARE	@generic_formulation varchar(300) = 'miconazole nitrate 2 % / hydrocortisone acetate 1 % Topical Cream'
+DECLARE	@corr_scd_rxcui varchar(20) = 'KEG7858'
+DECLARE	@active_ingredients varchar(200) = NULL
 DECLARE	@generic_ingr_rxcui varchar(20)
 DECLARE	@brand_name varchar(200)
 DECLARE	@drug_type varchar(20) = 'Single Drug'
@@ -109,30 +109,60 @@ SET @brand_form_rxcui = upper(@country_code) + 'B' + @country_source_id
 SET @generic_form_rxcui = upper(@country_code) + 'G' + @country_source_id
 SET @brand_ingr_rxcui = upper(@country_code) + 'BI' + @country_source_id
 
+IF @generic_only = 1
+	BEGIN
+	SET @brand_form_rxcui = NULL
+	SET @brand_ingr_rxcui = NULL
+	SET @brand_name_rxcui = NULL
+	SET @sbd_rxcui = NULL
+	SET @brand_name_formulation = NULL
+	END
+
 -- If a generic rxcui had been supplied, or can be found using ingredients, 
 -- use it, otherwise make a new one up
 IF @generic_ingr_rxcui IS NULL OR @generic_ingr_rxcui = ''
 	BEGIN
+	SELECT @generic_rxcui = ingr_rxcui
+	FROM c_Drug_Formulation f 
+	WHERE f.form_rxcui = substring(@scd_rxcui,5,20)
+	
 	-- exact wording match for generic?
-	SELECT @generic_rxcui = generic_rxcui
-	FROM c_Drug_Generic g 
-	WHERE g.generic_name = @active_ingredients
-	SET @generic_ingr_exists = CASE WHEN @generic_rxcui IS NULL THEN 0 ELSE 1 END
+	IF @generic_rxcui IS NULL
+		SELECT @generic_rxcui = generic_rxcui
+		FROM c_Drug_Generic g 
+		WHERE g.generic_name = @active_ingredients
 
-	IF @generic_ingr_exists = 0
-		SET @generic_rxcui = upper(@country_code) + 'GI' + @country_source_id
-	END
-ELSE
-	BEGIN
-	SELECT @generic_rxcui = generic_rxcui
-	FROM c_Drug_Generic g 
-	WHERE g.generic_rxcui = @generic_ingr_rxcui
 	SET @generic_ingr_exists = CASE WHEN @generic_rxcui IS NULL THEN 0 ELSE 1 END
 
 	IF @generic_ingr_exists = 0
 		SET @generic_rxcui = upper(@country_code) + 'GI' + @country_source_id
 	ELSE
+		SELECT @active_ingredients = generic_name
+		FROM c_Drug_Generic g 
+		WHERE g.generic_rxcui = @generic_rxcui
+	END
+ELSE
+	BEGIN
+	SELECT @generic_rxcui = ingr_rxcui
+	FROM c_Drug_Formulation f 
+	WHERE f.form_rxcui = substring(@scd_rxcui,5,20)
+	
+	IF @generic_rxcui IS NULL
+		SELECT @generic_rxcui = generic_rxcui
+		FROM c_Drug_Generic g 
+		WHERE g.generic_rxcui = @generic_ingr_rxcui
+
+	SET @generic_ingr_exists = CASE WHEN @generic_rxcui IS NULL THEN 0 ELSE 1 END
+
+	IF @generic_ingr_exists = 0
+		SET @generic_rxcui = upper(@country_code) + 'GI' + @country_source_id
+	ELSE
+		BEGIN
 		SET @generic_rxcui = @generic_ingr_rxcui
+		SELECT @active_ingredients = generic_name
+		FROM c_Drug_Generic g 
+		WHERE g.generic_rxcui = @generic_rxcui
+		END
 	END
 
 CREATE TABLE #Drug_Brand (
@@ -325,6 +355,16 @@ CREATE TABLE #new_generic_form (
 						WHERE form_rxcui = @brand_form_rxcui)
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
 						WHERE form_rxcui = IsNull(@sbd_rxcui,'XXXXXX'))
+
+		IF (SELECT count(*) FROM #new_form) = 0
+			BEGIN
+			-- brand formulation already exists
+			print @brand_name_formulation + ' already exists'
+			SELECT TOP 1 @brand_form_rxcui = form_rxcui 
+				FROM c_Drug_Formulation 
+				WHERE form_rxcui = substring(ISNULL(@sbd_rxcui,'XXXXXXXX'),5,20)
+				OR form_descr = @brand_name_formulation
+			END
 
 		-- Derive brand ingredient record
 		IF @brand_name IS NOT NULL
