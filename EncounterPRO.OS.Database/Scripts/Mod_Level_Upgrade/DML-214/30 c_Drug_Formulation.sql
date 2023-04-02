@@ -23,6 +23,42 @@ SET generic_form_rxcui = 'KEG5916'
 where form_rxcui = 'KEB9632B'
 -- (1 row(s) affected)
 
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Oral Tablets', 'Oral Tablet')
+WHERE form_descr LIKE '%Oral Tablets%'
+-- (1 row affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Oral Extended Release Tablet', 'Extended Release Oral Tablet')
+WHERE form_descr LIKE '%Oral Extended Release Tablet%'
+-- (1 row affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Otic Drops Suspension', 'Otic Suspension')
+WHERE form_descr LIKE '%Otic Drops Suspension%'
+-- (1 row affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Otic Drops', 'Otic Solution')
+WHERE form_descr LIKE '%Otic Drops%'
+-- (8 rows affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Topical Liniment', 'Topical Ointment')
+WHERE form_descr LIKE '%Topical Liniment%'
+-- (1 row affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Transdermal Patch', 'Transdermal System')
+WHERE form_descr LIKE '%Transdermal Patch%'
+-- (15 rows affected)
+
+UPDATE c_Drug_Formulation 
+SET form_descr = REPLACE(form_descr, 'Vaginal Capsule', 'Vaginal Tablet')
+WHERE form_descr LIKE '%Vaginal Capsule%'
+-- (10 rows affected)
+
 -- Missing dosage form in description
 UPDATE c_Drug_Formulation
 SET form_descr = 'terbutaline sulphate 2.5 MG / bromhexine HCl 4 MG / guaifenesin 100 MG in 10 ML Oral Solution' 
