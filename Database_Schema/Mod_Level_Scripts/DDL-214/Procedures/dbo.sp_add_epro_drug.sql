@@ -15,13 +15,13 @@ CREATE PROCEDURE sp_add_epro_drug (
 	@country_code varchar(100), 
 	@country_source_id varchar(21), 
 	@brand_name_formulation varchar(300),
-	@corr_sbd_rxcui varchar(20),
+	@corr_sbd_rxcui varchar(30),
 	@generic_formulation varchar(300),
-	@corr_scd_rxcui varchar(20),
+	@corr_scd_rxcui varchar(30),
 	@active_ingredients varchar(200),
-	@generic_ingr_rxcui varchar(20),
+	@generic_ingr_rxcui varchar(30),
 	@brand_name varchar(200),
-	@brand_rxcui varchar(20),
+	@brand_rxcui varchar(30),
 	@drug_type varchar(20) = 'Single Drug',
 	@notes varchar(200) = NULL
 	)
@@ -36,26 +36,26 @@ DECLARE	@generic_only bit = 0
 DECLARE	@country_code varchar(100) = 'UG' 
 DECLARE	@country_source_id varchar(21) = '0669' 
 DECLARE	@brand_name_formulation varchar(300) = 'Axcel Fungicort 2 % / 1 % Topical Cream'
-DECLARE	@corr_sbd_rxcui varchar(20)
+DECLARE	@corr_sbd_rxcui varchar(30)
 DECLARE	@generic_formulation varchar(300) = 'miconazole nitrate 2 % / hydrocortisone acetate 1 % Topical Cream'
-DECLARE	@corr_scd_rxcui varchar(20) = 'KEG7858'
+DECLARE	@corr_scd_rxcui varchar(30) = 'KEG7858'
 DECLARE	@active_ingredients varchar(200) = NULL
-DECLARE	@generic_ingr_rxcui varchar(20)
+DECLARE	@generic_ingr_rxcui varchar(30)
 DECLARE	@brand_name varchar(200)
 DECLARE	@drug_type varchar(20) = 'Single Drug'
 */
 -- local variables
-DECLARE @brand_form_rxcui varchar(20)
-DECLARE @generic_form_rxcui varchar(20)
-DECLARE @brand_ingr_rxcui varchar(20)
+DECLARE @brand_form_rxcui varchar(30)
+DECLARE @generic_form_rxcui varchar(30)
+DECLARE @brand_ingr_rxcui varchar(30)
 DECLARE @single_ingredient bit = CASE 
 	WHEN @active_ingredients LIKE '% / %'
 		OR @generic_formulation LIKE '% / %' THEN 0 
 		ELSE 1 END
-DECLARE @generic_rxcui varchar(20)
-DECLARE @brand_name_rxcui varchar(20)
-DECLARE @sbd_rxcui varchar(20)
-DECLARE @scd_rxcui varchar(20)
+DECLARE @generic_rxcui varchar(30)
+DECLARE @brand_name_rxcui varchar(30)
+DECLARE @sbd_rxcui varchar(30)
+DECLARE @scd_rxcui varchar(30)
 DECLARE @generic_ingr_exists bit
 
 DECLARE @brand_name_edited varchar(300)
