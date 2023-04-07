@@ -1,14 +1,15 @@
 
-Print 'Drop Procedure [dbo].[sp_add_epro_drug]'
+-- print 'Drop Procedure [dbo].[sp_add_epro_drug]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'sp_add_epro_drug') AND [type]='P'))
 DROP PROCEDURE [dbo].[sp_add_epro_drug]
 GO
 
-Print 'Create Procedure [dbo].[sp_add_epro_drug]'
+-- print 'Create Procedure [dbo].[sp_add_epro_drug]'
 GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
 GO
 CREATE PROCEDURE sp_add_epro_drug (
 	@generic_only bit,
@@ -96,8 +97,8 @@ IF @country_source_id IS NULL
 
 	IF @@ROWCOUNT > 0
 		BEGIN
-		print 'source_id already exists: ' + @country_source_id
-		print 'Aborting'
+		-- print 'source_id already exists: ' + @country_source_id
+		-- print 'Aborting'
 		RETURN
 		END
 	-- Make up a @country_source_id
@@ -243,7 +244,7 @@ CREATE TABLE #new_generic_form (
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Formulation 
 						WHERE form_rxcui = @generic_form_rxcui)
 			BEGIN
-			print 'INSERT INTO #new_generic_form'
+			-- print 'INSERT INTO #new_generic_form'
 			INSERT INTO #new_generic_form (
 				form_rxcui,
 				form_descr, 
@@ -267,7 +268,7 @@ CREATE TABLE #new_generic_form (
 		ELSE
 			BEGIN
 			-- generic formulation already exists
-			print @generic_formulation + ' already exists'
+			-- print @generic_formulation + ' already exists'
 			SELECT TOP 1 @generic_form_rxcui = form_rxcui 
 				FROM c_Drug_Formulation 
 				WHERE form_rxcui = substring(ISNULL(@scd_rxcui,'XXXXXXXX'),5,20)
@@ -296,7 +297,7 @@ CREATE TABLE #new_generic_form (
 	*/
 	IF @generic_ingr_exists = 1
 		BEGIN
-		print @active_ingredients + ' already exists'
+		-- print @active_ingredients + ' already exists'
 		UPDATE #new_generic_form
 		SET ingr_rxcui = @generic_rxcui
 		UPDATE c_Drug_Generic
@@ -306,7 +307,7 @@ CREATE TABLE #new_generic_form (
 		END
 	ELSE
 		BEGIN
-		print 'Inserting ' + @active_ingredients + ' INTO #Drug_Generic'
+		-- print 'Inserting ' + @active_ingredients + ' INTO #Drug_Generic'
 		INSERT INTO #Drug_Generic (
 			generic_rxcui,
 			generic_name,
@@ -325,7 +326,7 @@ CREATE TABLE #new_generic_form (
 	-- Brand formulation?
 	IF @generic_only = 0 
 		BEGIN
-		print 'INSERT INTO #new_form'
+		-- print 'INSERT INTO #new_form'
 		INSERT INTO #new_form (
 			form_rxcui,
 			form_descr, 
@@ -359,7 +360,7 @@ CREATE TABLE #new_generic_form (
 		IF (SELECT count(*) FROM #new_form) = 0
 			BEGIN
 			-- brand formulation already exists
-			print @brand_name_formulation + ' already exists'
+			-- print @brand_name_formulation + ' already exists'
 			SELECT TOP 1 @brand_form_rxcui = form_rxcui 
 				FROM c_Drug_Formulation 
 				WHERE form_rxcui = substring(ISNULL(@sbd_rxcui,'XXXXXXXX'),5,20)
@@ -391,7 +392,7 @@ CREATE TABLE #new_generic_form (
 						WHERE brand_name = @brand_name_edited
 						OR brand_name_rxcui = @brand_rxcui)
 			BEGIN
-			print @brand_name_edited + ' Brand already exists'
+			-- print @brand_name_edited + ' Brand already exists'
 			SELECT @brand_name_rxcui = b.brand_name_rxcui
 				FROM c_Drug_Brand b 
 				WHERE b.brand_name = @brand_name_edited
@@ -405,7 +406,7 @@ CREATE TABLE #new_generic_form (
 			END
 		ELSE
 			BEGIN
-			print 'Inserting ' + @brand_name_edited + ' INTO #Drug_Brand'
+			-- print 'Inserting ' + @brand_name_edited + ' INTO #Drug_Brand'
 			INSERT INTO #Drug_Brand (
 				brand_name_rxcui,
 				brand_name,
@@ -423,7 +424,7 @@ CREATE TABLE #new_generic_form (
 			FROM c_1_record
 			END
 
-		print 'UPDATE #Drug_Brand name'
+		-- print 'UPDATE #Drug_Brand name'
 		UPDATE #Drug_Brand 
 		SET brand_name = REPLACE(REPLACE(REPLACE(
 			brand_name, 
@@ -437,7 +438,7 @@ CREATE TABLE #new_generic_form (
 
 	IF (SELECT count(*) FROM #new_generic_form) > 0
 	BEGIN
-	print 'INSERT INTO c_Drug_Formulation from #new_generic_form'
+	-- print 'INSERT INTO c_Drug_Formulation from #new_generic_form'
 	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in)
 	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in
 	FROM #new_generic_form
@@ -445,7 +446,7 @@ CREATE TABLE #new_generic_form (
 
 	IF (SELECT count(*) FROM #new_form) > 0
 	BEGIN
-	print 'INSERT INTO c_Drug_Formulation from #new_form'
+	-- print 'INSERT INTO c_Drug_Formulation from #new_form'
 	INSERT INTO c_Drug_Formulation (form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui)
 	SELECT form_rxcui, form_descr, form_tty, ingr_tty, ingr_rxcui, valid_in, generic_form_rxcui
 	FROM #new_form
@@ -453,7 +454,7 @@ CREATE TABLE #new_generic_form (
 
 	IF (SELECT count(*) FROM #Drug_Brand) > 0
 	BEGIN
-	print 'INSERT INTO c_Drug_Brand'
+	-- print 'INSERT INTO c_Drug_Brand'
 	INSERT INTO c_Drug_Brand (drug_id, brand_name_rxcui, brand_name, generic_rxcui, is_single_ingredient, valid_in) 
 	SELECT drug_id,
 		brand_name_rxcui,
@@ -468,7 +469,7 @@ CREATE TABLE #new_generic_form (
 
 	IF (SELECT count(*) FROM #Drug_Generic) > 0
 	BEGIN
-	print 'INSERT INTO c_Drug_Generic'
+	-- print 'INSERT INTO c_Drug_Generic'
 	INSERT INTO c_Drug_Generic (drug_id, generic_rxcui, generic_name, is_single_ingredient, valid_in) 
 	SELECT drug_id,
 		generic_rxcui,
@@ -485,7 +486,7 @@ CREATE TABLE #new_generic_form (
 	-- sp_add_missing_drug_defn_pkg_adm_method will not duplicate
 
 	-- Missing KE brand definitions
-	print 'INSERT INTO c_Drug_Definition brand'
+	-- print 'INSERT INTO c_Drug_Definition brand'
 	INSERT INTO c_Drug_Definition (drug_id, drug_type, common_name, generic_name)
 	SELECT b.drug_id, @drug_type,
 		CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
@@ -496,7 +497,7 @@ CREATE TABLE #new_generic_form (
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where b.brand_name_rxcui = f.ingr_rxcui)
 
 	-- Missing KE generic definitions
-	print 'INSERT INTO c_Drug_Definition generic'
+	-- print 'INSERT INTO c_Drug_Definition generic'
 	INSERT INTO c_Drug_Definition (drug_id, drug_type, common_name, generic_name)
 	SELECT g.drug_id, @drug_type, 
 		CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
@@ -505,7 +506,7 @@ CREATE TABLE #new_generic_form (
 	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
 
-	print 'INSERT INTO c_Drug_Source_Formulation'
+	-- print 'INSERT INTO c_Drug_Source_Formulation'
 	INSERT INTO c_Drug_Source_Formulation (
 		[country_code],
 		[source_id],
