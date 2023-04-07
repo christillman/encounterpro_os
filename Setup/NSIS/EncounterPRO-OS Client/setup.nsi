@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.1.0.0
+  !define VERSION   7.2.0.0
 
 ; Source Root
  !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   213
+  !define Database_Mod_Level   214
   ; Get this from the folder name in e.g.
   ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2703
   !define PBRuntime_VERSION   19.2.0.2703
