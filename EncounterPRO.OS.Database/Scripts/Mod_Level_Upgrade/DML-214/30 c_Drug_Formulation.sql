@@ -6,6 +6,14 @@ JOIN c_Drug_Generic g on g.generic_rxcui = f.ingr_rxcui
 WHERE generic_form_rxcui is not null
 -- (66 row(s) affected)
 
+-- These mass form_descr updates really exercise the trigger, so drop it temporarily
+
+GO
+IF OBJECT_ID ('tr_c_Drug_Formulation_insert_update', 'TR') IS NOT NULL
+     DROP TRIGGER tr_c_Drug_Formulation_insert_update
+GO
+
+
 -- Update recommended in comments 11_26_2020 dose_unit assignment ^L0 corrections_RevisedJan2022.xlsx
 UPDATE c_Drug_Formulation 
 SET form_descr = REPLACE(form_descr,'solution for injection','Injectable Solution')
@@ -203,3 +211,24 @@ set form_descr = replace(form_descr, ' per ', ' in ')
 where (form_descr like '% per % ML%' or form_descr like '% per % OZ%')
 and form_descr not like '% per 24%'
 and form_tty like 'SCD%'
+GO
+
+CREATE TRIGGER tr_c_Drug_Formulation_insert_update
+ON c_Drug_Formulation
+FOR INSERT, UPDATE 
+AS 
+	BEGIN 
+	IF EXISTS (SELECT 1 FROM c_Drug_Formulation f
+				JOIN inserted i ON i.form_descr = f.form_descr
+				WHERE i.form_rxcui != f.form_rxcui)
+		BEGIN
+		RAISERROR ('Not a unique value for form_descr', 16, 10)
+		-- Force Violation of PRIMARY KEY to prevent insertion
+		INSERT INTO c_Drug_Formulation (form_rxcui)
+		SELECT f.form_rxcui FROM c_Drug_Formulation f
+		JOIN inserted i ON i.form_descr = f.form_descr
+		END
+	END
+  
+GO
+
