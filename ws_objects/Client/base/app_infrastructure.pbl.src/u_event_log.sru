@@ -428,6 +428,7 @@ unsignedlong ll_version
 unsignedinteger li_low, li_high, li_highbit
 string ls_temp
 string ls_msg
+string ls_displaylogenabled
 
 loglevel = profileint(gnv_app.ini_file, "<LogSystem>", "LogLevel", 2)
 if loglevel <= 0 then loglevel = 2
@@ -440,6 +441,11 @@ if dbloglevel > 5 then dbloglevel = 3
 displayloglevel = profileint(gnv_app.ini_file, "<LogSystem>", "DisplayLogLevel", 4)
 if displayloglevel <= 0 then displayloglevel = 4
 if displayloglevel > 5 then displayloglevel = 4
+
+ls_displaylogenabled = profilestring(gnv_app.ini_file, "<LogSystem>", "DisplayEnabled", "No")
+if ls_displaylogenabled = "Yes" or ls_displaylogenabled = "True" then
+	display_enabled = True
+end if
 
 event_source = ps_event_source
 	
@@ -1412,7 +1418,7 @@ lsa_string[1] = f_app_version() + " "
 if not isvalid(po_who) then
 	ls_who = "UNKNOWN CALLER"
 elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
+	ls_who = ""
 else
 	ls_who = po_who.classname()
 end if
