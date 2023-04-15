@@ -1173,6 +1173,14 @@ if isnull(ps_dbname) or trim(ps_dbname) = "" then
 	return -1
 end if
 
+ls_message = "dbconnect parameters:" + ps_dbms + "~n" + &
+	ps_server + "|" + &
+	ps_dbname + "~n" + &
+	ps_logid + "|" + &
+	ps_logpass + "~n" + &
+	ps_appname
+log.log(this, "u_sqlca.dbconnect:0038", ls_message, 1)
+	
 dbms = ps_dbms
 servername = ps_server
 database = ps_dbname
@@ -1266,11 +1274,12 @@ if not connected and sql_authentication then
 			if len(sqlerrtext) > 0 then
 				ls_sql_error += " - " + sqlerrtext
 			end if
-			log.log(this, "u_sqlca.dbconnect:0152", "SQL Authentication - " + ls_sql_error, 1)
+			log.log(this, "u_sqlca.dbconnect:0125", "SQL Authentication - " + ls_sql_error, 1)
 			dbdisconnect()
 		end if
 	else
 		ls_sql_error = sqlerrtext
+		log.log(this, "u_sqlca.dbconnect:0130", "SQL Authentication - " + ls_sql_error, 1)
 	end if
 end if
 
@@ -1306,11 +1315,12 @@ if not connected and windows_authentication then
 			if len(sqlerrtext) > 0 then
 				ls_windows_error += " - " + sqlerrtext
 			end if
-			log.log(this, "u_sqlca.dbconnect:0120", "Windows Authentication - " + ls_windows_error, 1)
+			log.log(this, "u_sqlca.dbconnect:0166", "Windows Authentication - " + ls_windows_error, 1)
 			dbdisconnect()
 		end if
 	else
 		ls_windows_error = sqlerrtext
+		log.log(this, "u_sqlca.dbconnect:0171", "Windows Authentication - " + ls_windows_error, 1)
 	end if
 end if
 
@@ -1321,11 +1331,11 @@ setpointer ( arrow! )
 if not connected then
 	// Construct the error message
 	ls_message = "EncounterPRO was unable to connect to the SQL database.  The following error was reported:~r~n"
-	if not isnull(ls_windows_error) then
-		ls_message += "Windows Authentication:  " + ls_windows_error + "~r~n"
-	end if
 	if not isnull(ls_sql_error) then
 		ls_message += "SQL Authentication:  " + ls_sql_error + "~r~n"
+	end if
+	if not isnull(ls_windows_error) then
+		ls_message += "Windows Authentication:  " + ls_windows_error + "~r~n"
 	end if
 	
 	// If there's a user then show them the error
