@@ -207,12 +207,12 @@ type variables
 
 long minimum_modification_level = 214
 
-date compile_date = date("2023-03-11")
+date compile_date = date("2023-04-15")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "0.0"
-// Resulting in 7.1.0.0
+string build = "1.0"
+// Resulting in 7.2.1.0
 
 ////////////////////////////////////////////////////////////
 
@@ -238,6 +238,7 @@ string windows_logon_id
 // en_af: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -399,7 +400,7 @@ f_cpr_set_msg("Database Connected")
 //if isnull(lbl_script) or len(lbl_script) <= 0 then
 //	log.log(this, "u_sqlca.upgrade_database:0034", "Empty", 4)
 //end if
-
+//
 // Check the versions
 if f_check_version() < 0 then
 	// After an upgrade, we don't want an error message but rather a nice quiet exit
