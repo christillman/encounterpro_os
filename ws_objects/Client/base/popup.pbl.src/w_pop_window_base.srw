@@ -16,6 +16,7 @@ string title = ""
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
+boolean show_more_buttons = false
 dw_message dw_message
 end type
 global w_pop_window_base w_pop_window_base
@@ -71,9 +72,9 @@ type dw_message from datawindow within w_pop_window_base
 integer x = 59
 integer y = 36
 integer width = 1906
-integer height = 608
-boolean enabled = false
+integer height = 624
 string dataobject = "dw_ok"
+boolean vscrollbar = true
 boolean border = false
 end type
 
