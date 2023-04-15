@@ -14,7 +14,7 @@ global type w_pop_message from w_pop_window_base
 integer x = 325
 integer y = 604
 integer width = 2313
-integer height = 656
+integer height = 872
 cb_ok cb_ok
 cb_help cb_help
 cb_edit_help cb_edit_help
@@ -110,14 +110,13 @@ end type
 type dw_message from w_pop_window_base`dw_message within w_pop_message
 integer x = 69
 integer y = 60
-integer width = 2130
-integer height = 356
-boolean vscrollbar = true
+integer width = 2181
+integer height = 640
 end type
 
 type cb_ok from commandbutton within w_pop_message
-integer x = 933
-integer y = 440
+integer x = 1175
+integer y = 696
 integer width = 402
 integer height = 112
 integer taborder = 20
@@ -135,8 +134,8 @@ event clicked;close(parent)
 end event
 
 type cb_help from commandbutton within w_pop_message
-integer x = 37
-integer y = 444
+integer x = 279
+integer y = 700
 integer width = 402
 integer height = 112
 integer taborder = 30
@@ -155,8 +154,8 @@ event clicked;f_display_help(help_article.help_context, help_article.which_help 
 end event
 
 type cb_edit_help from commandbutton within w_pop_message
-integer x = 466
-integer y = 464
+integer x = 709
+integer y = 720
 integer width = 320
 integer height = 76
 integer taborder = 40
