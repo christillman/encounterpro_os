@@ -26,20 +26,26 @@ declare @SQL nvarchar(max)
 DECLARE cr_add CURSOR FOR 
 SELECT [NDA_MAL_HDP]
       ,[SBD_Version]
-      ,[brand_form_RXCUI]
+      ,u.[brand_form_RXCUI]
       ,[SCD_PSN_Version]
-      ,[generic_form_RXCUI]
+      ,u.[generic_form_RXCUI]
       ,[generic_name]
       ,[generic_ingr_RXCUI]
       ,[brand_name]
-      ,[brand_name_RXCUI]
-  FROM [dbo].[Uganda_Drugs]
-where reviewed > 0
+      ,u.[brand_name_RXCUI]
+FROM [dbo].[Uganda_Drugs] u
+left join c_Drug_Source_Formulation f 
+	on f.source_id = u.NDA_MAL_HDP
+	and f.country_code = 'UG'
+where reviewed between 1 and 4
+and f.source_id is null
 and ([SCD_PSN_Version] is not null
-	OR [generic_form_RXCUI] is not null)
+	OR u.[generic_form_RXCUI] is not null
+	OR u.brand_form_RXCUI IS NOT NULL)
 and ([generic_name] is not null
 	OR [generic_ingr_RXCUI] is not null
-	OR [generic_form_RXCUI] is not null)
+	OR u.[generic_form_RXCUI] is not null
+	OR u.brand_form_RXCUI IS NOT NULL)
 order by [NDA_MAL_HDP]
 
 OPEN cr_add
@@ -67,7 +73,7 @@ WHILE @@FETCH_STATUS = 0
 	SET @SQL = @SQL + CASE WHEN @generic_ingr_RXCUI IS NULL THEN 'NULL,' ELSE '''' + @generic_ingr_RXCUI + ''',' END
 	SET @SQL = @SQL + CASE WHEN @brand_name IS NULL THEN 'NULL,' ELSE '''' + replace(@brand_name,'''','''''') + ''','  END
 	SET @SQL = @SQL + CASE WHEN @brand_name_RXCUI IS NULL THEN 'NULL' ELSE '''' + @brand_name_RXCUI + '''' END
-	print @SQL
+	-- print @SQL
 	exec sp_ExecuteSQL @SQL
 
 	FETCH NEXT FROM cr_add INTO @NDA_MAL_HDP
