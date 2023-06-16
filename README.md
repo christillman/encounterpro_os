@@ -11,15 +11,15 @@ There are many ways of contributing, including some that don't require you to wr
 
 Open an issue using the most appropriate [issue template]() to describe the changes you'd like to see.
 
-If you're looking for a way to contribute, you can scan through our [existing issues](issues) for something to work on. When ready, check out [Getting Started with Contributing](/CONTRIBUTING.md) for detailed instructions.
+If you're looking for a way to contribute, you can scan through our [existing issues](https://github.com/christillman/encounterpro_os/issues) for something to work on. When ready, check out [Getting Started with Contributing](/CONTRIBUTING.md) for detailed instructions.
 
 ### Join us in discussions
 
-Use our public Discussions page to talk about all sorts of topics related EncounterPro. For example: if you'd like help troubleshooting a PR, have a great new idea, or want to share something amazing you've learned in our docs, join us in the [discussions](discussions).
+Use our public Discussions page to talk about all sorts of topics related EncounterPro. For example: if you'd like help troubleshooting a PR, have a great new idea, or want to share something amazing you've learned in our docs, join us in the [discussions](https://github.com/christillman/encounterpro_os/discussions).
 
 ### Getting started
 
-The [Release Notes](https://github.com/christillman/encounterpro_os/wiki/Release-Notes) for EncounterPro_OS are linked in the [Wiki homepage](wiki)
+The [Release Notes](https://github.com/christillman/encounterpro_os/wiki/Release-Notes) for EncounterPro_OS are linked in the [Wiki homepage](https://github.com/christillman/encounterpro_os/wiki)
 
 Use the latest binary installer to install the compiled EncounterPro. The installer is not released as part of source; it is available through [GreenOlive EHR](https://www.greenoliveehr.com/) which supports usage of EncounterPro_OS in clinician's offices. The SQL Server name will be 
 
