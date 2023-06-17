@@ -1,0 +1,38 @@
+name: "New Feature"
+description: "Use this form for creating new issues."
+title: "Ticket Title"
+labels: ["UI"]
+assignees:
+  - christillman
+body:
+  - type: textarea
+    attributes:
+      label: "Overview"
+      description: "Provide an overview of the feature request."
+      placeholder: "Provide information here."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Requirements"
+      description: "List all requirements for ticket completion."
+      placeholder: "- [ ] List Requirements Here"
+      value: "- [ ] Requirement 1"
+  - type: textarea
+    attributes:
+      label: "Design Comp"
+      description: "Provide a link to any design comps or parts kit pieces if available."
+      placeholder: "[Design Comp](url)"
+      value: "[Design Comp Name](url)"
+  - type: textarea
+    attributes:
+      label: "Related Tickets"
+      description: "Link to any related or prior tickets."
+      placeholder: "List related tickets here if available."
+      value: "- #"
+  - type: textarea
+    attributes:
+      label: "Screenshots (if applicable)"
+      description: "Provide any relevant screenshots."
+      placeholder: "Add relevant screenshots here."
+	  
