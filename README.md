@@ -1,4 +1,4 @@
-# encounterpro-os
+# EncounterPro_OS
 EncounterPro Open Source Electronic Health Record EHR/EMR and Physician Workflow
 
 This repository contains the code and Markdown source files for [EncounterPro_OS](https://github.com/christillman/encounterpro_os).
