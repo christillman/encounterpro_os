@@ -20,12 +20,33 @@ body:
   - type: textarea
     id: what-happened
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
+      label: What happened? 
+      description: Describe the bug
       placeholder: Tell us what you see!
-      value: "A bug happened!"
+      value: "A clear and concise description of what the bug is."
     validations:
       required: true
+  - type: textarea
+    id: to-reproduce
+    attributes:
+      label: How did it happen? 
+      description: Steps to reproduce the behavior
+      placeholder: Tell us how we can see the problem
+      value: "1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expectations
+      description: What the world should look like
+      placeholder: Tell us what you expected
+      value: "I expected ..."
+    validations:
+      required: false
   - type: dropdown
     id: version
     attributes:
