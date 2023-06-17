@@ -5,6 +5,8 @@ This repository contains the code and Markdown source files for [EncounterPro_OS
 
 ## Contributing
 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+
 See [the contributing guide](CONTRIBUTING.md) for detailed instructions on how to get started with our project.
 
 There are many ways of contributing, including some that don't require you to write a single line of code.
