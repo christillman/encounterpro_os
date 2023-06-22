@@ -47,6 +47,15 @@ body:
       value: "I expected ..."
     validations:
       required: false
+  - type: textarea
+    id: priority
+    attributes:
+      label: Urgency and Importance
+      description: Please describe the impact to you, including your reasoning around urgency and importance of completing the fix
+      placeholder: I need ...
+      value: "I need ..."
+    validations:
+      required: true
   - type: dropdown
     id: version
     attributes:
