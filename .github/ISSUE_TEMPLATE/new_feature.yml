@@ -9,7 +9,7 @@ body:
     attributes:
       label: "Overview"
       description: "Provide an overview of the feature request."
-      placeholder: "Provide information here."
+      placeholder: "What should the world look like"
     validations:
       required: true
   - type: textarea
@@ -20,8 +20,8 @@ body:
       value: "- [ ] Requirement 1"
   - type: textarea
     attributes:
-      label: "Design Comp"
-      description: "Provide a link to any design comps or parts kit pieces if available."
+      label: "Design"
+      description: "Provide a link to any documentation or parts kit pieces if available."
       placeholder: "[Design Comp](url)"
       value: "[Design Comp Name](url)"
   - type: textarea
@@ -30,6 +30,15 @@ body:
       description: "Link to any related or prior tickets."
       placeholder: "List related tickets here if available."
       value: "- #"
+  - type: textarea
+    id: priority
+    attributes:
+      label: Urgency and Importance
+      description: Please describe your reasoning around the urgency and importance of completing the enhancement
+      placeholder: urgency
+      value: "This needs to be ready by Christmas because ..."
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: "Screenshots (if applicable)"
