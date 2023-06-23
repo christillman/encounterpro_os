@@ -236,20 +236,20 @@ string ls_mod_level
 
 ls_building_from = GetCurrentDirectory ( )
 
-ls_dml_path = "C:\Users\tofft\EncounterPro\encounterpro_os\EncounterPRO.OS.Database\Scripts\Mod_Level_Upgrade\DML-"
+ls_dml_path = "C:\EncounterPro\encounterpro_os\EncounterPRO.OS.Database\Scripts\Mod_Level_Upgrade\DML-"
 li_sts = GetFolder ("Select DML Mod Folder", ls_dml_path)
 If li_sts <= 0 Then return
 
 ls_mod_level = Right(ls_dml_path,3)
 
-ls_ddl_path = "C:\Users\tofft\EncounterPro\encounterpro_os\Database_Schema\Mod_Level_Scripts\DDL-" + ls_mod_level
+ls_ddl_path = "C:\EncounterPro\encounterpro_os\Database_Schema\Mod_Level_Scripts\DDL-" + ls_mod_level
 IF Not FileExists(ls_ddl_path) THEN
 	li_sts = CreateDirectory(ls_ddl_path)
 END IF
 //li_sts = GetFolder ("Select Database Schema Mod Folder", ls_ddl_path)
 //If li_sts <= 0 Then return
 
-ls_output_path = "C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\Database\Upgrade\" + ls_mod_level
+ls_output_path = "C:\EncounterPro\Builds\EncounterPRO-OS\Database\Upgrade\" + ls_mod_level
 IF Not FileExists(ls_output_path) THEN
 	li_sts = CreateDirectory(ls_output_path)
 END IF
