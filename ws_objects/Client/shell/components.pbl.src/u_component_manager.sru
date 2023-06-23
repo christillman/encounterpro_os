@@ -613,7 +613,10 @@ public function boolean is_environment_installable ();string ls_install_user
 string ls_install_pw
 boolean lb_is_admin
 
-lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+
+if common_thread.utilities_ok() then
+	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+end if
 if lb_is_admin then return true
 
 ls_install_user = datalist.get_preference("SYSTEM", "Install Username")
@@ -641,7 +644,9 @@ component_trial_mode = datalist.get_preference_boolean("SYSTEM", "Component Tria
 
 just_in_time_installing = datalist.get_preference_boolean("SYSTEM", "Just In Time Installation", false)
 
-lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+if common_thread.utilities_ok() then
+	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+end if
 if lb_is_admin then
 	is_environment_installable = true
 else
