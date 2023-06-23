@@ -185,7 +185,11 @@ long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = "L:\Common\icons\epro40.ico"
-string appruntimeversion = "19.2.0.2703"
+string appruntimeversion = "19.2.0.2797"
+long webview2distribution = 0
+boolean webview2checkx86 = false
+boolean webview2checkx64 = false
+string webview2url = "https://developer.microsoft.com/en-us/microsoft-edge/webview2/"
 event keydown pbm_keydown
 end type
 global cpr cpr
@@ -263,6 +267,10 @@ string ls_arg
 ContextKeyword lcxk_base
 string ls_Appdata
 string ls_values[]
+
+// Have seen failure of SQLCA creation in create event.
+// Re-create here.
+sqlca = create u_sqlca
 
 cpr_mode = "CLIENT"
 
@@ -389,18 +397,18 @@ log.display_enabled = true
 f_cpr_set_msg("Database Connected")
 
 // Check SELECTBLOB works
-//blob lbl_script
-//SELECTBLOB object
-//INTO :lbl_script
-//FROM c_Patient_Material
-//WHERE material_id = 1
-//USING SQLCA;
-//tf_check()
-//
-//if isnull(lbl_script) or len(lbl_script) <= 0 then
-//	log.log(this, "u_sqlca.upgrade_database:0034", "Empty", 4)
-//end if
-//
+blob lbl_script
+SELECTBLOB object
+INTO :lbl_script
+FROM c_Patient_Material
+WHERE material_id = 1
+USING SQLCA;
+tf_check()
+
+if isnull(lbl_script) or len(lbl_script) <= 0 then
+	log.log(this, "cpr.open: 159", "Blob doesn't work", 4)
+end if
+
 // Check the versions
 if f_check_version() < 0 then
 	// After an upgrade, we don't want an error message but rather a nice quiet exit
