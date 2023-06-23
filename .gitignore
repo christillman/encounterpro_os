@@ -42,3 +42,10 @@ Client/EproTrace_401.pbp
 *.pbd
 Help/_errorlog.txt
 .vs
+/Components/EncounterPRO.OS.ComponentTest/EncounterPRO.OS.Component/obj
+/Components/EncounterPRO.OS.ComponentTest/EncounterPRO.OS.Component/bin
+/Components/EncounterPRO.OS.ComponentTest/EncounterPRO.OS.ComponentTest/obj
+/Components/EncounterPRO.OS.ComponentTest/EncounterPRO.OS.ComponentTest/bin
+/Components/EncounterPRO.OS.ComponentTest/JMJDocument/obj
+/Components/EncounterPRO.OS.ComponentTest/JMJDocument/bin
+/Help/_errorlog.txt
