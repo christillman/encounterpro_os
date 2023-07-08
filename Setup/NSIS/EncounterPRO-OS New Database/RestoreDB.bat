@@ -1,0 +1,2 @@
+"C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\SQLCmd.exe" -X -E -S ".\EncounterPRO_OS" -i ".\Restore Epro Database.sql" -v NewDBName = "EncounterPRO_OS" backupfilepath = ".\OS_202.bak"
+pause

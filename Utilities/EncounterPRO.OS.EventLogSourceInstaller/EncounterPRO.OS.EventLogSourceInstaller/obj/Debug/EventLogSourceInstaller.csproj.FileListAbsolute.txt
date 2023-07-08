@@ -1,6 +1,6 @@
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Debug\EncounterPRO.OS.EventLogSourceInstaller.dll
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Debug\EncounterPRO.OS.EventLogSourceInstaller.pdb
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EventLogSourceInstaller.csprojAssemblyReference.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EventLogSourceInstaller.csproj.CoreCompileInputs.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EncounterPRO.OS.EventLogSourceInstaller.dll
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EncounterPRO.OS.EventLogSourceInstaller.pdb
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Debug\EncounterPRO.OS.EventLogSourceInstaller.dll
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\bin\Debug\EncounterPRO.OS.EventLogSourceInstaller.pdb
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EventLogSourceInstaller.csprojAssemblyReference.cache
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EventLogSourceInstaller.csproj.CoreCompileInputs.cache
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EncounterPRO.OS.EventLogSourceInstaller.dll
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.EventLogSourceInstaller\EncounterPRO.OS.EventLogSourceInstaller\obj\Debug\EncounterPRO.OS.EventLogSourceInstaller.pdb

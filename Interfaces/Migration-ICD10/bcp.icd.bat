@@ -6,9 +6,9 @@ REM The server designation, this one is a local SQL SERVER Express
 REM I access through Windows user permisson
 SET MSSQLSERVER=DESKTOP-GU15HUD\ENCOUNTERPRO_OS
 
-SET IMPORT_FILE_PATH=C:\Users\tofft\EncounterPro\ICD
+SET IMPORT_FILE_PATH=C:\EncounterPro\ICD
 
-SET SCRIPT_PATH=C:\Users\tofft\EncounterPro\encounterpro_os\Interfaces
+SET SCRIPT_PATH=C:\EncounterPro\encounterpro_os\Interfaces
 
 REM Execute the table setup script. 
 sqlcmd -i "%SCRIPT_PATH%\create_icd_tables.sql" -S %MSSQLSERVER% -d EPRO_OS_105 -E

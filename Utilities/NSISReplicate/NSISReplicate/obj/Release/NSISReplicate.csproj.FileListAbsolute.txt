@@ -1,6 +1,6 @@
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.exe.config
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.exe
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.pdb
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.csproj.CoreCompileInputs.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.exe
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.pdb
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.exe.config
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.exe
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\bin\Release\NSISReplicate.pdb
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.csproj.CoreCompileInputs.cache
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.exe
+C:\EncounterPro\encounterpro_os\Utilities\NSISReplicate\NSISReplicate\obj\Release\NSISReplicate.pdb

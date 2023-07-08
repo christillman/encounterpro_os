@@ -34,21 +34,30 @@
 !include "LogicLib.nsh"
 !include "WinMessages.NSH"
 !include "StrFunc.nsh"
+${Using:StrFunc} StrTok
+${Using:StrFunc} StrStr
+${Using:StrFunc} StrRep
+${Using:StrFunc} UnStrTok
+${Using:StrFunc} UnStrStr
+${Using:StrFunc} UnStrRep
+!define un.StrTok "${UnStrTok}"
+!define un.StrStr "${UnStrStr}"
+!define un.StrRep "${UnStrRep}"
 
 ; ---- Fix for conflict if StrFunc.nsh is already includes in main file -----------------------
-!macro _IncludeStrFunction StrFuncName
-  !ifndef ${StrFuncName}_INCLUDED
-    ${${StrFuncName}}
-  !endif
-  !ifndef Un${StrFuncName}_INCLUDED
-    ${Un${StrFuncName}}
-  !endif
-  !define un.${StrFuncName} "${Un${StrFuncName}}"
-!macroend
+;!macro _IncludeStrFunction StrFuncName
+;  !ifndef ${StrFuncName}_INCLUDED
+;    ${${StrFuncName}}
+;  !endif
+;  !ifndef Un${StrFuncName}_INCLUDED
+;    ${Un${StrFuncName}}
+;  !endif
+;  !define un.${StrFuncName} "${Un${StrFuncName}}"
+;!macroend
 
-!insertmacro _IncludeStrFunction StrTok
-!insertmacro _IncludeStrFunction StrStr
-!insertmacro _IncludeStrFunction StrRep
+;!insertmacro _IncludeStrFunction StrTok
+;!insertmacro _IncludeStrFunction StrStr
+;!insertmacro _IncludeStrFunction StrRep
 
 ; ---------------------------------- Macro Definitions ----------------------------------------
 !macro _EnvVarUpdateConstructor ResultVar EnvVarName Action Regloc PathString

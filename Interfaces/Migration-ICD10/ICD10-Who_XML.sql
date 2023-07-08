@@ -19,7 +19,7 @@ GRANT SELECT ON [dbo].[icd10_who] TO CPRSYSTEM
 
 INSERT INTO icd10_who_xml(XMLData, LoadedDateTime)
 SELECT CONVERT(XML, BulkColumn) AS BulkColumn, GETDATE() 
-FROM OPENROWSET(BULK 'C:\Users\tofft\EncounterPro\ICD\health_icd10\data\diseases.xml', SINGLE_BLOB) AS x;
+FROM OPENROWSET(BULK 'C:\EncounterPro\ICD\health_icd10\data\diseases.xml', SINGLE_BLOB) AS x;
 
 
 DECLARE @XML AS XML, @hDoc AS INT, @SQL NVARCHAR (MAX)

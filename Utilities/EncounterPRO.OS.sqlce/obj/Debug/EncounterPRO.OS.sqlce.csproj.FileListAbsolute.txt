@@ -1,6 +1,6 @@
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\bin\Debug\EncounterPRO.OS.sqlce.exe
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\bin\Debug\EncounterPRO.OS.sqlce.pdb
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.csprojAssemblyReference.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.csproj.CoreCompileInputs.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.exe
-C:\Users\tofft\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.pdb
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\bin\Debug\EncounterPRO.OS.sqlce.exe
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\bin\Debug\EncounterPRO.OS.sqlce.pdb
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.csprojAssemblyReference.cache
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.csproj.CoreCompileInputs.cache
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.exe
+C:\EncounterPro\encounterpro_os\Utilities\EncounterPRO.OS.sqlce\obj\Debug\EncounterPRO.OS.sqlce.pdb

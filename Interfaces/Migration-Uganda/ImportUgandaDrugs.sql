@@ -3,26 +3,37 @@
 select distinct
 	'sed ''s/' + replace(replace(u.[Generic Name of Drug],'/',' *\/ *'),'  ',' ')
 	 + '/' + replace(UPPER(g.generic_name),'/','\/') + '/g'' | \'
-from UgandaJun2022 u
+from UgandaJune2023 u
 join c_Drug_Generic g on replace(g.generic_name,' ','') = replace(u.[Generic Name of Drug],' ','')
 where g.generic_name != u.[Generic Name of Drug]
 order by 1
+
+--sed 's/AMOXICILLIN *\/ *CLAVULANATE/AMOXICILLIN \/ CLAVULANATE/g' | \
 
 -- Add lines to process_Uganda.sh for spacing problems around the /
 select u.[Generic Name of Drug],
 	'sed ''s/' + replace(replace(replace(u.[Generic Name of Drug],'/',' *\/ *'),'  ',' '),' * ',' *')
 	 + '/' + replace(replace(u.[Generic Name of Drug],'/',' \/ ')  + '/g'' | \','  ',' ')
-from UgandaJun2022 u
+from UgandaJune2023 u
 where u.[Generic Name of Drug] like '%[A-Z]/%' 
 	OR u.[Generic Name of Drug] like '%/[A-Z]%'
 order by 1
+--AMOXICILLIN/CLAVULANATE	sed 's/AMOXICILLIN *\/ *CLAVULANATE/AMOXICILLIN \/ CLAVULANATE/g' | \
+--AMOXICILLIN/CLAVULANATE	sed 's/AMOXICILLIN *\/ *CLAVULANATE/AMOXICILLIN \/ CLAVULANATE/g' | \
 
+select * from UgandaJune2023
+where [Generic Name of Drug] like 'AMOXICILLIN%/%CLAVULANATE'
+
+update UgandaJune2023
+set [Generic Name of Drug] = 'AMOXICILLIN / CLAVULANATE'
+where [Generic Name of Drug] like 'AMOXICILLIN%/%CLAVULANATE'
 -- Iterate to eliminate above problems
 
-UPDATE UgandaJun2022
-SET [NDA REGISTRATION NUMBER] = right([NDA REGISTRATION NUMBER],4)
-WHERE [NDA REGISTRATION NUMBER] LIKE '0%'
-AND len([NDA REGISTRATION NUMBER]) = 5
+-- they xfill haven't moved to 5 digits overall
+UPDATE UgandaJune2023
+SET NDA = right(NDA,4)
+WHERE NDA LIKE '0%'
+AND len(NDA) = 5
 
 --drop table #form_equiv
 create table #form_equiv (generic_rxcui varchar(30), generic_name varchar(1000), form_name varchar(1000), long_name varchar(1000))
@@ -41,7 +52,7 @@ and f.form_descr not like '% vaccine %'
 -- prevent duplicates
 and generic_rxcui not in ('KEGI3456','11258','1008584','KEGI8701','1008064','683','42954')
 GROUP BY generic_rxcui, generic_name, dbo.fn_ingredients(form_descr)
--- (1519 rows affected)
+-- (1513 rows affected)
 
 update #form_equiv
 SET form_name = 'methohexital sodium'
@@ -51,21 +62,26 @@ update #form_equiv
 SET long_name = replace(replace(form_name,' HCl',' hydrochloride'),' HBr',' hydrobromide')
 where form_name like '% HCl%'
 or form_name like '% HBr%'
--- (617 rows affected)
+-- (612 rows affected)
 
 update #form_equiv
 SET long_name = replace(replace(form_name,' Cl',' chloride'),' Br',' bromide')
 from #form_equiv
 where form_name like '% Cl%'
 or form_name like '% Br%'
--- (62 rows affected)
+-- (69 rows affected)
 
 update #form_equiv
 SET form_name = replace(form_name,' equivalent','')
 from #form_equiv
 where form_name like '% equivalent%'
+
+select *
+from #form_equiv
+where generic_name = 'bromhexin / uaifenesi / erbutaline'
+
 /*
-generics without forms
+-- generics without forms
 select '('''+g.generic_rxcui+''','''+replace(g.generic_name,'''','''''')+''',''''),'
 from c_Drug_Generic g
 left join #form_equiv e on e.generic_rxcui = g.generic_rxcui
@@ -81,7 +97,7 @@ order by generic_name, form_name
 
 select distinct [GENERIC NAME OF DRUG],
 '(''' + g.generic_rxcui + ''', ''' + dbo.fn_first_words([GENERIC NAME OF DRUG],1) + ''',''' + [GENERIC NAME OF DRUG] + '''),'
-from UgandaJun2022 u
+from UgandaJune2023 u
 left join c_Drug_Generic g on g.generic_name = dbo.fn_first_words([GENERIC NAME OF DRUG],1)
 where ([GENERIC NAME OF DRUG] LIKE '% HCL'
 OR [GENERIC NAME OF DRUG] LIKE '% HBR'
@@ -233,8 +249,8 @@ CREATE TABLE #ug_ingr (nda varchar(5), sort_order int, ingr varchar(1000), strg 
 
 DECLARE @no varchar(5), @ingr varchar(1000), @strg varchar(1000), @df varchar(100)
 DECLARE crs_ug CURSOR FOR 
-	SELECT u.[NDA REGISTRATION NUMBER], u.[GENERIC NAME OF DRUG] , u.[STRENGTH OF DRUG], u.[DOSAGE FORM]
-	from UgandaJun2022 u
+	SELECT u.NDA, u.[GENERIC NAME OF DRUG] , u.[STRENGTH OF DRUG], u.[DOSAGE FORM]
+	from UgandaJune2023 u
 	--where u.[GENERIC NAME OF DRUG] not like '%/%'
 
 OPEN crs_ug
@@ -288,7 +304,9 @@ WHILE @@FETCH_STATUS = 0
 CLOSE crs_ep
 DEALLOCATE crs_ep
 
-delete from #ep_ingr 
+delete 
+-- select * 
+from #ep_ingr 
 where strg = 'error'
 --order by form_rxcui
 
@@ -351,13 +369,13 @@ Insert into [Uganda_Drugs] (
       ,[ug_STRENGTH OF DRUG]
       ,[notes]
 )
-select u.[NDA Registration Number] as [NDA_MAL_HDP], 
+select u.NDA as [NDA_MAL_HDP], 
 	CASE WHEN u.[Name of Drug] = u.[Generic Name of Drug] THEN 'No Brand' 
 		ELSE u.[Name of Drug] END,
 	u.[Generic Name of Drug],
 	u.[STRENGTH OF DRUG],
 	u.[Dosage Form] + ' | ' + u.[Pack Size]
-from UgandaJun2022 u
+from UgandaJune2023 u
 
 -- UPDATE [Uganda_Drugs] SET [generic_ingr_RXCUI] = NULL
 UPDATE u 
@@ -544,7 +562,7 @@ left join c_Drug_Formulation fg on fg.form_rxcui = fb.generic_form_rxcui
 
 
 select distinct g.generic_name, u.[Generic Name of Drug], u.[Name of Drug], b.brand_name 
-from UgandaJun2022 u
+from UgandaJune2023 u
 join c_Drug_Brand b on u.[Name of Drug] like b.brand_name + '%'
 join c_Drug_Generic g on b.generic_rxcui = g.generic_rxcui
 --join c_Synonym s on replace(g.generic_name,s.term,s.alternate) = u.[Generic Name of Drug]

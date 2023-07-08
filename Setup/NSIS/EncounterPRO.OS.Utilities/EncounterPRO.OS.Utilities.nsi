@@ -4,7 +4,7 @@
 !define PRODUCT_NAME "EncounterPRO-OS Utilities"
 
 ; Source Root
-!define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
+!define SOURCE_ROOT "C:\EncounterPro\Builds"
 
 ; Component Versions
 !define EncounterPRO_Utilities_VERSION   1.0.4.0
@@ -20,7 +20,7 @@
 !define PRODUCT_WEB_SITE "http://www.encounterpro.org"
 !define Required_Dotnet_VERSION   'v4.0'
 
-; Module Locations
+; Module Locations C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Utilities\1.0.4.0\Files
 !define EncounterPRO_Utilities_SOURCE  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\${EncounterPRO_Utilities_VERSION}\Files'
 ; !define FOXIT_READER_SOURCE "${SOURCE_ROOT}\3rd Party Software\Foxit Reader\${TPS_Foxit_Version}"
 !define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\EproEventLogInstaller\${EventLogInstaller_Version}"

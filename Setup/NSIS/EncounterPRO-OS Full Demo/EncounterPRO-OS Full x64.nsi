@@ -15,7 +15,7 @@
   !define VERSION   7.0.1
 
 ; Source Root
- !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
+ !define SOURCE_ROOT "C:\EncounterPro\Builds"
   
 ; Included Versions
   !define SQLServerExpress_VERSION   "2008R2"
