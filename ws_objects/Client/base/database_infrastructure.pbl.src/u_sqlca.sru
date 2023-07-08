@@ -1196,10 +1196,21 @@ end if
 
 ls_computername = mylog.get_computername()
 
+
+dbms = "MSOLEDBSQL SQL Server"
+
 ls_dbms = UPPER(LEFT(dbms, 3))
 
 ls_adodb_connectstring = "DRIVER={SQL Server};SERVER=" + ServerName + ";DATABASE=" + Database
 
+// Profile MSOLEDBSQL-DESKTOPgreenolive
+//SQLCA.DBMS = "MSOLEDBSQL SQL Server"
+//SQLCA.ServerName = "DESKTOP-1EOB2VV\ENCOUNTERPRO"
+//SQLCA.AutoCommit = True
+//SQLCA.DBParm = "TrustedConnection=1,Database='EncounterPro_OS',AppName='EncounterPro_OLE',DisableBind=0"
+//SQLCA.LogPass = greenolive
+//SQLCA.LogId = "greenolive"
+//
 // Profile cpr_132
 //SQLCA.DBMS = "SNC SQL Native Client(OLE DB)"
 //SQLCA.ServerName = "dev-mc"
@@ -1209,8 +1220,13 @@ ls_adodb_connectstring = "DRIVER={SQL Server};SERVER=" + ServerName + ";DATABASE
 
 CHOOSE CASE ls_dbms
 	CASE "ADO"
+	CASE "MSO"
+		dbparm += ",Provider='MSOLEDBSQL'"
+		dbparm += ",Database='" + ps_dbname + "'"
+		dbparm += ",AppName='" + ps_appname + "'"
+		dbparm += ",Identity='SCOPE_IDENTITY()'"
 	CASE "MSS"
-		dbparm += "Host='" + ls_computername + "'"
+		dbparm += ",Host='" + ls_computername + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		if not isnull(ps_connectstring) and trim(ps_connectstring) <> "" then
 			dbparm += ", Connectstring='" + ps_connectstring + "'"
@@ -1219,9 +1235,9 @@ CHOOSE CASE ls_dbms
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
 	CASE "ODB" // "ODBC Driver 17 for SQL Server"
 		//dbparm += "ConnectString='DSN=greenolive_DSN',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
-		dbparm += "ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
-		dbparm += "Database='" + ps_dbname + "'"
-		dbparm += "AppName='" + ps_appname + "'"
+		dbparm += ",ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
+		dbparm += ",Database='" + ps_dbname + "'"
+		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
 	CASE "OLE"
 		dbparm += "Provider='SQLNCLI'"
@@ -1232,8 +1248,6 @@ CHOOSE CASE ls_dbms
 			dbparm += ",Connectstring='" + ps_connectstring + "'"
 		end if
 	CASE "SNC"
-		// This works! It's necessary to use the PB SNC driver, because SELECTBLOB
-		// is broken using the PB ODB driver.
 		dbparm += ",Provider='SQLNCLI11'"
 		//dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};SERVER=" + ps_server + ";'"
 		//dbparm += ",ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
@@ -1287,6 +1301,8 @@ end if
 if not connected and windows_authentication then
 	// Reset the dbparm
 	CHOOSE CASE ls_dbms
+		CASE "MSO"
+			dbparm = ls_dbparm + ",TrustedConnection=1"
 		CASE "ADO"
 		CASE "MSS"
 			dbparm = ls_dbparm + ",Secure=1"
@@ -3039,7 +3055,7 @@ string ls_null
 
 ls_return = ps_phone
 // Avoid automatic American phone formatting 
-if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	setnull(ls_null)
 	
 	SELECT dbo.fn_pretty_phone(:ps_phone)
