@@ -72,6 +72,9 @@ RETURNS varchar(32)
 AS
 BEGIN
 
+-- To enable, comment the following line
+RETURN @ps_phone_number
+
 DECLARE @ls_pretty_phone varchar(32),
 		@ls_char char(1),
 		@ll_charnum int,
