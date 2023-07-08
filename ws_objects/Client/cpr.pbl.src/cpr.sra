@@ -209,14 +209,15 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 214
+long minimum_modification_level = 216
 
-date compile_date = date("2023-04-15")
+date compile_date = date("2023-07-08")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.0"
-// Resulting in 7.2.1.0
+string build = "1.1"
+// Resulting in 7.2.1.1
+// Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
