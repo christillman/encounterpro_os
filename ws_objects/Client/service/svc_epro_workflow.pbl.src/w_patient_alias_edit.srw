@@ -44,7 +44,6 @@ integer y = 252
 integer width = 1614
 integer height = 1352
 boolean titlebar = true
-string title = "Import Selected Files"
 windowtype windowtype = response!
 long backcolor = 7191717
 event postopen ( )
@@ -254,6 +253,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
+text = wordcap(text)
 
 end event
 
@@ -334,6 +334,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
+text = wordcap(text)
 
 end event
 
@@ -355,6 +356,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
+text = wordcap(text)
 
 end event
 
@@ -395,6 +397,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
+text = wordcap(text)
 
 end event
 
@@ -578,6 +581,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
+text = wordcap(text)
 
 end event
 

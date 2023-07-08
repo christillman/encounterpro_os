@@ -1,6 +1,0 @@
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\bin\Release\EncounterPRO.OS.Component.dll
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\obj\Release\EncounterPRO.OS.Component.EPForm.resources
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\obj\Release\EncounterPRO.OS.Component.ProgressForm.resources
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\obj\Release\EncounterPRO.OS.Component.csproj.GenerateResource.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\obj\Release\EncounterPRO.OS.Component.csproj.CoreCompileInputs.cache
-C:\Users\tofft\EncounterPro\encounterpro_os\Components\EncounterPRO.OS.Component\obj\Release\EncounterPRO.OS.Component.dll

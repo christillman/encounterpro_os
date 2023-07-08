@@ -116,7 +116,7 @@ else
 end if
 
 // Avoid Americanisms 
-if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	set_all_locality_visibility(false)
 
 else

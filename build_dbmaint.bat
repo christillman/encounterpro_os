@@ -1,7 +1,7 @@
 REM Usage: build_dbmaint.bat <version> 
 REM e.g.    >build_dbmaint.bat 1.0.0.3
 
-set build_folder=C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Utilities\%1
+set build_folder=C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Utilities\%1
 
 echo "Building version ----> %1 <---- in %cd%\Client ?"
 pause

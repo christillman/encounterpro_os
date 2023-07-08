@@ -26,7 +26,7 @@ long richtexteditx64type = 0
 long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = ""
-string appruntimeversion = "19.2.0.2703"
+string appruntimeversion = "19.2.0.2797"
 end type
 global upgradescript upgradescript
 

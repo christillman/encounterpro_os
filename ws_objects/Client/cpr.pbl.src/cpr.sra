@@ -184,8 +184,12 @@ long richtextedittype = 0
 long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
-string appicon = "L:\Common\icons\epro40.ico"
-string appruntimeversion = "19.2.0.2703"
+string appicon = "green-olive-avi-02.ico"
+string appruntimeversion = "19.2.0.2797"
+long webview2distribution = 0
+boolean webview2checkx86 = false
+boolean webview2checkx64 = false
+string webview2url = "https://developer.microsoft.com/en-us/microsoft-edge/webview2/"
 event keydown pbm_keydown
 end type
 global cpr cpr
@@ -205,14 +209,15 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 215
+long minimum_modification_level = 216
 
-date compile_date = date("2023-04-15")
+date compile_date = date("2023-07-08")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.0"
-// Resulting in 7.2.1.0
+string build = "1.1"
+// Resulting in 7.2.1.1
+// Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
@@ -234,8 +239,8 @@ string windows_logon_id
 
 // Don't get your hopes up; only a couple of locales are supported
 // so far, and only in a limited way!
-// en_us: as originally built
-// en_af: starting support for African countries
+// en-US: as originally built
+// en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
 event keydown;//f_fkey_handler(key, keyflags)
@@ -262,6 +267,10 @@ string ls_arg
 ContextKeyword lcxk_base
 string ls_Appdata
 string ls_values[]
+
+// Have seen failure of SQLCA creation in create event.
+// Re-create here.
+sqlca = create u_sqlca
 
 cpr_mode = "CLIENT"
 
@@ -388,18 +397,18 @@ log.display_enabled = true
 f_cpr_set_msg("Database Connected")
 
 // Check SELECTBLOB works
-//blob lbl_script
-//SELECTBLOB object
-//INTO :lbl_script
-//FROM c_Patient_Material
-//WHERE material_id = 1
-//USING SQLCA;
-//tf_check()
-//
-//if isnull(lbl_script) or len(lbl_script) <= 0 then
-//	log.log(this, "u_sqlca.upgrade_database:0034", "Empty", 4)
-//end if
-//
+blob lbl_script
+SELECTBLOB object
+INTO :lbl_script
+FROM c_Patient_Material
+WHERE material_id = 1
+USING SQLCA;
+tf_check()
+
+if isnull(lbl_script) or len(lbl_script) <= 0 then
+	log.log(this, "cpr.open: 159", "Blob doesn't work", 4)
+end if
+
 // Check the versions
 if f_check_version() < 0 then
 	// After an upgrade, we don't want an error message but rather a nice quiet exit

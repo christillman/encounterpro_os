@@ -1,7 +1,7 @@
 REM Usage: assemble_cpr.bat <target-version> 
 REM e.g. > assemble_cpr.bat 7.0.0.1
 
-set build_folder=C:\Users\tofft\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%1
+set build_folder=C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%1
 
 move /Y "Client\base\app_infrastructure.pbd" %build_folder%
 move /Y "Client\base\attribute.pbd" %build_folder%

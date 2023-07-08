@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.2.0.0
+  !define VERSION   7.2.1.0
 
 ; Source Root
- !define SOURCE_ROOT "C:\Users\tofft\EncounterPro\Builds"
+ !define SOURCE_ROOT "C:\EncounterPro\Builds"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   214
+  !define Database_Mod_Level   215
   ; Get this from the folder name in e.g.
   ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2703
   !define PBRuntime_VERSION   19.2.0.2703
@@ -152,7 +152,7 @@
         DetailPrint "supporting this installation."
         DetailPrint ""
         DetailPrint "Create an empty folder anywhere on this computer. Right click on it and choose Share."
-        DetailPrint "Make the share name 'attachments', and be sure to share it with 'Everyone'. "
+        DetailPrint "Make the share name 'attachments', and be sure to share it with 'Everyone' with Read/Write permission. "
         DetailPrint "The bulk import files will be copied to it during installation when you try again."
         DetailPrint ""
         SetDetailsView show
@@ -206,7 +206,7 @@
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
-        File "${SOURCE_ROOT}\Icons\epmanos.ico"
+        File "${SOURCE_ROOT}\Icons\green-olive-avi-02.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
@@ -265,9 +265,9 @@
         SetOutPath $INSTDIR
         CreateDirectory "$SMPROGRAMS\EncounterPRO-OS"
         CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\epmanos.ico"
-        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\epmanos.ico"
-        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\epmanos.ico"
+        CreateShortCut "$DESKTOP\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -279,7 +279,7 @@
         ; Uninstaller
         WriteUninstaller "$INSTDIR\uninst.exe"
         WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^name)"
-        WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\epmanos.ico"
+        WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayIcon" "$INSTDIR\green-olive-avi-02.ico"
         WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "UninstallString" "$INSTDIR\uninst.exe"
         WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${VERSION}"
         SetDetailsPrint both

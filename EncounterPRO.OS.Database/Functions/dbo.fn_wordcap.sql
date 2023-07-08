@@ -72,7 +72,7 @@ BEGIN
 DECLARE @Index          INT
 DECLARE @Char           CHAR(1)
 DECLARE @PrevChar       CHAR(1)
-DECLARE @OutputString   VARCHAR(255)
+DECLARE @OutputString   VARCHAR(4000)
 
 SET @OutputString = LOWER(@InputString)
 SET @Index = 1

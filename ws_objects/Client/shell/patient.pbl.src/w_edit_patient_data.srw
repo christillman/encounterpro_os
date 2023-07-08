@@ -727,7 +727,7 @@ st_patient_status.text = new_patient.patient_status
 cbx_test_patient.checked = new_patient.test_patient
 
 // Avoid Americanisms 
-if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en_us" then
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	// Hmmm, ssn never WAS populated
 	sle_name_suffix.text = new_patient.name_suffix
 	sle_nickname.text = new_patient.nickname
@@ -1122,7 +1122,8 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.middle_name = text
+event modified;new_patient.middle_name = wordcap(text)
+text = new_patient.middle_name
 
 end event
 
@@ -1162,7 +1163,8 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.first_name = text
+event modified;new_patient.first_name = wordcap(text)
+text = new_patient.first_name
 highlight_sle(this, false)
 end event
 
@@ -1268,7 +1270,8 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.last_name = text
+event modified;new_patient.last_name = wordcap(text)
+text = new_patient.last_name
 highlight_sle(this, false)
 end event
 
@@ -1409,8 +1412,8 @@ long backcolor = 16777215
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.address_line_1 = text
-
+event modified;new_patient.address_line_1 = wordcap(text)
+text = new_patient.address_line_1
 end event
 
 type st_address1_title from statictext within w_edit_patient_data

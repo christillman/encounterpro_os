@@ -1,0 +1,46 @@
+name: "New Feature"
+description: "Use this form for creating new issues."
+title: "Ticket Title"
+labels: ["UI"]
+assignees:
+  - christillman
+body:
+  - type: textarea
+    attributes:
+      label: "Overview"
+      description: "Provide an overview of the feature request."
+      placeholder: "What should the world look like"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Requirements"
+      description: "List all requirements for ticket completion."
+      placeholder: "- [ ] List Requirements Here"
+      value: "- [ ] Requirement 1"
+  - type: textarea
+    attributes:
+      label: "Design"
+      description: "Provide a link to any documentation or parts kit pieces if available."
+      placeholder: "[Design Comp](url)"
+      value: "[Design Comp Name](url)"
+  - type: textarea
+    attributes:
+      label: "Related Tickets"
+      description: "Link to any related or prior tickets."
+      placeholder: "List related tickets here if available."
+      value: "- #"
+  - type: textarea
+    id: priority
+    attributes:
+      label: Urgency and Importance
+      description: Please describe your reasoning around the urgency and importance of completing the enhancement
+      placeholder: urgency
+      value: "This needs to be ready by Christmas because ..."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Screenshots (if applicable)"
+      description: "Provide any relevant screenshots."
+      placeholder: "Add relevant screenshots here."
