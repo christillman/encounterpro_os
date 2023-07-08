@@ -129,7 +129,7 @@ end type
 type p_logo from picture within w_splash
 integer width = 2674
 integer height = 1652
-string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolivehr-background.png"
+string picturename = "greenolivehr-background.png"
 boolean focusrectangle = false
 end type
 

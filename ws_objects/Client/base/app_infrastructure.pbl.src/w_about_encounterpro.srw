@@ -269,7 +269,7 @@ type phl_logo from picturehyperlink within w_about_encounterpro
 integer width = 2574
 integer height = 1692
 string pointer = "HyperLink!"
-string picturename = "C:\Users\tofft\EncounterPro\encounterpro_os\IconFiles\greenolive-splash-screen-05-1024.png"
+string picturename = "greenolive-splash-screen-05-1024.png"
 boolean focusrectangle = false
 end type
 

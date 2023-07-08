@@ -184,7 +184,7 @@ long richtextedittype = 0
 long richtexteditx64type = 3
 long richtexteditversion = 0
 string richtexteditkey = ""
-string appicon = "L:\Common\icons\epro40.ico"
+string appicon = "green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
 long webview2distribution = 0
 boolean webview2checkx86 = false
@@ -238,11 +238,10 @@ string windows_logon_id
 
 // Don't get your hopes up; only a couple of locales are supported
 // so far, and only in a limited way!
-// en_us: as originally built
-// en_af: starting support for African countries
+// en-US: as originally built
+// en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
