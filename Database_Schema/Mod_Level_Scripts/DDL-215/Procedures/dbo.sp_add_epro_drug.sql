@@ -371,6 +371,7 @@ IF @generic_rxcui IS NULL
 			lower(@country_code) + ';',
 			@generic_rxcui
 		FROM c_1_record
+		WHERE @generic_name IS NOT NULL
 		END
 
 	-- Brand pack?
