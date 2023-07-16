@@ -73,7 +73,8 @@ CREATE TABLE [dbo].[c_Immunization_Dose_Schedule] (
 		[last_dose_interval_amount]      [int] NULL,
 		[last_dose_interval_unit_id]     [varchar](24) NULL,
 		[sort_sequence]                  [int] NULL,
-		[dose_text]                      [varchar](255) NULL
+		[dose_text]                      [varchar](255) NULL,
+		valid_in varchar(100)
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Immunization_Dose_Schedule]
