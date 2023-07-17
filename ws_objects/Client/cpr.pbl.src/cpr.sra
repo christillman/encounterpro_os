@@ -96,8 +96,8 @@ string time_format_string = "[time]"
 string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
 string db_date_format = "yyyy-mm-dd"
 string default_encounter_type = "WELL"
-string temp_path = "C:\TEMP"
-string debug_path = "C:\TEMP\EproDebug"
+string temp_path = "C:\Temp\Epro" // reset in f_get_preferences to user temp folder
+string debug_path = "C:\Temp\EproDebug"
 // rgb(192,192,255) classic purple (EPRO_BLUE)
 // You need to change background color using global-replace in the
 // text source files, and then Refresh at the root of the app.
@@ -209,14 +209,14 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 216
+long minimum_modification_level = 217
 
-date compile_date = date("2023-07-08")
+date compile_date = date("2023-07-18")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.1"
-// Resulting in 7.2.1.1
+string build = "1.2"
+// Resulting in 7.2.1.2
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
