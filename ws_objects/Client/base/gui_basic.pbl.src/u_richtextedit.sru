@@ -399,8 +399,10 @@ lb_displayonly = displayonly
 
 displayonly = false
 selecttextall()
-// clear()  // Wasn't working for some reason
-replacetext("")
+clear()
+// The above only clears the detail page
+SelectTextAll(Header!)
+clear()
 set_margins()
 set_color(color_text_normal)
 set_bold(false)
