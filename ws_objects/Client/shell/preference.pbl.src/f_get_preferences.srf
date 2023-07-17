@@ -22,24 +22,31 @@ else
 	idle(common_thread.idle_timeout)
 end if
 
-temp_path = datalist.get_preference("SYSTEM", "temp_path")
-if isnull(temp_path) then
-	li_return = GetContextService("ContextKeyword", lcx_key)
-	lcx_key.GetContextKeywords("TEMP", lsa_values)
+li_return = GetContextService("ContextKeyword", lcx_key)
+lcx_key.GetContextKeywords("TEMP", lsa_values)
+li_count = UpperBound(lsa_values)
+if li_count >= 1 then
+	temp_path = lsa_values[1]
+else
+	lcx_key.GetContextKeywords("TMP", lsa_values)
 	li_count = UpperBound(lsa_values)
 	if li_count >= 1 then
 		temp_path = lsa_values[1]
 	else
-		lcx_key.GetContextKeywords("TMP", lsa_values)
-		li_count = UpperBound(lsa_values)
-		if li_count >= 1 then
-			temp_path = lsa_values[1]
-		else
-			temp_path = "c:\temp"
-		end if
+		temp_path = "C:\Temp"
 	end if
 end if
 if right(temp_path, 1) = "\" then temp_path = left(temp_path, len(temp_path) - 1)
+
+//if isnull(temp_path) then
+//	temp_path = datalist.get_preference("SYSTEM", "temp_path")
+//end if
+//
+temp_path = temp_path + "\EPro"
+
+if not log.of_directoryexists(temp_path) then
+	log.of_createdirectory(temp_path)
+end if
 
 temp_path += "\" + string(gnv_app.computer_id)
 
