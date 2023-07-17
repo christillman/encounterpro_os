@@ -12,14 +12,14 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.2.1.1
+  !define VERSION   7.2.1.2
 
 ; Source Root
  !define SOURCE_ROOT "C:\EncounterPro\Builds"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   216
+  !define Database_Mod_Level   217
   ; Get this from the folder name in e.g.
   ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2703
   !define PBRuntime_VERSION   19.2.0.2797
@@ -39,6 +39,7 @@
   ; EproLibNET installer define
   ;*** To change EproLibNET version, change the path below
   !define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities'
+  !define SRC_TextMaker  'C:\Installers\freeoffice2021.msi'
 
   ;*** If Setup version != Client files version, modify following line ***
   !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
@@ -173,14 +174,21 @@
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
                   
-      ; Install PB Runtime
+      ; Install PB Runtime, Utilities, and TextMaker
       SetOutPath $INSTDIR
       DetailPrint "Installing Powerbuilder Runtime Files..."
       SetDetailsPrint textonly
       File "${SRC_PBR}\${PBRuntime_FILENAME}"
       nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
       Delete '$INSTDIR\${PBRuntime_FILENAME}'
-      
+ 
+      SetOutPath $INSTDIR
+      DetailPrint "Installing TextMaker..."
+      SetDetailsPrint textonly
+      File "${SRC_TextMaker}"
+      nsExec::Exec 'msiexec /i "$INSTDIR\${SRC_TextMaker}" /passive /norestart /l*v "$INSTDIR\TextMaker.log"'
+      Delete '$INSTDIR\${SRC_TextMaker}'
+  
       SetDetailsPrint both
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
       SetDetailsPrint none
