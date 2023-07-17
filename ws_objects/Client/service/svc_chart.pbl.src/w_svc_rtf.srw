@@ -33,6 +33,7 @@ u_component_service	service
 
 long display_script_id
 end variables
+
 forward prototypes
 public function integer refresh ()
 end prototypes
@@ -241,7 +242,9 @@ closewithreturn(parent, popup_return)
 end event
 
 type ole_rtf from u_rich_text_edit within w_svc_rtf
-integer width = 2926
+integer x = 50
+integer y = 12
+integer width = 2825
 integer height = 1584
 integer taborder = 20
 boolean init_vscrollbar = true
@@ -250,7 +253,9 @@ borderstyle borderstyle = styleraised!
 end type
 
 type tab_rtf from u_tab_rtf_service within w_svc_rtf
-integer width = 2930
+integer x = 50
+integer y = 12
+integer width = 2830
 integer height = 1588
 end type
 
