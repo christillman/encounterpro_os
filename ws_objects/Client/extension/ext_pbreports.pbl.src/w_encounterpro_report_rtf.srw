@@ -26,7 +26,6 @@ end forward
 
 global type w_encounterpro_report_rtf from w_window_base
 boolean visible = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -334,6 +333,18 @@ boolean lb_full_screen
 string ls_path
 string ls_temp
 
+string ls_destination
+long ll_line
+string ls_message
+string ls_office_id
+integer li_sts
+long ll_display_script_id
+string ls_display_script
+string ls_printer
+long ll_page_width
+long ll_page_height
+
+
 report = message.powerobjectparm
 
 report.get_attribute("full_screen", lb_full_screen)
@@ -347,6 +358,7 @@ else
 	title = "Report"
 end if
 
+rte_report.set_report_attributes(report.get_attributes())
 rte_report.reader_user_id = report.get_attribute("reader_user_id")
 
 rte_report.set_background_color(rgb(255, 255, 255))
@@ -354,43 +366,6 @@ rte_report.set_background_color(rgb(255, 255, 255))
 if isnull(report.report_object) then
 	cb_attach.visible = false
 end if
-
-//postevent("post_open")
-string ls_destination
-long ll_line
-string ls_message
-string ls_office_id
-integer li_sts
-long ll_display_script_id
-string ls_display_script
-string ls_printer
-long ll_page_width
-long ll_page_height
-
-//string ls_destination
-//long ll_display_script_id
-//string ls_display_script
-
-
-//rte_report.width = width - 64
-//rte_report.height = height - 282
-//st_display_script.y = rte_report.y + rte_report.height + 4
-//
-//pb_epro_help.y = rte_report.y + rte_report.height + 28
-//cb_print.y = pb_epro_help.y
-//cb_edit.y = pb_epro_help.y
-//cb_attach.y = pb_epro_help.y
-//pb_up.y = pb_epro_help.y
-//pb_down.y = pb_epro_help.y
-//cb_ok.y = pb_epro_help.y
-//cb_view.y = pb_epro_help.y
-//
-//cb_ok.x = width - cb_ok.width - 40
-//pb_epro_help.x = cb_ok.x - pb_epro_help.width - 40
-//pb_down.x = pb_epro_help.x - pb_down.width - 60
-//pb_up.x = pb_down.x - pb_up.width - 28
-
-//report.rtf = rte_report
 
 default_attach_file_type = report.get_attribute("default_attach_file_type")
 if isnull(default_attach_file_type) then default_attach_file_type = "pdf"
@@ -400,29 +375,6 @@ if isnull(default_edit_file_type) then default_edit_file_type = "doc"
 
 if isnull(temp_file) or trim(temp_file) = "" then
 	temp_file = f_temp_file(default_edit_file_type)
-end if
-
-rte_report.set_report_attributes(report.get_attributes())
-
-view_mode = report.get_attribute("default_view_mode")
-if isnull(view_mode) then
-	// In version 4 this attribute was called "display_mode" with domain "SCREEN" or "PAGE"
-	CHOOSE CASE upper(report.get_attribute("display_mode"))
-		CASE "SCREEN"
-			view_mode = "Normal"
-		CASE "PAGE"
-			view_mode = "Page"
-		CASE ELSE
-			view_mode = "Normal"
-	END CHOOSE
-end if
-
-rte_report.set_view_mode(view_mode)
-
-// Make this window visible now if we're doing screen mode
-ls_destination = upper(report.get_attribute("DESTINATION"))
-if ls_destination = "SCREEN" then
-	visible = true
 end if
 
 // Then, if there's a display script, execute it
@@ -435,16 +387,22 @@ end if
 
 refresh()
 
+// Make this window visible now if we're doing screen mode
+ls_destination = upper(report.get_attribute("DESTINATION"))
+if ls_destination = "SCREEN" then
+	//visible = true
+end if
+
 report.get_attribute("page_width", ll_page_width)
 if ll_page_width > 0 then rte_report.set_page_width(ll_page_width)
 
 report.get_attribute("page_height", ll_page_height)
 if ll_page_height > 0 then rte_report.set_page_height(ll_page_height)
 
-
 if ls_destination = "SCREEN" then
 	// Scroll back to the top
 	rte_report.goto_top()
+	visible = true
 elseif ls_destination = "FILE" then
 	report.get_attribute("extension", lstr_document.extension)
 	if isnull(lstr_document.extension) then lstr_document.extension = default_attach_file_type
@@ -506,6 +464,7 @@ else
 	st_display_script.visible = false
 end if
 
+postevent("post_open")
 
 end event
 
@@ -531,6 +490,27 @@ if ldt_updated > file_updated then
 end if
 
 
+end event
+
+event post_open;call super::post_open;
+// The view_mode must be set after the RTF display script runs
+
+view_mode = report.get_attribute("default_view_mode")
+if isnull(view_mode) then
+	// In version 4 this attribute was called "display_mode" with domain "SCREEN" or "PAGE"
+	CHOOSE CASE upper(report.get_attribute("display_mode"))
+		CASE "SCREEN"
+			view_mode = "Normal"
+		CASE "PAGE"
+			view_mode = "Page"
+		CASE "NORMAL"
+			view_mode = "Normal"
+		CASE ELSE
+			view_mode = "Page"
+	END CHOOSE
+end if
+
+rte_report.set_view_mode(view_mode)
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_encounterpro_report_rtf
@@ -759,9 +739,9 @@ end type
 
 type cb_refresh from commandbutton within w_encounterpro_report_rtf
 integer x = 1906
-integer y = 1636
+integer y = 1608
 integer width = 297
-integer height = 88
+integer height = 116
 integer taborder = 20
 boolean bringtotop = true
 integer textsize = -10
@@ -773,6 +753,19 @@ string facename = "Arial"
 string text = "Refresh"
 end type
 
-event clicked;refresh()
+event clicked;string ls_save_view_mode
+
+ls_save_view_mode = view_mode
+if ls_save_view_mode = "Page" then
+// To prevent Japanese-looking script results durinig refresh, the Preview mode must be OFF.
+	rte_report.set_view_mode("Normal")
+end if
+
+refresh()
+
+if ls_save_view_mode = "Page" then
+	rte_report.set_view_mode(ls_save_view_mode)
+end if
+
 end event
 
