@@ -57,6 +57,9 @@ if left(ps_extension, 1) = "." then
 end if
 
 ls_filename = temp_path
+if not directoryexists(ls_filename) then
+	createdirectory(ls_filename)
+end if
 
 if len(ps_subdir) > 0 then
 	ls_filename += "\" + ps_subdir
