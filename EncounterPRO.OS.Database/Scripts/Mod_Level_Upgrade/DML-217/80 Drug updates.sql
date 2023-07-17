@@ -1,4 +1,7 @@
 
+UPDATE c_Drug_Generic SET drug_id = 'RXNG' + generic_rxcui
+WHERE generic_rxcui IN ('10869','898404')
+
 delete from c_Drug_Generic
 where generic_rxcui = 'UGGI6489'
 and generic_name = 'bromhexin / uaifenesi / erbutaline'
