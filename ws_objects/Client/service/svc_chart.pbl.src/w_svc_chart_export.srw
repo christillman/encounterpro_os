@@ -299,7 +299,7 @@ ls_temp = service.get_attribute("default_path")
 if len(ls_temp) > 0 then
 	if right(ls_temp, 1) <> "\" then ls_temp += "\"
 else
-	ls_temp = "c:\temp\PatientCharts\"
+	ls_temp = temp_path + "\PatientCharts\"
 end if
 st_path.text = ls_temp
 
