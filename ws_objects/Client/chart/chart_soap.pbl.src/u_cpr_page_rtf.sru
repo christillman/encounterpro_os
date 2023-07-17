@@ -38,7 +38,7 @@ end subroutine
 public subroutine initialize (u_cpr_section puo_section, integer pi_page);this_section = puo_section
 this_page = pi_page
 
-rte_report.width = width
+rte_report.width = width - 100
 rte_report.height = height
 
 this_section.load_params(this_page)
