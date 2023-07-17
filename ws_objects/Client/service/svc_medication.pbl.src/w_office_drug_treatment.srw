@@ -414,8 +414,10 @@ else
 	end if
 	
 	// Get the admin list for this drug
-	li_count = uo_drug_administration.retrieve(drug_id, "DOSE")
-	
+	// Hide Dose Based on widgets (#11)
+	// CDT 2023-07-17
+	// li_count = uo_drug_administration.retrieve(drug_id, "DOSE")
+		
 	last_package_list_index = 0
 end if
 
@@ -438,7 +440,9 @@ If Not isnull(treat_officemed.end_date) &
 Else
 	st_display_only.visible = False
 	uo_dose.enabled = True
-	uo_drug_administration.enabled = True
+	// Hide Dose Based on widgets (#11)
+	// CDT 2023-07-17
+	// uo_drug_administration.enabled = True
 	uo_drug_package.enabled = True
 	uo_hcpcs_procedure.enabled = True
 	uo_procedure.enabled = True
@@ -776,6 +780,11 @@ end if
 ll_menu_id = long(service.get_attribute("menu_id"))
 paint_menu(ll_menu_id)
 
+// Hide Dose Based on widgets (#11)
+// CDT 2023-07-17
+st_dosebase.Visible = False
+uo_drug_administration.Visible = False
+st_mult_display.Visible = False
 
 postevent("post_open")
 end event
@@ -907,8 +916,8 @@ boolean focusrectangle = false
 end type
 
 type uo_drug_administration from u_drug_administration within w_office_drug_treatment
-integer x = 183
-integer y = 912
+integer x = 174
+integer y = 1200
 integer width = 1070
 integer height = 140
 boolean enabled = true
@@ -1071,8 +1080,8 @@ set_value(popup_return.items[1])
 end event
 
 type st_dosebase from statictext within w_office_drug_treatment
-integer x = 183
-integer y = 848
+integer x = 174
+integer y = 1136
 integer width = 1070
 integer height = 60
 integer textsize = -10

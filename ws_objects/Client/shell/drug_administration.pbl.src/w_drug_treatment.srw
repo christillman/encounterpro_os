@@ -1886,8 +1886,8 @@ boolean focusrectangle = false
 end type
 
 type st_mult_display from statictext within w_drug_treatment
-integer x = 430
-integer y = 1528
+integer x = 270
+integer y = 1600
 integer width = 1070
 integer height = 60
 integer textsize = -8
@@ -1989,8 +1989,8 @@ end if
 end event
 
 type uo_drug_administration from u_drug_administration within w_drug_treatment
-integer x = 215
-integer y = 1440
+integer x = 233
+integer y = 1484
 integer width = 1070
 integer height = 140
 boolean enabled = true
