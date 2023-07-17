@@ -32,7 +32,9 @@ insert into c_Drug_Definition( [drug_id]
       ,[dea_schedule]
       ,[is_generic]
 	  )
-SELECT g.[drug_id], 'Single Drug', g.generic_name, 'OK', '981', 'NA', 0 
+SELECT g.[drug_id], 'Single Drug', 
+	CASE WHEN len(g.generic_name) > 80 THEN LEFT(g.generic_name, 77) + '...' ELSE g.generic_name END, 
+	g.generic_name, 'OK', '981', 'NA', 0 
 from c_Drug_Generic g 
 left join c_drug_definition d on d.drug_id = g.drug_id
 where d.drug_id is null
