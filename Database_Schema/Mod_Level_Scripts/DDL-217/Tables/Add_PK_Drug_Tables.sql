@@ -3,6 +3,9 @@ delete from c_Drug_Generic
 where generic_rxcui = 'UGGI6489'
 and generic_name = 'bromhexin / uaifenesi / erbutaline'
 
+-- Would prevent uq_generic_drug_id being created
+UPDATE c_Drug_Generic SET drug_id = 'RXNG' + generic_rxcui
+WHERE generic_rxcui IN ('10869','898404')
 
 ALTER TABLE c_Drug_Generic
 ALTER COLUMN generic_rxcui varchar(30) NOT NULL
@@ -14,6 +17,9 @@ IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'pk_Drug_Gener
 ALTER TABLE c_Drug_Generic
 ADD CONSTRAINT pk_Drug_Generic PRIMARY KEY  (generic_rxcui)
 
+DROP INDEX IF EXISTS c_Drug_Generic.uq_generic_drug_id
+CREATE UNIQUE INDEX uq_generic_drug_id ON c_Drug_Generic (drug_id)
+
 ALTER TABLE c_Drug_Brand
 ALTER COLUMN brand_name_rxcui varchar(30) NOT NULL
 
@@ -23,6 +29,9 @@ ALTER COLUMN brand_name varchar(200) NOT NULL
 IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'pk_Drug_Brand') AND type = 'K')
 ALTER TABLE c_Drug_Brand
 ADD CONSTRAINT pk_Drug_Brand PRIMARY KEY  (brand_name_rxcui)
+
+DROP INDEX IF EXISTS c_Drug_Brand.uq_brand_drug_id
+CREATE UNIQUE INDEX uq_brand_drug_id ON c_Drug_Brand (drug_id)
 
 -- Next release; must be generic or brand, but not both
 /*

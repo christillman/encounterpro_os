@@ -27,6 +27,9 @@ CREATE TABLE [dbo].[c_Drug_Generic](
 	[uq_name_checksum]  AS (checksum([generic_name])) PERSISTED,
  CONSTRAINT [uq_generic_name] UNIQUE NONCLUSTERED 
 (
+	/* A unique constraint is required to avoid the error
+		Warning! The maximum key length for a nonclustered index is 1700 bytes. The index 'uq_generic_name' has maximum length of 2000 bytes. For some combination of large values, the insert/update operation will fail.
+	*/
 	[uq_name_checksum] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -36,4 +39,5 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-
+CREATE UNIQUE INDEX uq_generic_drug_id ON c_Drug_Generic (drug_id)
+GO
