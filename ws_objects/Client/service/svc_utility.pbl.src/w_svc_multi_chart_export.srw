@@ -60,7 +60,6 @@ end type
 global type w_svc_multi_chart_export from w_window_base
 integer width = 2962
 integer height = 1936
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 3
@@ -513,7 +512,7 @@ end if
 if len(ls_temp) > 0 then
 	if right(ls_temp, 1) <> "\" then ls_temp += "\"
 else
-	ls_temp = "c:\temp\PatientCharts\"
+	ls_temp = temp_path + "\PatientCharts\"
 end if
 st_path.text = ls_temp
 
