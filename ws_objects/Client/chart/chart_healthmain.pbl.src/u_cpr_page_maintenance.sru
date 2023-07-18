@@ -66,8 +66,6 @@ if dw_encounters.visible then
 
 	st_hm_title.x = content_left_edge
 	st_hm_title.y = dw_schedule.y - st_hm_title.height
-	
-	dw_schedule.settransobject(sqlca)
 else
 	pb_up.visible = false
 	pb_down.visible = false
@@ -152,6 +150,7 @@ long ll_page
 ll_page = dw_schedule.current_page
 if ll_page <= 0 then ll_page = 1
 
+dw_schedule.settransobject(sqlca)
 li_count = dw_schedule.retrieve(current_patient.cpr_id)
 dw_schedule.set_page(ll_page, pb_up, pb_down, st_page)
 
