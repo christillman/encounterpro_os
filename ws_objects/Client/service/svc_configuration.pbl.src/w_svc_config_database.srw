@@ -103,7 +103,6 @@ end variables
 
 forward prototypes
 public function integer refresh ()
-public function long load_schema_file (string ps_rootpath)
 end prototypes
 
 public function integer refresh ();
@@ -119,163 +118,6 @@ st_mod_level.text = string(sqlca.modification_level)
 
 
 return 1
-
-end function
-
-public function long load_schema_file (string ps_rootpath);string ls_left
-string ls_right
-string ls_id
-string ls_url
-long ll_from_material_id
-string ls_parent_config_object_id
-long ll_count
-long ll_file_count
-long i
-long ll_subdir_index
-string lsa_files[]
-string lsa_paths[]
-str_filepath lstr_rootpath
-str_filepath lstr_filepath
-string ls_sql_files
-integer li_sts
-str_file_attributes lstr_file_attributes
-long ll_filebytes
-blob lbl_file
-string ls_file_script
-string ls_owner
-string ls_object
-string ls_objecttype
-long ll_modification_level
-long ll_category
-string ls_title
-long ll_material_id
-integer li_success_count
-string ls_user_id
-
-ll_modification_level = sqlca.modification_level + 1
-
-if lower(right(ps_rootpath, 6)) = ".mdlvl" then
-	ls_sql_files = ps_rootpath
-	lstr_rootpath = f_parse_filepath2(ps_rootpath)
-else
-	// assume no file is specified and add one so it will parse correctly
-	lstr_rootpath = f_parse_filepath2(ps_rootpath + "\dummy.sql")
-	ls_sql_files = lstr_rootpath.drive + lstr_rootpath.filepath + "\*-" + string(ll_modification_level) + ".mdlvl"
-end if
-
-ll_file_count = log.get_all_files(ls_sql_files, lsa_files)
-for i = 1 to ll_file_count
-	lsa_paths[i] = lstr_rootpath.drive + lstr_rootpath.filepath + "\" + lsa_files[i]
-next
-
-li_success_count = 0
-
-for i = 1 to ll_file_count
-	// Skip the shorthand directories
-	if lsa_files[i] = "." or lsa_files[i] = ".." then continue
-	
-	// Skip the file if we can't get its properties
-	li_sts = log.file_attributes(lsa_paths[i], lstr_file_attributes)
-	if li_sts <= 0 then continue
-	
-	// Skip the directories
-	if lstr_file_attributes.subdirectory then continue
-	
-	
-	lstr_filepath = f_parse_filepath2(lsa_paths[i])
-	
-	// Read the file
-	li_sts = log.file_read(lsa_paths[i], lbl_file)
-	if li_sts <= 0 then
-		log.log(this, "w_svc_config_database.load_schema_file:0066", "Error reading file (" + lsa_paths[i] + ")", 4)
-		return -1
-	end if
-	
-	ls_id = f_new_guid()
-	setnull(ls_url)
-	setnull(ll_from_material_id)
-	setnull(ll_category)
-	setnull(ls_parent_config_object_id)
-	
-	if isnull(current_scribe) then
-		ls_user_id = "SYSTEM"
-	else
-		ls_user_id = current_scribe.user_id
-	end if
-
-//	f_split_string(lstr_filepath.filename, "-", ls_left, ls_right)
-//	if isnumber(ls_right) then
-//		ll_modification_level = long(ls_right)
-//	else
-//		log.log(this, "w_svc_config_database.load_schema_file:0086", "badly formed filename - could not find mod level (" + lstr_filepath.filename + ")", 4)
-//		return -1
-//	end if
-//
-	ls_title = "EncounterPRO OS Schema - Mod Level " + string(ll_modification_level)
-	
-	// Remove any previous version that might need overriding
-	DELETE FROM c_Patient_Material
-	WHERE status = 'ML'
-	AND version = :ll_modification_level; 
-	
-	INSERT INTO c_Patient_Material (
-		title ,
-		category ,
-		status ,
-		extension ,
-		created_by ,
-		id,
-		version,
-		url,
-		owner_id,
-		filename,
-		document_id
-		)
-	VALUES (
-		:ls_title,
-		:ll_category,
-		'ML',
-		:lstr_filepath.extension,
-		:ls_user_id,
-		:ls_id,
-		1,
-		:ls_url,
-		0,
-		:lstr_filepath.filename,
-		:ls_id
-		);
-	if not tf_check() then return -1
-
-//	ll_material_id = sqlca.jmj_new_material(ls_title, ll_category, "ML", lstr_filepath.extension, ls_id, ls_url, ls_user_id, lstr_filepath.filename, ll_from_material_id, ls_parent_config_object_id)
-//	if not tf_check() then return -1
-
-	SELECT scope_identity()
-	INTO :ll_material_id
-	FROM c_1_record;
-	if not tf_check() then return -1
-	
-	if isnull(ll_material_id) or ll_material_id <= 0 then
-		log.log(this,"w_svc_config_database.load_schema_file:0134","Error creating new material",4)
-		return -1
-	end if
-		
-	Update c_patient_material
-	Set version = :ll_modification_level 
-	Where material_id = :ll_material_id;
-	If not tf_check() Then return -1
-
-	// Update the blob column
-	UpdateBlob c_patient_material
-	Set object = :lbl_file 
-	Where material_id = :ll_material_id;
-	If not tf_check() Then return -1
-
-	openwithparm(w_pop_message, "Successfully imported schema file " + lsa_paths[i])
-	return ll_material_id
-next
-	
-return 0
-
 
 end function
 
@@ -499,14 +341,19 @@ end type
 event clicked;integer li_sts
 string ls_filepath
 string ls_filename
-blob lbl_schema
+long ll_material_id, ll_modification_level
+
 
 li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, ls_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
 If li_sts <= 0 Then return
 
+ll_modification_level = sqlca.modification_level + 1
 
-li_sts = load_schema_file(ls_filepath)
-if li_sts <= 0 then
+ll_material_id = sqlca.load_schema_file(ls_filepath, ll_modification_level, ls_filename)
+if ll_material_id > 0 then
+	openwithparm(w_pop_message, "Successfully imported schema file " + ls_filename)
+	return ll_material_id
+else	
 	openwithparm(w_pop_message, "Error loading schema file")
 	return
 end if
