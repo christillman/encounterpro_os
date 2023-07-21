@@ -75,7 +75,7 @@ AS
 BEGIN
 DECLARE @ls_office_user_id varchar(24)
 
-SELECT @ls_office_user_id = min(user_id)
+SELECT @ls_office_user_id = IsNull(min(user_id),'No actor_class = Office')
 FROM c_User
 WHERE office_id = @ps_office_id
 AND actor_class = 'Office'
