@@ -170,7 +170,7 @@ type tv_practice_config from u_tv_configuration within u_tabpage_shell_configure
 integer width = 2359
 integer height = 1828
 integer taborder = 20
-long backcolor = 12632256
+long backcolor = 7191717
 boolean border = false
 end type
 
