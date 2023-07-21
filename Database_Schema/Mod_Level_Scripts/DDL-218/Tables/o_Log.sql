@@ -1,0 +1,21 @@
+
+
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER TABLE [dbo].[o_Log] DROP CONSTRAINT IF EXISTS [DF__o_Log__id__6FD627B4]
+GO
+
+ALTER TABLE [dbo].[o_Log] DROP COLUMN IF EXISTS [id]
+GO
+
+ALTER TABLE [dbo].[o_Log] DROP COLUMN IF EXISTS [caused_by_id]
+GO
+
+ALTER TABLE [dbo].[o_Log] ADD progress_seconds numeric(18,4) NULL
+
+

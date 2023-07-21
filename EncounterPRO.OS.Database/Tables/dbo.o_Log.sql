@@ -43,12 +43,11 @@ CREATE TABLE [dbo].[o_Log] (
 		[epro_version]                 [varchar](64) NULL,
 		[sql_version]                  [varchar](256) NULL,
 		[exception_object]             [binary](1) NULL,
-		[id]                           [uniqueidentifier] NOT NULL,
-		[caused_by_id]                 [uniqueidentifier] NULL,
 		[spid]                         [int] NULL,
 		[log_data]                     [text] NULL,
 		[component_id]                 [varchar](24) NULL,
-		[compile_name]                 [nvarchar](128) NULL
+		[compile_name]                 [nvarchar](128) NULL,
+		[progress_seconds]				[numeric(18,4) NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[o_Log]
@@ -59,11 +58,6 @@ ALTER TABLE [dbo].[o_Log]
 	([log_id])
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[o_Log]
-	ADD
-	CONSTRAINT [DF__o_Log__id__6FD627B4]
-	DEFAULT (newid()) FOR [id]
 GO
 ALTER TABLE [dbo].[o_Log]
 	ADD
