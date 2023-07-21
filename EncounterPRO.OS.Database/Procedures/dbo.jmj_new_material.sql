@@ -133,10 +133,6 @@ SELECT @ll_latest_version = max(version)
 FROM c_Patient_Material
 WHERE id = @lui_id
 
-SELECT @ll_latest_version = max(version)
-FROM c_Patient_Material
-WHERE id = @lui_id
-
 SELECT @ll_count = @@ROWCOUNT,
 		@ll_error = @@ERROR
 
