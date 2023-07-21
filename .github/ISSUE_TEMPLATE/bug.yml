@@ -31,9 +31,6 @@ body:
       label: How did it happen? 
       description: Steps to reproduce the behavior
       placeholder: Tell us how we can see the problem
-2. Click on '....'
-3. Scroll down to '....'
-4. See error"
     validations:
       required: true
   - type: textarea
