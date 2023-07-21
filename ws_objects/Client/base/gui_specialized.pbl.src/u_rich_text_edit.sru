@@ -80,6 +80,8 @@ long current_object_key
 
 boolean nested = false
 
+time it_start
+time it_done
 integer rtf_id
 
 protected str_attributes report_attributes
@@ -132,8 +134,9 @@ private str_reentry_state reentry_state
 // ulong        hWin  
 // hWin = Handle ( this )  
 // hWin = FindWindowEx ( hWin, 0, "Ter24Class", 0 )  
-// (see https://www.brucearmstrong.org/2017/08/spell-checking-in-new-powerbuilder-2017.html )
- 
+// (see https://www.brucearmstrong.org/2017/08/spell-checking-in-new-powerbuilder-2017.html 
+
+w_pop_please_wait wait_window
 
 end variables
 
@@ -399,11 +402,13 @@ str_observation_comment lstr_comment
 str_attributes lstr_attributes
 str_property_value lstr_property_value
 integer li_blank_lines
-string ls_context_object
+string ls_context_object, ls_msg
 long ll_null
 long ll_command_index
 long ll_parent_command_index
 long ll_temp_indentl
+time lt_start_loading, lt_done_loading
+decimal ld_elapsed, ld_loadtime
 
 setnull(ll_null)
 setnull(ls_text)
@@ -412,6 +417,8 @@ setnull(ls_text)
 
 // Check each of the command attributes for runtime substitution
 f_attribute_value_substitute_multiple(pstr_command.attributes, last_context, report_attributes)
+
+lt_start_loading = now()
 
 current_context_object = pstr_command.context_object
 
@@ -431,7 +438,6 @@ parent_command_index = command_count
 command_error = false
 command_error_text = ""
 
-//log.log_db(this, "display_script_command", "Script command " + lower(current_context_object) + ": " + pstr_command.display_command, 3)
 
 TRY
 	CHOOSE CASE lower(current_context_object)
@@ -479,6 +485,17 @@ command_error_text = ""
 
 //ll_temp_indentl = object.indentl
 
+lt_done_loading = now()
+ld_elapsed = f_time_seconds_after(it_start, lt_done_loading)
+ld_loadtime = f_time_seconds_after(lt_start_loading, lt_done_loading)
+
+ls_msg = string(ll_command_index)
+ls_msg += " / Parent " + string(ll_parent_command_index) 
+ls_msg +=  ", line " + string(command[ll_command_index].footprint.from_position.line_number) 
+ls_msg +=  ", " + lower(current_context_object)
+ls_msg +=  ": " + pstr_command.display_command
+ls_msg += ", time " + string(ld_loadtime, "###0.000")
+log.log_db_with_seconds(this, "display_script", ls_msg, 2, ld_elapsed)
 
 // Save the final footprint end
 command[ll_command_index].footprint.to_position = charposition()
@@ -3746,8 +3763,6 @@ string ls_text
 
 setnull(ls_null)
 
-log.log_db(this, "display_script_command", "Script id " + string(pl_display_script_id), 2)
-
 // This wrapper puts the RTF display script function inside a TRY/CATCH structure
 // because of the incidents where the TX Text Control appears to breifly stop working
 // at times on a terminal server.  The basic idea is that if the text control is empty,
@@ -3796,13 +3811,16 @@ DO
 	CATCH (throwable lt_error2)
 		lb_error = true
 		ls_error = lt_error2.text
-		// debugbreak() // If window is closing, error_retries_max becomes null
+		// debugbreak() // If window is closing, this reference is not valid
+		if NOT IsValid(this) then
+			return ls_null
+		end if
 		if li_retries >= error_retries_max OR ll_len > 0 then
 			THROW lt_error2
 			return ls_null
 		end if
 	END TRY
-LOOP WHILE lb_error and li_retries <= error_retries_max and ll_len = 0
+LOOP WHILE lb_error and ll_len = 0
 
 return ls_text
 
@@ -3813,6 +3831,7 @@ str_assessment_description lstr_assessment
 str_treatment_description lstr_treatment
 integer li_sts
 string ls_temp
+decimal ld_loadtime
 
 // Don't do anything if we don't have a display_script_id
 if isnull(pl_display_script_id) then return
@@ -3864,9 +3883,18 @@ if not nested then
 	process_header_footer = f_string_to_boolean(ls_temp)
 end if
 
-//setredraw(false)
+
+it_start = now()
+////setredraw(false)
+this.visible = false
 display_script(pl_display_script_id, lstr_encounter, lstr_assessment, lstr_treatment)
-//setredraw(true)
+// If not valid, likely the user clicked Finished in the window to cancel the script
+if IsValid(this) then 
+	this.visible = true
+	//setredraw(true)
+	ld_loadtime = f_time_seconds_after(it_start,  now())
+	common_thread.log_perflog("Script id " + string(pl_display_script_id), ld_loadtime, false)
+end if
 end subroutine
 
 public subroutine display_treatment (long pl_treatment_id, long pl_display_script_id);str_treatment_description lstr_treatment
@@ -6798,6 +6826,13 @@ ulong ll_hCursor
 long ll_temp_indentl
 long ll_first_command_index
 
+time lt_start_loading
+time lt_done_loading
+decimal ld_loadtime, ld_elapsed
+lt_start_loading = now()
+
+log.log_db(this, "display_script", "Script id " + string(pl_display_script_id), 2)
+
 is_on_break = false
 
 if pb_is_reentry then
@@ -6921,7 +6956,8 @@ else
 	SetPointer(HourGlass!)
 	
 	if not lb_nested then
-		f_progress_initialize(1, lstr_display_script.display_command_count)
+		open(wait_window, "w_pop_please_wait_chart")
+		if isvalid(wait_window) then wait_window.initialize(0, lstr_display_script.display_command_count + 2)
 	end if
 end if  // End not-reentry section
 
@@ -6930,6 +6966,7 @@ if (gnv_app.cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) 
 	open_editor()
 	return ls_rtf
 end if
+
 
 for i = ll_first_command_index to lstr_display_script.display_command_count
 	display_script_command(lstr_display_script.display_command[i], pstr_encounter, pstr_assessment, pstr_treatment)
@@ -6950,12 +6987,15 @@ for i = ll_first_command_index to lstr_display_script.display_command_count
 		end if
 
 		yield()
-		f_progress_set(i)
+		// If not valid, likely the user clicked Finished in the window to cancel the script
+		if not isvalid(this) then exit
+		if isvalid(wait_window) then wait_window.bump_progress()
 	end if
 next
 
-if not lb_nested then
-	f_progress_close()
+// If not valid, likely the user clicked Finished in the window to cancel the script
+if not lb_nested and isvalid(this) then
+	if isvalid(wait_window) then close(wait_window)
 
 	if process_header_footer then
 		// Add the header
@@ -6999,15 +7039,23 @@ if not lb_nested then
 	SetPointer(Arrow!)
 end if
 
-// Now reset the fontstate so any changes made within the executed display format
-// don't affect any display_script calling this one
-//ll_temp_indentl = object.indentl
-set_font_settings(lstr_font_settings)
-//current_fontstate = lstr_fontstate
-reset_fontstate()
-//ll_temp_indentl = object.indentl
-
-nested = lb_nested
+// If not valid, likely the user clicked Finished in the window to cancel the script
+if IsValid(this) then
+	// Now reset the fontstate so any changes made within the executed display format
+	// don't affect any display_script calling this one
+	//ll_temp_indentl = object.indentl
+	set_font_settings(lstr_font_settings)
+	//current_fontstate = lstr_fontstate
+	reset_fontstate()
+	//ll_temp_indentl = object.indentl
+	
+	lt_done_loading = now()
+	ld_elapsed = f_time_seconds_after(it_start, lt_done_loading)
+	ld_loadtime = f_time_seconds_after(lt_start_loading, lt_done_loading)
+	log.log_db_with_seconds(this, "display_script", "Done Script id " + string(pl_display_script_id) + ", time " + string(ld_loadtime, "###0.000"), 2, ld_elapsed)
+	
+	nested = lb_nested
+end if
 
 return ls_rtf
 
