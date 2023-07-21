@@ -65,6 +65,11 @@ if len(patient_cache.zip) > 0 then
 	ls_city_state_zip += patient_cache.zip
 end if
 
+if len(patient_cache.country) > 0 then
+	if len(ls_city_state_zip) > 0 then ls_city_state_zip += "  "
+	ls_city_state_zip += patient_cache.country
+end if
+
 if len(ls_city_state_zip) > 0 then
 	if len(ls_address) > 0 then ls_address += ps_line_delimiter
 	ls_address += ls_city_state_zip
