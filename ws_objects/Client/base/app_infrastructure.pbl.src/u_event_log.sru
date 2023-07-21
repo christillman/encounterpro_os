@@ -217,8 +217,9 @@ public function integer copy_files (string ps_from_path, string ps_to_path, bool
 public function long file_read2 (string ps_file, ref blob pblb_file, boolean pb_lock_file)
 public function integer delete_old_files (string ps_filespec)
 public function string get_file_version (string ps_filepath)
-public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name)
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name)
+public function integer log_db_with_seconds (powerobject po_who, string ps_script, string ps_message, integer pi_severity, decimal pd_seconds)
+public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name, decimal pd_seconds)
 end prototypes
 
 public function integer shutdown ();//DeregisterEventSource(event_handle)
@@ -236,6 +237,7 @@ end function
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity);string ls_component_id
 string ls_version_name
 string ls_who
+decimal ld_seconds
 u_component_base_class luo_component
 
 setnull(ls_component_id)
@@ -982,11 +984,13 @@ end function
 
 public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity);string ls_component_id
 string ls_version_name
+decimal ld_seconds
 
 setnull(ls_component_id)
 setnull(ls_version_name)
+setnull(ld_seconds)
 
-return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name)
+return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name, ld_seconds)
 
 end function
 
@@ -1235,7 +1239,170 @@ return ls_version
 
 end function
 
-public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name);string ls_user
+public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name);integer li_sts
+boolean lb_reported
+integer li_event_type
+integer li_category
+unsignedlong ll_user
+long ll_event_id
+integer li_string_count
+long ll_data_size
+string lsa_string[]
+string ls_message
+long ll_rawdata
+str_popup popup
+string ls_who
+string ls_error_file
+long ll_dochandle
+str_event_log_entry lstr_log
+decimal ld_seconds
+
+setnull(ld_seconds)
+
+// Make Sure the severity is in our range
+if isnull(pi_severity) then pi_severity = 1
+if pi_severity < 1 then pi_severity = 1
+if pi_severity > 5 then pi_severity = 5
+
+// set event type
+if pi_severity <= 1 then
+	// Debug Message
+	ll_event_id = 0
+	li_event_type = 4
+elseif pi_severity = 2 then
+	// Informational Message
+	ll_event_id = 0
+	li_event_type = 4
+elseif pi_severity = 3 then
+	// Warning Message
+	ll_event_id = 0
+	li_event_type = 2
+else
+	// Error Message
+	ll_event_id = 0
+	li_event_type = 1
+end if
+
+// set category
+li_category = 1
+
+// Set Raw Data
+ll_rawdata = 0
+
+// Set user id
+ll_user = 0
+
+// Set Data Size
+ll_data_size = 0
+
+// Set Strings
+lsa_string[1] = f_app_version() + " "
+
+// Determine the "who" text
+if not isvalid(po_who) then
+	ls_who = "UNKNOWN CALLER"
+elseif isnull(po_who) then
+	ls_who = ""
+else
+	ls_who = po_who.classname()
+end if
+
+li_string_count = 1
+if isnull(ps_script) then
+	ps_script = "Script Unknown"
+end if
+
+if isnull(ps_message) then
+	ps_message = "No Message"
+end if
+
+ls_message = "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity)
+
+// If not initialized, write to a file in the current folder
+if not initialized then 
+	ls_error_file = GetCurrentDirectory( ) + "\EPro-Initialization-Errors.txt"
+	ll_dochandle = FileOpen(ls_error_file, LineMode!, Write!, Shared!, Append!)
+	if ll_dochandle = -1 then	
+		Clipboard(ls_message)
+		DebugBreak()
+		return -1
+	end if
+	FileWrite(ll_dochandle, ls_message)
+	FileClose(ll_dochandle)
+	return 0
+end if
+
+// If the message needs to be logged to the database, do that first
+if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
+	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name, ld_seconds)
+	lb_reported = True
+end if
+
+// Report Event to the Windows Event Log
+
+//#define EVENTLOG_SUCCESS                0X0000
+//#define EVENTLOG_ERROR_TYPE             0x0001
+//#define EVENTLOG_WARNING_TYPE           0x0002
+//#define EVENTLOG_INFORMATION_TYPE       0x0004
+//#define EVENTLOG_AUDIT_SUCCESS          0x0008
+//#define EVENTLOG_AUDIT_FAILURE          0x0010
+
+if pi_severity >= loglevel then
+	if common_thread.utilities_ok() then
+		common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
+		lb_reported = True
+	else
+		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
+	end if
+end if
+
+
+// Construct the event structure
+lstr_log.severity = pi_severity
+lstr_log.severity_text = severities[pi_severity]
+lstr_log.class = ls_who
+lstr_log.script = ps_script
+lstr_log.message = ps_message
+lstr_log.date_time = datetime(today(), now())
+
+// If the severity is >= 4, then report it to the message bar at the bottom of the screen
+if pi_severity >= 4 then
+	f_cpr_set_error(lstr_log)
+	lb_reported = True
+end if	
+
+// If the display is enabled and the severity is >= the display level, then show the message to the user
+if display_enabled then
+	if pi_severity >= displayloglevel then
+		f_display_log_entry(lstr_log)
+		lb_reported = True
+	end if
+end if
+
+if not lb_reported then return -1
+
+if pi_severity >= 4 then
+	// Call to developer attention
+	Clipboard(ls_message)
+	DebugBreak()
+end if
+
+return 1
+
+
+end function
+
+public function integer log_db_with_seconds (powerobject po_who, string ps_script, string ps_message, integer pi_severity, decimal pd_seconds);string ls_component_id
+string ls_version_name
+
+setnull(ls_component_id)
+setnull(ls_version_name)
+
+return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name, pd_seconds)
+
+end function
+
+public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name, decimal pd_seconds);string ls_user
 string ls_scribe
 string ls_who
 string ls_message
@@ -1328,7 +1495,8 @@ INSERT INTO o_Log (
 		os_version,
 		epro_version,
 		component_id,
-		compile_name)
+		compile_name,
+		progress_seconds)
 VALUES (
 		:severities[pi_severity],
 		:ls_who,
@@ -1347,164 +1515,14 @@ VALUES (
 		:ls_os_version,
 		:ls_app_version,
 		:ps_component_id,
-		:ps_version_name)
+		:ps_version_name,
+		:pd_seconds)
 USING cprdb;
 if not cprdb.sqlcode = 0 then
 	return 1
 else
 	return -1
 end if
-
-end function
-
-public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name);integer li_sts
-boolean lb_reported
-integer li_event_type
-integer li_category
-unsignedlong ll_user
-long ll_event_id
-integer li_string_count
-long ll_data_size
-string lsa_string[]
-string ls_message
-long ll_rawdata
-str_popup popup
-string ls_who
-string ls_error_file
-long ll_dochandle
-str_event_log_entry lstr_log
-
-
-// Make Sure the severity is in our range
-if isnull(pi_severity) then pi_severity = 1
-if pi_severity < 1 then pi_severity = 1
-if pi_severity > 5 then pi_severity = 5
-
-// set event type
-if pi_severity <= 1 then
-	// Debug Message
-	ll_event_id = 0
-	li_event_type = 4
-elseif pi_severity = 2 then
-	// Informational Message
-	ll_event_id = 0
-	li_event_type = 4
-elseif pi_severity = 3 then
-	// Warning Message
-	ll_event_id = 0
-	li_event_type = 2
-else
-	// Error Message
-	ll_event_id = 0
-	li_event_type = 1
-end if
-
-// set category
-li_category = 1
-
-// Set Raw Data
-ll_rawdata = 0
-
-// Set user id
-ll_user = 0
-
-// Set Data Size
-ll_data_size = 0
-
-// Set Strings
-lsa_string[1] = f_app_version() + " "
-
-// Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = ""
-else
-	ls_who = po_who.classname()
-end if
-
-li_string_count = 1
-if isnull(ps_script) then
-	ps_script = "Script Unknown"
-end if
-
-if isnull(ps_message) then
-	ps_message = "No Message"
-end if
-
-ls_message = "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity)
-
-// If not initialized, write to a file in the current folder
-if not initialized then 
-	ls_error_file = GetCurrentDirectory( ) + "\EPro-Initialization-Errors.txt"
-	ll_dochandle = FileOpen(ls_error_file, LineMode!, Write!, Shared!, Append!)
-	if ll_dochandle = -1 then	
-		Clipboard(ls_message)
-		DebugBreak()
-		return -1
-	end if
-	FileWrite(ll_dochandle, ls_message)
-	FileClose(ll_dochandle)
-	return 0
-end if
-
-// If the message needs to be logged to the database, do that first
-if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
-	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name)
-	lb_reported = True
-end if
-
-// Report Event to the Windows Event Log
-
-//#define EVENTLOG_SUCCESS                0X0000
-//#define EVENTLOG_ERROR_TYPE             0x0001
-//#define EVENTLOG_WARNING_TYPE           0x0002
-//#define EVENTLOG_INFORMATION_TYPE       0x0004
-//#define EVENTLOG_AUDIT_SUCCESS          0x0008
-//#define EVENTLOG_AUDIT_FAILURE          0x0010
-
-if pi_severity >= loglevel then
-	if common_thread.utilities_ok() then
-		common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
-		lb_reported = True
-	else
-		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
-	end if
-end if
-
-
-// Construct the event structure
-lstr_log.severity = pi_severity
-lstr_log.severity_text = severities[pi_severity]
-lstr_log.class = ls_who
-lstr_log.script = ps_script
-lstr_log.message = ps_message
-lstr_log.date_time = datetime(today(), now())
-
-// If the severity is >= 4, then report it to the message bar at the bottom of the screen
-if pi_severity >= 4 then
-	f_cpr_set_error(lstr_log)
-	lb_reported = True
-end if	
-
-// If the display is enabled and the severity is >= the display level, then show the message to the user
-if display_enabled then
-	if pi_severity >= displayloglevel then
-		f_display_log_entry(lstr_log)
-		lb_reported = True
-	end if
-end if
-
-if not lb_reported then return -1
-
-if pi_severity >= 4 then
-	// Call to developer attention
-	Clipboard(ls_message)
-	DebugBreak()
-end if
-
-return 1
-
 
 end function
 
