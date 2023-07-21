@@ -38,6 +38,10 @@ type sle_email_address from singlelineedit within u_tabpage_user_contact_info
 end type
 type st_email_address_title from statictext within u_tabpage_user_contact_info
 end type
+type st_country from statictext within u_tabpage_user_contact_info
+end type
+type sle_country from singlelineedit within u_tabpage_user_contact_info
+end type
 end forward
 
 global type u_tabpage_user_contact_info from u_tabpage_user_base
@@ -62,6 +66,8 @@ st_zip st_zip
 sle_zip sle_zip
 sle_email_address sle_email_address
 st_email_address_title st_email_address_title
+st_country st_country
+sle_country sle_country
 end type
 global u_tabpage_user_contact_info u_tabpage_user_contact_info
 
@@ -92,6 +98,7 @@ sle_address2.text	= user.address[address_index].address_line_2
 sle_city.text	= user.address[address_index].city
 sle_state.text	= user.address[address_index].state
 sle_zip.text	= user.address[address_index].zip
+sle_country.text	= user.address[address_index].country
 
 sle_phone.text	= user.communication[phone_index].communication_value
 sle_phone2.text	= user.communication[phone2_index].communication_value
@@ -107,6 +114,22 @@ phone2_index = user.get_communication_index("Phone", "Phone2")
 fax_index = user.get_communication_index("Fax", "Fax")
 email_index = user.get_communication_index("Email", "Email")
 
+// Avoid Americanisms 
+if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
+	st_state.visible = true
+	sle_state.visible = true
+	st_zip.visible = true
+	sle_zip.visible = true
+	st_country.visible = false
+	sle_country.visible = false
+ELSE
+	st_state.visible = false
+	sle_state.visible = false
+	st_zip.visible = false
+	sle_zip.visible = false
+	st_country.visible = true
+	sle_country.visible = true
+END IF	
 return 1
 
 end function
@@ -132,6 +155,8 @@ this.st_zip=create st_zip
 this.sle_zip=create sle_zip
 this.sle_email_address=create sle_email_address
 this.st_email_address_title=create st_email_address_title
+this.st_country=create st_country
+this.sle_country=create sle_country
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_phone
 this.Control[iCurrent+2]=this.sle_phone
@@ -151,6 +176,8 @@ this.Control[iCurrent+15]=this.st_zip
 this.Control[iCurrent+16]=this.sle_zip
 this.Control[iCurrent+17]=this.sle_email_address
 this.Control[iCurrent+18]=this.st_email_address_title
+this.Control[iCurrent+19]=this.st_country
+this.Control[iCurrent+20]=this.sle_country
 end on
 
 on u_tabpage_user_contact_info.destroy
@@ -173,6 +200,8 @@ destroy(this.st_zip)
 destroy(this.sle_zip)
 destroy(this.sle_email_address)
 destroy(this.st_email_address_title)
+destroy(this.st_country)
+destroy(this.sle_country)
 end on
 
 type st_phone from statictext within u_tabpage_user_contact_info
@@ -464,7 +493,7 @@ boolean focusrectangle = false
 end type
 
 type sle_state from singlelineedit within u_tabpage_user_contact_info
-integer x = 1646
+integer x = 1669
 integer y = 456
 integer width = 398
 integer height = 104
@@ -601,4 +630,51 @@ string text = "Email Address:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
+
+type st_country from statictext within u_tabpage_user_contact_info
+integer x = 1614
+integer y = 472
+integer width = 238
+integer height = 76
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 700
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+long backcolor = 7191717
+string text = "Country"
+alignment alignment = right!
+boolean focusrectangle = false
+end type
+
+type sle_country from singlelineedit within u_tabpage_user_contact_info
+integer x = 1966
+integer y = 456
+integer width = 681
+integer height = 104
+integer taborder = 20
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long textcolor = 33554432
+integer limit = 20
+borderstyle borderstyle = stylelowered!
+end type
+
+event modified;if len(trim(text)) > 0 then
+	user.address[address_index].country = text
+else
+	setnull(user.address[address_index].country)
+end if
+
+user.update_address(address_index)
+
+end event
 
