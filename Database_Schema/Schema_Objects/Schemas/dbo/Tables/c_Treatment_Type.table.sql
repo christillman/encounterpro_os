@@ -22,7 +22,6 @@
     [status]                       VARCHAR (12)     NULL,
     [id]                           UNIQUEIDENTIFIER NOT NULL,
     [display_script_id]            INT              NULL,
-    [dashboard_datawindow_config_object_id]            UNIQUEIDENTIFIER              NULL,
     [update_flag]                  CHAR (1)         NOT NULL,
     [owner_id]                     INT              NOT NULL,
     [last_updated]                 DATETIME         NOT NULL,
