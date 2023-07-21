@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[em_Documentation_Guide]
-    ADD CONSTRAINT [PK_em_documentation_guide] PRIMARY KEY CLUSTERED ([em_documentation_guide] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

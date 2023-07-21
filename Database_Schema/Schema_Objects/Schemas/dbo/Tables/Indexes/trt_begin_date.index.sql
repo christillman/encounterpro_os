@@ -1,4 +1,0 @@
-﻿CREATE NONCLUSTERED INDEX [trt_begin_date]
-    ON [dbo].[p_Treatment_Item]([treatment_type] ASC, [begin_date] ASC, [specialty_id] ASC, [treatment_status] ASC) WITH (FILLFACTOR = 70, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = ON, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF, ONLINE = OFF, MAXDOP = 0)
-    ON [PRIMARY];
-

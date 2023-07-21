@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[u_Display_Format_Selection]
-    ADD CONSTRAINT [PK_u_Display_Format_Selection_01] PRIMARY KEY CLUSTERED ([display_format_selection_id] ASC) WITH (FILLFACTOR = 80, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

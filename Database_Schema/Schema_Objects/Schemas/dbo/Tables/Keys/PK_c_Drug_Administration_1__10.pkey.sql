@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[c_Drug_Administration]
-    ADD CONSTRAINT [PK_c_Drug_Administration_1__10] PRIMARY KEY CLUSTERED ([drug_id] ASC, [administration_sequence] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

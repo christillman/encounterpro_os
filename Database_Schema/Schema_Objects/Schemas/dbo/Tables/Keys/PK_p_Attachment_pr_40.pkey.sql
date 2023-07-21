@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[p_Attachment_Progress]
-    ADD CONSTRAINT [PK_p_Attachment_pr_40] PRIMARY KEY NONCLUSTERED ([attachment_id] ASC, [attachment_progress_sequence] ASC) WITH (FILLFACTOR = 90, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF) ON [PRIMARY];
-

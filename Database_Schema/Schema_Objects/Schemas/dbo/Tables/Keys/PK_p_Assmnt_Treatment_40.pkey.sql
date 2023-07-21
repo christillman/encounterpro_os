@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[p_Assessment_Treatment]
-    ADD CONSTRAINT [PK_p_Assmnt_Treatment_40] PRIMARY KEY CLUSTERED ([cpr_id] ASC, [problem_id] ASC, [treatment_id] ASC) WITH (FILLFACTOR = 80, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

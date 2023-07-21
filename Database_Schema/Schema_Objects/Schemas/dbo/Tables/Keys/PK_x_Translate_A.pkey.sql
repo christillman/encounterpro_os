@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[x_Translate_A]
-    ADD CONSTRAINT [PK_x_Translate_A] PRIMARY KEY CLUSTERED ([translation_set] ASC, [epro_value] ASC, [external_value] ASC) WITH (FILLFACTOR = 80, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-
