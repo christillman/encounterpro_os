@@ -157,301 +157,68 @@ public subroutine load_medication ()
 public function string get_patient_weight ()
 end prototypes
 
-event post_open;///////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Description: 
-//
-// Created By:Mark																				Creation dt: 
-//
-// Modified By:Sumathi Chinnasamy															Modified On:03/14/2000
-///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-integer					li_sts
-String					ls_null
-/* user defined */
-u_attachment_list		luo_attachment_list
-boolean lb_auto_dose
+public subroutine recalcdose ();integer i, j
+real lr_dose_amount
+string ls_mult_display
 
-Setnull(ls_null)
-drug_id 		  = treat_medication.drug_id
-if isnull(drug_id) then
-	log.log(this, "w_svc_drug_treatment_edit:post", "Null drug_id", 4)
-	treat_medication.treatment_definition[1].attribute_count = -1
-	Close(This)
-	Return
-End if
+if not uo_dose.visible then return
 
-li_sts = set_drug()
+ls_mult_display = ""
 
-If li_sts <= 0 Then
-	treat_medication.treatment_definition[1].attribute_count = -1
-	Close(This)
-	Return
-End if
-
-load_medication()
-
-cb_done.setfocus()
-
-end event
-
-public function integer display_instructions ();string ls_temp
-
-ls_temp = ""
-
-if not isnull(pharmacist_instructions) and trim(pharmacist_instructions) <> "" then
-	ls_temp = "Pharmacist: " + trim(pharmacist_instructions)
-end if
-
-if not isnull(patient_instructions) and trim(patient_instructions) <> "" then
-	if ls_temp = "" then
-		ls_temp = "Patient: " + trim(patient_instructions)
-	else
-		ls_temp += "~nPatient: " + trim(patient_instructions)
+if drug_admin_index > 0 and package_list_index > 0 then
+	i = package_list_index
+	j = drug_admin_index
+	uo_dose.calc_dose_amount(	uo_drug_administration.administer_amount[j], &
+										uo_drug_administration.administer_unit[j], &
+										uo_drug_package.pkg_administer_unit[i], &
+										uo_drug_administration.mult_by_what[j], &
+										uo_drug_administration.calc_per[j], &
+										uo_drug_administration.daily_frequency[j], &
+										uo_drug_package.administer_per_dose[i], &
+										uo_drug_package.dose_amount[i], &
+										uo_drug_package.dose_unit[i], &
+										max_dose_per_day, &
+										max_dose_unit, &
+										ls_mult_display, &
+										lr_dose_amount)
+	uo_dose.set_amount(lr_dose_amount, uo_drug_package.dose_unit[package_list_index])
+elseif package_list_index > 0 then
+	i = package_list_index
+	if isnull(uo_dose.amount) or uo_dose.amount <= 0 then
+		uo_dose.set_amount(1, uo_drug_package.dose_unit[i])
+	elseif last_package_list_index > 0 then
+		j = last_package_list_index
+		uo_dose.convert_dose_amount(uo_drug_package.pkg_administer_unit[j], &
+											uo_drug_package.administer_per_dose[j], &
+											uo_drug_package.dose_unit[j], &
+											uo_drug_package.pkg_administer_unit[i], &
+											uo_drug_package.administer_per_dose[i], &
+											uo_drug_package.dose_amount[i], &
+											uo_drug_package.dose_unit[i] )
 	end if
 end if
-// Check whether to override the previous instructions
-dw_instructions.reset()
-If Len(ls_temp) > 0 Then
-//	dw_instructions.reset()
-	dw_instructions.insertrow(0)
-	dw_instructions.setitem(1, "instruction", ls_temp)
-Else
-//	patient_instructions = treat_medication.patient_instructions
-//	pharmacist_instructions = treat_medication.pharmacist_instructions
-End If
-Return 1
 
-end function
-
-public subroutine edit_instruction (string ps_progress_key);str_popup popup
-str_popup_return popup_return
-string ls_ins
-long ll_row
-
-popup.data_row_count = 3
-popup.items[1] = ps_progress_key + "_" + treat_medication.treatment_type + "_" + treat_medication.drug_id
-popup.items[2] = ps_progress_key + "_" + treat_medication.treatment_type
-if ps_progress_key = "Patient Instructions" then
-	popup.title = "Patient Instructions For "
-	popup.items[3] = patient_instructions
-else
-	popup.title = "Pharmacist Instructions For "
-	popup.items[3] = pharmacist_instructions
-end if
-popup.title += treat_medication.treatment_description
-
-openwithparm(w_progress_note_edit, popup)
-popup_return = message.powerobjectparm
-If popup_return.item_count = 2 then
-	If trim(popup_return.items[1]) = "" then
-		setnull(ls_ins)
-	else
-		ls_ins = popup_return.items[1]
+if not dispense_selected then
+	i = uo_administer_frequency.current_frequency
+	if i > 0 then
+		uo_dispense.calc_amount(uo_dose.amount, &
+										uo_dose.unit, &
+										uo_administer_frequency.frequencies[i].frequency, &
+										uo_duration.amount, &
+										uo_duration.unit &
+										)
 	end if
-ElseIf popup_return.item_count = 0 then
-	Setnull(ls_ins)
-Else
-	Return
-End If
-if ps_progress_key = "Patient Instructions" then
-	patient_instructions = ls_ins
-else
-	pharmacist_instructions = ls_ins
 end if
-display_instructions()
+
+if isnull(ls_mult_display) or trim(ls_mult_display) = "" then
+	st_mult_display.text = get_patient_weight()
+else
+	st_mult_display.text = ls_mult_display
+end if
 
 end subroutine
 
-public function integer set_drug ();integer li_count, i, j, li_sts
-string ls_null, ls_unit
-string ls_dea_number_required, ls_generic_name
-
-setnull(ls_null)
-
-log.log(this, "w_svc_drug_treatment_edit.set_drug:0007", drug_id, 1)
-
-// Get the name and default duration
-li_sts = tf_get_drug(drug_id, &
-							st_drug.text, &
-							ls_generic_name, &
-							default_duration_amount, &
-							default_duration_unit, &
-							default_duration_prn, &
-							max_dose_per_day, &
-							ls_unit, &
-							ls_dea_number_required)
-if li_sts <= 0 then
-	if li_sts = 0 then log.log(this, "w_svc_drug_treatment_edit.set_drug:0020","Invalid Drug ID (" + drug_id + ")", 4)
-	return li_sts
-end if
-
-max_dose_unit = unit_list.find_unit(ls_unit)
-if not isnull(max_dose_unit) then
-	st_max_dose.text = "Max Dose = " + f_pretty_amount_unit(max_dose_per_day, max_dose_unit.unit_id) + " / Day"
-else
-	st_max_dose.text = ""
-end if
-
-// Get the package list for this drug
-li_count = uo_drug_package.retrieve(drug_id)
-if li_count <= 0 then
-	messagebox("w_svc_drug_treatment_edit-set_drug()","This drug (" + st_drug.text + ") has no packages defined.")
-	return -1
-end if
-
-// Get the admin list for this drug
-
-// Hide Dose Based on widgets (#11)
-// CDT 2023-07-17
-// li_count = uo_drug_administration.retrieve(drug_id, "ALL")
-
-display_only = false
-
-Return 1
-end function
-
-public subroutine set_default_instruction ();str_popup popup
-str_popup_return popup_return
-string ls_instruction_for
-string ls_instruction_id
-string ls_package_id
-integer li_administration_sequence
-string ls_instruction
-integer i
-string ls_temp
-string lsa_which[]
-string ls_setclear,ls_null
-
-Setnull(ls_null)
-
-popup.data_row_count = 4
-popup.items[1] = "Clear Default Patient Instruction"
-popup.items[2] = "Set Default Patient Instruction"
-popup.items[3] = "Clear Default Pharmacist Instruction"
-popup.items[4] = "Set Default Pharmacist Instruction"
-	
-openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_count <> 1 then return
-
-Choose Case popup_return.item_indexes[1]
-	Case 1
-		ls_instruction_for = "P"
-		ls_instruction = ls_null
-		ls_setclear = "Clear"
-	Case 2
-		ls_instruction_for = "P"
-		ls_instruction = patient_instructions
-		ls_setclear = "Set"
-	Case 3
-		ls_instruction_for = "D"
-		ls_instruction = ls_null
-		ls_setclear = "Clear"
-	Case 4
-		ls_instruction_for = "D"
-		ls_instruction = pharmacist_instructions
-		ls_setclear = "Set"
-End Choose
-
-popup.data_row_count = 1
-popup.items[1] = ls_setclear + " Default for Drug"
-lsa_which[1] = "DRUG"
-
-if package_list_index > 0 then
-	popup.data_row_count += 1
-	lsa_which[popup.data_row_count] = "PACKAGE"
-	popup.items[popup.data_row_count] = ls_setclear + " Default for Drug/Package"
-end if
-
-if drug_admin_index > 0 then
-	popup.data_row_count += 1
-	lsa_which[popup.data_row_count] = "ADMIN"
-	popup.items[popup.data_row_count] = ls_setclear + " Default for Drug/Administration"
-end if
-
-if isnull(ls_instruction) then
-	popup.data_row_count += 1
-	lsa_which[popup.data_row_count] = "ALL"
-	popup.items[popup.data_row_count] = "Clear Default for ALL"
-end if
-
-openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
-if popup_return.item_count <> 1 then return
-
-setnull(ls_instruction_id)
-setnull(ls_package_id)
-setnull(li_administration_sequence)
-
-CHOOSE CASE lsa_which[popup_return.item_indexes[1]]
-	CASE "DRUG"
-		DELETE FROM c_Drug_Instruction
-		WHERE drug_id = :drug_id
-		AND default_flag = 'Y'
-		AND instruction_for = :ls_instruction_for
-		AND package_id IS NULL
-		AND administration_sequence IS NULL;
-		if not tf_check() then return
-	CASE "PACKAGE"
-		ls_package_id = uo_drug_package.package_id[package_list_index]
-		DELETE FROM c_Drug_Instruction
-		WHERE drug_id = :drug_id
-		AND default_flag = 'Y'
-		AND instruction_for = :ls_instruction_for
-		AND package_id = :ls_package_id
-		AND administration_sequence IS NULL;
-		if not tf_check() then return
-	CASE "ADMIN"
-		li_administration_sequence = uo_drug_administration.administration_sequence[drug_admin_index]
-		DELETE FROM c_Drug_Instruction
-		WHERE drug_id = :drug_id
-		AND default_flag = 'Y'
-		AND instruction_for = :ls_instruction_for
-		AND package_id IS NULL
-		AND administration_sequence = :li_administration_sequence;
-		if not tf_check() then return
-	CASE "ALL"
-		DELETE FROM c_Drug_Instruction
-		WHERE drug_id = :drug_id
-		AND default_flag = 'Y'
-		AND instruction_for = :ls_instruction_for;
-		if not tf_check() then return
-END CHOOSE
-
-if not isnull(ls_instruction) then
-	i = 1
-	DO
-		ls_instruction_id = drug_id + string(i)
-		SELECT instruction_id
-		INTO :ls_temp
-		FROM c_Drug_Instruction
-		WHERE instruction_id = :ls_instruction_id;
-		if not tf_check() then return
-		if sqlca.sqlcode = 100 then EXIT
-		i += 1
-		if i > 100 then return
-	LOOP WHILE true
-	
-	INSERT INTO c_Drug_Instruction (
-		instruction_id,
-		drug_id,
-		package_id,
-		administration_sequence,
-		default_flag,
-		instruction,
-		instruction_for)
-	VALUES (
-		:ls_instruction_id,
-		:drug_id,
-		:ls_package_id,
-		:li_administration_sequence,
-		'Y',
-		:ls_instruction,
-		:ls_instruction_for);
-	if not tf_check() then return
-end if
-end subroutine
 
 public function integer load_default_drug_instructions (string ps_drug_id, string ps_package_id, integer pi_administration_sequence);string ls_instruction_for, ls_instruction
 string ls_pharmacist, ls_patient
@@ -596,6 +363,382 @@ return 1
 
 end function
 
+public function integer display_instructions ();string ls_temp
+
+ls_temp = ""
+
+if not isnull(pharmacist_instructions) and trim(pharmacist_instructions) <> "" then
+	ls_temp = "Pharmacist: " + trim(pharmacist_instructions)
+end if
+
+if not isnull(patient_instructions) and trim(patient_instructions) <> "" then
+	if ls_temp = "" then
+		ls_temp = "Patient: " + trim(patient_instructions)
+	else
+		ls_temp += "~nPatient: " + trim(patient_instructions)
+	end if
+end if
+// Check whether to override the previous instructions
+dw_instructions.reset()
+If Len(ls_temp) > 0 Then
+//	dw_instructions.reset()
+	dw_instructions.insertrow(0)
+	dw_instructions.setitem(1, "instruction", ls_temp)
+Else
+//	patient_instructions = treat_medication.patient_instructions
+//	pharmacist_instructions = treat_medication.pharmacist_instructions
+End If
+Return 1
+
+end function
+
+public subroutine set_default_instruction ();str_popup popup
+str_popup_return popup_return
+string ls_instruction_for
+string ls_instruction_id
+string ls_package_id
+integer li_administration_sequence
+string ls_instruction
+integer i
+string ls_temp
+string lsa_which[]
+string ls_setclear,ls_null
+
+Setnull(ls_null)
+
+popup.data_row_count = 4
+popup.items[1] = "Clear Default Patient Instruction"
+popup.items[2] = "Set Default Patient Instruction"
+popup.items[3] = "Clear Default Pharmacist Instruction"
+popup.items[4] = "Set Default Pharmacist Instruction"
+	
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return
+
+Choose Case popup_return.item_indexes[1]
+	Case 1
+		ls_instruction_for = "P"
+		ls_instruction = ls_null
+		ls_setclear = "Clear"
+	Case 2
+		ls_instruction_for = "P"
+		ls_instruction = patient_instructions
+		ls_setclear = "Set"
+	Case 3
+		ls_instruction_for = "D"
+		ls_instruction = ls_null
+		ls_setclear = "Clear"
+	Case 4
+		ls_instruction_for = "D"
+		ls_instruction = pharmacist_instructions
+		ls_setclear = "Set"
+End Choose
+
+popup.data_row_count = 1
+popup.items[1] = ls_setclear + " Default for Drug"
+lsa_which[1] = "DRUG"
+
+if package_list_index > 0 then
+	popup.data_row_count += 1
+	lsa_which[popup.data_row_count] = "PACKAGE"
+	popup.items[popup.data_row_count] = ls_setclear + " Default for Drug/Package"
+end if
+
+if drug_admin_index > 0 then
+	popup.data_row_count += 1
+	lsa_which[popup.data_row_count] = "ADMIN"
+	popup.items[popup.data_row_count] = ls_setclear + " Default for Drug/Administration"
+end if
+
+if isnull(ls_instruction) then
+	popup.data_row_count += 1
+	lsa_which[popup.data_row_count] = "ALL"
+	popup.items[popup.data_row_count] = "Clear Default for ALL"
+end if
+
+openwithparm(w_pop_pick, popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count <> 1 then return
+
+setnull(ls_instruction_id)
+setnull(ls_package_id)
+setnull(li_administration_sequence)
+
+CHOOSE CASE lsa_which[popup_return.item_indexes[1]]
+	CASE "DRUG"
+		DELETE FROM c_Drug_Instruction
+		WHERE drug_id = :drug_id
+		AND default_flag = 'Y'
+		AND instruction_for = :ls_instruction_for
+		AND package_id IS NULL
+		AND administration_sequence IS NULL;
+		if not tf_check() then return
+	CASE "PACKAGE"
+		ls_package_id = uo_drug_package.package_id[package_list_index]
+		DELETE FROM c_Drug_Instruction
+		WHERE drug_id = :drug_id
+		AND default_flag = 'Y'
+		AND instruction_for = :ls_instruction_for
+		AND package_id = :ls_package_id
+		AND administration_sequence IS NULL;
+		if not tf_check() then return
+	CASE "ADMIN"
+		li_administration_sequence = uo_drug_administration.administration_sequence[drug_admin_index]
+		DELETE FROM c_Drug_Instruction
+		WHERE drug_id = :drug_id
+		AND default_flag = 'Y'
+		AND instruction_for = :ls_instruction_for
+		AND package_id IS NULL
+		AND administration_sequence = :li_administration_sequence;
+		if not tf_check() then return
+	CASE "ALL"
+		DELETE FROM c_Drug_Instruction
+		WHERE drug_id = :drug_id
+		AND default_flag = 'Y'
+		AND instruction_for = :ls_instruction_for;
+		if not tf_check() then return
+END CHOOSE
+
+if not isnull(ls_instruction) then
+	i = 1
+	DO
+		ls_instruction_id = drug_id + string(i)
+		SELECT instruction_id
+		INTO :ls_temp
+		FROM c_Drug_Instruction
+		WHERE instruction_id = :ls_instruction_id;
+		if not tf_check() then return
+		if sqlca.sqlcode = 100 then EXIT
+		i += 1
+		if i > 100 then return
+	LOOP WHILE true
+	
+	INSERT INTO c_Drug_Instruction (
+		instruction_id,
+		drug_id,
+		package_id,
+		administration_sequence,
+		default_flag,
+		instruction,
+		instruction_for)
+	VALUES (
+		:ls_instruction_id,
+		:drug_id,
+		:ls_package_id,
+		:li_administration_sequence,
+		'Y',
+		:ls_instruction,
+		:ls_instruction_for);
+	if not tf_check() then return
+end if
+end subroutine
+
+
+public subroutine edit_instruction (string ps_progress_key);str_popup popup
+str_popup_return popup_return
+string ls_ins
+long ll_row
+
+popup.data_row_count = 3
+popup.items[1] = ps_progress_key + "_" + treat_medication.treatment_type + "_" + treat_medication.drug_id
+popup.items[2] = ps_progress_key + "_" + treat_medication.treatment_type
+if ps_progress_key = "Patient Instructions" then
+	popup.title = "Patient Instructions For "
+	popup.items[3] = patient_instructions
+else
+	popup.title = "Pharmacist Instructions For "
+	popup.items[3] = pharmacist_instructions
+end if
+popup.title += treat_medication.treatment_description
+
+openwithparm(w_progress_note_edit, popup)
+popup_return = message.powerobjectparm
+If popup_return.item_count = 2 then
+	If trim(popup_return.items[1]) = "" then
+		setnull(ls_ins)
+	else
+		ls_ins = popup_return.items[1]
+	end if
+ElseIf popup_return.item_count = 0 then
+	Setnull(ls_ins)
+Else
+	Return
+End If
+if ps_progress_key = "Patient Instructions" then
+	patient_instructions = ls_ins
+else
+	pharmacist_instructions = ls_ins
+end if
+display_instructions()
+
+end subroutine
+
+public function integer set_drug ();integer li_count, i, j, li_sts
+string ls_null, ls_unit
+string ls_dea_number_required, ls_generic_name
+
+setnull(ls_null)
+
+log.log(this, "w_svc_drug_treatment_edit.set_drug:0007", drug_id, 1)
+
+// Get the name and default duration
+li_sts = tf_get_drug(drug_id, &
+							st_drug.text, &
+							ls_generic_name, &
+							default_duration_amount, &
+							default_duration_unit, &
+							default_duration_prn, &
+							max_dose_per_day, &
+							ls_unit, &
+							ls_dea_number_required)
+if li_sts <= 0 then
+	if li_sts = 0 then log.log(this, "w_svc_drug_treatment_edit.set_drug:0020","Invalid Drug ID (" + drug_id + ")", 4)
+	return li_sts
+end if
+
+max_dose_unit = unit_list.find_unit(ls_unit)
+if not isnull(max_dose_unit) then
+	st_max_dose.text = "Max Dose = " + f_pretty_amount_unit(max_dose_per_day, max_dose_unit.unit_id) + " / Day"
+else
+	st_max_dose.text = ""
+end if
+
+// Get the package list for this drug
+li_count = uo_drug_package.retrieve(drug_id)
+if li_count <= 0 then
+	messagebox("w_svc_drug_treatment_edit-set_drug()","This drug (" + st_drug.text + ") has no packages defined.")
+	return -1
+end if
+
+// Get the admin list for this drug
+
+// Hide Dose Based on widgets (#11)
+// CDT 2023-07-17
+// li_count = uo_drug_administration.retrieve(drug_id, "ALL")
+
+display_only = false
+
+Return 1
+end function
+
+public subroutine load_medication ();integer li_count, i, j, li_sts
+string ls_null
+str_progress lstr_progress
+real lr_null
+string ls_is_qs
+string ls_dispense_unit
+
+setnull(lr_null)
+setnull(ls_null)
+// If the package ID exists, then set it.
+// Otherwise use the dosage form if it exists.
+// Otherwise use the first package.
+package_list_index = uo_drug_package.selectpackage(treat_medication.package_id)
+If package_list_index = 0 Then
+	package_selected = False
+Else
+	package_selected = True
+	uo_dose.set_amount(lr_null, uo_drug_package.dose_unit[package_list_index])
+	uo_drug_package.event trigger newpackage()
+End if
+
+// Determine the dispense amount/unit
+ls_dispense_unit = treat_medication.dispense_unit
+if isnull(ls_dispense_unit) then
+	if package_list_index > 0 then
+		ls_dispense_unit = uo_drug_package.default_dispense_unit[package_list_index]
+	end if
+end if
+
+If Isnull(treat_medication.dispense_amount) Then
+	ls_is_qs = f_get_progress_value(current_patient.cpr_id, &
+												"Treatment", &
+												treat_medication.treatment_id, &
+												"Property", &
+												"Dispense QS")
+	uo_dispense.is_qs = f_string_to_boolean(ls_is_qs)
+	dispense_selected = False
+Else
+	uo_dispense.is_qs = false
+	dispense_selected = True
+End if
+
+		// Ciru says do not set dispense amount ahead of dose being selected
+//uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
+//uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
+
+// Save the initial dispense_qs setting so we know if it changes
+prev_dispense_qs = uo_dispense.is_qs
+
+// If there is no dose amount, then set the drug administration to the one specified
+// in the medication object.
+If isnull(treat_medication.dose_amount) then
+	drug_admin_index = uo_drug_administration.selectadminsequence(&
+											treat_medication.administration_sequence)
+Else
+	// If there is a dose amount then load it.
+	uo_dose.set_amount(treat_medication.dose_amount, &
+									treat_medication.dose_unit)
+	drug_admin_index = uo_drug_administration.selectadminsequence(&
+											treat_medication.administration_sequence)
+End if
+
+// Load all the other stuff
+If Not isnull(treat_medication.administer_frequency) Then &
+	uo_administer_frequency.set_frequency(treat_medication.administer_frequency)
+
+uo_duration.set_amount(	treat_medication.duration_amount, &
+								treat_medication.duration_unit, &
+								treat_medication.duration_prn )
+
+// By Sumathi Chinnasamy On 12/08/99
+// Set refill text 
+refills = treat_medication.refills
+if isnull(refills) or refills = 0 then
+	st_refills.text = "No Refills"
+	st_refills.backcolor = color_object_selected
+elseif refills < 0 then
+	st_prn.backcolor = color_object_selected
+else
+	st_refills.text = String(treat_medication.refills)+" Refills"
+	st_refills.backcolor = color_object_selected
+end if
+
+//---
+brand_name_required = treat_medication.brand_name_required
+if upper(brand_name_required) = "Y" then
+	st_brand_name_required.text = "Yes"
+else
+	st_brand_name_required.text = "No"
+end if
+
+//uo_procedure.set_value(medication.procedure_id)
+
+// Load the special instructions
+pharmacist_instructions = f_get_progress_value(current_patient.cpr_id, &
+																"Treatment", &
+																treat_medication.treatment_id, &
+																"Instructions", &
+																"Pharmacist Instructions")
+
+
+patient_instructions = f_get_progress_value(current_patient.cpr_id, &
+																"Treatment", &
+																treat_medication.treatment_id, &
+																"Instructions", &
+																"Patient Instructions")
+
+display_instructions()
+
+// this is used to compare whether progress needs to be updated
+prev_patient_instructions = patient_instructions
+prev_pharmacist_instructions = pharmacist_instructions
+
+
+end subroutine
+
+
 public function integer save_changes ();String	ls_description
 Integer	li_sts
 str_attributes lstr_attributes
@@ -738,183 +881,6 @@ return 1
 
 end function
 
-public subroutine recalcdose ();integer i, j
-real lr_dose_amount
-string ls_mult_display
-
-if not uo_dose.visible then return
-
-ls_mult_display = ""
-
-if drug_admin_index > 0 and package_list_index > 0 then
-	i = package_list_index
-	j = drug_admin_index
-	uo_dose.calc_dose_amount(	uo_drug_administration.administer_amount[j], &
-										uo_drug_administration.administer_unit[j], &
-										uo_drug_package.pkg_administer_unit[i], &
-										uo_drug_administration.mult_by_what[j], &
-										uo_drug_administration.calc_per[j], &
-										uo_drug_administration.daily_frequency[j], &
-										uo_drug_package.administer_per_dose[i], &
-										uo_drug_package.dose_amount[i], &
-										uo_drug_package.dose_unit[i], &
-										max_dose_per_day, &
-										max_dose_unit, &
-										ls_mult_display, &
-										lr_dose_amount)
-	uo_dose.set_amount(lr_dose_amount, uo_drug_package.dose_unit[package_list_index])
-elseif package_list_index > 0 then
-	i = package_list_index
-	if isnull(uo_dose.amount) or uo_dose.amount <= 0 then
-		uo_dose.set_amount(1, uo_drug_package.dose_unit[i])
-	elseif last_package_list_index > 0 then
-		j = last_package_list_index
-		uo_dose.convert_dose_amount(uo_drug_package.pkg_administer_unit[j], &
-											uo_drug_package.administer_per_dose[j], &
-											uo_drug_package.dose_unit[j], &
-											uo_drug_package.pkg_administer_unit[i], &
-											uo_drug_package.administer_per_dose[i], &
-											uo_drug_package.dose_amount[i], &
-											uo_drug_package.dose_unit[i] )
-	end if
-end if
-
-if not dispense_selected then
-	i = uo_administer_frequency.current_frequency
-	if i > 0 then
-		uo_dispense.calc_amount(uo_dose.amount, &
-										uo_dose.unit, &
-										uo_administer_frequency.frequencies[i].frequency, &
-										uo_duration.amount, &
-										uo_duration.unit &
-										)
-	end if
-end if
-
-if isnull(ls_mult_display) or trim(ls_mult_display) = "" then
-	st_mult_display.text = get_patient_weight()
-else
-	st_mult_display.text = ls_mult_display
-end if
-
-end subroutine
-
-public subroutine load_medication ();integer li_count, i, j, li_sts
-string ls_null
-str_progress lstr_progress
-real lr_null
-string ls_is_qs
-string ls_dispense_unit
-
-setnull(lr_null)
-setnull(ls_null)
-// If the package ID exists, then set it.
-// Otherwise use the dosage form if it exists.
-// Otherwise use the first package.
-package_list_index = uo_drug_package.selectpackage(treat_medication.package_id)
-If package_list_index = 0 Then
-	package_selected = False
-Else
-	package_selected = True
-	uo_dose.set_amount(lr_null, uo_drug_package.dose_unit[package_list_index])
-	uo_drug_package.event trigger newpackage()
-End if
-
-// Determine the dispense amount/unit
-ls_dispense_unit = treat_medication.dispense_unit
-if isnull(ls_dispense_unit) then
-	if package_list_index > 0 then
-		ls_dispense_unit = uo_drug_package.default_dispense_unit[package_list_index]
-	end if
-end if
-
-If Isnull(treat_medication.dispense_amount) Then
-	ls_is_qs = f_get_progress_value(current_patient.cpr_id, &
-												"Treatment", &
-												treat_medication.treatment_id, &
-												"Property", &
-												"Dispense QS")
-	uo_dispense.is_qs = f_string_to_boolean(ls_is_qs)
-	dispense_selected = False
-Else
-	uo_dispense.is_qs = false
-	dispense_selected = True
-End if
-
-		// Ciru says do not set dispense amount ahead of dose being selected
-//uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
-//uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
-
-// Save the initial dispense_qs setting so we know if it changes
-prev_dispense_qs = uo_dispense.is_qs
-
-// If there is no dose amount, then set the drug administration to the one specified
-// in the medication object.
-If isnull(treat_medication.dose_amount) then
-	drug_admin_index = uo_drug_administration.selectadminsequence(&
-											treat_medication.administration_sequence)
-Else
-	// If there is a dose amount then load it.
-	uo_dose.set_amount(treat_medication.dose_amount, &
-									treat_medication.dose_unit)
-	drug_admin_index = uo_drug_administration.selectadminsequence(&
-											treat_medication.administration_sequence)
-End if
-
-// Load all the other stuff
-If Not isnull(treat_medication.administer_frequency) Then &
-	uo_administer_frequency.set_frequency(treat_medication.administer_frequency)
-
-uo_duration.set_amount(	treat_medication.duration_amount, &
-								treat_medication.duration_unit, &
-								treat_medication.duration_prn )
-
-// By Sumathi Chinnasamy On 12/08/99
-// Set refill text 
-refills = treat_medication.refills
-if isnull(refills) or refills = 0 then
-	st_refills.text = "No Refills"
-	st_refills.backcolor = color_object_selected
-elseif refills < 0 then
-	st_prn.backcolor = color_object_selected
-else
-	st_refills.text = String(treat_medication.refills)+" Refills"
-	st_refills.backcolor = color_object_selected
-end if
-
-//---
-brand_name_required = treat_medication.brand_name_required
-if upper(brand_name_required) = "Y" then
-	st_brand_name_required.text = "Yes"
-else
-	st_brand_name_required.text = "No"
-end if
-
-//uo_procedure.set_value(medication.procedure_id)
-
-// Load the special instructions
-pharmacist_instructions = f_get_progress_value(current_patient.cpr_id, &
-																"Treatment", &
-																treat_medication.treatment_id, &
-																"Instructions", &
-																"Pharmacist Instructions")
-
-
-patient_instructions = f_get_progress_value(current_patient.cpr_id, &
-																"Treatment", &
-																treat_medication.treatment_id, &
-																"Instructions", &
-																"Patient Instructions")
-
-display_instructions()
-
-// this is used to compare whether progress needs to be updated
-prev_patient_instructions = patient_instructions
-prev_pharmacist_instructions = pharmacist_instructions
-
-
-end subroutine
-
 public function string get_patient_weight ();u_unit luo_unit
 integer li_sts
 real lr_multiplier
@@ -1013,6 +979,45 @@ ls_weight = ls_weight + "  " + ls_display_date
 return ls_weight
 
 end function
+
+
+event post_open;///////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Description: 
+//
+// Created By:Mark																				Creation dt: 
+//
+// Modified By:Sumathi Chinnasamy															Modified On:03/14/2000
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+integer					li_sts
+String					ls_null
+/* user defined */
+u_attachment_list		luo_attachment_list
+boolean lb_auto_dose
+
+Setnull(ls_null)
+drug_id 		  = treat_medication.drug_id
+if isnull(drug_id) then
+	log.log(this, "w_svc_drug_treatment_edit:post", "Null drug_id", 4)
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+li_sts = set_drug()
+
+If li_sts <= 0 Then
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+load_medication()
+
+cb_done.setfocus()
+
+end event
 
 event open;call super::open;///////////////////////////////////////////////////////////////////////////////////////////////////////
 //
