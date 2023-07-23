@@ -53,7 +53,7 @@ FROM c_Drug_Brand
 WHERE brand_name_rxcui = :ps_ingr_rxcui;
 
 if not tf_check() then 
-	log.log(this,"f_choose_formulation","Database error",2)
+	log.log(po_null,"f_choose_formulation:0048","Database error",2)
 	return "Nothing selected"
 end if
 lb_brand_selected = NOT (sqlca.sqlcode = 100)
@@ -65,14 +65,14 @@ IF NOT lb_brand_selected THEN
 	WHERE generic_rxcui = :ps_ingr_rxcui;
 		
 	if not tf_check() then 
-		log.log(this,"f_choose_formulation","Database error",2)
+		log.log(po_null,"f_choose_formulation:0060","Database error",2)
 		return "Nothing selected"
 	end if
 	lb_generic_selected = NOT (sqlca.sqlcode = 100)
 END IF
 
 if not (lb_brand_selected OR lb_generic_selected) then 
-	log.log(this,"f_choose_formulation","Neither brand nor generic were found",2)
+	log.log(po_null,"f_choose_formulation:0067","Neither brand nor generic were found",2)
 	return "Nothing selected"
 end if
 
