@@ -87,7 +87,8 @@ IF @ps_context_object = 'Patient'
 			selected_flag = 0,
 			a.extension,
 			f.status AS folder_status,
-			DATALENGTH(a.attachment_image) as attachment_length
+			DATALENGTH(a.attachment_image) as attachment_length,   
+			a.encounter_id
 	FROM p_Attachment a
 		INNER JOIN c_Attachment_Type at
 		ON a.attachment_type = at.attachment_type
@@ -120,7 +121,8 @@ ELSE
 			selected_flag=0,
 			a.extension,
 			f.status AS folder_status,
-			DATALENGTH(a.attachment_image) as attachment_length
+			DATALENGTH(a.attachment_image) as attachment_length,   
+			a.encounter_id
 	FROM dbo.fn_progress(@ps_cpr_id , @ps_context_object, @pl_object_key, NULL, NULL, 'Y') p
 		INNER JOIN c_User u
 		ON p.user_id = u.user_id
