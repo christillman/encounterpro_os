@@ -360,9 +360,9 @@ end if
 
 li_temp = datalist.get_preference_int("SYSTEM", "display_log_level")
 if isnull(li_temp) then
-	log.displayloglevel = integer(datalist.get_preference("SYSTEM", "DisplayLogLevel", "5"))
-	if log.displayloglevel <= 0 then log.displayloglevel = 5
-	if log.displayloglevel > 5 then log.displayloglevel = 5
+	log.displayloglevel = integer(datalist.get_preference("SYSTEM", "display_log_level", "4"))
+	if log.displayloglevel <= 0 then log.displayloglevel = 4
+	if log.displayloglevel > 5 then log.displayloglevel = 4
 else
 	log.displayloglevel = li_temp
 end if
@@ -699,7 +699,7 @@ if log.dbloglevel > 2 then
 end if
 
 // Set the display log level back to the computer/global value
-log.displayloglevel = datalist.get_preference_int("SYSTEM", "display_log_level", 5)
+log.displayloglevel = datalist.get_preference_int("SYSTEM", "display_log_level", 4)
 
 if isnull(current_user) then
 	log.log(this, "u_user.logoff:0023", "current_user is null", 3)
