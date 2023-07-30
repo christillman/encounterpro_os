@@ -61,12 +61,6 @@ if isnull(property.status) or property.status <> "OK" then
 	return ls_property
 end if
 
-li_sts = common_thread.get_adodb(adodb)
-if li_sts <= 0 then
-	mylog.log(this, "u_component_property.get_property:0027", "Unable to establish ADO Connection", 4)
-	return ls_property
-end if
-
 add_attributes(pstr_attributes)
 
 ls_property = xx_get_property()
