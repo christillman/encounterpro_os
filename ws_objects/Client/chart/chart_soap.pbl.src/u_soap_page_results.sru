@@ -52,6 +52,7 @@ u_ds_attachments attachments
 
 string displayed_actual_file
 end variables
+
 forward prototypes
 public subroutine xx_refresh ()
 public subroutine xx_initialize ()
@@ -175,7 +176,7 @@ uo_attachments.y = content_top_edge
 uo_attachments.height = st_encounter_count.y - uo_attachments.y - 10
 
 // split the space between attachments list and picture
-uo_attachments.width = 2 * content_width / 3 - 20
+uo_attachments.width = 1 * content_width / 3 - 20
 
 st_attachment_details.x = uo_attachments.x + uo_attachments.width + 20
 st_attachment_details.y = content_bottom_edge - st_attachment_details.height
@@ -258,7 +259,8 @@ return
 
 end subroutine
 
-public subroutine attachment_menu (long pl_attachment_id, string ps_attachment_type);current_patient.attachments.menu(pl_attachment_id, uo_attachments.context_object, uo_attachments.object_key)
+public subroutine attachment_menu (long pl_attachment_id, string ps_attachment_type);
+current_patient.attachments.menu(pl_attachment_id, uo_attachments.context_object, uo_attachments.object_key)
 refresh()
 
 end subroutine
