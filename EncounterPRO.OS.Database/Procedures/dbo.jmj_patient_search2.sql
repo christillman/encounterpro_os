@@ -1,47 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
+﻿
 
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
@@ -57,6 +14,22 @@ GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_patient_search2]') AND [type]='P'))
 DROP PROCEDURE [dbo].[jmj_patient_search2]
 GO
+/*
+ exec [jmj_patient_search2] '981^2',
+	@ps_billing_id = NULL,
+	@ps_last_name = 'A%',
+	@ps_first_name = NULL,
+	@ps_ssn = NULL,
+	@pdt_date_of_birth = NULL,
+	@ps_phone_number = NULL,
+	@ps_employer = NULL,
+	@ps_employeeid = NULL,
+	@ps_patient_status = NULL,
+	@ps_id_document = NULL,
+	@ps_country = 'Uganda',
+	@ps_document_number = NULL,
+	@pl_count_only = 0 
+	*/
 
 -- Create Procedure [dbo].[jmj_patient_search2]
 Print 'Create Procedure [dbo].[jmj_patient_search2]'
@@ -88,6 +61,22 @@ AS
 --	1	More than zero and less than a thousand rows were found
 --	0	No records matching the search criteria were found
 --	-1	More than a thousand rows were found
+/* test code
+declare @ps_user_id varchar(24) = NULL,
+	@ps_billing_id varchar(24) = NULL,
+	@ps_last_name varchar(40) = 'A%',
+	@ps_first_name varchar(20) = NULL,
+	@ps_ssn varchar(24) = NULL,
+	@pdt_date_of_birth datetime = NULL,
+	@ps_phone_number varchar(32) = NULL,
+	@ps_employer varchar(40) = NULL,
+	@ps_employeeid varchar(24) = NULL,
+	@ps_patient_status varchar(24) = NULL,
+	@ps_id_document varchar(24) = NULL,
+	@ps_country varchar(24) = 'Rwanda',
+	@ps_document_number varchar(24) = NULL,
+	@pl_count_only int = 0
+	*/
 
 DECLARE @ll_rows int,
 		@ll_return int,
@@ -103,7 +92,7 @@ INSERT INTO @offices (
 SELECT office_id
 FROM dbo.fn_user_privilege_offices(@ps_user_id, 'View Patients')
 
-SET @ls_patient_name_format_list = dbo.fn_get_preference('PREFERNECES', 'Patient Name Format List', @ps_user_id, NULL)
+SET @ls_patient_name_format_list = dbo.fn_get_preference('PREFERENCES', 'Patient Name Format List', @ps_user_id, NULL)
 IF @ls_patient_name_format_list IS NULL
 	SET @ls_patient_name_format_list = '{Last},{ First}{ M.}{ (Nickname)}{, Suffix}'
 
@@ -117,7 +106,7 @@ IF ISNULL( @ps_ssn, '' ) = ''
 IF ISNULL( @ps_document_number, '' ) = ''
 	SET @ps_document_number = '%'
 
-IF ISNULL( @ps_country, '' ) = ''
+IF ISNULL( @ps_country, '' ) = '' OR @ps_country = 'Issuing Country' OR @ps_country = '<<Blank>>'
 	SET @ps_country = '%'
 
 IF ISNULL( @ps_last_name, '' ) = ''
@@ -526,15 +515,25 @@ BEGIN
 	JOIN p_Patient_List_Item li ON p.cpr_id = li.cpr_id
 	WHERE li.list_id = 'Country'
 	AND li.list_item = @ps_country
-	
+
 	SET @ll_rows = @@ROWCOUNT
+
+END
 	
-	IF @ll_rows = 2000
-		BEGIN
-		DELETE FROM @patients
-		SET @ll_rows = 0
-		SET @ll_return = -1
-		END
+IF @ps_country <> '%' AND @ll_rows > 0
+BEGIN
+	DELETE p 
+	FROM @patients p
+	JOIN p_Patient_List_Item li ON p.cpr_id = li.cpr_id
+	WHERE li.list_id = 'Country'
+	AND li.list_item != @ps_country
+END
+
+IF @ll_rows = 2000
+BEGIN
+	DELETE FROM @patients
+	SET @ll_rows = 0
+	SET @ll_return = -1
 END
 
 DELETE x
@@ -542,12 +541,10 @@ FROM @patients x
 WHERE office_id IS NOT NULL
 AND office_id NOT IN (SELECT office_id FROM @offices)
 
-SELECT @ll_rows = count(*)
-FROM @patients
+SELECT @ll_rows = count(*) FROM @patients
 
 IF @ll_rows > 0
 	BEGIN
-
 
 	IF @pl_count_only = 0
 		BEGIN
