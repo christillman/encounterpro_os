@@ -130,7 +130,7 @@ em_ssn.text = ""
 sle_phone_number.text = ""
 st_patient_status.text = "Active"
 em_dob.text = ""
-st_country.text = "Country"
+st_country.text = "Issuing Country"
 st_id_document.text = "Id Document"
 sle_id_number.text = ""
 
@@ -325,7 +325,13 @@ if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	st_id_document.visible = false
 	st_country.visible = false
 	sle_id_number.visible = false
+	st_ssn_t.visible = true
+	em_ssn.visible = true
 else
+	gb_id_document.visible = true
+	st_id_document.visible = true
+	st_country.visible = true
+	sle_id_number.visible = true
 	st_ssn_t.visible = false
 	em_ssn.visible = false
 end if
@@ -405,11 +411,12 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
 text = popup_return.items[1]
-if text = "ID Document" then
-	id_document = ""
-else
-	id_document = text
+id_document = text
+if text = "" then
+	text = "ID Document"
 end if
+
+parent.postevent("search_criteria_changed")
 end event
 
 type st_country from statictext within u_patient_search_criteria
@@ -441,6 +448,7 @@ u_user luo_user
 integer li_rc
 string ls_empty = ""
 
+
 popup.dataobject = "dw_list_items_active"
 popup.datacolumn = 2
 popup.displaycolumn = 2
@@ -452,11 +460,13 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
 text = popup_return.items[1]
-if text = "Country" then
-	country = ""
-else
-	country = text
+country = text
+if text = "" then
+	text = "Issuing Country"
 end if
+
+parent.postevent("search_criteria_changed")
+
 end event
 
 type sle_id_number from singlelineedit within u_patient_search_criteria
