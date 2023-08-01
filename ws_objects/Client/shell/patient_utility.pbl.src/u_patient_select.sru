@@ -105,7 +105,6 @@ end event
 
 public function integer search_patients ();integer li_sts
 long ll_check
-string ls_id_document, ls_country
 
 ll_check = sqlca.jmj_patient_search2(current_user.user_id, &
 												uo_search_criteria.billing_id, &
