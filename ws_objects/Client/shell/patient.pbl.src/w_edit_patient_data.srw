@@ -210,6 +210,7 @@ public subroutine set_all_locality_visibility (boolean pb_visible)
 public function integer get_patient_list_item (string ps_list_id, ref string ps_list_item, ref string ps_patient_value)
 public subroutine get_localities ()
 public function integer set_patient_list_item (string ps_list_id, string ps_list_item, string ps_patient_value)
+public subroutine set_us_field_visibility (boolean pb_set)
 end prototypes
 
 public subroutine highlight_sle (singlelineedit pwo_control, boolean pb_on);
@@ -224,7 +225,7 @@ end subroutine
 
 public function boolean validated ();boolean lb_passes = true
 
-IF f_is_empty_string(sle_last_name.text) THEN
+IF sle_last_name.visible AND f_is_empty_string(sle_last_name.text) THEN
 	highlight_sle(sle_last_name, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's last name is required")
@@ -234,7 +235,7 @@ ELSE
 	highlight_sle(sle_last_name, false)
 END IF
 
-IF f_is_empty_string(sle_first_name.text) THEN
+IF sle_first_name.visible AND f_is_empty_string(sle_first_name.text) THEN
 	highlight_sle(sle_first_name, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's first name is required")
@@ -244,7 +245,7 @@ ELSE
 	highlight_sle(sle_first_name, false)
 END IF
 
-IF f_is_empty_string(st_sex.text) THEN
+IF st_sex.visible AND f_is_empty_string(st_sex.text) THEN
 	highlight_st(st_sex, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's gender is required")
@@ -254,7 +255,7 @@ ELSE
 	highlight_st(st_sex, false)
 END IF
 
-IF f_is_empty_string(st_date_of_birth.text) THEN
+IF st_date_of_birth.visible AND f_is_empty_string(st_date_of_birth.text) THEN
 	highlight_st(st_date_of_birth, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's birth date is required")
@@ -264,7 +265,7 @@ ELSE
 	highlight_st(st_date_of_birth, false)
 END IF
 
-IF f_is_empty_string(st_id_document.text) THEN
+IF st_id_document.visible AND f_is_empty_string(st_id_document.text) THEN
 	highlight_st(st_id_document, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The id document type is required")
@@ -274,7 +275,7 @@ ELSE
 	highlight_st(st_id_document, false)
 END IF
 
-IF f_is_empty_string(sle_id_number.text) THEN
+IF sle_id_number.visible AND f_is_empty_string(sle_id_number.text) THEN
 	highlight_sle(sle_id_number, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The id document number is required")
@@ -284,7 +285,7 @@ ELSE
 	highlight_sle(sle_id_number, false)
 END IF
 
-IF f_is_empty_string(st_country.text) THEN
+IF st_country.visible AND f_is_empty_string(st_country.text) THEN
 	highlight_st(st_country, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The issuing country is required")
@@ -513,6 +514,37 @@ RETURN 0
 
 end function
 
+public subroutine set_us_field_visibility (boolean pb_set);
+
+	em_ssn.visible = pb_set
+	sle_name_suffix.visible = pb_set
+	sle_nickname.visible = pb_set
+	sle_maiden_name.visible = pb_set
+	sle_address_2.visible = pb_set
+	sle_city.visible = pb_set
+	sle_state.visible = pb_set
+	sle_zip.visible = pb_set
+	st_race.visible = pb_set
+	
+	st_ssn_t.visible = pb_set
+	st_name_suffix_title.visible = pb_set
+	st_nickname_t.visible = pb_set
+	st_maiden_name_title.visible = pb_set
+	st_address_2_title.visible = pb_set
+	st_city_t.visible = pb_set
+	st_state_t.visible = pb_set
+	st_zip_t.visible = pb_set
+	st_race_title.visible = pb_set
+	
+	st_id_document.visible = NOT pb_set
+	sle_id_number.visible = NOT pb_set
+	st_country.visible = NOT pb_set
+	
+	st_id_document_t.visible = NOT pb_set
+	st_id_number_t.visible = NOT pb_set
+	st_country_t.visible = NOT pb_set
+end subroutine
+
 on w_edit_patient_data.create
 int iCurrent
 call super::create
@@ -728,7 +760,10 @@ cbx_test_patient.checked = new_patient.test_patient
 
 // Avoid Americanisms 
 if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
-	// Hmmm, ssn never WAS populated
+	
+	set_us_field_visibility(true)
+	set_all_locality_visibility(false)
+	em_ssn.text =  new_patient.ssn
 	sle_name_suffix.text = new_patient.name_suffix
 	sle_nickname.text = new_patient.nickname
 	sle_maiden_name.text = new_patient.maiden_name
@@ -738,36 +773,11 @@ if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	sle_zip.text = new_patient.zip
 	st_race.text = new_patient.race
 	
-	st_id_document.visible = false
-	sle_id_number.visible = false
-	st_country.visible = false
-	st_id_document_t.visible = false
-	st_id_number_t.visible = false
-	st_country_t.visible = false
-	set_all_locality_visibility(false)
-	
 else
 	// some day may have a case statement for locale?
 	// Hide the U.S. fields
-	em_ssn.visible = false
-	sle_name_suffix.visible = false
-	sle_nickname.visible = false
-	sle_maiden_name.visible = false
-	sle_address_2.visible = false
-	sle_city.visible = false
-	sle_state.visible = false
-	sle_zip.visible = false
-	st_race.visible = false
-	
-	st_ssn_t.visible = false
-	st_name_suffix_title.visible = false
-	st_nickname_t.visible = false
-	st_maiden_name_title.visible = false
-	st_address_2_title.visible = false
-	st_city_t.visible = false
-	st_state_t.visible = false
-	st_zip_t.visible = false
-	st_race_title.visible = false
+	set_us_field_visibility(false)
+	set_all_locality_visibility(true)
 
 	st_id_document.text = ""
 	sle_id_number.text = ""
