@@ -589,12 +589,12 @@ on u_dw_drug_list.destroy
 call super::destroy
 end on
 
-event computed_clicked(long clicked_row);integer li_selected_flag
+event computed_clicked;integer li_selected_flag
 long ll_row
 
 setnull(top_20_sequence)
 
-if allow_editing then
+// Removed if (allow_editing), we were already within that section to detect this click
 	if current_search = "TOP20" then
 		top_20_sequence = object.top_20_sequence[clicked_row]
 	end if
@@ -621,7 +621,6 @@ if allow_editing then
 	else
 		clear_selected()
 	end if
-end if
 
 
 end event
