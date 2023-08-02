@@ -22,6 +22,11 @@ str_popup_return popup_return
 
 f_get_rxnorm(ps_drug_id, ls_generic_rxcui, ls_brand_name_rxcui)
 
+IF IsNull(ls_generic_rxcui) AND IsNull(ls_brand_name_rxcui) THEN
+	log.log(po_null,"f_choose_formulation:0020","ps_drug_id " + ps_drug_id + " not found",2)
+	return "Nothing selected"
+END IF
+
 IF IsNull(ls_generic_rxcui) THEN 
 	popup.items[1] = "0"
 ELSE
