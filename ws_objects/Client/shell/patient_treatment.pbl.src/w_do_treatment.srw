@@ -208,6 +208,7 @@ CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 //
 		li_attribute_count = lds.Retrieve(treatment.treatment_type, ll_service_sequence)
 		FOR li_row = 1 TO li_attribute_count
+			lstr_attributes.attribute_count++
 			lstr_attributes.attribute[lstr_attributes.attribute_count].attribute = lds.Object.attribute[li_row]
 			lstr_attributes.attribute[lstr_attributes.attribute_count].value = lds.Object.value[li_row]
 		NEXT
