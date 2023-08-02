@@ -298,5 +298,6 @@ type rte_treatment from u_rich_text_edit within u_treatment_results
 integer width = 1861
 integer height = 1044
 integer taborder = 10
+boolean init_headerfooter = false
 end type
 
