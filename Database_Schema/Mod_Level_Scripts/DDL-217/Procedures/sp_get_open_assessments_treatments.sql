@@ -1,5 +1,3 @@
-USE [Epro_2]
-GO
 
 /****** Object:  StoredProcedure [dbo].[sp_get_open_assessments_treatments]    Script Date: 15/07/2023 8:11:50 am ******/
 DROP PROCEDURE [dbo].[sp_get_open_assessments_treatments]

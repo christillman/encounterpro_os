@@ -1,5 +1,3 @@
-USE [EncounterPro_OS]
-GO
 
 /****** Object:  StoredProcedure [dbo].[sp_ResetEproPermissions]    Script Date: 17/07/2023 2:03:13 pm ******/
 DROP PROCEDURE [dbo].[sp_ResetEproPermissions]
