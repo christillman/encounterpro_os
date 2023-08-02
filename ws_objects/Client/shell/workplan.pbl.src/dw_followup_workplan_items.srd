@@ -11,7 +11,7 @@ table(column=(type=long updatewhereclause=yes identity=yes name=patient_workplan
  retrieve="  SELECT p_Patient_WP_Item.patient_workplan_item_id,   
          p_Patient_WP_Item.ordered_treatment_type,   
          c_Treatment_Type.icon,   
-         description=COALESCE(p_Patient_WP_Item_Attribute.value, p_Patient_WP_Item.description)  
+         description=IsNull(p_Patient_WP_Item_Attribute.value, p_Patient_WP_Item.description)  
     FROM p_Patient_WP_Item 
 		LEFT OUTER JOIN c_Treatment_Type 
 			ON p_Patient_WP_Item.ordered_treatment_type = c_Treatment_Type.treatment_type 
