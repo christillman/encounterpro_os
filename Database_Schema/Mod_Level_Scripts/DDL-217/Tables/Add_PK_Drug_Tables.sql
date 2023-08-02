@@ -35,9 +35,16 @@ ALTER TABLE c_Drug_Generic ADD uq_name_checksum AS (CHECKSUM(generic_name)
 	CONSTRAINT uq_generic_name UNIQUE (uq_name_checksum)
 GO
 
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'pk_Drug_Generic') AND type = 'K')
-ALTER TABLE c_Drug_Generic
-ADD CONSTRAINT pk_Drug_Generic PRIMARY KEY  (generic_rxcui)
+if exists (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Generic')
+AND name = 'PK_c_Drug_Generic')
+ALTER TABLE c_Drug_Generic DROP CONSTRAINT IF EXISTS PK_c_Drug_Generic 
+	
+if exists (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Generic')
+AND name = 'pk_Drug_Generic')
+ALTER TABLE c_Drug_Generic DROP CONSTRAINT IF EXISTS pk_Drug_Generic 
+	
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Generic'))
+ALTER TABLE c_Drug_Generic ADD CONSTRAINT PK_c_Drug_Generic PRIMARY KEY  (generic_rxcui)
 
 DROP INDEX IF EXISTS c_Drug_Generic.uq_generic_drug_id
 CREATE UNIQUE INDEX uq_generic_drug_id ON c_Drug_Generic (drug_id)
@@ -54,9 +61,16 @@ ALTER TABLE c_Drug_Brand
 ALTER COLUMN brand_name varchar(200) NOT NULL
 GO
 
-IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'pk_Drug_Brand') AND type = 'K')
-ALTER TABLE c_Drug_Brand
-ADD CONSTRAINT pk_Drug_Brand PRIMARY KEY  (brand_name_rxcui)
+if exists (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Brand')
+	AND name = 'PK_c_Drug_Brand')
+	ALTER TABLE c_Drug_Brand DROP CONSTRAINT IF EXISTS PK_c_Drug_Brand 
+	
+if exists (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Brand')
+	AND name = 'pk_Drug_Brand')
+	ALTER TABLE c_Drug_Brand DROP CONSTRAINT IF EXISTS pk_Drug_Brand 
+	
+IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE xtype = 'PK' and parent_obj = object_id('c_Drug_Brand'))
+	ALTER TABLE c_Drug_Brand ADD CONSTRAINT PK_c_Drug_Brand PRIMARY KEY  (brand_name_rxcui)
 
 DROP INDEX IF EXISTS c_Drug_Brand.uq_brand_drug_id
 CREATE UNIQUE INDEX uq_brand_drug_id ON c_Drug_Brand (drug_id)
