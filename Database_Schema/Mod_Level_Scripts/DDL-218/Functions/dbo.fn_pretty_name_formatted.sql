@@ -188,8 +188,6 @@ RETURN @ls_patient_full_name
 END
 
 GO
-GRANT EXECUTE
-	ON [dbo].[fn_pretty_name_formatted]
-	TO [cprsystem]
+GRANT EXECUTE ON [dbo].[fn_pretty_name_formatted] TO [cprsystem]
 GO
 
