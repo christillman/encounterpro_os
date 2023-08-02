@@ -42,6 +42,7 @@ type str_reentry_state from structure
 end type
 
 global type u_rich_text_edit from u_richtextedit
+long init_leftmargin = 1
 event lbuttondown pbm_renlbuttondown
 event scrollto ( long pl_scrollto )
 event signature_captured ( str_captured_signature pstr_captured_signature )
