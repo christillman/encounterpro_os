@@ -29,7 +29,7 @@ string assessment_service
 string encounter_service
 
 long text_color_new
-long back_color_services
+long back_color_services = 0
 long back_color_deleted = rgb(255, 196, 196)
 
 str_assessment_description assessments[]
@@ -59,7 +59,6 @@ string assessment_soap_display_rule
 
 
 end variables
-
 forward prototypes
 public function boolean treatment_in_assessment (str_treatment_description pstr_treatment, long pl_problem_id)
 public subroutine encounter_menu (long pl_row)
@@ -292,10 +291,10 @@ ll_count = luo_data.retrieve(current_patient.cpr_id, encounter_context.encounter
 if ll_count > 0 then
 	// Add the header for the past objects
 	ll_row = insertrow(0)
-	object.soap_type[ll_row] = "SINCELAST"
-	object.description[ll_row] = "Items Added/Modified Since Last Encounter (" + string(ll_count) + ")"
-	object.icon_bitmap[ll_row] = "button21.bmp"
-	object.text_color[ll_row] = text_color_new
+	this.object.soap_type[ll_row] = "SINCELAST"
+	this.object.description[ll_row] = "Items Added/Modified Since Last Encounter (" + string(ll_count) + ")"
+	this.object.icon_bitmap[ll_row] = "button21.bmp"
+	this.object.text_color[ll_row] = text_color_new
 end if
 
 
@@ -305,9 +304,9 @@ last_page = 0
 if display_mode = "OBJ" then
 	// Add the header for the past objects
 	ll_row = insertrow(0)
-	object.soap_type[ll_row] = "DURING"
-	object.description[ll_row] = "Items Added/Modified During This Encounter"
-	object.icon_bitmap[ll_row] = "button21.bmp"
+	this.object.soap_type[ll_row] = "DURING"
+	this.object.description[ll_row] = "Items Added/Modified During This Encounter"
+	this.object.icon_bitmap[ll_row] = "button21.bmp"
 	
 	// Load the objects since the last encounter
 	li_sts = load_objects("DURING")
@@ -742,10 +741,10 @@ if upper(left(pstr_assessment.icd10_code, 1)) <> "V" then
 	end if
 end if
 
-object.description[pl_row] = ls_description
-object.text_color[pl_row] = ll_text_color
-object.color[pl_row] = ll_back_color
-object.icon_bitmap[pl_row] = current_patient.assessments.assessment_bitmap(pstr_assessment)
+this.object.description[pl_row] = ls_description
+this.object.text_color[pl_row] = ll_text_color
+this.object.color[pl_row] = ll_back_color
+this.object.icon_bitmap[pl_row] = current_patient.assessments.assessment_bitmap(pstr_assessment)
 
 return 1
 
@@ -883,14 +882,14 @@ for i = 1 to treatment_count
 	end if
 	
 	ll_row = insertrow(0)
-	object.display_mode[ll_row] = display_mode
+	this.object.display_mode[ll_row] = display_mode
 	if ls_soap_type = "TREATMENT" then 
-		object.soap_type[ll_row] = "TREATCHILD" 
+		this.object.soap_type[ll_row] = "TREATCHILD" 
 	else
-		object.soap_type[ll_row] = "TREATMENT"
+		this.object.soap_type[ll_row] = "TREATMENT"
 	end if
 	
-	object.key[ll_row] = string(treatments[i].treatment_id)
+	this.object.key[ll_row] = string(treatments[i].treatment_id)
 	refresh_treatment_row(ll_row, encounter_context, treatments[i])
 
 	ls_soap_display_rule = datalist.treatment_type_soap_display_rule(treatments[i].treatment_type)
@@ -952,9 +951,9 @@ for i = 1 to assessment_count
 	
 
 	ll_row = insertrow(0)
-	object.display_mode[ll_row] = display_mode
-	object.soap_type[ll_row] = "ASSESSMENT"
-	object.key[ll_row] = string(assessments[i].problem_id) + "," + string(assessments[i].diagnosis_sequence)
+	this.object.display_mode[ll_row] = display_mode
+	this.object.soap_type[ll_row] = "ASSESSMENT"
+	this.object.key[ll_row] = string(assessments[i].problem_id) + "," + string(assessments[i].diagnosis_sequence)
 	
 	refresh_assessment_row(ll_row, encounter_context, assessments[i])
 	
@@ -991,11 +990,11 @@ if display_mode = "ATAT" then
 	// If we added any treatments with no assessments, then add a header for them
 	if rowcount() > ll_rowcount then
 		ll_row = insertrow(ll_rowcount + 1)
-		object.display_mode[ll_row] = display_mode
-		object.soap_type[ll_row] = "NOASSESSMENT"
+		this.object.display_mode[ll_row] = display_mode
+		this.object.soap_type[ll_row] = "NOASSESSMENT"
 		ls_description = datalist.get_preference("PREFERENCES", "Standalone Treatment Heading", "Treatments With No Assessment")
-		object.description[ll_row] = ls_description
-		object.icon_bitmap[ll_row] = "icon018.bmp"
+		this.object.description[ll_row] = ls_description
+		this.object.icon_bitmap[ll_row] = "icon018.bmp"
 	end if
 end if
 
@@ -1014,30 +1013,30 @@ if display_mode = "TT" then
 	// If we added any treatments, then add a header for them
 	if rowcount() > ll_rowcount then
 		ll_row = insertrow(ll_rowcount + 1)
-		object.display_mode[ll_row] = display_mode
-		object.soap_type[ll_row] = "Treatments"
-		object.description[ll_row] = "Treatments"
-		object.icon_bitmap[ll_row] = "icon012.bmp"
+		this.object.display_mode[ll_row] = display_mode
+		this.object.soap_type[ll_row] = "Treatments"
+		this.object.description[ll_row] = "Treatments"
+		this.object.icon_bitmap[ll_row] = "icon012.bmp"
 	end if
 end if
 
 // If we're loading assessments only or assessments followed by treatments, then add the header and load the assessments
 if display_mode = "AA" or display_mode = "AATT" then
 	ll_row = insertrow(0)
-	object.display_mode[ll_row] = display_mode
-	object.soap_type[ll_row] = "Assessments"
-	object.description[ll_row] = "Assessments"
-	object.icon_bitmap[ll_row] = "icon018.bmp"
+	this.object.display_mode[ll_row] = display_mode
+	this.object.soap_type[ll_row] = "Assessments"
+	this.object.description[ll_row] = "Assessments"
+	this.object.icon_bitmap[ll_row] = "icon018.bmp"
 	li_sts = load_assessments()
 end if
 
 // If we're loading assessments interleaved with treatments, then add the header and load the assessments
 if display_mode = "ATAT" then
 	ll_row = insertrow(0)
-	object.display_mode[ll_row] = display_mode
-	object.soap_type[ll_row] = "Assessments"
-	object.description[ll_row] = "Assessments and Treatments"
-	object.icon_bitmap[ll_row] = "icon018.bmp"
+	this.object.display_mode[ll_row] = display_mode
+	this.object.soap_type[ll_row] = "Assessments"
+	this.object.description[ll_row] = "Assessments and Treatments"
+	this.object.icon_bitmap[ll_row] = "icon018.bmp"
 	li_sts = load_assessments()
 end if
 
@@ -1045,10 +1044,10 @@ end if
 // If we need to show treatments after the assessments, then load them
 if display_mode = "AATT" then
 	ll_row = insertrow(0)
-	object.display_mode[ll_row] = display_mode
-	object.soap_type[ll_row] = "Treatments"
-	object.description[ll_row] = "Treatments"
-	object.icon_bitmap[ll_row] = "icon012.bmp"
+	this.object.display_mode[ll_row] = display_mode
+	this.object.soap_type[ll_row] = "Treatments"
+	this.object.description[ll_row] = "Treatments"
+	this.object.icon_bitmap[ll_row] = "icon012.bmp"
 
 	li_sts = load_treatment_items()
 	if li_sts < 0 then
@@ -1098,23 +1097,23 @@ if ll_count > 0 then
 		
 		ll_row = insertrow(0)
 //		object.display_mode[ll_row] = display_mode
-		object.soap_type[ll_row] = upper(ls_context_object)
+		this.object.soap_type[ll_row] = upper(ls_context_object)
 		if not isnull(ll_attachment_id) then
 			ls_attachment_extension = luo_data.object.attachment_extension[i]
 			if isnull(ls_attachment_extension) then ls_attachment_extension = "bmp"
-			object.attachment_bitmap[ll_row] = datalist.extension_button(ls_attachment_extension)
-			object.attachment_id[ll_row] = ll_attachment_id
+			this.object.attachment_bitmap[ll_row] = datalist.extension_button(ls_attachment_extension)
+			this.object.attachment_id[ll_row] = ll_attachment_id
 		end if
-		object.key[ll_row] = string(ll_object_key)
+		this.object.key[ll_row] = string(ll_object_key)
 		
 		ls_description = luo_data.object.description[i]
 		ls_progress_type = luo_data.object.progress_type[i]
 		ldt_progress_created = luo_data.object.progress_created[i]
 		ls_description = string(date(ldt_progress_created)) + "  " + ls_description + " (" + wordcap(lower(ls_progress_type)) + ")"
 		
-		object.description[ll_row] = ls_description
-		object.text_color[ll_row] = text_color_new
-		object.icon_bitmap[ll_row] = datalist.object_icon(ls_context_object, ls_object_type)
+		this.object.description[ll_row] = ls_description
+		this.object.text_color[ll_row] = text_color_new
+		this.object.icon_bitmap[ll_row] = datalist.object_icon(ls_context_object, ls_object_type)
 	next
 end if
 
