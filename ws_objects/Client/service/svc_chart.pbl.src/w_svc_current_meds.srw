@@ -23,7 +23,6 @@ end forward
 global type w_svc_current_meds from w_window_base
 integer width = 2944
 integer height = 1992
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -242,8 +241,8 @@ end event
 type pb_up from u_picture_button within w_svc_current_meds
 integer x = 2235
 integer y = 140
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 30
 boolean bringtotop = true
 string picturename = "icon_up.bmp"
@@ -265,8 +264,8 @@ end event
 type pb_down from u_picture_button within w_svc_current_meds
 integer x = 2235
 integer y = 268
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 20
 boolean bringtotop = true
 string picturename = "icon_down.bmp"
