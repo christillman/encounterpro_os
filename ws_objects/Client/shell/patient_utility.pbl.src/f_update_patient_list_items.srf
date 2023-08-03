@@ -27,7 +27,7 @@ for i = 1 to UpperBound(pstr_list_item)
 						:pstr_list_item[i].list_item_patient_data );
 			END IF
 					
-		CASE "Country"
+		CASE "Country", "Country_Phone_Prefix"
 			// single value lists; the last one will win
 			DELETE FROM p_patient_list_item 
 			WHERE cpr_id = :ps_cpr_id
