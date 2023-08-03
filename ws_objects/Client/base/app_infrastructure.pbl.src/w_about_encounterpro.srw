@@ -88,19 +88,11 @@ end on
 
 event open;call super::open;st_build_number.text = f_app_version()
 
-//
-//phl_logo.x = (width - phl_logo.width) / 2
-//st_build_number.x = (width - st_build_number.width) / 2
-//rte_license.x = (width - rte_license.width) / 2
-//shl_source.x = (width - shl_source.width) / 2
-//shl_foundation.x = (width - shl_foundation.width) / 2
-//shl_gnu_affero.x = (width - shl_gnu_affero.width) / 2
-//phl_agpl.x = (width - phl_agpl.width) / 2
-//
-//st_license_title.x = rte_license.x
-//
 rte_license.InsertDocument(gnv_app.program_directory + "\Open Source License.rtf", true)
 rte_license.displayonly = true
+
+shl_foundation.text = gnv_app.copyright
+shl_foundation.url = gnv_app.source_url
 
 this.center_popup( )
 
@@ -184,7 +176,7 @@ boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
 long backcolor = 27041863
-string text = "EncounterPRO-OS on BitHub"
+string text = "EncounterPRO-OS on GitHub"
 alignment alignment = center!
 boolean focusrectangle = false
 string url = "https://github.com/christillman/encounterpro_os"
@@ -225,10 +217,10 @@ boolean underline = true
 string pointer = "HyperLink!"
 long textcolor = 134217856
 long backcolor = 27041863
-string text = "Copyright 2010-2021 The EncounterPRO Foundation, Inc."
+string text = "{gnv_app.copyright}"
 alignment alignment = center!
 boolean focusrectangle = false
-string url = "https://github.com/christillman/encounterpro_os"
+string url = "{gnv_app.source_url}"
 end type
 
 type shl_gnu_affero from statichyperlink within w_about_encounterpro

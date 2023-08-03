@@ -53,11 +53,7 @@ end on
 
 event open;call super::open;st_build_number.text = f_app_version()
 
-//
-//p_logo.x = (width - p_logo.width) / 2
-//st_build_number.x = (width - st_build_number.width) / 2
-//st_copyright.x = (width - st_copyright.width) / 2
-//p_agpl.x = (width - p_agpl.width) / 2
+st_copyright.text = gnv_app.copyright
 
 timer( 5 ) // 35 seconds
 this.bringtotop = TRUE
@@ -121,7 +117,7 @@ fontfamily fontfamily = roman!
 string facename = "Times New Roman"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Copyright 2010-2022 The EncounterPRO Foundation, Inc."
+string text = "{gnv_app.copyright}"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
