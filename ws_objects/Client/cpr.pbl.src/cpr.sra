@@ -180,9 +180,9 @@ string themename = "Do Not Use Themes"
 boolean nativepdfvalid = false
 boolean nativepdfincludecustomfont = false
 string nativepdfappname = ""
-long richtextedittype = 3
+long richtextedittype = 0
 long richtexteditx64type = 3
-long richtexteditversion = 2
+long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = "green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
@@ -218,6 +218,9 @@ string database_version = "2" // this is really minor release
 string build = "1.2"
 // Resulting in 7.2.1.2
 // Using Powerbuilder Runtime 2797
+
+string copyright = "Copyright 1996-2023 The EncounterPRO Foundation, Inc."
+string source_url = "https://github.com/christillman/encounterpro_os"
 
 ////////////////////////////////////////////////////////////
 
