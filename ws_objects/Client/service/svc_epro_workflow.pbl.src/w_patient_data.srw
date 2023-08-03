@@ -15,6 +15,7 @@ end type
 end forward
 
 global type w_patient_data from w_window_base
+integer height = 1724
 string title = "Patient Information"
 windowtype windowtype = response!
 cb_be_back cb_be_back
@@ -89,6 +90,7 @@ FOR li_item = 1 TO li_count
 	ELSEIF current_patient.list_item[li_item].list_id = ps_list_id &
 			AND ps_patient_value = "" THEN
 		// Must be a single-value list item, changing values
+		lb_found = true
 		current_patient.list_item[li_item].list_item = ps_list_item
 	END IF
 NEXT
@@ -342,7 +344,7 @@ end type
 
 type cb_be_back from commandbutton within w_patient_data
 integer x = 1966
-integer y = 1600
+integer y = 1520
 integer width = 443
 integer height = 108
 integer taborder = 60
@@ -370,7 +372,7 @@ end event
 
 type cb_finished from commandbutton within w_patient_data
 integer x = 2432
-integer y = 1600
+integer y = 1520
 integer width = 443
 integer height = 108
 integer taborder = 60
@@ -400,14 +402,14 @@ end event
 
 type tab_patient_data from u_tab_patient_data within w_patient_data
 integer width = 2917
-integer height = 1300
+integer height = 1348
 long backcolor = 7191717
 tabposition tabposition = tabsonbottom!
 end type
 
 type cb_cancel from commandbutton within w_patient_data
 integer x = 1554
-integer y = 1600
+integer y = 1524
 integer width = 402
 integer height = 104
 integer taborder = 310
