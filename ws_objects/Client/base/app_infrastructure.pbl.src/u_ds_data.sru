@@ -1783,7 +1783,7 @@ if isnull(ps_query) or trim(ps_query) = "" then return 0
 li_sts = sqlca.get_dw_syntax(ps_query, ls_new_syntax)
 if li_sts <= 0 then
 	if isnull(ls_error_syntaxfromSQL) then ls_error_syntaxfromSQL = "<Null>"
-	log.log(this, "u_ds_data.load_query:0021", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + ")", 4)
+	log.log(this, "u_ds_data.load_query:0021", "Error getting query syntax (" + sqlca.dbms + ", " + ls_error_syntaxfromSQL + "), "+ps_query, 4)
 	return -1
 end if
 
