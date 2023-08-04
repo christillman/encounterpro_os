@@ -1221,12 +1221,14 @@ ls_adodb_connectstring = "DRIVER={SQL Server};SERVER=" + ServerName + ";DATABASE
 CHOOSE CASE ls_dbms
 	CASE "ADO"
 	CASE "MSO"
-		dbparm += ",Provider='MSOLEDBSQL'"
+		dbparm += "Provider='MSOLEDBSQL'"
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
+		dbparm += ",ProviderString='MARS Connection=False'"
+		
 	CASE "MSS"
-		dbparm += ",Host='" + ls_computername + "'"
+		dbparm += "Host='" + ls_computername + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		if not isnull(ps_connectstring) and trim(ps_connectstring) <> "" then
 			dbparm += ", Connectstring='" + ps_connectstring + "'"
@@ -1235,7 +1237,7 @@ CHOOSE CASE ls_dbms
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
 	CASE "ODB" // "ODBC Driver 17 for SQL Server"
 		//dbparm += "ConnectString='DSN=greenolive_DSN',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
-		dbparm += ",ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
+		dbparm += "ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
@@ -1248,7 +1250,7 @@ CHOOSE CASE ls_dbms
 			dbparm += ",Connectstring='" + ps_connectstring + "'"
 		end if
 	CASE "SNC"
-		dbparm += ",Provider='SQLNCLI11'"
+		dbparm += "Provider='SQLNCLI11'"
 		//dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};SERVER=" + ps_server + ";'"
 		//dbparm += ",ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
 		dbparm += ",Database='" + ps_dbname + "'"
