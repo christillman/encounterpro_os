@@ -243,12 +243,7 @@ u_component_base_class luo_component
 setnull(ls_component_id)
 setnull(ls_version_name)
 
-// Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
-else
+if isvalid(po_who) then
 	ls_who = po_who.classname()
 	if lower(left(ls_who, 12)) = "u_component_" and lower(ls_who) <> "u_component_manager" then
 		luo_component = po_who
@@ -1299,12 +1294,12 @@ ll_data_size = 0
 lsa_string[1] = f_app_version() + " "
 
 // Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = ""
-else
+if isvalid(po_who) then
 	ls_who = po_who.classname()
+elseif isnull(po_who) and not isnull(ps_script) then
+	ls_who = ps_script
+else
+	ls_who = "NULL CALLER"
 end if
 
 li_string_count = 1
@@ -1414,7 +1409,7 @@ long ll_patient_workplan_item_id
 string ls_service
 string ls_app_version
 environment lo_env
-integer li_sts
+integer li_tran_count, li_sts
 string ls_os_version
 
 if not sqlca.connected then return 1
@@ -1434,12 +1429,13 @@ else
 	ls_message = ps_message
 end if
 
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
-else
+// Determine the "who" text
+if isvalid(po_who) then
 	ls_who = po_who.classname()
+elseif isnull(po_who) and not isnull(ps_script) then
+	ls_who = ps_script
+else
+	ls_who = "NULL CALLER"
 end if
 
 if isnull(current_user) then
@@ -1476,6 +1472,14 @@ else
 end if
 
 ls_app_version = f_app_version()
+
+if pi_severity >= 3 then
+	// We want to be sure warnings and errors are logged. Is there any open transaction?
+	SELECT count(*) INTO :li_tran_count FROM sys.sysprocesses WHERE open_tran = 1 USING cprdb;
+	IF li_tran_count = 0 THEN
+		cprdb.begin_transaction(this, ps_script)
+	END IF
+end if
 
 INSERT INTO o_Log (
 		severity,
@@ -1518,7 +1522,14 @@ VALUES (
 		:ps_version_name,
 		:pd_seconds)
 USING cprdb;
-if not cprdb.sqlcode = 0 then
+
+li_sts = cprdb.sqlcode
+
+IF pi_severity >= 3 AND li_tran_count = 0 THEN
+	cprdb.commit_transaction()
+END IF
+
+if li_sts = 0 then
 	return 1
 else
 	return -1
