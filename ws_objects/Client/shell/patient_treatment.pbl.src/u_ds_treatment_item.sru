@@ -2712,10 +2712,11 @@ If luo_treatment.parent_treatment_id = 0 Then Setnull(luo_treatment.parent_treat
 if isnull(luo_treatment.drug_id) then
 	If Not Isnull(luo_treatment.procedure_id) Then
 		// Get the drug id from procedure table
-		SELECT vaccine_id
+		SELECT v.drug_id
 		 INTO :ls_proc_drug_id
-		 FROM c_Procedure
-		 WHERE procedure_id = :luo_treatment.procedure_id;
+		 FROM c_Procedure p
+		 JOIN c_Vaccine v ON v.vaccine_id = p.vaccine_id
+		 WHERE p.procedure_id = :luo_treatment.procedure_id;
 		If Not tf_check() Then Return -1
 	
 		If sqlca.Sqlcode = 100 Then
