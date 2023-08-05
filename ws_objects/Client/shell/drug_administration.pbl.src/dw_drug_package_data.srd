@@ -1,26 +1,46 @@
 ﻿$PBExportHeader$dw_drug_package_data.srd
 $PBExportComments$administer_method no longer part of package
-release 17;
+release 19;
 datawindow(units=0 timer_interval=0 color=7191717 brushmode=0 transparency=0 gradient.angle=0 gradient.color=8421504 gradient.focus=0 gradient.repetition.count=0 gradient.repetition.length=100 gradient.repetition.mode=0 gradient.scale=100 gradient.spread=100 gradient.transparency=0 picture.blur=0 picture.clip.bottom=0 picture.clip.left=0 picture.clip.right=0 picture.clip.top=0 picture.mode=0 picture.scale.x=100 picture.scale.y=100 picture.transparency=0 processing=0 HTMLDW=no print.printername="" print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.canusedefaultprinter=yes print.prompt=no print.buttons=no print.preview.buttons=no print.cliptext=no print.overrideprintjob=no print.collate=yes print.background=no print.preview.background=no print.preview.outline=yes hidegrayline=no showbackcoloronxp=no picture.file="" )
 header(height=136 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 summary(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 footer(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 detail(height=108 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
-table(column=(type=char(24) updatewhereclause=yes name=package_id dbname="c_Drug_Package.package_id" dbalias=".package_id" )
- column=(type=long updatewhereclause=yes name=sort_order dbname="c_Drug_Package.sort_order" dbalias=".sort_order" )
- column=(type=char(1) updatewhereclause=yes name=prescription_flag dbname="c_Drug_Package.prescription_flag" dbalias=".prescription_flag" )
- column=(type=real updatewhereclause=yes name=default_dispense_amount dbname="c_Drug_Package.default_dispense_amount" dbalias=".default_dispense_amount" )
- column=(type=char(12) updatewhereclause=yes name=default_dispense_unit dbname="c_Drug_Package.default_dispense_unit" dbalias=".default_dispense_unit" )
- column=(type=char(1) updatewhereclause=yes name=take_as_directed dbname="c_Drug_Package.take_as_directed" dbalias=".take_as_directed" )
- column=(type=char(600) updatewhereclause=yes name=package_description dbname="c_Package.description" dbalias=".description" )
- column=(type=char(20) updatewhereclause=yes name=administer_unit dbname="c_Package.administer_unit" dbalias=".administer_unit" )
- column=(type=real updatewhereclause=yes name=dose_amount dbname="c_Package.dose_amount" dbalias=".dose_amount" )
- column=(type=char(20) updatewhereclause=yes name=dose_unit dbname="c_Package.dose_unit" dbalias=".dose_unit" )
- column=(type=real updatewhereclause=yes name=administer_per_dose dbname="c_Package.administer_per_dose" dbalias=".administer_per_dose" )
- column=(type=char(24) updatewhereclause=yes name=dosage_form dbname="c_Package.dosage_form" dbalias=".dosage_form" )
- column=(type=char(20) updatewhereclause=yes name=form_rxcui dbname="c_Drug_Package.form_rxcui" dbalias=".form_rxcui" )
- column=(type=char(40) updatewhereclause=yes name=display_mask dbname="c_Unit.display_mask" dbalias=".display_mask" )
- retrieve="PBSELECT( VERSION(400) TABLE(NAME=~"c_Drug_Package~" )  TABLE(NAME=~"c_Package~" )  TABLE(NAME=~"c_Unit~" ) COLUMN(NAME=~"c_Drug_Package.package_id~") COLUMN(NAME=~"c_Drug_Package.sort_order~") COLUMN(NAME=~"c_Drug_Package.prescription_flag~") COLUMN(NAME=~"c_Drug_Package.default_dispense_amount~") COLUMN(NAME=~"c_Drug_Package.default_dispense_unit~") COLUMN(NAME=~"c_Drug_Package.take_as_directed~") COLUMN(NAME=~"c_Package.description~") COLUMN(NAME=~"c_Package.administer_unit~") COLUMN(NAME=~"c_Package.dose_amount~") COLUMN(NAME=~"c_Package.dose_unit~") COLUMN(NAME=~"c_Package.administer_per_dose~") COLUMN(NAME=~"c_Package.dosage_form~") COLUMN(NAME=~"c_Drug_Package.form_rxcui~") COLUMN(NAME=~"c_Unit.display_mask~")    JOIN (LEFT=~"c_Drug_Package.package_id~"    OP =~"=~"RIGHT=~"c_Package.package_id~" )    JOIN (LEFT=~"c_Package.dose_unit~"    OP =~"=~"RIGHT=~"c_Unit.unit_id~" )WHERE(    EXP1 =~"c_Drug_Package.drug_id~"   OP =~"=~"    EXP2 =~":ps_drug_id~" ) ) ORDER(NAME=~"c_Drug_Package.sort_order~" ASC=yes ) ARG(NAME = ~"ps_drug_id~" TYPE = string) " arguments=(("ps_drug_id", string))  sort="sort_order A package_id A " )
+table(column=(type=char(24) updatewhereclause=yes name=package_id dbname="package_id" )
+ column=(type=long updatewhereclause=yes name=sort_order dbname="sort_order" )
+ column=(type=char(1) updatewhereclause=yes name=prescription_flag dbname="prescription_flag" )
+ column=(type=real updatewhereclause=yes name=default_dispense_amount dbname="default_dispense_amount" )
+ column=(type=char(15) updatewhereclause=yes name=default_dispense_unit dbname="default_dispense_unit" )
+ column=(type=char(1) updatewhereclause=yes name=take_as_directed dbname="take_as_directed" )
+ column=(type=char(600) updatewhereclause=yes name=package_description dbname="description" )
+ column=(type=char(20) updatewhereclause=yes name=administer_unit dbname="administer_unit" )
+ column=(type=real updatewhereclause=yes name=dose_amount dbname="dose_amount" )
+ column=(type=char(20) updatewhereclause=yes name=dose_unit dbname="dose_unit" )
+ column=(type=real updatewhereclause=yes name=administer_per_dose dbname="administer_per_dose" )
+ column=(type=char(24) updatewhereclause=yes name=dosage_form dbname="dosage_form" )
+ column=(type=char(20) updatewhereclause=yes name=form_rxcui dbname="form_rxcui" )
+ column=(type=char(40) updatewhereclause=yes name=display_mask dbname="display_mask" )
+ retrieve=" 
+  SELECT  c_Drug_Package.package_id ,           
+  c_Drug_Package.sort_order ,           
+  c_Drug_Package.prescription_flag ,           
+  c_Drug_Package.default_dispense_amount ,           
+  c_Drug_Package.default_dispense_unit ,           
+  c_Drug_Package.take_as_directed ,           
+  c_Package.description ,           
+  c_Package.administer_unit ,          
+  c_Package.dose_amount ,           
+  c_Package.dose_unit ,           
+  c_Package.administer_per_dose ,           
+  c_Package.dosage_form ,           
+  c_Drug_Package.form_rxcui ,           
+  c_Unit.display_mask     
+  FROM c_Drug_Package
+  JOIN c_Package ON c_Drug_Package.package_id = c_Package.package_id
+  JOIN c_Unit  ON c_Package.dose_unit = c_Unit.unit_id 
+WHERE c_Drug_Package.drug_id = :ps_drug_id
+  ORDER BY c_Drug_Package.sort_order          ASC  
+" arguments=(("ps_drug_id", string))  sort="sort_order A package_id A " )
 text(band=header alignment="2" text="C Drug Package
 Package Id" border="0" color="33554432" x="5" y="4" height="128" width="686" html.valueishtml="0"  name=c_drug_package_package_id_t visible="1"  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
 text(band=header alignment="2" text="C Drug Package
