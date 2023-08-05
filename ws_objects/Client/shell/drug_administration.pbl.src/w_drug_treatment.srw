@@ -760,7 +760,11 @@ li_sts = tf_get_drug(drug_id, &
 							ls_unit, &
 							ls_dea_number_required)
 if li_sts <= 0 then
-	if li_sts = 0 then log.log(this, "w_drug_treatment.set_drug:0020","Invalid Drug ID (" + drug_id + ")", 4)
+	if li_sts = 0 then 
+		log.log(this, "w_drug_treatment.set_drug:0021","Invalid Drug ID (" + drug_id + ")", 4)
+	else
+		log.log(this, "w_drug_treatment.set_drug:0023","Database connection failed searching for " + drug_id, 4)
+	end if
 	return li_sts
 end if
 
@@ -780,9 +784,18 @@ end if
 // Get the package list for this drug
 li_count = uo_drug_package.retrieve(drug_id)
 if li_count <= 0 then
-	messagebox("w_drug_treatment-set_drug()","This drug (" + st_drug.text + ") has no packages defined, or the packages have no dose_unit.")
+	messagebox("w_drug_treatment.set_drug:0044","This drug (" +drug_id  + ") has no packages defined, or the packages have no dose_unit.")
 	return -1
 end if
+
+// for now, retrieve the formulation which was specified
+// This means another formulation can't be chosen with uo_drug_package
+package_list_index = uo_drug_package.selectformulation(form_rxcui)
+if package_list_index <= 0 then
+	messagebox("w_drug_treatment.set_drug:0052","This formulation (" +form_rxcui + ") has no packages defined, or the packages have no dose_unit.")
+	return -1
+end if
+
 
 // Get the admin list for this drug
 // CDT 8/4/2020, Avoid messing with administrations for now
@@ -1365,25 +1378,31 @@ u_attachment_list		luo_attachment_list
 Setnull(ls_null)
 drug_id = treat_medication.drug_id
 if isnull(drug_id) then
-	log.log(this, "w_drug_treatment:post", "Null drug_id", 4)
+	log.log(this, "w_drug_treatment.post_open:0019", "Null drug_id", 4)
+	treat_medication.treatment_definition[1].attribute_count = -1
+	Close(This)
+	Return
+End if
+
+// CDT 31/3/2020
+// Require a formulation has been selected
+form_rxcui = treat_medication.form_rxcui
+if isnull(form_rxcui) OR form_rxcui = "" then
+	log.log(this, "w_drug_treatment.post_open:0031", "Null form_rxcui", 4)
 	treat_medication.treatment_definition[1].attribute_count = -1
 	Close(This)
 	Return
 End if
 
 li_sts = set_drug()
-
-// CDT 31/3/2020
-// Require a formulation has been selected
-form_rxcui = treat_medication.form_rxcui
-if  li_sts <= 0 OR isnull(form_rxcui) OR form_rxcui = "" then
-	log.log(this, "w_drug_treatment:post", "Null form_rxcui", 4)
+if  li_sts <= 0 then
+	log.log(this, "w_drug_treatment.post_open:0037", "set_drug failed", 4)
 	treat_medication.treatment_definition[1].attribute_count = -1
 	Close(This)
 	Return
 End if
 
-package_list_index = uo_drug_package.selectformulation(treat_medication.form_rxcui)
+// package_list_index = uo_drug_package.selectformulation(treat_medication.form_rxcui)
 
 If Isnull(treat_medication.dose_amount) Then
 	load_defaults()
