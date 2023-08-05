@@ -115,39 +115,39 @@ end type
 global w_drug_treatment w_drug_treatment
 
 type variables
-/* real data types */
+
+// Passed in properties
+string drug_id
+string form_rxcui
+string package_id
+string pharmacist_instructions
+string patient_instructions
+string brand_name_required
+real dispense_amount
+real office_dispense_amount
+string dispense_unit
+real dose_amount
+string dose_unit
+long administration_sequence
+string administer_frequency
+real duration_amount
+string duration_unit
+string duration_prn
+integer refills
+
+// Calculated properties
 real default_duration_amount
+string default_duration_unit
+string default_duration_prn
 real max_dose_per_day
-
-/* string data types */
-string       drug_id
-string       form_rxcui
-string       default_duration_unit
-string       default_duration_prn
-string       pharmacist_instructions
-string       patient_instructions
-string		 prev_patient_instructions,prev_pharmacist_instructions
-string		brand_name_required
-
-/* integer datatypes */
-integer     refills = 0
-integer     package_list_index = 0
-integer     drug_admin_index = 0
-integer     last_package_list_index = 0
-
-/* long data types */
-long         problem_id
-long         treatment_id
-long         treatment_sequence
-
-/* boolean data types */
+u_unit max_dose_unit
+integer package_list_index = 0
+integer drug_admin_index = 0
+integer last_package_list_index = 0
 boolean    package_selected
 boolean    dispense_selected
-boolean	  display_only=false
+string		 prev_patient_instructions,prev_pharmacist_instructions
 boolean prev_dispense_qs
-
-/* reference to unit object */
-u_unit      max_dose_unit
 
 /* reference to treatment component */
 u_component_treatment      treat_medication
@@ -788,8 +788,6 @@ end if
 // CDT 8/4/2020, Avoid messing with administrations for now
 // li_count = uo_drug_administration.retrieve(drug_id, "ALL")
 
-display_only = false
-
 Return 1
 end function
 
@@ -798,21 +796,30 @@ string ls_null
 str_progress lstr_progress
 string ls_is_qs
 string ls_dispense_unit
+real lr_null
 
 setnull(ls_null)
-// If the package ID exists, then set it.
-// Otherwise use the dosage form if it exists.
-// Otherwise use the first package.
+setnull(lr_null)
+
 package_list_index = uo_drug_package.selectpackage(treat_medication.package_id)
-If package_list_index = 0 Then
-	log.log(This, "w_drug_treatment.load_medication:0013", "Package ID " + &
-				treat_medication.package_id + " is not available for this drug (" +&
-				treat_medication.drug_id + ").", 3 )
-	package_list_index = uo_drug_package.selectpackage(uo_drug_package.package_id[1])
-	package_selected = False
-Else
-	package_selected = True
+package_selected = NOT (package_list_index = 0)
+If package_selected Then
+	// package ID exists, then set it.
+	// these 2 lines came from w_svc_drug_treatment_edit and w_drug_admin_edit 22/7/2023
+	uo_dose.set_amount(lr_null, uo_drug_package.dose_unit[package_list_index])
+	uo_drug_package.event trigger newpackage()
 End if
+
+package_list_index = select_best_package(treat_medication.dosage_form)
+package_selected = NOT (package_list_index = 0)
+If package_selected Then
+	uo_drug_package.selectitem(package_list_index)
+End If
+
+// have the user pick a package, if form_rxcui not yet populated
+IF IsNull(form_rxcui) OR form_rxcui = "" THEN
+	uo_drug_package.event post clicked()
+END IF
 
 // Set the route list
 uo_route.set_package(treat_medication.package_id)
@@ -838,7 +845,7 @@ Else
 	dispense_selected = True
 End if
 
-		// Ciru says do not set dispense amount ahead of dose being selected
+// Ciru says do not set dispense amount ahead of dose being selected
 //uo_dispense.set_amount(treat_medication.dispense_amount, ls_dispense_unit)
 //uo_dispense_office.set_amount(treat_medication.office_dispense_amount, ls_dispense_unit)
 
@@ -853,12 +860,12 @@ If isnull(treat_medication.dose_amount) then
 	drug_admin_index = uo_drug_administration.selectadminsequence(&
 											treat_medication.administration_sequence)
 	uo_drug_administration.triggerevent("newadmin")
-Else
-	// If there is a dose amount then load it.
 	// CDT 30/3/2020
 	// Ciru wants the dose blank to start with, to make the clinician enter it.
-	uo_dose.set_amount(0, /* treat_medication.dose_amount, */ &
-									treat_medication.dose_unit)
+	uo_dose.set_amount(0, treat_medication.dose_unit)
+Else
+	// If there is a dose amount then load it.
+	uo_dose.set_amount(treat_medication.dose_amount, treat_medication.dose_unit)
 	drug_admin_index = uo_drug_administration.selectadminsequence(&
 											treat_medication.administration_sequence)
 End if
@@ -888,7 +895,7 @@ CHOOSE CASE treat_medication.refills
 		st_refills.text = String(treat_medication.refills)+" Refills"
 		st_refills.backcolor = color_object_selected
 END CHOOSE
-//---
+
 if treat_medication.brand_name_required = "Y" then
 	brand_name_required = "Y"
 	st_brand_name_required.text = "Yes"
@@ -1369,18 +1376,14 @@ li_sts = set_drug()
 // CDT 31/3/2020
 // Require a formulation has been selected
 form_rxcui = treat_medication.form_rxcui
-if isnull(form_rxcui) or form_rxcui = "" then
+if  li_sts <= 0 OR isnull(form_rxcui) OR form_rxcui = "" then
 	log.log(this, "w_drug_treatment:post", "Null form_rxcui", 4)
 	treat_medication.treatment_definition[1].attribute_count = -1
 	Close(This)
 	Return
 End if
 
-If li_sts <= 0 Then
-	treat_medication.treatment_definition[1].attribute_count = -1
-	Close(This)
-	Return
-End if
+package_list_index = uo_drug_package.selectformulation(treat_medication.form_rxcui)
 
 If Isnull(treat_medication.dose_amount) Then
 	load_defaults()
@@ -1408,12 +1411,6 @@ title = current_patient.id_line()
 if service.manual_service then
 	cb_continue.visible = false
 	max_buttons = 3
-end if
-
-if service.manual_service then
-	cb_cancel.visible = false
-	cb_continue.visible = false
-	max_buttons = 4
 end if
 
 // Hide Dose Based on widgets for this release, will add back in later when administrations are available
@@ -1787,29 +1784,24 @@ window 								lw_pop_buttons
 
 
 // We can refill a prescription if it shows on the open encounter
-if not display_only then
-	popup.button_count = popup.button_count + 1
-	popup.button_icons[popup.button_count] = "button10.bmp"
-	popup.button_helps[popup.button_count] = "Enter Patient Instructions"
-	popup.button_titles[popup.button_count] = "Patient Instructions"
-	buttons[popup.button_count] = "PATIENTINSTRUCTION"
-end if
+popup.button_count = popup.button_count + 1
+popup.button_icons[popup.button_count] = "button10.bmp"
+popup.button_helps[popup.button_count] = "Enter Patient Instructions"
+popup.button_titles[popup.button_count] = "Patient Instructions"
+buttons[popup.button_count] = "PATIENTINSTRUCTION"
 
-if not display_only then
-	popup.button_count = popup.button_count + 1
-	popup.button_icons[popup.button_count] = "button10.bmp"
-	popup.button_helps[popup.button_count] = "Enter Pharmacist Instructions"
-	popup.button_titles[popup.button_count] = "Pharmacist Instructions"
-	buttons[popup.button_count] = "PHARMACISTINSTRUCTION"
-end if
 
-if not display_only then
-	popup.button_count = popup.button_count + 1
-	popup.button_icons[popup.button_count] = "button10.bmp"
-	popup.button_helps[popup.button_count] = "Set current instruction as default instruction"
-	popup.button_titles[popup.button_count] = "Set as Default"
-	buttons[popup.button_count] = "SETDEFAULT"
-end if
+popup.button_count = popup.button_count + 1
+popup.button_icons[popup.button_count] = "button10.bmp"
+popup.button_helps[popup.button_count] = "Enter Pharmacist Instructions"
+popup.button_titles[popup.button_count] = "Pharmacist Instructions"
+buttons[popup.button_count] = "PHARMACISTINSTRUCTION"
+
+popup.button_count = popup.button_count + 1
+popup.button_icons[popup.button_count] = "button10.bmp"
+popup.button_helps[popup.button_count] = "Set current instruction as default instruction"
+popup.button_titles[popup.button_count] = "Set as Default"
+buttons[popup.button_count] = "SETDEFAULT"
 
 if true then
 	popup.button_count = popup.button_count + 1
@@ -2084,28 +2076,28 @@ if package_list_index > 0 then
 //		uo_dispense_office.set_amount(0, default_dispense_unit[package_list_index])
 	end if
 	
-	
-	if take_as_directed[package_list_index] = "Y" then
-		uo_dose.visible = false
-		st_take_as_directed.visible = true
-		uo_route.visible = false
-		uo_administer_frequency.visible = false
-		uo_duration.visible = false
-		pb_whole.visible = false
-		st_dosebase.visible = false
-		uo_drug_administration.visible = false
-	else
-		uo_dose.visible = true
-		st_take_as_directed.visible = false
-		uo_route.visible = true
-		uo_administer_frequency.visible = true
-		uo_duration.visible = true
-		pb_whole.visible = true
-		// We are suppressing drug_administration activity for the time being
-		// CDT 2020-03-29
-		// st_dosebase.visible = true
-		// uo_drug_administration.visible = true
-	end if
+//	
+//	if take_as_directed[package_list_index] = "Y" then
+//		uo_dose.visible = false
+//		st_take_as_directed.visible = true
+//		uo_route.visible = false
+//		uo_administer_frequency.visible = false
+//		uo_duration.visible = false
+//		pb_whole.visible = false
+//		st_dosebase.visible = false
+//		uo_drug_administration.visible = false
+//	else
+//		uo_dose.visible = true
+//		st_take_as_directed.visible = false
+//		uo_route.visible = true
+//		uo_administer_frequency.visible = true
+//		uo_duration.visible = true
+//		pb_whole.visible = true
+//		// We are suppressing drug_administration activity for the time being
+//		// CDT 2020-03-29
+//		// st_dosebase.visible = true
+//		// uo_drug_administration.visible = true
+//	end if
 	ls_package_id = uo_drug_package.package_id[package_list_index]
 	uo_route.set_package(ls_package_id)
 	
@@ -2123,7 +2115,7 @@ end event
 event clicked;call super::clicked;window w
 integer i
 real lr_temp
-string ls_form_rxcui, ls_ingr_rxcui, ls_form_description, ls_drug_id
+string ls_ingr_rxcui, ls_form_description, ls_drug_id
 str_popup popup
 str_popup_return popup_return
 
@@ -2138,15 +2130,21 @@ last_package_list_index = package_list_index
 
 // Replace above popup with new 2-column formulation window
 ls_drug_id = drug_id
-ls_form_description = f_choose_formulation(ls_drug_id, ls_form_rxcui, ls_ingr_rxcui)
+ls_form_description = f_choose_formulation(treat_medication)
+IF ls_form_description = "Nothing selected" THEN
+	RETURN
+END IF
+
 // This is inherited from u_drug_package, which has a form_rxcui array.
 // We want to assign to the window instance variable.
-parent.form_rxcui = ls_form_rxcui
-drug_id = ls_drug_id
-set_drug()
-// set_drug must execute before this can be done.
-package_list_index = uo_drug_package.selectformulation(ls_form_rxcui)
+parent.form_rxcui = treat_medication.form_rxcui
+drug_id =  treat_medication.drug_id
+this.text = ls_form_description
 
+set_drug()
+
+// set_drug must execute before this can be done.
+package_list_index = uo_drug_package.selectformulation(treat_medication.form_rxcui)
 
 if package_list_index <= 0 then return
 
