@@ -409,7 +409,7 @@ else
 	// Get the package list for this drug
 	li_count = uo_drug_package.retrieve(drug_id)
 	if li_count <= 0 then
-		messagebox("w_drug_treatment-set_drug()","This drug (" + st_drug.text + ") has no packages defined.")
+		messagebox("w_office_drug_treatment.set_drug:0034","This drug (" + st_drug.text + ") has no packages defined.")
 		return -1
 	end if
 	
