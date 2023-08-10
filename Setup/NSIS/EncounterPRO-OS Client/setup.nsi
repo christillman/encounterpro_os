@@ -25,7 +25,7 @@
   !define PBRuntime_VERSION   19.2.0.2797
   !define PBRuntime_FILENAME  PowerBuilderRuntime-2797.exe
 ; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
-  !define EncounterPRO_OS_Utilities_VERSION   1.0.4.0
+  !define EncounterPRO_OS_Utilities_VERSION   1.0.5.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
@@ -39,7 +39,8 @@
   ; EproLibNET installer define
   ;*** To change EproLibNET version, change the path below
   !define SRC_EproUtils  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities'
-  !define SRC_TextMaker  'C:\Installers\freeoffice2021.msi'
+  ; !define SRC_TextMaker  '${SOURCE_ROOT}\3rd Party Software\TextMaker'
+  ; !define SRC_TextMaker_Filename  'freeoffice2021.msi'
 
   ;*** If Setup version != Client files version, modify following line ***
   !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
@@ -59,9 +60,13 @@
 
     Var SERVER
     Var DATABASE
+    Var LOGID
+    Var LOGPASS
     Var Dialog
     Var SText
     Var DText
+    Var LText
+    Var PText
     Var ALREADY_INSTALLED
 
 ; ------------------------------------------
@@ -100,7 +105,7 @@
 ; Interface Configuration
 
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP 'EncounterPRO-OS logo.png'
+  !define MUI_HEADERIMAGE_BITMAP 'green-olive-avi-02.ico'
   !define MUI_ABORTWARNING
   
 ; ------------------------------------------
@@ -142,6 +147,17 @@
   !insertmacro MUI_LANGUAGE 'English'
   
 ; ------------------------------------------
+; Descriptions
+
+    ; Language strings
+    LangString PAGE_SERVDB_TITLE ${LANG_ENGLISH} "EncounterPRO-OS Settings"
+    LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter or confirm the Server and Database."
+
+    ; Assign language strings to sections
+    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+    !insertmacro MUI_FUNCTION_DESCRIPTION_END
+	
+; ------------------------------------------
 ; Installer Sections
 
     Section '-Dependencies' SecDeps
@@ -175,24 +191,29 @@
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
                   
       ; Install PB Runtime, Utilities, and TextMaker
-      SetOutPath $INSTDIR
+      SetOutPath '$INSTDIR'
       DetailPrint "Installing Powerbuilder Runtime Files..."
-      SetDetailsPrint textonly
+      SetDetailsPrint both
       File "${SRC_PBR}\${PBRuntime_FILENAME}"
       nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
       Delete '$INSTDIR\${PBRuntime_FILENAME}'
  
-      SetOutPath $INSTDIR
-      DetailPrint "Installing TextMaker..."
-      SetDetailsPrint textonly
-      File "${SRC_TextMaker}"
-      nsExec::Exec 'msiexec /i "$INSTDIR\${SRC_TextMaker}" /passive /norestart /l*v "$INSTDIR\TextMaker.log"'
-      Delete '$INSTDIR\${SRC_TextMaker}'
+ 
+	  ; Adding a fake file which the installer errors out trying to delete
+      ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021"
+      ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021\TB"
+      ; CreateShortCut "$SMPROGRAMS\SoftMaker FreeOffice 2021\TB\Downloader.exe" "$INSTDIR\PBCLTRT190.log"
+      ; SetOutPath '$INSTDIR'
+      ; DetailPrint "Installing TextMaker..."
+      ; SetDetailsPrint both
+      ; File "${SRC_TextMaker}\${SRC_TextMaker_Filename}"
+      ; nsExec::Exec 'msiexec /i "$INSTDIR\${SRC_TextMaker_Filename}" /passive /norestart /l*v "$INSTDIR\TextMaker.log" APPLICATIONFOLDER="C:\Program Files (x86)\SoftMaker FreeOffice 2021" INSTALLTM=1 INSTALLUPDATER=0'
+      ; Delete '$INSTDIR\${SRC_TextMaker_Filename}'
   
       SetDetailsPrint both
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
       SetDetailsPrint none
-      SetOutPath $INSTDIR
+      SetOutPath '$INSTDIR'
       File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
       nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
       Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
@@ -208,12 +229,14 @@
         SetOverwrite on
         SetDetailsPrint both
         File "${SRC_EPRO}\*.*"
-        DetailPrint "Setting ini SERVER to $SERVER"
-        DetailPrint "Setting ini DATABASE to $DATABASE"
+        DetailPrint "Setting ini SERVER and DATABASE to $SERVER and $DATABASE"
+        DetailPrint "Setting ini DBLOGID and DBLOGPASS to $LOGID and $LOGPASS"
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "SNC"
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "MSOLEDBSQL"
         WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid" $LOGID
+        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass" $LOGPASS
         File "${SOURCE_ROOT}\Icons\green-olive-avi-02.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
@@ -270,7 +293,7 @@
     
     Section -AdditionalIcons
         SetDetailsPrint textonly
-        SetOutPath $INSTDIR
+        SetOutPath '$INSTDIR'
         CreateDirectory "$SMPROGRAMS\EncounterPRO-OS"
         CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\Uninstall.lnk" "$INSTDIR\uninst.exe"
         CreateShortCut "$DESKTOP\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
@@ -331,17 +354,6 @@
       Delete "$INSTDIR\*.mdlvl"  
     SectionEnd
 
-; ------------------------------------------
-; Descriptions
-
-    ; Language strings
-    LangString PAGE_SERVDB_TITLE ${LANG_ENGLISH} "EncounterPRO-OS Settings"
-    LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter or confirm the names \
-        of your EncounterPRO-OS Server and Database."
-
-    ; Assign language strings to sections
-    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_FUNCTION_DESCRIPTION_END
     
 Function .onInit
     ; Install for ALL USERS
@@ -389,10 +401,16 @@ Function createServerDBPage
     !insertmacro MUI_HEADER_TEXT $(PAGE_SERVDB_TITLE) $(PAGE_SERVDB_SUBTITLE)
 
     ${If} $SERVER == ""
-        StrCpy $SERVER "localhost\ENCOUNTERPRO_OS"
+        StrCpy $SERVER "tcp:DESKTOP-5KDV41N,54321"
     ${EndIf}
     ${If} $DATABASE == ""
         StrCpy $DATABASE "EncounterPro_OS"
+    ${EndIf}
+    ${If} $LOGID == ""
+        StrCpy $LOGID "greenoliveehr"
+    ${EndIf}
+    ${If} $LOGPASS == ""
+        StrCpy $LOGPASS "greenoliveEHR"
     ${EndIf}
     
     nsDialogs::Create /NOUNLOAD 1018
@@ -412,6 +430,16 @@ Function createServerDBPage
     ${NSD_CreateText} 0 43u 100% 12u $DATABASE
     Pop $DText
 
+    ${NSD_CreateLabel} 0 60u 100% 12u "DB Login"
+
+    ${NSD_CreateText} 0 73u 100% 12u $LOGID
+    Pop $LText
+	
+    ${NSD_CreateLabel} 0 90u 100% 12u "DB Password"
+
+    ${NSD_CreateText} 0 103u 100% 12u $LOGPASS
+    Pop $PText
+	
     ${NSD_SetFocus} $SText
 
     nsDialogs::Show    
@@ -420,6 +448,8 @@ FunctionEnd
 Function endServerDBPage
     ${NSD_GetText} $SText $SERVER
     ${NSD_GetText} $DText $DATABASE
+    ${NSD_GetText} $LText $LOGID
+    ${NSD_GetText} $PText $LOGPASS
 FunctionEnd
 
 Function ProcessDrives
@@ -453,5 +483,7 @@ Function cpServerAndDatabase
   ; Read Server and Database from EncounterPRO.ini
   ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
   ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
+  ReadINIStr $LOGID "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid"
+  ReadINIStr $LOGPASS "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass"
   lbl_?servdbdone:
 FunctionEnd
