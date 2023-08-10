@@ -17,5 +17,31 @@ ALTER TABLE [dbo].[o_Log] DROP COLUMN IF EXISTS [caused_by_id]
 GO
 
 ALTER TABLE [dbo].[o_Log] ADD progress_seconds numeric(18,4) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN caller varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN script varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN computername varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN windows_logon_id varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN cpr_id varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN program varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN cleared_by varchar(255) NULL
+GO
+
+ALTER TABLE [dbo].[o_Log] ALTER COLUMN sql_version varchar(255) NULL
+GO
+
 
 
