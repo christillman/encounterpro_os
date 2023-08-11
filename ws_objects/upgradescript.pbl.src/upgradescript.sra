@@ -11,9 +11,8 @@ global message message
 end forward
 
 global variables
-
+string gs_building_from
 end variables
-
 global type upgradescript from application
 string appname = "upgradescript"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -27,6 +26,10 @@ long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = ""
 string appruntimeversion = "19.2.0.2797"
+long webview2distribution = 0
+boolean webview2checkx86 = false
+boolean webview2checkx64 = false
+string webview2url = "https://developer.microsoft.com/en-us/microsoft-edge/webview2/"
 end type
 global upgradescript upgradescript
 
@@ -54,6 +57,8 @@ end on
 event open;
 script_producer sp
 line_number_updater lnu
+
+gs_building_from = GetCurrentDirectory ( )
 
 // Upgraded to PB 2019 R3
 //lnu = CREATE line_number_updater

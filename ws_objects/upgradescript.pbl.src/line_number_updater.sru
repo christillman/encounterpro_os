@@ -25,7 +25,7 @@ string ls_source_file_prev
 string ls_quotes[]
 string ls_subfile, ls_script_sub_line
 
-string ls_src_path = "C:\EncounterPro\encounterpro_os\ws_objects\Client\"
+string ls_src_path = gs_building_from + "\ws_objects\Client\"
 
 GetFileOpenName ("log.log file", ls_fullpath, ls_filename)
 

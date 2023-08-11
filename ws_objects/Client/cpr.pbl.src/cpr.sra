@@ -96,8 +96,8 @@ string time_format_string = "[time]"
 string db_datetime_format = "yyyy-mm-dd hh:mm:ss"
 string db_date_format = "yyyy-mm-dd"
 string default_encounter_type = "WELL"
-string temp_path = "C:\Temp\Epro"
-string debug_path = "C:\Temp\EproDebug"
+string temp_path = "C:\TEMP"
+string debug_path = "C:\TEMP\EproDebug"
 // rgb(192,192,255) classic purple (EPRO_BLUE)
 // You need to change background color using global-replace in the
 // text source files, and then Refresh at the root of the app.
@@ -182,7 +182,7 @@ boolean nativepdfincludecustomfont = false
 string nativepdfappname = ""
 long richtextedittype = 0
 long richtexteditx64type = 3
-long richtexteditversion = 1
+long richtexteditversion = 0
 string richtexteditkey = ""
 string appicon = "green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
@@ -209,20 +209,18 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 218
+long minimum_modification_level = 216
 
-date compile_date = date("2023-08-12")
+date compile_date = date("2023-07-08")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.3"
-// Resulting in 7.2.1.3
+string build = "1.1"
+// Resulting in 7.2.1.1
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
-string copyright = "Copyright 1994-2023 The EncounterPRO Foundation, Inc."
-string source_url = "https://github.com/christillman/encounterpro_os"
 
 ////////////////////////////////////////////////////////////
 // DB Version this client is compatible with.
@@ -245,6 +243,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
