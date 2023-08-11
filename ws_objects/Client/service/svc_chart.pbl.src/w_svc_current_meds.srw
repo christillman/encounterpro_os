@@ -23,7 +23,6 @@ end forward
 global type w_svc_current_meds from w_window_base
 integer width = 2944
 integer height = 1992
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -190,12 +189,17 @@ event clicked;Integer						i
 datetime						ldt_begin_date
 date							ld_begin_date
 String						ls_treatment_type,ls_temp
+long ll_null
+long ll_treatment_id
+
+SetNull(ll_null)
 
 str_picked_drugs 			lstr_drugs
 u_component_treatment 	luo_treatment
 u_component_treatment 	luo_new_treatment
 
-str_attributes lstr_attributes
+str_attributes lstr_trt_attributes
+str_attributes lstr_order_attributes
 
 ls_treatment_type = "MEDICATION"
 
@@ -205,29 +209,43 @@ If isnull(luo_treatment) Then Return
 luo_new_treatment = f_get_treatment_component(ls_treatment_type)
 If isnull(luo_treatment) Then Return
 
-luo_treatment.treatment_type = ls_treatment_type
 luo_treatment.past_treatment = true // to get the duration for the drugs
 
 luo_treatment.define_treatment()
 If luo_treatment.treatment_count > 0 Then
 	For i = 1 To luo_treatment.treatment_count
 	
- 		luo_new_treatment.reset()
-		luo_new_treatment.parent_patient = current_patient
-		luo_new_treatment.open_encounter_id = current_patient.open_encounter_id
-		luo_new_treatment.treatment_type = ls_treatment_type
-		Setnull(luo_new_treatment.treatment_id)
-		luo_new_treatment.ordered_by = current_user.user_id
-		luo_new_treatment.created_by = current_scribe.user_id
-		luo_new_treatment.past_treatment = true
+		// CDT 2023-08-05: Call order_treatment which calls new_treatment within, 
+		// instead of just new_treatment (same as in f_order_treatment_list)
+		// In order to get w_drug_treatment open (w_drug_admin_edit is now defunct)
 		
-		lstr_attributes = f_attribute_arrays_to_str(luo_treatment.treatment_definition[i].attribute_count, &
+// 		luo_new_treatment.reset()
+//		luo_new_treatment.parent_patient = current_patient
+//		luo_new_treatment.open_encounter_id = current_patient.open_encounter_id
+//		luo_new_treatment.treatment_type = ls_treatment_type
+//		luo_new_treatment.ordered_by = current_user.user_id
+//		luo_new_treatment.created_by = current_scribe.user_id
+//		luo_new_treatment.past_treatment = true
+//		
+		lstr_trt_attributes = f_attribute_arrays_to_str(luo_treatment.treatment_definition[i].attribute_count, &
 																	luo_treatment.treatment_definition[i].attribute, &
 																	luo_treatment.treatment_definition[i].value )
+	
+				
+		// luo_new_treatment.map_attr_to_data_columns(lstr_trt_attributes)
 
-		luo_new_treatment.map_attr_to_data_columns(lstr_attributes)
+		// current_patient.treatments.new_treatment(luo_new_treatment, false)
+		
+		ll_treatment_id = current_patient.treatments.order_treatment(current_patient.cpr_id, &
+																						current_patient.open_encounter_id, &
+																						ls_treatment_type, &
+																						luo_treatment.treatment_definition[i].item_description, &
+																						ll_null, &
+																						false, &
+																						current_user.user_id, &
+																						ll_null, &
+																						lstr_trt_attributes)
 
-		current_patient.treatments.new_treatment(luo_new_treatment, false)
 	Next
 End if
 
@@ -236,14 +254,13 @@ component_manager.destroy_component(luo_new_treatment)
 
 Parent.function POST refresh()
 
-
 end event
 
 type pb_up from u_picture_button within w_svc_current_meds
 integer x = 2235
 integer y = 140
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 30
 boolean bringtotop = true
 string picturename = "icon_up.bmp"
@@ -265,8 +282,8 @@ end event
 type pb_down from u_picture_button within w_svc_current_meds
 integer x = 2235
 integer y = 268
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 20
 boolean bringtotop = true
 string picturename = "icon_down.bmp"

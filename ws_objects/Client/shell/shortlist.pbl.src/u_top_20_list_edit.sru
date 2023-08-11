@@ -470,8 +470,8 @@ end event
 type pb_up from u_picture_button within u_top_20_list_edit
 integer x = 1307
 integer y = 260
-integer width = 137
-integer height = 116
+integer width = 146
+integer height = 124
 integer taborder = 50
 string picturename = "icon_up.bmp"
 string disabledname = "icon_upx.bmp"

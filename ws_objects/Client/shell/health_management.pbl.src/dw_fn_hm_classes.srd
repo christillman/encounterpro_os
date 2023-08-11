@@ -27,12 +27,12 @@ table(column=(type=long updatewhereclause=yes name=maintenance_rule_id dbname="m
 	r.compliant_patients ,
 	r.measured_patients ,
 	r.controlled_patients ,
-     compliance_ok_percent = COALESCE(c.compliance_ok_percent, 90),
-     compliance_warning_percent = COALESCE(c.compliance_warning_percent, 80),
-     measured_ok_percent = COALESCE(c.measured_ok_percent, 90),
-     measured_warning_percent = COALESCE(c.measured_warning_percent, 80),
-     controlled_ok_percent = COALESCE(c.controlled_ok_percent, 90),
-     controlled_warning_percent = COALESCE(c.controlled_warning_percent, 80),
+     compliance_ok_percent = IsNull(c.compliance_ok_percent, 90),
+     compliance_warning_percent = IsNull(c.compliance_warning_percent, 80),
+     measured_ok_percent = IsNull(c.measured_ok_percent, 90),
+     measured_warning_percent = IsNull(c.measured_warning_percent, 80),
+     controlled_ok_percent = IsNull(c.controlled_ok_percent, 90),
+     controlled_warning_percent = IsNull(c.controlled_warning_percent, 80),
 	c.status,
 	selected_flag=0
 FROM dbo.fn_hm_classes(:maintenance_rule_type) r

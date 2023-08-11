@@ -239,12 +239,12 @@ if isnull(adodb) then
 		return -1
 	end if
 	
+	// Getting failures here sometimes, but adodb actually OK. Maybe a small delay could help?
+	sleep(1)
 	ll_state = adStateClosed
 	
 	TRY
 		adodb.open(sqlca.adodb_connectstring)
-		// Getting failures here sometimes, but adodb actually OK. Maybe a small delay could help?
-		sleep(1)
 		ll_state = adodb.state
 	CATCH (throwable lo_error1)
 		log.log(this, "u_common_thread.get_adodb:0023", "Error opening ADODB Connection (" + lo_error1.text + ")", 3)
@@ -258,6 +258,9 @@ if isnull(adodb) then
 		setnull(adodb)
 		return -1
 	end if
+	
+	// Getting failures here sometimes, but adodb actually OK. Maybe a small delay could help?
+	sleep(1)
 	
 	if sqlca.is_approle_set then
 		ls_query = sqlca.approle_command()

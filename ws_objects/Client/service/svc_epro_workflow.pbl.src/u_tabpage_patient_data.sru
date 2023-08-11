@@ -2,6 +2,8 @@
 forward
 global type u_tabpage_patient_data from u_tabpage
 end type
+type sle_phone_prefix from singlelineedit within u_tabpage_patient_data
+end type
 type st_ssn_t from statictext within u_tabpage_patient_data
 end type
 type em_ssn from editmask within u_tabpage_patient_data
@@ -94,6 +96,7 @@ global type u_tabpage_patient_data from u_tabpage
 integer width = 2875
 integer height = 1268
 string text = "none"
+sle_phone_prefix sle_phone_prefix
 st_ssn_t st_ssn_t
 em_ssn em_ssn
 sle_id_number sle_id_number
@@ -235,7 +238,7 @@ end if
 
 // Avoid Americanisms 
 if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
-	// Hmmm, ssn never WAS populated
+	em_ssn.text = current_patient.ssn
 	sle_nickname.text = current_patient.nickname
 	sle_maiden_name.text = current_patient.maiden_name
 	st_race.text = current_patient.race
@@ -246,7 +249,7 @@ if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	st_id_document_t.visible = false
 	st_id_number_t.visible = false
 	st_country_t.visible = false
-
+	sle_phone_prefix.text = "+1"
 else
 	// some day may have a case statement for locale?
 	// Hide the U.S. fields
@@ -265,6 +268,8 @@ else
 	w_container.get_patient_list_item("Id Document", st_id_document.text, sle_id_number.text)
 	st_country.text = ""
 	w_container.get_patient_list_item("Country", st_country.text, ls_empty)
+	sle_phone_prefix.text = ""
+	w_container.get_patient_list_item("Country_Phone_Prefix", sle_phone_prefix.text, ls_empty)
 end if
 
 display_portrait()
@@ -323,6 +328,7 @@ end subroutine
 on u_tabpage_patient_data.create
 int iCurrent
 call super::create
+this.sle_phone_prefix=create sle_phone_prefix
 this.st_ssn_t=create st_ssn_t
 this.em_ssn=create em_ssn
 this.sle_id_number=create sle_id_number
@@ -367,53 +373,55 @@ this.st_portrait=create st_portrait
 this.st_age=create st_age
 this.st_referring_provider=create st_referring_provider
 iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.st_ssn_t
-this.Control[iCurrent+2]=this.em_ssn
-this.Control[iCurrent+3]=this.sle_id_number
-this.Control[iCurrent+4]=this.st_id_number_t
-this.Control[iCurrent+5]=this.st_country_t
-this.Control[iCurrent+6]=this.st_country
-this.Control[iCurrent+7]=this.st_id_document
-this.Control[iCurrent+8]=this.st_id_document_t
-this.Control[iCurrent+9]=this.st_sex
-this.Control[iCurrent+10]=this.st_sex_t
-this.Control[iCurrent+11]=this.cb_make_test
-this.Control[iCurrent+12]=this.st_test_patient
-this.Control[iCurrent+13]=this.st_maiden_name_title
-this.Control[iCurrent+14]=this.sle_maiden_name
-this.Control[iCurrent+15]=this.cb_clear_referring_provider
-this.Control[iCurrent+16]=this.st_referring_provider_title
-this.Control[iCurrent+17]=this.st_birth_time_title
-this.Control[iCurrent+18]=this.st_time_of_birth
-this.Control[iCurrent+19]=this.sle_nickname
-this.Control[iCurrent+20]=this.st_nickname_t
-this.Control[iCurrent+21]=this.st_patient_name
-this.Control[iCurrent+22]=this.st_date_of_birth
-this.Control[iCurrent+23]=this.cb_change_billing_id
-this.Control[iCurrent+24]=this.st_race
-this.Control[iCurrent+25]=this.st_race_title
-this.Control[iCurrent+26]=this.st_patient_status
-this.Control[iCurrent+27]=this.st_patient_status_t
-this.Control[iCurrent+28]=this.st_cpr_id
-this.Control[iCurrent+29]=this.st_primary_provider
-this.Control[iCurrent+30]=this.st_patient_name_t
-this.Control[iCurrent+31]=this.st_birthdate
-this.Control[iCurrent+32]=this.st_age_title
-this.Control[iCurrent+33]=this.st_billing_id_t
-this.Control[iCurrent+34]=this.st_phone_num_title
-this.Control[iCurrent+35]=this.sle_phone_number
-this.Control[iCurrent+36]=this.st_primary_provider_title
-this.Control[iCurrent+37]=this.st_office
-this.Control[iCurrent+38]=this.st_office_title
-this.Control[iCurrent+39]=this.st_billing_id
-this.Control[iCurrent+40]=this.uo_picture
-this.Control[iCurrent+41]=this.st_portrait
-this.Control[iCurrent+42]=this.st_age
-this.Control[iCurrent+43]=this.st_referring_provider
+this.Control[iCurrent+1]=this.sle_phone_prefix
+this.Control[iCurrent+2]=this.st_ssn_t
+this.Control[iCurrent+3]=this.em_ssn
+this.Control[iCurrent+4]=this.sle_id_number
+this.Control[iCurrent+5]=this.st_id_number_t
+this.Control[iCurrent+6]=this.st_country_t
+this.Control[iCurrent+7]=this.st_country
+this.Control[iCurrent+8]=this.st_id_document
+this.Control[iCurrent+9]=this.st_id_document_t
+this.Control[iCurrent+10]=this.st_sex
+this.Control[iCurrent+11]=this.st_sex_t
+this.Control[iCurrent+12]=this.cb_make_test
+this.Control[iCurrent+13]=this.st_test_patient
+this.Control[iCurrent+14]=this.st_maiden_name_title
+this.Control[iCurrent+15]=this.sle_maiden_name
+this.Control[iCurrent+16]=this.cb_clear_referring_provider
+this.Control[iCurrent+17]=this.st_referring_provider_title
+this.Control[iCurrent+18]=this.st_birth_time_title
+this.Control[iCurrent+19]=this.st_time_of_birth
+this.Control[iCurrent+20]=this.sle_nickname
+this.Control[iCurrent+21]=this.st_nickname_t
+this.Control[iCurrent+22]=this.st_patient_name
+this.Control[iCurrent+23]=this.st_date_of_birth
+this.Control[iCurrent+24]=this.cb_change_billing_id
+this.Control[iCurrent+25]=this.st_race
+this.Control[iCurrent+26]=this.st_race_title
+this.Control[iCurrent+27]=this.st_patient_status
+this.Control[iCurrent+28]=this.st_patient_status_t
+this.Control[iCurrent+29]=this.st_cpr_id
+this.Control[iCurrent+30]=this.st_primary_provider
+this.Control[iCurrent+31]=this.st_patient_name_t
+this.Control[iCurrent+32]=this.st_birthdate
+this.Control[iCurrent+33]=this.st_age_title
+this.Control[iCurrent+34]=this.st_billing_id_t
+this.Control[iCurrent+35]=this.st_phone_num_title
+this.Control[iCurrent+36]=this.sle_phone_number
+this.Control[iCurrent+37]=this.st_primary_provider_title
+this.Control[iCurrent+38]=this.st_office
+this.Control[iCurrent+39]=this.st_office_title
+this.Control[iCurrent+40]=this.st_billing_id
+this.Control[iCurrent+41]=this.uo_picture
+this.Control[iCurrent+42]=this.st_portrait
+this.Control[iCurrent+43]=this.st_age
+this.Control[iCurrent+44]=this.st_referring_provider
 end on
 
 on u_tabpage_patient_data.destroy
 call super::destroy
+destroy(this.sle_phone_prefix)
 destroy(this.st_ssn_t)
 destroy(this.em_ssn)
 destroy(this.sle_id_number)
@@ -458,6 +466,34 @@ destroy(this.st_portrait)
 destroy(this.st_age)
 destroy(this.st_referring_provider)
 end on
+
+type sle_phone_prefix from singlelineedit within u_tabpage_patient_data
+integer x = 594
+integer y = 824
+integer width = 224
+integer height = 108
+integer taborder = 50
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+boolean autohscroll = false
+borderstyle borderstyle = stylelowered!
+end type
+
+event modified;int li_rc
+string ls_empty = ""
+
+li_rc = w_container.set_patient_list_item("Country_Phone_Prefix", text, ls_empty)
+if li_rc < 0 then
+	log.log(this, "u_tabpage_patient_data.sle_phone_prefix.clicked:0019", "Error setting phone prefix", 4)
+end if
+
+end event
 
 type st_ssn_t from statictext within u_tabpage_patient_data
 integer x = 2057
@@ -526,7 +562,7 @@ end if
 li_rc = w_container.set_patient_list_item("Id Document", st_id_document.text, text)
 highlight_sle(this, false)
 if li_rc < 0 then
-	log.log(this, "w_edit_patient_data.st_id_number.modified:0006", "Error setting document number", 4)
+	log.log(this, "u_tabpage_patient_data.st_id_number.modified:0006", "Error setting document number", 4)
 end if
 
 end event
@@ -596,6 +632,7 @@ str_popup_return popup_return
 u_user luo_user
 integer li_rc
 string ls_empty = ""
+string ls_country_phone_prefix
 
 popup.dataobject = "dw_list_items_active"
 popup.datacolumn = 2
@@ -608,10 +645,23 @@ if popup_return.item_count <> 1 then return
 
 li_rc = w_container.set_patient_list_item("Country", popup_return.items[1], ls_empty)
 if li_rc < 0 then
-	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
+	log.log(this, "u_tabpage_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
-// Edited country, clear out document number
-sle_id_number.text = ""
+
+// Set phone prefix according to country selected, if not already populated
+if sle_phone_prefix.text = ls_empty then
+	SELECT cpp.list_item INTO :ls_country_phone_prefix
+	FROM c_list_item cc
+	JOIN c_list_item cpp ON cpp.list_item_id = cc.list_item_id // the country code
+	WHERE cpp.list_id = "Country_Phone_Prefix"
+	AND cc.list_id = 'Country'
+	AND cc.list_item = :popup_return.items[1];
+	if tf_check() AND ls_country_phone_prefix <> ls_empty then
+		sle_phone_prefix.text = ls_country_phone_prefix
+		li_rc = w_container.set_patient_list_item("Country_Phone_Prefix", ls_country_phone_prefix, ls_empty)
+	end if
+end if
+
 text = popup_return.items[1]
 highlight_st(this, false)
 
@@ -655,7 +705,7 @@ if popup_return.item_count <> 1 then return
 
 li_rc = w_container.set_patient_list_item("Id Document", popup_return.items[1], ls_empty)
 if li_rc < 0 then
-	log.log(this, "w_edit_patient_data.st_id_document.clicked:0019", "Error setting document id type", 4)
+	log.log(this, "u_tabpage_patient_data.st_id_document.clicked:0019", "Error setting document id type", 4)
 end if
 // Edited document type, clear out document number
 sle_id_number.text = ""
@@ -1371,7 +1421,7 @@ boolean focusrectangle = false
 end type
 
 type sle_phone_number from singlelineedit within u_tabpage_patient_data
-integer x = 594
+integer x = 832
 integer y = 824
 integer width = 946
 integer height = 108

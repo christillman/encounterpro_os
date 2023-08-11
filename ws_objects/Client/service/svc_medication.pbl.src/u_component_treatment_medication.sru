@@ -34,7 +34,9 @@ str_attributes_list lstr_attributes_list
 popup.data_row_count = 2
 popup.items[1] = treatment_type
 popup.items[2] = f_boolean_to_string(past_treatment) 
+
 Openwithparm(w_trt_pick_drugs, popup)
+
 lstr_attributes_list = Message.powerobjectparm
 
 treatment_count = lstr_attributes_list.attributes_count

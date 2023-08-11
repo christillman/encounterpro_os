@@ -68,9 +68,8 @@ DECLARE @log TABLE (
 	[os_version] [varchar](64) NULL,
 	[epro_version] [varchar](64) NULL,
 	[sql_version] [varchar](256) NULL,
-	[id] [uniqueidentifier] NOT NULL ,
-	[caused_by_id] [uniqueidentifier] NULL,
 	[spid] [int] NULL ,
+	progress_seconds numeric(18,4) NULL,
 	[log_data] [text] NULL,
 	scribe_user_full_name varchar(64) NULL
 	)
@@ -131,9 +130,8 @@ INSERT INTO @log
 	,os_version
 	,epro_version
 	,sql_version
-	,id
-	,caused_by_id
 	,spid
+	,progress_seconds
 	,log_data
 	,scribe_user_full_name)
 SELECT l.log_id
@@ -158,9 +156,8 @@ SELECT l.log_id
 	,l.os_version
 	,l.epro_version
 	,l.sql_version
-	,l.id
-	,l.caused_by_id
 	,l.spid
+	,l.progress_seconds
 	,l.log_data
 	,u.user_full_name
 FROM o_Log l WITH (NOLOCK)
@@ -197,9 +194,8 @@ SELECT l.log_id
 	,l.os_version
 	,l.epro_version
 	,l.sql_version
-	,l.id
-	,l.caused_by_id
 	,l.spid
+	,l.progress_seconds
 	,l.log_data
 	,l.scribe_user_full_name
 	,selected_flag = 0

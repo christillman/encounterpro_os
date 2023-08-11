@@ -30,22 +30,31 @@ AS
 
 BEGIN
 
+SET @in_brand_name_formulation = IsNull(@in_brand_name_formulation,'Nothing')
+SET @in_corr_sbd_rxcui = IsNull(@in_corr_sbd_rxcui,'Nothing')
+SET @in_generic_formulation = IsNull(@in_generic_formulation,'Nothing')
+SET @in_corr_scd_rxcui = IsNull(@in_corr_scd_rxcui,'Nothing')
+SET @in_active_ingredients = IsNull(@in_active_ingredients,'Nothing')
+SET @in_generic_ingr_rxcui = IsNull(@in_generic_ingr_rxcui,'Nothing')
+SET @in_brand_name = IsNull(@in_brand_name,'Nothing')
+SET @in_brand_rxcui = IsNull(@in_brand_rxcui,'Nothing')
+
 -- Show @debug messages only for developer
-DECLARE @debug bit = CASE WHEN @@servername LIKE 'DESKTOP-GU15HUD%' THEN 1 ELSE 0 END
+DECLARE @debug bit = CASE WHEN @@servername LIKE 'DESKTOP-1EOB2VV%' THEN 1 ELSE 0 END
 
 IF @debug = 1 
 	BEGIN
 	PRINT '@in_generic_only ' +	CASE WHEN @in_generic_only = 1 Then 'Yes' ELSE 'No' END
 	PRINT '@country_code ' +	@country_code
 	PRINT '@country_source_id ' +	@country_source_id
-	PRINT '@in_brand_name_formulation ' +IsNull(@in_brand_name_formulation,'NULL')
-	PRINT '@in_corr_sbd_rxcui ' +	IsNull(@in_corr_sbd_rxcui,'NULL')
-	PRINT '@in_generic_formulation ' +	IsNull(@in_generic_formulation,'NULL')
-	PRINT '@in_corr_scd_rxcui ' +	IsNull(@in_corr_scd_rxcui,'NULL')
-	PRINT '@in_active_ingredients ' +	IsNull(@in_active_ingredients,'NULL')
-	PRINT '@in_generic_ingr_rxcui ' +	IsNull(@in_generic_ingr_rxcui,'NULL')
-	PRINT '@in_brand_name ' +	IsNull(@in_brand_name,'NULL')
-	PRINT '@in_brand_rxcui ' +	IsNull(@in_brand_rxcui,'NULL')
+	PRINT '@in_brand_name_formulation ' + @in_brand_name_formulation 
+	PRINT '@in_corr_sbd_rxcui ' +	 @in_corr_sbd_rxcui 
+	PRINT '@in_generic_formulation ' +	 @in_generic_formulation 
+	PRINT '@in_corr_scd_rxcui ' +	 @in_corr_scd_rxcui 
+	PRINT '@in_active_ingredients ' +	 @in_active_ingredients 
+	PRINT '@in_generic_ingr_rxcui ' +	 @in_generic_ingr_rxcui 
+	PRINT '@in_brand_name ' +	 @in_brand_name 
+	PRINT '@in_brand_rxcui ' +	 @in_brand_rxcui 
 	END
 ELSE	
 	SET NOCOUNT ON
@@ -62,6 +71,7 @@ DECLARE	@in_corr_scd_rxcui varchar(30) = 'KEG7858'
 DECLARE	@in_active_ingredients varchar(200) = NULL
 DECLARE	@in_generic_ingr_rxcui varchar(30)
 DECLARE	@in_brand_name varchar(200)
+DECLARE	@in_brand_rxcui varchar(30)
 DECLARE	@drug_type varchar(20) = 'Single Drug'
 */
 -- local variables
@@ -141,7 +151,7 @@ IF @in_brand_name_formulation LIKE 'No %'
 	SET @generic_only = 1
 	
 SET @sbd_rxcui = CASE
-	WHEN @in_corr_sbd_rxcui IS NULL THEN NULL
+	WHEN @in_corr_sbd_rxcui = 'Nothing' THEN NULL
 	WHEN @in_corr_sbd_rxcui LIKE 'No %' THEN NULL
 	WHEN @in_corr_sbd_rxcui = '' THEN NULL
 	WHEN @in_corr_sbd_rxcui LIKE 'SBD_PSN-%' THEN substring(@in_corr_sbd_rxcui, 9, 20)
@@ -150,7 +160,7 @@ SET @sbd_rxcui = CASE
 	ELSE @in_corr_sbd_rxcui END
 
 SET @scd_rxcui = CASE
-	WHEN @in_corr_scd_rxcui IS NULL THEN NULL
+	WHEN @in_corr_scd_rxcui = 'Nothing' THEN NULL
 	WHEN @in_corr_scd_rxcui LIKE 'No %' THEN NULL
 	WHEN @in_corr_scd_rxcui = '' THEN NULL
 	WHEN @in_corr_scd_rxcui LIKE 'SCD_PSN-%' THEN substring(@in_corr_sbd_rxcui, 9, 20)
@@ -158,7 +168,7 @@ SET @scd_rxcui = CASE
 	WHEN @in_corr_scd_rxcui LIKE 'SCD-%' THEN substring(@in_corr_sbd_rxcui, 5, 20)
 	ELSE @in_corr_scd_rxcui END
 
-IF @country_source_id IS NULL 
+IF @country_source_id = 'Nothing' 
 	OR @country_source_id IN ('00nobrandfound','NO RXCUI', 'No Retention No', 
 		'No Retention Number', 'Not in Retention List', 'None')
 	BEGIN 
@@ -193,7 +203,7 @@ IF @generic_only = 1
 	END
 
 -- If a generic rxcui has not been supplied, validate it
-IF @in_generic_ingr_rxcui IS NOT NULL AND @in_generic_ingr_rxcui != ''
+IF @in_generic_ingr_rxcui != 'Nothing' AND @in_generic_ingr_rxcui != ''
 	SELECT @generic_rxcui = generic_rxcui, @generic_name = generic_name
 	FROM c_Drug_Generic g 
 	WHERE g.generic_rxcui = @in_generic_ingr_rxcui
@@ -201,7 +211,7 @@ IF @in_generic_ingr_rxcui IS NOT NULL AND @in_generic_ingr_rxcui != ''
 -- If a generic rxcui has not been supplied, try to find using ingredients
 IF @generic_rxcui IS NULL
 	BEGIN
-	IF @debug = 1 PRINT '@in_generic_ingr_rxcui NULL, looking for ' + @scd_rxcui
+	IF @debug = 1 PRINT '@in_generic_ingr_rxcui was NULL, looking for ' + @scd_rxcui
 	SELECT @generic_rxcui = f.ingr_rxcui, @generic_name = generic_name
 	FROM c_Drug_Formulation f
 	JOIN c_Drug_Generic g ON g.generic_rxcui = f.ingr_rxcui
@@ -210,7 +220,7 @@ IF @generic_rxcui IS NULL
 	-- exact wording match for generic?
 	IF @generic_rxcui IS NULL
 		BEGIN
-		IF @debug = 1 PRINT 'generic name not found from formulation: ' + IsNull(@in_active_ingredients,'NULL')
+		IF @debug = 1 PRINT 'generic name not found from formulation: ' + @in_active_ingredients
 		SELECT @generic_rxcui = generic_rxcui, @generic_name = generic_name
 		FROM c_Drug_Generic g 
 		WHERE g.generic_name = @in_active_ingredients
@@ -285,7 +295,7 @@ IF @generic_rxcui IS NULL
 				lower(@country_code) + ';'
 			FROM c_1_record
 			
-			END -- 'INSERT INTO #new_generic_form'
+			END -- 'INSERT INTO #new_generic_pack'
 		ELSE
 			BEGIN
 			-- generic pack already exists
@@ -458,7 +468,7 @@ IF @generic_rxcui IS NULL
 			END
 
 		-- Derive brand ingredient record
-		IF @in_brand_name IS NOT NULL
+		IF @in_brand_name != 'Nothing'
 			SET @brand_name_edited = @in_brand_name
 		ELSE
 			BEGIN
@@ -628,16 +638,30 @@ IF @generic_rxcui IS NULL
 	SELECT lower(@country_code),
 		@country_source_id,
 		CASE WHEN @generic_only = 1 THEN NULL ELSE @in_brand_name_formulation END,
-		CASE WHEN @generic_only = 1 THEN NULL ELSE COALESCE(@brand_name_rxcui, @default_brand_ingr_rxcui) END,
+		@default_brand_ingr_rxcui,
 		@in_generic_formulation,
 		COALESCE(@generic_name, @in_active_ingredients),
 		@generic_rxcui,
 		@single_ingredient,
 		@default_generic_form_rxcui,
-		CASE WHEN @generic_only = 1 THEN NULL ELSE @default_brand_form_rxcui END
+		@default_brand_form_rxcui
 	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Source_Formulation r
 		WHERE r.[source_id] = @country_source_id
 		AND r.country_code = @country_code)
+
+	IF @debug = 1 PRINT 'UPDATE c_Drug_Source_Formulation'
+	UPDATE r SET 
+		[source_brand_form_descr] = CASE WHEN @generic_only = 1 THEN NULL ELSE @in_brand_name_formulation END,
+		[brand_name_rxcui] = @default_brand_ingr_rxcui,
+		source_generic_form_descr = @in_generic_formulation,
+		[active_ingredients] = COALESCE(@generic_name, @in_active_ingredients),
+		[generic_rxcui] = @generic_rxcui,
+		[is_single_ingredient] = @single_ingredient,
+		generic_form_rxcui = @default_generic_form_rxcui,
+		brand_form_rxcui = @default_brand_form_rxcui
+	FROM c_Drug_Source_Formulation r
+		WHERE r.[source_id] = @country_source_id
+		AND r.country_code = @country_code
 
 	-- Skip package sync if nothing new was added
 	IF (SELECT count(*) FROM #Drug_Brand) > 0

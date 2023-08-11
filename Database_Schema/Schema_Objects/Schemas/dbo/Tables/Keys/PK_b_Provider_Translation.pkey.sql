@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[b_Provider_Translation]
-    ADD CONSTRAINT [PK_b_Provider_Translation] PRIMARY KEY CLUSTERED ([office_id] ASC, [external_id] ASC) WITH (ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

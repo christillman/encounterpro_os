@@ -57,6 +57,7 @@ if isnull(current_scribe) then
 end if
 
 st_build_number.text = f_app_version()
+st_copyright.text = gnv_app.copyright
 
 bringtotop = true
 
@@ -142,7 +143,7 @@ type st_title from statictext within w_lock_terminal
 integer x = 279
 integer y = 28
 integer width = 2336
-integer height = 136
+integer height = 100
 boolean bringtotop = true
 integer textsize = -14
 integer weight = 700
@@ -157,8 +158,8 @@ boolean focusrectangle = false
 end type
 
 type cb_unlock from commandbutton within w_lock_terminal
-integer x = 1097
-integer y = 212
+integer x = 1083
+integer y = 140
 integer width = 695
 integer height = 132
 integer taborder = 20
@@ -244,9 +245,9 @@ return
 end event
 
 type st_legal from statictext within w_lock_terminal
-integer y = 1076
+integer y = 1260
 integer width = 2907
-integer height = 536
+integer height = 476
 integer textsize = -10
 integer weight = 400
 fontcharset fontcharset = ansi!
@@ -262,8 +263,8 @@ boolean focusrectangle = false
 end type
 
 type st_copyright from statictext within w_lock_terminal
-integer x = 407
-integer y = 908
+integer x = 334
+integer y = 1740
 integer width = 2075
 integer height = 76
 integer textsize = -10
@@ -273,15 +274,15 @@ fontfamily fontfamily = roman!
 string facename = "Times New Roman"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Copyright 1996-2008 EncounterPRO Healthcare Resources, Inc.  All Rights Reserved."
+string text = "{gnv_app.copyright}"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
 
 type st_build_number from statictext within w_lock_terminal
-integer x = 814
-integer y = 724
-integer width = 1262
+integer x = 453
+integer y = 1080
+integer width = 896
 integer height = 72
 integer textsize = -8
 integer weight = 400
@@ -296,11 +297,11 @@ boolean focusrectangle = false
 end type
 
 type p_logo from picture within w_lock_terminal
-integer x = 1001
-integer y = 416
-integer width = 891
-integer height = 280
-string picturename = "EHR_Logo_v5blue.jpg"
+integer x = 306
+integer y = 304
+integer width = 2295
+integer height = 952
+string picturename = "greenolive-splash-screen-05-1024.png"
 boolean focusrectangle = false
 end type
 

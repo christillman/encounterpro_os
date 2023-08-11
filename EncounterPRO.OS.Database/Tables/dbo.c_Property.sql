@@ -70,7 +70,7 @@ CREATE TABLE [dbo].[c_Property] (
 		[description]                         [varchar](80) NULL,
 		[title]                               [varchar](20) NULL,
 		[function_name]                       [varchar](64) NULL,
-		[return_data_type]                    [varchar](12) NULL,
+		[return_data_type]                    [varchar](12) NOT NULL,
 		[script_language]                     [varchar](12) NULL,
 		[script]                              [text] NULL,
 		[service]                             [varchar](24) NULL,

@@ -36,7 +36,7 @@ RETURNS @charges TABLE (
 	[treatment_id] [int] NULL,
 	[procedure_type] [varchar](12) NOT NULL,
 	[procedure_id] [varchar](24) NOT NULL,
-	[procedure_description] varchar(80) NULL,
+	[procedure_description] varchar(250) NULL, -- fix truncation error
 	[charge] [money] NULL,
 	[cpt_code] [varchar](24) NULL,
 	[units] [int] NULL,

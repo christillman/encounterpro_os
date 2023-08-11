@@ -137,7 +137,7 @@ mylog.log(this, "u_component_outgoing.send_file:0097", "Sending Message (" + str
 message_compression_type = "NONE"
 //ls_path = get_attribute("temp_directory")
 //if isnull(ls_path) or len(ls_path) = 0 then
-//	ls_path = "c:\temp"
+//	ls_path = temp_path
 //end if
 //if not mylog.of_directoryexists(ls_path) Then // check directory exists
 //	if mylog.of_createdirectory(ls_path) <= 0 then // create new directory

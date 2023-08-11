@@ -155,7 +155,7 @@ if isnull(le_saveastype) then
 			setnull(ps_filepath)
 		end if
 	else
-		log.log(this, "f_save_graph_to_file:0192", "Graph image not saved (Utilities not available)", 3)
+		log.log(po_null, "f_save_graph_to_file:0192", "Graph image not saved (Utilities not available)", 3)
 		setnull(ps_filepath)
 	end if
 else

@@ -1,3 +1,0 @@
-﻿ALTER TABLE [dbo].[c_Database_Modification_Dependancy]
-    ADD CONSTRAINT [PK_c_Database_Modification_Dependancy] PRIMARY KEY CLUSTERED ([system_id] ASC, [major_release] ASC, [database_version] ASC, [version] ASC) WITH (FILLFACTOR = 100, ALLOW_PAGE_LOCKS = ON, ALLOW_ROW_LOCKS = ON, PAD_INDEX = OFF, IGNORE_DUP_KEY = OFF, STATISTICS_NORECOMPUTE = OFF);
-

@@ -141,6 +141,12 @@ if context_object = "Patient" then
 	ls_filter += "upper(attachment_type)<>'SIGNATURE'"
 End If
 
+// encounter filter ??
+if current_display_encounter.encounter_id > 0 then
+	if len(ls_filter) > 0 then ls_filter += " and "
+	ls_filter += "encounter_id='" + string(current_display_encounter.encounter_id) + "'"
+End If
+
 // Is any progress_type filter ??
 If Len(progress_type) > 0 Then 
 	if len(ls_filter) > 0 then ls_filter += " and "

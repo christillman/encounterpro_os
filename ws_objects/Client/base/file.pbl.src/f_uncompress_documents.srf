@@ -46,7 +46,7 @@ if common_thread.utilities_ok() then
 		return -1
 	END TRY
 else
-	log.log(this, "f_uncompress_documents:0036", "Document not unzipped (Utilities not available)", 3)
+	log.log(po_null, "f_uncompress_documents:0036", "Document not unzipped (Utilities not available)", 3)
 	return -1
 end if
 

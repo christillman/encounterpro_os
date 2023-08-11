@@ -12,14 +12,6 @@ boolean lb_selected_generic
 SetNull(ps_generic_rxcui)
 SetNull(ps_brand_name_rxcui)
 
-if not tf_check() then 
-	log.log(this,"f_get_rxnorm","Database error",2)
-	return
-end if
-if sqlca.sqlcode = 100 then
-	log.log(this,"f_get_rxnorm","Selected drug not found!",2)
-end if
-
 // Is it listed in c_Drug_Generic?
 SELECT generic_rxcui 
 INTO :ps_generic_rxcui
@@ -27,7 +19,7 @@ FROM c_Drug_Generic
 WHERE drug_id = :ps_drug_id;
 
 if not tf_check() then 
-	log.log(this,"f_get_rxnorm","Database error",2)
+	log.log(po_null,"f_get_rxnorm","Database error",2)
 	return
 end if
 lb_selected_generic = NOT (sqlca.sqlcode = 100)
@@ -40,13 +32,14 @@ IF NOT lb_selected_generic THEN
 	WHERE drug_id = :ps_drug_id;
 	
 	if not tf_check() then 
-		log.log(this,"f_get_rxnorm","Database error",2)
+		log.log(po_null,"f_get_rxnorm","Database error",2)
 		return
 	end if
 	if sqlca.sqlcode = 100 then
-		log.log(this,"f_get_rxnorm","Drug not found in c_Drug_Brand!",2)
+		log.log(po_null,"f_get_rxnorm","Drug "+ps_drug_id+" not found in c_Drug_Brand",2)
 	end if
 END IF
+
 
 end subroutine
 

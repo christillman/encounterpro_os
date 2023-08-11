@@ -217,8 +217,9 @@ public function integer copy_files (string ps_from_path, string ps_to_path, bool
 public function long file_read2 (string ps_file, ref blob pblb_file, boolean pb_lock_file)
 public function integer delete_old_files (string ps_filespec)
 public function string get_file_version (string ps_filepath)
-public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name)
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name)
+public function integer log_db_with_seconds (powerobject po_who, string ps_script, string ps_message, integer pi_severity, decimal pd_seconds)
+public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name, decimal pd_seconds)
 end prototypes
 
 public function integer shutdown ();//DeregisterEventSource(event_handle)
@@ -236,17 +237,13 @@ end function
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity);string ls_component_id
 string ls_version_name
 string ls_who
+decimal ld_seconds
 u_component_base_class luo_component
 
 setnull(ls_component_id)
 setnull(ls_version_name)
 
-// Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
-else
+if isvalid(po_who) then
 	ls_who = po_who.classname()
 	if lower(left(ls_who, 12)) = "u_component_" and lower(ls_who) <> "u_component_manager" then
 		luo_component = po_who
@@ -982,11 +979,13 @@ end function
 
 public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity);string ls_component_id
 string ls_version_name
+decimal ld_seconds
 
 setnull(ls_component_id)
 setnull(ls_version_name)
+setnull(ld_seconds)
 
-return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name)
+return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name, ld_seconds)
 
 end function
 
@@ -1235,128 +1234,6 @@ return ls_version
 
 end function
 
-public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name);string ls_user
-string ls_scribe
-string ls_who
-string ls_message
-string ls_computer
-string ls_cpr_id
-long ll_encounter_id
-long ll_treatment_id
-long ll_patient_workplan_item_id
-string ls_service
-string ls_app_version
-environment lo_env
-integer li_sts
-string ls_os_version
-
-if not sqlca.connected then return 1
-
-li_sts = getenvironment(lo_env)
-if li_sts > 0 then
-	ls_os_version = string(lo_env.OSMajorRevision)
-	ls_os_version += "." + string(lo_env.OSMinorRevision)
-	ls_os_version += "." + string(lo_env.OSFixesRevision)
-else
-	setnull(ls_os_version)
-end if
-
-if len(ps_message) > 500 then
-	ls_message = left(ps_message, 500)
-else
-	ls_message = ps_message
-end if
-
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = "NULL CALLER"
-else
-	ls_who = po_who.classname()
-end if
-
-if isnull(current_user) then
-	setnull(ls_user)
-else
-	ls_user = current_user.user_id
-end if
-
-if isnull(current_scribe) then
-	setnull(ls_scribe)
-else
-	ls_scribe = current_scribe.user_id
-end if
-
-if isnull(current_patient) then
-	setnull(ls_cpr_id)
-else
-	ls_cpr_id = current_patient.cpr_id
-	if isnull(current_patient.open_encounter) then
-		setnull(ll_encounter_id)
-	else
-		ll_encounter_id = current_patient.open_encounter.encounter_id
-	end if
-end if
-
-if isnull(current_service) then
-	setnull(ll_treatment_id)
-	setnull(ll_patient_workplan_item_id)
-	setnull(current_service)
-else
-	ll_patient_workplan_item_id = current_service.patient_workplan_item_id
-	ll_treatment_id = current_service.treatment_id
-	ls_service = current_service.service
-end if
-
-ls_app_version = f_app_version()
-
-INSERT INTO o_Log (
-		severity,
-		caller,
-		script,
-		message,
-		computer_id,
-		computername,
-		windows_logon_id,
-		cpr_id,
-		encounter_id,
-		treatment_id,
-		patient_workplan_item_id,
-		service,
-		user_id,
-		scribe_user_id,
-		os_version,
-		epro_version,
-		component_id,
-		compile_name)
-VALUES (
-		:severities[pi_severity],
-		:ls_who,
-		:ps_script,
-		:ls_message,
-		:gnv_app.computer_id,
-		:gnv_app.computername,
-		:gnv_app.windows_logon_id,
-		:ls_cpr_id,
-		:ll_encounter_id,
-		:ll_treatment_id,
-		:ll_patient_workplan_item_id,
-		:ls_service,
-		:ls_user,
-		:ls_scribe,
-		:ls_os_version,
-		:ls_app_version,
-		:ps_component_id,
-		:ps_version_name)
-USING cprdb;
-if not cprdb.sqlcode = 0 then
-	return 1
-else
-	return -1
-end if
-
-end function
-
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name);integer li_sts
 boolean lb_reported
 integer li_event_type
@@ -1373,7 +1250,9 @@ string ls_who
 string ls_error_file
 long ll_dochandle
 str_event_log_entry lstr_log
+decimal ld_seconds
 
+setnull(ld_seconds)
 
 // Make Sure the severity is in our range
 if isnull(pi_severity) then pi_severity = 1
@@ -1415,12 +1294,12 @@ ll_data_size = 0
 lsa_string[1] = f_app_version() + " "
 
 // Determine the "who" text
-if not isvalid(po_who) then
-	ls_who = "UNKNOWN CALLER"
-elseif isnull(po_who) then
-	ls_who = ""
-else
+if isvalid(po_who) then
 	ls_who = po_who.classname()
+elseif isnull(po_who) and not isnull(ps_script) then
+	ls_who = ps_script
+else
+	ls_who = "NULL CALLER"
 end if
 
 li_string_count = 1
@@ -1450,7 +1329,7 @@ end if
 
 // If the message needs to be logged to the database, do that first
 if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
-	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name)
+	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name, ld_seconds)
 	lb_reported = True
 end if
 
@@ -1505,6 +1384,156 @@ end if
 
 return 1
 
+
+end function
+
+public function integer log_db_with_seconds (powerobject po_who, string ps_script, string ps_message, integer pi_severity, decimal pd_seconds);string ls_component_id
+string ls_version_name
+
+setnull(ls_component_id)
+setnull(ls_version_name)
+
+return log_db(po_who, ps_script, ps_message, pi_severity, ls_component_id, ls_version_name, pd_seconds)
+
+end function
+
+public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name, decimal pd_seconds);string ls_user
+string ls_scribe
+string ls_who
+string ls_message
+string ls_computer
+string ls_cpr_id
+long ll_encounter_id
+long ll_treatment_id
+long ll_patient_workplan_item_id
+string ls_service
+string ls_app_version
+environment lo_env
+integer li_tran_count, li_sts
+string ls_os_version
+
+if not sqlca.connected then return 1
+
+li_sts = getenvironment(lo_env)
+if li_sts > 0 then
+	ls_os_version = string(lo_env.OSMajorRevision)
+	ls_os_version += "." + string(lo_env.OSMinorRevision)
+	ls_os_version += "." + string(lo_env.OSFixesRevision)
+else
+	setnull(ls_os_version)
+end if
+
+if len(ps_message) > 500 then
+	ls_message = left(ps_message, 500)
+else
+	ls_message = ps_message
+end if
+
+// Determine the "who" text
+if isvalid(po_who) then
+	ls_who = po_who.classname()
+elseif isnull(po_who) and not isnull(ps_script) then
+	ls_who = ps_script
+else
+	ls_who = "NULL CALLER"
+end if
+
+if isnull(current_user) then
+	setnull(ls_user)
+else
+	ls_user = current_user.user_id
+end if
+
+if isnull(current_scribe) then
+	setnull(ls_scribe)
+else
+	ls_scribe = current_scribe.user_id
+end if
+
+if isnull(current_patient) then
+	setnull(ls_cpr_id)
+else
+	ls_cpr_id = current_patient.cpr_id
+	if isnull(current_patient.open_encounter) then
+		setnull(ll_encounter_id)
+	else
+		ll_encounter_id = current_patient.open_encounter.encounter_id
+	end if
+end if
+
+if isnull(current_service) then
+	setnull(ll_treatment_id)
+	setnull(ll_patient_workplan_item_id)
+	setnull(current_service)
+else
+	ll_patient_workplan_item_id = current_service.patient_workplan_item_id
+	ll_treatment_id = current_service.treatment_id
+	ls_service = current_service.service
+end if
+
+ls_app_version = f_app_version()
+
+if pi_severity >= 3 then
+	// We want to be sure warnings and errors are logged. Is there any open transaction?
+	SELECT count(*) INTO :li_tran_count FROM sys.sysprocesses WHERE open_tran = 1 USING cprdb;
+	IF li_tran_count = 0 THEN
+		cprdb.begin_transaction(this, ps_script)
+	END IF
+end if
+
+INSERT INTO o_Log (
+		severity,
+		caller,
+		script,
+		message,
+		computer_id,
+		computername,
+		windows_logon_id,
+		cpr_id,
+		encounter_id,
+		treatment_id,
+		patient_workplan_item_id,
+		service,
+		user_id,
+		scribe_user_id,
+		os_version,
+		epro_version,
+		component_id,
+		compile_name,
+		progress_seconds)
+VALUES (
+		:severities[pi_severity],
+		:ls_who,
+		:ps_script,
+		:ls_message,
+		:gnv_app.computer_id,
+		:gnv_app.computername,
+		:gnv_app.windows_logon_id,
+		:ls_cpr_id,
+		:ll_encounter_id,
+		:ll_treatment_id,
+		:ll_patient_workplan_item_id,
+		:ls_service,
+		:ls_user,
+		:ls_scribe,
+		:ls_os_version,
+		:ls_app_version,
+		:ps_component_id,
+		:ps_version_name,
+		:pd_seconds)
+USING cprdb;
+
+li_sts = cprdb.sqlcode
+
+IF pi_severity >= 3 AND li_tran_count = 0 THEN
+	cprdb.commit_transaction()
+END IF
+
+if li_sts = 0 then
+	return 1
+else
+	return -1
+end if
 
 end function
 

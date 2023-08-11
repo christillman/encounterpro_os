@@ -323,7 +323,9 @@ if li_count <= 0 then
 end if
 
 // Get the admin list for this drug
-li_count = uo_drug_administration.retrieve(drug_id, "ALL")
+// Hide Dose Based on widgets (#11)
+// CDT 2023-07-17
+// li_count = uo_drug_administration.retrieve(drug_id, "ALL")
 
 Return 1
 end function
@@ -862,6 +864,11 @@ max_buttons = 2
 ll_menu_id = long(f_attribute_find_attribute(drug_attributes, "menu_id"))
 paint_menu(ll_menu_id)
 
+// Hide Dose Based on widgets (#11)
+// CDT 2023-07-17
+st_dosebase.Visible = False
+uo_drug_administration.Visible = False
+st_mult_display.Visible = False
 
 postevent("post_open")
 
@@ -1406,8 +1413,10 @@ if package_list_index > 0 then
 		uo_administer_frequency.visible = true
 		uo_duration.visible = true
 		pb_whole.visible = true
-		st_dosebase.visible = true
-		uo_drug_administration.visible = true
+		// Hide Dose Based on widgets (#11)
+		// CDT 2023-07-17
+		st_dosebase.Visible = False
+		uo_drug_administration.Visible = False
 	end if
 end if
 

@@ -120,47 +120,51 @@ for i = 1 to package_count
 	end if
 next
 
-// If we didn't find the specified package, then add it
-// administer_method no longer part of package
-SELECT c_Package.description,
-		c_Package.administer_unit,
-		c_Package.dose_amount,
-		c_Package.dose_unit,
-		c_Package.administer_per_dose,
-		c_Unit.display_mask,
-		c_Package.dosage_form,
-		c_Drug_Package.form_rxcui
-INTO		:package_description[package_count + 1],
-			:pkg_administer_unit[package_count + 1],
-			:dose_amount[package_count + 1],
-			:dose_unit[package_count + 1],
-			:administer_per_dose[package_count + 1],
-			:display_mask[package_count + 1],
-			:dosage_form[package_count + 1],
-			:form_rxcui[package_count + 1]
- FROM c_Package
- 	JOIN c_Drug_Package ON c_Drug_Package.Package_id = c_Package.Package_id
-	INNER JOIN c_Unit
-	ON c_Package.dose_unit = c_Unit.unit_id
-WHERE c_Package.package_id = :ps_package_id;
-if not tf_check() then return -1
-if sqlca.sqlcode = 100 then
-	log.log(this, "u_drug_package.selectpackage:0043", "Package Not Found (" + ps_package_id + ")", 3)
-	return 0
-end if
+log.log(this, "u_drug_package.selectpackage:0043", "Package Not Found (" + ps_package_id + ")", 3)
+return 0
 
-package_count += 1
-
-package_id[package_count] = ps_package_id
-prescription_flag[package_count] = "Y"
-default_dispense_amount[package_count] = 1
-default_dispense_unit[package_count] = dose_unit[package_count]
-take_as_directed[package_count] = "N"
-if isnull(dose_amount[package_count]) then dose_amount[package_count] = 1
-
-selectitem(package_count)
-return package_count
-
+//
+//// If we didn't find the specified package, then add it
+//// administer_method no longer part of package
+//SELECT c_Package.description,
+//		c_Package.administer_unit,
+//		c_Package.dose_amount,
+//		c_Package.dose_unit,
+//		c_Package.administer_per_dose,
+//		c_Unit.display_mask,
+//		c_Package.dosage_form,
+//		c_Drug_Package.form_rxcui
+//INTO		:package_description[package_count + 1],
+//			:pkg_administer_unit[package_count + 1],
+//			:dose_amount[package_count + 1],
+//			:dose_unit[package_count + 1],
+//			:administer_per_dose[package_count + 1],
+//			:display_mask[package_count + 1],
+//			:dosage_form[package_count + 1],
+//			:form_rxcui[package_count + 1]
+// FROM c_Package
+// 	JOIN c_Drug_Package ON c_Drug_Package.Package_id = c_Package.Package_id
+//	INNER JOIN c_Unit
+//	ON c_Package.dose_unit = c_Unit.unit_id
+//WHERE c_Package.package_id = :ps_package_id;
+//if not tf_check() then return -1
+//if sqlca.sqlcode = 100 then
+//	log.log(this, "u_drug_package.selectpackage:0043", "Package Not Found (" + ps_package_id + ")", 3)
+//	return 0
+//end if
+//
+//package_count += 1
+//
+//package_id[package_count] = ps_package_id
+//prescription_flag[package_count] = "Y"
+//default_dispense_amount[package_count] = 1
+//default_dispense_unit[package_count] = dose_unit[package_count]
+//take_as_directed[package_count] = "N"
+//if isnull(dose_amount[package_count]) then dose_amount[package_count] = 1
+//
+//selectitem(package_count)
+//return package_count
+//
 end function
 
 public function integer selectformulation (string ps_form_rxcui);integer i
@@ -171,6 +175,7 @@ if isnull(ps_form_rxcui) or trim(ps_form_rxcui) = "" then
 end if
 
 for i = 1 to package_count
+	// will need to fix this if we get real packages (where there will be more than one per formulation)
 	if form_rxcui[i] = ps_form_rxcui then
 		selectitem(i)
 		return i

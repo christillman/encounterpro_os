@@ -218,7 +218,7 @@ FOR li_locality_index = 1 TO li_locality_count
 			st_locality_6_t.text = lds_selected_localities.object.list_item[li_locality_index]
 			sle_locality_6.visible = true
 		CASE ELSE
-			log.log(this, "w_edit_patient_data.get_localities:0044", "Too many locality types", 4)
+			log.log(this, "u_tabpage_patient_communication.get_localities:0044", "Too many locality types", 4)
 	END CHOOSE
 
 	FOR li_item = 1 TO li_item_count

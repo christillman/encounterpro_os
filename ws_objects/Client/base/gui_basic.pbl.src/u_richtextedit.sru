@@ -20,7 +20,8 @@ fontcharset fontcharset = ansi!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean init_wordwrap = true
-long init_inputfieldbackcolor = 15780518
+long init_inputfieldbackcolor = 16777215
+boolean init_inputfieldnamesvisible = true
 boolean init_headerfooter = true
 event lbuttondown pbm_renlbuttondown
 event field_clicked ( long pl_fieldid,  string ps_field_text,  string ps_field_data )
@@ -399,8 +400,10 @@ lb_displayonly = displayonly
 
 displayonly = false
 selecttextall()
-// clear()  // Wasn't working for some reason
-replacetext("")
+clear()
+// The above only clears the detail page
+SelectTextAll(Header!)
+clear()
 set_margins()
 set_color(color_text_normal)
 set_bold(false)
@@ -999,16 +1002,19 @@ lstr_font_settings = get_font_settings()
 // record the current selected text
 ls_selectedtext = selectedtext()
 
-set_font_settings(pstr_font_settings)
+if lstr_font_settings <> pstr_font_settings then
+	set_font_settings(pstr_font_settings)
+end if
 
 // If the insertion point is at the end of a line then add a space because we have trouble
 // if the InputField is at the end of a line
-lstr_charposition = charposition()
-if selectedcolumn() > linelength() then
-	replacetext(" ")
-	select_text(lstr_charposition)
-end if
-	
+// CDT 2023-08-04: It seems there isn't any "trouble" any more. Saves about 20% of the time.
+//lstr_charposition = charposition()
+//if selectedcolumn() > linelength() then
+//	replacetext(" ")
+//	select_text(lstr_charposition)
+//end if
+//	
 
 ls_fieldname = "field" + right("0000" + string(input_field_count), 4)
 li_sts = InputFieldInsert(ls_fieldname)
@@ -1026,7 +1032,7 @@ lstr_charposition.line_number = selectedline()
 lstr_charposition.char_position = linelength() + 1
 select_text(lstr_charposition)
 
-if len(ls_selectedtext) = 0 then
+if len(ls_selectedtext) = 0 AND lstr_font_settings <> pstr_font_settings then
 	// Reset the previous font settings
 	set_font_settings(lstr_font_settings)
 end if

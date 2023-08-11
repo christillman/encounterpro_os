@@ -16,7 +16,6 @@ string ls_max_dose_unit
 integer li_sts
 string ls_dea_number_required
 
-tf_begin_transaction(this, "")
 // By Sumathi Asokumar on 11/24/2000
 // dea number required is removed from this table
 select	common_name,
@@ -50,8 +49,6 @@ else
 //	ps_dea_number_required = ls_dea_number_required
 	li_sts = 1
 end if
-
-tf_commit()
 
 return li_sts
 end function

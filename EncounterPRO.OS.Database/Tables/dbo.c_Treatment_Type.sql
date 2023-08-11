@@ -87,7 +87,6 @@ CREATE TABLE [dbo].[c_Treatment_Type] (
 		[status]                                    [varchar](12) NULL,
 		[id]                                        [uniqueidentifier] NOT NULL,
 		[display_script_id]                         [int] NULL,
-		[dashboard_datawindow_config_object_id]     [uniqueidentifier] NULL,
 		[update_flag]                               [char](1) NOT NULL,
 		[owner_id]                                  [int] NOT NULL,
 		[last_updated]                              [datetime] NOT NULL,

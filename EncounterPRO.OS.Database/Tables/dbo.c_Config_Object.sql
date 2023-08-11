@@ -88,8 +88,7 @@ CREATE TABLE [dbo].[c_Config_Object] (
 		[copyable]                     [bit] NOT NULL,
 		[license_data]                 [varchar](2000) NULL,
 		[license_status]               [varchar](24) NULL,
-		[license_expiration_date]      [datetime] NULL,
-		[installed_local_key]          [int] NULL
+		[license_expiration_date]      [datetime] NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Config_Object]

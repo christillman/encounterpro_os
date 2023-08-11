@@ -122,6 +122,8 @@ type st_locality_6_t from statictext within w_edit_patient_data
 end type
 type sle_locality_6 from singlelineedit within w_edit_patient_data
 end type
+type sle_phone_prefix from singlelineedit within w_edit_patient_data
+end type
 end forward
 
 global type w_edit_patient_data from w_window_base
@@ -195,6 +197,7 @@ st_locality_5_t st_locality_5_t
 sle_locality_5 sle_locality_5
 st_locality_6_t st_locality_6_t
 sle_locality_6 sle_locality_6
+sle_phone_prefix sle_phone_prefix
 end type
 global w_edit_patient_data w_edit_patient_data
 
@@ -210,6 +213,7 @@ public subroutine set_all_locality_visibility (boolean pb_visible)
 public function integer get_patient_list_item (string ps_list_id, ref string ps_list_item, ref string ps_patient_value)
 public subroutine get_localities ()
 public function integer set_patient_list_item (string ps_list_id, string ps_list_item, string ps_patient_value)
+public subroutine set_us_field_visibility (boolean pb_set)
 end prototypes
 
 public subroutine highlight_sle (singlelineedit pwo_control, boolean pb_on);
@@ -224,7 +228,7 @@ end subroutine
 
 public function boolean validated ();boolean lb_passes = true
 
-IF f_is_empty_string(sle_last_name.text) THEN
+IF sle_last_name.visible AND f_is_empty_string(sle_last_name.text) THEN
 	highlight_sle(sle_last_name, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's last name is required")
@@ -234,7 +238,7 @@ ELSE
 	highlight_sle(sle_last_name, false)
 END IF
 
-IF f_is_empty_string(sle_first_name.text) THEN
+IF sle_first_name.visible AND f_is_empty_string(sle_first_name.text) THEN
 	highlight_sle(sle_first_name, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's first name is required")
@@ -244,7 +248,7 @@ ELSE
 	highlight_sle(sle_first_name, false)
 END IF
 
-IF f_is_empty_string(st_sex.text) THEN
+IF st_sex.visible AND f_is_empty_string(st_sex.text) THEN
 	highlight_st(st_sex, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's gender is required")
@@ -254,7 +258,7 @@ ELSE
 	highlight_st(st_sex, false)
 END IF
 
-IF f_is_empty_string(st_date_of_birth.text) THEN
+IF st_date_of_birth.visible AND f_is_empty_string(st_date_of_birth.text) THEN
 	highlight_st(st_date_of_birth, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The patient's birth date is required")
@@ -264,7 +268,7 @@ ELSE
 	highlight_st(st_date_of_birth, false)
 END IF
 
-IF f_is_empty_string(st_id_document.text) THEN
+IF st_id_document.visible AND f_is_empty_string(st_id_document.text) THEN
 	highlight_st(st_id_document, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The id document type is required")
@@ -274,7 +278,7 @@ ELSE
 	highlight_st(st_id_document, false)
 END IF
 
-IF f_is_empty_string(sle_id_number.text) THEN
+IF sle_id_number.visible AND f_is_empty_string(sle_id_number.text) THEN
 	highlight_sle(sle_id_number, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The id document number is required")
@@ -284,7 +288,7 @@ ELSE
 	highlight_sle(sle_id_number, false)
 END IF
 
-IF f_is_empty_string(st_country.text) THEN
+IF st_country.visible AND f_is_empty_string(st_country.text) THEN
 	highlight_st(st_country, true)
 	if lb_passes then
 		openwithparm(w_pop_message, "The issuing country is required")
@@ -498,6 +502,7 @@ FOR li_item = 1 TO li_count
 	ELSEIF new_patient.list_item[li_item].list_id = ps_list_id &
 			AND ps_patient_value = "" THEN
 		// Must be a single-value list item, changing values
+		lb_found = true
 		new_patient.list_item[li_item].list_item = ps_list_item
 	END IF
 NEXT
@@ -512,6 +517,37 @@ RETURN 0
 
 
 end function
+
+public subroutine set_us_field_visibility (boolean pb_set);
+
+	em_ssn.visible = pb_set
+	sle_name_suffix.visible = pb_set
+	sle_nickname.visible = pb_set
+	sle_maiden_name.visible = pb_set
+	sle_address_2.visible = pb_set
+	sle_city.visible = pb_set
+	sle_state.visible = pb_set
+	sle_zip.visible = pb_set
+	st_race.visible = pb_set
+	
+	st_ssn_t.visible = pb_set
+	st_name_suffix_title.visible = pb_set
+	st_nickname_t.visible = pb_set
+	st_maiden_name_title.visible = pb_set
+	st_address_2_title.visible = pb_set
+	st_city_t.visible = pb_set
+	st_state_t.visible = pb_set
+	st_zip_t.visible = pb_set
+	st_race_title.visible = pb_set
+	
+	st_id_document.visible = NOT pb_set
+	sle_id_number.visible = NOT pb_set
+	st_country.visible = NOT pb_set
+	
+	st_id_document_t.visible = NOT pb_set
+	st_id_number_t.visible = NOT pb_set
+	st_country_t.visible = NOT pb_set
+end subroutine
 
 on w_edit_patient_data.create
 int iCurrent
@@ -576,6 +612,7 @@ this.st_locality_5_t=create st_locality_5_t
 this.sle_locality_5=create sle_locality_5
 this.st_locality_6_t=create st_locality_6_t
 this.sle_locality_6=create sle_locality_6
+this.sle_phone_prefix=create sle_phone_prefix
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.sle_phone_number
 this.Control[iCurrent+2]=this.st_phone_num_title
@@ -637,6 +674,7 @@ this.Control[iCurrent+57]=this.st_locality_5_t
 this.Control[iCurrent+58]=this.sle_locality_5
 this.Control[iCurrent+59]=this.st_locality_6_t
 this.Control[iCurrent+60]=this.sle_locality_6
+this.Control[iCurrent+61]=this.sle_phone_prefix
 end on
 
 on w_edit_patient_data.destroy
@@ -701,6 +739,7 @@ destroy(this.st_locality_5_t)
 destroy(this.sle_locality_5)
 destroy(this.st_locality_6_t)
 destroy(this.sle_locality_6)
+destroy(this.sle_phone_prefix)
 end on
 
 event open;str_popup popup
@@ -728,7 +767,10 @@ cbx_test_patient.checked = new_patient.test_patient
 
 // Avoid Americanisms 
 if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
-	// Hmmm, ssn never WAS populated
+	
+	set_us_field_visibility(true)
+	set_all_locality_visibility(false)
+	em_ssn.text =  new_patient.ssn
 	sle_name_suffix.text = new_patient.name_suffix
 	sle_nickname.text = new_patient.nickname
 	sle_maiden_name.text = new_patient.maiden_name
@@ -738,42 +780,19 @@ if NOT IsNull(gnv_app.locale) AND gnv_app.locale = "en-US" then
 	sle_zip.text = new_patient.zip
 	st_race.text = new_patient.race
 	
-	st_id_document.visible = false
-	sle_id_number.visible = false
-	st_country.visible = false
-	st_id_document_t.visible = false
-	st_id_number_t.visible = false
-	st_country_t.visible = false
-	set_all_locality_visibility(false)
-	
 else
 	// some day may have a case statement for locale?
 	// Hide the U.S. fields
-	em_ssn.visible = false
-	sle_name_suffix.visible = false
-	sle_nickname.visible = false
-	sle_maiden_name.visible = false
-	sle_address_2.visible = false
-	sle_city.visible = false
-	sle_state.visible = false
-	sle_zip.visible = false
-	st_race.visible = false
-	
-	st_ssn_t.visible = false
-	st_name_suffix_title.visible = false
-	st_nickname_t.visible = false
-	st_maiden_name_title.visible = false
-	st_address_2_title.visible = false
-	st_city_t.visible = false
-	st_state_t.visible = false
-	st_zip_t.visible = false
-	st_race_title.visible = false
+	set_us_field_visibility(false)
+	set_all_locality_visibility(true)
 
 	st_id_document.text = ""
 	sle_id_number.text = ""
 	get_patient_list_item("Id Document", st_id_document.text, sle_id_number.text)
 	st_country.text = ""
 	get_patient_list_item("Country", st_country.text, ls_empty)
+	sle_phone_prefix.text = ""
+	get_patient_list_item("Country_Phone_Prefix", sle_phone_prefix.text, ls_empty)
 	get_localities()
 end if
 center_popup()
@@ -790,9 +809,9 @@ integer y = 1492
 end type
 
 type sle_phone_number from singlelineedit within w_edit_patient_data
-integer x = 1687
+integer x = 1915
 integer y = 392
-integer width = 768
+integer width = 539
 integer height = 108
 integer taborder = 100
 integer textsize = -10
@@ -1818,6 +1837,7 @@ str_popup_return popup_return
 u_user luo_user
 integer li_rc
 string ls_empty = ""
+string ls_country_phone_prefix
 
 popup.dataobject = "dw_list_items_active"
 popup.datacolumn = 2
@@ -1832,8 +1852,21 @@ li_rc = set_patient_list_item("Country", popup_return.items[1], ls_empty)
 if li_rc < 0 then
 	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
-// Edited country, clear out document number
-sle_id_number.text = ""
+
+// Set phone prefix according to country selected, if not already populated
+if sle_phone_prefix.text = ls_empty then
+	SELECT cpp.list_item INTO :ls_country_phone_prefix
+	FROM c_list_item cc
+	JOIN c_list_item cpp ON cpp.list_item_id = cc.list_item_id // the country code
+	WHERE cpp.list_id = "Country_Phone_Prefix"
+	AND cc.list_id = 'Country'
+	AND cc.list_item = :popup_return.items[1];
+	if tf_check() AND ls_country_phone_prefix <> ls_empty then
+		sle_phone_prefix.text = ls_country_phone_prefix
+		li_rc = set_patient_list_item("Country_Phone_Prefix", ls_country_phone_prefix, ls_empty)
+	end if
+end if
+
 text = popup_return.items[1]
 highlight_st(this, false)
 
@@ -2114,6 +2147,31 @@ end type
 event modified;
 set_patient_list_item("Locality", st_locality_6_t.text, text)
 highlight_sle(this, false)
+
+end event
+
+type sle_phone_prefix from singlelineedit within w_edit_patient_data
+integer x = 1687
+integer y = 392
+integer width = 224
+integer height = 108
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+boolean autohscroll = false
+borderstyle borderstyle = stylelowered!
+end type
+
+event modified;int li_rc
+string ls_empty = ""
+
+li_rc = set_patient_list_item("Country_Phone_Prefix",text, ls_empty)
 
 end event
 

@@ -1221,12 +1221,15 @@ ls_adodb_connectstring = "DRIVER={SQL Server};SERVER=" + ServerName + ";DATABASE
 CHOOSE CASE ls_dbms
 	CASE "ADO"
 	CASE "MSO"
-		dbparm += ",Provider='MSOLEDBSQL'"
+		dbparm += "Provider='MSOLEDBSQL'"
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
+		dbparm += ",Encrypt=0"
+		dbparm += ",ProviderString='MARS Connection=False'"
+		
 	CASE "MSS"
-		dbparm += ",Host='" + ls_computername + "'"
+		dbparm += "Host='" + ls_computername + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		if not isnull(ps_connectstring) and trim(ps_connectstring) <> "" then
 			dbparm += ", Connectstring='" + ps_connectstring + "'"
@@ -1235,7 +1238,7 @@ CHOOSE CASE ls_dbms
 		dbparm += ",AtAtIdentity=1,OptSelectBlob=1"
 	CASE "ODB" // "ODBC Driver 17 for SQL Server"
 		//dbparm += "ConnectString='DSN=greenolive_DSN',ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
-		dbparm += ",ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
+		dbparm += "ConnectString='Driver={SQL Server};Trusted_Connection=Yes;SERVER=" + ps_server + ";'"
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
@@ -1248,7 +1251,7 @@ CHOOSE CASE ls_dbms
 			dbparm += ",Connectstring='" + ps_connectstring + "'"
 		end if
 	CASE "SNC"
-		dbparm += ",Provider='SQLNCLI11'"
+		dbparm += "Provider='SQLNCLI11'"
 		//dbparm += "ConnectString='Driver={ODBC Driver 17 for SQL Server};SERVER=" + ps_server + ";'"
 		//dbparm += ",ConnectOption='SQL_INTEGRATED_SECURITY,SQL_IS_OFF'"
 		dbparm += ",Database='" + ps_dbname + "'"
@@ -3791,7 +3794,6 @@ public function long upgrade_material_id (ref string as_filename);long ll_modifi
 long ll_material_id
 integer li_sts
 string ls_filepath
-string ls_filename
 
 ll_modification_level = modification_level + 1
 
@@ -3814,13 +3816,12 @@ ll_modification_level = modification_level + 1
 		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level, as_filename)
 	end if
 	if ll_material_id <= 0 then
-		MessageBox("File not found", "The ModLevel-" + string(ll_modification_level) + ".mdlvl schema file for mod level " + string(ll_modification_level) + " was not found in either the program directory or atttachments folder.")
-		// log.log(this, "u_sqlca.upgrade_material_id:0024", "Error loading schema file for mod level (" + string(ll_modification_level) + ")", 4)
+		MessageBox("File not found", "The ModLevel-" + string(ll_modification_level) + ".mdlvl schema file for mod level " + string(ll_modification_level) + " was not found in either the program directory or attachments folder.")
 
-		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, ls_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
+		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, as_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
 		If li_sts <= 0 Then return -1
 		
-		ll_material_id = load_schema_file(ls_filepath, ll_modification_level, ls_filename)
+		ll_material_id = load_schema_file(ls_filepath, ll_modification_level, as_filename)
 		if ll_material_id <= 0 then
 			openwithparm(w_pop_message, "Error loading schema file")
 			return -1
@@ -3912,6 +3913,15 @@ for i = 1 to ll_file_count
 
 	ls_title = "EncounterPRO OS Schema - Mod Level " + string(pl_modification_level)
 	
+	// Remove any previous mdlvl records for this version
+	DELETE FROM c_Patient_Material
+	WHERE version = :pl_modification_level
+	USING this;
+	if not check() then 
+		log.log(this,"u_sqlca.load_schema_file:0087","Previous material not deleted for version " + string(pl_modification_level),4)
+		return -1
+	end if
+	
 	INSERT INTO c_Patient_Material (
 		title ,
 		category ,
@@ -3932,39 +3942,40 @@ for i = 1 to ll_file_count
 		:lstr_filepath.extension,
 		:ls_user_id,
 		:ls_id,
-		1,
+		:pl_modification_level,
 		:ls_url,
 		0,
 		:lstr_filepath.filename,
 		:ls_id
 		)
 	USING this;
-	if not check() then return -1
-
-	SELECT max(material_id)
-	INTO :ll_material_id
-	FROM c_Patient_Material
-	USING this;
-	if not check() then return -1
-	
-	if isnull(ll_material_id) or ll_material_id <= 0 then
-		log.log(this,"u_sqlca.load_schema_file:0118","Error creating new material",4)
+	if not check() then 
+		log.log(this,"u_sqlca.load_schema_file:0119","Insert to c_Patient_Material failed",4)
 		return -1
 	end if
-		
-	Update c_patient_material
-	Set version = :pl_modification_level 
-	Where material_id = :ll_material_id
-	USING this;
-	if not check() then return -1
 
+//	ll_material_id = sqlca.jmj_new_material(ls_title, ll_category, "ML", lstr_filepath.extension, ls_id, ls_url, ls_user_id, lstr_filepath.filename, ll_from_material_id, ls_parent_config_object_id)
+
+	SELECT SCOPE_IDENTITY()
+	INTO :ll_material_id
+	FROM c_1_record
+	USING this;
+	
+	if not check() OR isnull(ll_material_id) OR ll_material_id <= 0 then
+		log.log(this,"u_sqlca.load_schema_file:0131","Error finding new material",4)
+		return -1
+	end if
+	
 	// Update the blob column
 	UpdateBlob c_patient_material
 	Set object = :lbl_file 
 	Where material_id = :ll_material_id
 	USING this;
-	if not check() then return -1
-
+	if not check() then 
+		log.log(this,"u_sqlca.load_schema_file:0141","Blob update failed, driver is " + sqlca.DBMS,4)
+		return -1
+	end if
+	
 	as_filename = lstr_filepath.filename
 	return ll_material_id
 next

@@ -96,9 +96,7 @@ CREATE TABLE [dbo].[c_Workplan_Item] (
 		[escalation_time]             [int] NULL,
 		[escalation_unit_id]          [varchar](24) NULL,
 		[expiration_time]             [int] NULL,
-		[expiration_unit_id]          [varchar](24) NULL,
-		[authority_id]                [varchar](24) NULL,
-		[authority_category]          [varchar](24) NULL
+		[expiration_unit_id]          [varchar](24) NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Workplan_Item]

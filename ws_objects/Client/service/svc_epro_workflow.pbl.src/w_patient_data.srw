@@ -15,6 +15,8 @@ end type
 end forward
 
 global type w_patient_data from w_window_base
+integer width = 2953
+integer height = 1940
 string title = "Patient Information"
 windowtype windowtype = response!
 cb_be_back cb_be_back
@@ -89,6 +91,7 @@ FOR li_item = 1 TO li_count
 	ELSEIF current_patient.list_item[li_item].list_id = ps_list_id &
 			AND ps_patient_value = "" THEN
 		// Must be a single-value list item, changing values
+		lb_found = true
 		current_patient.list_item[li_item].list_item = ps_list_item
 	END IF
 NEXT
@@ -228,7 +231,7 @@ popup_return.items[1] = "ERROR"
 
 service = message.powerobjectparm
 
-if isnull(current_patient) then
+if isnull(current_patient) OR Not IsValid(current_patient) then
 	log.log(this, "w_patient_data:open", "No current patient", 4)
 	closewithreturn(this, popup_return)
 	return
@@ -333,18 +336,18 @@ end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_patient_data
 boolean visible = true
-integer x = 2638
-integer y = 1352
+integer x = 2661
+integer y = 1532
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_patient_data
 end type
 
 type cb_be_back from commandbutton within w_patient_data
-integer x = 1966
-integer y = 1600
+integer x = 1989
+integer y = 1740
 integer width = 443
-integer height = 108
+integer height = 88
 integer taborder = 60
 boolean bringtotop = true
 integer textsize = -10
@@ -369,10 +372,10 @@ closewithreturn(parent, popup_return)
 end event
 
 type cb_finished from commandbutton within w_patient_data
-integer x = 2432
-integer y = 1600
+integer x = 2455
+integer y = 1740
 integer width = 443
-integer height = 108
+integer height = 88
 integer taborder = 60
 boolean bringtotop = true
 integer textsize = -10
@@ -400,16 +403,15 @@ end event
 
 type tab_patient_data from u_tab_patient_data within w_patient_data
 integer width = 2917
-integer height = 1300
+integer height = 1436
 long backcolor = 7191717
-tabposition tabposition = tabsonbottom!
 end type
 
 type cb_cancel from commandbutton within w_patient_data
-integer x = 1554
-integer y = 1600
+integer x = 1577
+integer y = 1744
 integer width = 402
-integer height = 104
+integer height = 84
 integer taborder = 310
 boolean bringtotop = true
 integer textsize = -10

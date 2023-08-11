@@ -33,6 +33,7 @@ u_component_service	service
 
 long display_script_id
 end variables
+
 forward prototypes
 public function integer refresh ()
 end prototypes
@@ -167,17 +168,21 @@ end event
 
 event post_open;call super::post_open;
 // The rtf gets very upset when we try to close it as it's still drawing
-// (it hates having its references removed) so wait for it finish.
+// (it hates having its references removed) 
 
-cb_finished.enabled = False
-cb_be_back.enabled = False
+// try allowing graceful cancel
+// cb_finished.enabled = False
+// cb_be_back.enabled = False
 refresh()
-cb_finished.enabled = True
-cb_be_back.enabled = True
-
-
-// Make sure the focus stays here
-enable_window()
+// If not valid, likely the user clicked Finished in the window to cancel the script
+if IsValid(this) then
+	cb_finished.enabled = True
+	cb_be_back.enabled = True
+	
+	
+	// Make sure the focus stays here
+	enable_window()
+end if
 
 end event
 
@@ -241,7 +246,9 @@ closewithreturn(parent, popup_return)
 end event
 
 type ole_rtf from u_rich_text_edit within w_svc_rtf
-integer width = 2926
+integer x = 50
+integer y = 12
+integer width = 2825
 integer height = 1584
 integer taborder = 20
 boolean init_vscrollbar = true
@@ -250,7 +257,9 @@ borderstyle borderstyle = styleraised!
 end type
 
 type tab_rtf from u_tab_rtf_service within w_svc_rtf
-integer width = 2930
+integer x = 50
+integer y = 12
+integer width = 2830
 integer height = 1588
 end type
 
