@@ -1225,6 +1225,7 @@ CHOOSE CASE ls_dbms
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
+		dbparm += ",Encrypt=0"
 		dbparm += ",ProviderString='MARS Connection=False'"
 		
 	CASE "MSS"
