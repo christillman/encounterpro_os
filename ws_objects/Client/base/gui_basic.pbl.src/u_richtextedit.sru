@@ -21,7 +21,6 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 boolean init_wordwrap = true
 long init_inputfieldbackcolor = 16777215
-boolean init_inputfieldnamesvisible = true
 boolean init_headerfooter = true
 event lbuttondown pbm_renlbuttondown
 event field_clicked ( long pl_fieldid,  string ps_field_text,  string ps_field_data )
