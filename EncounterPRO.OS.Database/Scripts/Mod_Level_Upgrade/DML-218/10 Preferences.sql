@@ -54,3 +54,7 @@ where preference_value = '{Last}, {First}{Middle}'
 	ELSE 'string' END
 	FROM c_Property p
 	WHERE return_data_type IS NULL
+
+-- Some updates in the catch-up script used N'NULL'
+UPDATE [dbo].[o_Preferences] SET [preference_value]=NULL WHERE [preference_type]=N'PROPERTY' AND [preference_level]=N'Global' AND [preference_key]=N'Global' AND [preference_id]=N'Favorite Adult Other HX'
+UPDATE [dbo].[c_Office] SET [zip]=NULL WHERE [office_id]=N'0001'
