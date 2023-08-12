@@ -16,6 +16,9 @@ GO
 ALTER TABLE [dbo].[o_Log] DROP COLUMN IF EXISTS [caused_by_id]
 GO
 
+if not exists (select * from sys.columns 
+	where object_id = object_id('o_Log') 
+	and name = 'progress_seconds')
 ALTER TABLE [dbo].[o_Log] ADD progress_seconds numeric(18,4) NULL
 GO
 
@@ -43,5 +46,10 @@ GO
 ALTER TABLE [dbo].[o_Log] ALTER COLUMN sql_version varchar(255) NULL
 GO
 
+-- Because o_LOg is used in the upgrade process, we need to close out 
+-- the transaction now and begin a new one
+
+commit transaction
+begin transaction
 
 
