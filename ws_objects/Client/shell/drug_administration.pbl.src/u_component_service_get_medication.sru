@@ -62,7 +62,7 @@ END IF
 if isnull(treatment.form_rxcui) then
 	ls_form_description = f_choose_formulation(treatment)
 	IF ls_form_description = "Nothing selected" THEN
-		log.log(this, "u_component_service_get_medication.xx_do_service:0050", "No formulation selected", 4)
+		log.log(this, "u_component_service_get_medication.xx_do_service:0050", "No formulation selected", 2)
 		return 2
 	END IF
 end if
