@@ -86,7 +86,7 @@ SET @ls_line_delimiter = '  '
 IF LEN(@ps_address_line_1) > 0 
 	SET @ls_pretty_address = @ls_pretty_address + @ps_address_line_1
 
-IF LEN(@ps_address_line_2) > 0
+IF LEN(IsNull(@ps_address_line_2,'')) > 0
 	BEGIN
 	IF LEN(@ls_pretty_address) > 0
 		SET @ls_pretty_address = @ls_pretty_address + @ls_line_delimiter
@@ -99,7 +99,7 @@ IF LEN(@ps_city) > 0
 	SET @ls_city_state_zip = @ls_city_state_zip + @ps_city
 
 
-IF LEN(@ps_state) > 0
+IF LEN(IsNull(@ps_state,'')) > 0
 	BEGIN
 	IF LEN(@ls_city_state_zip) > 0
 		SET @ls_city_state_zip = @ls_city_state_zip + ', '
@@ -107,7 +107,7 @@ IF LEN(@ps_state) > 0
 	END
 
 
-IF LEN(@ps_zip) > 0
+IF LEN(IsNull(@ps_zip,'')) > 0
 	BEGIN
 	IF LEN(@ls_city_state_zip) > 0
 		SET @ls_city_state_zip = @ls_city_state_zip + '  '
