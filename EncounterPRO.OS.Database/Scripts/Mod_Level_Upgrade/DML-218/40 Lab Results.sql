@@ -61,7 +61,11 @@ SELECT [drug_id]
       ,[fda_generic_available]
       ,[available_strengths]
       ,[is_generic] 
-	  from c_Drug_Definition_Archive where drug_id like '%981^33%'
+	  from c_Drug_Definition_Archive 
+	  where drug_id = '981^33'
+		AND NOT EXISTS (SELECT 1 FROM c_Drug_Definition p
+		where drug_id = '981^33'
+		)
 
 -- Clean these up, we have no objects to support them (ancient anyway)
 DELETE from c_Component_Registry
