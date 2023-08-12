@@ -14,3 +14,4 @@
 	WHERE return_data_type IS NULL
 
 ALTER TABLE c_Property ALTER COLUMN return_data_type varchar(12) NOT NULL
+GO
