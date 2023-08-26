@@ -6,5 +6,5 @@ Save Format v3.0(19990112)
  1 "upgradescript.pbt";
  2 "demorte.pbt";
 @end;
-DefaultTarget "upgradescript.pbt";
-DefaultRemoteTarget "upgradescript.pbt";
+DefaultTarget "Client\\cpr.pbt";
+DefaultRemoteTarget "Client\\cpr.pbt";
