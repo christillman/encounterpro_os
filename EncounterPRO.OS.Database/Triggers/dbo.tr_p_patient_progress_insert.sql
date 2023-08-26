@@ -170,7 +170,7 @@ BEGIN
 	AND inserted.progress_key = 'date_of_birth'
 
 	UPDATE p_Patient
-	SET 	date_of_birth = CONVERT(datetime, CONVERT(varchar(10), p_Patient.date_of_birth, 101) + ' ' + inserted.progress_value)
+	SET 	date_of_birth = CONVERT(datetime, CONVERT(varchar(10), p_Patient.date_of_birth, 120) + ' ' + inserted.progress_value)
 	FROM inserted
 	WHERE inserted.cpr_id = p_Patient.cpr_id
 	AND inserted.progress_type = 'Modify'
