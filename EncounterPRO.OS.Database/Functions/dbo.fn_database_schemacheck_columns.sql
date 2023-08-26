@@ -283,18 +283,16 @@ SELECT o.name,
 	'False',
 	'True',
 	3
-FROM sys.objects o
+FROM sys.tables o
 	INNER JOIN sys.columns c
 	ON c.object_id = o.object_id
 	INNER JOIN c_Database_Table t
 	ON o.name = t.tablename
-WHERE NOT EXISTS (
-	SELECT 1
-	FROM c_database_column dc
-	WHERE dc.tablename = o.name
+LEFT JOIN c_Database_Column dc
+	ON dc.tablename = o.name
 	AND dc.columnname = c.name
-	AND dc.modification_level <= @ll_modification_level
-	)
+WHERE dc.modification_level <= @ll_modification_level
+	AND dc.tablename IS NULL
 
 RETURN
 END
