@@ -2,6 +2,8 @@
 forward
 global type u_tabpage_patient_data from u_tabpage
 end type
+type uo_cb_sex from u_cb_sex_toggle within u_tabpage_patient_data
+end type
 type sle_phone_prefix from singlelineedit within u_tabpage_patient_data
 end type
 type st_ssn_t from statictext within u_tabpage_patient_data
@@ -19,8 +21,6 @@ end type
 type st_id_document from statictext within u_tabpage_patient_data
 end type
 type st_id_document_t from statictext within u_tabpage_patient_data
-end type
-type st_sex from statictext within u_tabpage_patient_data
 end type
 type st_sex_t from statictext within u_tabpage_patient_data
 end type
@@ -96,6 +96,7 @@ global type u_tabpage_patient_data from u_tabpage
 integer width = 2875
 integer height = 1268
 string text = "none"
+uo_cb_sex uo_cb_sex
 sle_phone_prefix sle_phone_prefix
 st_ssn_t st_ssn_t
 em_ssn em_ssn
@@ -105,7 +106,6 @@ st_country_t st_country_t
 st_country st_country
 st_id_document st_id_document
 st_id_document_t st_id_document_t
-st_sex st_sex
 st_sex_t st_sex_t
 cb_make_test cb_make_test
 st_test_patient st_test_patient
@@ -196,7 +196,7 @@ if current_patient.weeks_premature > 0 then
 end if
 
 st_cpr_id.text = ps_cpr_id
-st_sex.text = current_patient.sex
+uo_cb_sex.set_sex(current_patient.sex)
 sle_phone_number.text = current_patient.phone_number
 st_primary_provider.initialize(current_patient.primary_provider_id)
 st_race.text = current_patient.race
@@ -328,6 +328,7 @@ end subroutine
 on u_tabpage_patient_data.create
 int iCurrent
 call super::create
+this.uo_cb_sex=create uo_cb_sex
 this.sle_phone_prefix=create sle_phone_prefix
 this.st_ssn_t=create st_ssn_t
 this.em_ssn=create em_ssn
@@ -337,7 +338,6 @@ this.st_country_t=create st_country_t
 this.st_country=create st_country
 this.st_id_document=create st_id_document
 this.st_id_document_t=create st_id_document_t
-this.st_sex=create st_sex
 this.st_sex_t=create st_sex_t
 this.cb_make_test=create cb_make_test
 this.st_test_patient=create st_test_patient
@@ -373,16 +373,16 @@ this.st_portrait=create st_portrait
 this.st_age=create st_age
 this.st_referring_provider=create st_referring_provider
 iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.sle_phone_prefix
-this.Control[iCurrent+2]=this.st_ssn_t
-this.Control[iCurrent+3]=this.em_ssn
-this.Control[iCurrent+4]=this.sle_id_number
-this.Control[iCurrent+5]=this.st_id_number_t
-this.Control[iCurrent+6]=this.st_country_t
-this.Control[iCurrent+7]=this.st_country
-this.Control[iCurrent+8]=this.st_id_document
-this.Control[iCurrent+9]=this.st_id_document_t
-this.Control[iCurrent+10]=this.st_sex
+this.Control[iCurrent+1]=this.uo_cb_sex
+this.Control[iCurrent+2]=this.sle_phone_prefix
+this.Control[iCurrent+3]=this.st_ssn_t
+this.Control[iCurrent+4]=this.em_ssn
+this.Control[iCurrent+5]=this.sle_id_number
+this.Control[iCurrent+6]=this.st_id_number_t
+this.Control[iCurrent+7]=this.st_country_t
+this.Control[iCurrent+8]=this.st_country
+this.Control[iCurrent+9]=this.st_id_document
+this.Control[iCurrent+10]=this.st_id_document_t
 this.Control[iCurrent+11]=this.st_sex_t
 this.Control[iCurrent+12]=this.cb_make_test
 this.Control[iCurrent+13]=this.st_test_patient
@@ -421,6 +421,7 @@ end on
 
 on u_tabpage_patient_data.destroy
 call super::destroy
+destroy(this.uo_cb_sex)
 destroy(this.sle_phone_prefix)
 destroy(this.st_ssn_t)
 destroy(this.em_ssn)
@@ -430,7 +431,6 @@ destroy(this.st_country_t)
 destroy(this.st_country)
 destroy(this.st_id_document)
 destroy(this.st_id_document_t)
-destroy(this.st_sex)
 destroy(this.st_sex_t)
 destroy(this.cb_make_test)
 destroy(this.st_test_patient)
@@ -466,6 +466,22 @@ destroy(this.st_portrait)
 destroy(this.st_age)
 destroy(this.st_referring_provider)
 end on
+
+type uo_cb_sex from u_cb_sex_toggle within u_tabpage_patient_data
+integer x = 590
+integer y = 328
+integer width = 338
+integer taborder = 50
+string text = "Female"
+end type
+
+event clicked;call super::clicked;
+if f_string_modified(current_patient.sex, sex) then
+	current_patient.modify_patient("sex", sex)
+	set_sex(current_patient.sex)
+end if
+
+end event
 
 type sle_phone_prefix from singlelineedit within u_tabpage_patient_data
 integer x = 594
@@ -730,43 +746,6 @@ string text = "Id Document"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
-
-type st_sex from statictext within u_tabpage_patient_data
-integer x = 594
-integer y = 332
-integer width = 443
-integer height = 104
-integer taborder = 30
-boolean bringtotop = true
-integer textsize = -10
-integer weight = 700
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long textcolor = 33554432
-long backcolor = 67108864
-alignment alignment = center!
-boolean border = true
-borderstyle borderstyle = styleraised!
-boolean focusrectangle = false
-end type
-
-event clicked;
-if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
-	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's sex.")
-	return
-end if
-
-if text = "Male" then
-	text = "Female"
-	current_patient.sex = "F"
-else
-	text = "Male"
-	current_patient.sex = "M"
-end if
-highlight_st(this, false)
-end event
 
 type st_sex_t from statictext within u_tabpage_patient_data
 integer x = 389
@@ -1090,7 +1069,7 @@ ls_text = f_select_date(ld_date_of_birth, "Date of Birth")
 if isnull(ls_text) then return
 
 if (ld_date_of_birth <> current_patient.date_of_birth) or isnull(current_patient.date_of_birth) then
-	current_patient.modify_patient("date_of_birth", string(ld_date_of_birth, db_datetime_format))
+	current_patient.modify_patient("date_of_birth", string(ld_date_of_birth, db_date_format))
 	text = string(current_patient.date_of_birth, date_format_string)
 end if
 
@@ -1188,7 +1167,7 @@ end event
 
 type st_race from statictext within u_tabpage_patient_data
 integer x = 1618
-integer y = 336
+integer y = 332
 integer width = 544
 integer height = 100
 integer taborder = 40
