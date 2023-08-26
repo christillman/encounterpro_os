@@ -345,7 +345,8 @@ IF @generic_rxcui IS NULL
 			BEGIN
 			-- generic formulation already exists
 			IF @debug = 1 PRINT @in_generic_formulation + ' already exists'
-			SELECT TOP 1 @default_generic_form_rxcui = form_rxcui 
+			SELECT TOP 1 @default_generic_form_rxcui = form_rxcui ,
+					@default_generic_ingr_rxcui = ingr_rxcui
 				FROM c_Drug_Formulation 
 				WHERE form_rxcui = ISNULL(@scd_rxcui,'XXXXXXXX')
 				OR form_descr = @in_generic_formulation
@@ -461,7 +462,8 @@ IF @generic_rxcui IS NULL
 			BEGIN
 			-- brand formulation already exists
 			IF @debug = 1 PRINT @in_brand_name_formulation + ' brand form already exists'
-			SELECT TOP 1 @default_brand_form_rxcui = form_rxcui 
+			SELECT TOP 1 @default_brand_form_rxcui = form_rxcui,
+					@default_brand_ingr_rxcui = ingr_rxcui
 				FROM c_Drug_Formulation 
 				WHERE form_rxcui = substring(ISNULL(@sbd_rxcui,'XXXXXXXX'),5,20)
 				OR form_descr = @in_brand_name_formulation
@@ -498,8 +500,10 @@ IF @generic_rxcui IS NULL
 				FROM c_Drug_Brand b 
 				WHERE b.brand_name = @brand_name_edited
 					OR brand_name_rxcui = @in_brand_rxcui
+					
 			UPDATE #new_form
 			SET ingr_rxcui = @brand_name_rxcui
+			
 			UPDATE c_Drug_Brand
 			SET valid_in = valid_in + lower(@country_code) + ';'
 			WHERE brand_name_rxcui = @brand_name_rxcui
@@ -608,9 +612,11 @@ IF @generic_rxcui IS NULL
 	SELECT b.drug_id, @drug_type,
 		CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
 		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
-	FROM #Drug_Brand b
-	JOIN #Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
-	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = b.drug_id)
+	FROM Drug_Brand b
+	JOIN Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
+	WHERE b.generic_rxcui = @default_generic_ingr_rxcui
+	AND b.brand_name_rxcui = @default_brand_ingr_rxcui
+	AND NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = b.drug_id)
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where b.brand_name_rxcui = f.ingr_rxcui)
 
 	-- Missing KE generic definitions
@@ -619,8 +625,9 @@ IF @generic_rxcui IS NULL
 	SELECT g.drug_id, @drug_type, 
 		CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
 		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
-	FROM #Drug_Generic g
-	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
+	FROM Drug_Generic g 
+	WHERE b.generic_rxcui = @default_generic_ingr_rxcui
+	AND NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
 
 	IF @debug = 1 PRINT 'INSERT INTO c_Drug_Source_Formulation'
