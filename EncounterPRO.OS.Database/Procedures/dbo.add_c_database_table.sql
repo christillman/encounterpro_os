@@ -6,6 +6,15 @@ IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[add_
 	DROP PROCEDURE [dbo].[add_c_database_table]
 GO
 
+/*
+SELECT distinct 'exec add_c_database_table ''' + o.name + ''''
+FROM sys.tables o
+LEFT JOIN c_Database_Table t
+	ON t.tablename = o.name
+WHERE t.tablename IS NULL
+order by 1
+*/
+
 -- Create Procedure [dbo].[add_c_database_table]
 Print 'Create Procedure [dbo].[add_c_database_table]'
 GO
