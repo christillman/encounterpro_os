@@ -1141,8 +1141,9 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.middle_name = wordcap(text)
-text = new_patient.middle_name
+event modified;
+if common_thread.name_cap = 'Y' then text = wordcap(text)
+new_patient.middle_name = text
 
 end event
 
@@ -1182,8 +1183,9 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.first_name = wordcap(text)
-text = new_patient.first_name
+event modified;
+if common_thread.name_cap = 'Y' then text = wordcap(text)
+new_patient.first_name = text
 highlight_sle(this, false)
 end event
 
@@ -1289,8 +1291,9 @@ integer limit = 100
 borderstyle borderstyle = stylelowered!
 end type
 
-event modified;new_patient.last_name = wordcap(text)
-text = new_patient.last_name
+event modified;
+if common_thread.name_cap = 'Y' then text = wordcap(text)
+new_patient.last_name = text
 highlight_sle(this, false)
 end event
 
