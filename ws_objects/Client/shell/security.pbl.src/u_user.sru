@@ -81,6 +81,7 @@ boolean sticky_logon
 //		false = log user off 
 //		null = don't log user off and don't refresh main screen
 boolean sticky_logon_prompt
+boolean rtfpopmenu = false
 
 long address_count
 str_actor_address address[]
@@ -90,7 +91,6 @@ str_actor_communication communication[]
 
 
 end variables
-
 forward prototypes
 public function integer check_drug (string ps_drug_id, string ps_package_id)
 public function string get_preference (string ps_preference_type, string ps_preference_id)
@@ -385,6 +385,10 @@ abnormal_result_font_settings = f_interpret_font_settings(ls_temp)
 show_hm = datalist.get_preference_boolean("SECURITY", "Show Health Maintenance Tab", common_thread.show_hm)
 
 show_documents = check_privilege("Office Documents")
+
+ls_temp = sqlca.fn_get_specific_preference("PREFERENCES","User",this.user_id,"Rich Text Popup Menu" )
+If NOT IsNull(ls_temp) THEN rtfpopmenu = (ls_temp = "Y")
+
 
 end subroutine
 
