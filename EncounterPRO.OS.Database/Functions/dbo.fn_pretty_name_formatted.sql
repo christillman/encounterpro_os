@@ -40,7 +40,14 @@ DECLARE @ls_patient_full_name varchar(80),
 		@ll_next_token_start int,
 		@ll_next_token_end int,
 		@ls_token_contents varchar(64),
-		@ll_keyword_index int
+		@ll_keyword_index int,
+		@ls_last_name varchar(40) = @ps_last_name,
+		@ls_first_name varchar(40) = @ps_first_name,
+		@ls_middle_name varchar(40) = @ps_middle_name,
+		@ls_name_prefix varchar(12) = @ps_name_prefix,
+		@ls_name_suffix varchar(12) = @ps_name_suffix,
+		@ls_degree varchar(24) = @ps_degree,
+		@lb_wordcap char(1) = 'N'
 
 IF @ps_name_format = 'Full'
 	BEGIN
@@ -60,8 +67,27 @@ IF @ps_name_format IS NULL OR @ps_name_format = '' OR CHARINDEX('{', @ps_name_fo
 	BEGIN
 	SET @ps_name_format = dbo.fn_get_preference('PREFERENCES', 'Patient Name Format Full', NULL, NULL)
 	IF @ps_name_format IS NULL
-		SET @ps_name_format = '{ First}{ M.}{ (Nickname)}{ Last}{ Suffix}'
+		SET @ps_name_format = '{ First}{ M.}{ (Nickname)}{ Last}{ Suffix}{, Degree}'
 	END
+
+
+SET @lb_wordcap = dbo.fn_get_preference('PREFERENCES', 'NameCap', NULL, NULL)
+IF @lb_wordcap IS NULL
+	SET @lb_wordcap = 'N'
+
+IF @lb_wordcap = 'Y' 
+BEGIN
+	SET @ls_last_name = dbo.fn_wordcap(@ls_last_name)
+	SET @ls_first_name = dbo.fn_wordcap(@ls_first_name)
+	SET @ls_middle_name = dbo.fn_wordcap(@ls_middle_name)
+	SET @ls_last_name = dbo.fn_wordcap(@ls_last_name)
+	SET @ls_name_prefix = dbo.fn_wordcap(@ls_name_prefix)
+	SET @ls_name_suffix = dbo.fn_wordcap(@ls_name_suffix)
+	SET @ls_degree = CASE WHEN UPPER(@ps_degree) = 'PHD' THEN 'PhD' 
+				WHEN UPPER(@ps_degree) = 'PH.D.' THEN 'Ph.D.' 
+				ELSE UPPER(@ps_degree) END
+END
+
 
 SET @ll_index = 1
 SET @ls_patient_full_name = ''
@@ -107,29 +133,29 @@ WHILE 1 = 1
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('Prefix', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_name_prefix) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Prefix', @ps_name_prefix)
+		IF @ll_keyword_index > 0 AND LEN(@ls_name_prefix) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Prefix', @ls_name_prefix)
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('First', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_first_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'First', @ps_first_name)
+		IF @ll_keyword_index > 0 AND LEN(@ls_first_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'First', @ls_first_name)
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('Middle', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_middle_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Middle', @ps_middle_name)
+		IF @ll_keyword_index > 0 AND LEN(@ls_middle_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Middle', @ls_middle_name)
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('Last', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_last_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Last', @ps_last_name)
+		IF @ll_keyword_index > 0 AND LEN(@ls_last_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Last', @ls_last_name)
 		END		
 
 	IF @ll_keyword_index = 0
@@ -142,39 +168,39 @@ WHILE 1 = 1
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('Suffix', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_name_suffix) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Suffix', @ps_name_suffix)
+		IF @ll_keyword_index > 0 AND LEN(@ls_name_suffix) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Suffix', @ls_name_suffix)
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('Degree', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_degree) > 0
+		IF @ll_keyword_index > 0 AND LEN(@ls_degree) > 0
 			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'Degree', 
-				CASE WHEN UPPER(@ps_degree) = 'PHD' THEN 'PhD' 
-				WHEN UPPER(@ps_degree) = 'PH.D.' THEN 'Ph.D.' 
-				ELSE UPPER(@ps_degree) END)
+				CASE WHEN UPPER(@ls_degree) = 'PHD' THEN 'PhD' 
+				WHEN UPPER(@ls_degree) = 'PH.D.' THEN 'Ph.D.' 
+				ELSE UPPER(@ls_degree) END)
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('F', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_first_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'F', LEFT(@ps_first_name, 1))
+		IF @ll_keyword_index > 0 AND LEN(@ls_first_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'F', LEFT(@ls_first_name, 1))
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('M', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_middle_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'M', LEFT(@ps_middle_name, 1))
+		IF @ll_keyword_index > 0 AND LEN(@ls_middle_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'M', LEFT(@ls_middle_name, 1))
 		END		
 
 	IF @ll_keyword_index = 0
 		BEGIN
 		SET @ll_keyword_index = CHARINDEX('L', @ls_token_contents)
-		IF @ll_keyword_index > 0 AND LEN(@ps_last_name) > 0
-			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'L', LEFT(@ps_last_name, 1))
+		IF @ll_keyword_index > 0 AND LEN(@ls_last_name) > 0
+			SET @ls_patient_full_name = @ls_patient_full_name + REPLACE(@ls_token_contents, 'L', LEFT(@ls_last_name, 1))
 		END		
 
 	IF @ll_index > LEN(@ps_name_format)
@@ -186,6 +212,27 @@ WHILE 1 = 1
 RETURN @ls_patient_full_name 
 
 END
+
+/*
+select dbo.fn_pretty_name_formatted(
+	'chRis' ,
+	'DEAN' ,
+	'TiLLmAn' ,
+	'toff' ,
+	'sr' ,
+	'mr.' ,
+	'MspDc',
+	NULL)
+
+select dbo.fn_pretty_name ( 
+	'TiLLmAn' ,
+	'chRis' ,
+	'DEAN' ,
+	'sr' ,
+	'mr.' ,
+	'phd' )
+
+*/
 
 GO
 GRANT EXECUTE ON [dbo].[fn_pretty_name_formatted] TO [cprsystem]
