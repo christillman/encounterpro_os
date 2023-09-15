@@ -475,6 +475,9 @@ END TRY
 
 if command_error then
 	if isnull(command_error_text) or trim(command_error_text) = "" then command_error_text = "Error"
+	
+	command_error_text += " S " + string(pstr_command.display_script_id)
+	command_error_text += " C " + string(pstr_command.display_command_id)
 	command[ll_command_index].error = command_error
 	command[ll_command_index].error_text = command_error_text
 	
@@ -3887,6 +3890,7 @@ end if
 
 it_start = now()
 ////setredraw(false)
+set_view_mode("Normal")
 this.visible = false
 display_script(pl_display_script_id, lstr_encounter, lstr_assessment, lstr_treatment)
 // If not valid, likely the user clicked Finished in the window to cancel the script
