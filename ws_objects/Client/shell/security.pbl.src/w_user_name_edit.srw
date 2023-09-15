@@ -181,8 +181,8 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
-text = wordcap(text)
-
+text = Upper(text)
+if (text = 'PHD') then text = 'PhD'
 end event
 
 type st_name_suffix_title from statictext within w_user_name_edit
@@ -284,7 +284,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
-text = wordcap(text)
+if common_thread.name_cap = 'Y' then text = wordcap(text)
 
 end event
 
@@ -325,8 +325,7 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
-text = wordcap(text)
-
+if common_thread.name_cap = 'Y' then text = wordcap(text)
 end event
 
 type st_first_name_title from statictext within w_user_name_edit
@@ -478,7 +477,6 @@ borderstyle borderstyle = stylelowered!
 end type
 
 event modified;changed = true
-text = wordcap(text)
-
+if common_thread.name_cap = 'Y' then text = wordcap(text)
 end event
 
