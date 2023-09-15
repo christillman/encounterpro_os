@@ -43,6 +43,7 @@ string epcompinfo
 
 string name_format_full  // full name for standalone situations - First Middle Last
 string name_format_list  // Name format in list of names - last, first MI
+string name_cap
 
 integer max_priority
 boolean priority_beeps
@@ -157,7 +158,6 @@ long adStateExecuting = 4 //Indicates that the object is executing a command.
 long adStateFetching = 8 //Indicates that the rows of the object are being retrieved. 
 
 end variables
-
 forward prototypes
 public subroutine shutdown ()
 public function integer get_adodb (ref u_adodb_connection puo_adodb)
@@ -1161,6 +1161,7 @@ end if
 
 name_format_full = datalist.get_preference("PREFERENCES", "Patient Name Format Full", "{First}{ M.}{ (Nickname)}{ Last}{ Suffix}")
 name_format_list = datalist.get_preference("PREFERENCES", "Patient Name Format List", "{Last},{ First}{ M.}{ (Nickname)}{, Suffix}")
+name_cap = datalist.get_preference("PREFERENCES", "NameCap")
 
 load_contraindication_alerts()
 
