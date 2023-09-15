@@ -506,7 +506,7 @@ if isnull(view_mode) then
 		CASE "NORMAL"
 			view_mode = "Normal"
 		CASE ELSE
-			view_mode = "Page"
+			view_mode = "Normal"
 	END CHOOSE
 end if
 
@@ -734,7 +734,6 @@ integer width = 2885
 integer height = 1548
 integer taborder = 40
 boolean bringtotop = true
-boolean init_vscrollbar = true
 end type
 
 type cb_refresh from commandbutton within w_encounterpro_report_rtf
@@ -757,7 +756,7 @@ event clicked;string ls_save_view_mode
 
 ls_save_view_mode = view_mode
 if ls_save_view_mode = "Page" then
-// To prevent Japanese-looking script results durinig refresh, the Preview mode must be OFF.
+// To prevent Japanese-looking script results during refresh, the Preview mode must be OFF.
 	rte_report.set_view_mode("Normal")
 end if
 
