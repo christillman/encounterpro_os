@@ -54,6 +54,7 @@ end event
 type ole_rtf from u_rich_text_edit within u_tabpage_rtf_service
 integer height = 1524
 integer taborder = 10
+boolean init_vscrollbar = true
 borderstyle borderstyle = styleraised!
 end type
 
