@@ -19,9 +19,12 @@ integer weight = 400
 fontcharset fontcharset = ansi!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
+boolean init_vscrollbar = true
 boolean init_wordwrap = true
 long init_inputfieldbackcolor = 16777215
+boolean init_toolbar = true
 boolean init_headerfooter = true
+boolean init_popmenu = true
 event lbuttondown pbm_renlbuttondown
 event field_clicked ( long pl_fieldid,  string ps_field_text,  string ps_field_data )
 end type
@@ -398,10 +401,12 @@ public subroutine clear_rtf ();boolean lb_displayonly
 lb_displayonly = displayonly
 
 displayonly = false
-selecttextall()
+selecttextall(Footer!)
 clear()
-// The above only clears the detail page
-SelectTextAll(Header!)
+selecttextall(Header!)
+clear()
+// must clear detail last, so cursor ends up there
+selecttextall(Detail!)
 clear()
 set_margins()
 set_color(color_text_normal)
@@ -616,7 +621,7 @@ ll_screen_resolution = common_thread.screen_resolution_x()
 ll_width = (1000 * UnitsToPixels(width, XUnitsToPixels!)) / ll_screen_resolution
 
 // Set the right margin, assuming a page width of 8.5 inches
-rightmargin = 8500 - ll_width
+//rightmargin = 8500 - ll_width
 
 
 end subroutine
@@ -1005,15 +1010,14 @@ if lstr_font_settings <> pstr_font_settings then
 	set_font_settings(pstr_font_settings)
 end if
 
-// If the insertion point is at the end of a line then add a space because we have trouble
-// if the InputField is at the end of a line
-// CDT 2023-08-04: It seems there isn't any "trouble" any more. Saves about 20% of the time.
-//lstr_charposition = charposition()
-//if selectedcolumn() > linelength() then
-//	replacetext(" ")
-//	select_text(lstr_charposition)
-//end if
-//	
+// If the insertion point is at the end of a line then add a space 
+// If the InputField is at the end of a line the next line appends at the end of it
+lstr_charposition = charposition()
+if selectedcolumn() > linelength() then
+	replacetext(" ")
+	select_text(lstr_charposition)
+end if
+	
 
 ls_fieldname = "field" + right("0000" + string(input_field_count), 4)
 li_sts = InputFieldInsert(ls_fieldname)
@@ -1700,8 +1704,8 @@ public subroutine initialize ();//
 //
 //
 // Set the page height/width in twips
-paperheight = 11000 // 11 inches
-paperwidth = 8500 // 8.5 inches
+//paperheight = 11000 // 11 inches
+//paperwidth = 8500 // 8.5 inches
 //
 //// Get the height of the control in twips
 //ll_screen_resolution_y = common_thread.screen_resolution_y()
@@ -1757,6 +1761,8 @@ if isvalid(datalist) and not isnull(datalist) then
 	field_backcolor = datalist.get_preference_int("COLOR", "RTF Field Backcolor", rgb(216,216,216))
 	inputfieldbackcolor = field_backcolor
 end if
+
+this.popmenu = current_user.rtfpopmenu
 
 end subroutine
 
@@ -2025,7 +2031,7 @@ END CHOOSE
 end subroutine
 
 public subroutine copy_to_clipboard (boolean pb_all);
-if pb_all then selecttextall()
+if pb_all then SelectTextAll()
 
 copy()
 
@@ -2457,7 +2463,7 @@ elseif pl_line > 1 then
 	selecttext(pl_line - 1, ll_prev_length + 1, 0, 0)
 else
 	// There's only 1 line!
-	selecttextall()
+	SelectTextAll()
 	replacetext("")
 end if
 
