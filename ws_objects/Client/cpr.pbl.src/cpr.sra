@@ -180,9 +180,9 @@ string themename = "Do Not Use Themes"
 boolean nativepdfvalid = false
 boolean nativepdfincludecustomfont = false
 string nativepdfappname = ""
-long richtextedittype = 0
+long richtextedittype = 3
 long richtexteditx64type = 3
-long richtexteditversion = 1
+long richtexteditversion = 2
 string richtexteditkey = ""
 string appicon = "green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
@@ -245,6 +245,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
