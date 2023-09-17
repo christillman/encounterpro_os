@@ -20,11 +20,6 @@ if isnull(ps_file) then
 	return 0
 end if
 
-//if not fileexists(ps_file) then
-//	log.log(po_null, "f_open_file_with_process:0016", "attachment file not found (" + ps_file + ")", 4)
-//	return 0
-//end if
-
 lstr_extension = datalist.extension(ps_file)
 
 CHOOSE CASE lower(ps_action)
@@ -53,6 +48,11 @@ ls_open_command = f_string_substitute(ls_open_command, "%Printer%", common_threa
 f_split_string(ls_open_command, " ", ls_special1, ls_special2)
 CHOOSE CASE lower(ls_special1)
 	CASE "shell"
+		if not fileexists(ps_file) then
+			log.log(po_null, "f_open_file_with_process:0044", "attachment file not found (" + ps_file + ")", 4)
+			return 0
+		end if
+
 		li_sts = windows_api.shell32.open_file_ex(ps_file, ls_special2, pb_wait_for_completion, pul_process_id)
 	CASE "browser"
 		// Open html file with HyperlinkToURL
