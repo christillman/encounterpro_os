@@ -158,10 +158,12 @@ blob lbl_file
 long j
 string ls_xml_results
 boolean lb_read_xml_specified
-boolean lb_read_xml
+boolean lb_read_xml, lb_large_file
 integer li_sts2
 boolean lb_lock_file
 long ll_filebytes
+
+SetNull(lbl_file)
 
 ls_comment_title = get_attribute("comment_title")
 If trim(ls_comment_title) = "" Then setnull(ls_comment_title)
@@ -234,24 +236,27 @@ for i = 1 to li_count
 	// Skip the directories
 	if lstr_file_attributes.subdirectory then continue
 	
-	// Skip the file if it's too big
+	lb_large_file = false
 	if lstr_file_attributes.filesize > max_file_size then
-		log.log(this, "u_component_observation_jmj_file.get_attachments:0109", "File too large", 4)
-		set_processed(lsa_paths[i], -1)
-		continue
+//		log.log(this, "u_component_observation_jmj_file.get_attachments:0109", "File too large", 4)
+//		set_processed(lsa_paths[i], -1)
+		lb_large_file = true
 	end if
 	
 	li_sts = f_parse_filepath(lsa_paths[i], ls_drive, ls_directory, ls_filename, ls_extension )
 	if li_sts <= 0 then continue
 	
-	// Read the file into the structure
-//	li_sts = mylog.file_read(lsa_paths[i], lbl_file)
-	ll_filebytes = mylog.file_read2(lsa_paths[i], lbl_file, lb_lock_file)
-	if ll_filebytes <= 0 then
-		li_sts = ll_filebytes
-	else
-		li_sts = 1
-	end if
+	// Read the file into the structure if not too large
+	IF NOT lb_large_file THEN
+		ll_filebytes = mylog.file_read2(lsa_paths[i], lbl_file, lb_lock_file)
+		if ll_filebytes <= 0 then
+			log.log(this, "u_component_observation_jmj_file.get_attachments:0174", "Error: file is empty (" + lsa_paths[i] + ")", 4)
+			li_sts = -1
+		else
+			li_sts = 1
+		end if
+	END IF
+
 	if li_sts > 0 then
 		// If the "read_xml" attribute is specified, then obey it.  Otherwise,
 		// process as an xml file if the extension is "xml"
@@ -282,27 +287,23 @@ for i = 1 to li_count
 			else
 				observations[observation_count].attachment_list.attachments[1].attachment_comment_title = ls_comment_title
 			end if
-			observations[observation_count].attachment_list.attachments[1].attachment = lbl_file
+			IF NOT lb_large_file THEN
+				observations[observation_count].attachment_list.attachments[1].attachment = lbl_file
+			END IF
 		end if
 	end if
-	
 	// Process the original file according to the li_sts value
 	if li_sts > 0 then
-		if len(lbl_file) > 0 then
-			// If we're supposed to move the file then move it
-			if not isnull(ls_move_to_pending) then
-				ls_temp = ls_move_to_pending + lsa_files[i]
-				li_sts = filemove(lsa_paths[i], ls_temp)
-				if li_sts > 0 then
-					// If we moved the file, then point the id to the new place
-					observations[observation_count].external_item_id = ls_temp
-				else
-					log.log(this, "u_component_observation_jmj_file.get_attachments:0170", "Error moving file (" + lsa_paths[i] + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
-				end if
+		// If we're supposed to move the file then move it
+		if not isnull(ls_move_to_pending) then
+			ls_temp = ls_move_to_pending + lsa_files[i]
+			li_sts = filemove(lsa_paths[i], ls_temp)
+			if li_sts > 0 then
+				// If we moved the file, then point the id to the new place
+				observations[observation_count].external_item_id = ls_temp
+			else
+				log.log(this, "u_component_observation_jmj_file.get_attachments:0170", "Error moving file (" + lsa_paths[i] + ", " + ls_temp + ", " + string(li_sts) + ")", 4)
 			end if
-		else
-			log.log(this, "u_component_observation_jmj_file.get_attachments:0174", "Error: file is empty (" + lsa_paths[i] + ")", 4)
-			li_sts = -1
 		end if
 	elseif li_sts < 0 then
 		log.log(this, "u_component_observation_jmj_file.get_attachments:0178", "Error reading file (" + lsa_paths[i] + ", " + string(li_sts) + ")", 4)
