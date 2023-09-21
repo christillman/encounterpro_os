@@ -79,3 +79,9 @@ drop table #test
 
 GO
 
+
+GRANT EXECUTE
+	ON [dbo].[sp_get_open_assessments_treatments]
+	TO [cprsystem]
+GO
+
