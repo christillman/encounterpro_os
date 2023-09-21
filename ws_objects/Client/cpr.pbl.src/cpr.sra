@@ -209,14 +209,14 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 218
+long minimum_modification_level = 219
 
-date compile_date = date("2023-08-12")
+date compile_date = date("2023-09-21")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.3"
-// Resulting in 7.2.1.3
+string build = "1.4"
+// Resulting in 7.2.1.4
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
@@ -245,7 +245,6 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
