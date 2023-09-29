@@ -1851,27 +1851,31 @@ openwithparm(w_pop_pick, popup)
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
+text = popup_return.items[1]
+highlight_st(this, false)
+
 li_rc = set_patient_list_item("Country", popup_return.items[1], ls_empty)
 if li_rc < 0 then
 	log.log(this, "w_edit_patient_data.st_country.clicked:0019", "Error setting country", 4)
 end if
 
-// Set phone prefix according to country selected, if not already populated
-if sle_phone_prefix.text = ls_empty then
-	SELECT cpp.list_item INTO :ls_country_phone_prefix
-	FROM c_list_item cc
-	JOIN c_list_item cpp ON cpp.list_item_id = cc.list_item_id // the country code
-	WHERE cpp.list_id = "Country_Phone_Prefix"
-	AND cc.list_id = 'Country'
-	AND cc.list_item = :popup_return.items[1];
-	if tf_check() AND ls_country_phone_prefix <> ls_empty then
-		sle_phone_prefix.text = ls_country_phone_prefix
-		li_rc = set_patient_list_item("Country_Phone_Prefix", ls_country_phone_prefix, ls_empty)
+SELECT cpp.list_item INTO :ls_country_phone_prefix
+FROM c_list_item cc
+JOIN c_list_item cpp ON cpp.list_item_id = cc.list_item_id // the country code to match the lists
+WHERE cpp.list_id = "Country_Phone_Prefix"
+AND cc.list_id = 'Country'
+AND cc.list_item = :popup_return.items[1];
+
+if tf_check() and NOT IsNull(ls_country_phone_prefix) then 
+	if sle_phone_prefix.text = ls_empty AND ls_country_phone_prefix <> ls_empty then
+		// Set phone prefix according to country selected, if not already populated
+			sle_phone_prefix.text = ls_country_phone_prefix
+			li_rc = set_patient_list_item("Country_Phone_Prefix", ls_country_phone_prefix, ls_empty)
+	elseif sle_phone_prefix.text <> ls_country_phone_prefix then
+		// Warn user if code different
+		MessageBox("Warning",popup_return.items[1] + " country code is " + ls_country_phone_prefix + " but patient phone prefix is " + sle_phone_prefix.text)
 	end if
 end if
-
-text = popup_return.items[1]
-highlight_st(this, false)
 
 end event
 
@@ -2173,8 +2177,32 @@ end type
 
 event modified;int li_rc
 string ls_empty = ""
+string ls_phone_prefix, ls_country_name
 
-li_rc = set_patient_list_item("Country_Phone_Prefix",text, ls_empty)
+if text <> ls_empty then
+	SELECT cpp.list_item, cc.list_item 
+	INTO :ls_phone_prefix, :ls_country_name
+	FROM c_list_item cc
+	JOIN c_list_item cpp ON cpp.list_item_id = cc.list_item_id // the country code to match
+	WHERE cpp.list_id = 'Country_Phone_Prefix'
+	AND cc.list_id = 'Country'
+	AND ( cpp.list_item = :text OR cpp.list_item = '+' + :text );
+	
+	if tf_check() and NOT IsNull(ls_phone_prefix) then 
+		
+		text = ls_phone_prefix
+		li_rc = set_patient_list_item("Country_Phone_Prefix", ls_phone_prefix, ls_empty)
+	
+		if st_country.text = ls_empty then
+			// Set country according to phone prefix selected, if not already populated
+			st_country.text = ls_country_name			
+			li_rc = set_patient_list_item("Country", ls_country_name, ls_empty)
+		elseif st_country.text <> ls_country_name then
+			// Warn user if code different
+			MessageBox("Warning","Patient prefix is " + ls_phone_prefix + " (" + ls_country_name + ") but issuing country is " + st_country.text)
+		end if
+	end if
+end if
 
 end event
 
