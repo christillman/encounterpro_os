@@ -53,12 +53,17 @@ for i = 1 to pstr_add_documents.file_count
 	if li_sts <= 0 then return -1
 next
 
-TRY
-	common_thread.eprolibnet4.zip(ls_sourcepath, ls_compressed_file, ll_compression_level, lb_subdirs)
-CATCH (oleruntimeerror lt_error)
-	log.log(po_null, "f_compress_documents:0051", "Error Zipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+if common_thread.utilities_ok() then
+	TRY
+		common_thread.eprolibnet4.zip(ls_sourcepath, ls_compressed_file, ll_compression_level, lb_subdirs)
+	CATCH (oleruntimeerror lt_error)
+		log.log(po_null, "f_compress_documents:0051", "Error Zipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+		return -1
+	END TRY
+else
+	log.log(po_null, "f_compress_documents:0056", "Document not zipped (Utilities not available)", 3)
 	return -1
-END TRY
+end if
 
 li_sts = log.file_read(ls_compressed_file, pstr_compressed_document.filedata)
 if li_sts <= 0 then return -1

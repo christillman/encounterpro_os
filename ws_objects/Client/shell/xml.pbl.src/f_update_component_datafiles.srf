@@ -78,7 +78,7 @@ for i = 1 to ll_count
 				CASE "MATERIALDATA"
 					// Convert the hexbinary attachment into a blob
 					TRY
-						lstr_patient_material.material_object = common_thread.eprolibnet4.converthextobinary(ls_value)
+						lstr_patient_material.material_object = common_thread.inv_CoderObject.HexDecode(ls_value)
 					CATCH (throwable lt_error)
 						log.log(po_null, "f_update_component_datafiles:0075", "Error calling hex to binary conversion (" + lt_error.text + ")", 4)
 						return -1

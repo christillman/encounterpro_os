@@ -99,12 +99,16 @@ if isnull(ls_results_xml) or ls_results_xml = "" then return 0
 
 // If we need to transform the xml, do it here
 if len(ls_xslt) > 0 then
-	TRY
-		ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
-	CATCH (throwable lt_error2)
-		log.log(this, "u_component_observation_com_document.xx_do_source:0087", "Error calling com source (" + lt_error2.text + ")", 4)
-		return -1
-	END TRY
+	if common_thread.utilities_ok() then
+		TRY
+			ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
+		CATCH (throwable lt_error2)
+			log.log(this, "u_component_observation_com_document.xx_do_source:0087", "Error calling com source (" + lt_error2.text + ")", 4)
+			return -1
+		END TRY
+	else
+		log.log(this, "u_component_observation_com_document.xx_do_source:0092", "XML not transformed (Utilities not available)", 3)
+	end if		
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else

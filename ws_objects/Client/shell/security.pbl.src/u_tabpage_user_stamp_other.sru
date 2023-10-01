@@ -75,7 +75,7 @@ if signature_changed then
 		setnull(ls_stamp_data)
 	else
 		TRY
-			ls_stamp_data = common_thread.eprolibnet4.convertbinarytohex(lbl_signature_stamp)
+			ls_stamp_data = common_thread.inv_CoderObject.HexEncode(lbl_signature_stamp)
 		CATCH (throwable lo_error)
 			log.log(this, "u_tabpage_user_stamp_other.save:0028", "Error converting user stamp to hex (" + lo_error.text + ")", 4)
 			return -1
@@ -145,7 +145,7 @@ end if
 
 if len(ls_stamp_data) > 0 then
 	TRY
-		lbl_stamp_data = common_thread.eprolibnet4.converthextobinary(ls_stamp_data)
+		lbl_stamp_data = common_thread.inv_CoderObject.HexDecode(ls_stamp_data)
 	CATCH (throwable lo_error)
 		log.log(this, "u_tabpage_user_stamp_other.initialize:0040", "Error converting user stamp to binary (" + lo_error.text + ")", 4)
 		return -1

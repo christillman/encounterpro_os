@@ -26,7 +26,6 @@ global type w_ext_observation_pbink_signature from w_window_base
 integer width = 2953
 integer height = 1856
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false

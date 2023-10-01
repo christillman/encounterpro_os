@@ -444,50 +444,56 @@ if ls_displaylogenabled = "Yes" or ls_displaylogenabled = "True" then
 	display_enabled = True
 end if
 
-event_source = ps_event_source
-	
-if common_thread.utilities_ok() then
-	if initialized then
-	//	DeregisterEventSource(event_handle)
-		common_thread.eprolibnet4.CloseEventLog(event_source)
-		initialized = false
-	end if
-	
-	//ls_server = ""	
-	//event_handle = RegisterEventSource(ls_server, event_source)
-	
-	li_sts = common_thread.eprolibnet4.InitializeEventLog(event_source)
-	
-	if li_sts > 0 then
-		initialized = true
-		return 1
-	end if
-else
-	log.log(this, "u_event_log.initialize:0039", "Event log not initialized (Utilities not available)", 3)
-end if
-
-return -1
+initialized = true
+return 1
+		
+// EventLog not working, commenting out 30/09/2023
+//event_source = ps_event_source
+//
+//if common_thread.utilities_ok() then
+//	if initialized then
+//	//	DeregisterEventSource(event_handle)
+//		common_thread.eprolibnet4.CloseEventLog(event_source)
+//		initialized = false
+//	end if
+//	
+//	//ls_server = ""	
+//	//event_handle = RegisterEventSource(ls_server, event_source)
+//	
+//	li_sts = common_thread.eprolibnet4.InitializeEventLog(event_source)
+//	
+//	if li_sts > 0 then
+//		initialized = true
+//		return 1
+//	end if
+//else
+//	log.log(this, "u_event_log.initialize:0039", "Event log not initialized (Utilities not available)", 3)
+//end if
+//
+//return -1
 
 
 end function
 
 public function integer file_read (string ps_file, ref blob pblb_file);
+long ll_bytes
+integer li_filenum
+
 if isnull(ps_file) then
 	log.log(this, "u_event_log.file_read:0003", "Null file path", 4)
 	return -1
 end if
 
-if common_thread.utilities_ok() then
-	TRY
-		pblb_file = common_thread.eprolibnet4.FileToBytes(ps_file)
-	CATCH (throwable lt_error)
-		log.log(this, "u_event_log.file_read:0010", "Error reading file (" + ps_file + "): " + lt_error.text, 4)
-		return -1
-	END TRY
-else
-	log.log(this, "u_event_log.file_read:0015", "File not read (Utilities not available)", 3)
+TRY
+	li_filenum = FileOpen(ps_file, StreamMode!, Read!, Shared!)
+
+	ll_bytes = FileReadEx(li_filenum, pblb_file)
+	
+	FileClose(li_filenum)
+CATCH (throwable lt_error)
+	log.log(this, "u_event_log.file_read:0010", "Error reading file (" + ps_file + "): " + lt_error.text, 4)
 	return -1
-end if
+END TRY
 
 if len(pblb_file) > 0 then
 	return 1
@@ -498,7 +504,8 @@ end if
 
 end function
 
-public function integer file_write (ref blob pblb_file, string ps_file);integer li_sts
+public function integer file_write (ref blob pblb_file, string ps_file);long ll_rc
+integer li_filenum
 
 if isnull(ps_file) then
 	log.log(this, "u_event_log.file_write:0004", "Null file path", 4)
@@ -510,22 +517,18 @@ if isnull(pblb_file) then
 	return -1
 end if
 
-if common_thread.utilities_ok() then
-	TRY
-		li_sts = common_thread.eprolibnet4.BytesToFile(ps_file, pblb_file)
-	CATCH (throwable lt_error)
-		log.log(this, "u_event_log.file_write:0016", "Error writing file (" + ps_file + ") : " + lt_error.text, 4)
-		return -1
-	END TRY
-else
-	log.log(this, "u_event_log.file_write:0021", "File not written (Utilities not available)", 3)
+TRY
+	li_filenum = FileOpen(ps_file, StreamMode!, Write!, LockWrite!, Replace!)
+
+	ll_rc = FileWriteEx(li_filenum, pblb_file)
+	
+	FileClose(li_filenum)
+CATCH (throwable lt_error)
+	log.log(this, "u_event_log.file_write:0016", "Error writing file (" + ps_file + ") : " + lt_error.text, 4)
 	return -1
-end if
+END TRY
 
-
-
-
-Return li_sts
+Return 1
 
 end function
 
@@ -1341,16 +1344,17 @@ end if
 //#define EVENTLOG_INFORMATION_TYPE       0x0004
 //#define EVENTLOG_AUDIT_SUCCESS          0x0008
 //#define EVENTLOG_AUDIT_FAILURE          0x0010
-
-if pi_severity >= loglevel then
-	if common_thread.utilities_ok() then
-		common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
-		lb_reported = True
-	else
-		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
-	end if
-end if
-
+// Not working, call returns -1
+// Commenting 30/09/2023
+//if pi_severity >= loglevel then
+//	if common_thread.utilities_ok() then
+//		li_sts = common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
+//		lb_reported = True
+//	else
+//		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
+//	end if
+//end if
+//
 
 // Construct the event structure
 lstr_log.severity = pi_severity

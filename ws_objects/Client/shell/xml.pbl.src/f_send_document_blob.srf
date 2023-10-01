@@ -26,7 +26,7 @@ end if
 
 // Convert the blob to a hex-encoded string
 TRY
-	ls_hex = common_thread.eprolibnet4.convertbinarytohex(pbl_document)
+	ls_hex = common_thread.inv_CoderObject.HexEncode(pbl_document)
 CATCH (throwable lt_error)
 	log.log(po_null, "f_send_document_blob:0023", "Error calling binary to hex conversion (" + lt_error.text + ")", 4)
 	return -1

@@ -104,7 +104,7 @@ for i = 1 to pstr_element.child_count
 		CASE "templatedata"
 			ls_hexdata = pstr_element.child[i].gettexttrim()
 			if len(ls_hexdata) > 0 then
-				lstr_document_template_file.templatedata = common_thread.eprolibnet4.converthextobinary(ls_hexdata)
+				lstr_document_template_file.templatedata = common_thread.inv_CoderObject.HexDecode(ls_hexdata)
 			end if
 		CASE "modifieddate"
 			lstr_document_template_file.modifieddate = f_xml_datetime(pstr_element.child[i].gettexttrim())

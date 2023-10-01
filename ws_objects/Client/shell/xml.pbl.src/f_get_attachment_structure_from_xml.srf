@@ -3,135 +3,8 @@ global type f_get_attachment_structure_from_xml from function_object
 end type
 
 forward prototypes
-global function str_external_observation_attachment f_get_document_from_xml (string ps_xml)
 global function integer f_get_attachment_structure_from_xml (string ps_xml, ref str_external_observation_attachment pstr_attachment)
 end prototypes
-
-global function str_external_observation_attachment f_get_document_from_xml (string ps_xml);//
-//
-//
-//
-//
-//
-u_xml_document lxml_doc
-PBDOM_ELEMENT pbdom_root
-PBDOM_ELEMENT pbdom_element_array[]
-PBDOM_ELEMENT pbdom_element_array2[]
-PBDOM_ATTRIBUTE pbdom_attribute_array[]
-integer li_sts
-string ls_root
-long i, j, k
-string ls_file
-blob lbl_xml_file
-boolean lb_success
-long ll_original_observation_count
-string ls_extension
-string ls_element_description
-string ls_text
-string ls_description
-blob lbl_attachment
-long ll_hex_length
-long ll_blob_length
-string ls_attachment_type
-boolean lb_xml_attachment
-boolean lb_xml_data
-string ls_observation
-string ls_result_value
-string ls_temp
-string ls_date
-string ls_time
-datetime ldt_result_date_time
-string ls_print_result_flag
-string ls_result_unit
-string ls_abnormal_flag
-string ls_abnormal_nature
-integer li_severity
-string ls_observed_by
-long ll_rc
-integer lia_result_sequence[]
-string ls_location
-string lsa_observation_id[]
-string ls_null
-string ls_result
-str_external_observation_attachment lstr_document_error
-str_external_observation_attachment lstr_document
-
-str_c_xml_code_list lstr_observation_codes
-
-setnull(ls_null)
-
-li_sts = f_get_xml_document(ps_xml, lxml_doc)
-pbdom_root = lxml_doc.XML_Document.GetRootElement()
-
-ls_root = pbdom_root.GetName()
-ls_text = pbdom_root.GetText()
-setnull(ls_extension)
-ls_description = ls_root
-
-if pbdom_root.HasAttributes() then
-	// Scan the attributes for an extension and/or a description
-	
-	pbdom_root.GetAttributes(ref pbdom_attribute_array[])
-	
-	for k=1 to UpperBound(pbdom_attribute_array)
-		choose case lower(pbdom_attribute_array[k].GetName())
-			case "extension"
-				ls_extension = pbdom_attribute_array[k].GetText()
-			case "description"
-				ls_description = pbdom_attribute_array[k].GetText()
-		end choose
-	next
-
-	// See if this looks like an attachment.  If the root element has attributes, has a value, but no child elements,
-	// then it might be an attachment wrapped in XML
-	if not pbdom_root.HasChildElements() and len(ls_text) > 0 then
-		if not isnull(ls_extension) then
-			// This is an attachment so treat it as an attachment instead of as an XML document
-			if isnull(ls_description) then ls_description = ls_root
-			// Convert the hexbinary attachment into a blob
-			TRY
-				lbl_attachment = common_thread.eprolibnet4.converthextobinary(ls_text)
-			CATCH (throwable lt_error)
-				log.log(po_null, "f_get_attachment_structure_from_xml.f_get_document_from_xml:0086", "Error calling hex to binary conversion (" + lt_error.text + ")", 4)
-				return lstr_document_error
-			END TRY
-			
-			// If the text converted to binary then we really do have an attachment
-			if len(lbl_attachment) > 0 then
-				ll_hex_length = len(ls_text)
-				ll_blob_length = len(lbl_attachment)
-				
-				if ll_hex_length <> (ll_blob_length * 2) then
-					log.log(po_null, "f_get_attachment_structure_from_xml.f_get_document_from_xml:0096", "Error converting hex to binary", 4)
-					return lstr_document_error
-				end if
-				
-				ls_attachment_type = f_attachment_type_from_object_type(ls_extension)
-				
-//				// Add the observation structure
-//				observation_count += 1
-//				setnull(observations[observation_count].observation_id)
-//				observations[observation_count].result_count = 0
-//				
-//				// Add the attachment
-//				observations[observation_count].attachment_list.attachment_count = 1
-//				setnull(observations[observation_count].attachment_list.attachments[1].filename)
-//				observations[observation_count].attachment_list.attachments[1].attachment_type = ls_attachment_type
-//				observations[observation_count].attachment_list.attachments[1].extension = ls_extension
-//				observations[observation_count].attachment_list.attachments[1].attachment_comment_title = ls_description
-//				observations[observation_count].attachment_list.attachments[1].attachment = lbl_attachment
-				return lstr_document
-			end if
-		end if
-	end if
-end if
-
-
-return lstr_document
-
-
-
-end function
 
 global function integer f_get_attachment_structure_from_xml (string ps_xml, ref str_external_observation_attachment pstr_attachment);//
 //
@@ -231,7 +104,7 @@ if pbdom_root.HasAttributes() then
 				CASE "base64"
 					// Convert the base64 attachment into a blob
 					TRY
-						lbl_attachment = common_thread.eprolibnet4.convertbase64tobinary(ls_text)
+						lbl_attachment = common_thread.inv_CoderObject.Base64Decode(ls_text)
 					CATCH (throwable lt_error)
 						log.log(po_null, "f_get_attachment_structure_from_xml:0101", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
 						return -1
@@ -239,7 +112,7 @@ if pbdom_root.HasAttributes() then
 				CASE ELSE
 					// Convert the hexbinary attachment into a blob
 					TRY
-						lbl_attachment = common_thread.eprolibnet4.converthextobinary(ls_text)
+						lbl_attachment = common_thread.inv_CoderObject.HexDecode(ls_text)
 					CATCH (throwable lt_error2)
 						log.log(po_null, "f_get_attachment_structure_from_xml:0109", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
 						return -1

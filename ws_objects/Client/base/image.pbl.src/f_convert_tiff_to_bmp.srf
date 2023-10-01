@@ -22,15 +22,20 @@ if isnull(ps_bmp_file) or len(ps_bmp_file) = 0 then
 	ps_bmp_file = f_temp_file("bmp")
 end if
 
-TRY
-	li_sts = common_thread.eprolibnet4.ConvertImage(ps_tiff_file, ps_bmp_file)
-CATCH (throwable lt_error)
-	log.log(po_null, "f_convert_tiff_to_bmp:0020", "Error converting image file from ~"" + ps_tiff_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
+	if common_thread.utilities_ok() then
+	TRY
+		li_sts = common_thread.eprolibnet4.ConvertImage(ps_tiff_file, ps_bmp_file)
+	CATCH (throwable lt_error)
+		log.log(po_null, "f_convert_tiff_to_bmp:0020", "Error converting image file from ~"" + ps_tiff_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
+		return -1
+	END TRY
+else
+	log.log(po_null, "f_convert_tiff_to_bmp:0025", "Tiff not converted (Utilities not available)", 3)
 	return -1
-END TRY
+end if
 
 if li_sts <= 0 then
-	log.log(po_null, "f_convert_tiff_to_bmp:0025", "Error converting file (" + ps_tiff_file + ")", 3)
+	log.log(po_null, "f_convert_tiff_to_bmp:0030", "Error converting file (" + ps_tiff_file + ")", 3)
 	return -1
 end if
 

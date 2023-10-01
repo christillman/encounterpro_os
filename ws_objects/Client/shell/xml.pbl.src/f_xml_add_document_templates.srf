@@ -3,148 +3,9 @@ global type f_xml_add_document_templates from function_object
 end type
 
 forward prototypes
-global function string f_get_document_templates_xml (str_document_elements pstr_document_elements)
 global function string f_xml_add_document_templates (str_document_templates pstr_document_templates)
 global subroutine f_xml_add_document_templates (pbdom_element po_parent_element, str_document_templates pstr_document_templates)
 end prototypes
-
-global function string f_get_document_templates_xml (str_document_elements pstr_document_elements);string ls_xml
-long i, j, k
-integer li_sts
-PBDOM_Element lo_root
-PBDOM_Element lo_element_set
-PBDOM_Element lo_element
-PBDOM_Element lo_element2
-PBDOM_Element lo_element3
-PBDOM_Element lo_element4
-PBDOM_Document lo_document
-string ls_null
-long ll_set
-
-setnull(ls_null)
-
-if pstr_document_elements.element_set_count <= 0 then return ""
-
-TRY
-	lo_document = CREATE PBDOM_Document
-	lo_document.newdocument("DocumentElements")
-
-	lo_root = CREATE PBDOM_Element
-	lo_root.setname("DocumentElements")
-	
-	for ll_set = 1 to pstr_document_elements.element_set_count
-		lo_element_set = CREATE PBDOM_Element
-		lo_element_set.setname("ElementSet")
-		lo_root.addcontent(lo_element_set)
-		
-		lo_element2 = CREATE PBDOM_Element
-		lo_element2.setname("Description")
-		lo_element2.addcontent(pstr_document_elements.element_set[ll_set].description)
-		lo_element_set.addcontent(lo_element2)
-		
-		for i = 1 to pstr_document_elements.element_set[ll_set].element_count
-			lo_element = CREATE PBDOM_Element
-			lo_element.setname("Element")
-			lo_element_set.addcontent(lo_element)
-			
-			lo_element2 = CREATE PBDOM_Element
-			lo_element2.setname("Name")
-			lo_element2.addcontent(pstr_document_elements.element_set[ll_set].element[i].element)
-			lo_element.addcontent(lo_element2)
-	
-			if len(pstr_document_elements.element_set[ll_set].element[i].description) > 0 then
-				lo_element2 = CREATE PBDOM_Element
-				lo_element2.setname("Description")
-				lo_element2.addcontent(pstr_document_elements.element_set[ll_set].element[i].description)
-				lo_element.addcontent(lo_element2)
-	
-			end if
-			
-			if len(pstr_document_elements.element_set[ll_set].element[i].datatype) > 0 then
-				lo_element2 = CREATE PBDOM_Element
-				lo_element2.setname("Datatype")
-				lo_element2.addcontent(pstr_document_elements.element_set[ll_set].element[i].datatype)
-				lo_element.addcontent(lo_element2)
-			end if
-	
-			if pstr_document_elements.element_set[ll_set].element[i].maxlength > 0 then
-				lo_element2 = CREATE PBDOM_Element
-				lo_element2.setname("MaxLength")
-				lo_element2.addcontent(string(pstr_document_elements.element_set[ll_set].element[i].maxlength))
-				lo_element.addcontent(lo_element2)
-			end if
-	
-			for j = 1 to pstr_document_elements.element_set[ll_set].element[i].enumerated_count
-				if len(pstr_document_elements.element_set[ll_set].element[i].enumerated_value[j]) > 0 then
-					lo_element2 = CREATE PBDOM_Element
-					lo_element2.setname("DomainItem")
-					lo_element2.addcontent(pstr_document_elements.element_set[ll_set].element[i].enumerated_value[j])
-					lo_element.addcontent(lo_element3)
-				end if
-			next
-	
-			for j = 1 to pstr_document_elements.element_set[ll_set].element[i].mapped_property_count
-				lo_element2 = CREATE PBDOM_Element
-				lo_element2.setname("MappedProperty")
-				lo_element.addcontent(lo_element2)
-				
-				if len(pstr_document_elements.element_set[ll_set].element[i].Mapped_Property[j].mapped_property) > 0 then
-					lo_element3 = CREATE PBDOM_Element
-					lo_element3.setname("MappedProperty")
-					lo_element3.addcontent(pstr_document_elements.element_set[ll_set].element[i].Mapped_Property[j].mapped_property)
-					lo_element2.addcontent(lo_element3)
-				end if
-			
-				for k = 1 to pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule_count
-					lo_element3 = CREATE PBDOM_Element
-					lo_element3.setname("MappingRule")
-					lo_element2.addcontent(lo_element3)
-				
-					if len(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].operator) > 0 then
-						lo_element4 = CREATE PBDOM_Element
-						lo_element4.setname("Operator")
-						lo_element4.addcontent(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].operator)
-						lo_element3.addcontent(lo_element4)
-					end if
-					
-					if len(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].Right_Side) > 0 then
-						lo_element4 = CREATE PBDOM_Element
-						lo_element4.setname("RightSide")
-						lo_element4.addcontent(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].Right_Side)
-						lo_element3.addcontent(lo_element4)
-					end if
-					
-					if len(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].True_Value) > 0 then
-						lo_element4 = CREATE PBDOM_Element
-						lo_element4.setname("TrueValue")
-						lo_element4.addcontent(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].True_Value)
-						lo_element3.addcontent(lo_element4)
-					end if
-					
-					if len(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].False_Value) > 0 then
-						lo_element4 = CREATE PBDOM_Element
-						lo_element4.setname("FalseValue")
-						lo_element4.addcontent(pstr_document_elements.element_set[ll_set].element[i].mapped_property[j].mapping_rule[k].False_Value)
-						lo_element3.addcontent(lo_element4)
-					end if
-				next
-			next
-		next
-	next
-	
-	lo_document.setrootelement(lo_root)
-CATCH (throwable lo_error)
-	log.log(po_null, "f_xml_add_document_templates.f_get_document_templates_xml:0127", "Error creating wrapper (" + lo_error.text + ")", 4)
-	return ls_null
-END TRY
-
-ls_xml = lo_document.savedocumentintostring( )
-
-
-return ls_xml
-
-
-end function
 
 global function string f_xml_add_document_templates (str_document_templates pstr_document_templates);string ls_xml
 long i, j, k
@@ -209,8 +70,8 @@ TRY
 			end if
 			
 			lo_element3 = CREATE PBDOM_Element
-			lo_element3.setname("TemplateData")
-			ls_hexdata = common_thread.eprolibnet4.convertbinarytohex(pstr_document_templates.template[ll_template].templatefile.templatedata)
+			lo_element3.setname("TemplateData")		
+			ls_hexdata = common_thread.inv_CoderObject.HexEncode(pstr_document_templates.template[ll_template].templatefile.templatedata)
 			lo_element3.addcontent(ls_hexdata)
 			lo_element2.addcontent(lo_element3)
 	
@@ -295,7 +156,7 @@ TRY
 			
 			lo_element3 = CREATE PBDOM_Element
 			lo_element3.setname("TemplateData")
-			ls_hexdata = common_thread.eprolibnet4.convertbinarytohex(pstr_document_templates.template[ll_template].templatefile.templatedata)
+			ls_hexdata = common_thread.inv_CoderObject.HexEncode(pstr_document_templates.template[ll_template].templatefile.templatedata)
 			lo_element3.addcontent(ls_hexdata)
 			lo_element2.addcontent(lo_element3)
 	

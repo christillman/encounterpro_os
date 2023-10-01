@@ -32,6 +32,9 @@ str_config_object_info contraindication_alerts[]
 
 oleobject mm
 oleobject eprolibnet4
+
+CoderObject inv_CoderObject
+
 string default_database
 string epro_service = "EncounterPRO"
 string default_display_style
@@ -158,6 +161,7 @@ long adStateExecuting = 4 //Indicates that the object is executing a command.
 long adStateFetching = 8 //Indicates that the rows of the object are being retrieved. 
 
 end variables
+
 forward prototypes
 public subroutine shutdown ()
 public function integer get_adodb (ref u_adodb_connection puo_adodb)
@@ -313,26 +317,6 @@ end if
 default_database = "<Default>"
 setnull(adodb)
 
-//// Initialize utility com objects
-//mm = CREATE oleobject
-//li_sts = mm.connecttonewobject("EPROLIB4.Utilities")
-//if li_sts < 0 then
-//	openwithparm(w_pop_message, "EPROLIB4 is not available (" + string(li_sts) + ").  Please contact your system administrator or JMJ customer support for assistance.")
-//	return -1
-//end if
-
-eprolibnet4 = CREATE oleobject
-li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
-if li_sts < 0 then
-	SetNull(eprolibnet4)
-	openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall EncounterPRO-OS or contact your system administrator for assistance.")
-	// return -1
-else
-	eprolibnet4.EPVersion = f_app_version()
-end if
-
-mm = eprolibnet4
-
 // Set osversion
 // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vista or 2008
 li_sts = getenvironment(lo_env)
@@ -411,24 +395,29 @@ if lower(current_printer.printername) = lower(lstr_printer.printername) then ret
 
 current_printer = lstr_printer
 
-if osversion <= 4 then
-	// If we get here then we need to set the specified printer as the default printer for this user/computer
-	// To do that we'll first set the registry key which specifies the default printer
-	li_sts = RegistrySet("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows", "Device", current_printer.nt_device)
-	if li_sts <= 0 then
-		log.log(this, "u_common_thread.set_printer:0030", "Error setting default printer in registry (" + current_printer.printername + ")", 4)
-	end if
-else
-	if this.utilities_ok() then
-		TRY
-			eprolibnet4.SetDefaultPrinter(current_printer.printername)
-		CATCH (oleruntimeerror lt_error)
-			log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
-		END TRY
-	else
-		log.log(this, "u_common_thread.set_printer:0040", "SetDefaultPrinter failed (Utilities not available)", 3)
-	end if
+li_sts = PrintSetPrinter(current_printer.printername)
 
+if li_sts < 0 then
+	if osversion <= 4 then
+		// If we get here then we need to set the specified printer as the default printer for this user/computer
+		// To do that we'll first set the registry key which specifies the default printer
+		li_sts = RegistrySet("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows", "Device", current_printer.nt_device)
+		if li_sts <= 0 then
+			log.log(this, "u_common_thread.set_printer:0030", "Error setting default printer in registry (" + current_printer.printername + ")", 4)
+		end if
+	else
+	
+		if this.utilities_ok() then
+			TRY
+				eprolibnet4.SetDefaultPrinter(current_printer.printername)
+			CATCH (oleruntimeerror lt_error)
+				log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+			END TRY
+		else
+			log.log(this, "u_common_thread.set_printer:0040", "SetDefaultPrinter failed (Utilities not available)", 3)
+		end if
+	
+	end if
 end if
 
 // Then we'll set the default printer with the powerbuilder system command.  This will affect the PowerBuild "Print" functions
@@ -443,30 +432,45 @@ public function str_printer get_default_printer ();integer li_sts
 string ls_default_printer
 string ls_printer
 string ls_temp
+String ls_fullstring
+Long ll_place
 
-// We put this code here because we don't want it to execute until it's actually needed
-
+ls_fullstring=PrintGetPrinter()
+ll_place=pos (ls_fullstring, "~t")
+ls_printer=left(ls_fullstring, ll_place -1)
+//				String ls_driver, ls_port, ls_temp
+//				ls_temp=mid(ls_fullstring, ll_place +1)
+//				ll_place=pos (ls_temp, "~t")
+//				ls_driver=left(ls_temp, ll_place -1)
+//				ls_port=mid(ls_temp, ll_place +1)
+//				sle_1.text=ls_printer
+//				sle_2.text=ls_driver
+//				sle_3.text=ls_port
 
 if not default_printer_set then
 	default_printer_set = true  // prevents a loop with get_printer()
 	if printers.printer_count > 0 then
-		if osversion <= 4 then
-			// If there is more than one printer then see if we can figure out the default from the registry.
-			// we're doing it this way because the PrintGetPrinter() system function appears to have
-			// problems if there aren't any printers or if we're running as a service
-			li_sts = RegistryGet("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows", "Device", RegString!, ls_default_printer)
-			if li_sts > 0 then
-				f_split_string(ls_default_printer, ",", ls_printer, ls_temp)
-			end if
+		if len(ls_printer) > 0 then
+			default_printer = get_printer(ls_printer)
 		else
-			if this.utilities_ok() then
-				TRY
-					ls_printer = eprolibnet4.GetDefaultPrinter()
-				CATCH (oleruntimeerror lt_error)
-					log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
-				END TRY
+			if osversion <= 4 then
+				// If there is more than one printer then see if we can figure out the default from the registry.
+				// we're doing it this way because the PrintGetPrinter() system function appears to have
+				// problems if there aren't any printers or if we're running as a service
+				li_sts = RegistryGet("HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows", "Device", RegString!, ls_default_printer)
+				if li_sts > 0 then
+					f_split_string(ls_default_printer, ",", ls_printer, ls_temp)
+				end if
 			else
-				log.log(this, "u_common_thread.get_default_printer:0028", "GetDefaultPrinter failed (Utilities not available)", 3)
+				if this.utilities_ok() then
+					TRY
+						ls_printer = eprolibnet4.GetDefaultPrinter()
+					CATCH (oleruntimeerror lt_error)
+						log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
+					END TRY
+				else
+					log.log(this, "u_common_thread.get_default_printer:0028", "GetDefaultPrinter failed (Utilities not available)", 3)
+				end if
 			end if
 		end if
 		
@@ -476,7 +480,7 @@ if not default_printer_set then
 			setnull(default_printer.printername)
 		end if
 		
-		if isnull(common_thread.default_printer.printername) or trim(common_thread.default_printer.printername) = "" then
+		if isnull(default_printer.printername) or trim(default_printer.printername) = "" then
 			// If we still don't have a default printer then log a warning
 			log.log(this, "u_common_thread.get_default_printer:0036", "Unable to determine default printer", 3)
 		else
@@ -1712,7 +1716,29 @@ return 0
 
 end function
 
-public function boolean utilities_ok ();
+public function boolean utilities_ok ();integer li_sts
+
+//// Initialize utility com objects
+//mm = CREATE oleobject
+//li_sts = mm.connecttonewobject("EPROLIB4.Utilities")
+//if li_sts < 0 then
+//	openwithparm(w_pop_message, "EPROLIB4 is not available (" + string(li_sts) + ").  Please contact your system administrator or JMJ customer support for assistance.")
+//	return -1
+//end if
+
+IF IsNull(this.eprolibnet4) THEN 
+	eprolibnet4 = CREATE oleobject
+	li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
+	if li_sts < 0 then
+		SetNull(eprolibnet4)
+		openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall EncounterPRO-OS or contact your system administrator for assistance.")
+		// return -1
+	else
+		eprolibnet4.EPVersion = f_app_version()
+	end if
+	
+	mm = eprolibnet4
+END IF
 
 RETURN (Not IsNull(this.eprolibnet4))
 end function

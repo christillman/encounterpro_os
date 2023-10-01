@@ -37,18 +37,21 @@ set_connected_status(lb_connected)
 if not connected then return 0
 
 get_attribute("owner_id", ll_owner_id)
-
-TRY
-	la_rtn = com_source.do_source()
-	if classname(la_rtn) = "string" then
-		ls_results_xml = string(la_rtn)
-	else
-		ls_results_xml = ""
-	end if
-CATCH (throwable lt_error)
-	log.log(this, "u_component_observation_jmj_com.xx_do_source:0023", "Error calling com source (" + lt_error.text + ")", 4)
-	return -1
-END TRY
+if common_thread.utilities_ok() then
+	TRY
+		la_rtn = com_source.do_source()
+		if classname(la_rtn) = "string" then
+			ls_results_xml = string(la_rtn)
+		else
+			ls_results_xml = ""
+		end if
+	CATCH (throwable lt_error)
+		log.log(this, "u_component_observation_jmj_com.xx_do_source:0023", "Error calling com source (" + lt_error.text + ")", 4)
+		return -1
+	END TRY
+else
+	log.log(this, "u_component_observation_jmj_com.xx_do_source:0027", "XML not transformed (Utilities not available)", 3)
+end if		
 
 if isnull(ls_results_xml) or ls_results_xml = "" then return 0
 

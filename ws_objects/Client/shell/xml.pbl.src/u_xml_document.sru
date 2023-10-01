@@ -145,14 +145,17 @@ else
 		ps_rendered = xml_string
 	else
 		ls_xslt = f_blob_to_string(lstr_material.material_object)
-		
-		TRY
-			ps_rendered = common_thread.eprolibnet4.TransformXML(xml_string, ls_xslt)
-		CATCH (throwable lo_error)
-			log.log(this, "u_xml_document.render:0023", "Error transforming xml file", 3)
-			setnull(ps_rendered)
-		END TRY
-		
+		if common_thread.utilities_ok() then
+			TRY
+				ps_rendered = common_thread.eprolibnet4.TransformXML(xml_string, ls_xslt)
+			CATCH (throwable lo_error)
+				log.log(this, "u_xml_document.render:0023", "Error transforming xml file", 3)
+				setnull(ps_rendered)
+			END TRY
+		else
+			log.log(this, "u_xml_document.render:0027", "XML not transformed (Utilities not available)", 3)
+		end if		
+			
 		if isnull(ps_rendered) or len(ps_rendered) = 0 then
 			ps_rendered = xml_string
 		else

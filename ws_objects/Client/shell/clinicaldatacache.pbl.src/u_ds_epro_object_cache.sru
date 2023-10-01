@@ -795,7 +795,7 @@ if ll_property_index > 0 then
 				if isnull(lbl_value) or len(lbl_value) <= 0 then
 					setnull(pstr_property_value.value)
 				else
-					pstr_property_value.value = common_thread.eprolibnet4.convertbinarytohex(lbl_value)
+					pstr_property_value.value = common_thread.inv_CoderObject.HexEncode(lbl_value)
 					pstr_property_value.datatype = property[ll_property_index].property_datatype
 					pstr_property_value.filetype = ls_filetype
 					pstr_property_value.encoding = "hex"
@@ -1737,7 +1737,7 @@ CHOOSE CASE lower(ps_property)
 			ls_image_filetype = "bmp"
 		end if
 
-		pstr_property_value.value = common_thread.eprolibnet4.convertbinarytohex(lbl_image_data)
+		pstr_property_value.value = common_thread.inv_CoderObject.HexEncode(lbl_image_data)
 		pstr_property_value.datatype = "binary"
 		pstr_property_value.filetype = ls_image_filetype
 		pstr_property_value.encoding = "hex"

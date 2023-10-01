@@ -26,7 +26,7 @@ CHOOSE CASE upper(ps_encoding)
 	CASE "BASE64"
 		// Convert the base64 attachment into a blob
 		TRY
-			lbl_blob = common_thread.eprolibnet4.ConvertBase64ToBinary(ps_string)
+			lbl_blob = common_thread.inv_CoderObject.Base64Decode(ps_string)
 		CATCH (throwable lt_error)
 			log.log(po_null, "f_string_to_blob:0023", "Error calling base64 to binary conversion (" + lt_error.text + ")", 4)
 			return lbl_blob
@@ -34,7 +34,7 @@ CHOOSE CASE upper(ps_encoding)
 	CASE "BINHEX", "HEX"
 		// Convert the hexbinary attachment into a blob
 		TRY
-			lbl_blob = common_thread.eprolibnet4.converthextobinary(ps_string)
+			lbl_blob = common_thread.inv_CoderObject.HexDecode(ps_string)
 		CATCH (throwable lt_error2)
 			log.log(po_null, "f_string_to_blob:0031", "Error calling hex to binary conversion (" + lt_error2.text + ")", 4)
 			return lbl_blob

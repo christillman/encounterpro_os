@@ -2524,7 +2524,7 @@ lo_element2 = add_element(lo_element, "OwnerID", string(pstr_material.owner_id))
 
 
 if len(pstr_material.material_object) > 0 then
-	ls_hexbinary = common_thread.eprolibnet4.convertbinarytohex(pstr_material.material_object)
+	ls_hexbinary = common_thread.inv_CoderObject.HexEncode(pstr_material.material_object)
 	if isnull(ls_hexbinary) or len(ls_hexbinary) = 0 then
 		log.log(this, "u_xml_script.add_datafile:0026", "Error converting file data to hexbinary (" + string(pstr_material.material_id) + ")", 4)
 		return -1

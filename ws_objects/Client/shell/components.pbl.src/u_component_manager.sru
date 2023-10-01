@@ -436,14 +436,18 @@ string ls_arguments
 blob lbl_setup
 integer li_sts
 string ls_message
+boolean lb_is_admin = false
 str_component_version lstr_component_version
 str_popup_return popup_return
 
+setnull(ls_install_user)
+setnull(ls_install_pw)
 
-if common_thread.eprolibnet4.IsUserAdmin() then
-	setnull(ls_install_user)
-	setnull(ls_install_pw)
-else
+if common_thread.utilities_ok() then
+	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin() 
+end if
+
+if not lb_is_admin then
 	ls_install_user = datalist.get_preference("SYSTEM", "Install Username")
 	ls_install_pw = datalist.get_preference("SYSTEM", "Install Password")
 	
@@ -499,33 +503,38 @@ CHOOSE CASE lower(lstr_component_version.installer)
 		
 		ls_arguments = "/S EncounterPROFolder=" + gnv_app.program_directory + ";"
 
-		TRY
-			if isnull(ls_install_user) or isnull(ls_install_pw) then
-				setnull(ls_install_user)
-				common_thread.eprolibnet4.ExecuteProgram(ls_setup_exe, ls_arguments)
-			else
-				common_thread.eprolibnet4.ExecuteProgramAs(ls_setup_exe, ls_arguments, ls_install_user, ls_install_pw)
-			end if
-		CATCH (oleruntimeerror lt_error)
-			ls_message = "Error Installing Component ~r~n"
-			ls_message += pstr_component_definition.component_id + ", " + lstr_component_version.version_name + "~r~n" + ls_setup_exe + "~r~n"
-			ls_message += lt_error.text + "~r~n" + lt_error.description
-			log.log(this, "u_component_manager.install_component_version:0082", ls_message, 4)
-			sqlca.jmj_component_log(pstr_component_definition.component_id , &
-									lstr_component_version.version,  &
-									"Install", & 
-									datetime(today(), now()) ,  &
-									gnv_app.computer_id ,  &
-									ls_install_user ,  &
-									"ERROR" ,  &
-									ls_message ,  &
-									current_scribe.user_id  ) 
-			if not tf_check() then return -1
+		if common_thread.utilities_ok() then
+			TRY
+				if isnull(ls_install_user) or isnull(ls_install_pw) then
+					setnull(ls_install_user)
+					common_thread.eprolibnet4.ExecuteProgram(ls_setup_exe, ls_arguments)
+				else
+					common_thread.eprolibnet4.ExecuteProgramAs(ls_setup_exe, ls_arguments, ls_install_user, ls_install_pw)
+				end if
+			CATCH (oleruntimeerror lt_error)
+				ls_message = "Error Installing Component ~r~n"
+				ls_message += pstr_component_definition.component_id + ", " + lstr_component_version.version_name + "~r~n" + ls_setup_exe + "~r~n"
+				ls_message += lt_error.text + "~r~n" + lt_error.description
+				log.log(this, "u_component_manager.install_component_version:0082", ls_message, 4)
+				sqlca.jmj_component_log(pstr_component_definition.component_id , &
+										lstr_component_version.version,  &
+										"Install", & 
+										datetime(today(), now()) ,  &
+										gnv_app.computer_id ,  &
+										ls_install_user ,  &
+										"ERROR" ,  &
+										ls_message ,  &
+										current_scribe.user_id  ) 
+				if not tf_check() then return -1
+				return -1
+			END TRY
+		else
+			log.log(this, "u_component_manager.install_component_version:0101", "Component not installed (Utilities not available)", 3)
 			return -1
-		END TRY
+		end if
 	CASE ELSE
 		ls_message = "Unknown installer (" + lstr_component_version.installer + ")"
-		log.log(this, "u_component_manager.install_component_version:0097", ls_message, 4)
+		log.log(this, "u_component_manager.install_component_version:0106", ls_message, 4)
 		sqlca.jmj_component_log(pstr_component_definition.component_id , &
 								lstr_component_version.version,  &
 								"Install", & 
@@ -611,8 +620,7 @@ end function
 
 public function boolean is_environment_installable ();string ls_install_user
 string ls_install_pw
-boolean lb_is_admin
-
+boolean lb_is_admin = false
 
 if common_thread.utilities_ok() then
 	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
@@ -624,8 +632,6 @@ ls_install_pw = datalist.get_preference("SYSTEM", "Install Password")
 
 if len(ls_install_user) > 0 and len(ls_install_pw) > 0 then return true
 
-
-
 return false
 
 end function
@@ -633,7 +639,7 @@ end function
 public subroutine refresh_status ();string ls_temp
 string ls_install_user
 string ls_install_pw
-boolean lb_is_admin
+boolean lb_is_admin = false
 
 // check the last refresh, only refresh every minute
 if date(status_last_refreshed) = today() then

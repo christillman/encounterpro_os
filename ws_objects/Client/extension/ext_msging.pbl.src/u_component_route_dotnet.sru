@@ -126,7 +126,7 @@ end if
 CHOOSE CASE lower(ls_document_encoding)
 	CASE "base64"
 		TRY
-			ls_encoded_data = common_thread.eprolibnet4.convertbinarytobase64(lstr_document.attachment)
+			ls_encoded_data = common_thread.inv_CoderObject.Base64Encode(lstr_document.attachment)
 			if isnull(ls_encoded_data) or len(ls_encoded_data) = 0 then
 				log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0036", "Error converting file data to base64 (" + string(lstr_document.attachment) + ")", 4)
 				return -1
@@ -137,7 +137,7 @@ CHOOSE CASE lower(ls_document_encoding)
 	CASE "hex", "binhex"
 		ls_document_encoding = "hex"
 		TRY
-			ls_encoded_data = common_thread.eprolibnet4.convertbinarytohex(lstr_document.attachment)
+			ls_encoded_data = common_thread.inv_CoderObject.HexEncode(lstr_document.attachment)
 			if isnull(ls_encoded_data) or len(ls_encoded_data) = 0 then
 				log.log(this, "u_component_route_dotnet.add_document_to_componentdata:0047", "Error converting file data to hex (" + string(lstr_document.attachment) + ")", 4)
 				return -1

@@ -6738,10 +6738,10 @@ CHOOSE CASE lower(ps_property_value.encoding)
 	CASE "hex"
 		// possibility to replace
 		// lbl_property_data = lnv_CoderObject.HexDecode(ps_property_value.value)
-		lbl_property_data = common_thread.eprolibnet4.converthextobinary(ps_property_value.value)
+		lbl_property_data = common_thread.inv_CoderObject.HexDecode(ps_property_value.value)
 	CASE ELSE
 		// Assume hex
-		lbl_property_data = common_thread.eprolibnet4.converthextobinary(ps_property_value.value)
+		lbl_property_data = common_thread.inv_CoderObject.HexDecode(ps_property_value.value)
 END CHOOSE
 
 li_sts = add_document(lbl_property_data, ps_property_value.filetype, lstr_attributes)

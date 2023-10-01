@@ -95,23 +95,27 @@ end if
 
 // If we need to transform the xml, do it here
 if len(ls_xslt) > 0 then
-	TRY
-		ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
-	CATCH (oleruntimeerror lt_error2)
-		ls_message += lt_error2.text + "~r~n" + lt_error2.description
-		log.log(this, "u_component_document_dotnet.xx_do_source:0079", "Error calling TransformXML:~r~n" + ls_message, 4)
-		return -1
-	END TRY
+	if common_thread.utilities_ok() then
+		TRY
+			ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
+		CATCH (oleruntimeerror lt_error2)
+			ls_message += lt_error2.text + "~r~n" + lt_error2.description
+			log.log(this, "u_component_document_dotnet.xx_do_source:0079", "Error calling TransformXML:~r~n" + ls_message, 4)
+			return -1
+		END TRY
+	else
+		log.log(this, "u_component_document_dotnet.xx_do_source:0084", "XML not transformed (Utilities not available)", 3)
+	end if		
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else
-		log.log(this, "u_component_document_dotnet.xx_do_source:0085", "Error transforming xml", 3)
+		log.log(this, "u_component_document_dotnet.xx_do_source:0089", "Error transforming xml", 3)
 	end if
 end if
 
 li_sts = read_data(ls_results_xml, "")
 if li_sts < 0 then
-	log.log(this, "u_component_document_dotnet.xx_do_source:0091", "Error reading xml documents", 4)
+	log.log(this, "u_component_document_dotnet.xx_do_source:0095", "Error reading xml documents", 4)
 	return -1
 end if
 

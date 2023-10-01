@@ -12,7 +12,7 @@ global function blob f_xml_blob (string ps_xml_blob);blob lbl_data
 
 
 TRY
-	lbl_data = common_thread.eprolibnet4.converthextobinary(ps_xml_blob)
+	lbl_data = common_thread.inv_CoderObject.HexDecode(ps_xml_blob)
 	if len(lbl_data) = 0 then setnull(lbl_data)
 CATCH (oleruntimeerror lt_error)
 	log.log(po_null, "f_xml_blob:0010", "Error converting hex-encoded binary to blob~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
