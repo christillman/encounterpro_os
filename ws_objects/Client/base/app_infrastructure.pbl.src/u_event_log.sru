@@ -478,6 +478,7 @@ end function
 public function integer file_read (string ps_file, ref blob pblb_file);
 long ll_bytes
 integer li_filenum
+blob lblob_empty
 
 if isnull(ps_file) then
 	log.log(this, "u_event_log.file_read:0003", "Null file path", 4)
@@ -487,7 +488,9 @@ end if
 TRY
 	li_filenum = FileOpen(ps_file, StreamMode!, Read!, Shared!)
 
-	ll_bytes = FileReadEx(li_filenum, pblb_file)
+		
+	ll_bytes = FileReadEx(li_filenum, lblob_empty)
+	pblb_file = lblob_empty
 	
 	FileClose(li_filenum)
 CATCH (throwable lt_error)
@@ -1096,6 +1099,7 @@ end function
 public function long file_read2 (string ps_file, ref blob pblb_file, boolean pb_lock_file);long ll_fileNum
 FileLock le_filelock
 long ll_bytes
+blob lblob_empty
 
 if isnull(ps_file) then
 	log.log(this, "u_event_log.file_read2:0006", "Null file path", 4)
@@ -1114,7 +1118,9 @@ if ll_fileNum < 0 then
 	return -1
 end if
 
-ll_bytes = FileReadEx(ll_fileNum, pblb_file)
+ll_bytes = FileReadEx(ll_fileNum, lblob_empty)
+pblb_file = lblob_empty
+
 if ll_bytes = -1 then
 	log.log(this, "u_event_log.file_read2:0024", "Error reading file (" + ps_file + ")", 4)
 	return -1
