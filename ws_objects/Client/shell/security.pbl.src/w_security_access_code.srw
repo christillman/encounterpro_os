@@ -78,9 +78,11 @@ end variables
 forward prototypes
 public subroutine number_pressed (string ps_number)
 public subroutine logon ()
+public subroutine wf_cancel ()
 end prototypes
 
-public subroutine number_pressed (string ps_number);access_id += ps_number
+public subroutine number_pressed (string ps_number);
+access_id += ps_number
 st_asterisks.text += "* "
 if not variable_password_length and len(access_id) = password_length then logon()
 
@@ -95,6 +97,9 @@ popup_return.items[2] = f_boolean_to_string(sticky_logon)
 closewithreturn(this, popup_return)
 
 
+end subroutine
+
+public subroutine wf_cancel ();
 end subroutine
 
 event open;str_popup popup
@@ -147,9 +152,15 @@ timer(li_logon_timeout, this)
 
 end event
 
-on timer;pb_cancel.triggerevent("clicked")
+event timer;
+str_popup_return popup_return
 
-end on
+setnull(popup_return.returnobject)
+popup_return.item_count = 0
+
+closewithreturn(this, popup_return)
+
+end event
 
 on w_security_access_code.create
 this.st_sticky=create st_sticky
@@ -299,7 +310,8 @@ string picturename = "button11.bmp"
 string disabledname = "b_push11.bmp"
 end type
 
-event clicked;call super::clicked;str_popup_return popup_return
+event clicked;call super::clicked;
+str_popup_return popup_return
 
 setnull(popup_return.returnobject)
 popup_return.item_count = 0

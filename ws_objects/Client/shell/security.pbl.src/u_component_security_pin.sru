@@ -26,18 +26,17 @@ string ls_username
 popup.item = "NOLOGON"
 popup.title = "Enter Access Code"
 openwithparm(w_security_access_code, popup)
+
 popup_return = message.powerobjectparm
-if popup_return.item_count < 2 then
-	setnull(ls_user_id)
-else
+setnull(ls_username)
+
+if popup_return.item_count >= 1 then
 	SELECT	user_id, username
 	INTO	:ls_user_id, :ls_username
 	FROM c_User (nolock)
 	WHERE access_id = :popup_return.items[1];
 	if not tf_check() then setnull(ls_username)
 	if sqlca.sqlcode = 100 then setnull(ls_username)
-	
-	
 //	lstr_attempt_logon.user_id = ls_user_id
 //	lstr_attempt_logon.sticky_logon = f_string_to_boolean(popup_return.items[2])
 end if
