@@ -12,20 +12,20 @@
   !define PRODUCT   EncounterPRO-OS
 
 ; EncounterPRO Client Setup Version
-  !define VERSION   7.2.1.4
+  !define VERSION   7.2.1.5
 
 ; Source Root
  !define SOURCE_ROOT "C:\EncounterPro\Builds"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   219
+  !define Database_Mod_Level   220
   ; Get this from the folder name in e.g.
   ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2797
   !define PBRuntime_VERSION   19.2.0.2797
   !define PBRuntime_FILENAME  PowerBuilderRuntime-2797.exe
 ; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
-  !define EncounterPRO_OS_Utilities_VERSION   1.0.5.0
+  !define EncounterPRO_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
