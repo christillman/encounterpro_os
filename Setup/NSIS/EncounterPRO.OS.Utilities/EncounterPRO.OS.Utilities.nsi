@@ -7,7 +7,7 @@
 !define SOURCE_ROOT "C:\EncounterPro\Builds"
 
 ; Component Versions
-!define EncounterPRO_Utilities_VERSION   1.0.5.0
+!define EncounterPRO_Utilities_VERSION   1.0.6.0
 ; This has a virus in it
 ; !define TPS_Foxit_Version 2.3
 !define EventLogInstaller_Version 1.2
@@ -22,10 +22,8 @@
 
 ; Module Locations C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Utilities\1.0.4.0\Files
 !define EncounterPRO_Utilities_SOURCE  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\${EncounterPRO_Utilities_VERSION}\Files'
-; !define FOXIT_READER_SOURCE "${SOURCE_ROOT}\3rd Party Software\Foxit Reader\${TPS_Foxit_Version}"
 !define EVENTLOG_INSTALLER_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\EproEventLogInstaller\${EventLogInstaller_Version}"
 !define CSharpGACTool_SOURCE "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Utilities\CSharpGACTool\${CSharpGACTool_Version}"
-; !define PS_Distiller_Driver_SOURCE "${SOURCE_ROOT}\3rd Party Software\Adobe\PS Distiller Driver"
 !define ICSharpCode_SharpZipLib_SOURCE "${SOURCE_ROOT}\3rd Party Software\ICSharpCode\SharpZipLib\${ICSharpCode_SharpZipLib_Version}"
 
 

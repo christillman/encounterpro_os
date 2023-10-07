@@ -160,9 +160,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DocumentWrapper.cs" />
     <Compile Include="ImageManipulation.cs" />
-    <Compile Include="InternalMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="InternalMethods.cs" />
     <Compile Include="PBCOMWrapper.cs" />
     <Compile Include="RouteWrapper.cs" />
     <Compile Include="SecurityManagerWrapper.cs" />

@@ -441,59 +441,6 @@ namespace EncounterPRO.OS
 			return (string[])contents.ToArray(Type.GetType("System.String"));
 		}
 
-
-		public byte[] ConvertHexToBinary(string hex_text)
-		{
-			try
-			{
-				return InternalMethods.HexStringToBytes(hex_text);
-			}
-			catch(Exception exc)
-			{
-				LogInternalEvent(exc,4);
-				throw exc;
-			}
-		}
-
-		public string ConvertBinaryToHex(byte[] binary)
-		{
-			try
-			{
-				return InternalMethods.BytesToHexString(binary);
-			}
-			catch(Exception exc)
-			{
-				LogInternalEvent(exc,4);
-				throw exc;
-			}
-		}
-
-		public byte[] ConvertBase64ToBinary(string base64_text)
-		{
-			try
-			{
-				return Convert.FromBase64String(base64_text);
-			}
-			catch(Exception exc)
-			{
-				LogInternalEvent(exc,4);
-				throw exc;
-			}
-		}
-
-		public string ConvertBinaryToBase64(byte[] binary)
-		{
-			try
-			{
-				return Convert.ToBase64String(binary);
-			}
-			catch(Exception exc)
-			{
-				LogInternalEvent(exc,4);
-				throw exc;
-			}
-		}
-
 		public void SetDefaultPrinter(string NewDefaultPrinter)
 		{
 			try
