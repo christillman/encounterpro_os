@@ -1717,6 +1717,7 @@ return 0
 end function
 
 public function boolean utilities_ok ();integer li_sts
+boolean lb_ok
 
 //// Initialize utility com objects
 //mm = CREATE oleobject
@@ -1726,7 +1727,9 @@ public function boolean utilities_ok ();integer li_sts
 //	return -1
 //end if
 
-IF IsNull(this.eprolibnet4) THEN 
+// IsNull doesn't seem to work
+lb_ok =  IsValid(this.eprolibnet4)
+IF NOT lb_ok THEN 
 	eprolibnet4 = CREATE oleobject
 	li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
 	if li_sts < 0 then
@@ -1740,7 +1743,9 @@ IF IsNull(this.eprolibnet4) THEN
 	mm = eprolibnet4
 END IF
 
-RETURN (Not IsNull(this.eprolibnet4))
+
+lb_ok =  IsValid(this.eprolibnet4)
+RETURN lb_ok
 end function
 
 public function integer screen_resolution_x ();
