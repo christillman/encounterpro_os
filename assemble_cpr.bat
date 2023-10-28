@@ -117,6 +117,7 @@ move /Y "Client\encounterpro.os.client.exe" %build_folder%
 
 copy %build_folder%\..\pb.ini %build_folder%
 copy %build_folder%\..\EncounterPRO.ini %build_folder%
+copy %build_folder%\..\Resources\Open Source License.rtf %build_folder%
 
 REM Now building pbdom / pbsoap separately as of PB 2019 R3
 
