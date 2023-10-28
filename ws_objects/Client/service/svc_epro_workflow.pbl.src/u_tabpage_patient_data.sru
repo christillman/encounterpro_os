@@ -1055,8 +1055,9 @@ end type
 
 event clicked;str_patient_alias lstr_alias
 
-if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
-	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's name. To create a new patient, use the New Patient button on the Charts tab.")
+
+if not user_list.is_user_privileged(current_scribe.user_id, "Edit Patient Details") then
+	OpenWithParm(w_pop_message, "You may not correct a patient's name. Please refer to a supervisor for this. To create a new patient, use the New Patient button on the Charts tab.")
 	return
 end if
 
@@ -1094,8 +1095,8 @@ end type
 event clicked;date ld_date_of_birth
 string ls_text
 
-if not user_list.is_user_privileged(current_scribe.user_id, "Super User") then
-	OpenWithParm(w_pop_message, "Only the Super User may correct a patient's birthdate.")
+if not user_list.is_user_privileged(current_scribe.user_id, "Edit Patient Details") then
+	OpenWithParm(w_pop_message, "You may not edit patient details. Please refer to a supervisor.")
 	return
 end if
 
