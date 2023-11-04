@@ -13,10 +13,12 @@ public function integer xx_do_service ()
 end prototypes
 
 public function integer xx_do_service ();str_popup_return popup_return
-
+string ls_returning_class
 
 DO WHILE true
 	openwithparm(service_window, this, "w_cpr_main")
+	
+	IF IsNull(message.powerobjectparm) THEN return -1
 	
 	popup_return = message.powerobjectparm
 	if popup_return.item_count <> 1 then return 0
