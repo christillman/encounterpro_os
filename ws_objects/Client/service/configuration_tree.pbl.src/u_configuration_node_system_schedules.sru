@@ -16,10 +16,6 @@ end prototypes
 public function boolean has_children ();str_configuration_nodes lstr_nodes
 u_ds_data luo_data
 long ll_count
-long i
-string ls_status
-str_room_type lstr_room_type
-string ls_room_type
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_fn_scheduled_services")
