@@ -59,6 +59,7 @@ string assessment_soap_display_rule
 
 
 end variables
+
 forward prototypes
 public function boolean treatment_in_assessment (str_treatment_description pstr_treatment, long pl_problem_id)
 public subroutine encounter_menu (long pl_row)
@@ -463,12 +464,12 @@ end function
 private function integer check_encounter_context ();integer li_sts
 
 if isnull(current_display_encounter) then
-	log.log(this, "u_soap_display.check_encounter_context:0004", "Invalid current_display_encounter", 4)
+	// expected for new clients
 	return -1
 end if
 
 if isnull(encounter_context) then
-	log.log(this, "u_soap_display.check_encounter_context:0004", "Invalid encounter_context", 4)
+	log.log(this, "u_soap_display.check_encounter_context:0009", "Invalid encounter_context", 4)
 	return -1
 end if
 
@@ -476,23 +477,23 @@ end if
 if isnull(encounter_context.encounter_id) or encounter_context.encounter_id <> current_display_encounter.encounter_id then
 	li_sts = current_patient.encounters.encounter(encounter_context, current_display_encounter.encounter_id)
 	if li_sts <= 0 then
-		log.log(this, "u_soap_display.check_encounter_context:0012", "Error getting encounter context", 4)
+		log.log(this, "u_soap_display.check_encounter_context:0017", "Error getting encounter context", 4)
 		return -1
 	end if
 end if
 
 if isnull(encounter_services) then
-	log.log(this, "u_soap_display.check_encounter_context:0004", "Invalid encounter_services", 4)
+	log.log(this, "u_soap_display.check_encounter_context:0023", "Invalid encounter_services", 4)
 	return -1
 end if
 
 if isnull(current_user) then
-	log.log(this, "u_soap_display.check_encounter_context:0004", "Invalid current_user", 4)
+	log.log(this, "u_soap_display.check_encounter_context:0028", "Invalid current_user", 4)
 	return -1
 end if
 
 if isnull(current_patient) then
-	log.log(this, "u_soap_display.check_encounter_context:0004", "Invalid current_patient", 4)
+	log.log(this, "u_soap_display.check_encounter_context:0033", "Invalid current_patient", 4)
 	return -1
 end if
 
