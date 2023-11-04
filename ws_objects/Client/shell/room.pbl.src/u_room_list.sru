@@ -20,7 +20,6 @@ public function string find_first_room_type (string ps_room_type)
 public function u_room find_room_computer (long pl_computer_id)
 public function integer load_rooms ()
 public subroutine refresh_room_status ()
-public function string bitmap (string ps_room_type, string ps_room_status)
 public function string find_room_type (string ps_room_type)
 public function string room_type (string ps_room_id)
 public function string room_name (string ps_room_id)
@@ -64,7 +63,12 @@ for i = 1 to ll_rows
 		OR (ps_room_type = "!ALL" and ls_room_type = "REMOTE") then
 		popup.button_count += 1
 		lsa_room_id[popup.button_count] = luo_data.object.room_id[i]
-		popup.button_icons[popup.button_count] = bitmap(ls_room_type, ls_room_status)
+		IF ls_room_status = "OK" THEN
+			popup.button_icons[popup.button_count] = datalist.room_type(ls_room_type).button
+		ELSE
+			popup.button_icons[popup.button_count] = datalist.room_type(ls_room_type).dirty_button
+		END IF
+		//popup.button_icons[popup.button_count] = bitmap(ls_room_type, ls_room_status)
 		popup.button_helps[popup.button_count] = ls_room_name
 		popup.button_titles[popup.button_count] = ls_room_name
 		buttons[popup.button_count] = string(i)
@@ -202,56 +206,6 @@ next
 
 
 end subroutine
-
-public function string bitmap (string ps_room_type, string ps_room_status);
-//if room_status <> "OK" and room_status <> "DIRTY" then return "buttonxh.bmp"
-
-CHOOSE CASE ps_room_type
-	CASE "$CHECKOUT"
-		if ps_room_status = "OK" then
-			return "button12.bmp"
-		else
-			return "b_push12.bmp"
-		end if
-	CASE "$EXAMINATION"
-		if ps_room_status = "OK" then
-			return "button10.bmp"
-		else
-			return "b_push10.bmp"
-		end if
-	CASE "$TRIAGE"
-		if ps_room_status = "OK" then
-			return "button25.bmp"
-		else
-			return "b_push25.bmp"
-		end if
-	CASE "$WAITING"
-		if ps_room_status = "OK" then
-			return "button23.bmp"
-		else
-			return "b_push23.bmp"
-		end if
-	CASE "$TELEPHONE"
-		if ps_room_status = "OK" then
-			return "button24.bmp"
-		else
-			return "b_push24.bmp"
-		end if
-	CASE "$EXIT"
-		if ps_room_status = "OK" then
-			return "button16.bmp"
-		else
-			return "b_push16.bmp"
-		end if
-	CASE "$REMOTE"
-		return "buttonxq.bmp"
-END CHOOSE
-
-log.log(this, "u_room_list.bitmap:0045", "Unknown room type (" + ps_room_type + ")", 3)
-return "button09.bmp"
-
-
-end function
 
 public function string find_room_type (string ps_room_type);integer i
 string ls_room

@@ -22,7 +22,6 @@ end variables
 
 forward prototypes
 public function integer set_room_status (string ps_room_status)
-public function string bitmap ()
 public function integer refresh_room_status ()
 end prototypes
 
@@ -42,56 +41,6 @@ tf_commit()
 room_status = ps_room_status
 
 return 1
-
-end function
-
-public function string bitmap ();
-//if room_status <> "OK" and room_status <> "DIRTY" then return "buttonxh.bmp"
-
-CHOOSE CASE room_type
-	CASE "CHECKOUT"
-		if room_status = "OK" then
-			return "button12.bmp"
-		else
-			return "b_push12.bmp"
-		end if
-	CASE "EXAMINATION"
-		if room_status = "OK" then
-			return "button10.bmp"
-		else
-			return "b_push10.bmp"
-		end if
-	CASE "TRIAGE"
-		if room_status = "OK" then
-			return "button25.bmp"
-		else
-			return "b_push25.bmp"
-		end if
-	CASE "WAITING"
-		if room_status = "OK" then
-			return "button23.bmp"
-		else
-			return "b_push23.bmp"
-		end if
-	CASE "TELEPHONE"
-		if room_status = "OK" then
-			return "button24.bmp"
-		else
-			return "b_push24.bmp"
-		end if
-	CASE "EXIT"
-		if room_status = "OK" then
-			return "button16.bmp"
-		else
-			return "b_push16.bmp"
-		end if
-	CASE "REMOTE"
-		return "buttonxq.bmp"
-END CHOOSE
-
-log.log(this, "u_room.bitmap:0045", "Unknown room type (" + room_type + ")", 3)
-return "button09.bmp"
-
 
 end function
 

@@ -1121,7 +1121,11 @@ for i = 1 to ll_rooms
 	if ls_room_status = "NA" then continue
 	
 	popup.button_count += 1
-	popup.button_icons[popup.button_count] = room_list.bitmap(ls_room_type, ls_room_status)
+	IF ls_room_status = "OK" THEN
+		popup.button_icons[popup.button_count] = datalist.room_type(ls_room_type).button
+	ELSE // Dirty
+		popup.button_icons[popup.button_count] = datalist.room_type(ls_room_type).dirty_button
+	END IF
 	popup.button_helps[popup.button_count] = ls_room_name
 	popup.button_titles[popup.button_count] = ls_room_name
 next
