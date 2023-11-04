@@ -124,9 +124,7 @@ if pages_open then
 	next
 else
 	li_sts = open_pages()
-	//msc commented out because first tab will automatically be selected and
-	// selectionchanging event has already been posted
-//	tab_pages.selecttab(1)
+	this_section.page[1].page_object.refresh()
 end if
 
 
