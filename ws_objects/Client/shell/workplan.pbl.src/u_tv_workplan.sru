@@ -219,6 +219,12 @@ string ls_delay_from_flag
 u_unit luo_unit
 string ls_item_type
 
+// we can't do anything with a handle of 0
+if handle = 0 then
+	log.log(this, "u_tv_workplan:item", "itempopulate given zero handle", 2)
+	return 1
+end if
+
 li_sts = getitem(handle, ltvi_parent_item)
 if li_sts <= 0 then
 	log.log(this, "u_tv_workplan:item", "Error getting new treeview item (" + string(handle) + ")", 4)
