@@ -61,13 +61,7 @@ if li_sts < 0 then
 	return -1
 end if
 
-// Don't do this at startup anymore
-//log.log(po_null, "f_initialize_objects:0062", "User list load", 1)
-//li_sts = user_list.load_users()
-//if li_sts < 0 then
-//	log.log(po_null, "f_initialize_objects:0065","User list load failed", 5)
-//	return -1
-//end if
+// Loading users is now done in u_component_security
 
 log.log(po_null, "f_initialize_objects:0069", "Room list load", 1)
 room_list.load_rooms()
