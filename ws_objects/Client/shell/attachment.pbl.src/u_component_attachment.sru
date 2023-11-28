@@ -309,7 +309,8 @@ CHOOSE CASE lower(ls_display_how)
 		end if
 	CASE ELSE
 		// If we don't have any other instructions then use the old Open_Atachment logic
-		li_sts = open_attachment()
+		ls_file = get_attachment()
+		li_sts = f_open_file(ls_file, false)
 		if li_sts < 0 then return -1
 		if li_sts = 0 then return 0
 END CHOOSE
