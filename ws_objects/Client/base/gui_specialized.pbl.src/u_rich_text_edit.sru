@@ -493,6 +493,7 @@ lt_done_loading = now()
 ld_elapsed = f_time_seconds_after(it_start, lt_done_loading)
 ld_loadtime = f_time_seconds_after(lt_start_loading, lt_done_loading)
 
+/* stop spamming the log now
 ls_msg = string(ll_command_index)
 ls_msg += " / Parent " + string(ll_parent_command_index) 
 ls_msg +=  ", line " + string(command[ll_command_index].footprint.from_position.line_number) 
@@ -500,6 +501,7 @@ ls_msg +=  ", " + lower(current_context_object)
 ls_msg +=  ": " + pstr_command.display_command
 ls_msg += ", time " + string(ld_loadtime, "###0.000")
 log.log_db_with_seconds(this, "display_script", ls_msg, 2, ld_elapsed)
+*/
 
 // Save the final footprint end
 command[ll_command_index].footprint.to_position = charposition()

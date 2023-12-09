@@ -302,7 +302,7 @@ AND encounter_type = :puo_encounter.encounter_type
 AND encounter_date = :puo_encounter.encounter_date;
 if not tf_check() then return -1
 if li_count <> 1 then
-	log.log(this, "u_ds_patient_encounter.new_encounter:0062", "Incorrect encounter_id", 3)
+	log.log(this, "u_ds_patient_encounter.new_encounter:0062", "Incorrect encounter_id", 1)
 	// If we got the wrong encounter_id, then execute a query to find the correct encounter_id
 	SELECT max(encounter_id)
 	INTO :puo_encounter.encounter_id
@@ -317,7 +317,7 @@ if li_count <> 1 then
 	end if
 	object.encounter_id[ll_row] = puo_encounter.encounter_id
 	setitemstatus(ll_row, 0, Primary!, NotModified!)
-	log.log(this, "u_ds_patient_encounter.new_encounter:0077", "Correct encounter_id found", 2)
+	log.log(this, "u_ds_patient_encounter.new_encounter:0077", "Correct encounter_id found", 1)
 end if
 
 // Add the "Created" progress record
