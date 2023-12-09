@@ -306,6 +306,7 @@ event open;call super::open;// This window expects the datawindow object to be p
 integer i
 long ll_rows
 str_point pt
+boolean lb_skip_sizing
 
 popup = message.powerobjectparm
 
@@ -449,25 +450,27 @@ end if
 // Check for singleton
 if popup.auto_singleton and dw_pick.rowcount() = 1 then
 	picked(1)
-	return
+	lb_skip_sizing = true
 end if
 
 // Check for rows.  If no rows, treat as if cancel were pressed
 if dw_pick.rowcount() = 0 then
 	cb_cancel.triggerevent("clicked")
-	return
+	lb_skip_sizing = true
 end if
 
 // If we get here in server mode then cancel
 if gnv_app.cpr_mode = "SERVER" then
 	cb_cancel.event trigger clicked()
-	return
+	lb_skip_sizing = true
 end if
 
-// Finally, resize the window to fit the displayed data
-sizeandmove()
-
-setfocus()
+IF Not lb_skip_sizing THEN
+	// Finally, resize the window to fit the displayed data
+	sizeandmove()
+	
+	setfocus()
+END IF
 end event
 
 on w_pop_pick.create
