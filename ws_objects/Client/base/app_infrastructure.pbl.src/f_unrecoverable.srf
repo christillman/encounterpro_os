@@ -1,0 +1,15 @@
+﻿$PBExportHeader$f_unrecoverable.srf
+global type f_unrecoverable from function_object
+end type
+
+forward prototypes
+global subroutine f_unrecoverable (string ps_message)
+end prototypes
+
+global subroutine f_unrecoverable (string ps_message);
+IF sqlca.sqldbcode = 999 AND Pos(sqlca.sqlerrtext, "unrecoverable") > 0 THEN
+	MessageBox("Unrecoverable error","Application terminating: " + ps_message)
+	halt
+END IF
+end subroutine
+

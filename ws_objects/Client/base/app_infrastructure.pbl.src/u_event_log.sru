@@ -1338,6 +1338,7 @@ end if
 
 // If the message needs to be logged to the database, do that first
 if pi_severity >= dbloglevel and not isnull(cprdb) and isvalid(cprdb) then
+	f_unrecoverable(ps_message)
 	li_sts = log_db(po_who, ps_script, ps_message, pi_severity, ps_component_id, ps_version_name, ld_seconds)
 	lb_reported = True
 end if
@@ -1383,6 +1384,8 @@ if display_enabled then
 		lb_reported = True
 	end if
 end if
+
+f_unrecoverable(ps_message)
 
 if not lb_reported then return -1
 
