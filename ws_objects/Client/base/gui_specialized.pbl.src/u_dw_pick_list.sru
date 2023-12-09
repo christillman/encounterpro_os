@@ -625,7 +625,7 @@ if not isnull(sqlsyntax) then
 	ls_message += "~r~nSQL Statement = " + sqlsyntax
 end if
 
-log.log(this, "u_dw_pick_list:dber", ls_message, 4)
+log.log(this,  classname() + ":dber", ls_message, 4)
 
 return 1
 

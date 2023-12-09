@@ -323,16 +323,6 @@ postevent("post_click")
 
 end event
 
-event dberror;string ls_message
-
-ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
-
-log.log(this, "u_room_status:dber", ls_message, 3)
-
-return 1
-
-end event
-
 on u_room_status.create
 call super::create
 end on

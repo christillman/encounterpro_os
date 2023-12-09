@@ -1878,13 +1878,13 @@ end on
 
 event dberror;string ls_message
 
-sqlca.check()
+tf_check()
 
 ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
 ls_message += "~r~nDataobject = " + dataobject
 ls_message += "~r~nSQL Statement = " + sqlsyntax
 
-log.log(this, "u_ds_data:dber", ls_message, 3)
+log.log(this,  classname() + ":dberror", ls_message, 3)
 
 return 1
 

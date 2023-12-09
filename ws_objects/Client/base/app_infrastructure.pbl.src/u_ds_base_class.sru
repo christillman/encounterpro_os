@@ -196,15 +196,3 @@ on u_ds_base_class.destroy
 call super::destroy
 end on
 
-event dberror;string ls_message
-
-sqlca.check()
-
-ls_message = "DATAWINDOW SQL ERROR = (" + string(sqldbcode) + ") " + sqlerrtext
-
-log.log(this, "u_ds_base_class:dber", ls_message, 3)
-
-return 1
-
-end event
-
