@@ -295,40 +295,37 @@ public function integer initialize ();integer li_sts
 environment lo_env
 boolean lb_sts
 ContextKeyword lcxk_base
-string ls_Appdata
 string ls_values[]
 
-// Get the value of %APPDATA%
-this.GetContextService("Keyword", lcxk_base)
-lcxk_base.GetContextKeywords("APPDATA", ls_values)
-IF Upperbound(ls_values) > 0 THEN
-   ls_Appdata = ls_values[1]
-ELSE
-   ls_Appdata = "* APPDATA UNDEFINED *"
-END IF
+string ls_apppath
+string ls_drive
+string ls_dir
+string ls_filename
+string ls_extension
+ulong lul_hinst, lul_maxpath, lul_rc
+blob lbl_file
 
-epcompinfo = ls_Appdata + "\EncounterPro_OS\EPCompInfo.ini"
+// We don't have access to the database yet, so set the beeps to null.  The priority_alert
+// method will query the beeps setting when it first runs
+setnull(priority_beeps)
+setnull(adodb)
 
-// If the INI directory doesn't exist, then create it
-if not fileexists(ls_Appdata + "\EncounterPro_OS") then
-	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
-end if
+randomize(0)
 
 default_database = "<Default>"
-setnull(adodb)
 
 // Set osversion
 // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vista or 2008
 li_sts = getenvironment(lo_env)
 if li_sts > 0 then
 	if lo_env.ostype <> WindowsNT! then
-		log.log(this, "u_common_thread.initialize:0059", "EncounterPRO is only support on the Windows Operation System", 3)
+		log.log(this, "u_common_thread.initialize:0059", gnv_app.product_name + " is only support on the Windows Operation System", 3)
 		osversion = 0
 	else
 		osversion = lo_env.OSMajorRevision
 		if lo_env.OSMajorRevision = 5 and lo_env.OSMinorRevision = 0 then
 			// Set Windows 2000 back to 4 to group it with the other OS versions that we don't support
-			log.log(this, "u_common_thread.initialize:0065", "EncounterPRO version 5 is only supported on Windows XP or later", 3)
+			log.log(this, "u_common_thread.initialize:0065",  gnv_app.product_name + " is only supported on Windows 7 or later", 3)
 			osversion = 4
 		end if
 	end if
@@ -337,13 +334,44 @@ else
 	osversion = 0
 end if
 
+// Get our application path so we can set the INI file
+// Default installation application path is C:\Users\Public\Documents\GreenOliveEHR\Client
+// so we can write to it without admin, and every user on the computer can see it
+lul_hinst = Handle( GetApplication() )
+lul_maxpath = 260
+ls_apppath = Space( lul_maxpath )    // pre-allocate memory
+lul_rc = GetModuleFilenameA( lul_hinst, ls_apppath, lul_maxpath )
+IF ls_apppath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\PB190.exe" THEN
+	// If we are running in the IDE, the app is "running" in Program Files. But we don't
+	// want to create / modify files here, because of admin issues and writing to virtualstore
+	// So make it the default location for dev
+	ls_apppath = "C:\Users\Public\Documents\EncounterPro_OS\Client\EncounterPRO.OS.Client.exe"
+END IF
+IF lul_rc > 0 THEN
+	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)
+	gnv_app.program_directory = ls_drive + ls_dir
+	gnv_app.ini_file = gnv_app.program_directory + "\EncounterPRO.ini"
+	epcompinfo = gnv_app.program_directory + "\EPCompInfo.ini"
+else
+	gnv_app.program_directory = ""
+	gnv_app.ini_file = "EncounterPRO.ini"
+	epcompinfo = "EPCompInfo.ini"
+END IF
 
-// We don't have access to the database yet, so set the beeps to null.  The priority_alert
-// method will query the beeps setting when it first runs
-setnull(priority_beeps)
+// If the INI file doesn't exist, then create an empty one
+if not fileexists(gnv_app.ini_file) then
+	lbl_file = blob("")
+	log.file_write(lbl_file, gnv_app.ini_file)
+end if
 
-randomize(0)
-
+// Initialize the logging system; the log system uses the ini file
+// Logging system must be initialized after common thread,
+// so it can reference EncounterPro.OS.Utilities for event logging
+log.initialize("gnv_app.product_name")
+if li_sts <= 0 then
+	openwithparm(w_pop_message, "Unable to initialize logging system")
+	halt
+end if
 
 return 1
 
@@ -882,7 +910,7 @@ for i = 1 to ll_device_count
 		TRY
 			lo_device = lo_deviceinfo.connect()
 		CATCH (throwable lt_error)
-			ls_text = "EncounterPRO was unable to connect to the specified device.  The following error message was returned:  "
+			ls_text = gnv_app.product_name + " was unable to connect to the specified device.  The following error message was returned:  "
 			ls_text += lt_error.text
 			openwithparm(w_pop_message, ls_text)
 		FINALLY
@@ -1734,7 +1762,7 @@ IF NOT lb_ok THEN
 	li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
 	if li_sts < 0 then
 		SetNull(eprolibnet4)
-		openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall EncounterPRO-OS or contact your system administrator for assistance.")
+		openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall " + gnv_app.product_name + " or contact your system administrator for assistance.")
 		// return -1
 	else
 		eprolibnet4.EPVersion = f_app_version()
