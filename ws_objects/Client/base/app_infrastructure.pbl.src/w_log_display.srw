@@ -70,6 +70,7 @@ global w_log_display w_log_display
 type prototypes
 
 end prototypes
+
 type variables
 str_log_search original_search
 str_log_search current_search
@@ -368,6 +369,9 @@ string text = "EncounterPRO Event Log"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
+
+event constructor;this.text = gnv_app.product_name + " Event Log"
+end event
 
 type st_min_severity_title from statictext within w_log_display
 integer x = 1929

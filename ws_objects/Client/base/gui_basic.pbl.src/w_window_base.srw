@@ -580,6 +580,8 @@ boolean lb_full_screen
 u_component_service luo_service
 string ls_temp
 
+this.Title =  gnv_app.product_name
+
 shortcut_menus()
 
 pb_epro_help.visible = false

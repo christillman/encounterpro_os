@@ -21,7 +21,6 @@ end type
 end forward
 
 global type w_doc_link from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -111,10 +110,10 @@ boolean focusrectangle = false
 end type
 
 type st_2 from statictext within w_doc_link
-integer x = 457
-integer y = 412
-integer width = 2002
-integer height = 236
+integer x = 366
+integer y = 348
+integer width = 2299
+integer height = 308
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -124,7 +123,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Warning:  This operation only attaches a link to the patient~'s chart.  The content of the Link is not in the EncounterPRO database, not under the control of EncounterPRO, and may change without notice."
+string text = "Warning:  This operation only attaches a link to the patient~'s chart.  The content of the Link is not in the <gnv_app.product_name> database, not under the control of <gnv_app.product_name>, and may change without notice."
 boolean focusrectangle = false
 end type
 

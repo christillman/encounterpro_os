@@ -58,7 +58,7 @@ dw_fkey_assignment.object.assignment[ll_row] = "Display EDAS Property Browser"
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F3"
 dw_fkey_assignment.object.flags[ll_row] = 3
-dw_fkey_assignment.object.assignment[ll_row] = "Exit EncounterPRO"
+dw_fkey_assignment.object.assignment[ll_row] = "Exit " + gnv_app.product_name
 
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F4"
@@ -73,7 +73,7 @@ dw_fkey_assignment.object.assignment[ll_row] = "Refresh Current Screen"
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F5"
 dw_fkey_assignment.object.flags[ll_row] = 2
-dw_fkey_assignment.object.assignment[ll_row] = "Clear EncounterPRO's Cache and Refresh Current Screen"
+dw_fkey_assignment.object.assignment[ll_row] = "Clear " + gnv_app.product_name + "'s Cache and Refresh Current Screen"
 
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F6"

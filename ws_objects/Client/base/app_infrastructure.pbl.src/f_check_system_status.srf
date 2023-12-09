@@ -18,7 +18,7 @@ if gnv_app.computer_id > 0 then
 	if not tf_check() then return -1
 	
 	if isnull(ls_status) or upper(ls_status) <> "OK" then
-		openwithparm(w_pop_message, "This computer is not authorized to run EncounterPRO.  Please see your system administrator.")
+		openwithparm(w_pop_message, "This computer is not authorized to run " + gnv_app.product_name + ".  Please see your system administrator.")
 		return -1
 	end if
 end if
@@ -30,7 +30,7 @@ FROM c_Database_Status;
 if not tf_check() then return -1
 
 if isnull(ls_status) or upper(ls_status) <> "OK" then
-	openwithparm(w_pop_message, "This EncounterPRO system is not available.  Please see your system administrator.")
+	openwithparm(w_pop_message, "This " + gnv_app.product_name + " system is not available.  Please see your system administrator.")
 	return -1
 end if
 

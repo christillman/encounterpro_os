@@ -19,7 +19,7 @@ end forward
 
 global type u_help_bar from userobject
 integer width = 2491
-integer height = 50
+integer height = 52
 long backcolor = 12632256
 long tabtextcolor = 33554432
 event documentation pbm_custom75
@@ -455,5 +455,8 @@ end type
 
 event clicked;open(w_about_encounterpro)
 
+end event
+
+event constructor;this.text = "About " + gnv_app.product_name
 end event
 

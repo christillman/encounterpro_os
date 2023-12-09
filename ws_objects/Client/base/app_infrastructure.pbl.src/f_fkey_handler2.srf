@@ -77,7 +77,7 @@ CHOOSE CASE key
 		if user_list.is_user_privileged(current_user.user_id, "Configuration Mode") then
 			config_mode = NOT config_mode
 		else
-			openwithparm(w_pop_message, "You are not authorized to use EncounterPRO in configuration mode")
+			openwithparm(w_pop_message, "You are not authorized to use " + gnv_app.product_name + " in configuration mode")
 		end if
 		return true
 	CASE KeyF5!

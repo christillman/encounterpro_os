@@ -1349,7 +1349,7 @@ setpointer ( arrow! )
 
 if not connected then
 	// Construct the error message
-	ls_message = "EncounterPRO was unable to connect to the SQL database.  The following error was reported:~r~n"
+	ls_message = gnv_app.product_name + " was unable to connect to the SQL database.  The following error was reported:~r~n"
 	if not isnull(ls_sql_error) then
 		ls_message += "SQL Authentication:  " + ls_sql_error + "~r~n"
 	end if
@@ -1704,7 +1704,7 @@ end if
 sql_version = long(left(sql_server_productversion, ll_pos - 1))
 
 if sql_version <= 8 then
-	ls_temp = "This database is running on an older version of SQL Server.  EncounterPRO-OS SQL Server 2005 or later."
+	ls_temp = "This database is running on an older version of SQL Server.  " + gnv_app.product_name + " requires SQL Server 2005 or later."
 	if gnv_app.cpr_mode = "CLIENT" then
 		openwithparm(w_pop_message, ls_temp)
 	end if
@@ -1786,7 +1786,7 @@ if luo_this.sqlcode = 0 then
 		is_eprodb = false
 		if gnv_app.cpr_mode = "CLIENT" then
 			ls_temp = "This database (" + database + ")"
-			ls_temp += " does not appear to be a valid EncounterPRO database."
+			ls_temp += " does not appear to be a valid " + gnv_app.product_name + " database."
 			openwithparm(w_pop_message, ls_temp)
 			log.log(this, "u_sqlca.check_database:0140", ls_temp, 4)
 			return -1
@@ -2617,13 +2617,13 @@ end if
 
 li_sts = check_database()
 if li_sts <= 0 then
-	log.log(this, "u_sqlca.set_beta_status:0043", "check_database_failed.  EncounterPRO must close.", 5)
+	log.log(this, "u_sqlca.set_beta_status:0043", "check_database_failed.  " + gnv_app.product_name + " must close.", 5)
 	return -1
 end if
 
 li_sts = bootstrap_database_scripts()
 if li_sts <= 0 then
-	log.log(this, "u_sqlca.set_beta_status:0049", "Check Now failed.  EncounterPRO must close.", 5)
+	log.log(this, "u_sqlca.set_beta_status:0049", "Check Now failed.  " + gnv_app.product_name + " must close.", 5)
 	return -1
 end if
 
@@ -3911,7 +3911,7 @@ for i = 1 to ll_file_count
 		ls_user_id = current_scribe.user_id
 	end if
 
-	ls_title = "EncounterPRO OS Schema - Mod Level " + string(pl_modification_level)
+	ls_title = gnv_app.product_name + " Schema - Mod Level " + string(pl_modification_level)
 	
 	// Remove any previous mdlvl records for this version
 	DELETE FROM c_Patient_Material

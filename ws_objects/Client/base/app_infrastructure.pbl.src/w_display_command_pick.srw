@@ -32,7 +32,6 @@ end forward
 
 global type w_display_command_pick from w_window_base
 string title = "EncounterPRO Report Command Create/Edit"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -136,6 +135,8 @@ str_script_command_context lstr_context
 lstr_context = message.powerobjectparm
 script_type = lstr_context.script_type
 context_object = lstr_context.context_object
+
+this.Title = gnv_app.product_name + " Report Command Create/Edit"
 
 luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_v_Compatible_Context_Object")

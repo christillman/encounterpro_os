@@ -40,7 +40,7 @@ if isnull(current_scribe) then
 				setnull(current_user)
 			else
 				lstr_security_alert.alert_title = "Scribe Statement"
-				lstr_security_alert.alert_message = "By logging into the EncounterPRO-OS Electronic Health Record as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into the EncounterPRO EHR as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information."
+				lstr_security_alert.alert_message = "By logging into the " + gnv_app.product_name + " Electronic Health Record as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into the EncounterPRO EHR as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information."
 				openwithparm(w_security_disclaimer, lstr_security_alert)
 				ls_response = message.stringparm
 				if ls_response = "YES" then

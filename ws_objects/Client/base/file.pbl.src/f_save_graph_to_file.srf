@@ -22,7 +22,7 @@ if isnull(ls_printer) then return 0
 
 common_thread.set_printer(ls_printer)
 
-ls_temp = "EncounterPRO Graph"
+ls_temp = gnv_app.product_name + " Graph"
 ll_printjob = printopen(ls_temp, false)
 if ll_printjob < 0 then
 	log.log(po_null, "f_save_graph_to_file:0019", "Error opening print job (" + ls_temp + ")", 4)

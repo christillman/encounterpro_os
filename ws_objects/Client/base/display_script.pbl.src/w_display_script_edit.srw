@@ -42,7 +42,6 @@ end forward
 
 global type w_display_script_edit from w_window_base
 string title = "EncounterPRO Display Script Create/Edit"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -380,6 +379,8 @@ end on
 event open;call super::open;integer li_sts
 
 display_script_id = message.doubleparm
+
+this.Title = gnv_app.product_name + " Display Script Create/Edit"
 
 if isnull(display_script_id) then
 	log.log(this, "w_display_script_edit:open", "null display script", 4)
