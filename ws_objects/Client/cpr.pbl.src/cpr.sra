@@ -184,7 +184,7 @@ long richtextedittype = 3
 long richtexteditx64type = 3
 long richtexteditversion = 2
 string richtexteditkey = ""
-string appicon = "green-olive-avi-02.ico"
+string appicon = "C:\EncounterPro\encounterpro_os\IconFiles\green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
 long webview2distribution = 0
 boolean webview2checkx86 = false
@@ -229,6 +229,8 @@ string source_url = "https://github.com/christillman/encounterpro_os"
 string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
 
+string product_name = 'GreenOliveEHR'
+
 string registry_key
 string ini_file
 string program_directory
@@ -250,33 +252,17 @@ event keydown;//f_fkey_handler(key, keyflags)
 
 end event
 
-event open;integer li_sts
-string ls_parm
-environment env
-integer rtn
-string lsa_subkeys[]
-integer li_subkeys
-integer i
-string ls_apppath
-string ls_drive
-string ls_dir
-string ls_filename
-string ls_extension
-ulong lul_hinst, lul_maxpath, lul_rc
-blob lbl_file
-string ls_msg
-string ls_arg
-ContextKeyword lcxk_base
-string ls_Appdata
-string ls_values[]
+event open;
+integer li_sts
+string ls_parm, ls_arg, ls_disk_check, ls_msg
+string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
+blob lbl_script
 
 // Have seen failure of SQLCA creation in create event.
 // Re-create here.
 sqlca = create u_sqlca
 
 cpr_mode = "CLIENT"
-
-rtn = GetEnvironment(env)
 
 setnull(current_user)
 setnull(current_scribe)
@@ -291,8 +277,10 @@ if ls_parm = "" or left(ls_parm, 1) = "/" then setnull(ls_parm)
 
 // Initialize the windows API
 windows_api = CREATE u_windows_api
-string ls_regKey = "HKEY_CURRENT_USER\Control Panel\International"
 RegistryGet(ls_regKey, "LocaleName", RegString!, locale)
+
+// ls_disk_check = "mkdir ck123 && diskusage ck123 | findstr /C:""disk in use"" && rmdir ck123 > C:\Temp\diskusage.txt"
+// needs to execute with admin priivilege
 
 // Create the log object
 log = CREATE u_event_log
@@ -302,52 +290,8 @@ common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
 
-//// Get the value of %APPDATA%
-//this.GetContextService("Keyword", lcxk_base)
-//lcxk_base.GetContextKeywords("APPDATA", ls_values)
-//IF Upperbound(ls_values) > 0 THEN
-//   ls_Appdata = ls_values[1]
-//ELSE
-//   ls_Appdata = "* APPDATA UNDEFINED *"
-//END IF
-//
-//ini_file = ls_Appdata + "\EncounterPro_OS\EncounterPro.ini"
-//
-//// If the INI directory doesn't exist, then create it
-//if not fileexists(ls_Appdata + "\EncounterPro_OS") then
-//	li_sts = CreateDirectory(ls_Appdata + "\EncounterPro_OS")
-//end if
-//
-
-// Get our application path so we can set the INI file
-lul_hinst = Handle( GetApplication() )
-lul_maxpath = 260
-ls_apppath = Space( lul_maxpath )    // pre-allocate memory
-lul_rc = GetModuleFilenameA( lul_hinst, ls_apppath, lul_maxpath )
-IF lul_rc > 0 THEN
-	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)
-	program_directory = ls_drive + ls_dir
-	ini_file = program_directory + "\EncounterPRO.ini"
-else
-	program_directory = ""
-	ini_file = "EncounterPRO.ini"
-END IF
-
-// If the INI file doesn't exist, then create an empty one
-if not fileexists(ini_file) then
-	lbl_file = blob("")
-	log.file_write(lbl_file, ini_file)
-end if
-
-// Initialize the logging system; the log system uses the ini file
-
-// Logging system must be initialized after common thread,
-// so it can reference EncounterPro.OS.Utilities for event logging
-log.initialize("EncounterPro-OS")
-if li_sts <= 0 then
-	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
-end if
+// Moved application path so we can set the INI file into common_thread.initialize()
+// Moved Initialize the logging system into common_thread.initialize()
 
 // log.log(this, "cpr.open", "Starting up", 1)
 
@@ -399,7 +343,6 @@ log.display_enabled = true
 f_cpr_set_msg("Database Connected")
 
 // Check SELECTBLOB works
-blob lbl_script
 SELECTBLOB object
 INTO :lbl_script
 FROM c_Patient_Material
