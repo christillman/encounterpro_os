@@ -693,6 +693,8 @@ datastore				lds_datastore
 
 If clicked_row <= 0 Then Return
 
+// When right-clicked, this event is fired but clicked_row is null; just ignore the click
+If IsNull(clicked_row) Then Return
 ls_treatment_mode = object.treatment_mode[clicked_row]
 ls_procedure_id = object.procedure_id[clicked_row]
 

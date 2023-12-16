@@ -706,6 +706,8 @@ long						ll_rows
 datastore				lds_datastore
 
 
+// When right-clicked, this event is fired but clicked_row is null; just ignore the click
+If IsNull(clicked_row) Then Return
 If clicked_row <= 0 Then Return
 
 ls_treatment_mode = object.treatment_mode[clicked_row]
