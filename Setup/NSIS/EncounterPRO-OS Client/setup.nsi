@@ -9,13 +9,14 @@
 
 ; ------------------------------------------
 ; DEFINES
-  !define PRODUCT   EncounterPRO-OS
+  !define PRODUCT   GreenOliveEHR
 
-; EncounterPRO Client Setup Version
+; Client Setup Version
   !define VERSION   7.2.1.5
 
 ; Source Root
- !define SOURCE_ROOT "C:\EncounterPro\Builds"
+  !define SOURCE_ROOT "C:\EncounterPro\Builds"
+  !define DEST_FOLDER "C:\Users\Public\Documents\${PRODUCT}\Client"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
@@ -25,7 +26,7 @@
   !define PBRuntime_VERSION   19.2.0.2797
   !define PBRuntime_FILENAME  PowerBuilderRuntime-2797.exe
 ; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
-  !define EncounterPRO_OS_Utilities_VERSION   1.0.6.0
+  !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
@@ -53,7 +54,7 @@
 
   ; Installing the help file
   !define COMMONFILES_TARGET "EncounterPRO-OS"
-  !define APPDATA_TARGET "EncounterPRO_OS"
+  !define APPDATA_TARGET "${PRODUCT}"
 
 ; ------------------------------------------
 ; Variables
@@ -93,8 +94,8 @@
 
     ; Name and File
     Name '${DISP_NAME}'
-    OutFile 'EncounterPRO.OS.Client ${VERSION} Install.exe'
-    InstallDir "$PROGRAMFILES\EncounterPRO.ORG\EncounterPRO-OS"
+    OutFile '${PRODUCT} ${VERSION} Install.exe'
+    InstallDir "${DEST_FOLDER}"
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
     
@@ -150,7 +151,7 @@
 ; Descriptions
 
     ; Language strings
-    LangString PAGE_SERVDB_TITLE ${LANG_ENGLISH} "EncounterPRO-OS Settings"
+    LangString PAGE_SERVDB_TITLE ${LANG_ENGLISH} "${PRODUCT} Settings"
     LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter or confirm the Server and Database."
 
     ; Assign language strings to sections
@@ -160,6 +161,7 @@
 ; ------------------------------------------
 ; Installer Sections
 
+; Revise this to use Uploads subfolder in Client
     Section '-Dependencies' SecDeps
         SetDetailsPrint textonly
         SetOutPath '$SYSDIR'
@@ -214,18 +216,18 @@
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
       SetDetailsPrint none
       SetOutPath '$INSTDIR'
-      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
-      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe"'
-      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPRO_OS_Utilities_VERSION} Install.exe'
+      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
+      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
+      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
       
       SetDetailsPrint both
     SectionEnd
     
-    Section '-EncounterPRO Client' SecEpro
+    Section '-${PRODUCT} Client' SecEpro
         SetOutPath '$INSTDIR'
         SetDetailsPrint both
       
-        DetailPrint "Installing EncounterPRO Client..."
+        DetailPrint "Installing ${PRODUCT}..."
         SetOverwrite on
         SetDetailsPrint both
         File "${SRC_EPRO}\*.*"
@@ -247,7 +249,7 @@
     Section '-Help File' SecHelp
         SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}"
         SetDetailsPrint both
-        DetailPrint "Installing EncounterPro-OS Help..."
+        DetailPrint "Installing ${PRODUCT} Help..."
         SetOverwrite on
         SetDetailsPrint textonly
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
@@ -283,7 +285,6 @@
 ;    SectionEnd
 
     Section '-Attachments' SecAT
-        Delete "$INSTDIR\*.mdlvl"
         SetOutPath '\\localhost\attachments'
         SetDetailsPrint both
         DetailPrint "Installing Attachments in \\localhost\attachments ..."
@@ -294,18 +295,19 @@
     Section -AdditionalIcons
         SetDetailsPrint textonly
         SetOutPath '$INSTDIR'
-        CreateDirectory "$SMPROGRAMS\EncounterPRO-OS"
-        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        CreateDirectory "${DEST_FOLDER}"
+        CreateDirectory "${DEST_FOLDER}\Uploads"
+        CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+        CreateShortCut "$DESKTOP\GreenOliveEHR.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\GreenOliveEHR.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\GreenOliveEHR Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
     Section '-Post' SecPost
         SetDetailsPrint textonly
         ; Store installation folder
-        WriteRegStr HKLM 'Software\EncounterPRO.ORG\EncounterPRO-OS' '' $INSTDIR   
+        WriteRegStr HKLM 'Software\${PRODUCT}' '' $INSTDIR   
         
         ; Uninstaller
         WriteUninstaller "$INSTDIR\uninst.exe"
@@ -319,12 +321,17 @@
     Section Uninstall
       Delete "$INSTDIR\uninst.exe"
     
-      Delete "$SMPROGRAMS\EncounterPRO-OS\Uninstall.lnk"
+      Delete "${DEST_FOLDER}\Uninstall.lnk"
+	  
       Delete "$DESKTOP\EncounterPRO-OS.lnk"
-      Delete "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS.lnk"
-      Delete "$SMPROGRAMS\EncounterPRO-OS\EncounterPRO-OS Ask.lnk"
+      Delete "${DEST_FOLDER}\EncounterPRO-OS.lnk"
+      Delete "${DEST_FOLDER}\EncounterPRO-OS Ask.lnk"
+	  
+      Delete "$DESKTOP\${PRODUCT}.lnk"
+      Delete "${DEST_FOLDER}\${PRODUCT}.lnk"
+      Delete "${DEST_FOLDER}\${PRODUCT} Ask.lnk"
     
-      RMDir "$SMPROGRAMS\EncounterPRO-OS"
+      RMDir "${DEST_FOLDER}"
     
       RMDir $INSTDIR
     
@@ -332,8 +339,8 @@
       SetAutoClose true
     SectionEnd
     
-    Section "un.EncounterPRO Client"
-      DetailPrint "UnInstalling EncounterPRO-OS Client..."
+    Section "un.${PRODUCT}"
+      DetailPrint "UnInstalling ${PRODUCT}..."
       Delete "$INSTDIR\*.pbd"
       Delete "$INSTDIR\Encounterpro.OS.Client.exe"
     SectionEnd
@@ -350,8 +357,7 @@
       Delete "$INSTDIR\*.ocx"
       Delete "$INSTDIR\*.ini"
       Delete "$INSTDIR\Open Source License.rtf"
-      Delete "$INSTDIR\*.flt"  
-      Delete "$INSTDIR\*.mdlvl"  
+      Delete "$INSTDIR\*.flt"
     SectionEnd
 
     
@@ -463,7 +469,7 @@ FunctionEnd
 
 Function SetInstallDir
   ClearErrors
-  ReadRegStr $R0 HKLM 'Software\EncounterPRO.ORG\EncounterPRO-OS' ''
+  ReadRegStr $R0 HKLM 'Software\${PRODUCT}' ''
   IfErrors lbl_tryuninstkey
   StrCpy $INSTDIR $R0
   goto done
