@@ -107,10 +107,10 @@ string ls_temp
 integer li_logon_timeout
 boolean lb_computer_secure
 
+popup = message.powerobjectparm
+
 access_id = ""
 st_asterisks.text = ""
-
-popup = message.powerobjectparm
 
 mode = popup.item
 st_prompt.text = popup.title
