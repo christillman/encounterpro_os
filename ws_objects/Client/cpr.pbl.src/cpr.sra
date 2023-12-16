@@ -184,7 +184,7 @@ long richtextedittype = 3
 long richtexteditx64type = 3
 long richtexteditversion = 2
 string richtexteditkey = ""
-string appicon = "C:\EncounterPro\encounterpro_os\IconFiles\green-olive-avi-02.ico"
+string appicon = "green-olive-avi-02.ico"
 string appruntimeversion = "19.2.0.2797"
 long webview2distribution = 0
 boolean webview2checkx86 = false
@@ -247,6 +247,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
