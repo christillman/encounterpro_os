@@ -46,6 +46,8 @@ type cb_cancel from commandbutton within w_trt_pick_drugs
 end type
 type cb_finished from commandbutton within w_trt_pick_drugs
 end type
+type shl_1 from statichyperlink within w_trt_pick_drugs
+end type
 end forward
 
 global type w_trt_pick_drugs from w_window_base
@@ -73,6 +75,7 @@ st_page_sel st_page_sel
 cb_new_drug cb_new_drug
 cb_cancel cb_cancel
 cb_finished cb_finished
+shl_1 shl_1
 end type
 global w_trt_pick_drugs w_trt_pick_drugs
 
@@ -475,6 +478,7 @@ this.st_page_sel=create st_page_sel
 this.cb_new_drug=create cb_new_drug
 this.cb_cancel=create cb_cancel
 this.cb_finished=create cb_finished
+this.shl_1=create shl_1
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_search_title
 this.Control[iCurrent+2]=this.pb_down_sel
@@ -498,6 +502,7 @@ this.Control[iCurrent+19]=this.st_page_sel
 this.Control[iCurrent+20]=this.cb_new_drug
 this.Control[iCurrent+21]=this.cb_cancel
 this.Control[iCurrent+22]=this.cb_finished
+this.Control[iCurrent+23]=this.shl_1
 end on
 
 on w_trt_pick_drugs.destroy
@@ -524,6 +529,7 @@ destroy(this.st_page_sel)
 destroy(this.cb_new_drug)
 destroy(this.cb_cancel)
 destroy(this.cb_finished)
+destroy(this.shl_1)
 end on
 
 type pb_epro_help from w_window_base`pb_epro_help within w_trt_pick_drugs
@@ -1161,4 +1167,26 @@ Closewithreturn(parent, lstr_attributes_list)
 
 
 end event
+
+type shl_1 from statichyperlink within w_trt_pick_drugs
+integer x = 2039
+integer y = 12
+integer width = 434
+integer height = 104
+boolean bringtotop = true
+integer textsize = -12
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+boolean underline = true
+string pointer = "HyperLink!"
+long textcolor = 134217856
+long backcolor = 7191717
+string text = "Video"
+alignment alignment = center!
+boolean focusrectangle = false
+string url = "https://www.youtube.com/watch?app=desktop&v=Xs23YtBKfn4"
+end type
 
