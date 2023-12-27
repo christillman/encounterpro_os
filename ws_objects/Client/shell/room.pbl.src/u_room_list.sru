@@ -68,7 +68,6 @@ for i = 1 to ll_rows
 		ELSE
 			popup.button_icons[popup.button_count] = datalist.room_type(ls_room_type).dirty_button
 		END IF
-		//popup.button_icons[popup.button_count] = bitmap(ls_room_type, ls_room_status)
 		popup.button_helps[popup.button_count] = ls_room_name
 		popup.button_titles[popup.button_count] = ls_room_name
 		buttons[popup.button_count] = string(i)
