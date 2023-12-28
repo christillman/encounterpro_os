@@ -105,8 +105,8 @@ BEGIN
 	UPDATE p_patient
 	SET	patient_status = inserted.progress_type
 	FROM inserted
-	WHERE inserted.cpr_id = p_patient.cpr_id
-	AND inserted.progress_type in ('DECEASED', 'MOVED', 'CHANGED')
+	JOIN p_patient ON inserted.cpr_id = p_patient.cpr_id
+	WHERE inserted.progress_type in ('DECEASED', 'MOVED', 'CHANGED')
 	AND p_patient.patient_status IS NULL
 END
 
@@ -158,22 +158,22 @@ BEGIN
 			termination_date = CASE inserted.progress_key WHEN 'termination_date' then CONVERT(datetime, inserted.progress_value) ELSE p_Patient.termination_date END,
 			zip = CASE inserted.progress_key WHEN 'zip' then inserted.progress_value ELSE p_Patient.zip END
 	FROM inserted
-	WHERE inserted.cpr_id = p_Patient.cpr_id
-	AND inserted.progress_type = 'Modify'
+	JOIN p_patient ON inserted.cpr_id = p_patient.cpr_id
+	WHERE inserted.progress_type = 'Modify'
 	AND inserted.progress_key NOT IN ('date_of_birth', 'time_of_birth')
 
 	UPDATE p_Patient
 	SET 	date_of_birth = CONVERT(datetime, inserted.progress_value + ' ' + ISNULL(CONVERT(varchar(20), p_Patient.date_of_birth, 114), ''))
 	FROM inserted
-	WHERE inserted.cpr_id = p_Patient.cpr_id
-	AND inserted.progress_type = 'Modify'
+	JOIN p_patient ON inserted.cpr_id = p_patient.cpr_id
+	WHERE inserted.progress_type = 'Modify'
 	AND inserted.progress_key = 'date_of_birth'
 
 	UPDATE p_Patient
 	SET 	date_of_birth = CONVERT(datetime, CONVERT(varchar(10), p_Patient.date_of_birth, 120) + ' ' + inserted.progress_value)
 	FROM inserted
-	WHERE inserted.cpr_id = p_Patient.cpr_id
-	AND inserted.progress_type = 'Modify'
+	JOIN p_patient ON inserted.cpr_id = p_patient.cpr_id
+	WHERE inserted.progress_type = 'Modify'
 	AND inserted.progress_key = 'time_of_birth'
 
 	INSERT INTO p_Patient_Progress (
@@ -262,12 +262,12 @@ END
 
 -- Then get the latest attachment text if applicable
 UPDATE p_patient_Progress
-SET progress = a.attachment_text
-FROM inserted, p_Attachment a
-WHERE inserted.cpr_id = p_patient_Progress.cpr_id
+SET progress = p_Attachment.attachment_text
+FROM inserted
+JOIN p_Attachment ON inserted.attachment_id = p_Attachment.attachment_id
+JOIN p_patient_Progress ON inserted.cpr_id = p_patient_Progress.cpr_id
 AND inserted.patient_progress_sequence  = p_patient_Progress.patient_progress_sequence
-AND inserted.attachment_id = a.attachment_id
-AND a.attachment_text IS NOT NULL
+WHERE p_Attachment.attachment_text IS NOT NULL
 
 -- Set previous progress note to not current using the progress_date_time
 -- Progress types other than 'Property', 'ID', 'Care Team' and 'Communication %'
