@@ -97,7 +97,6 @@ boolean do_autoperform = true
 end variables
 
 forward prototypes
-private function integer get_todo_item_attributes (string ps_user_id, long pl_todo_item_id, ref str_attribute pstra_attribute[])
 public function integer set_progress (string ps_progress_type)
 private function str_attributes get_workplan_item_attributes ()
 public function integer save_wp_item_attributes ()
@@ -140,51 +139,6 @@ public function long new_attachment (string ps_context_object, long pl_object_ke
 public function long new_attachment (string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_filepath, string ps_description, string ps_folder)
 public function long new_attachment (string ps_progress_type, string ps_progress_key, string ps_filepath, string ps_description, string ps_folder)
 end prototypes
-
-private function integer get_todo_item_attributes (string ps_user_id, long pl_todo_item_id, ref str_attribute pstra_attribute[]);long ll_attribute_sequence
-string ls_attribute
-string ls_value
-boolean lb_loop
-integer i
-
-
-DECLARE lc_todo_attribute CURSOR FOR  
-  SELECT attribute_sequence,
-  			attribute,
-			value
-    FROM u_Todo_attribute
-   WHERE user_id = :ps_user_id
-   AND todo_item_id = :pl_todo_item_id;
-
-
-OPEN lc_todo_attribute;
-if not tf_check() then return -1
-
-i = 0
-lb_loop = true
-
-DO
-	FETCH lc_todo_attribute INTO
-    		:ll_attribute_sequence,
-  			:ls_attribute,
-			:ls_value;
-	if not tf_check() then return -1
-
-	if sqlca.sqlcode = 0 then
-		i++
-		pstra_attribute[i].attribute_sequence = ll_attribute_sequence
-		pstra_attribute[i].attribute = ls_attribute
-		pstra_attribute[i].value = ls_value
-	else
-		lb_loop = false
-	end if
-LOOP WHILE lb_loop
-
-CLOSE lc_todo_attribute;
-
-return i
-
-end function
 
 public function integer set_progress (string ps_progress_type);datetime ldt_null
 
