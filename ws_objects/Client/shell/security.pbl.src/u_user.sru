@@ -91,6 +91,7 @@ str_actor_communication communication[]
 
 
 end variables
+
 forward prototypes
 public function integer check_drug (string ps_drug_id, string ps_package_id)
 public function string get_preference (string ps_preference_type, string ps_preference_id)
@@ -168,12 +169,13 @@ public function integer start_todo_item (long pl_todo_item_id);datetime ldt_now
 
 ldt_now = datetime(today(), now())
 
-UPDATE u_Todo_List
-SET start_date_time = :ldt_now
-WHERE user_id = :user_id
-AND todo_item_id = :pl_todo_item_id;
-if not tf_check() then return -1
-
+//u_Todo tables are not in our database
+//UPDATE u_Todo_List
+//SET start_date_time = :ldt_now
+//WHERE user_id = :user_id
+//AND todo_item_id = :pl_todo_item_id;
+//if not tf_check() then return -1
+//
 return 1
 
 end function
@@ -182,13 +184,14 @@ public subroutine complete_todo_item (long pl_todo_item_id, string ps_status);da
 
 ldt_now = datetime(today(), now())
 
-UPDATE u_Todo_List
-SET end_date_time = :ldt_now,
-	 status = :ps_status
-WHERE user_id = :user_id
-AND todo_item_id = :pl_todo_item_id;
-if not tf_check() then return
-
+//u_Todo tables are not in our database
+//UPDATE u_Todo_List
+//SET end_date_time = :ldt_now,
+//	 status = :ps_status
+//WHERE user_id = :user_id
+//AND todo_item_id = :pl_todo_item_id;
+//if not tf_check() then return
+//
 
 end subroutine
 
