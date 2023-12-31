@@ -83,7 +83,6 @@ public function integer add_finding (string ps_finding_list, string ps_finding)
 public function string room_menu ()
 public function integer order_encounter_workplan ()
 public function integer close_old ()
-public function boolean any_unfinished_services_old ()
 end prototypes
 
 public subroutine edit_objective ();str_popup popup
@@ -1266,33 +1265,6 @@ luo_this = this
 current_patient.encounters.refresh_encounter(luo_this)
 
 return 1
-
-end function
-
-public function boolean any_unfinished_services_old ();string ls_null
-long ll_patient_workplan_item_id
-char lc_auto_perform_flag
-
-//lc_auto_perform_flag = '%'
-//
-//setnull(ls_null)
-//
-//sqlca.sp_get_next_encounter_service( &
-//		current_patient.cpr_id, &
-//		encounter_id, &
-//		ls_null, &
-//		lc_auto_perform_flag, &
-//		ll_patient_workplan_item_id)
-//		
-//if not tf_check() then return false
-
-if isnull(ll_patient_workplan_item_id) then
-	return false
-else
-	return true
-end if
-
-
 
 end function
 
