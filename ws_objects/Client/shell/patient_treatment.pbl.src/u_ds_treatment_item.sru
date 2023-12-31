@@ -30,8 +30,6 @@ private string cpr_id
 end variables
 
 forward prototypes
-public function integer refresh_service (long al_encounter_log_id)
-public function integer refresh_service (long al_encounter_log_id, ref string as_treatment_status, ref datetime adt_end_date, ref long al_close_encounter_id)
 public function integer refresh_status (long al_treatment_id)
 public function boolean any_treatments (long pl_encounter_id, string ps_treatment_type)
 public function integer close_assessment (long pl_problem_id)
@@ -105,45 +103,6 @@ public function integer new_treatment (u_component_treatment puo_treatment, bool
 public function integer refresh_row (long pl_row)
 public subroutine set_treatment_changed (long pl_treatment_id)
 end prototypes
-
-public function integer refresh_service (long al_encounter_log_id);string ls_treatment_status
-datetime ldt_end_date
-long ll_close_encounter_id
-
-return refresh_service(al_encounter_log_id, ls_treatment_status, ldt_end_date, ll_close_encounter_id)
-
-
-end function
-
-public function integer refresh_service (long al_encounter_log_id, ref string as_treatment_status, ref datetime adt_end_date, ref long al_close_encounter_id);String		ls_find
-Long			ll_row
-long ll_treatment_id
-
-
-IF Isnull(parent_patient.open_encounter) THEN
-	log.log(This, "u_ds_treatment_item.refresh_service:0007", "No open encounter", 4)
-	RETURN -1
-END IF
-
-SELECT treatment_id
-INTO :ll_treatment_id
-FROM p_Encounter_Log
-WHERE cpr_id = :parent_patient.cpr_id
-AND encounter_id = :parent_patient.open_encounter_id
-AND encounter_log_id = :al_encounter_log_id;
-if not tf_check() then return -1
-if sqlca.sqlcode = 100 then
-	log.log(this, "u_ds_treatment_item.refresh_service:0019", "encounter log record not found (" + string(al_encounter_log_id) + ")", 4)
-	return -1
-end if
-
-// If this service doesn't have a treatment_id, then we're done
-if isnull(ll_treatment_id) then return 1
-
-return refresh_status(ll_treatment_id, as_treatment_status, adt_end_date, al_close_encounter_id)
-
-
-end function
 
 public function integer refresh_status (long al_treatment_id);string ls_treatment_status
 datetime ldt_end_date
