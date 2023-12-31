@@ -369,7 +369,6 @@ FUNCTION long sp_get_menu_items(long pl_menu_id) RPCFUNC ALIAS FOR "dbo.sp_get_m
 FUNCTION long sp_Get_Next_Auto_Perform_Service(long pl_patient_workplan_item_id, string ps_user_id, ref long pl_next_patient_workplan_item_id) RPCFUNC ALIAS FOR "dbo.sp_Get_Next_Auto_Perform_Service"
 FUNCTION long sp_get_next_box_item(long pl_box_id, ref long pl_next_box_item) RPCFUNC ALIAS FOR "dbo.sp_get_next_box_item"
 FUNCTION long sp_get_next_component_counter(string ps_component_id, string ps_attribute, ref long pl_next_counter) RPCFUNC ALIAS FOR "dbo.sp_get_next_component_counter"
-FUNCTION long sp_Get_Next_Encounter_Service(string ps_cpr_id, long pl_encounter_id, string ps_user_id, string ps_auto_perform_flag, ref long pl_patient_workplan_item_id) RPCFUNC ALIAS FOR "dbo.sp_Get_Next_Encounter_Service"
 FUNCTION long sp_Get_Next_Encounter_Service_2(string ps_cpr_id, long pl_encounter_id, string ps_user_id, string ps_auto_perform_flag, string ps_in_office_flag, ref long pl_patient_workplan_item_id) RPCFUNC ALIAS FOR "dbo.sp_Get_Next_Encounter_Service_2"
 FUNCTION long sp_get_next_key(string ps_cpr_id, string ps_key_id, ref long pl_key_value) RPCFUNC ALIAS FOR "dbo.sp_get_next_key"
 FUNCTION long sp_get_next_key2(string ps_cpr_id, string ps_key_id) RPCFUNC ALIAS FOR "dbo.sp_get_next_key"
