@@ -811,7 +811,7 @@ CHOOSE CASE lower(ps_table)
 		end if
 		object.assessment_id[pl_row] = ls_newkey
 		object.status[pl_row] = "NA"
-	CASE "c_development_item"
+//	CASE "c_development_item"
 		// table doesn't exist in Epro_OS
 //		ls_stage_id = object.stage_id[pl_row]
 //		ls_item_type = object.item_type[pl_row]
@@ -825,14 +825,14 @@ CHOOSE CASE lower(ps_table)
 //
 //		if isnull(li_item_sequence) then li_item_sequence = 0
 //		object.item_sequence[pl_row] = li_item_sequence + pl_row
-	CASE "c_development_stage"
-		ls_description = object.description[pl_row]
-		ls_newkey = gen_unique_key(ps_table, "stage_id", ls_description)
-		if isnull(ls_newkey) then
-			log.log(this, "u_ds_data.generate_new_key:0055", "Error generating new key (" + ps_table + ")", 4)
-			return -1
-		end if
-		object.stage_id[pl_row] = ls_newkey
+//	CASE "c_development_stage"
+//		ls_description = object.description[pl_row]
+//		ls_newkey = gen_unique_key(ps_table, "stage_id", ls_description)
+//		if isnull(ls_newkey) then
+//			log.log(this, "u_ds_data.generate_new_key:0055", "Error generating new key (" + ps_table + ")", 4)
+//			return -1
+//		end if
+//		object.stage_id[pl_row] = ls_newkey
 	CASE "c_drug_definition"
 		ls_description = object.common_name[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "drug_id", ls_description)
@@ -850,7 +850,7 @@ CHOOSE CASE lower(ps_table)
 			return -1
 		end if
 		object.maker_id[pl_row] = ls_newkey
-	CASE "c_history_questionnaire"
+//	CASE "c_history_questionnaire"
 		// table doesn't exist in Epro_OS
 //		SELECT max(history_questionnaire_id)
 //		INTO :li_item_sequence
@@ -980,7 +980,7 @@ CHOOSE CASE lower(ps_table)
 		end if
 			
 	CASE "p_assessment_progress"
-	CASE "p_attachment_header"
+//	CASE "p_attachment_header"
 		// table doesn't exist in Epro_OS
 //		ls_cpr_id = object.cpr_id[pl_row]
 //		ll_attachment_id = object.attachment_id[pl_row]
@@ -1000,21 +1000,21 @@ CHOOSE CASE lower(ps_table)
 //		end if
 //		
 //		object.attachment_sequence[pl_row] = li_attachment_sequence
-	CASE "p_attachment_list"
-		ls_cpr_id = object.cpr_id[pl_row]
-		ls_key_id = "ATTACHMENT_ID"
-		mydb.sp_get_next_key   ( &
-         ls_cpr_id,    &
-         ls_key_id,    &
-         ref ll_key_value) ;
-// 	EXECUTE lsp_get_next_key;
-		if not sqlca.check() then return -1
-//		FETCH lsp_get_next_key INTO :ll_attachment_id;
+//	CASE "p_attachment_list"
+//		ls_cpr_id = object.cpr_id[pl_row]
+//		ls_key_id = "ATTACHMENT_ID"
+//		mydb.sp_get_next_key   ( &
+//         ls_cpr_id,    &
+//         ls_key_id,    &
+//         ref ll_key_value) ;
+//// 	EXECUTE lsp_get_next_key;
 //		if not sqlca.check() then return -1
-//		CLOSE lsp_get_next_key;
-//		
-		object.attachment_id[pl_row] = ll_attachment_id
-	CASE "p_attachment_object"
+////		FETCH lsp_get_next_key INTO :ll_attachment_id;
+////		if not sqlca.check() then return -1
+////		CLOSE lsp_get_next_key;
+////		
+//		object.attachment_id[pl_row] = ll_attachment_id
+//	CASE "p_attachment_object"
 		// table doesn't exist in Epro_OS
 //		ls_cpr_id = object.cpr_id[pl_row]
 //		ll_attachment_id = object.attachment_id[pl_row]
@@ -1036,17 +1036,17 @@ CHOOSE CASE lower(ps_table)
 //		end if
 //		
 //		object.object_sequence[pl_row] = ll_object_sequence
-	CASE "p_development"
-	CASE "p_development_stage"
-	CASE "p_encounter_log"
+//	CASE "p_development"
+//	CASE "p_development_stage"
+//	CASE "p_encounter_log"
 	CASE "p_family_history"
 	CASE "p_family_illness"
-	CASE "p_history"
-	CASE "p_history_questionnaire"
+//	CASE "p_history"
+//	CASE "p_history_questionnaire"
 	CASE "p_letter"
 	CASE "p_material_used"
-	CASE "p_objective"
-	CASE "p_objective_result"
+//	CASE "p_objective"
+//	CASE "p_objective_result"
 	CASE "p_patient"
 		ls_cpr_id = object.billing_id[pl_row]
 		ls_newkey = gen_unique_key(ps_table, "cpr_id", ls_cpr_id)
@@ -1069,7 +1069,7 @@ CHOOSE CASE lower(ps_table)
 //		CLOSE lsp_get_next_key;
 //		
 		object.encounter_id[pl_row] = ll_encounter_id
-	CASE "p_patient_insurance"
+//	CASE "p_patient_insurance"
 	CASE "p_treatment_item"
 	CASE "p_treatment_progress"
 END CHOOSE

@@ -62,9 +62,7 @@ public function integer retry_posting ()
 public function integer set_billing_procedure ()
 public function integer get_billing_treatments (long pl_problem_id, ref str_encounter_charge pstra_charge[], ref integer pi_charge_count)
 public function long find_service (string ps_service)
-public function integer get_numeric_objective_result (long pl_treatment_id, string ps_observation_id, string ps_location, integer pi_result_sequence, ref real pr_result_amount, ref string ps_result_unit)
 public function integer get_assessments (ref str_encounter_assessment pstra_assessment[], ref integer pi_assessment_count)
-public function integer set_numeric_objective_result (long pl_treatment_id, string ps_observation_id, integer pi_result_sequence, string ps_location, real pr_result_amount)
 public function integer save_attachment ()
 public function integer set_billing_procedure (boolean pb_replace)
 public function integer cancel_treatment (long pl_treatment_id)
@@ -464,38 +462,6 @@ return ll_patient_workplan_item_id
 
 end function
 
-public function integer get_numeric_objective_result (long pl_treatment_id, string ps_observation_id, string ps_location, integer pi_result_sequence, ref real pr_result_amount, ref string ps_result_unit);
-
-// DECLARE lsp_get_result_loc PROCEDURE FOR dbo.sp_get_result_loc
-//         @ps_cpr_id = :current_patient.cpr_id,   
-//         @pl_treatment_id = :pl_treatment_id,   
-//         @ps_observation_id = :ps_observation_id,
-//         @ps_location = :ps_location,
-//         @pi_result_sequence = :pi_result_sequence,
-//         @pr_result_amount = :pr_result_amount OUT,   
-//         @ps_result_unit = :ps_result_unit OUT ;
-//
-SQLCA.sp_get_result_loc ( &
-         current_patient.cpr_id,    &
-         pl_treatment_id,    &
-         ps_observation_id, &
-         ps_location, &
-         pi_result_sequence, &
-         ref pr_result_amount,    &
-         ref ps_result_unit );
-
-//EXECUTE lsp_get_result_loc;
-if not tf_check() then return -1
-
-//FETCH lsp_get_result_loc INTO :pr_result_amount, :ps_result_unit;
-//if not tf_check() then return -1
-//
-//CLOSE lsp_get_result_loc;
-
-return 1
-
-end function
-
 public function integer get_assessments (ref str_encounter_assessment pstra_assessment[], ref integer pi_assessment_count);
 u_ds_data lds 
 integer li_row
@@ -560,28 +526,6 @@ NEXT
 
 return 1
 
-
-end function
-
-public function integer set_numeric_objective_result (long pl_treatment_id, string ps_observation_id, integer pi_result_sequence, string ps_location, real pr_result_amount);datetime ldt_result_date_time
-
-setnull(ldt_result_date_time)
-
-sqlca.sp_set_result_amount( &
-		current_patient.cpr_id, &
-		pl_treatment_id, &
-		ps_observation_id, &
-		pi_result_sequence, &
-		ps_location, &
-		encounter_id, &
-		pr_result_amount, &
-		ldt_result_date_time, &
-		current_user.user_id, &
-		current_scribe.user_id)
-
-if not tf_check() then return -1
-
-return 1
 
 end function
 

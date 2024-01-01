@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -89,12 +45,10 @@ Select  ca.icd_9_code,
        pat.first_name,
        pat.billing_id,
        pat.date_of_birth
-FROM p_assessment pa (NOLOCK),
-     c_assessment_definition ca (NOLOCK),
-     p_patient pat (NOLOCK)
-Where pa.cpr_id = pat.cpr_id
-AND pa.assessment_id = ca.assessment_id
-	AND pa.begin_date BETWEEN @begin_date AND DATEADD( day, 1, @end_date)
+FROM p_assessment pa (NOLOCK)
+     JOIN c_assessment_definition ca (NOLOCK) ON pa.assessment_id = ca.assessment_id
+     JOIN p_patient pat (NOLOCK) ON pa.cpr_id = pat.cpr_id
+Where pa.begin_date BETWEEN @begin_date AND DATEADD( day, 1, @end_date)
 	AND (ca.icd_9_code In ('071','482.2','038.41','041.5','033.0','042','501','008.43','099.0','099.41','099.5','483.1','007.4','061','065.4','064','323.4','323.5','323.6','008.0','038.42','041.4','482.82','647.1','030.8','030.9','079.81','283.11','795.71','482.84','027.0','088.81','072.2','V82.5','026.1','087.9','056','771.0','002.0','004','004.9','011','502','082.0','038.0','320.2','420.99','511.1','511.0','097.9','771.3','037','978.4','124','008.44')       
          OR ca.icd_9_code LIKE '001%'
          OR ca.icd_9_code LIKE '005%'
@@ -132,11 +86,9 @@ Create Table #comm_disease (
 
 
 SELECT @mycount =  (Select count(*)
-FROM p_assessment pa (NOLOCK),
-     c_assessment_definition ca (NOLOCK)
-WHERE
-	pa.assessment_id = ca.assessment_id
-	AND pa.begin_date BETWEEN @begin_date AND DATEADD( day, 1, @end_date)
+FROM p_assessment pa (NOLOCK)
+     JOIN c_assessment_definition ca (NOLOCK) ON pa.assessment_id = ca.assessment_id
+WHERE pa.begin_date BETWEEN @begin_date AND DATEADD( day, 1, @end_date)
 	AND (ca.icd_9_code In ('071','482.2','038.41','041.5','033.0','042','501','008.43','099.0','099.41','099.5','483.1','007.4','061','065.4','064','323.4','323.5','323.6','008.0','038.42','041.4','482.82','647.1','030.8','030.9','079.81','283.11','795.71','482.84','027.0','088.81','072.2','V82.5','026.1','087.9','056','771.0','002.0','004','004.9','011','502','082.0','038.0','320.2','420.99','511.1','511.0','097.9','771.3','037','978.4','124','008.44')       
     OR ca.icd_9_code LIKE '001%'
     OR ca.icd_9_code LIKE '005%'

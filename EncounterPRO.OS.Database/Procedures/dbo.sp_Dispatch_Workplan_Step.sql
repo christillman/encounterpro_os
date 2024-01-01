@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -346,9 +302,11 @@ WHILE @pi_step_number > 0
 			@ll_expiration_time = expiration_time,
 			@ls_expiration_unit_id = expiration_unit_id,
 			@ls_abnormal_flag = abnormal_flag,
-			@li_severity = severity,
-			@ls_item_authority_id = authority_id,
-			@ls_item_authority_category = authority_category
+			@li_severity = severity
+			-- Remove [authority_id] and [authority_category] columns which were added in the 6.1.1 design but excluded in releases 
+			-- and from further development in the open source version (because the change wasn't complete).
+			-- @ls_item_authority_id = authority_id,
+			-- @ls_item_authority_category = authority_category
 		FROM c_Workplan_Item
 		WHERE workplan_id = @ll_this_workplan_id
 		AND item_number = @ll_item_number
@@ -364,12 +322,6 @@ WHILE @pi_step_number > 0
 			IF @ls_sex IS NOT NULL and @ls_sex <> @ls_this_sex
 				SET @ls_skip = 'Y'
 				
-			IF @ls_item_authority_id IS NOT NULL and @ls_item_authority_id <> @ls_payer_authority_id
-				SET @ls_skip = 'Y'
-
-			IF @ls_item_authority_category IS NOT NULL and @ls_item_authority_category <> @ls_payer_authority_category
-				SET @ls_skip = 'Y'
-
 			IF @ls_new_flag IS NOT NULL and @ls_new_flag <> @ls_this_new_flag
 				SET @ls_skip = 'Y'
 				
@@ -503,13 +455,14 @@ WHILE @pi_step_number > 0
 				-- item to the existing one and update the status to 'CONSOLIDATED'
 				IF @ls_consolidate_flag = 'Y'
 					SELECT @ll_dispatched_patient_workplan_item_id = min(c.patient_workplan_item_id)
-					FROM p_Patient_WP_Item t, p_Patient_WP_Item c
+					FROM p_Patient_WP_Item t
+					JOIN p_Patient_WP_Item c 
+						ON c.cpr_id = t.cpr_id
+						AND c.encounter_id = t.encounter_id
+						AND c.item_type = t.item_type
+						AND c.ordered_service = t.ordered_service
+						AND c.ordered_for = t.ordered_for
 					WHERE t.patient_workplan_item_id = @ll_patient_workplan_item_id
-					AND c.cpr_id = t.cpr_id
-					AND c.encounter_id = t.encounter_id
-					AND c.item_type = t.item_type
-					AND c.ordered_service = t.ordered_service
-					AND c.ordered_for = t.ordered_for
 					AND c.consolidate_flag = 'Y'
 					AND c.status = 'DISPATCHED'
 				ELSE
@@ -575,9 +528,9 @@ WHILE @pi_step_number > 0
 						@ls_ordered_in_office_flag = c_Workplan.in_office_flag,
 						@ls_ordered_workplan_type = c_Workplan.workplan_type,
 						@ll_treatment_id = NULL
-					FROM c_Workplan, p_Patient_WP_Item
+					FROM c_Workplan
+					JOIN p_Patient_WP_Item ON p_Patient_WP_Item.ordered_workplan_id = c_Workplan.workplan_id
 					WHERE p_Patient_WP_Item.patient_workplan_item_id = @ll_patient_workplan_item_id
-					AND p_Patient_WP_Item.ordered_workplan_id = c_Workplan.workplan_id
 		
 				-- Dispatch the workplan if there's not an in_office_flag mismatch
 				IF @ls_ordered_in_office_flag <> 'Y' OR @ls_this_in_office_flag = 'Y'
@@ -586,23 +539,25 @@ WHILE @pi_step_number > 0
 						BEGIN
 						IF @ls_item_type = 'Treatment'
 							SELECT @ll_dispatched_patient_workplan_item_id = min(c.patient_workplan_item_id)
-							FROM p_Patient_WP_Item t, p_Patient_WP_Item c
+							FROM p_Patient_WP_Item t
+							JOIN p_Patient_WP_Item c 
+								ON c.cpr_id = t.cpr_id
+								AND c.encounter_id = t.encounter_id
+								AND c.item_type = t.item_type
+								AND c.ordered_treatment_type = t.ordered_treatment_type
+								AND c.ordered_for = t.ordered_for
 							WHERE t.patient_workplan_item_id = @ll_patient_workplan_item_id
-							AND c.cpr_id = t.cpr_id
-							AND c.encounter_id = t.encounter_id
-							AND c.item_type = t.item_type
-							AND c.ordered_treatment_type = t.ordered_treatment_type
-							AND c.ordered_for = t.ordered_for
 							AND c.status = 'DISPATCHED'
 						ELSE
 							SELECT @ll_dispatched_patient_workplan_item_id = min(c.patient_workplan_item_id)
-							FROM p_Patient_WP_Item t, p_Patient_WP_Item c
+							FROM p_Patient_WP_Item t
+							JOIN p_Patient_WP_Item c 
+								ON c.cpr_id = t.cpr_id
+								AND c.encounter_id = t.encounter_id
+								AND c.item_type = t.item_type
+								AND c.ordered_workplan_id = t.ordered_workplan_id
+								AND c.ordered_for = t.ordered_for
 							WHERE t.patient_workplan_item_id = @ll_patient_workplan_item_id
-							AND c.cpr_id = t.cpr_id
-							AND c.encounter_id = t.encounter_id
-							AND c.item_type = t.item_type
-							AND c.ordered_workplan_id = t.ordered_workplan_id
-							AND c.ordered_for = t.ordered_for
 							AND c.status = 'DISPATCHED'
 						END
 					ELSE

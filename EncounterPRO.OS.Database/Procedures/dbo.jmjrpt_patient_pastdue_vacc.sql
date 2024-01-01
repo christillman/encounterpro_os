@@ -29,10 +29,10 @@ CREATE TABLE #overdue_vacc(
 CREATE TABLE #overdue_vacc2(
             id int IDENTITY (1, 1) NOT NULL , namer varchar(40),dob datetime,vacc_descp varchar(40),odue_days integer) ON [PRIMARY] 
 DECLARE @li_vaccine_count smallint,
-	@li_schedule_count smallint,
+		@li_schedule_count smallint,
         @li_max_count smallint,
-	@ldt_date_of_birth datetime,
-	@ldt_age datetime,
+		@ldt_date_of_birth datetime,
+		@ldt_age datetime,
         @ldt_due_date_time datetime, 
         @vaccid varchar(24),@lstvaccid varchar(24),
         @diseaseid integer,
@@ -66,17 +66,17 @@ SELECT p.cpr_id
           ON a.assessment_id = d.assessment_id
          inner join c_Disease cd WITH (NOLOCK)
           ON  d.disease_id = cd.disease_id
-        AND  cd.no_vaccine_after_disease = 'Y')
-        AND  i.treatment_id = (SELECT MAX(i2.treatment_id)
-        FROM p_Treatment_Item i2 WITH (NOLOCK)
-		JOIN c_vaccine v2 ON i2.drug_id = v2.drug_id
-		JOIN c_vaccine_disease cvd2 ON v2.vaccine_id = cvd2.vaccine_id
-        INNER JOIN c_Immunization_Schedule cid2 WITH (NOLOCK)
-        ON cvd2.disease_id = cid2.disease_id
-        WHERE p.cpr_id = i2.cpr_id
-        AND i2.treatment_type IN ('IMMUNIZATION', 'PASTIMMUN')
-        AND ISNULL( i2.treatment_status, 'OPEN' ) <> 'CANCELLED')
-GROUP BY p.cpr_id, p.date_of_birth,cvd.vaccine_id,cid.disease_id
+			AND  cd.no_vaccine_after_disease = 'Y')
+			AND  i.treatment_id = (SELECT MAX(i2.treatment_id)
+			FROM p_Treatment_Item i2 WITH (NOLOCK)
+			JOIN c_vaccine v2 ON i2.drug_id = v2.drug_id
+			JOIN c_vaccine_disease cvd2 ON v2.vaccine_id = cvd2.vaccine_id
+			INNER JOIN c_Immunization_Schedule cid2 WITH (NOLOCK)
+			ON cvd2.disease_id = cid2.disease_id
+			WHERE p.cpr_id = i2.cpr_id
+			AND i2.treatment_type IN ('IMMUNIZATION', 'PASTIMMUN')
+			AND ISNULL( i2.treatment_status, 'OPEN' ) <> 'CANCELLED')
+	GROUP BY p.cpr_id, p.date_of_birth,cvd.vaccine_id,cid.disease_id
 
 UNION 
 --some vaccine not done
@@ -86,12 +86,10 @@ SELECT p.cpr_id
       ,cid.disease_id
       ,'1'
       ,'Y' 
-FROM c_vaccine_disease cvd WITH (NOLOCK),
-     c_Immunization_Schedule cid WITH (NOLOCK),
-     p_patient p WITH (NOLOCK)
-     WHERE
-        cvd.disease_id = cid.disease_id 
-        AND p.patient_status = 'ACTIVE' 
+FROM c_vaccine_disease cvd WITH (NOLOCK)
+     JOIN c_Immunization_Schedule cid WITH (NOLOCK) ON cvd.disease_id = cid.disease_id 
+     CROSS JOIN p_patient p WITH (NOLOCK)
+     WHERE p.patient_status = 'ACTIVE' 
         AND datediff(year, p.date_of_birth, getdate()) <= 24
          -- if patient had disease then vaccine not needed
         AND p.cpr_id not in
@@ -104,14 +102,14 @@ FROM c_vaccine_disease cvd WITH (NOLOCK),
         AND NOT EXISTS
         (SELECT i3.cpr_id
            FROM p_Treatment_Item i3 WITH (NOLOCK)
-		JOIN c_vaccine v3 ON i3.drug_id = v3.drug_id
-		JOIN c_vaccine_disease cvd3 ON v3.vaccine_id = cvd3.vaccine_id
-        INNER JOIN c_Immunization_Schedule cid3 WITH (NOLOCK)
-        ON cvd3.disease_id = cid3.disease_id
-        WHERE p.cpr_id = i3.cpr_id
-        AND i3.treatment_type IN ('IMMUNIZATION', 'PASTIMMUN')
-        AND ISNULL( i3.treatment_status, 'OPEN' ) <> 'CANCELLED') 
-       GROUP BY p.cpr_id, p.date_of_birth,cvd.vaccine_id,cid.disease_id
+			JOIN c_vaccine v3 ON i3.drug_id = v3.drug_id
+			JOIN c_vaccine_disease cvd3 ON v3.vaccine_id = cvd3.vaccine_id
+			INNER JOIN c_Immunization_Schedule cid3 WITH (NOLOCK)
+			ON cvd3.disease_id = cid3.disease_id
+			WHERE p.cpr_id = i3.cpr_id
+			AND i3.treatment_type IN ('IMMUNIZATION', 'PASTIMMUN')
+			AND ISNULL( i3.treatment_status, 'OPEN' ) <> 'CANCELLED') 
+GROUP BY p.cpr_id, p.date_of_birth,cvd.vaccine_id,cid.disease_id
 
 ORDER BY date_of_birth desc, p.cpr_id asc,cvd.vaccine_id 
 

@@ -41,9 +41,8 @@ IF @lc_no_vaccine_after_disease = 'Y'
 	BEGIN
 	SELECT @li_assessment_count = count(problem_id)
 	FROM 	p_Assessment a WITH (NOLOCK)
-		, c_Disease_Assessment d WITH (NOLOCK)
+		JOIN c_Disease_Assessment d WITH (NOLOCK) ON a.assessment_id = d.assessment_id
 	WHERE a.cpr_id = @ps_cpr_id
-	AND a.assessment_id = d.assessment_id
 	AND d.disease_id = @pl_disease_id
 	IF @li_assessment_count > 0
 		BEGIN

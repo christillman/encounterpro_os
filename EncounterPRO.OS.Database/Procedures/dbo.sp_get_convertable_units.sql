@@ -26,18 +26,16 @@ AS
 SELECT	c_Unit.unit_id,
 	c_Unit.description,
 	selected_flag = 0
-FROM	c_Unit_Conversion (NOLOCK),
-	c_Unit (NOLOCK)
-WHERE c_Unit_Conversion.unit_from = c_Unit.unit_id
-AND c_Unit_Conversion.unit_to = @ps_unit_id
+FROM	c_Unit_Conversion (NOLOCK)
+	JOIN c_Unit (NOLOCK) ON c_Unit_Conversion.unit_from = c_Unit.unit_id
+WHERE c_Unit_Conversion.unit_to = @ps_unit_id
 UNION
 SELECT	c_Unit.unit_id,
 	c_Unit.description,
 	selected_flag = 0
-FROM	c_Unit_Conversion (NOLOCK),
-	c_Unit (NOLOCK)
-WHERE c_Unit_Conversion.unit_to = c_Unit.unit_id
-AND c_Unit_Conversion.unit_from = @ps_unit_id
+FROM	c_Unit_Conversion (NOLOCK)
+	JOIN c_Unit (NOLOCK) ON c_Unit_Conversion.unit_from = c_Unit.unit_id
+WHERE c_Unit_Conversion.unit_from = @ps_unit_id
 UNION
 SELECT	unit_id,
 	description,
