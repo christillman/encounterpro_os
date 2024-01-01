@@ -38,41 +38,42 @@ BEGIN
 	AND inserted.treatment_id = p_Patient_WP.treatment_id
 END
 
-IF UPDATE(office_dispense_amount) OR UPDATE( dispense_unit )
-BEGIN
-	DECLARE @ls_cpr_id varchar(12),
-		@ll_treatment_id int
+-- Procedures use tables not found in current version
+--IF UPDATE(office_dispense_amount) OR UPDATE( dispense_unit )
+--BEGIN
+--	DECLARE @ls_cpr_id varchar(12),
+--		@ll_treatment_id int
 
-	DECLARE pharmacist_items CURSOR LOCAL STATIC FORWARD_ONLY TYPE_WARNING FOR
-	SELECT inserted.cpr_id, inserted.treatment_id
-	FROM inserted
-	JOIN deleted  
-	ON inserted.cpr_id = deleted.cpr_id
-	AND inserted.treatment_id = deleted.treatment_id
-	WHERE inserted.office_dispense_amount > 0
-	AND inserted.dispense_unit IS NOT NULL
+--	DECLARE pharmacist_items CURSOR LOCAL STATIC FORWARD_ONLY TYPE_WARNING FOR
+--	SELECT inserted.cpr_id, inserted.treatment_id
+--	FROM inserted
+--	JOIN deleted  
+--	ON inserted.cpr_id = deleted.cpr_id
+--	AND inserted.treatment_id = deleted.treatment_id
+--	WHERE inserted.office_dispense_amount > 0
+--	AND inserted.dispense_unit IS NOT NULL
 	
-	OPEN pharmacist_items
+--	OPEN pharmacist_items
 	
-	FETCH pharmacist_items INTO
-		@ls_cpr_id,
-		@ll_treatment_id
+--	FETCH pharmacist_items INTO
+--		@ls_cpr_id,
+--		@ll_treatment_id
 	
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
-		EXECUTE sp_dispatch_pharmacist_service
-			@ps_cpr_id = @ls_cpr_id,
-			@pl_treatment_id = @ll_treatment_id
+--	WHILE @@FETCH_STATUS = 0
+--	BEGIN
+--		EXECUTE sp_dispatch_pharmacist_service
+--			@ps_cpr_id = @ls_cpr_id,
+--			@pl_treatment_id = @ll_treatment_id
 	
-		FETCH pharmacist_items INTO
-			@ls_cpr_id,
-			@ll_treatment_id
-	END
+--		FETCH pharmacist_items INTO
+--			@ls_cpr_id,
+--			@ll_treatment_id
+--	END
 	
-	CLOSE pharmacist_items
+--	CLOSE pharmacist_items
 	
-	DEALLOCATE pharmacist_items
-END
+--	DEALLOCATE pharmacist_items
+--END
 
 IF UPDATE( treatment_status ) 
 	BEGIN
