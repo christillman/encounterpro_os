@@ -1,0 +1,25 @@
+
+UPDATE c_Assessment_Category SET icd10_start = 'Z00', icd10_end = 'Z99' WHERE assessment_type = 'WELL'
+UPDATE c_Assessment_Category SET icd10_start = 'A00', icd10_end = 'B99' WHERE assessment_category_id = 'AINFECT'
+UPDATE c_Assessment_Category SET icd10_start = 'C00', icd10_end = 'D49' WHERE assessment_category_id = 'ANEO'
+UPDATE c_Assessment_Category SET icd10_start = 'D50', icd10_end = 'D89' WHERE assessment_category_id = 'CHEMA'
+UPDATE c_Assessment_Category SET icd10_start = 'E00', icd10_end = 'E89' WHERE assessment_category_id = 'BMETA'
+UPDATE c_Assessment_Category SET icd10_start = 'F01', icd10_end = 'F99' WHERE assessment_category_id = 'MENTAL'
+UPDATE c_Assessment_Category SET icd10_start = 'G00', icd10_end = 'G99' WHERE assessment_category_id = 'NERVE'
+UPDATE c_Assessment_Category SET icd10_start = 'H00', icd10_end = 'H59' WHERE assessment_category_id = 'NEYE'
+UPDATE c_Assessment_Category SET icd10_start = 'H60', icd10_end = 'H95' WHERE assessment_category_id = 'NOEAR'
+UPDATE c_Assessment_Category SET icd10_start = 'I00', icd10_end = 'I99' WHERE assessment_category_id = 'OCARDIO'
+UPDATE c_Assessment_Category SET icd10_start = 'J00', icd10_end = 'J99' WHERE assessment_category_id = 'ORESP'
+UPDATE c_Assessment_Category SET icd10_start = 'K00', icd10_end = 'K95' WHERE assessment_category_id = 'PGASTRA'
+UPDATE c_Assessment_Category SET icd10_start = 'L00', icd10_end = 'L99' WHERE assessment_category_id = 'QDERM'
+UPDATE c_Assessment_Category SET icd10_start = 'M00', icd10_end = 'M99' WHERE assessment_category_id = 'QMUS'
+UPDATE c_Assessment_Category SET icd10_start = 'N00', icd10_end = 'N99' WHERE assessment_category_id = 'PGU'
+UPDATE c_Assessment_Category SET icd10_start = 'O00', icd10_end = 'O9A' WHERE assessment_category_id = 'OB'
+UPDATE c_Assessment_Category SET icd10_start = 'P00', icd10_end = 'P96' WHERE assessment_category_id = 'OBP'
+UPDATE c_Assessment_Category SET icd10_start = 'Q00', icd10_end = 'Q99' WHERE assessment_category_id = 'RGENE'
+UPDATE c_Assessment_Category SET icd10_start = 'R00', icd10_end = 'R99' WHERE assessment_category_id = 'ZZZ'
+UPDATE c_Assessment_Category SET icd10_start = 'S00', icd10_end = 'T88' WHERE assessment_category_id = 'WOUND'
+UPDATE c_Assessment_Category SET icd10_start = 'V00', icd10_end = 'Y99' WHERE assessment_category_id = 'Z'
+
+GO
+

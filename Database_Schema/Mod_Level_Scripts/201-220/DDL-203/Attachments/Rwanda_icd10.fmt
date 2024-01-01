@@ -1,0 +1,4 @@
+10.0
+2
+1       SQLCHAR             0       10      "\t"     1     code           SQL_Latin1_General_CP1_CI_AS
+2       SQLCHAR             0       255     "\r\n"   2     descr          SQL_Latin1_General_CP1_CI_AS
