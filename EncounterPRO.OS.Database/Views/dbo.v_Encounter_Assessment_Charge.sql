@@ -2,7 +2,7 @@
 Print 'Drop View [dbo].[v_Encounter_Assessment_Charge]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[v_Encounter_Assessment_Charge]') AND [type]='V'))
-DROP VIEW v_drug_search
+DROP VIEW v_Encounter_Assessment_Charge
 Print 'Create View [dbo].[v_Encounter_Assessment_Charge]'
 GO
 CREATE VIEW v_Encounter_Assessment_Charge AS
@@ -44,3 +44,4 @@ FROM p_Encounter_Assessment_Charge eac (NOLOCK)
     JOIN p_Assessment_Treatment pat (NOLOCK) ON a.cpr_id = pat.cpr_id
 		AND a.problem_id = pat.problem_id
     JOIN c_procedure cp (NOLOCK) ON cp.procedure_id = ec.procedure_id  
+
