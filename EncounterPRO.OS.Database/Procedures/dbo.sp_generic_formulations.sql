@@ -19,7 +19,8 @@ AS
 BEGIN
 
 /* The generic that was picked, if any (0 if brand was picked)*/
-SELECT form_descr, form_rxcui, ingr_rxcui, dbo.fn_strength_sort(form_descr) AS strength_sort
+SELECT form_descr, form_rxcui, ingr_rxcui, 
+	dbo.fn_strength_sort(form_descr) AS strength_sort
 	/* , 'Y' as matches_brand */
 FROM c_Drug_Formulation
 WHERE ingr_rxcui = @ps_generic_ingr_rxcui
@@ -27,14 +28,15 @@ AND valid_in LIKE '%' + @country_code + ';%'
 UNION
 /* If no generic picked, then only the generic formulations matching 
 	the available formulations for the brand that was picked */
-SELECT f.form_descr, f.form_rxcui, f.ingr_rxcui, dbo.fn_strength_sort(f.form_descr) AS strength_sort
+SELECT f.form_descr, f.form_rxcui, f.ingr_rxcui, 
+	dbo.fn_strength_sort(f.form_descr) AS strength_sort
 FROM c_Drug_Formulation fb 
 JOIN c_Drug_Formulation f ON f.form_rxcui = fb.generic_form_rxcui
 WHERE fb.ingr_rxcui = @ps_brand_name_rxcui
 AND f.valid_in LIKE '%' + @country_code + ';%'
 AND fb.valid_in LIKE '%' + @country_code + ';%'
 AND @ps_generic_ingr_rxcui = '0'
-ORDER BY 4
+ORDER BY strength_sort
 
 END
 
