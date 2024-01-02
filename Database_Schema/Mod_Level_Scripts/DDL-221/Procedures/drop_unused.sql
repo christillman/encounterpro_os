@@ -1,3 +1,5 @@
+
+DROP PROCEDURE IF EXISTS jmjrpt_patient_any_flow
 DROP PROCEDURE IF EXISTS sp_cancel_service
 DROP PROCEDURE IF EXISTS sp_check_development_status
 DROP PROCEDURE IF EXISTS sp_close_encounter_if_done
@@ -8,6 +10,7 @@ DROP PROCEDURE IF EXISTS sp_delete_report
 DROP PROCEDURE IF EXISTS sp_dispatch_pharmacist_service
 DROP PROCEDURE IF EXISTS sp_get_assessment_therapies
 DROP PROCEDURE IF EXISTS sp_get_current_finding
+DROP PROCEDURE IF EXISTS sp_get_encounter_services
 DROP PROCEDURE IF EXISTS sp_get_exam_observations
 DROP PROCEDURE IF EXISTS sp_get_history_questionnaires
 DROP PROCEDURE IF EXISTS sp_get_last_discussed_by
@@ -47,6 +50,7 @@ DROP PROCEDURE IF EXISTS sp_order_todo_service_enc
 DROP PROCEDURE IF EXISTS sp_order_todo_service_patient
 DROP PROCEDURE IF EXISTS sp_post_assessments
 DROP PROCEDURE IF EXISTS sp_post_billing
+DROP PROCEDURE IF EXISTS sp_primary_service_check
 DROP PROCEDURE IF EXISTS sp_queue_encounter_report
 DROP PROCEDURE IF EXISTS sp_queue_report
 DROP PROCEDURE IF EXISTS sp_queue_report_ready
