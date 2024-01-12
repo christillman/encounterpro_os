@@ -59,11 +59,6 @@ and d2.drug_id in (select drug_id from c_Drug_Generic)
 update [p_Treatment_Item] set drug_id = 'HEPB', treatment_key = 'HEPB' 
 where drug_id = '981^42'
 
-update [p_Treatment_Item] set drug_id = 'ZITHROMAX', treatment_key = 'ZITHROMAX' 
-where drug_id = '981^5'
-update c_Drug_Package set drug_id = 'ZITHROMAX' where drug_id = '981^5'
-update c_Common_Drug set drug_id = 'ZITHROMAX' where drug_id = '981^5'
-
 /*
 specialty_id	drug_id
 $ENT	981^46
