@@ -217,6 +217,10 @@ integer major_release = 7
 string database_version = "2" // this is really minor release
 string build = "1.6"
 // Resulting in 7.2.1.6
+
+/// !!! Remember to also change this in markbuild project entry spots
+//  7   2   1   6
+
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
