@@ -209,19 +209,19 @@ type variables
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 220
+long minimum_modification_level = 221
 
-date compile_date = date("2023-10-07")
+date compile_date = date("2024-01-13")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.5"
-// Resulting in 7.2.1.5
+string build = "1.6"
+// Resulting in 7.2.1.6
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
-string copyright = "Copyright 1994-2023 The EncounterPRO Foundation, Inc."
+string copyright = "Copyright 1994-2024 The EncounterPRO Foundation, Inc."
 string source_url = "https://github.com/christillman/encounterpro_os"
 
 ////////////////////////////////////////////////////////////
@@ -247,7 +247,6 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 

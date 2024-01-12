@@ -12,7 +12,7 @@
   !define PRODUCT   GreenOliveEHR
 
 ; Client Setup Version
-  !define VERSION   7.2.1.5
+  !define VERSION   7.2.1.6
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -20,7 +20,7 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   220
+  !define Database_Mod_Level   221
   ; Get this from the folder name in e.g.
   ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2797
   !define PBRuntime_VERSION   19.2.0.2797
