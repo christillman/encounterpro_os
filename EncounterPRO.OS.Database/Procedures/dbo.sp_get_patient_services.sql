@@ -40,7 +40,7 @@ AND	(i.owned_by = @ps_user_id
 	OR i.owned_by IN (
 				SELECT role_id
 				FROM c_User_Role
-				WHERE user_id = @ps_user_id) )
+				WHERE [user_id] = @ps_user_id) )
 AND NOT EXISTS (
 		SELECT patient_workplan_item_id
 		FROM o_User_Service_Lock l

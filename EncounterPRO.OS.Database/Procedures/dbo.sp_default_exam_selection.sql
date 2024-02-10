@@ -50,7 +50,7 @@ WHERE cpr_id = @ps_cpr_id
 
 SELECT @ls_specialty_id = COALESCE(specialty_id, '$')
 FROM c_User WITH (NOLOCK)
-WHERE user_id = @ps_user_id
+WHERE [user_id] = @ps_user_id
 
 DECLARE @tmp_exams TABLE
 (	exam_sequence int NOT NULL,

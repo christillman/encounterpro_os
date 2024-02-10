@@ -121,7 +121,7 @@ IF @@ROWCOUNT <= 0
 
 	SET @ls_user_id = CAST(@ll_owner_id AS varchar(12)) + '^' + ltrim(rtrim(convert(varchar(12),@ll_key_value)))
 
-	WHILE exists(select 1 from c_User where user_id = @ls_user_id)
+	WHILE exists(select 1 from c_User where [user_id] = @ls_user_id)
 		BEGIN
 		EXECUTE sp_get_next_key
 			@ps_cpr_id = '!CPR',
@@ -177,7 +177,7 @@ ELSE
 			information_system_version = @ps_information_system_version,
 			organization_contact = @ps_organization_contact,
 			organization_director = @ps_organization_director
-	WHERE user_id = @ls_user_id
+	WHERE [user_id] = @ls_user_id
 
 RETURN @ll_actor_id
 

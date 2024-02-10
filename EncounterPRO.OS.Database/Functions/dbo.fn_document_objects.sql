@@ -285,7 +285,7 @@ WHERE u.actor_class = 'Office'
 
 SELECT @ls_primary_office_id = u.office_id
 FROM c_User u
-WHERE user_id = @ls_primary_office_user_id
+WHERE [user_id] = @ls_primary_office_user_id
 
 DECLARE @offices TABLE (
 	office_id varchar(4) NOT NULL,

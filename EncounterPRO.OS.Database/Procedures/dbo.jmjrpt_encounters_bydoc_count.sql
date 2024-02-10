@@ -37,7 +37,7 @@ SELECT	c_user.user_full_name As Provider,
 	FROM p_Patient_Encounter pe (NOLOCK)
         JOIN c_user (NOLOCK) ON c_user.user_id = pe.attending_doctor
 	WHERE
-	c_user.user_id IN (SELECT user_id FROM c_user_role WHERE role_id='!PHYSICIAN')  
+	c_user.user_id IN (SELECT [user_id] FROM c_user_role WHERE role_id='!PHYSICIAN')  
 	AND bill_flag = 'Y'
 	AND encounter_status = 'CLOSED'
 	AND pe.encounter_date >= @begin_date 

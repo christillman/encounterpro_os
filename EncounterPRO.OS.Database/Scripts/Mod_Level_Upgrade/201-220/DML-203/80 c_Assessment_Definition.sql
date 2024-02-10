@@ -73,7 +73,7 @@ from u_assessment_treat_definition
 where assessment_id IN (
 'SPRHAN'
 ) 
-and user_id = '$' order by definition_id
+and [user_id] = '$' order by definition_id
 order by user_id, assessment_id
 -- 54
 */

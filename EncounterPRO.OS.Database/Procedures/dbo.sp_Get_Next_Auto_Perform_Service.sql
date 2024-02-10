@@ -52,7 +52,7 @@ WHILE @ll_patient_workplan_item_id IS NOT NULL
 	IF @pl_next_patient_workplan_item_id IS NOT NULL
 		BEGIN
 		IF @pl_next_patient_workplan_item_id <> @pl_patient_workplan_item_id
-		  AND NOT EXISTS (SELECT user_id FROM o_User_Service_Lock
+		  AND NOT EXISTS (SELECT [user_id] FROM o_User_Service_Lock
 						  WHERE patient_workplan_item_id = @pl_next_patient_workplan_item_id)
 			BEGIN
 			RETURN

@@ -1060,9 +1060,9 @@ COMMIT TRANSACTION
 
 /* Potential fixes
 
-update c_User set access_id = '0222', user_status = 'OK' where user_id = '981^2'
-update c_User set access_id = '0220', user_status = 'OK' where user_id = '981^1'
-update c_User set access_id = '1020', user_status = 'OK' where user_id = 'SUPPORT'
+update c_User set access_id = '0222', user_status = 'OK' where [user_id] = '981^2'
+update c_User set access_id = '0220', user_status = 'OK' where [user_id] = '981^1'
+update c_User set access_id = '1020', user_status = 'OK' where [user_id] = 'SUPPORT'
 
 update  EncounterPro_OS.dbo.c_user set status = 'OK' where status != 'OK'
 

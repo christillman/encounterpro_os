@@ -31,17 +31,17 @@ DECLARE  @tmpattribs TABLE
 (	attribute_sequence int
 )
 
--- First add the attributes where user_id is null
+-- First add the attributes where [user_id] is null
 INSERT INTO @tmpattribs (attribute_sequence)
 SELECT attribute_sequence
 FROM o_Service_Attribute  
 WHERE service = @ps_service
-AND user_id IS NULL
+AND [user_id] IS NULL
 
 
 SELECT @ls_specialty_id = COALESCE(specialty_id, '$')
 FROM c_User
-WHERE user_id = @ps_user_id
+WHERE [user_id] = @ps_user_id
 
 IF @@ROWCOUNT = 1
 	BEGIN
@@ -51,13 +51,13 @@ IF @@ROWCOUNT = 1
 	SELECT attribute_sequence
 	FROM o_Service_Attribute  
 	WHERE service = @ps_service
-	AND user_id = @ls_specialty_id
+	AND [user_id] = @ls_specialty_id
 
 	INSERT INTO @tmpattribs (attribute_sequence)
 	SELECT attribute_sequence
 	FROM o_Service_Attribute  
 	WHERE service = @ps_service
-	AND user_id = @ps_user_id
+	AND [user_id] = @ps_user_id
 	END   
 
 SELECT a.service,

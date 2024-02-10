@@ -121,7 +121,7 @@ IF @ps_cpr_id IS NULL
 		FROM p_patient_wp_item_progress WITH (NOLOCK)
 		WHERE created >= @pdt_begin_date
 		AND	created < @pdt_end_date
-		AND user_id = @ps_user_id
+		AND [user_id] = @ps_user_id
 		AND progress_type NOT IN ('Runtime_Configured', 'dispatched', 'clicked', 'Skipped', 'Error')
 		UNION
 		SELECT patient_workplan_id,
@@ -149,7 +149,7 @@ ELSE
 		AND (@pl_encounter_id IS NULL OR encounter_id = @pl_encounter_id)
 		AND	created >= @pdt_begin_date
 		AND	created < @pdt_end_date
-		AND (@ps_user_id IS NULL OR user_id = @ps_user_id OR created_by = @ps_user_id)
+		AND (@ps_user_id IS NULL OR [user_id] = @ps_user_id OR created_by = @ps_user_id)
 		AND progress_type NOT IN ('Runtime_Configured', 'dispatched', 'clicked', 'Skipped', 'Error')
 	ELSE
 		INSERT INTO @wpitemprogress (
@@ -162,7 +162,7 @@ ELSE
 		FROM p_patient_wp_item_progress WITH (NOLOCK)
 		WHERE cpr_id = @ps_cpr_id
 		AND (@pl_encounter_id IS NULL OR encounter_id = @pl_encounter_id)
-		AND (@ps_user_id IS NULL OR user_id = @ps_user_id OR created_by = @ps_user_id)
+		AND (@ps_user_id IS NULL OR [user_id] = @ps_user_id OR created_by = @ps_user_id)
 		AND progress_type NOT IN ('Runtime_Configured', 'dispatched', 'clicked', 'Skipped', 'Error')
 	END
 
@@ -224,7 +224,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 	BEGIN
 	IF @ps_cpr_id IS NULL
 		BEGIN
-		-- This must be a user audit.  A user_id and date range must have been specified or we wouldn't get to here
+		-- This must be a user audit.  A [user_id] and date range must have been specified or we wouldn't get to here
 		INSERT INTO @events (
 			cpr_id,
 			billing_id,
@@ -351,7 +351,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 	END -- @ps_include_object_updates = 'Y'
 
 
--- If a user_id and date range are specified then include all logon/logoff events
+-- If a [user_id] and date range are specified then include all logon/logoff events
 
 IF @ps_user_id IS NOT NULL AND @pdt_begin_date IS NOT NULL AND @pdt_end_date IS NOT NULL
 	BEGIN

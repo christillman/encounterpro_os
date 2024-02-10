@@ -28,7 +28,7 @@ AS
 -- the same value, even if they don't share the same primary key values.
 -- Therefore, we will get the close record with the latest date_time.
 -- It is unlikely but possible that two close records have the same date_time
--- We will handle this by selecting the highest user_id from any records which -- tie on the date_time.
+-- We will handle this by selecting the highest [user_id] from any records which -- tie on the date_time.
 -- Create temp table to hold progress records created at the same time
 CREATE TABLE #tmp_tr_prg_dups (
 	cpr_id varchar(12),

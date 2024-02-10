@@ -72,7 +72,7 @@ DECLARE @tmp_u_assessment_treat_definition TABLE (
 IF EXISTS(SELECT 1 
 			FROM u_Assessment_Treat_Definition 
 			WHERE assessment_id = @To_assessment_id
-			AND user_id = @To_user_id
+			AND [user_id] = @To_user_id
 			AND created > DATEADD(ss, -20, getdate()) )
 	BEGIN
 	Select 
@@ -88,7 +88,7 @@ IF EXISTS(SELECT 1
                 child_flag
 		FROM u_assessment_treat_definition
 		where assessment_id = @To_assessment_id
-		and user_id = @To_user_id
+		and [user_id] = @To_user_id
 	RETURN
 	END
 
@@ -96,7 +96,7 @@ IF EXISTS(SELECT 1
 DELETE d
 FROM u_assessment_treat_definition d
 WHERE assessment_id = @From_assessment_id
-AND user_id = @From_user_id
+AND [user_id] = @From_user_id
 AND d.parent_definition_id IS NOT NULL
 AND NOT EXISTS (SELECT 1
 				FROM u_assessment_treat_definition dp
@@ -115,7 +115,7 @@ AND d.assessment_id = d.assessment_id
 WHERE d2.definition_id IS NULL
 AND d.parent_definition_id IS NOT NULL)
 AND assessment_id = @From_assessment_id
-and user_id = @From_user_id
+and [user_id] = @From_user_id
 
 --another cleanup issue that is a bug in the delete composite functionality.!
 DELETE from u_assessment_treat_definition WHERE parent_definition_id IN
@@ -124,7 +124,7 @@ WHERE parent_definition_id IS NOT NULL
 AND parent_definition_id not in
 (SELECT definition_id FROM u_assessment_treat_definition))
 AND assessment_id = @From_assessment_id
-and user_id = @From_user_id
+and [user_id] = @From_user_id
 
 
 INSERT INTO @tmp_u_assessment_treat_definition
@@ -155,7 +155,7 @@ SELECT 		definition_id,
                 child_flag
 FROM u_assessment_treat_definition
 where assessment_id = @From_assessment_id
-and user_id = @From_user_id
+and [user_id] = @From_user_id
 order by definition_id asc
 
 
@@ -239,7 +239,7 @@ JOIN @tmp_u_assessment_treat_definition ON definition_id = identity_id
 where definition_id in (select definition_id
 FROM u_assessment_treat_definition
 where assessment_id = @From_assessment_id
-and user_id = @From_user_id)
+and [user_id] = @From_user_id)
 
 select @Count =  count(*) from @tmp_u_assessment_treat_def_attrib
 --select @Count
@@ -330,7 +330,7 @@ Select
                 child_flag
 FROM u_assessment_treat_definition
 where assessment_id = @To_assessment_id
-and user_id = @To_user_id
+and [user_id] = @To_user_id
 GO
 GRANT EXECUTE
 	ON [dbo].[jmj_copy_treatment_list]

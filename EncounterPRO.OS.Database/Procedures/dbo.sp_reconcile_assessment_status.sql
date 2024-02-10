@@ -28,7 +28,7 @@ AS
 -- the same value, even if they don't share the same primary key values.
 -- Therefore, we will get the close record with the latest date_time.
 -- It is unlikely but possible that two close records have the same date_time
--- We will handle this by selecting the highest user_id from any records which
+-- We will handle this by selecting the highest [user_id] from any records which
 -- tie on the date_time.
 -- First get all the close progress records, with complete alternate keys
 SELECT cpr_id, problem_id, max(progress_date_time) as progress_date_time, count(*) as progress_count
@@ -51,7 +51,7 @@ SELECT cpr_id, problem_id, progress_date_time
 INTO #tmp_as_progress2
 FROM #tmp_as_progress1
 WHERE progress_count > 1
--- Now get the highest user_id from all the records which match the
+-- Now get the highest [user_id] from all the records which match the
 -- highest date_time
 SELECT a.cpr_id, a.problem_id, max(a.user_id) as user_id
 INTO #tmp_as_progress3

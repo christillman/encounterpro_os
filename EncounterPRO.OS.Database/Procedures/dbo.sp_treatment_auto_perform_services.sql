@@ -28,7 +28,7 @@ AS
 
 DECLARE @ls_role_id varchar(24)
 
--- The @ps_user_id param can be a user_id or a role_id
+-- The @ps_user_id param can be a [user_id] or a role_id
 IF @ps_user_id LIKE '!%'
 	SELECT @ls_role_id = @ps_user_id
 ELSE
@@ -48,7 +48,7 @@ AND (@ps_user_id IS NULL
 	OR p_patient_wp_item.owned_by IN (
 				SELECT role_id
 			    FROM c_User_Role
-			    WHERE user_id = @ps_user_id))
+			    WHERE [user_id] = @ps_user_id))
 
 GO
 GRANT EXECUTE

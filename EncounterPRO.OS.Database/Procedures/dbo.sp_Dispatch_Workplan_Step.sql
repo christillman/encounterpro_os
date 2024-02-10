@@ -327,7 +327,7 @@ WHILE @pi_step_number > 0
 				
 			IF @ls_workplan_owner IS NOT NULL
 				BEGIN
-				IF @ls_workplan_owner <> @ls_this_workplan_owner AND @ls_this_workplan_owner NOT IN (SELECT user_id FROM c_User_Role WHERE role_id = @ls_workplan_owner)
+				IF @ls_workplan_owner <> @ls_this_workplan_owner AND @ls_this_workplan_owner NOT IN (SELECT [user_id] FROM c_User_Role WHERE role_id = @ls_workplan_owner)
 					SET @ls_skip = 'Y'
 				END
 				
@@ -697,7 +697,7 @@ WHILE @pi_step_number > 0
 		WHERE patient_workplan_item_id = @ll_patient_workplan_item_id
 
 		-- If the dispatcher is in the "ordered_for" role, then make the dispatcher the "ordered_for"
-		IF EXISTS(SELECT user_id FROM c_User_Role WHERE user_id = @ps_dispatched_by AND role_id = @ls_ordered_for)
+		IF EXISTS(SELECT [user_id] FROM c_User_Role WHERE [user_id] = @ps_dispatched_by AND role_id = @ls_ordered_for)
 			SELECT @ls_ordered_for = @ps_dispatched_by
 			FROM p_Patient_WP
 			WHERE patient_workplan_id = @pl_patient_workplan_id
