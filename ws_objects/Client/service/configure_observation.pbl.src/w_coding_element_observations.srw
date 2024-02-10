@@ -45,7 +45,6 @@ end type
 end forward
 
 global type w_coding_element_observations from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -348,9 +347,15 @@ end type
 event clicked;integer li_sts
 str_popup_return popup_return
 
-datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_component", em_component)
-datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_type|" + em_component, em_type)
-datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_category|" + em_component + "|" + em_type, em_category)
+if not isnull(em_component) then
+	datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_component", em_component)
+	if not isnull(em_type) then
+		datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_type|" + em_component, em_type)
+		if not isnull(em_category) then
+			datalist.update_preference("CODING", "User", current_user.user_id, "pickobs_em_category|" + em_component + "|" + em_type, em_category)
+		end if
+	end if
+end if
 
 popup_return.item_count = 1
 popup_return.items[1] = "OK"
