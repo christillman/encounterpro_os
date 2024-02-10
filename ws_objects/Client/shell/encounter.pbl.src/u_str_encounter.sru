@@ -1126,14 +1126,6 @@ setnull(ldt_progress_date_time)
 setnull(ls_completed_by)
 setnull(ls_owned_by)
 
-// DECLARE lsp_Order_Encounter_Workplan PROCEDURE FOR dbo.sp_Order_Encounter_Workplan  
-//         @ps_cpr_id = :current_patient.cpr_id,   
-//         @pl_encounter_id = :encounter_id,   
-//         @ps_ordered_by = :current_user.user_id,   
-//         @ps_created_by = :current_scribe.user_id,
-//			@pl_patient_workplan_id = :patient_workplan_id OUT;
-
-
 ls_status = "CANCELLED"
 
 // First cancel the current workplan if there is one
@@ -1159,13 +1151,14 @@ SQLCA.sp_Order_Encounter_Workplan   ( &
          current_user.user_id,    &
          current_scribe.user_id, &
 			ref patient_workplan_id);
-//EXECUTE lsp_Order_Encounter_Workplan;
-if not tf_check() then return -1
 
-//FETCH lsp_Order_Encounter_Workplan INTO :patient_workplan_id;
-//if not tf_check() then return -1
-//
-//CLOSE lsp_Order_Encounter_Workplan;
+// Suppress visible errors when workplan not found
+if Pos(sqlca.sqlerrtext, "Encounter Workplan not found") > 0 Then
+	log.log(this, "u_str_encounter.order_encounter_workplan:0043", "Workplan not found", 1)
+	return 1
+Else
+	if not tf_check() then return -1
+End If
 
 // Refresh the encounter object because ordering the workplan might have changed things
 luo_this = this
