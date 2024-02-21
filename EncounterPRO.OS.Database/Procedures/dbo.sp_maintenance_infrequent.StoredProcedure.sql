@@ -1,4 +1,4 @@
-DROP PROCEDURE [sp_maintenance_infrequent]
+DROP PROCEDURE IF EXISTS [sp_maintenance_infrequent]
 GO
 SET ANSI_NULLS ON
 GO

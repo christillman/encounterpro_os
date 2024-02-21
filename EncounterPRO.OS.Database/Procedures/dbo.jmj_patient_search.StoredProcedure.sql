@@ -1,4 +1,4 @@
-DROP PROCEDURE [jmj_patient_search]
+DROP PROCEDURE IF EXISTS [jmj_patient_search]
 GO
 SET ANSI_NULLS ON
 GO
