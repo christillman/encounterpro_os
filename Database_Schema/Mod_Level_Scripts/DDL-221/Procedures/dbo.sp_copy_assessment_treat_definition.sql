@@ -19,6 +19,23 @@ AS BEGIN
 	And treatment_type=@treatment_type
 	and assessment_id=@assessment_id
 
+	INSERT INTO [u_assessment_treat_def_attrib] 
+	([definition_id]
+      ,[attribute_sequence]
+      ,[attribute]
+      ,[value]
+      ,[long_value])
+	SELECT [definition_id]
+      ,[attribute_sequence]
+      ,[attribute]
+      ,[value]
+      ,[long_value]
+	FROM u_assessment_treat_definition
+	WHERE [user_id]=@user_id_copy_from
+	And treatment_type=@treatment_type
+	and assessment_id=@assessment_id
+
 	print + 'Inserted ' + convert(varchar(10), @@rowcount) + ' rows for <' + @assessment_id + '>'
 END
 GO
+
