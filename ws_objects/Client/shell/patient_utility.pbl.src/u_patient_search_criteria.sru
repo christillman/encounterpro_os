@@ -893,6 +893,7 @@ string facename = "Arial"
 long backcolor = 16777215
 borderstyle borderstyle = stylelowered!
 maskdatatype maskdatatype = datemask!
+string mask = "[shortdate]"
 end type
 
 event modified;if isnull(text) or trim(text) = "" or trim(text) = "00/00/0000" then
