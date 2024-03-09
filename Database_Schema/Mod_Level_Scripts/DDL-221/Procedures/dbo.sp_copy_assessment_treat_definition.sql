@@ -25,12 +25,13 @@ AS BEGIN
       ,[attribute]
       ,[value]
       ,[long_value])
-	SELECT [definition_id]
+	SELECT a.[definition_id]
       ,[attribute_sequence]
       ,[attribute]
       ,[value]
       ,[long_value]
-	FROM u_assessment_treat_definition
+	FROM [u_assessment_treat_def_attrib] a
+	JOIN u_assessment_treat_definition t ON a.definition_id = t.definition_id
 	WHERE [user_id]=@user_id_copy_from
 	And treatment_type=@treatment_type
 	and assessment_id=@assessment_id
