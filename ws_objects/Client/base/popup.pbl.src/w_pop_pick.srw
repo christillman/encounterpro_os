@@ -450,7 +450,10 @@ end if
 // Check for singleton
 if popup.auto_singleton and dw_pick.rowcount() = 1 then
 	picked(1)
-	lb_skip_sizing = true
+	// picked calls CloseWithReturn, and then the open event continues here. 
+	// After CloseWithReturn, the window objects like dw_pick are no longer valid,
+	// we must exit immediately.
+	RETURN
 end if
 
 // Check for rows.  If no rows, treat as if cancel were pressed
