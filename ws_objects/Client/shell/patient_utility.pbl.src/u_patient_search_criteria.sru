@@ -2,6 +2,8 @@
 forward
 global type u_patient_search_criteria from userobject
 end type
+type sle_dob from singlelineedit within u_patient_search_criteria
+end type
 type st_dob from statictext within u_patient_search_criteria
 end type
 type st_id_number from statictext within u_patient_search_criteria
@@ -48,8 +50,6 @@ type sle_billing_id from singlelineedit within u_patient_search_criteria
 end type
 type st_billing_id from statictext within u_patient_search_criteria
 end type
-type em_dob from editmask within u_patient_search_criteria
-end type
 type em_ssn from editmask within u_patient_search_criteria
 end type
 type gb_id_document from groupbox within u_patient_search_criteria
@@ -67,6 +67,7 @@ long picturemaskcolor = 536870912
 event select_patient ( string ps_cpr_id )
 event new_patient ( string ps_cpr_id )
 event search_criteria_changed ( )
+sle_dob sle_dob
 st_dob st_dob
 st_id_number st_id_number
 st_id_document st_id_document
@@ -90,7 +91,6 @@ cb_abc_lastname cb_abc_lastname
 cb_abc_firstname cb_abc_firstname
 sle_billing_id sle_billing_id
 st_billing_id st_billing_id
-em_dob em_dob
 em_ssn em_ssn
 gb_id_document gb_id_document
 end type
@@ -129,7 +129,7 @@ sle_employeeid.text = ""
 em_ssn.text = ""
 sle_phone_number.text = ""
 st_patient_status.text = "Active"
-em_dob.text = ""
+sle_dob.text = ""
 st_country.text = "Issuing Country"
 st_id_document.text = "Id Document"
 sle_id_number.text = ""
@@ -194,10 +194,10 @@ else
 end if
 
 if pstr_patient.date_of_birth > date('1/1/1902') then
-	em_dob.text = string(pstr_patient.date_of_birth, "[shortdate]")
+	sle_dob.text = string(pstr_patient.date_of_birth, "[shortdate]")
 	date_of_birth = datetime(pstr_patient.date_of_birth, time(""))
 else
-	em_dob.text = ""
+	sle_dob.text = ""
 	setnull(date_of_birth)
 end if
 
@@ -235,6 +235,7 @@ employeeid = ""
 end subroutine
 
 on u_patient_search_criteria.create
+this.sle_dob=create sle_dob
 this.st_dob=create st_dob
 this.st_id_number=create st_id_number
 this.st_id_document=create st_id_document
@@ -258,10 +259,10 @@ this.cb_abc_lastname=create cb_abc_lastname
 this.cb_abc_firstname=create cb_abc_firstname
 this.sle_billing_id=create sle_billing_id
 this.st_billing_id=create st_billing_id
-this.em_dob=create em_dob
 this.em_ssn=create em_ssn
 this.gb_id_document=create gb_id_document
-this.Control[]={this.st_dob,&
+this.Control[]={this.sle_dob,&
+this.st_dob,&
 this.st_id_number,&
 this.st_id_document,&
 this.st_country,&
@@ -284,12 +285,12 @@ this.cb_abc_lastname,&
 this.cb_abc_firstname,&
 this.sle_billing_id,&
 this.st_billing_id,&
-this.em_dob,&
 this.em_ssn,&
 this.gb_id_document}
 end on
 
 on u_patient_search_criteria.destroy
+destroy(this.sle_dob)
 destroy(this.st_dob)
 destroy(this.st_id_number)
 destroy(this.st_id_document)
@@ -313,7 +314,6 @@ destroy(this.cb_abc_lastname)
 destroy(this.cb_abc_firstname)
 destroy(this.sle_billing_id)
 destroy(this.st_billing_id)
-destroy(this.em_dob)
 destroy(this.em_ssn)
 destroy(this.gb_id_document)
 end on
@@ -337,8 +337,44 @@ else
 end if
 end event
 
+type sle_dob from singlelineedit within u_patient_search_criteria
+integer x = 69
+integer y = 824
+integer width = 585
+integer height = 80
+integer taborder = 70
+integer textsize = -9
+integer weight = 700
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+long backcolor = 16777215
+string text = "15/01/2001"
+borderstyle borderstyle = stylelowered!
+end type
+
+event modified;
+
+if isnull(text) or trim(text) = "" or trim(text) = "00/00/0000" then
+	text = ""
+	setnull(date_of_birth)
+	return
+end if
+
+if not isdate(text) then	
+	openwithparm(w_pop_message, "Please enter a valid date")
+	return
+end if
+
+date_of_birth = datetime(date(text), time(""))
+
+parent.postevent("search_criteria_changed")
+
+
+end event
+
 type st_dob from statictext within u_patient_search_criteria
-integer x = 133
+integer x = 123
 integer y = 764
 integer width = 453
 integer height = 56
@@ -556,7 +592,6 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 16777215
-string text = "(770) 654-0000"
 borderstyle borderstyle = stylelowered!
 end type
 
@@ -877,41 +912,6 @@ string text = "Billing ID"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
-
-type em_dob from editmask within u_patient_search_criteria
-integer x = 69
-integer y = 824
-integer width = 585
-integer height = 80
-integer taborder = 50
-integer textsize = -9
-integer weight = 700
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long backcolor = 16777215
-borderstyle borderstyle = stylelowered!
-maskdatatype maskdatatype = datemask!
-string mask = "[shortdate]"
-end type
-
-event modified;if isnull(text) or trim(text) = "" or trim(text) = "00/00/0000" then
-	text = ""
-	setnull(date_of_birth)
-	return
-end if
-
-if not isdate(text) then
-	openwithparm(w_pop_message, "Please enter a valid date")
-	return
-end if
-
-date_of_birth = datetime(date(text), time(""))
-
-parent.postevent("search_criteria_changed")
-
-end event
 
 type em_ssn from editmask within u_patient_search_criteria
 integer x = 864
