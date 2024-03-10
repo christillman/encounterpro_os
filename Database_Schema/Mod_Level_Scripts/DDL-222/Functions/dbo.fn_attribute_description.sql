@@ -54,174 +54,55 @@ IF @ps_value LIKE '\%General%' ESCAPE '\'
 	RETURN @ls_description
 	END
 
+-- We need to put these in separate calls, so the optimizer in copmat level 150 doesn't run out of memory
+
 IF @ps_attribute LIKE '%observation_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Observation
-	WHERE observation_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_obs(@ps_value)
 
 IF @ps_attribute LIKE '%procedure_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Procedure
-	WHERE procedure_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_proc(@ps_value)
 
 IF @ps_attribute LIKE '%assessment_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Assessment_Definition
-	WHERE assessment_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_assm(@ps_value)
 
 IF @ps_attribute LIKE '%property_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Property
-	WHERE property_id = CAST(@ps_value as integer)
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_prop(@ps_value)
 
 IF @ps_attribute LIKE '%display_script_id' OR @ps_attribute LIKE '%xml_script_id'
-	BEGIN
-	SELECT @ls_description = display_script
-	FROM c_Display_Script
-	WHERE display_script_id = CAST(@ps_value as integer)
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_dscr(@ps_value)
 
 IF @ps_attribute LIKE '%service'
-	BEGIN
-	SELECT @ls_description = description
-	FROM o_Service
-	WHERE service = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_serv(@ps_value)
 
 IF @ps_attribute LIKE '%treatment_type'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Treatment_Type
-	WHERE treatment_type = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_trtt(@ps_value)
 
 IF @ps_attribute LIKE '%assessment_type'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Assessment_Type
-	WHERE assessment_type = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_asst(@ps_value)
 
 IF @ps_attribute LIKE '%unit_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Unit
-	WHERE unit_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_unit(@ps_value)
 
 IF @ps_attribute LIKE '%user_id' 
-		OR @ps_attribute LIKE '%approved_by' 
-		OR @ps_attribute LIKE '%ordered_by'
-		OR @ps_attribute LIKE '%ordered_for'
-		OR @ps_attribute LIKE '%completed_by'
-	BEGIN
-	IF LEFT(@ps_value, 1) = '!'
-		SELECT @ls_description = role_name
-		FROM c_role
-		WHERE role_id = @ps_value
-	ELSE
-		SELECT @ls_description = user_full_name
-		FROM c_User
-		WHERE [user_id] = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_rusr(@ps_value)
 
 IF @ps_attribute LIKE '%report_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Report_Definition
-	WHERE report_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_rpt(@ps_value)
 
 IF @ps_attribute LIKE '%office_id'
-	BEGIN
-	SELECT @ls_description = description
-	FROM c_Office
-	WHERE office_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_ofc(@ps_value)
 
 IF @ps_attribute LIKE '%room_id'
-	BEGIN 
-	SELECT @ls_description = room_name
-	FROM o_Rooms
-	WHERE room_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_room(@ps_value)
 		
 IF @ps_attribute LIKE '%component_id'
-	BEGIN 
-	SELECT @ls_description = description
-	FROM c_Component_Registry
-	WHERE component_id = @ps_value
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_comp(@ps_value)
 
 IF @ps_attribute LIKE '%material_id'
-	BEGIN 
-	SELECT @ls_description = title
-	FROM c_Patient_Material
-	WHERE material_id = CAST(@ps_value as integer)
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_pmat(@ps_value)
 	
 IF @ps_attribute LIKE '%attachment_location_id'
-	BEGIN 
-	SELECT @ls_description = '\\' + attachment_server + '\' + attachment_share
-	FROM c_Attachment_Location
-	WHERE attachment_location_id = CAST(@ps_value as integer)
-	
-	IF @@ROWCOUNT <> 1
-		SET @ls_description = @ps_value
-	END
+	SET @ls_description = dbo.fn_attribute_desc_attl(@ps_value)
 	
 RETURN @ls_description 
 
