@@ -26,7 +26,7 @@
   !define PBRuntime_VERSION   19.2.0.2797
   !define PBRuntime_FILENAME  PowerBuilderRuntime-2797.exe
 ; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
-  !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
+  !define EncounterPro_OS_Utilities_VERSION   1.0.1.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
