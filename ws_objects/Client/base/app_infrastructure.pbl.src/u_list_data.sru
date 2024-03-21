@@ -3484,7 +3484,7 @@ if ll_row > 0 then
 	if f_string_to_boolean(ls_encrypted) then
 		if common_thread.utilities_ok() then
 			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
-			ls_preference_d = common_thread.eprolibnet4.decryptstring(ls_preference_value, common_thread.key())
+			ls_preference_d = common_thread.eprolibnet4.of_decryptstring(ls_preference_value, common_thread.key())
 		else
 			log.log(this, "u_list_data.get_preference:0033", "Password not decrypted (Utilities not available)", 3)
 		end if
@@ -7358,7 +7358,7 @@ if len(ps_preference_value) > 0 then
 			if common_thread.utilities_ok() then
 				// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
 				TRY
-					ls_preference_value_e = common_thread.eprolibnet4.encryptstring(ps_preference_value, common_thread.key())
+					ls_preference_value_e = common_thread.eprolibnet4.of_encryptstring(ps_preference_value, common_thread.key())
 					if ls_preference_value_e = "" then
 						setnull(ls_preference_value_e)
 					end if

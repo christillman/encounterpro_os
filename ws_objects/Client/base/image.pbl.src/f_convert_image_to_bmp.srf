@@ -24,7 +24,7 @@ end if
 
 if common_thread.utilities_ok() then
 	TRY
-		li_sts = common_thread.eprolibnet4.ConvertImage(ps_image_file, ps_bmp_file)
+		li_sts = common_thread.eprolibnet4.of_ConvertImage(ps_image_file, ps_bmp_file)
 	CATCH (throwable lt_error)
 		log.log(po_null, "f_convert_image_to_bmp:0021", "Error converting image file from ~"" + ps_image_file + "~" to ~"" + ps_bmp_file + "~":  " + lt_error.text, 3)
 		return -1

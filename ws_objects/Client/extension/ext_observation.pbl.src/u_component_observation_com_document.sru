@@ -101,7 +101,7 @@ if isnull(ls_results_xml) or ls_results_xml = "" then return 0
 if len(ls_xslt) > 0 then
 	if common_thread.utilities_ok() then
 		TRY
-			ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
+			ls_new_xml = common_thread.eprolibnet4.of_TransformXML(ls_results_xml, ls_xslt)
 		CATCH (throwable lt_error2)
 			log.log(this, "u_component_observation_com_document.xx_do_source:0087", "Error calling com source (" + lt_error2.text + ")", 4)
 			return -1

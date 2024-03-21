@@ -293,7 +293,7 @@ CHOOSE CASE lower(ls_display_how)
 			
 			if common_thread.utilities_ok() then
 				TRY
-					common_thread.eprolibnet4.ExecuteProgram(ls_executable, ls_arguments)
+					common_thread.eprolibnet4.of_ExecuteProgram(ls_executable, ls_arguments)
 				CATCH (oleruntimeerror lt_error)
 					ls_message = "Error Displaying Attachment ~r~n"
 					ls_message += ls_executable + "  " + ls_arguments + "~r~n"
@@ -488,7 +488,7 @@ CHOOSE CASE lower(ls_edit_how)
 			
 			if common_thread.utilities_ok() then
 				TRY
-					common_thread.eprolibnet4.ExecuteProgram(ls_executable, ls_arguments)
+					common_thread.eprolibnet4.of_ExecuteProgram(ls_executable, ls_arguments)
 				CATCH (oleruntimeerror lt_error)
 					ls_message = "Error editing Attachment ~r~n"
 					ls_message += ls_executable + "  " + ls_arguments + "~r~n"
@@ -1167,7 +1167,7 @@ CHOOSE CASE lower(ls_print_how)
 						end if
 					end if
 					
-					common_thread.eprolibnet4.ExecuteProgramTimeout(ls_executable, ls_arguments, ll_timeout)
+					common_thread.eprolibnet4.of_ExecuteProgramTimeout(ls_executable, ls_arguments, ll_timeout)
 				CATCH (oleruntimeerror lt_error)
 					ls_message = "Error Printing Attachment ~r~n"
 					ls_message += ls_executable + "  " + ls_arguments + "~r~n"

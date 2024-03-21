@@ -55,7 +55,7 @@ next
 
 if common_thread.utilities_ok() then
 	TRY
-		common_thread.eprolibnet4.zip(ls_sourcepath, ls_compressed_file, ll_compression_level, lb_subdirs)
+		common_thread.eprolibnet4.of_zip(ls_sourcepath, ls_compressed_file, ll_compression_level, lb_subdirs)
 	CATCH (oleruntimeerror lt_error)
 		log.log(po_null, "f_compress_documents:0051", "Error Zipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 		return -1

@@ -225,7 +225,7 @@ end prototypes
 public function integer shutdown ();//DeregisterEventSource(event_handle)
 if IsValid(common_thread) then
 	if NOT IsNull(common_thread.eprolibnet4) AND IsValid(common_thread.eprolibnet4) then
-		common_thread.eprolibnet4.CloseEventLog(event_source)
+		common_thread.eprolibnet4.of_CloseEventLog(event_source)
 	end if
 end if
 initialized = false
@@ -448,29 +448,30 @@ initialized = true
 return 1
 		
 // EventLog not working, commenting out 30/09/2023
-//event_source = ps_event_source
-//
-//if common_thread.utilities_ok() then
-//	if initialized then
-//	//	DeregisterEventSource(event_handle)
-//		common_thread.eprolibnet4.CloseEventLog(event_source)
-//		initialized = false
-//	end if
-//	
-//	//ls_server = ""	
-//	//event_handle = RegisterEventSource(ls_server, event_source)
-//	
-//	li_sts = common_thread.eprolibnet4.InitializeEventLog(event_source)
-//	
-//	if li_sts > 0 then
-//		initialized = true
-//		return 1
-//	end if
-//else
-//	log.log(this, "u_event_log.initialize:0039", "Event log not initialized (Utilities not available)", 3)
-//end if
-//
-//return -1
+// trying with nvo_utilities
+event_source = ps_event_source
+
+if common_thread.utilities_ok() then
+	if initialized then
+	//	DeregisterEventSource(event_handle)
+		common_thread.eprolibnet4.of_CloseEventLog(event_source)
+		initialized = false
+	end if
+	
+	//ls_server = ""	
+	//event_handle = RegisterEventSource(ls_server, event_source)
+	
+	li_sts = common_thread.eprolibnet4.of_InitializeEventLog(event_source)
+	
+	if li_sts > 0 then
+		initialized = true
+		return 1
+	end if
+else
+	log.log(this, "u_event_log.initialize:0039", "Event log not initialized (Utilities not available)", 3)
+end if
+
+return -1
 
 
 end function
@@ -1351,17 +1352,17 @@ end if
 //#define EVENTLOG_INFORMATION_TYPE       0x0004
 //#define EVENTLOG_AUDIT_SUCCESS          0x0008
 //#define EVENTLOG_AUDIT_FAILURE          0x0010
-// Not working, call returns -1
+
 // Commenting 30/09/2023
-//if pi_severity >= loglevel then
-//	if common_thread.utilities_ok() then
-//		li_sts = common_thread.eprolibnet4.LogEvent(ls_who, ps_script, ps_message, pi_severity)
-//		lb_reported = True
-//	else
-//		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
-//	end if
-//end if
-//
+// trying again with nvo_utilities
+if pi_severity >= loglevel then
+	if common_thread.utilities_ok() then
+		li_sts = common_thread.eprolibnet4.of_LogEvent(ls_who, ps_script, ps_message, pi_severity)
+		lb_reported = True
+	else
+		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
+	end if
+end if
 
 // Construct the event structure
 lstr_log.severity = pi_severity

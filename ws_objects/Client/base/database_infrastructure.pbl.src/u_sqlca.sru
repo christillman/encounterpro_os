@@ -1469,7 +1469,7 @@ elseif lower(ps_user) = lower(application_role) then
 		if common_thread.utilities_ok() then
 			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
 			TRY
-				return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+				return common_thread.eprolibnet4.of_decryptstring(ls_temp, common_thread.key())
 			CATCH (throwable le_error)
 				log.log(this, "u_sqlca.sys:0028", "Error getting system_bitmap: " + le_error.text, 4)
 			END TRY
@@ -3508,7 +3508,7 @@ if not pb_old then
 		if common_thread.utilities_ok() then
 			// Potentially replace with CrypterObject TDES! type SymmetricDecrypt / SymmetricEncrypt
 			TRY
-				return common_thread.eprolibnet4.decryptstring(ls_temp, common_thread.key())
+				return common_thread.eprolibnet4.of_decryptstring(ls_temp, common_thread.key())
 			CATCH (throwable le_error)
 				log.log(this, "u_sqlca.sysapp:0018", "Error getting system_bitmap: " + le_error.text, 4)
 			END TRY
@@ -3518,7 +3518,7 @@ if not pb_old then
 	end if
 end if
 
-//return common_thread.eprolibnet4.decryptstring("876587658765876876587658765876587", common_thread.key())
+//return common_thread.eprolibnet4.of_decryptstring("876587658765876876587658765876587", common_thread.key())
 
 ls_temp  = "a"
 ls_temp  += "p"

@@ -30,8 +30,8 @@ integer osversion // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vis
 long contraindication_count
 str_config_object_info contraindication_alerts[]
 
-oleobject mm
-oleobject eprolibnet4
+nvo_utilities mm
+nvo_utilities eprolibnet4
 
 CoderObject inv_CoderObject
 
@@ -210,12 +210,6 @@ end prototypes
 
 public subroutine shutdown ();if default_printer_set and lower(current_printer.printername) <> lower(default_printer.printername) then
 	set_default_printer()
-end if
-
-if NOT IsNull(eprolibnet4) AND IsValid(eprolibnet4) then
-	eprolibnet4.disconnectobject()
-	DESTROY eprolibnet4
-	setnull(eprolibnet4)
 end if
 
 if not isnull(adodb) and isvalid(adodb) then
@@ -437,7 +431,7 @@ if li_sts < 0 then
 	
 		if this.utilities_ok() then
 			TRY
-				eprolibnet4.SetDefaultPrinter(current_printer.printername)
+				eprolibnet4.of_SetDefaultPrinter(current_printer.printername)
 			CATCH (oleruntimeerror lt_error)
 				log.log(this, "u_common_thread.set_printer:0036", "Error calling SetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 			END TRY
@@ -492,7 +486,7 @@ if not default_printer_set then
 			else
 				if this.utilities_ok() then
 					TRY
-						ls_printer = eprolibnet4.GetDefaultPrinter()
+						ls_printer = eprolibnet4.of_GetDefaultPrinter()
 					CATCH (oleruntimeerror lt_error)
 						log.log(this, "u_common_thread.get_default_printer:0024", "Error calling GetDefaultPrinter ~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 					END TRY
@@ -1746,6 +1740,7 @@ end function
 
 public function boolean utilities_ok ();integer li_sts
 boolean lb_ok
+string ls_appversion
 
 //// Initialize utility com objects
 //mm = CREATE oleobject
@@ -1758,19 +1753,12 @@ boolean lb_ok
 // IsNull doesn't seem to work
 lb_ok =  IsValid(this.eprolibnet4)
 IF NOT lb_ok THEN 
-	eprolibnet4 = CREATE oleobject
-	li_sts = eprolibnet4.connecttonewobject("EncounterPRO.OS.Utilities")
-	if li_sts < 0 then
-		SetNull(eprolibnet4)
-		openwithparm(w_pop_message, "EncounterPRO.OS.Utilities is not available (" + string(li_sts) + ").  Please reinstall " + gnv_app.product_name + " or contact your system administrator for assistance.")
-		// return -1
-	else
-		eprolibnet4.EPVersion = f_app_version()
-	end if
-	
-	mm = eprolibnet4
+	ls_appversion = f_app_version()
+	this.eprolibnet4 = CREATE nvo_utilities	
+	this.eprolibnet4.set_EPVersion( ls_appversion )
+	// openwithparm(w_pop_message, "EPROLIB4 version " + eprolibnet4.of_get_EPVersion())
+	this.mm = this.eprolibnet4
 END IF
-
 
 lb_ok =  IsValid(this.eprolibnet4)
 RETURN lb_ok

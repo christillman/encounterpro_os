@@ -57,7 +57,7 @@ if isnull(ls_results_xml) or ls_results_xml = "" then return 0
 
 // If we need to transform the xml, do it here
 if len(xslt) > 0 then
-	ls_new_xml = common_thread.eprolibnet4.TransformXML(observations[observation_count].xml_results, xslt)
+	ls_new_xml = common_thread.eprolibnet4.of_TransformXML(observations[observation_count].xml_results, xslt)
 	if len(ls_new_xml) > 0 then
 		ls_results_xml = ls_new_xml
 	else

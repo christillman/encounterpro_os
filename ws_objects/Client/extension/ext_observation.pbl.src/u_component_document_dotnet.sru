@@ -97,7 +97,7 @@ end if
 if len(ls_xslt) > 0 then
 	if common_thread.utilities_ok() then
 		TRY
-			ls_new_xml = common_thread.eprolibnet4.TransformXML(ls_results_xml, ls_xslt)
+			ls_new_xml = common_thread.eprolibnet4.of_TransformXML(ls_results_xml, ls_xslt)
 		CATCH (oleruntimeerror lt_error2)
 			ls_message += lt_error2.text + "~r~n" + lt_error2.description
 			log.log(this, "u_component_document_dotnet.xx_do_source:0079", "Error calling TransformXML:~r~n" + ls_message, 4)

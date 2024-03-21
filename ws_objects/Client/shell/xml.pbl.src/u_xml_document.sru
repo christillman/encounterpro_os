@@ -147,7 +147,7 @@ else
 		ls_xslt = f_blob_to_string(lstr_material.material_object)
 		if common_thread.utilities_ok() then
 			TRY
-				ps_rendered = common_thread.eprolibnet4.TransformXML(xml_string, ls_xslt)
+				ps_rendered = common_thread.eprolibnet4.of_TransformXML(xml_string, ls_xslt)
 			CATCH (throwable lo_error)
 				log.log(this, "u_xml_document.render:0023", "Error transforming xml file", 3)
 				setnull(ps_rendered)

@@ -316,7 +316,7 @@ END CHOOSE
 if isnull(le_saveastype) then
 	gr_growth.clipboard()
 	if common_thread.utilities_ok() then
-		li_sts = common_thread.eprolibnet4.SaveClipboardToFile(growth_chart_settings.return_file_path)
+		li_sts = common_thread.eprolibnet4.of_SaveClipboardToFile(growth_chart_settings.return_file_path)
 		if li_sts <= 0 then
 			log.log(this, "w_growth_charts.save_graph_to_file:0071", "Error converting graph image to file", 4)
 			setnull(growth_chart_settings.return_file_path)

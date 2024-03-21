@@ -40,7 +40,7 @@ if li_sts <= 0 then return -1
 
 if common_thread.utilities_ok() then
 	TRY
-		common_thread.eprolibnet4.unzip(ls_compressed_file, ls_destpath, lb_subdirs, lsa_items)
+		common_thread.eprolibnet4.of_unzip(ls_compressed_file, ls_destpath, lb_subdirs, lsa_items)
 	CATCH (oleruntimeerror lt_error)
 		log.log(po_null, "f_uncompress_documents:0036", "Error UnZipping Document~r~n" + lt_error.text + "~r~n" + lt_error.description, 4)
 		return -1

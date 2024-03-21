@@ -444,7 +444,7 @@ setnull(ls_install_user)
 setnull(ls_install_pw)
 
 if common_thread.utilities_ok() then
-	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin() 
+	lb_is_admin = common_thread.eprolibnet4.of_IsUserAdmin() 
 end if
 
 if not lb_is_admin then
@@ -507,9 +507,9 @@ CHOOSE CASE lower(lstr_component_version.installer)
 			TRY
 				if isnull(ls_install_user) or isnull(ls_install_pw) then
 					setnull(ls_install_user)
-					common_thread.eprolibnet4.ExecuteProgram(ls_setup_exe, ls_arguments)
+					common_thread.eprolibnet4.of_ExecuteProgram(ls_setup_exe, ls_arguments)
 				else
-					common_thread.eprolibnet4.ExecuteProgramAs(ls_setup_exe, ls_arguments, ls_install_user, ls_install_pw)
+					common_thread.eprolibnet4.of_ExecuteProgramAs(ls_setup_exe, ls_arguments, ls_install_user, ls_install_pw)
 				end if
 			CATCH (oleruntimeerror lt_error)
 				ls_message = "Error Installing Component ~r~n"
@@ -623,7 +623,7 @@ string ls_install_pw
 boolean lb_is_admin = false
 
 if common_thread.utilities_ok() then
-	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+	lb_is_admin = common_thread.eprolibnet4.of_IsUserAdmin()
 end if
 if lb_is_admin then return true
 
@@ -651,7 +651,7 @@ component_trial_mode = datalist.get_preference_boolean("SYSTEM", "Component Tria
 just_in_time_installing = datalist.get_preference_boolean("SYSTEM", "Just In Time Installation", false)
 
 if common_thread.utilities_ok() then
-	lb_is_admin = common_thread.eprolibnet4.IsUserAdmin()
+	lb_is_admin = common_thread.eprolibnet4.of_IsUserAdmin()
 end if
 if lb_is_admin then
 	is_environment_installable = true

@@ -1,0 +1,74 @@
+﻿$PBExportHeader$f_send_whatsapp.srf
+global type f_send_whatsapp from function_object
+end type
+
+forward prototypes
+global function string f_send_whatsapp ()
+end prototypes
+
+global function string f_send_whatsapp ();
+
+string ls_mobile_no = '9198251*****'
+long ll_len
+string ls_data_header, ls_Boundary, ls_data, ls_encoded, ls_Url , ls_ReturnJson, ls_End
+Constant String CRLF = Char(13) + Char(10)
+
+ls_Boundary = "--------------060605070804060204050809"
+ls_End = "~r~n~r~n" + ls_boundary + "--"
+
+ls_data_header = CRLF + CRLF + ls_Boundary + CRLF
+ls_data_header += 'Content-Disposition: form-data; name="file"; filename="@D:/bill.pdf"' + CRLF
+ls_data_header += 'Content-Type: application/pdf' + CRLF
+
+ls_data = ls_data_header
+
+
+Blob lblob_filedata
+long ll_Num
+ll_Num = FileOpen("d:\bill.pdf", StreamMode!)
+FileReadEx(ll_Num, lblob_filedata)
+FileClose(ll_Num)
+
+// encode the binary data
+CoderObject lnv_CoderObject
+lnv_CoderObject = Create CoderObject
+//ls_encoded = lnv_CoderObject.Base64Encode(lblob_filedata)
+//ls_data += CRLF + ls_encoded + CRLF
+
+Blob lblb_data
+lblb_data = Blob (ls_data_header,EncodingUTF8!) + lblob_filedata + Blob (ls_End,EncodingUTF8!)
+//ls_data = ls_data_header + CRLF + ls_encoded + CRLF + ls_End
+ll_len = len(lblb_data)
+
+// ===============
+string ls_token , ls_postdata, i_token
+Long ll_rtn
+HttpClient lo_http
+lo_http = Create HttpClient
+
+string ls_phone_id
+ls_phone_id = '*********'
+
+ls_token = i_token
+
+lo_http.SetRequestHeader("Authorization", "Bearer " + ls_token)
+
+
+String ls_Base64Str
+
+string ls_json
+ls_Url = "https://graph.facebook.com/v15.0/" + ls_phone_id + "/media?messaging_product=whatsapp&file=d:\bill.pdf"
+lo_http.SetRequestHeader ( "Accept", "*/*" )
+lo_http.SetRequestHeader ( "Content-Type", "multipart/form-data; boundary=" + ls_Boundary )
+lo_http.SetRequestHeader ( "Connection", "keep-alive" )
+lo_http.SetRequestHeader ( "Content-Length", string(ll_len) )
+
+
+ll_rtn = lo_http.sendrequest( "POST", ls_Url , lblb_data)
+
+
+lo_http.GetResponseBody(ls_ReturnJson)
+
+Return ls_ReturnJson
+end function
+
