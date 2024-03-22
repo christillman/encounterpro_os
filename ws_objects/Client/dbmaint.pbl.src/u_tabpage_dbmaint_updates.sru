@@ -237,6 +237,9 @@ integer li_sts
 string ls_user
 string ls_pwd
 
+log.log(this, "update_clientmodule()", "This function used of_CopyFTPToUNC which is not available in EncounterPro_OS.Utilities", 4)
+return
+
 ls_system_id = dw_systems.object.system_id[pl_row]
 ls_system_type = dw_systems.object.system_type[pl_row]
 ls_available_version = dw_systems.object.available_version[pl_row]
@@ -266,11 +269,11 @@ if isnull(ls_pwd) then
 	return -1
 end if
 
-li_sts = common_thread.eprolibnet4.CopyFTPToUNC(ls_download_url, &
-																ls_user, &
-																ls_pwd, &
-																ls_installdir, &
-																true)
+// li_sts = common_thread.eprolibnet4.of_CopyFTPToUNC(ls_download_url, &
+//																ls_user, &
+//																ls_pwd, &
+//																ls_installdir, &
+//																true)
 if li_sts <= 0 then
 	log.log(this, "update_clientmodule()", "Error downloading upgrade files from EncounterPRO FTP Site", 4)
 	return -1
