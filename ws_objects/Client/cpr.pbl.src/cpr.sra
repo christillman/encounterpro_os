@@ -206,17 +206,19 @@ end prototypes
 type variables
 
 
+string product_name = 'GreenOliveEHR'
+
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 222
+long minimum_modification_level = 223
 
-date compile_date = date("2024-03-10")
+date compile_date = date("2024-03-23")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.7"
-// Resulting in 7.2.1.7
+string build = "1.8"
+// Resulting in 7.2.1.8
 
 /// !!! Remember to also change this in markbuild project entry spots
 //  7   2   1   7
@@ -233,7 +235,6 @@ string source_url = "https://github.com/christillman/encounterpro_os"
 string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
 
-string product_name = 'GreenOliveEHR'
 
 string registry_key
 string ini_file
