@@ -510,10 +510,6 @@ else
 end if
 
 // Now update the c_Observation_Tree table
-// sp_update_observation sets last_updated on c_Observation_Tree, so need to re-retrieve
-// (Noticed bug in Ciru's o_log)
-load_children()
-
 // First, set the parent observation_id for any rows where it is missing
 for i = 1 to dw_observations.rowcount()
 	ls_parent_obseravation_id = dw_observations.object.parent_observation_id[i]
