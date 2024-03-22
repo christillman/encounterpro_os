@@ -53,14 +53,6 @@ SET @error = @@error
 IF @error <> 0
 	RETURN @error
 
-
-
--- Revoke statement privilges
-
-REVOKE ALL FROM cprsystem
-
-REVOKE ALL FROM PUBLIC
-
 -- Revoke object priviliges
 
 OPEN  c1
