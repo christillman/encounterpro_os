@@ -652,6 +652,7 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
+
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -1130,6 +1131,8 @@ CHOOSE CASE ls_dbms
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
 		dbparm += ",Encrypt=0"
+		dbparm += ",RecheckRows=1"
+		dbparm += ",TrustServerCertificate=1"
 		dbparm += ",ProviderString='MARS Connection=False'"
 		
 	CASE "MSS"
