@@ -287,7 +287,7 @@ if not sqlca.check() then
 	return -1
 end if
 
-ls_password_e = common_thread.eprolibnet4.encryptstring(ls_password, common_thread.key())
+ls_password_e = common_thread.eprolibnet4.of_encryptstring(ls_password, common_thread.key())
 
 INSERT INTO o_Preferences (
 	preference_type,
@@ -764,7 +764,7 @@ conn = create SoapConnection  //Instantiated connection
 
 ls_usr = sqlca.fn_get_preference( "SYSTEM", "epie_user", ls_null, ll_null)
 ls_pwd_e = sqlca.fn_get_preference( "SYSTEM", "epie_pwd", ls_null, ll_null)
-ls_pwd = common_thread.eprolibnet4.decryptstring(ls_pwd_e, common_thread.key())
+ls_pwd = common_thread.eprolibnet4.of_decryptstring(ls_pwd_e, common_thread.key())
 
 ll_sts = conn.SetSoapLogFile (ls_templog) 
 
