@@ -2,6 +2,7 @@ REM Usage: assemble_cpr.bat <target-version>
 REM e.g. > assemble_cpr.bat 7.0.0.1
 
 set build_folder=C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%1
+set runtimeversion=%2
 
 move /Y "Client\base\app_infrastructure.pbd" %build_folder%
 move /Y "Client\base\attribute.pbd" %build_folder%
@@ -123,3 +124,6 @@ REM Now building pbdom / pbsoap separately as of PB 2019 R3
 
 copy %build_folder%\..\pbdom.pbd %build_folder%
 copy %build_folder%\..\pbsoapclient.pbd %build_folder%
+
+REM now adding runtime into the EPro folder, so we don't need to run runtime installer
+xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" %build_folder% /S /Y
