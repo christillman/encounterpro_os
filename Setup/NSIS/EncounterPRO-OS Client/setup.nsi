@@ -12,7 +12,7 @@
   !define PRODUCT   GreenOliveEHR
 
 ; Client Setup Version
-  !define VERSION   7.2.1.7
+  !define VERSION   7.2.1.8
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -20,18 +20,11 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   222
-  ; Get this from the folder name in e.g.
-  ; C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 19.2.0.2797
-  !define PBRuntime_VERSION   19.2.0.2797
-  !define PBRuntime_FILENAME  PowerBuilderRuntime-2797.exe
-; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
-  !define EncounterPro_OS_Utilities_VERSION   1.0.1.0
+  !define Database_Mod_Level   223
+  !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
   !define Required_Dotnet_VERSION   'v4.0'
-  ; PBSNC170.DLL is now included in the Runtime Packager
-  ; !define SQL_Native_Client_Version 2008.12
 
   !define DISP_NAME '${PRODUCT} ${VERSION}'
   !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT} 7"
@@ -48,9 +41,6 @@
   !define SRC_EPRO_Resources  '${SOURCE_ROOT}\EncounterPRO-OS\Resources'
 
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
-
-  ;*** To change PB Runtime version, modify following line ***
-  !define SRC_PBR   '${SOURCE_ROOT}\3rd Party Software\Appeon PB Runtime\${PBRuntime_VERSION}'
 
   ; Installing the help file
   !define COMMONFILES_TARGET "EncounterPRO-OS"
@@ -192,15 +182,6 @@
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
                   
-      ; Install PB Runtime, Utilities, and TextMaker
-      SetOutPath '$INSTDIR'
-      DetailPrint "Installing Powerbuilder Runtime Files..."
-      SetDetailsPrint both
-      File "${SRC_PBR}\${PBRuntime_FILENAME}"
-      nsExec::Exec 'msiexec /i "$INSTDIR\${PBRuntime_FILENAME}" /passive /norestart /l*v "$INSTDIR\PBCLTRT190.log"'
-      Delete '$INSTDIR\${PBRuntime_FILENAME}'
- 
- 
 	  ; Adding a fake file which the installer errors out trying to delete
       ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021"
       ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021\TB"
@@ -298,9 +279,9 @@
         CreateDirectory "${DEST_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\GreenOliveEHR.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "${DEST_FOLDER}\GreenOliveEHR.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "${DEST_FOLDER}\GreenOliveEHR Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT} Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -342,6 +323,8 @@
     Section "un.${PRODUCT}"
       DetailPrint "UnInstalling ${PRODUCT}..."
       Delete "$INSTDIR\*.pbd"
+      Delete "$INSTDIR\*.log"
+      Delete "$INSTDIR\*.ico"
       Delete "$INSTDIR\Encounterpro.OS.Client.exe"
     SectionEnd
     
@@ -356,6 +339,10 @@
       Delete "$INSTDIR\*.pbx"
       Delete "$INSTDIR\*.ocx"
       Delete "$INSTDIR\*.ini"
+      Delete "$INSTDIR\*.jar"
+      Delete "$INSTDIR\*.manifest"
+      Delete "$INSTDIR\*.xml"
+      Delete "$INSTDIR\*.tlb"
       Delete "$INSTDIR\Open Source License.rtf"
       Delete "$INSTDIR\*.flt"
     SectionEnd

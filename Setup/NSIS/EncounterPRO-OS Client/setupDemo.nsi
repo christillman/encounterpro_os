@@ -9,10 +9,10 @@
 
 ; ------------------------------------------
 ; DEFINES
-  !define PRODUCT   GreenOliveEHRDemo
+  !define PRODUCT   GreenOliveEHR
 
 ; Client Setup Version
-  !define VERSION   7.2.1.7Demo
+  !define VERSION   7.2.1.8Demo
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -21,8 +21,7 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   222
-; There is some kind of virus in < 1.0.2.0 Utilities (in early version of Foxit PDF Reader).
+  !define Database_Mod_Level   223
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -86,7 +85,7 @@
 
     ; Name and File
     Name '${DISP_NAME}'
-    OutFile '${PRODUCT} ${VERSION}.exe'
+    OutFile '${PRODUCT} ${VERSION} Install.exe'
     InstallDir "${DEST_FOLDER}"
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
@@ -283,9 +282,9 @@
         CreateDirectory "${ATT_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\GreenOliveEHRDemo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "${DEST_FOLDER}\GreenOliveEHRDemo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        ;CreateShortCut "${DEST_FOLDER}\GreenOliveEHRDemo Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT}Demo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT}Demo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        ;CreateShortCut "${DEST_FOLDER}\${PRODUCT}Demo Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -329,7 +328,6 @@
       Delete "$INSTDIR\*.pbd"
       Delete "$INSTDIR\*.log"
       Delete "$INSTDIR\*.ico"
-      Delete "$INSTDIR\*.dll"
       Delete "$INSTDIR\Encounterpro.OS.Client.exe"
     SectionEnd
     
