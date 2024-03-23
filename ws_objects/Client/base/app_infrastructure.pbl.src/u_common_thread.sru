@@ -339,7 +339,7 @@ IF ls_apppath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\PB190.exe" THEN
 	// If we are running in the IDE, the app is "running" in Program Files. But we don't
 	// want to create / modify files here, because of admin issues and writing to virtualstore
 	// So make it the default location for dev
-	ls_apppath = "C:\Users\Public\Documents\EncounterPro_OS\Client\EncounterPRO.OS.Client.exe"
+	ls_apppath = "C:\Users\Public\Documents\GreenOliveEHR\Client\EncounterPRO.OS.Client.exe"
 END IF
 IF lul_rc > 0 THEN
 	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)

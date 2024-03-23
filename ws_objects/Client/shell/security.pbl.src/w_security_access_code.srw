@@ -2,6 +2,8 @@
 forward
 global type w_security_access_code from window
 end type
+type pb_hint from u_picture_button within w_security_access_code
+end type
 type st_sticky from statictext within w_security_access_code
 end type
 type st_sticky_title from statictext within w_security_access_code
@@ -45,6 +47,7 @@ integer width = 978
 integer height = 1640
 windowtype windowtype = response!
 long backcolor = 7191717
+pb_hint pb_hint
 st_sticky st_sticky
 st_sticky_title st_sticky_title
 st_prompt st_prompt
@@ -112,6 +115,8 @@ popup = message.powerobjectparm
 access_id = ""
 st_asterisks.text = ""
 
+pb_hint.Visible = (Pos(gnv_app.program_directory,"Demo") > 0)
+
 mode = popup.item
 st_prompt.text = popup.title
 
@@ -163,6 +168,7 @@ closewithreturn(this, popup_return)
 end event
 
 on w_security_access_code.create
+this.pb_hint=create pb_hint
 this.st_sticky=create st_sticky
 this.st_sticky_title=create st_sticky_title
 this.st_prompt=create st_prompt
@@ -180,7 +186,8 @@ this.cb_4=create cb_4
 this.cb_3=create cb_3
 this.cb_2=create cb_2
 this.cb_1=create cb_1
-this.Control[]={this.st_sticky,&
+this.Control[]={this.pb_hint,&
+this.st_sticky,&
 this.st_sticky_title,&
 this.st_prompt,&
 this.cb_done,&
@@ -200,6 +207,7 @@ this.cb_1}
 end on
 
 on w_security_access_code.destroy
+destroy(this.pb_hint)
 destroy(this.st_sticky)
 destroy(this.st_sticky_title)
 destroy(this.st_prompt)
@@ -218,6 +226,24 @@ destroy(this.cb_3)
 destroy(this.cb_2)
 destroy(this.cb_1)
 end on
+
+type pb_hint from u_picture_button within w_security_access_code
+integer x = 754
+integer y = 12
+integer width = 192
+integer height = 192
+integer taborder = 10
+boolean cancel = true
+boolean originalsize = false
+string picturename = "Button_question.bmp"
+string disabledname = "b_push11.bmp"
+end type
+
+event clicked;call super::clicked;
+
+MessageBox("Hint","For the GreenOlive EHR demo, you can log in as Dr. Pat Pedia with access id 0222")
+
+end event
 
 type st_sticky from statictext within w_security_access_code
 integer x = 631
