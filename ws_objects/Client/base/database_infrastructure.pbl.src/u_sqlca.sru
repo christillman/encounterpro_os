@@ -1449,6 +1449,9 @@ end function
 
 public function string sys (string ps_user);string ls_temp
 str_popup popup
+string ls_servername
+
+select ServerProperty('SERVERNAME') INTO :ls_servername FROM c_1_record USING this;
 
 if lower(ps_user) = "jmjtech" then
 	ls_temp  = "1"
@@ -1480,18 +1483,34 @@ elseif lower(ps_user) = lower(application_role) then
 			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
 		end if		
 	end if
-	ls_temp  = "a"
-	ls_temp  += "p"
-	ls_temp  += "p"
-	ls_temp  += "l"
-	ls_temp  += "e"
-	ls_temp  += "s"
-	ls_temp  += "a"
-	ls_temp  += "u"
-	ls_temp  += "c"
-	ls_temp  += "e"
-	ls_temp  += "2"
-	ls_temp  += "8"
+	if Mid(ls_servername,1,5) = "goehr"  Then
+		// Azure SQL password complexity constraints
+		ls_temp  = "A"
+		ls_temp  += "p"
+		ls_temp  += "p"
+		ls_temp  += "l"
+		ls_temp  += "e"
+		ls_temp  += "S"
+		ls_temp  += "@"
+		ls_temp  += "u"
+		ls_temp  += "c"
+		ls_temp  += "e"
+		ls_temp  += "2"
+		ls_temp  += "8"
+	Else
+		ls_temp  = "A"
+		ls_temp  += "p"
+		ls_temp  += "p"
+		ls_temp  += "l"
+		ls_temp  += "e"
+		ls_temp  += "s"
+		ls_temp  += "a"
+		ls_temp  += "u"
+		ls_temp  += "c"
+		ls_temp  += "e"
+		ls_temp  += "2"
+		ls_temp  += "8"
+	End if
 elseif lower(ps_user) = "synch" then
 	ls_temp  = "1"
 	ls_temp  += "2"
