@@ -6729,8 +6729,8 @@ string ls_value
 long ll_cache_index
 long ll_attribute_sequence
 
-if isnull(pl_display_script_id) then
-	log.log(this, "u_list_data.display_script_actual:0013", "null display_script_id", 4)
+if isnull(pl_display_script_id) OR pl_display_script_id = 0 then
+	log.log(this, "u_list_data.display_script_actual:0013", "missing display_script_id", 4)
 	return -1
 end if
 
