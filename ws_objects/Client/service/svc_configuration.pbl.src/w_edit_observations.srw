@@ -590,6 +590,8 @@ type pb_done from u_picture_button within w_edit_observations
 event clicked pbm_bnclicked
 integer x = 2569
 integer y = 1496
+integer width = 256
+integer height = 224
 integer taborder = 80
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
@@ -854,6 +856,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 string ls_composite_flag
+int li_count
 
 popup.data_row_count = 2
 popup.items[1] = "Simple Observation"
@@ -879,14 +882,21 @@ popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
 // Automatically associate the new observation with the current treatment_type
+// if not already done
 if not isnull(treatment_type) then
-	INSERT INTO c_Observation_Treatment_Type (
-		observation_id,
-		treatment_type)
-	VALUES (
-		:popup_return.items[1],
-		:treatment_type);
-	if not tf_check() then return
+	SELECT count(*) INTO :li_count
+	FROM c_Observation_Treatment_Type
+	WHERE observation_id = :popup_return.items[1]
+	AND treatment_type = :treatment_type;
+	if li_count = 0 then
+		INSERT INTO c_Observation_Treatment_Type (
+			observation_id,
+			treatment_type)
+		VALUES (
+			:popup_return.items[1],
+			:treatment_type);
+		if not tf_check() then return
+	end if
 end if
 
 
