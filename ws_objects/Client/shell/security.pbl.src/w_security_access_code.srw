@@ -115,7 +115,8 @@ popup = message.powerobjectparm
 access_id = ""
 st_asterisks.text = ""
 
-pb_hint.Visible = (Pos(gnv_app.program_directory,"Demo") > 0)
+pb_hint.Visible = (Pos(gnv_app.program_directory,"Demo") > 0 &
+	OR Pos(gnv_app.program_filename,"Demo") > 0)
 
 mode = popup.item
 st_prompt.text = popup.title
