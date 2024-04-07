@@ -22,11 +22,19 @@ str_c_xml_code lstr_xml_code
 boolean lb_new_map
 string ls_help_home_url
 str_help_article lstr_article
+string ls_cmdline, ls_errormsg
+
+n_runandwait iRun
 
 lstr_article = f_display_help_article(ps_help_context, ps_which_help)
 
+ls_cmdline = 'hh.exe "' + gnv_app.program_directory + '\EncounterPro-OS Help.chm"'
 IF NOT IsValid(datalist) THEN 
-	Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
+	If Not iRun.RunAndWait(ls_cmdline, iRun.SW_SHOWNORMAL) Then
+		ls_errormsg = iRun.LastErrorText
+		MessageBox("Problem finding help file", ls_errormsg, StopSign!)
+	End If
+	//Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 	return
 END IF
 
@@ -46,7 +54,11 @@ if pb_edit or isnull(lstr_article.article) then
 			
 			// Solution Center Home Page
 			//f_open_browser(ls_help_home_url)
-			Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
+			If Not iRun.RunAndWait(ls_cmdline, iRun.SW_SHOWNORMAL) Then
+				ls_errormsg = iRun.LastErrorText
+				MessageBox("Problem finding help file", ls_errormsg, StopSign!)
+			End If
+			//Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 			return
 		end if
 	end if
@@ -82,7 +94,11 @@ if pb_edit or isnull(lstr_article.article) then
 			
 			// Solution Center Home Page
 			//f_open_browser(ls_help_home_url)
-			Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
+			If Not iRun.RunAndWait(ls_cmdline, iRun.SW_SHOWNORMAL) Then
+				ls_errormsg = iRun.LastErrorText
+				MessageBox("Problem finding help file", ls_errormsg, StopSign!)
+			End If
+			//Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 			return
 		end if
 		
@@ -182,7 +198,11 @@ ls_helpURL = f_string_substitute(ls_helpURL, "%article%", lstr_article.article)
 
 // f_open_browser(ls_helpURL)
 // Use offline help file; will work on context sensitivity later
-Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
+If Not iRun.RunAndWait(ls_cmdline, iRun.SW_SHOWNORMAL) Then
+	ls_errormsg = iRun.LastErrorText
+	MessageBox("Problem finding help file", ls_errormsg, StopSign!)
+End If
+//Run('hh.exe "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPro-OS Help.chm"')
 
 end subroutine
 
