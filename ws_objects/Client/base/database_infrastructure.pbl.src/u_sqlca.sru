@@ -602,6 +602,7 @@ string database_status
 string database_id
 datetime master_configuration_date
 long modification_level
+string client_link
 boolean beta_flag
 long sql_version // 8 = SQL2000, 9 = SQL2005, 10 = SQL2008
 string sql_server_productversion
@@ -1599,6 +1600,7 @@ long ll_is_dbo
 long ll_pos
 long ll_file_id
 string ls_physical_name
+string ls_client_link
 
 luo_this = this
 
@@ -1726,14 +1728,16 @@ if luo_this.sqlcode = 0 then
 				database_mode,
 				database_status,
 				master_configuration_date,
-				modification_level
+				modification_level,
+				client_link
 		INTO :ll_customer_id,
 				:db_script_major_release,
 				:db_script_database_version,
 				:ls_database_mode,
 				:ls_database_status,
 				:ldt_master_configuration_date,
-				:ll_modification_level
+				:ll_modification_level,
+				:ls_client_link
 		FROM c_Database_Status
 		USING luo_this;
 		if not this.check() then return -1
@@ -1747,6 +1751,7 @@ if luo_this.sqlcode = 0 then
 		this.database_status = ls_database_status
 		this.master_configuration_date = ldt_master_configuration_date
 		this.modification_level = ll_modification_level
+		this.client_link = ls_client_link
 		
 		
 		select count(*) 
@@ -2220,7 +2225,7 @@ public function integer upgrade_database (long pl_modification_level);//
 
 u_ds_data luo_scripts
 long ll_script_count
-long i
+long li_count
 long ll_script_id
 string ls_script
 integer li_sts
@@ -2229,6 +2234,7 @@ long ll_error_index
 str_sql_script_status lstr_status
 integer li_please_wait_index
 long ll_current_modification_level
+string ls_modlevel_from, ls_modlevel_to, ls_client_link
 
 lstr_status = f_empty_sql_script_status()
 
@@ -2236,6 +2242,8 @@ SELECT modification_level
 INTO :ll_current_modification_level
 FROM c_Database_Status;
 if not check() then return -1
+
+ls_modlevel_from = string(ll_current_modification_level)
 
 if pl_modification_level > ll_current_modification_level + 1 then
 	// Upgrades cannot skip mod levels
@@ -2264,8 +2272,8 @@ f_please_wait_progress_bar(li_please_wait_index, 0, ll_script_count)
 
 li_sts = 1
 
-for i = 1 to ll_script_count
-	ll_script_id = luo_scripts.object.script_id[i]
+for li_count = 1 to ll_script_count
+	ll_script_id = luo_scripts.object.script_id[li_count]
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
@@ -2277,12 +2285,23 @@ for i = 1 to ll_script_count
 next
 
 if li_sts >= 0 and pl_modification_level > modification_level then
-	modification_level = pl_modification_level
+	this.modification_level = pl_modification_level
 end if
 	
 UPDATE c_Database_Status
-SET modification_level = :modification_level;
+SET modification_level = :this.modification_level;
 if not check() then li_sts = -1
+
+ls_modlevel_to = string(pl_modification_level)
+
+select count(*) into :li_count from sys.columns where name = 'client_link';
+if li_count > 0 then
+	
+	UPDATE c_Database_Status
+	SET client_link = REPLACE(client_link, :ls_modlevel_from, :ls_modlevel_to);
+	
+	if not check() then li_sts = -1
+end if
 
 f_please_wait_close(li_please_wait_index)
 
@@ -3612,12 +3631,14 @@ string ls_new_xml
 blob lbl_new_xml
 string ls_script
 integer li_please_wait_index
-integer li_script
+integer li_script, li_count
 integer li_num_scripts
 string ls_element
+string ls_modlevel_from, ls_modlevel_to
 str_sql_script_status lstr_sql_script_status
 
-ll_modification_level = modification_level + 1
+ll_modification_level = this.modification_level + 1
+ls_modlevel_from = string(this.modification_level)
 
 ll_material_id = upgrade_material_id(ls_script)
 if ll_material_id < 0 then
@@ -3685,18 +3706,29 @@ for li_script = 1 to li_num_scripts
 next
 f_please_wait_close(li_please_wait_index)
 
-UPDATE c_Database_Status
-SET modification_level = :ll_modification_level
-USING this;
+commit_transaction()
+
+select count(*) into :li_count from sys.columns where name = 'client_link';
+if li_count > 0 then
+	
+	ls_modlevel_to = string(ll_modification_level)		
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level,
+		client_link = REPLACE(client_link, :ls_modlevel_from, :ls_modlevel_to)
+	USING this;
+else		
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level
+	USING this;
+
+end if
 if not check() then
-	rollback_transaction()
 	return -1
 end if
 
-commit_transaction()
 DESTROY pbdombuilder_new
 
-modification_level = ll_modification_level
+this.modification_level = ll_modification_level
 
 return 1
 
