@@ -172,7 +172,6 @@ u_windows_api windows_api
 powerobject po_null
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -211,7 +210,7 @@ string product_name = 'GreenOliveEHR'
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long minimum_modification_level = 223
+long target_modification_level = 223
 
 date compile_date = date("2024-03-23")
 
@@ -221,7 +220,7 @@ string build = "1.8"
 // Resulting in 7.2.1.8
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   1   7
+//  7   2   1   8
 
 // Using Powerbuilder Runtime 2797
 
@@ -239,6 +238,7 @@ string my_sql_version = "4.05"
 string registry_key
 string ini_file
 string program_directory
+string program_filename
 string cpr_mode = "NA"
 string computername
 string servicename
