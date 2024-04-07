@@ -50,6 +50,7 @@ string name_cap
 
 integer max_priority
 boolean priority_beeps
+string windows_userprofile
 
 long idle_timeout = 0
 
@@ -328,6 +329,12 @@ else
 	osversion = 0
 end if
 
+ContextKeyword lcx_key
+GetContextService ('Keyword', lcx_key)
+lcx_key.GetContextKeywords ('USERPROFILE', ls_values)
+
+windows_userprofile = ls_values[1]
+
 // Get our application path so we can set the INI file
 // Default installation application path is C:\Users\Public\Documents\GreenOliveEHR\Client
 // so we can write to it without admin, and every user on the computer can see it
@@ -344,6 +351,7 @@ END IF
 IF lul_rc > 0 THEN
 	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)
 	gnv_app.program_directory = ls_drive + ls_dir
+	gnv_app.program_filename = ls_filename
 	gnv_app.ini_file = gnv_app.program_directory + "\EncounterPRO.ini"
 	epcompinfo = gnv_app.program_directory + "\EPCompInfo.ini"
 else
