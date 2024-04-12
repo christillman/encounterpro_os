@@ -46,7 +46,7 @@ ls_mybuild = ls_myversion + "." + gnv_app.build
 
 // With Azure, we will be upgradinig the database independently first, then the clients will need to automatically install the new client version.
 if gnv_app.target_modification_level < sqlca.modification_level then
-	openwithparm(w_pop_message, "The GreenOlive EHR database has been upgraded. Your new client application version will be downloaded, and then please allow the installer to run.")
+	openwithparm(w_pop_message, "The GreenOlive EHR database has been upgraded. Your new application version is being downloaded.")
 	
 	if sqlca.logid = "demo1" OR (Pos(gnv_app.program_directory,"Demo") > 0 &
 			OR Pos(gnv_app.program_filename,"Demo") > 0 OR Pos(sqlca.client_link,"Demo") > 0) then
@@ -83,13 +83,10 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 	
 	// downloaded just now, or previously
 	if FileExists(ls_target) then
-		//ls_expectedfile = ls_target + "\" + ls_expectedfile
-		If Not iRun.RunAndWait(ls_target, iRun.SW_SHOWNORMAL) Then
-			ls_errormsg = iRun.LastErrorText
+		openwithparm(w_pop_message, "GreenOlive EHR will quit now, and the new version will be installed. Afterwards, please start GreenOlive EHR again to use the new version.")
+		li_sts = Run(ls_target)
+		If li_sts <> 1 Then
 			openwithparm(w_pop_message, "The installation of " + ls_expectedfile + " was not completed. Please request assistance from your GreenOlive representative.")
-		Else
-			openwithparm(w_pop_message, "GreenOlive EHR will quit now, please start it up again to use the new version.")
-			FileDelete(ls_target)
 		End If
 		return -1 // quit and restart
 	else 
