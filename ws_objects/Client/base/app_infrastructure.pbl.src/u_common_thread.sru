@@ -1761,9 +1761,15 @@ string ls_appversion
 // IsNull doesn't seem to work
 lb_ok =  IsValid(this.eprolibnet4)
 IF NOT lb_ok THEN 
-	ls_appversion = f_app_version()
 	this.eprolibnet4 = CREATE nvo_utilities	
-	this.eprolibnet4.set_EPVersion( ls_appversion )
+	ls_appversion = string(gnv_app.major_release) + "." &
+							+ gnv_app.database_version + "." &
+							+ gnv_app.build 
+	try 
+		this.eprolibnet4.set_EPVersion( ls_appversion )
+	catch (throwable e)
+		openwithparm(w_pop_message, "Utilities error: " + e.Text)
+	end try
 	// openwithparm(w_pop_message, "EPROLIB4 version " + eprolibnet4.of_get_EPVersion())
 	this.mm = this.eprolibnet4
 END IF
