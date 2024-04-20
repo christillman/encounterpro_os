@@ -84,3 +84,7 @@ RETURN NULL --@dosage_form
 
 END
 
+
+GO
+GRANT EXECUTE ON [dbo].[fn_std_dosage_form] TO [cprsystem]
+GO

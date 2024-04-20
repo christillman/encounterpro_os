@@ -52,5 +52,8 @@ AS BEGIN
 	RETURN @target
 END
 
--- select dbo.fn_last_words ('one two three four five [extrawords]', 2)
+-- select dbo.fn_first_words ('one two three four five [extrawords]', 2)
 
+GO
+GRANT EXECUTE ON [dbo].[fn_first_words] TO [cprsystem]
+GO

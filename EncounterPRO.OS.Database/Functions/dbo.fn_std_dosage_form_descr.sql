@@ -72,3 +72,7 @@ END
 	select dbo.fn_std_dosage_form_descr('sodium polystyrene sulfonate 15 GM in 60 mL Rectal Suspension','sodium polystyrene sulfonate 15 GM in 60 mL Rectal Suspension')
 */
 
+
+GO
+GRANT EXECUTE ON [dbo].[fn_std_dosage_form_descr] TO [cprsystem]
+GO

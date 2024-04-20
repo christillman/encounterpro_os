@@ -38,3 +38,7 @@ select * from dbo.fn_split('ferric ammonium citrate 200 MG / thiamine HCl 2 MG /
 select * from dbo.fn_split('ferrous fumarate 300 MG / folic acid 2.5 MG / vitamin B6 10 MG / vitamin B12 50 MCG / vitamin C 100 MG Oral Capsule', ' / ')
 select * from dbo.fn_split('methylPREDNISolone sodium succinate 2 GM', ' / ')
 */
+
+GO
+GRANT EXECUTE ON [dbo].[fn_split] TO [cprsystem]
+GO

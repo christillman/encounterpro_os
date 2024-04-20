@@ -62,3 +62,7 @@ select * from dbo.fn_ingredient_strength ('mycobacterium bovis BCG (Bacillus Cal
 select * from dbo.fn_ingredient_strength ('budesonide/formoterol fumarate 80/4.5 MCG/INHAL Metered Dose Inhaler, 120 Actuations')
 select * from dbo.fn_ingredient_strength ('methylPREDNISolone sodium succinate 2 GM')
 */
+
+GO
+GRANT EXECUTE ON [dbo].[fn_ingredient_strength] TO [cprsystem]
+GO

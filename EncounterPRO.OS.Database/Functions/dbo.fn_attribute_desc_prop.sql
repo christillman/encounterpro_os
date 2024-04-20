@@ -36,3 +36,7 @@ BEGIN
 
 	RETURN @ls_description
 END
+
+GO
+GRANT EXECUTE ON [dbo].[fn_attribute_desc_prop] TO [cprsystem]
+GO

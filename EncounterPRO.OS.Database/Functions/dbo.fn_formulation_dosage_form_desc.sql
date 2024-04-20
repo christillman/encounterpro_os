@@ -28,3 +28,8 @@ RETURN @dosage_form
 END
 
 -- select dbo.fn_formulation_dosage_form_desc ('KEG1977')
+
+
+GO
+GRANT EXECUTE ON [dbo].[fn_formulation_dosage_form_desc] TO [cprsystem]
+GO

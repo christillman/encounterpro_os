@@ -43,3 +43,7 @@ select * from dbo.fn_ingredient_list('acetaminophen 650 MG / dextromethorphan HB
 select * from dbo.fn_ingredient_list('calcium 250 MG / vitamin D2 125 UNT Oral Tablet, as calcium carbonate')
 
 */
+
+GO
+GRANT EXECUTE ON [dbo].[fn_ingredient_list] TO [cprsystem]
+GO

@@ -377,3 +377,7 @@ ELSE (SELECT default_dose_unit
 END
 
 END
+
+GO
+GRANT EXECUTE ON [dbo].[fn_std_dose_unit] TO [cprsystem]
+GO

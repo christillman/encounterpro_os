@@ -44,3 +44,7 @@ END
 	select dbo.fn_next_country_id('KE')
 	select dbo.fn_next_country_id('UG')
 */
+
+GO
+GRANT EXECUTE ON [dbo].[fn_next_country_id] TO [cprsystem]
+GO

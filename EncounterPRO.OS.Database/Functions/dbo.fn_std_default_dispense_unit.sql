@@ -23,3 +23,7 @@ WHEN @dosage_form = 'Metered Inhaler' THEN 'PUFF'
 ELSE @dose_unit END
 
 END
+
+GO
+GRANT EXECUTE ON [dbo].[fn_std_default_dispense_unit] TO [cprsystem]
+GO

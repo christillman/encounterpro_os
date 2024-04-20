@@ -30,3 +30,9 @@ AS BEGIN
 END
 
 -- select dbo.fn_dosage_form_from_descr ('one two three four five')
+
+
+
+GO
+GRANT EXECUTE ON [dbo].[fn_dosage_form_from_descr] TO [cprsystem]
+GO

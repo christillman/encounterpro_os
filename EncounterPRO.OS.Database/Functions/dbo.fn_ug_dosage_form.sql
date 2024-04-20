@@ -145,3 +145,7 @@ RETURN  CASE
 		WHEN @ug_df = 'VAGINAL TABLETS' THEN 'Vaginal Tablet'
 		ELSE 'huh?' END
 END
+
+GO
+GRANT EXECUTE ON [dbo].[fn_ug_dosage_form] TO [cprsystem]
+GO
