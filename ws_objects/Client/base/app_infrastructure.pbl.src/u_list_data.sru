@@ -41,6 +41,7 @@ u_ds_data observations
 u_ds_data observation_results
 u_ds_data observation_stages
 string stage_observation_id
+u_ds_data office_preferences
 u_ds_data preferences
 u_ds_data progress_types
 u_ds_data locations
@@ -407,6 +408,8 @@ private function str_property get_fixed_property (string ps_object, string ps_pr
 public function str_room_type room_type (string ps_room_type)
 public function long load_room_types ()
 public function string age_range_description (long pl_age_range_id)
+public function integer load_office_preferences ()
+public function string office_preference (string ps_preference_id)
 end prototypes
 
 public function string attachment_button (string ps_attachment_type);string ls_find
@@ -3004,6 +3007,8 @@ CHOOSE CASE lower(ps_cache)
 		specialties.reset()
 	CASE"offices" 
 		offices.reset()
+	CASE"office_preferences" 
+		office_preferences.reset()
 	CASE"preferences" 
 		ll_count = preferences.retrieve()
 		component_manager.clear_cache( )
@@ -3461,6 +3466,14 @@ string ls_find
 string ls_encrypted
 long ll_row
 string ls_preference_d
+
+// To avoid calling the database so often (around 4000 queries in a short testing period 
+// with Ciru, although many may have been internal to db stored procs/functions),
+// refactor to load all office preferences on the first call, then look them up in memory
+// Note that preference_type isn't referenced anymore, so it's been dropped
+// Also no office preferences are encrypted, encryption was used for some 
+// "universal" preferences (passwords) in the commercial EncounterPro version
+RETURN office_preference(ps_preference_id)
 
 setnull(ls_null)
 
@@ -7485,6 +7498,107 @@ return ls_description
 	
 end function
 
+public function integer load_office_preferences ();long ll_rows
+
+office_preferences.set_dataobject("dw_office_preferences")
+
+ll_rows = office_preferences.retrieve()
+
+return ll_rows
+
+end function
+
+public function string office_preference (string ps_preference_id);string ls_find
+long ll_row
+string ls_preference_value, ls_preference_key, ls_preference_level
+string ls_user_id, ls_specialty_id, ls_null
+
+// 7.2.1.9: Implement logic here which was in fn_get_preference, to avoid calling the database so often.
+
+if office_preferences.rowcount() <= 0 then load_office_preferences()
+
+SetNull(ls_null)
+SetNull(ls_preference_value)
+
+if isnull(current_scribe) then
+	setnull(ls_user_id)
+else
+	ls_user_id = current_scribe.user_id
+	ls_specialty_id = current_scribe.specialty_id
+end if
+
+if NOT IsNull(ls_user_id) then
+	// See if there's a user preference
+	ls_preference_level = "User"
+	ls_preference_key = ls_user_id
+	ls_find = "lower(preference_level)='" + lower(ls_preference_level) + "' and lower(preference_key)='" + lower(ls_preference_key) + "' and lower(preference_id)='"  + lower(ps_preference_id) + "'"
+	ll_row = office_preferences.find(ls_find, 1, office_preferences.rowcount())
+	if ll_row <= 0 or isnull(ll_row) then
+		setnull(ls_preference_value)
+	else
+		ls_preference_value = office_preferences.object.preference_value[ll_row]
+	end if
+	
+	// If not, then see if there's a specialty preference
+	if IsNull(ls_preference_value) then
+		ls_preference_level = "Specialty"
+		ls_preference_key = ls_specialty_id
+		ls_find = "lower(preference_level)='" + lower(ls_preference_level) + "' and lower(preference_key)='" + lower(ls_preference_key) + "' and lower(preference_id)='"  + lower(ps_preference_id) + "'"
+		ll_row = office_preferences.find(ls_find, 1, office_preferences.rowcount())
+		if ll_row <= 0 or isnull(ll_row) then
+			setnull(ls_preference_value)
+		else
+			ls_preference_value = office_preferences.object.preference_value[ll_row]
+		end if
+	end if
+end if
+
+// If not, then see if there's a computer preference
+if IsNull(ls_preference_value) then
+	ls_preference_level = "Computer"
+	ls_preference_key = string(gnv_app.computer_id)
+	ls_find = "lower(preference_level)='" + lower(ls_preference_level) + "' and lower(preference_key)='" + lower(ls_preference_key) + "' and lower(preference_id)='"  + lower(ps_preference_id) + "'"
+	ll_row = office_preferences.find(ls_find, 1, office_preferences.rowcount())
+	if ll_row <= 0 or isnull(ll_row) then
+		setnull(ls_preference_value)
+	else
+		ls_preference_value = office_preferences.object.preference_value[ll_row]
+	end if
+end if
+
+// If not, then see if there's an office preference
+if IsNull(ls_preference_value) then
+	ls_preference_level = "Office"
+	ls_preference_key = gnv_app.office_id
+	ls_find = "lower(preference_level)='" + lower(ls_preference_level) + "' and lower(preference_key)='" + lower(ls_preference_key) + "' and lower(preference_id)='"  + lower(ps_preference_id) + "'"
+	ll_row = office_preferences.find(ls_find, 1, office_preferences.rowcount())
+	if ll_row <= 0 or isnull(ll_row) then
+		setnull(ls_preference_value)
+	else
+		ls_preference_value = office_preferences.object.preference_value[ll_row]
+	end if
+end if
+
+// If not, then see if there's a global preference
+if IsNull(ls_preference_value) then
+	ls_preference_level = "Global"
+	ls_preference_key = "Global"
+	ls_find = "lower(preference_level)='" + lower(ls_preference_level) + "' and lower(preference_key)='" + lower(ls_preference_key) + "' and lower(preference_id)='"  + lower(ps_preference_id) + "'"
+	ll_row = office_preferences.find(ls_find, 1, office_preferences.rowcount())
+	if ll_row <= 0 or isnull(ll_row) then
+		setnull(ls_preference_value)
+	else
+		ls_preference_value = office_preferences.object.preference_value[ll_row]
+	end if
+end if
+
+if isnull(ls_preference_value) then return ls_null
+if ls_preference_value = "" then return ls_null
+
+return ls_preference_value
+
+end function
+
 on u_list_data.create
 call super::create
 TriggerEvent( this, "constructor" )
@@ -7525,6 +7639,7 @@ observation_categories = CREATE u_ds_data
 observation_tree = CREATE u_ds_data
 observations = CREATE u_ds_data
 observation_results = CREATE u_ds_data
+office_preferences = CREATE u_ds_data
 preferences = CREATE u_ds_data
 progress_types = CREATE u_ds_data
 specialties = CREATE u_ds_data
