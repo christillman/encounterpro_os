@@ -79,6 +79,8 @@ boolean deleted = false
 boolean updated = false
 boolean description_loaded = false
 boolean past_treatment = false
+boolean prior_treatment = false
+
 
 str_item_definition treatment_definition[]
 
@@ -103,7 +105,6 @@ string comment_service = "OBSERVATION_COMMENT"
 string attachment_service = "EXTERNAL_SOURCE"
 
 end variables
-
 forward prototypes
 public function string description ()
 public subroutine get_descriptions ()

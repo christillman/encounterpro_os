@@ -57,7 +57,8 @@ forward prototypes
 public function integer refresh ()
 end prototypes
 
-public function integer refresh ();long ll_page
+public function integer refresh ();
+long ll_page
 
 ll_page = dw_soap.current_page
 if ll_page <= 0 then ll_page = 1
