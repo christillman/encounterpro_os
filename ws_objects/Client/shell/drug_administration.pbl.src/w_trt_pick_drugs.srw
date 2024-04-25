@@ -83,12 +83,10 @@ type variables
 str_attributes_list selected_attributes_list
 
 
-String treatment_type,specialty_id
+String treatment_type, specialty_id
 String search_type
 String common_flag = "Y"
-Boolean past_treatment = false
 end variables
-
 forward prototypes
 public subroutine select_drug (string ps_drug_id, string ps_description)
 public function string choose_drug_administration (string ps_drug_id, ref str_attributes pstr_attributes, ref str_drug_administration pstra_admin[])
@@ -122,36 +120,9 @@ WHERE drug_id = :ps_drug_id;
 
 // Add the drug to the attributes
 f_attribute_add_attribute(lstr_attributes, "drug_id", ps_drug_id)
-
+ls_description = "Nothing selected"
 Setnull(ld_begin_date)
 		
-// Get the duration & Package if it's past treatment
-// If past_treatment Then
-	//Openwithparm(lw_service_window, this, "w_drug_treatment")
-	
-
-	// Let the user select a begin date
-//	ls_temp = f_select_date_interval(ld_begin_date, "For How Long?", today(), "ONSET")
-//	If isnull(ls_temp) OR trim(ls_temp) = "" Then
-//		setnull(ldt_begin_date)
-//	Else
-//		ls_description += " " + ls_temp
-//		f_attribute_add_attribute(lstr_attributes, "begin_date", string(ld_begin_date))
-//	End If
-//	
-//	ls_ordered_by = "#Unknown"
-//	lb_past_med_who_ordered = datalist.get_preference_boolean( "PREFERENCES", "Past Med Prompt Who Ordered", true)
-//	if lb_past_med_who_ordered then
-//		lstr_pick_users.pick_screen_title = "Who Ordered This Medication?"
-//		lstr_pick_users.cpr_id = current_patient.cpr_id
-//		lstr_pick_users.actor_class = "Consultant"
-//		user_list.pick_users(lstr_pick_users)
-//		if lstr_pick_users.selected_users.user_count > 0 then
-//			ls_ordered_by = lstr_pick_users.selected_users.user[1].user_id
-//		end if
-//	end if
-//	f_attribute_add_attribute(lstr_attributes, "ordered_by", ls_ordered_by)
-//Else	
 	// Get list of any existing drug administrations for this drug_id
 	if upper(treatment_type) = "OFFICEMED" then
 		li_count = f_get_drug_administration_dose(ps_drug_id, lstra_admin)
@@ -175,7 +146,6 @@ Setnull(ld_begin_date)
 		// Disable picking the administration here, for now
 		// ls_description = choose_drug_administration(ls_drug_id, lstr_attributes, lstra_admin)
 	//END IF
-//End If
 
 IF ls_description <> "Nothing selected" THEN
 	ls_treatment_mode = f_get_default_treatment_mode(treatment_type, ps_drug_id)
@@ -400,11 +370,8 @@ event open;call super::open;////////////////////////////////////////////////////
 str_popup  			popup
 
 popup = message.powerobjectparm
-If popup.data_row_count = 1 Then
+If popup.data_row_count >= 1 Then
 	treatment_type = popup.items[1]
-Elseif popup.data_row_count = 2 Then
-	treatment_type = popup.items[1]
-	past_treatment = f_string_to_boolean(popup.items[2])
 Else
 	log.log(this,"w_trt_pick_drugs:open","Invalid parameters",4)
 	cb_cancel.event clicked()
