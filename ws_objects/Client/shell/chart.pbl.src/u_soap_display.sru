@@ -270,7 +270,7 @@ new_data = pb_new_data
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_encounter:0019", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_encounter:0019", "Error checking encounter context", 2)
 	return -1
 end if
 
@@ -379,7 +379,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_treatment_list:0008", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_treatment_list:0008", "Error checking encounter context", 2)
 	return -1
 end if
 
@@ -415,7 +415,7 @@ string ls_right
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.refresh_row:0014", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.refresh_row:0014", "Error checking encounter context", 2)
 	return -1
 end if
 
@@ -1165,7 +1165,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_patient:0016", "Error checking encounter context", 4)
+	log.log(this, "u_soap_display.load_patient:0016", "Error checking encounter context", 2)
 	return -1
 end if
 
