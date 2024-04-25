@@ -43,6 +43,7 @@ popup.items[1] = treatment_type
 If past_treatment Then
 	Openwithparm(w_pick_prior_drugs, popup)	
 	
+	
 //	Openwithparm(service_window, this, "w_drug_treatment")
 //	
 //	// Let the user select a begin date
