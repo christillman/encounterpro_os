@@ -49,14 +49,16 @@ public subroutine next_encounter ()
 public subroutine key_down (keycode key, unsignedlong keyflags)
 end prototypes
 
-public subroutine xx_refresh ();rte_observations.setredraw(false)
-
-rte_observations.clear_rtf()
-rte_observations.display_encounter(current_display_encounter.encounter_id, current_display_script_id)
-rte_observations.goto_top()
-
-rte_observations.setredraw(true)
-
+public subroutine xx_refresh ();
+If IsValid(current_display_encounter) Then
+	rte_observations.setredraw(false)
+	
+	rte_observations.clear_rtf()
+	rte_observations.display_encounter(current_display_encounter.encounter_id, current_display_script_id)
+	rte_observations.goto_top()
+	
+	rte_observations.setredraw(true)
+End If
 end subroutine
 
 public subroutine xx_initialize ();integer i
