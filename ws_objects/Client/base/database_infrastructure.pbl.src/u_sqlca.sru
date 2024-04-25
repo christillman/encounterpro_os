@@ -388,7 +388,6 @@ FUNCTION long sp_get_planned_referrals(string ps_cpr_id) RPCFUNC ALIAS FOR "dbo.
 FUNCTION long sp_get_pm_attributes(string ps_billing_system) RPCFUNC ALIAS FOR "dbo.sp_get_pm_attributes"
 FUNCTION long sp_get_post_attachments(string ps_cpr_id, string ps_treatment_list_id) RPCFUNC ALIAS FOR "dbo.sp_get_post_attachments"
 FUNCTION long sp_get_posting_failure_reasons(string ps_cpr_id, long pl_encounter_id) RPCFUNC ALIAS FOR "dbo.sp_get_posting_failure_reasons"
-FUNCTION long sp_get_preference(string ps_preference_type, string ps_user_id, long pl_computer_id, string ps_preference_id, string ps_system_user_id, ref string ps_preference_value) RPCFUNC ALIAS FOR "dbo.sp_get_preference"
 FUNCTION long sp_get_preference_list(string ps_preference_type) RPCFUNC ALIAS FOR "dbo.sp_get_preference_list"
 FUNCTION long sp_get_preferred_provider(string ps_cpr_id, string ps_specialty_id, string ps_authority_id) RPCFUNC ALIAS FOR "dbo.sp_get_preferred_provider"
 FUNCTION long sp_get_procedure_count(string ps_cpr_id, long pl_encounter_id, ref integer pi_procedure_count) RPCFUNC ALIAS FOR "dbo.sp_get_procedure_count"
@@ -1131,7 +1130,11 @@ CHOOSE CASE ls_dbms
 		dbparm += ",Database='" + ps_dbname + "'"
 		dbparm += ",AppName='" + ps_appname + "'"
 		dbparm += ",Identity='SCOPE_IDENTITY()'"
-		dbparm += ",Encrypt=0"
+		IF Pos(SQLCA.ServerName,"10.") > 0 THEN
+			dbparm += ",Encrypt=1"
+		ELSE
+			dbparm += ",Encrypt=0"
+		END IF
 		dbparm += ",RecheckRows=1"
 		dbparm += ",TrustServerCertificate=1"
 		dbparm += ",ProviderString='MARS Connection=False'"
@@ -1484,7 +1487,7 @@ elseif lower(ps_user) = lower(application_role) then
 			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
 		end if		
 	end if
-	if Mid(ls_servername,1,5) = "goehr"  Then
+	if Mid(ls_servername,1,5) = "goehr" OR Pos(sqlca.database, "Demo") > 0  Then
 		// Azure SQL password complexity constraints
 		ls_temp  = "A"
 		ls_temp  += "p"
@@ -1499,7 +1502,7 @@ elseif lower(ps_user) = lower(application_role) then
 		ls_temp  += "2"
 		ls_temp  += "8"
 	Else
-		ls_temp  = "A"
+		ls_temp  = "a"
 		ls_temp  += "p"
 		ls_temp  += "p"
 		ls_temp  += "l"
