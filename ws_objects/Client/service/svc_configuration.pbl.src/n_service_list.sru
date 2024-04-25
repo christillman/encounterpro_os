@@ -102,6 +102,7 @@ ls_dummy = w_svc_monitor_result.title
 ls_dummy = w_svc_multi_chart_export.title
 ls_dummy = w_svc_patient_service_list.title
 ls_dummy = w_svc_preferred_provider.title
+ls_dummy = w_svc_prior_meds.title
 ls_dummy = w_svc_problem_list.title
 ls_dummy = w_svc_problem_list.title
 ls_dummy = w_svc_refer_treatment.title

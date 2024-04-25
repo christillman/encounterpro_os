@@ -135,13 +135,6 @@ end if
 
 refresh()
 
-//li_sts = load_meds()
-//if li_sts < 0 then
-//	log.log(this, "w_svc_current_meds:open", "Error loading current meds", 4)
-//	close(this)
-//	return
-//end if
-
 // Don't offer the "I'll Be Back" option for manual services
 if service.manual_service then
 	cb_be_back.visible = false
@@ -214,28 +207,10 @@ luo_treatment.past_treatment = true // to get the duration for the drugs
 luo_treatment.define_treatment()
 If luo_treatment.treatment_count > 0 Then
 	For i = 1 To luo_treatment.treatment_count
-	
-		// CDT 2023-08-05: Call order_treatment which calls new_treatment within, 
-		// instead of just new_treatment (same as in f_order_treatment_list)
-		// In order to get w_drug_treatment open (w_drug_admin_edit is now defunct)
-		
-// 		luo_new_treatment.reset()
-//		luo_new_treatment.parent_patient = current_patient
-//		luo_new_treatment.open_encounter_id = current_patient.open_encounter_id
-//		luo_new_treatment.treatment_type = ls_treatment_type
-//		luo_new_treatment.ordered_by = current_user.user_id
-//		luo_new_treatment.created_by = current_scribe.user_id
-//		luo_new_treatment.past_treatment = true
-//		
 		lstr_trt_attributes = f_attribute_arrays_to_str(luo_treatment.treatment_definition[i].attribute_count, &
 																	luo_treatment.treatment_definition[i].attribute, &
 																	luo_treatment.treatment_definition[i].value )
 	
-				
-		// luo_new_treatment.map_attr_to_data_columns(lstr_trt_attributes)
-
-		// current_patient.treatments.new_treatment(luo_new_treatment, false)
-		
 		ll_treatment_id = current_patient.treatments.order_treatment(current_patient.cpr_id, &
 																						current_patient.open_encounter_id, &
 																						ls_treatment_type, &

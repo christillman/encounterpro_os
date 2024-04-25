@@ -23,19 +23,54 @@ public function integer xx_define_treatment ();/////////////////////////////////
 //
 // Modified By:Sumathi Chinnasamy									Creation dt: 04/27/2000
 //
-// Note: 'CurrentMeds' service window w_svc_current_meds also uses this component
+// Note: 'PriorMeds' service window w_svc_prior_meds also uses this component
 // to create past meds.
 /////////////////////////////////////////////////////////////////////////////////////
 
 Integer				i
 str_popup			popup
+str_popup_return	popup_return
+str_attributes lstr_attributes
 str_attributes_list lstr_attributes_list
+string ls_temp, ls_description, ls_dosage_form
+Datetime ldt_begin_date
+Date		ld_begin_date
 
-popup.data_row_count = 2
+popup.data_row_count = 1
 popup.items[1] = treatment_type
-popup.items[2] = f_boolean_to_string(past_treatment) 
 
-Openwithparm(w_trt_pick_drugs, popup)
+// Get the duration if it's past treatment
+If past_treatment Then
+	Openwithparm(w_pick_prior_drugs, popup)	
+	
+//	Openwithparm(service_window, this, "w_drug_treatment")
+//	
+//	// Let the user select a begin date
+//	ls_temp = f_select_date_interval(ld_begin_date, "For How Long?", today(), "ONSET")
+//	If isnull(ls_temp) OR trim(ls_temp) = "" Then
+//		setnull(ldt_begin_date)
+//	Else
+//		ls_description += " " + ls_temp
+//		f_attribute_add_attribute(lstr_attributes, "begin_date", string(ld_begin_date))
+//	End If
+//
+//	ls_ordered_by = "#Unknown"
+//	lb_past_med_who_ordered = datalist.get_preference_boolean( "PREFERENCES", "Past Med Prompt Who Ordered", true)
+//	if lb_past_med_who_ordered then
+//		lstr_pick_users.pick_screen_title = "Who Ordered This Medication?"
+//		lstr_pick_users.cpr_id = current_patient.cpr_id
+//		lstr_pick_users.actor_class = "Consultant"
+//		user_list.pick_users(lstr_pick_users)
+//		if lstr_pick_users.selected_users.user_count > 0 then
+//			ls_ordered_by = lstr_pick_users.selected_users.user[1].user_id
+//		end if
+//	end if
+//	f_attribute_add_attribute(lstr_attributes, "ordered_by", ls_ordered_by)
+ElseIf prior_treatment Then
+	Openwithparm(w_pick_prior_drugs, popup)	
+Else	
+	Openwithparm(w_trt_pick_drugs, popup)
+End If
 
 lstr_attributes_list = Message.powerobjectparm
 

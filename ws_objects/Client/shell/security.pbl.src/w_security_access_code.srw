@@ -131,7 +131,7 @@ if lower(left(ls_temp, 1)) = "t" then
 else
 	variable_password_length = false
 	password_length = f_get_global_preference_int("PREFERENCES", "password_length")
-	if isnull(password_length) or password_length <= 0 then password_length = 3
+	if isnull(password_length) or password_length <= 0 then password_length = 4
 end if
 
 if not variable_password_length then
