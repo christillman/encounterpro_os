@@ -7401,6 +7401,7 @@ if not isnull(current_user) then
 	current_user.get_preferences()
 end if
 
+load_office_preferences()
 
 return 1
 
