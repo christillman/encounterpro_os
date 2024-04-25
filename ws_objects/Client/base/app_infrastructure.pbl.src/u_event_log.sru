@@ -1426,7 +1426,7 @@ environment lo_env
 integer li_tran_count, li_sts
 string ls_os_version
 
-if not sqlca.connected then return 1
+if not cprdb.connected then return 1
 
 li_sts = getenvironment(lo_env)
 if li_sts > 0 then
