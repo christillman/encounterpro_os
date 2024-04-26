@@ -28,6 +28,10 @@ BEGIN
 IF @@ROWCOUNT = 0
 	RETURN
 
+DECLARE @inserted tab_p_Patient_WP_Item_Progress
+INSERT INTO @inserted
+SELECT * FROM inserted
+
 DECLARE
 	 @ATTACHMENT_FOLDER_flag int
 	,@ATTACHMENT_TAG_flag int
@@ -128,153 +132,96 @@ SELECT
 	,@Uncancel_flag = SUM( CHARINDEX( 'Uncancel', inserted.progress_type ) )
 FROM inserted
 
-
--- Set the owner back to the ordered_for if the service is reverted
-
-IF @Resend_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	status = 'Ordered'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Resend'
-	AND		p_Patient_WP_Item.item_type = 'Document'
-END
-
--- Set the owner back to the ordered_for if the service is reverted
-
-IF @Reset_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	status = 'Ordered'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Reset'
-	AND		p_Patient_WP_Item.item_type = 'Document'
-END
-
--- Set the owner back to the ordered_for if the service is reverted
-
-IF @Revert_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	owned_by = p_Patient_WP_Item.ordered_for
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Revert To Original Owner'
-END
-
--- Set the owner back to the ordered_for if the service is reverted
-
-IF @Transfer_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	owned_by = inserted.user_id,
-		status = CASE status WHEN 'Started' THEN 'Dispatched' ELSE status END
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Transfer'
-END
-
--- Increment the retries if there is an error
-
-IF @ERROR_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	retries = COALESCE(retries, 0) + 1
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'ERROR'
-END
-
--- Update the parent workplan item escalation date
-
-IF @Skipped_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	status = 'Skipped'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'SKIPPED'
-END
-
--- Update the parent workplan item escalation date
-
-IF @DOLATER_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	in_office_flag = 'N'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'DOLATER'
-END
-
--- Update the parent workplan item escalation date
-
-IF @ESCALATE_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	escalation_date = inserted.progress_date_time
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'ESCALATE'
-END
-
--- Update the parent workplan item expiration date
-
-IF @Expire_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	expiration_date = inserted.progress_date_time
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'EXPIRE'
-END
-
--- Update the parent workplan item status
-
-IF @Expired_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	 status = inserted.progress_type
-		,end_date =  inserted.progress_date_time
-		,completed_by = inserted.user_id
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'EXPIRED'
-END
+EXEC sp_update_patient_wp_item_1 @inserted,
+	@DOLATER_flag
+	,@ERROR_flag
+	,@ESCALATE_flag
+	,@EXPIRE_flag
+	,@EXPIRED_flag
+	,@Revert_flag
+	,@Resend_flag
+	,@Reset_flag
+	,@skipped_flag
+	,@Transfer_flag
 
 -- Update the parent workplan item dispatched records
-
-
 IF @DISPATCHED_flag > 0 OR @CONSOLIDATED_flag > 0
 BEGIN
-	UPDATE	wi
-	SET	status = i.progress_type,
-		dispatch_date =  i.progress_date_time,
-		owned_by = dbo.fn_workplan_item_owned_by_2
-			(	 wi.ordered_for
-				,wi.patient_workplan_id
-				,wi.cpr_id
-				,wi.encounter_id
-				,wi.ordered_by
-				,wi.dispatch_method
-			)
+	-- fn_workplan_item_owned_by_2 was being nasty in SQL Server 2019, running it out of 
+	-- memory when combined into the update. Needed to use a cursor and variables.
+	DECLARE @progress_type varchar(24),
+		@progress_date_time datetime,
+		@patient_workplan_item_id int,
+		@ordered_for varchar(24),
+		@patient_workplan_id int,
+		@cpr_id varchar(12),
+		@encounter_id int,
+		@ordered_by varchar(24),
+		@dispatch_method varchar(24),
+		@owned_by varchar(24)
+
+	DECLARE lc_owner CURSOR LOCAL STATIC FORWARD_ONLY TYPE_WARNING
+	FOR
+	SELECT i.progress_type,
+		i.progress_date_time
+		,wi.patient_workplan_item_id
+		,wi.ordered_for
+					,wi.patient_workplan_id
+					,wi.cpr_id
+					,wi.encounter_id
+					,wi.ordered_by
+					,wi.dispatch_method
 	FROM 	p_Patient_WP_Item wi
-	INNER JOIN inserted i
-	ON i.patient_workplan_id = wi.patient_workplan_id
-	AND i.patient_workplan_item_id = wi.patient_workplan_item_id
+	INNER JOIN @inserted i
+		ON i.patient_workplan_id = wi.patient_workplan_id
+		AND i.patient_workplan_item_id = wi.patient_workplan_item_id
 	WHERE i.progress_type IN ('DISPATCHED', 'CONSOLIDATED')
+
+	OPEN lc_owner
+	FETCH lc_owner INTO
+		@progress_type,
+		@progress_date_time,
+		@patient_workplan_item_id,
+		@ordered_for,
+		@patient_workplan_id,
+		@cpr_id,
+		@encounter_id,
+		@ordered_by,
+		@dispatch_method
+	
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SELECT @owned_by = dbo.fn_workplan_item_owned_by_2
+					(	@ordered_for
+						,@patient_workplan_id
+						,@cpr_id
+						,@encounter_id
+						,@ordered_by
+						,@dispatch_method
+					) 
+
+		UPDATE	p_Patient_WP_Item
+		SET	status = @progress_type,
+			dispatch_date =  @progress_date_time,
+			owned_by = @owned_by
+		WHERE patient_workplan_id = @patient_workplan_id
+		AND patient_workplan_item_id = @patient_workplan_item_id
+
+		FETCH lc_owner INTO
+			@progress_type,
+			@progress_date_time,
+			@patient_workplan_item_id,
+			@ordered_for,
+			@patient_workplan_id,
+			@cpr_id,
+			@encounter_id,
+			@ordered_by,
+			@dispatch_method
+	END
+
+	CLOSE lc_owner
+	DEALLOCATE lc_owner
+
 END
 
 -- Set the ready status
@@ -284,7 +231,7 @@ BEGIN
 	SET	 status = i.progress_type,
 		dispatch_date = COALESCE(wi.dispatch_date, i.progress_date_time)
 	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
+	INNER JOIN inserted i
 		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
 	WHERE 	i.progress_type = 'Ready'
 	AND		wi.item_type = 'Document'
@@ -306,12 +253,12 @@ BEGIN
 	UPDATE e
 	SET billing_posted = 'A'
 	FROM p_Patient_Encounter e
-		INNER JOIN p_Patient_WP_Item wi
+	INNER JOIN p_Patient_WP_Item wi
 		ON e.cpr_id = wi.cpr_id
 		AND e.encounter_id = wi.encounter_id
-		INNER JOIN inserted i
+	INNER JOIN inserted i
 		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-		INNER JOIN p_Patient_WP_Item_Attribute a
+	INNER JOIN p_Patient_WP_Item_Attribute a
 		ON i.patient_workplan_item_id = a.patient_workplan_item_id
 	WHERE 	i.progress_type = 'Success'
 	AND wi.item_type = 'Document'
@@ -319,162 +266,19 @@ BEGIN
 	AND a.value = 'Billing Data'
 END
 
--- Update the status for Document status changes
-IF @Sent_flag > 0 
-BEGIN
-	UPDATE 	wi
-	SET	 status = i.progress_type,
-		dispatch_date = COALESCE(wi.dispatch_date, i.progress_date_time)
-	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Sent'
-	AND		wi.item_type = 'Document'
-END
-
--- Update the status for Document status changes
-IF @ERROR_flag > 0
-BEGIN
-	UPDATE 	wi
-	SET	 status = i.progress_type
-	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Error'
-	AND		wi.item_type IN ('Document', 'Incoming')
-
-	-- If the error document is a "Billing Data" document, then set the encounter billing_status to 'E'
-	UPDATE e
-	SET billing_posted = 'E'
-	FROM p_Patient_Encounter e
-		INNER JOIN p_Patient_WP_Item wi
-		ON e.cpr_id = wi.cpr_id
-		AND e.encounter_id = wi.encounter_id
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-		INNER JOIN p_Patient_WP_Item_Attribute a
-		ON i.patient_workplan_item_id = a.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Error'
-	AND wi.item_type = 'Document'
-	AND a.attribute = 'Purpose'
-	AND a.value = 'Billing Data'
-END
-
--- Update the status for Document status changes
-IF @Created_flag > 0
-BEGIN
-	UPDATE 	wi
-	SET	 begin_date = i.progress_date_time,
-		status = 'Ordered'
-	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Document Created'
-	AND		wi.item_type = 'Document'
-
-	-- Keep this for backwards compatibility
-	UPDATE 	wi
-	SET	 begin_date = i.progress_date_time,
-		status = wi.status
-	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Created'
-	AND		wi.item_type = 'Document'
-END
-
--- Update the status for Document status changes
-IF @Creating_flag > 0
-BEGIN
-	UPDATE 	wi
-	SET	 status = 'Creating'
-	FROM 	p_Patient_WP_Item wi
-		INNER JOIN inserted i
-		ON i.patient_workplan_item_id = wi.patient_workplan_item_id
-	WHERE 	i.progress_type = 'Creating'
-	AND		wi.item_type = 'Document'
-END
-
--- Update the parent workplan item started records
-
-IF @STARTED_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	 status = inserted.progress_type
-		,begin_date =  COALESCE(p_Patient_WP_Item.begin_date, inserted.progress_date_time)
-		,owned_by = CASE WHEN end_date IS NULL THEN inserted.user_id ELSE p_Patient_WP_Item.owned_by END
-		,auto_perform_flag = 'N'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'STARTED'
-END
-
--- Update the parent workplan item completed records
-
-IF @COMPLETED_flag > 0 
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	 status = inserted.progress_type
-		,end_date =  inserted.progress_date_time
-		,completed_by = inserted.user_id
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type IN ('COMPLETED')
-	AND		p_Patient_WP_Item.status <> 'Cancelled'
-END
-
--- Update the parent workplan item cancelled records
-
-IF @CANCELLED_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	 status = inserted.progress_type
-		,end_date =  inserted.progress_date_time
-		,completed_by = inserted.user_id
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type IN ('CANCELLED')
-END
-
-IF @Uncancel_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	 status = 'Completed'
-		,end_date =  inserted.progress_date_time
-		,completed_by = inserted.user_id
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type IN ('Uncancel')
-	AND 	p_Patient_WP_Item.status IN ('CANCELLED')
-END
-
--- Update the parent workplan item runtime_configured_flag
-
-IF @Runtime_Configured_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	runtime_configured_flag = 'Y'
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Runtime_Configured'
-END
-
-
--- Update the owner_id
-
-IF @Owner_flag > 0
-BEGIN
-	UPDATE 	p_Patient_WP_Item
-	SET	owned_by = inserted.user_id
-	FROM 	inserted
-	WHERE 	inserted.patient_workplan_id = p_Patient_WP_Item.patient_workplan_id
-	AND 	inserted.patient_workplan_item_id = p_Patient_WP_Item.patient_workplan_item_id
-	AND 	inserted.progress_type = 'Change Owner'
-END
+EXEC sp_update_patient_wp_item_2 @inserted
+	,@CANCELLED_flag
+	,@COMPLETED_flag
+	,@Created_flag
+	,@Creating_flag
+	,@ERROR_flag
+	,@Owner_flag
+	,@Ready_flag
+	,@Runtime_Configured_flag
+	,@Sent_flag
+	,@skipped_flag
+	,@STARTED_flag
+	,@Uncancel_flag
 
 
 -- Set the WP status from 'Pending' to 'Current' for dispatched/started wp items 
