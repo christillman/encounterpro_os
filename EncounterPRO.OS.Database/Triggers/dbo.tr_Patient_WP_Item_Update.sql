@@ -1,5 +1,5 @@
 
-DROP TRIGGER [dbo].[tr_Patient_WP_Item_Update]
+DROP TRIGGER IF EXISTS [dbo].[tr_Patient_WP_Item_Update]
 /****** Object:  Trigger [dbo].[tr_Patient_WP_Item_Update]    Script Date: 14/07/2023 6:42:27 pm ******/
 SET ANSI_NULLS ON
 GO
@@ -29,7 +29,7 @@ IF UPDATE(status) OR UPDATE(item_type ) OR UPDATE(owned_by) OR UPDATE(descriptio
 	DECLARE lc_active_service CURSOR LOCAL FAST_FORWARD FOR
 		SELECT i.patient_workplan_item_id, i.item_type, d.status, i.status, i.cpr_id, i.patient_workplan_id, i.encounter_id
 		FROM inserted i
-			INNER JOIN deleted d
+		INNER JOIN deleted d
 			ON i.patient_workplan_item_id = d.patient_workplan_item_id
 
 	OPEN lc_active_service
@@ -94,7 +94,7 @@ IF UPDATE(status) OR UPDATE(item_type ) OR UPDATE(owned_by) OR UPDATE(descriptio
 				last_service_status = @ls_new_status,
 				last_successful_date = CASE @ls_new_status WHEN 'Completed' THEN getdate() ELSE s.last_successful_date END
 			FROM o_Service_Schedule s
-				INNER JOIN inserted i
+			INNER JOIN inserted i
 				ON i.item_number = s.service_sequence
 			WHERE i.workplan_id = -1  -- Scheduled Service
 
@@ -117,37 +117,41 @@ IF UPDATE(status) OR UPDATE(item_type ) OR UPDATE(owned_by) OR UPDATE(descriptio
 	END
 
 /*
-	Update the patient WP owner when a WP_item is dispatched and owner_flag is 'Y.  If the
-	WOrkplan has been misconfigured and more than 1 record has a flag of 'Y', the MAX subquery
+	Update the patient WP owner when a WP_item is dispatched and owner_flag is 'Y'.  If the
+	Workplan has been misconfigured and more than 1 record has a flag of 'Y', the MAX CTE
 	aritrarily picks the record with the highest patient_workplan_item_id.
 */
 
 IF UPDATE( owned_by ) OR UPDATE( owner_flag )
 BEGIN
 
+	WITH max_wp_item AS
+			(
+				SELECT i2.patient_workplan_id, MAX( i2.patient_workplan_item_id ) AS id
+				FROM 	 inserted i2
+					,deleted d2
+				WHERE	i2.patient_workplan_item_id = d2.patient_workplan_item_id
+				AND 	ISNULL( d2.owned_by, '^NULL^' ) <>  i2.owned_by
+				AND	i2.owner_flag = 'Y'
+				AND 	i2.owned_by IS NOT NULL
+				GROUP BY i2.patient_workplan_id
+			)
 	UPDATE p_Patient_WP
 	SET owned_by = i.owned_by
 	FROM	 inserted i
 	INNER JOIN deleted d
-	ON	i.patient_workplan_item_id = d.patient_workplan_item_id
-	AND 	i.owned_by <> ISNULL(  d.owned_by, '^NULL^' )
+		ON	i.patient_workplan_item_id = d.patient_workplan_item_id
+		AND i.owned_by <> ISNULL(  d.owned_by, '^NULL^' )
 	INNER JOIN p_Patient_WP
-	ON	p_Patient_WP.patient_workplan_id = i.patient_workplan_id
-	AND 	ISNULL( p_Patient_WP.owned_by, '^NULL^' ) <> i.owned_by
+		ON	p_Patient_WP.patient_workplan_id = i.patient_workplan_id
+		AND ISNULL( p_Patient_WP.owned_by, '^NULL^' ) <> i.owned_by
+	INNER JOIN max_wp_item 
+		ON i.patient_workplan_item_id = max_wp_item.id
+		AND i.patient_workplan_id = max_wp_item.patient_workplan_id
 	WHERE 
 		i.owner_flag = 'Y'
 	AND 	i.owned_by IS NOT NULL
-	AND 	i.patient_workplan_item_id =
-			(
-				SELECT MAX( i2.patient_workplan_item_id )
-				FROM 	 inserted i2
-					,deleted d2
-				WHERE	i2.patient_workplan_item_id = d2.patient_workplan_item_id
-				AND	i2.patient_workplan_id = i.patient_workplan_id
-				AND 	ISNULL( d2.owned_by, '^NULL^' ) <>  i2.owned_by
-				AND	i2.owner_flag = 'Y'
-				AND 	i2.owned_by IS NOT NULL
-			)
+
 END
 
 IF UPDATE( expiration_date )
@@ -156,7 +160,7 @@ BEGIN
 	UPDATE wpi
 	SET expiration_date = NULL
 	FROM p_Patient_WP_Item wpi
-		INNER JOIN inserted i
+	INNER JOIN inserted i
 		ON i.patient_workplan_item_id = wpi.patient_workplan_item_id
 	WHERE i.item_type = 'Service'
 	AND i.ordered_service = 'Message'
