@@ -504,7 +504,8 @@ IF @ll_error <> 0
 	RETURN -1
 	END
 
-EXECUTE jmj_log_backups
+-- not supported in Azure
+-- EXECUTE jmj_log_backups
 
 SELECT @ll_error = @@ERROR,
 		@ll_rowcount = @@ROWCOUNT
