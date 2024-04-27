@@ -1191,13 +1191,14 @@ if li_sts < 0 then return luo_null
 // Issue a backup warning
 lb_disable_backup_check = f_string_to_boolean(datalist.get_preference("SYSTEM","disable_backup_check"))
 if not lb_disable_backup_check and (sqlca.is_dbmode("Production") OR sqlca.is_dbmode("Beta")) then
-	SELECT max(backup_finish_date)
-	INTO :ldt_backup_date
-	FROM msdb..backupset
-	WHERE database_name = :sqlca.database;
-	if (not tf_check()) or isnull(ldt_backup_date) or (date(ldt_backup_date) < ld_yesterday) then
-		openwithparm(w_pop_message, "A recent EncounterPRO database backup could not be found.  Please contact your System Administrator to get this resolved as soon as possible!")
-	end if
+	// msdb is not available in Azure
+//	SELECT max(backup_finish_date)
+//	INTO :ldt_backup_date
+//	FROM msdb..backupset
+//	WHERE database_name = :sqlca.database;
+//	if (not tf_check()) or isnull(ldt_backup_date) or (date(ldt_backup_date) < ld_yesterday) then
+//		openwithparm(w_pop_message, "A recent EncounterPRO database backup could not be found.  Please contact your System Administrator to get this resolved as soon as possible!")
+//	end if
 end if
 
 

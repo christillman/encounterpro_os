@@ -1756,43 +1756,43 @@ if luo_this.sqlcode = 0 then
 		this.modification_level = ll_modification_level
 		this.client_link = ls_client_link
 		
-		
-		select count(*) 
-		into :ll_count
-		from syscolumns 
-		where id = object_id('c_Database_Status')
-		and name = 'beta_flag'
-		USING luo_this;
-	 	if not check() then return -1
-		if ll_count > 0 then
-			select beta_flag
-			INTO :li_beta_flag
-			FROM c_Database_Status
-			USING luo_this;
-		 	if not check() then return -1
-			
-			// The beta flag makes the apparent database_mode "Beta".  The actual_database_mode remains what it was.
-			if li_beta_flag = 0 then
-				this.beta_flag = false
-			else
-				this.database_mode = "Beta"
-				this.beta_flag = true
-			end if
-		end if
-		
-		
-		CHOOSE CASE lower(this.database_mode)
-			CASE "testing"
-				remote_database = "epro_40_synch_testing"
-			CASE "beta"
-				remote_database = "epro_40_synch_beta"
-			CASE ELSE
-				remote_database = "epro_40_synch"
-		END CHOOSE
+//		epro_40_synch_* were original encounterpro servers
+//		select count(*) 
+//		into :ll_count
+//		from syscolumns 
+//		where id = object_id('c_Database_Status')
+//		and name = 'beta_flag'
+//		USING luo_this;
+//	 	if not check() then return -1
+//		if ll_count > 0 then
+//			select beta_flag
+//			INTO :li_beta_flag
+//			FROM c_Database_Status
+//			USING luo_this;
+//		 	if not check() then return -1
+//			
+//			// The beta flag makes the apparent database_mode "Beta".  The actual_database_mode remains what it was.
+//			if li_beta_flag = 0 then
+//				this.beta_flag = false
+//			else
+//				this.database_mode = "Beta"
+//				this.beta_flag = true
+//			end if
+//		end if
+//		
+//		
+//		CHOOSE CASE lower(this.database_mode)
+//			CASE "testing"
+//				remote_database = "epro_40_synch_testing"
+//			CASE "beta"
+//				remote_database = "epro_40_synch_beta"
+//			CASE ELSE
+//				remote_database = "epro_40_synch"
+//		END CHOOSE
 		
 	end if
 	
-	// If we need to connect the applicationm role, then do that here
+	// If we need to connect the application role, then do that here
 	if len(application_role) > 0 and connect_approle then
 		// We're automatically not the dbo if we're supposed to set the application role
 		is_dbo = false
@@ -1839,7 +1839,7 @@ if luo_this.sqlcode = 0 then
 	if not is_masterdb and (isnull(ll_customer_id) or ll_customer_id <= 0) then
 		// If the customer_id is invalid and this is a production database then issue an error
 		if is_dbmode("production") then
-			ls_temp = "This database has an invalid customer id.  Please contact JMJ Customer Support to get a valid customer id."
+			ls_temp = "This database has an invalid customer id.  Please contact GreenOlive Customer Support to get a valid customer id."
 			openwithparm(w_pop_message, ls_temp)
 			log.log(this, "u_sqlca.check_database:0259", "Invalid Customer ID", 5)
 			gnv_app.event close()
@@ -2370,28 +2370,30 @@ string ls_null
 
 setnull(ls_null)
 
-CHOOSE CASE lower(database_mode)
-	CASE "testing"
-		SELECT current_version
-		INTO :ls_available_version
-		FROM epro_40_synch_testing.dbo.c_Database_System
-		WHERE system_id = :ps_system_id
-		USING this;
-	CASE "beta"
-		SELECT current_version
-		INTO :ls_available_version
-		FROM epro_40_synch_beta.dbo.c_Database_System
-		WHERE system_id = :ps_system_id
-		USING this;
-	CASE ELSE
-		SELECT current_version
-		INTO :ls_available_version
-		FROM epro_40_synch.dbo.c_Database_System
-		WHERE system_id = :ps_system_id
-		USING this;
-END CHOOSE
-if not check() then return ls_null
+//		epro_40_synch_* were original encounterpro servers
 
+//CHOOSE CASE lower(database_mode)
+//	CASE "testing"
+//		SELECT current_version
+//		INTO :ls_available_version
+//		FROM epro_40_synch_testing.dbo.c_Database_System
+//		WHERE system_id = :ps_system_id
+//		USING this;
+//	CASE "beta"
+//		SELECT current_version
+//		INTO :ls_available_version
+//		FROM epro_40_synch_beta.dbo.c_Database_System
+//		WHERE system_id = :ps_system_id
+//		USING this;
+//	CASE ELSE
+//		SELECT current_version
+//		INTO :ls_available_version
+//		FROM epro_40_synch.dbo.c_Database_System
+//		WHERE system_id = :ps_system_id
+//		USING this;
+//END CHOOSE
+//if not check() then return ls_null
+//
 if len(ls_available_version) > 0 then
 	return ls_available_version
 else
@@ -2527,6 +2529,10 @@ public function integer set_beta_status (boolean pb_beta_flag);long ll_count
 integer li_beta_flag
 str_sql_script_status lstr_status
 integer li_sts
+
+
+// Part of the original encounterpro release logic
+return -1
 
 lstr_status = f_empty_sql_script_status()
 
@@ -3078,6 +3084,9 @@ long i
 long ll_script_id
 string ls_tablename
 
+// Part of the original encounterpro release logic
+return -1
+
 luo_this = this
 
 log.log(this, "u_sqlca.reset_database_objects:0014", "Reset Database Objects starting...", 2)
@@ -3180,93 +3189,95 @@ string ls_null
 
 setnull(ls_null)
 
-li_please_wait_index = f_please_wait_open()
+// epro_40_synch and epro_40_synch_testing were original encounterpro servers
 
-luo_data = CREATE u_ds_data
-luo_data.set_dataobject("dw_bootstrap_scripts", this)
-ls_query = "select script_name, id from epro_40_synch"
-CHOOSE CASE lower(database_mode)
-	CASE "testing"
-		ls_query += "_testing"
-	CASE "beta"
-		ls_query += "_beta"
-END CHOOSE
-ls_query += ".dbo.v_bootstrap_scripts_2 where major_release = :major_release and database_version = :database_version and modification_level = :modification_level"
-
-luo_data.modify("datawindow.table.select''" + ls_query + "'")
-ll_rows = luo_data.retrieve(db_script_major_release, db_script_database_version, modification_level)
-
-for i = 1 to ll_rows
-	ls_script_name = luo_data.object.script_name[i]
-	ls_id = luo_data.object.id[i]
-	setnull(lbl_script)
-
-	// If pb_get_from_server is true then don't even try to get the script locally
-	if not pb_get_from_server then
-		// See if this script is already local
-		SELECTBLOB db_script
-		INTO :lbl_script
-		FROM c_Database_Script
-		WHERE CAST(id AS varchar(38)) = :ls_id
-		USING this;
-		if not check() then
-			f_please_wait_close(li_please_wait_index)
-			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
-			return -1
-		end if
-	end if
+//li_please_wait_index = f_please_wait_open()
+//
+//luo_data = CREATE u_ds_data
+//luo_data.set_dataobject("dw_bootstrap_scripts", this)
+//ls_query = "select script_name, id from epro_40_synch"
+//CHOOSE CASE lower(database_mode)
+//	CASE "testing"
+//		ls_query += "_testing"
+//	CASE "beta"
+//		ls_query += "_beta"
+//END CHOOSE
+//ls_query += ".dbo.v_bootstrap_scripts_2 where major_release = :major_release and database_version = :database_version and modification_level = :modification_level"
+//
+//luo_data.modify("datawindow.table.select''" + ls_query + "'")
+//ll_rows = luo_data.retrieve(db_script_major_release, db_script_database_version, modification_level)
+//
+//for i = 1 to ll_rows
+//	ls_script_name = luo_data.object.script_name[i]
+//	ls_id = luo_data.object.id[i]
+//	setnull(lbl_script)
+//
+//	// If pb_get_from_server is true then don't even try to get the script locally
+//	if not pb_get_from_server then
+//		// See if this script is already local
+//		SELECTBLOB db_script
+//		INTO :lbl_script
+//		FROM c_Database_Script
+//		WHERE CAST(id AS varchar(38)) = :ls_id
+//		USING this;
+//		if not check() then
+//			f_please_wait_close(li_please_wait_index)
+//			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
+//			return -1
+//		end if
+//	end if
 	
 	if isnull(lbl_script) or len(lbl_script) <= 0 then
 		// If the script isn't local yet the get it from the server
-		CHOOSE CASE lower(database_mode)
-			CASE "testing"
-				SELECTBLOB db_script
-				INTO :lbl_script
-				FROM epro_40_synch_testing.dbo.c_Database_Script
-				WHERE CAST(id AS varchar(38)) = :ls_id
-				USING this;
-			CASE "beta"
-				SELECTBLOB db_script
-				INTO :lbl_script
-				FROM epro_40_synch_beta.dbo.c_Database_Script
-				WHERE CAST(id AS varchar(38)) = :ls_id
-				USING this;
-			CASE ELSE
-				SELECTBLOB db_script
-				INTO :lbl_script
-				FROM epro_40_synch.dbo.c_Database_Script
-				WHERE CAST(id AS varchar(38)) = :ls_id
-				USING this;
-		END CHOOSE
-		if not check() then
-			log.log(this, "u_sqlca.bootstrap_database_scripts:0076", "Error getting script from " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
-			f_please_wait_close(li_please_wait_index)
-			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
-			return -1
-		end if
-		if sqlcode = 100 or sqlnrows <> 1 then
-			log.log(this, "u_sqlca.bootstrap_database_scripts:0082", "Script not found in " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
-			f_please_wait_close(li_please_wait_index)
-			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
-			return -1
-		end if
+//		CHOOSE CASE lower(database_mode)
+//			CASE "testing"
+//				SELECTBLOB db_script
+//				INTO :lbl_script
+//				FROM epro_40_synch_testing.dbo.c_Database_Script
+//				WHERE CAST(id AS varchar(38)) = :ls_id
+//				USING this;
+//			CASE "beta"
+//				SELECTBLOB db_script
+//				INTO :lbl_script
+//				FROM epro_40_synch_beta.dbo.c_Database_Script
+//				WHERE CAST(id AS varchar(38)) = :ls_id
+//				USING this;
+//			CASE ELSE
+//				SELECTBLOB db_script
+//				INTO :lbl_script
+//				FROM epro_40_synch.dbo.c_Database_Script
+//				WHERE CAST(id AS varchar(38)) = :ls_id
+//				USING this;
+//		END CHOOSE
+//		if not check() then
+//			log.log(this, "u_sqlca.bootstrap_database_scripts:0076", "Error getting script from " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
+//			f_please_wait_close(li_please_wait_index)
+//			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
+//			return -1
+//		end if
+//		if sqlcode = 100 or sqlnrows <> 1 then
+//			log.log(this, "u_sqlca.bootstrap_database_scripts:0082", "Script not found in " + database_mode + " sync database (" + ls_script_name + ", " + ls_id + ")", 4)
+//			f_please_wait_close(li_please_wait_index)
+//			jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
+//			return -1
+//		end if
 	end if
 	
-	ls_script = f_blob_to_string(lbl_script)
-	
-	li_sts = execute_string(ls_script)
-	if li_sts <= 0 then
-		log.log(this, "u_sqlca.bootstrap_database_scripts:0093", "Error executing remote scripts update", 4)
-		f_please_wait_close(li_please_wait_index)
-		jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
-		return -1
-	end if
-next
-
-jmj_log_database_maintenance("Sync Database Scripts", "OK", ls_null, f_module_version_number(), ls_null)
-
-f_please_wait_close(li_please_wait_index)
-
+//	ls_script = f_blob_to_string(lbl_script)
+//	
+//	li_sts = execute_string(ls_script)
+//	if li_sts <= 0 then
+//		log.log(this, "u_sqlca.bootstrap_database_scripts:0093", "Error executing remote scripts update", 4)
+//		f_please_wait_close(li_please_wait_index)
+//		jmj_log_database_maintenance("Sync Database Scripts", "Error", ls_null, f_module_version_number(), ls_null)
+//		return -1
+//	end if
+//next
+//
+//jmj_log_database_maintenance("Sync Database Scripts", "OK", ls_null, f_module_version_number(), ls_null)
+//
+//f_please_wait_close(li_please_wait_index)
+//
 return 1
 
 
