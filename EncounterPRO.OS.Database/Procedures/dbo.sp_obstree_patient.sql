@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -84,12 +40,12 @@ DECLARE  @ll_iterations int
 /*
 	This procedure flushes out the latest observation tree for a given
 	patient and root observation.  The top part of the tree is the latest 
-	tree definition from c_obaservation_tree.  It is referred to as the
+	tree definition from c_observation_tree.  It is referred to as the
 	"c_tree".  This tree always includes the first level children.  This assures that 
 	the user can see all the possible observations under the root.
 	Additionally the c_tree is flushed until a node with an in_context node observation is encountered
 	
-	Once the c_tree is fleshed out.  The patient specific data is pulled from the p tables.  This starts with the 
+	Once the c_tree is fleshed out, the patient specific data is pulled from the p tables.  This starts with the 
 	c_leaf pages which are replace with p_data if it exists.  The p_data also represents
 	trees which are referred to as p_trees.  All possible p_trees are generated for the c_leaf pages
 	When multiple p_trees exist for one c_leaf, the most recent tree with data 
@@ -102,7 +58,7 @@ DECLARE  @ll_iterations int
 	Note:  History_sequence is a identity column that uniquely identifies every record 
 	inserted into the working table.  It along iwth parent_history_sequence dynamically
 	defines the final tree created by this algorithm.  This mechanism is essential because
-	the ultimate tree has both a c_tree and p_tree component that are welded to gether with
+	the ultimate tree has both a c_tree and p_tree component that are welded together with
 	this mechansim.
 
 */
@@ -166,8 +122,8 @@ DECLARE @tmp_patient_results TABLE
 /* 
 	"results_level" identifies the level in the tree a set of nodes is on.  
 	It is used to generate and walk trees.  For backward
-	compatibility to a previous alorithm, the level counts down from 2000.  There is not
-	significance to individual result)level values
+	compatibility to a previous alorithm, the level counts down from 2000.  
+	There is no significance to individual result level values
 */
 
 
@@ -316,7 +272,7 @@ END
 UPDATE 	x
 SET	c_leaf_flag = 'N'
 FROM 	@tmp_patient_results x
-INNER HASH JOIN @tmp_patient_results x2
+INNER JOIN @tmp_patient_results x2
 ON 	x.history_sequence = x2.parent_history_sequence
 WHERE
 	x.record_source = 'C'
@@ -409,7 +365,7 @@ AND ISNULL(t.treatment_status, 'OPEN') <> 'CANCELLED'
 
 DELETE x
 FROM @tmp_patient_results x
-INNER HASH JOIN @tmp_patient_results x2
+INNER JOIN @tmp_patient_results x2
 ON	x.history_sequence = x2.c_leaf_id
 WHERE
 	x.c_leaf_flag = 'Y'
@@ -800,7 +756,7 @@ BEGIN
 	UPDATE	x
 	SET	associated_results_flag = 'Y'
 	FROM 	@tmp_patient_results x
-	INNER HASH JOIN @tmp_patient_results x2
+	INNER JOIN @tmp_patient_results x2
 	ON	x.history_sequence = x2.parent_history_sequence
 	WHERE	x2.associated_results_flag = 'Y'
 	AND	x.associated_results_flag = 'N'
@@ -829,7 +785,7 @@ FROM	@tmp_patient_results
 UPDATE x
 SET	obsolete_flag = 'Y'
 FROM @tmp_patient_results x
-INNER HASH JOIN @tmp_patient_results x2
+INNER JOIN @tmp_patient_results x2
 ON	x.c_leaf_id = x2.c_leaf_id
 AND	x.p_tree_id <> x2.p_tree_id
 WHERE
@@ -850,7 +806,7 @@ AND
 UPDATE x
 SET	obsolete_flag = 'Y'
 FROM 	@tmp_patient_results x
-INNER HASH JOIN @tmp_patient_results x2
+INNER JOIN @tmp_patient_results x2
 ON	x.c_leaf_id = x2.c_leaf_id
 AND	x.p_tree_id <> x2.p_tree_id
 AND	x.observation_sequence < x2.observation_sequence
@@ -866,7 +822,7 @@ AND	x.obsolete_flag = 'N'
 
 DELETE	x
 FROM	@tmp_patient_results x
-INNER HASH JOIN @tmp_patient_results x2
+INNER JOIN @tmp_patient_results x2
 ON	x.p_tree_id = x2.p_tree_id
 WHERE	x2.p_root_flag = 'Y'
 AND	x2.obsolete_flag = 'Y'
