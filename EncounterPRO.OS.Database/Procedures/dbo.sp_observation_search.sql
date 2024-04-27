@@ -120,7 +120,7 @@ IF @ps_top_20_user_id IS NULL
 		ON 	o.collection_procedure_id = cpc.procedure_id
 		LEFT OUTER JOIN c_procedure cpp WITH (NOLOCK)
 		ON 	o.perform_procedure_id = cpp.procedure_id
-		WHERE 	o.status like @ps_status
+		WHERE 	o.status = @ps_status
 	ELSE
 		INSERT INTO @tmp_observation
 		(	observation_id
@@ -179,7 +179,7 @@ IF @ps_top_20_user_id IS NULL
 		ON 	o.perform_procedure_id = cpp.procedure_id
 		WHERE	
 		 	c.specialty_id = @ps_specialty_id
-		AND 	o.status like @ps_status
+		AND 	o.status = @ps_status
 	END
 ELSE
 BEGIN
@@ -245,7 +245,7 @@ BEGIN
 	ON 	o.collection_procedure_id = cpc.procedure_id
 	LEFT OUTER JOIN c_procedure cpp WITH (NOLOCK)
 	ON 	o.perform_procedure_id = cpp.procedure_id
-	WHERE 	o.status like @ps_status
+	WHERE 	o.status = @ps_status
 	AND 	u.user_id = @ps_top_20_user_id
 	AND 	u.top_20_code = @ls_top_20_code
 END
