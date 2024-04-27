@@ -15,6 +15,11 @@ integer li_null
 string ls_em_documentation_guide
 string ls_new_flag
 
+// Disable this function (meeting US 1997 standards for billing) as not applicable to our use case.
+// Consumes a significant amount of database resource, also calls fn_em_component_rules_passed
+// and fn_em_type_rules_passed as part of the visit evaluation
+return 1
+
 setnull(li_null)
 
 if isnull(ps_cpr_id) or isnull(pl_encounter_id) then return li_null
