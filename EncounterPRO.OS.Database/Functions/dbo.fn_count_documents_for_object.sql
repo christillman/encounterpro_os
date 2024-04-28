@@ -35,7 +35,7 @@ RETURNS @documents TABLE (
 
 AS
 BEGIN
-/* 7.2.1.9: Refactor to use fn_document_wpi_for_object */
+/* 7.2.1.9: Extract fn_document_wpi_for_object */
 DECLARE @docs TABLE (
 	patient_workplan_item_id int NOT NULL,
 	status varchar(12) NULL)
