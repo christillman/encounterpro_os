@@ -41,7 +41,7 @@ DECLARE @ll_computer_id int,
 		@ls_scribe_for_user_id varchar(24),
 		@ls_office_id varchar(4)
 
-SET @ls_system_user = SYSTEM_USER
+SET @ls_system_user = ORIGINAL_LOGIN()
 SET @ls_computername = HOST_NAME()
 
 -- Trim off the domain if there is one
@@ -79,8 +79,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_current_epro_user_context]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_current_epro_user_context] TO [cprsystem]
 GO
 
