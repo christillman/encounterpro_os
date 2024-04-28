@@ -257,12 +257,7 @@ room[room_count].room_computer_id = pl_computer_id
 room[room_count].room_default_encounter_type = ps_default_encounter_type
 room[room_count].status = ps_status
 
-ls_sort = sqlca.fn_get_specific_preference('SYSTEM', 'Room', ps_room_id, 'sort')
-if isnull(ls_sort) then
-	ls_sort = "patient"
-end if
-
-room[room_count].sort = ls_sort
+room[room_count].sort = "patient"
 
 return room_count
 

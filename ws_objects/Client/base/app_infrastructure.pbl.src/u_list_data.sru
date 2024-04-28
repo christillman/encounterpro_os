@@ -5647,7 +5647,7 @@ SELECT room_id,
 	office_id,
 	status,
 	default_encounter_type,
-	COALESCE(dbo.fn_get_specific_preference('SYSTEM', 'Room', room_id, 'sort'), 'Patient'),
+	'Patient',
 	dirty_flag
 INTO :lstr_room.room_id,
 	:lstr_room.room_name,

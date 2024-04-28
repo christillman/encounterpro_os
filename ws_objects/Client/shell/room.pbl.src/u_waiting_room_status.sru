@@ -47,6 +47,9 @@ string ls_pref
 
 ls_sort = "room_sequence A, patient_location A"
 
+/*
+EncounterPro_OS has no such preference. Just cut to the chase (the default).
+This function is called every 5 seconds.
 ls_pref = sqlca.fn_get_specific_preference( "SYSTEM", "Room", room_id, "sort")
 
 // See if we have an alternate sort specified for this room
@@ -59,7 +62,8 @@ CHOOSE CASE lower(ls_pref)
 		// Default is "encounter descending"
 		ls_sort += ", minutes D, patient_name A"
 END CHOOSE
-
+*/
+ls_sort += ", minutes D, patient_name A"
 setsort(ls_sort)
 
 ll_rowcount = retrieve(gnv_app.office_id, room_id)
