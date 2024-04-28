@@ -12,9 +12,9 @@ CHOOSE CASE pi_message
 	CASE 1
 		ls_message = "You have exceeded 100 patients with a demonstration license.  You will not be allowed to create any more encounters."
 	CASE 2
-		ls_message = "The license for this installation has expired.  You will not be allowed to create a new encouner."
+		ls_message = "The license for this installation has expired.  You will not be allowed to create a new encounter."
 	CASE 3
-		ls_message = "This installation is not properly licensed.  You will not be allowed to create a new encouner."
+		ls_message = "This installation is not properly licensed.  You will not be allowed to create a new encounter."
 	CASE 4
 		ls_message = "License Service is not running. You will not be able to create new encounters.  Please restart the license service.  If problem persists, please contact JMJ Technologies, Inc. or your authorized EncounterPRO reseller."
 	CASE 5
