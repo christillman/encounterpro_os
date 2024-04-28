@@ -3,11 +3,22 @@ global type f_check_system_status from function_object
 end type
 
 forward prototypes
-global function integer check_system_status ()
 global function integer f_check_system_status ()
 end prototypes
 
 global function integer f_check_system_status ();string ls_status
+
+// See if the database is still OK
+SELECT database_status
+INTO :ls_status
+FROM c_Database_Status;
+if not tf_check() then return -1
+
+if isnull(ls_status) or upper(ls_status) <> "OK" then
+	openwithparm(w_pop_message, "This " + gnv_app.product_name + " system is not available.  Please see your system administrator.")
+	return -1
+end if
+
 
 // See if the computer is still OK
 if gnv_app.computer_id > 0 then
@@ -22,18 +33,6 @@ if gnv_app.computer_id > 0 then
 		return -1
 	end if
 end if
-
-// See if the database is still OK
-SELECT database_status
-INTO :ls_status
-FROM c_Database_Status;
-if not tf_check() then return -1
-
-if isnull(ls_status) or upper(ls_status) <> "OK" then
-	openwithparm(w_pop_message, "This " + gnv_app.product_name + " system is not available.  Please see your system administrator.")
-	return -1
-end if
-
 
 return 1
 
