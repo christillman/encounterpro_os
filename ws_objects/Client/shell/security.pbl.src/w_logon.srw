@@ -202,7 +202,6 @@ bringtotop = true
 If IsValid(main_window) Then
 	// When main window is open, hide it.
 	main_window.Hide()
-	//windowstate = maximized!
 End If
 
 // Could this ever happen?
