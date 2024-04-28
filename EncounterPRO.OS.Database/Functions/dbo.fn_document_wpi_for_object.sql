@@ -131,6 +131,6 @@ RETURN
 END
 
 GO
-GRANT EXECUTE ON [dbo].[fn_document_wpi_for_object] TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_wpi_for_object] TO [cprsystem]
 GO
 

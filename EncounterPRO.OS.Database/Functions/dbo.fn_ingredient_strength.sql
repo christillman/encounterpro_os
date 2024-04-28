@@ -64,5 +64,5 @@ select * from dbo.fn_ingredient_strength ('methylPREDNISolone sodium succinate 2
 */
 
 GO
-GRANT EXECUTE ON [dbo].[fn_ingredient_strength] TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_ingredient_strength] TO [cprsystem]
 GO

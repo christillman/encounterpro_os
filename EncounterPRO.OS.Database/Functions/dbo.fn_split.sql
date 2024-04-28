@@ -40,5 +40,5 @@ select * from dbo.fn_split('methylPREDNISolone sodium succinate 2 GM', ' / ')
 */
 
 GO
-GRANT EXECUTE ON [dbo].[fn_split] TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_split] TO [cprsystem]
 GO

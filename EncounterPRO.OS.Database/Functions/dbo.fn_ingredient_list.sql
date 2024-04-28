@@ -45,5 +45,5 @@ select * from dbo.fn_ingredient_list('calcium 250 MG / vitamin D2 125 UNT Oral T
 */
 
 GO
-GRANT EXECUTE ON [dbo].[fn_ingredient_list] TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_ingredient_list] TO [cprsystem]
 GO
