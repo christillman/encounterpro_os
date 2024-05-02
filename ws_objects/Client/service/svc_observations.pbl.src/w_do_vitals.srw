@@ -2,7 +2,7 @@
 forward
 global type w_do_vitals from w_observation_base
 end type
-type uo_current_meds from u_current_meds_small within w_do_vitals
+type uo_prior_meds from u_prior_meds_small within w_do_vitals
 end type
 type dw_timed_set_list from u_timed_set_list within w_do_vitals
 end type
@@ -43,7 +43,7 @@ string button_type = "COMMAND"
 integer max_buttons = 3
 boolean zoom_dw_on_resize = true
 event check_alert ( )
-uo_current_meds uo_current_meds
+uo_prior_meds uo_prior_meds
 dw_timed_set_list dw_timed_set_list
 pb_down pb_down
 pb_up pb_up
@@ -189,7 +189,7 @@ ll_menu_id = long(service.get_attribute("menu_id"))
 paint_menu(ll_menu_id)
 
 
-uo_current_meds.display_meds()
+uo_prior_meds.display_meds()
 
 // Don't offer the "I'll Be Back" option for manual services
 if service.manual_service then
@@ -222,7 +222,7 @@ end event
 on w_do_vitals.create
 int iCurrent
 call super::create
-this.uo_current_meds=create uo_current_meds
+this.uo_prior_meds=create uo_prior_meds
 this.dw_timed_set_list=create dw_timed_set_list
 this.pb_down=create pb_down
 this.pb_up=create pb_up
@@ -237,7 +237,7 @@ this.st_page=create st_page
 this.st_date=create st_date
 this.st_title=create st_title
 iCurrent=UpperBound(this.Control)
-this.Control[iCurrent+1]=this.uo_current_meds
+this.Control[iCurrent+1]=this.uo_prior_meds
 this.Control[iCurrent+2]=this.dw_timed_set_list
 this.Control[iCurrent+3]=this.pb_down
 this.Control[iCurrent+4]=this.pb_up
@@ -255,7 +255,7 @@ end on
 
 on w_do_vitals.destroy
 call super::destroy
-destroy(this.uo_current_meds)
+destroy(this.uo_prior_meds)
 destroy(this.dw_timed_set_list)
 destroy(this.pb_down)
 destroy(this.pb_up)
@@ -294,7 +294,7 @@ end type
 type st_config_mode_menu from w_observation_base`st_config_mode_menu within w_do_vitals
 end type
 
-type uo_current_meds from u_current_meds_small within w_do_vitals
+type uo_prior_meds from u_prior_meds_small within w_do_vitals
 integer x = 78
 integer y = 1152
 integer width = 485
@@ -305,8 +305,8 @@ borderstyle borderstyle = styleraised!
 integer max_meds = 5
 end type
 
-on uo_current_meds.destroy
-call u_current_meds_small::destroy
+on uo_prior_meds.destroy
+call u_prior_meds_small::destroy
 end on
 
 type dw_timed_set_list from u_timed_set_list within w_do_vitals
