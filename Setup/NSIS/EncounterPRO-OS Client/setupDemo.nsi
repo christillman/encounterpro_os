@@ -9,15 +9,17 @@
 
 ; ------------------------------------------
 ; DEFINES
-  !define PRODUCT   GreenOliveEHR
+  !define PRODUCT   "GreenOlive_EHR_Demo"
 
 ; Client Setup Version
-  !define VERSION   7.2.1.8Demo
+  !define VERSION   7.2.1.8
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
-  !define DEST_FOLDER "C:\Users\Public\Documents\${PRODUCT}\Client"
-  !define ATT_FOLDER "C:\Users\Public\Documents\${PRODUCT}\Attachments"
+  !define INST_ROOT "C:\Users\Public\Documents"
+  !define DEST_FOLDER "${INST_ROOT}\${PRODUCT}\Client"
+  !define ATT_FOLDER "${INST_ROOT}\${PRODUCT}\Attachments"
+  !define UTILITIES_FOLDER "${INST_ROOT}\Utilities"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
@@ -29,7 +31,6 @@
 
   !define DISP_NAME '${PRODUCT} ${VERSION}'
   !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT} 7"
-
 
   ; EproLibNET installer define
   ;*** To change EproLibNET version, change the path below
@@ -44,8 +45,8 @@
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
 
   ; Installing the help file
-  !define COMMONFILES_TARGET "EncounterPRO-OS"
-  !define APPDATA_TARGET "${PRODUCT}"
+  ;!define COMMONFILES_TARGET "EncounterPRO-OS"
+  ;!define APPDATA_TARGET "${PRODUCT}"
 
 ; ------------------------------------------
 ; Variables
@@ -85,13 +86,13 @@
 
     ; Name and File
     Name '${DISP_NAME}'
-    OutFile '${PRODUCT} ${VERSION} Install.exe'
+    OutFile '${PRODUCT}_Install_${Database_Mod_Level}.exe'
     InstallDir "${DEST_FOLDER}"
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
     
-    ; Request Execution Priviliges for Vista / Server 2008
-    RequestExecutionLevel admin
+    ; Allow to install as ordinary user
+    RequestExecutionLevel user
     
 ; ------------------------------------------
 ; Interface Configuration
@@ -194,13 +195,14 @@
       ; nsExec::Exec 'msiexec /i "$INSTDIR\${SRC_TextMaker_Filename}" /passive /norestart /l*v "$INSTDIR\TextMaker.log" APPLICATIONFOLDER="C:\Program Files (x86)\SoftMaker FreeOffice 2021" INSTALLTM=1 INSTALLUPDATER=0'
       ; Delete '$INSTDIR\${SRC_TextMaker_Filename}'
   
-      SetDetailsPrint both
-      DetailPrint "Installing EncounterPRO.OS.Utilities..."
-      SetDetailsPrint none
-      SetOutPath '$INSTDIR'
-      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
-      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
-      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
+	; Dont install utilites on demo versions, it would need admin installer
+      ; SetDetailsPrint both
+      ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
+      ; SetDetailsPrint none
+      ; SetOutPath '$INSTDIR'
+      ; File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
+      ; nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
+      ; Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
       
       SetDetailsPrint both
     SectionEnd
@@ -229,15 +231,15 @@
         SetDetailsPrint both
     SectionEnd
     
-    Section '-Help File' SecHelp
-        SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}"
-        SetDetailsPrint both
-        DetailPrint "Installing ${PRODUCT} Help..."
-        SetOverwrite on
-        SetDetailsPrint textonly
-        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
-        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
-    SectionEnd
+    ; Section '-Help File' SecHelp
+        ; SetOutPath '$INSTDIR'
+        ; SetDetailsPrint both
+        ; DetailPrint "Installing ${PRODUCT} Help..."
+        ; SetOverwrite on
+        ; SetDetailsPrint textonly
+        ; File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
+        ; File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
+    ; SectionEnd
 
     ; Section '-Ini Files' SecIni
     ;     SetOutPath "$APPDATA\${APPDATA_TARGET}"
@@ -282,9 +284,10 @@
         CreateDirectory "${ATT_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\${PRODUCT}Demo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        CreateShortCut "${DEST_FOLDER}\${PRODUCT}Demo.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
-        ;CreateShortCut "${DEST_FOLDER}\${PRODUCT}Demo Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        ;CreateShortCut "${DEST_FOLDER}\${PRODUCT} Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        SetOutPath "$DESKTOP"
+        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -348,14 +351,20 @@
       Delete "$INSTDIR\*.tlb"
       Delete "$INSTDIR\Open Source License.rtf"
       Delete "$INSTDIR\*.flt"
+      Delete "$INSTDIR\*.lnk"
+      Delete "$INSTDIR\*.chm"
+      Delete "$INSTDIR\*.json"
+      Delete "$INSTDIR\LICENSE"
+      Delete "$INSTDIR\Uploads"
+      Delete "$INSTDIR"
     SectionEnd
 
     
 Function .onInit
-    ; Install for ALL USERS
-    SetShellVarContext all
+    ; Install for current user
+    SetShellVarContext current
     Call CheckBitness
-    Call CheckIsAdminUser
+    ;Call CheckIsAdminUser
 
   Call getWindowsVersion
   ${If} $WinVer = 'not NT'
