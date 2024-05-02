@@ -53,7 +53,7 @@ FOR i = 1 TO ll_count
 		dw_history.setitem(ll_row, "drug", ls_drug)
 		dw_history.setitem(ll_row, "start_date", lstra_treatments[i].begin_date)
 		if isnull(lstra_treatments[i].treatment_status) then
-			dw_history.Setitem(ll_row,"treatment_status","** CURRENT MEDICATIONS **")
+			dw_history.Setitem(ll_row,"treatment_status","** PRESCRIBED MEDICATIONS **")
 			dw_history.Setitem(ll_row,"status_sort",1)
 		else
 			dw_history.Setitem(ll_row,"treatment_status","** PAST MEDICATIONS **")
@@ -95,6 +95,9 @@ on u_cpr_drug_history.destroy
 call super::destroy
 destroy(this.dw_history)
 end on
+
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_cpr_drug_history
+end type
 
 type dw_history from u_dw_pick_list within u_cpr_drug_history
 integer y = 4
