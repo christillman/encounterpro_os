@@ -87,11 +87,11 @@ String specialty_id
 String search_type
 String common_flag = "Y"
 String treatment_type
+boolean ib_include_strength
 
 str_attributes_list selected_attributes_list
 
 end variables
-
 forward prototypes
 public subroutine select_drug (string ps_drug_id, string ps_description)
 end prototypes
@@ -116,21 +116,34 @@ pb_done.enabled = true
 
 f_attribute_add_attribute(lstr_attributes, "drug_id", ps_drug_id)
 
-// Then make user select dosage form
 ls_description = ps_description
-popup.dataobject = "dw_dosage_form"
-popup.data_row_count = 0
-popup.displaycolumn = 2
-popup.datacolumn = 1
-popup.argument_count = 1
-popup.argument[1] = ps_drug_id
-popup.auto_singleton = true
-openwithparm(w_pop_pick, popup, this)
-popup_return = message.powerobjectparm
-If popup_return.item_count = 1 Then
-	f_attribute_add_attribute(lstr_attributes, "dosage_form", popup_return.items[1])
-	ls_description += " " + popup_return.descriptions[1]
-End if
+ls_form_description = "Nothing selected"
+If this.ib_include_strength Then
+	// try to add formulation
+	luo_treatment = f_get_treatment_component(treatment_type)
+	luo_treatment.drug_id = ps_drug_id
+	ls_form_description = f_choose_formulation(luo_treatment)
+End If
+
+IF ls_form_description <> "Nothing selected" THEN
+	ls_description = ls_form_description
+	f_attribute_add_attribute(lstr_attributes, "form_rxcui",luo_treatment.form_rxcui)
+Else
+	// If no formulation, get dosage form
+	popup.dataobject = "dw_dosage_form"
+	popup.data_row_count = 0
+	popup.displaycolumn = 2
+	popup.datacolumn = 1
+	popup.argument_count = 1
+	popup.argument[1] = ps_drug_id
+	popup.auto_singleton = true
+	openwithparm(w_pop_pick, popup, this)
+	popup_return = message.powerobjectparm
+	If popup_return.item_count = 1 Then
+		f_attribute_add_attribute(lstr_attributes, "dosage_form", popup_return.items[1])
+		ls_description += " " + popup_return.descriptions[1]
+	End if
+End If
 
 // try to add duration
 duration_popup.data_row_count = 3
@@ -154,15 +167,6 @@ if popup_return.item_count = 3 then
 	ls_description += " " + ls_duration_description	
 	f_attribute_add_attribute(lstr_attributes, "duration", ls_duration_description)
 end if
-
-// try to add formulation
-luo_treatment = f_get_treatment_component(treatment_type)
-luo_treatment.drug_id = ps_drug_id
-ls_form_description = f_choose_formulation(luo_treatment)
-IF ls_form_description <> "Nothing selected" THEN
-	ls_description += " " + ls_form_description
-	f_attribute_add_attribute(lstr_attributes, "form_rxcui",luo_treatment.form_rxcui)
-END IF
 
 f_attribute_add_attribute(lstr_attributes, "treatment_description", ls_description)
 
@@ -210,6 +214,10 @@ If isnull(treatment_type) Then
 	Return
 End If
 
+this.ib_include_strength = True
+If popup.data_row_count >= 2 Then
+	this.ib_include_strength = f_string_to_boolean(popup.items[2])
+End If
 string ls_drug_type
 
 specialty_id = current_user.specialty_id
