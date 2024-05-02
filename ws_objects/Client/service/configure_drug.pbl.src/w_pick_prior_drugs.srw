@@ -98,9 +98,15 @@ end prototypes
 
 public subroutine select_drug (string ps_drug_id, string ps_description);long ll_row
 String ls_description
+string ls_form_description
+String ls_duration_description
+real lr_amount
+
+u_component_treatment luo_treatment
 
 str_popup popup
 str_popup_return popup_return
+str_popup duration_popup
 
 str_attributes lstr_attributes
 
@@ -125,6 +131,38 @@ If popup_return.item_count = 1 Then
 	f_attribute_add_attribute(lstr_attributes, "dosage_form", popup_return.items[1])
 	ls_description += " " + popup_return.descriptions[1]
 End if
+
+// try to add duration
+duration_popup.data_row_count = 3
+duration_popup.items[1] = "4"
+duration_popup.items[2] = "WEEK"
+duration_popup.items[3] = ""
+
+openwithparm(w_pop_duration, duration_popup)
+popup_return = message.powerobjectparm
+if popup_return.item_count = 3 then
+	ls_duration_description = popup_return.items[1]
+	choose case ls_duration_description
+		case "0" // just the prn_text
+			ls_duration_description = popup_return.items[3]
+		case "-1"
+			ls_duration_description = "Indefinite"
+		case else // normal
+			lr_amount = real(popup_return.items[1])
+			ls_duration_description = f_pretty_amount_unit(lr_amount, popup_return.items[2])
+	end choose
+	ls_description += " " + ls_duration_description	
+	f_attribute_add_attribute(lstr_attributes, "duration", ls_duration_description)
+end if
+
+// try to add formulation
+luo_treatment = f_get_treatment_component(treatment_type)
+luo_treatment.drug_id = ps_drug_id
+ls_form_description = f_choose_formulation(luo_treatment)
+IF ls_form_description <> "Nothing selected" THEN
+	ls_description += " " + ls_form_description
+	f_attribute_add_attribute(lstr_attributes, "form_rxcui",luo_treatment.form_rxcui)
+END IF
 
 f_attribute_add_attribute(lstr_attributes, "treatment_description", ls_description)
 
