@@ -355,7 +355,7 @@ end if
 update_encounter_object(puo_encounter, ll_row)
 
 puo_encounter.updated = false
-puo_encounter.exists = true
+puo_encounter.ib_exists = true
 
 return 1
 
@@ -374,7 +374,7 @@ if isnull(ll_row) then return 0
 update_encounter_object(puo_encounter, ll_row)
 
 puo_encounter.updated = false
-puo_encounter.exists = true
+puo_encounter.ib_exists = true
 
 Return 1
 

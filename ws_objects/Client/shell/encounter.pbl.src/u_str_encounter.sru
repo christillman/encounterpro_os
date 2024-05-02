@@ -40,7 +40,7 @@ boolean billing_posted
 string encounter_office_id
 string created_by
 
-boolean exists
+boolean ib_exists
 boolean updated
 boolean deleted
 
@@ -48,7 +48,6 @@ u_patient parent_patient
 
 
 end variables
-
 forward prototypes
 public subroutine edit_objective ()
 public function u_user provider ()
