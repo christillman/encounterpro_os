@@ -251,6 +251,8 @@ end event
 type pb_cancel from u_picture_button within w_pop_duration
 integer x = 64
 integer y = 1560
+integer width = 256
+integer height = 224
 integer taborder = 30
 string picturename = "button11.bmp"
 string disabledname = "button11.bmp"
@@ -270,6 +272,8 @@ end on
 type pb_close from u_picture_button within w_pop_duration
 integer x = 2606
 integer y = 1560
+integer width = 256
+integer height = 224
 integer taborder = 40
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
