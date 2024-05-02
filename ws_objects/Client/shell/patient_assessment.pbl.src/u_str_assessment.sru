@@ -56,7 +56,7 @@ integer diagnosis_sequence
 
 datetime begin_date, end_date, created
 
-boolean exists, deleted, updated
+boolean ib_exists, deleted, updated
 
 u_attachment_list attachment_list
 u_patient parent_patient
@@ -65,7 +65,6 @@ string new_treatment_service = "ORDERTREATMENT"
 
 
 end variables
-
 forward prototypes
 public function boolean any_completed_treatments ()
 public function integer check_updated_old (u_sqlca p_sqlca)
@@ -79,7 +78,6 @@ public subroutine display_properties ()
 public function integer add_progress (string ps_progress_type, string ps_progress, string ps_severity, datetime pdt_progress_date_time, long pl_attachment_id)
 public function u_component_treatment find_treatment (long pi_treatment_id)
 public function integer add_progress (string ps_progress_type, datetime pdt_progress_date_time)
-public function integer save_old ()
 end prototypes
 
 public function boolean any_completed_treatments ();return parent_patient.treatments.any_completed_treatments(problem_id)
@@ -255,92 +253,6 @@ setnull(ls_severity)
 return parent_patient.assessments.set_progress(problem_id, diagnosis_sequence, ps_progress_type,&
 																ls_progress, ls_severity, pdt_progress_date_time)
 
-end function
-
-public function integer save_old ();integer i
-integer li_sts = 1
-long ll_attachment_id
-
-if isnull(attachment_list) then
-	setnull(ll_attachment_id)
-elseif attachment_list.attachment_count <= 0 then
-	setnull(ll_attachment_id)
-else
-	ll_attachment_id = attachment_list.attachment_id
-end if
-
-
-tf_begin_transaction(this, "save (" + assessment_id + ")")
-
-if deleted and exists then 
-	DELETE FROM p_Assessment
-	WHERE	cpr_id = :parent_patient.cpr_id
-	AND	problem_id = :problem_id
-	AND   diagnosis_sequence = :diagnosis_sequence;
-	if not tf_check() then return -1
-	exists = false
-	updated = false
-	if sqlca.sqlcode = 100 then
-		li_sts = 0
-	else
-		li_sts = 1
-	end if
-elseif exists and updated and not deleted then
-	UPDATE p_Assessment
-	SET	attachment_id = :ll_attachment_id
-	WHERE	cpr_id = :parent_patient.cpr_id
-	AND	problem_id = :problem_id
-	AND   diagnosis_sequence = :diagnosis_sequence;
-	if not tf_check() then return -1
-	updated = false
-	if sqlca.sqlcode = 100 then
-		li_sts = 0
-	else
-		li_sts = 1
-	end if
-elseif not exists and not deleted then
-
-	INSERT INTO p_Assessment
-			(
-			cpr_id,
-			problem_id,   
-			diagnosis_sequence,
-			assessment_type,
-         assessment_id,
-			assessment,
-         open_encounter_id,   
-         attachment_id,   
-         begin_date,
-			created_by
-			)
-	VALUES
-			(
-			:parent_patient.cpr_id,
-			:problem_id,
-			:diagnosis_sequence,
-			:assessment_type,
-         :assessment_id,
-			:assessment,
-         :open_encounter_id,
-         :ll_attachment_id,
-         :begin_date,
-			:created_by
-			) ;
-	if not tf_check() then return -1
-	exists = true
-	updated = false
-
-	if sqlca.sqlcode = 100 then
-		li_sts = 0
-	else
-		li_sts = 1
-	end if
-
-end if
-
-tf_commit()
-
-return li_sts
 end function
 
 on u_str_assessment.create

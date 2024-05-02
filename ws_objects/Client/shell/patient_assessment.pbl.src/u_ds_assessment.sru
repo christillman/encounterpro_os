@@ -407,47 +407,6 @@ public function integer assessment (ref u_str_assessment puo_assessment, long pl
 setnull(li_diagnosis_sequence)
 
 return assessment(puo_assessment, pl_problem_id, li_diagnosis_sequence)
-//
-//long ll_row,ll_problem_id
-//string ls_find
-//
-//if isnull(pl_problem_id) then return 0
-//
-//ls_find = "problem_id=" + string(pl_problem_id) + " and isnull(assessment_status)"
-//
-//ll_row = find(ls_find, 1, rowcount())
-//if ll_row < 0 then return -1
-//if ll_row = 0 then return 0
-//
-//if isnull(puo_assessment) or not isvalid(puo_assessment) then puo_assessment = CREATE u_str_assessment
-//
-//puo_assessment.problem_id = object.problem_id[ll_row]
-//puo_assessment.diagnosis_sequence = object.diagnosis_sequence[ll_row]
-//puo_assessment.assessment_type = object.assessment_type[ll_row]
-//puo_assessment.assessment_id = object.assessment_id[ll_row]
-//puo_assessment.assessment = object.assessment[ll_row]
-//puo_assessment.open_encounter_id = object.open_encounter_id[ll_row]
-//puo_assessment.begin_date = object.begin_date[ll_row]
-//puo_assessment.diagnosed_by = object.diagnosed_by[ll_row]
-//puo_assessment.created = object.created[ll_row]
-//puo_assessment.created_by = object.created_by[ll_row]
-//
-//puo_assessment.assessment_status = object.assessment_status[ll_row]
-//puo_assessment.end_date = object.end_date[ll_row]
-//puo_assessment.close_encounter_id = object.close_encounter_id[ll_row]
-//puo_assessment.icd10_code = object.icd10_code[ll_row]
-//
-//ll_problem_id = object.problem_id[ll_row]
-//parent_patient.attachments.assessment_attachment_list(puo_assessment.attachment_list, ll_problem_id)
-//
-//puo_assessment.exists = true
-//puo_assessment.updated = false
-//puo_assessment.deleted = false
-//
-//puo_assessment.parent_patient = parent_patient
-//
-//return 1
-//
 end function
 
 public function string assessment_description (long pl_problem_id, integer pi_diagnosis_sequence);string ls_null
@@ -683,7 +642,7 @@ puo_assessment.sort_sequence = object.sort_sequence[ll_row]
 
 parent_patient.attachments.assessment_attachment_list(puo_assessment.attachment_list, ll_problem_id)
 
-puo_assessment.exists = true
+puo_assessment.ib_exists = true
 puo_assessment.updated = false
 puo_assessment.deleted = false
 
@@ -1151,6 +1110,7 @@ long ll_null
 setnull(ls_null)
 setnull(ll_null)
 setnull(ll_attachment_id)
+
 
 // First see if the assessment exists
 

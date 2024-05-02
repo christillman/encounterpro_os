@@ -867,7 +867,7 @@ if not f_string_to_boolean(datalist.treatment_type_field(puo_treatment.treatment
 		puo_treatment.ordered_by = current_user.user_id
 		puo_treatment.past_treatment = true
 		puo_treatment.updated = false
-		puo_treatment.exists = false
+		puo_treatment.ib_exists = false
 		
 		// Mark the old treatment as "Modified" as of the begin_date of the new treatment
 		set_treatment_progress(puo_treatment.original_treatment_id, "MODIFIED", puo_treatment.begin_date)
@@ -1996,7 +1996,7 @@ else
 	puo_treatment.past_treatment = false
 end if
 
-puo_treatment.exists = true
+puo_treatment.ib_exists = true
 puo_treatment.updated = false
 puo_treatment.deleted = false
 
@@ -2718,7 +2718,7 @@ if isnull(luo_treatment.treatment_description) then
 end if
 
 // Reset Flags
-luo_treatment.exists = false
+luo_treatment.ib_exists = false
 luo_treatment.updated = false
 luo_treatment.deleted = false
 

@@ -74,13 +74,13 @@ real duration_amount
 real dispense_amount
 real office_dispense_amount
 
-boolean exists
+boolean ib_exists
 boolean deleted = false
 boolean updated = false
 boolean description_loaded = false
 boolean past_treatment = false
 boolean prior_treatment = false
-
+boolean include_strength = true
 
 str_item_definition treatment_definition[]
 
@@ -2628,7 +2628,7 @@ setnull(assessment.problem_id)
 past_treatment = False
 setnull(treatment_status)
 
-exists = False
+ib_exists = False
 deleted = False
 updated = False
 treatment_count = 0
@@ -3655,7 +3655,7 @@ if isnull(treatment_description) then
 end if
 
 // Reset Flags
-exists = false
+ib_exists = false
 updated = false
 deleted = false
 
