@@ -9,14 +9,15 @@
 
 ; ------------------------------------------
 ; DEFINES
-  !define PRODUCT   GreenOliveEHR
+  !define PRODUCT   "GreenOlive_EHR"
 
 ; Client Setup Version
   !define VERSION   7.2.1.8
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
-  !define DEST_FOLDER "C:\Users\Public\Documents\${PRODUCT}\Client"
+  !define INST_ROOT "C:\Users\Public\Documents"
+  !define DEST_FOLDER "${INST_ROOT}\${PRODUCT}\Client"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
@@ -84,7 +85,7 @@
 
     ; Name and File
     Name '${DISP_NAME}'
-    OutFile '${PRODUCT} ${VERSION} Install.exe'
+    OutFile '${PRODUCT}_Install_${Database_Mod_Level}.exe'
     InstallDir "${DEST_FOLDER}"
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
@@ -200,7 +201,7 @@
       File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
       nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
       Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
-      
+	  
       SetDetailsPrint both
     SectionEnd
     
@@ -228,7 +229,7 @@
     SectionEnd
     
     Section '-Help File' SecHelp
-        SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}"
+        SetOutPath "$INSTDIR"
         SetDetailsPrint both
         DetailPrint "Installing ${PRODUCT} Help..."
         SetOverwrite on
@@ -279,9 +280,10 @@
         CreateDirectory "${DEST_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         CreateShortCut "${DEST_FOLDER}\${PRODUCT} Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
+        SetOutPath "$DESKTOP"
+        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -345,6 +347,12 @@
       Delete "$INSTDIR\*.tlb"
       Delete "$INSTDIR\Open Source License.rtf"
       Delete "$INSTDIR\*.flt"
+      Delete "$INSTDIR\*.lnk"
+      Delete "$INSTDIR\*.chm"
+      Delete "$INSTDIR\*.json"
+      Delete "$INSTDIR\LICENSE"
+      Delete "$INSTDIR\Uploads"
+      Delete "$INSTDIR"
     SectionEnd
 
     
