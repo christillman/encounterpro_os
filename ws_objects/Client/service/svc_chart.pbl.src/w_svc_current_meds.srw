@@ -360,7 +360,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
 boolean enabled = false
-string text = "Current Medications"
+string text = "Prescribed Medications"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
