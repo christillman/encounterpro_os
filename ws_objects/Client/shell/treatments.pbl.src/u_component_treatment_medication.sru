@@ -37,13 +37,11 @@ Datetime ldt_begin_date
 Date		ld_begin_date
 
 popup.data_row_count = 1
-popup.items[1] = treatment_type
+popup.items[1] = "MEDICATION"
 
 // Get the duration if it's past treatment
 If past_treatment Then
 	Openwithparm(w_pick_prior_drugs, popup)	
-	
-	
 //	Openwithparm(service_window, this, "w_drug_treatment")
 //	
 //	// Let the user select a begin date
