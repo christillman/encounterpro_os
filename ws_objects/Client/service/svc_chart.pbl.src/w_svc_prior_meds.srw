@@ -4,19 +4,13 @@ global type w_svc_prior_meds from w_window_base
 end type
 type cb_add_meds from commandbutton within w_svc_prior_meds
 end type
-type pb_up from u_picture_button within w_svc_prior_meds
-end type
-type pb_down from u_picture_button within w_svc_prior_meds
-end type
-type st_page from statictext within w_svc_prior_meds
-end type
 type cb_done from commandbutton within w_svc_prior_meds
 end type
 type cb_be_back from commandbutton within w_svc_prior_meds
 end type
 type st_1 from statictext within w_svc_prior_meds
 end type
-type dw_soap from u_soap_display within w_svc_prior_meds
+type dw_treatments from u_dw_prior_drugs_list within w_svc_prior_meds
 end type
 end forward
 
@@ -29,13 +23,10 @@ boolean resizable = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 cb_add_meds cb_add_meds
-pb_up pb_up
-pb_down pb_down
-st_page st_page
 cb_done cb_done
 cb_be_back cb_be_back
 st_1 st_1
-dw_soap dw_soap
+dw_treatments dw_treatments
 end type
 global w_svc_prior_meds w_svc_prior_meds
 
@@ -60,17 +51,11 @@ end prototypes
 public function integer refresh ();
 long ll_page
 
-ll_page = dw_soap.current_page
+ll_page = dw_treatments.current_page
 if ll_page <= 0 then ll_page = 1
 
-dw_soap.setredraw(false)
-
-dw_soap.load_patient(display_mode, assessment_type, assessment_status, assessment_soap_display_rule, treatment_type, treatment_status)
-
-dw_soap.last_page = 0
-dw_soap.set_page(ll_page, pb_up, pb_down, st_page)
-
-dw_soap.setredraw(true)
+dw_treatments.reset()
+dw_treatments.load_treatments()
 
 return 1
 
@@ -81,34 +66,25 @@ on w_svc_prior_meds.create
 int iCurrent
 call super::create
 this.cb_add_meds=create cb_add_meds
-this.pb_up=create pb_up
-this.pb_down=create pb_down
-this.st_page=create st_page
 this.cb_done=create cb_done
 this.cb_be_back=create cb_be_back
 this.st_1=create st_1
-this.dw_soap=create dw_soap
+this.dw_treatments=create dw_treatments
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.cb_add_meds
-this.Control[iCurrent+2]=this.pb_up
-this.Control[iCurrent+3]=this.pb_down
-this.Control[iCurrent+4]=this.st_page
-this.Control[iCurrent+5]=this.cb_done
-this.Control[iCurrent+6]=this.cb_be_back
-this.Control[iCurrent+7]=this.st_1
-this.Control[iCurrent+8]=this.dw_soap
+this.Control[iCurrent+2]=this.cb_done
+this.Control[iCurrent+3]=this.cb_be_back
+this.Control[iCurrent+4]=this.st_1
+this.Control[iCurrent+5]=this.dw_treatments
 end on
 
 on w_svc_prior_meds.destroy
 call super::destroy
 destroy(this.cb_add_meds)
-destroy(this.pb_up)
-destroy(this.pb_down)
-destroy(this.st_page)
 destroy(this.cb_done)
 destroy(this.cb_be_back)
 destroy(this.st_1)
-destroy(this.dw_soap)
+destroy(this.dw_treatments)
 end on
 
 event open;call super::open;integer li_sts
@@ -122,7 +98,7 @@ setnull(assessment_type)
 assessment_status = "OPEN"
 assessment_soap_display_rule = "Display If Treatments"
 
-treatment_type = "MEDICATION"
+treatment_type = "PRIORMEDICATION"
 treatment_status = "OPEN"
 
 display_mode = "ATAT"
@@ -145,6 +121,7 @@ end if
 ll_menu_id = long(service.get_attribute("menu_id"))
 paint_menu(ll_menu_id)
 
+dw_treatments.object.description.width = dw_treatments.width - 247
 
 end event
 
@@ -194,7 +171,7 @@ u_component_treatment 	luo_new_treatment
 
 str_attributes lstr_trt_attributes
 
-ls_treatment_type = "MEDICATION"
+ls_treatment_type = "PRIORMEDICATION"
 
 luo_treatment = f_get_treatment_component(ls_treatment_type)
 If isnull(luo_treatment) Then Return
@@ -233,73 +210,6 @@ component_manager.destroy_component(luo_new_treatment)
 Parent.function POST refresh()
 
 end event
-
-type pb_up from u_picture_button within w_svc_prior_meds
-integer x = 2235
-integer y = 140
-integer width = 146
-integer height = 124
-integer taborder = 30
-boolean bringtotop = true
-string picturename = "icon_up.bmp"
-string disabledname = "icon_upx.bmp"
-end type
-
-event clicked;call super::clicked;string ls_temp
-integer li_page
-
-li_page = dw_soap.current_page
-
-dw_soap.set_page(li_page - 1, ls_temp)
-
-if li_page <= 2 then enabled = false
-pb_down.enabled = true
-
-end event
-
-type pb_down from u_picture_button within w_svc_prior_meds
-integer x = 2235
-integer y = 268
-integer width = 146
-integer height = 124
-integer taborder = 20
-boolean bringtotop = true
-string picturename = "icon_down.bmp"
-string disabledname = "icon_downx.bmp"
-end type
-
-event clicked;call super::clicked;string ls_temp
-integer li_page
-integer li_last_page
-
-li_page = dw_soap.current_page
-li_last_page = dw_soap.last_page
-
-dw_soap.set_page(li_page + 1, ls_temp)
-
-if li_page >= li_last_page - 1 then enabled = false
-pb_up.enabled = true
-
-end event
-
-type st_page from statictext within w_svc_prior_meds
-integer x = 2391
-integer y = 140
-integer width = 283
-integer height = 64
-boolean bringtotop = true
-integer textsize = -8
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-long textcolor = 33554432
-long backcolor = 7191717
-boolean enabled = false
-string text = "none"
-boolean focusrectangle = false
-end type
 
 type cb_done from commandbutton within w_svc_prior_meds
 integer x = 2441
@@ -368,15 +278,12 @@ alignment alignment = center!
 boolean focusrectangle = false
 end type
 
-type dw_soap from u_soap_display within w_svc_prior_meds
-integer x = 23
-integer y = 136
+type dw_treatments from u_dw_prior_drugs_list within w_svc_prior_meds
+integer x = 32
+integer y = 124
 integer width = 2199
-integer height = 1440
-integer taborder = 20
+integer height = 1272
+integer taborder = 10
+boolean bringtotop = true
 end type
-
-event selected;call super::selected;refresh()
-
-end event
 
