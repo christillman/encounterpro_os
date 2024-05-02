@@ -30,7 +30,7 @@ type st_property_title_3 from statictext within w_cpr_main
 end type
 type st_property_title_4 from statictext within w_cpr_main
 end type
-type uo_current_meds from u_current_meds_small within w_cpr_main
+type uo_prior_meds from u_prior_meds_small within w_cpr_main
 end type
 type st_property_title_2 from statictext within w_cpr_main
 end type
@@ -72,7 +72,7 @@ st_property_2 st_property_2
 st_property_1 st_property_1
 st_property_title_3 st_property_title_3
 st_property_title_4 st_property_title_4
-uo_current_meds uo_current_meds
+uo_prior_meds uo_prior_meds
 st_property_title_2 st_property_title_2
 tab_cpr tab_cpr
 ln_1 ln_1
@@ -256,7 +256,7 @@ st_property_6.refresh()
 st_property_7.refresh()
 st_property_8.refresh()
 
-uo_current_meds.display_meds()
+uo_prior_meds.display_meds()
 
 end subroutine
 
@@ -369,7 +369,7 @@ this.st_property_2=create st_property_2
 this.st_property_1=create st_property_1
 this.st_property_title_3=create st_property_title_3
 this.st_property_title_4=create st_property_title_4
-this.uo_current_meds=create uo_current_meds
+this.uo_prior_meds=create uo_prior_meds
 this.st_property_title_2=create st_property_title_2
 this.tab_cpr=create tab_cpr
 this.ln_1=create ln_1
@@ -393,7 +393,7 @@ this.Control[iCurrent+11]=this.st_property_2
 this.Control[iCurrent+12]=this.st_property_1
 this.Control[iCurrent+13]=this.st_property_title_3
 this.Control[iCurrent+14]=this.st_property_title_4
-this.Control[iCurrent+15]=this.uo_current_meds
+this.Control[iCurrent+15]=this.uo_prior_meds
 this.Control[iCurrent+16]=this.st_property_title_2
 this.Control[iCurrent+17]=this.tab_cpr
 this.Control[iCurrent+18]=this.ln_1
@@ -420,7 +420,7 @@ destroy(this.st_property_2)
 destroy(this.st_property_1)
 destroy(this.st_property_title_3)
 destroy(this.st_property_title_4)
-destroy(this.uo_current_meds)
+destroy(this.uo_prior_meds)
 destroy(this.st_property_title_2)
 destroy(this.tab_cpr)
 destroy(this.ln_1)
@@ -675,7 +675,7 @@ event clicked;pb_epro_help.event trigger clicked()
 
 end event
 
-type uo_current_meds from u_current_meds_small within w_cpr_main
+type uo_prior_meds from u_prior_meds_small within w_cpr_main
 integer x = 1499
 integer y = 12
 integer width = 434
@@ -685,8 +685,8 @@ borderstyle borderstyle = styleraised!
 integer max_meds = 4
 end type
 
-on uo_current_meds.destroy
-call u_current_meds_small::destroy
+on uo_prior_meds.destroy
+call u_prior_meds_small::destroy
 end on
 
 event meds_clicked;call super::meds_clicked;refresh()
