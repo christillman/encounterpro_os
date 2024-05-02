@@ -36,11 +36,14 @@ string ls_temp, ls_description, ls_dosage_form
 Datetime ldt_begin_date
 Date		ld_begin_date
 
-popup.data_row_count = 1
+popup.data_row_count = 2
+// to search for any medication, use MEDICATION here not PriorMedication
 popup.items[1] = "MEDICATION"
+popup.items[2] = f_boolean_to_string(this.include_strength)
 
-// Get the duration if it's past treatment
-If past_treatment Then
+If this.prior_treatment Then
+	Openwithparm(w_pick_prior_drugs, popup)	
+ElseIf this.past_treatment Then
 	Openwithparm(w_pick_prior_drugs, popup)	
 //	Openwithparm(service_window, this, "w_drug_treatment")
 //	
@@ -65,9 +68,7 @@ If past_treatment Then
 //		end if
 //	end if
 //	f_attribute_add_attribute(lstr_attributes, "ordered_by", ls_ordered_by)
-ElseIf prior_treatment Then
-	Openwithparm(w_pick_prior_drugs, popup)	
-Else	
+Else
 	Openwithparm(w_trt_pick_drugs, popup)
 End If
 
