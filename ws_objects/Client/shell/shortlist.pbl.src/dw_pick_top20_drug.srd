@@ -5,17 +5,17 @@ header(height=0 color="536870912" transparency="0" gradient.color="8421504" grad
 summary(height=140 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 footer(height=0 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
 detail(height=136 color="536870912" transparency="0" gradient.color="8421504" gradient.transparency="0" gradient.angle="0" brushmode="0" gradient.repetition.mode="0" gradient.repetition.count="0" gradient.repetition.length="100" gradient.focus="0" gradient.scale="100" gradient.spread="100" )
-table(column=(type=char(24) updatewhereclause=yes name=drug_id dbname="c_Drug_Definition.drug_id" )
- column=(type=char(80) updatewhereclause=yes name=common_name dbname="c_Drug_Definition.common_name" )
- column=(type=char(500) updatewhereclause=yes name=generic_name dbname="c_Drug_Definition.generic_name" )
- column=(type=char(24) update=yes updatewhereclause=yes key=yes name=user_id dbname="u_Top_20.user_id" )
- column=(type=char(64) update=yes updatewhereclause=yes key=yes name=top_20_code dbname="u_Top_20.top_20_code" )
- column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=top_20_sequence dbname="u_Top_20.top_20_sequence" )
- column=(type=char(255) update=yes updatewhereclause=yes name=item_text dbname="u_Top_20.item_text" )
- column=(type=char(64) update=yes updatewhereclause=yes name=item_id dbname="u_Top_20.item_id" )
- column=(type=char(24) update=yes updatewhereclause=yes name=item_id2 dbname="u_Top_20.item_id2" )
- column=(type=long update=yes updatewhereclause=yes name=item_id3 dbname="u_Top_20.item_id3" )
- column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="u_Top_20.sort_sequence" )
+table(column=(type=char(24) updatewhereclause=yes name=drug_id dbname="c_Drug_Definition.drug_id" dbalias=".drug_id" )
+ column=(type=char(80) updatewhereclause=yes name=common_name dbname="c_Drug_Definition.common_name" dbalias=".common_name" )
+ column=(type=char(500) updatewhereclause=yes name=generic_name dbname="c_Drug_Definition.generic_name" dbalias=".generic_name" )
+ column=(type=char(24) update=yes updatewhereclause=yes key=yes name=user_id dbname="u_Top_20.user_id" dbalias=".user_id" )
+ column=(type=char(64) update=yes updatewhereclause=yes key=yes name=top_20_code dbname="u_Top_20.top_20_code" dbalias=".top_20_code" )
+ column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=top_20_sequence dbname="u_Top_20.top_20_sequence" dbalias=".top_20_sequence" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=item_text dbname="u_Top_20.item_text" dbalias=".item_text" )
+ column=(type=char(64) update=yes updatewhereclause=yes name=item_id dbname="u_Top_20.item_id" dbalias=".item_id" )
+ column=(type=char(24) update=yes updatewhereclause=yes name=item_id2 dbname="u_Top_20.item_id2" dbalias=".item_id2" )
+ column=(type=long update=yes updatewhereclause=yes name=item_id3 dbname="u_Top_20.item_id3" dbalias=".item_id3" )
+ column=(type=long update=yes updatewhereclause=yes name=sort_sequence dbname="u_Top_20.sort_sequence" dbalias=".sort_sequence" )
  column=(type=long updatewhereclause=yes name=selected_flag dbname="selected_flag" initial="0" )
  retrieve="  SELECT c_Drug_Definition.drug_id,   
          c_Drug_Definition.common_name,   
@@ -29,11 +29,11 @@ table(column=(type=char(24) updatewhereclause=yes name=drug_id dbname="c_Drug_De
          u_Top_20.item_id3,   
          u_Top_20.sort_sequence,   
          selected_flag=0  
-    FROM u_Top_20,   
-         c_Drug_Definition
-   WHERE ( u_Top_20.item_id = c_Drug_Definition.drug_id ) and  
-         ( ( u_Top_20.user_id = :ps_user_id ) AND  
-         ( u_Top_20.top_20_code = :ps_top_20_code ) AND
+    FROM u_Top_20   
+    JOIN   c_Drug_Definition ON u_Top_20.item_id = c_Drug_Definition.drug_id
+   WHERE 
+         u_Top_20.user_id = :ps_user_id AND  
+         u_Top_20.top_20_code = :ps_top_20_code AND
 		(
 		EXISTS (SELECT 1 FROM c_Drug_Generic g
 			JOIN c_Drug_Formulation f ON f.ingr_rxcui = g.generic_rxcui
@@ -49,7 +49,7 @@ table(column=(type=char(24) updatewhereclause=yes name=drug_id dbname="c_Drug_De
 			WHERE b.drug_id = c_Drug_Definition.drug_id
 			AND f.valid_in LIKE '%' + co.country + ';%'
 			)
-		))    
+		)  
 " update="u_Top_20" updatewhere=0 updatekeyinplace=no arguments=(("ps_user_id", string),("ps_top_20_code", string))  sort="sort_sequence A top_20_sequence A " )
 compute(band=detail alignment="0" expression=" common_name + if(isnull(generic_name), '', if(lower(common_name) = lower(generic_name), '', ' (' + generic_name + ')') )"border="6" color="0" x="160" y="8" height="116" width="1161" format="[GENERAL]" html.valueishtml="0"  name=description visible="1"  font.face="Arial" font.height="-10~tif(len(description) > 45, -8, -10)" font.weight="700~tif(len(description) > 38, 400, 700)"  font.family="2" font.pitch="2" font.charset="0" background.mode="0" background.color="12632256~tif(selected_flag=0, rgb(192,192,192),rgb(128,128,128))" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="1" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.tip="~tcommon_name + if(isnull(generic_name), '', if(lower(common_name) = lower(generic_name), '', ' (' + generic_name + ')') )" tooltip.transparency="0" transparency="0" )
 compute(band=detail alignment="0" expression="bitmap(~"b_new03.bmp~")"border="6" color="0" x="18" y="8" height="116" width="119" format="[GENERAL]" html.valueishtml="0"  name=icon visible="1"  font.face="Arial" font.height="-10" font.weight="700"  font.family="2" font.pitch="2" font.charset="0" background.mode="2" background.color="12632256" background.transparency="0" background.gradient.color="8421504" background.gradient.transparency="0" background.gradient.angle="0" background.brushmode="0" background.gradient.repetition.mode="0" background.gradient.repetition.count="0" background.gradient.repetition.length="100" background.gradient.focus="0" background.gradient.scale="100" background.gradient.spread="100" tooltip.backcolor="134217752" tooltip.delay.initial="0" tooltip.delay.visible="32000" tooltip.enabled="0" tooltip.hasclosebutton="0" tooltip.icon="0" tooltip.isbubble="0" tooltip.maxwidth="0" tooltip.textcolor="134217751" tooltip.transparency="0" transparency="0" )
