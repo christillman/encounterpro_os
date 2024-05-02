@@ -108,8 +108,8 @@ if isnull(ls_treatment_type_description) then ls_treatment_type_description = "T
 
 CHOOSE CASE upper(datalist.treatment_type_component(contraindications.treatment_type))
 	CASE "TREAT_MEDICATION"
-		ls_verb1 = "Prescribe"
-		ls_verb2 = "Prescribing"
+		ls_verb1 = "Prescribe/Record"
+		ls_verb2 = "Prescribing/Recording"
 	CASE ELSE
 		ls_verb1 = "Order"
 		ls_verb2 = "Ordering"
