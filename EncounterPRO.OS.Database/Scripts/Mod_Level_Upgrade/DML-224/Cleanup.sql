@@ -1,6 +1,6 @@
 
-DELETE FROM o_log
-where log_date_time < dateadd(month,-9,getdate())
+--DELETE FROM o_log
+--where log_date_time < dateadd(month,-9,getdate())
 
 DELETE FROM [o_Event_Queue]
 
