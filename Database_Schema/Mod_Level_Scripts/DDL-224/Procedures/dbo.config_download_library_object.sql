@@ -55,7 +55,7 @@ GO
 Print 'Drop Procedure [dbo].[config_download_library_object]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[config_download_library_object]') AND [type]='P'))
-DROP PROCEDURE [dbo].[config_download_library_object]
+DROP PROCEDURE IF EXISTS [dbo].[config_download_library_object]
 GO
 
 -- Create Procedure [dbo].[config_download_library_object]

@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[jmj_new_log_message]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_new_log_message]') AND [type]='P'))
-DROP PROCEDURE [dbo].[jmj_new_log_message]
+DROP PROCEDURE IF EXISTS [dbo].[jmj_new_log_message]
 GO
 
 -- Create Procedure [dbo].[jmj_new_log_message]

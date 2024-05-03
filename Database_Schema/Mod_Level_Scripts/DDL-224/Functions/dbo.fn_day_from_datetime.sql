@@ -11,7 +11,7 @@ GO
 Print 'Drop Function [dbo].[fn_day_from_datetime]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_day_from_datetime]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_day_from_datetime]
+DROP FUNCTION IF EXISTS [dbo].[fn_day_from_datetime]
 GO
 
 -- Create Function [dbo].[fn_day_from_datetime]

@@ -2,7 +2,7 @@
 Print 'Drop Function [dbo].[fn_ingredient_strength]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_ingredient_strength]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION dbo.fn_ingredient_strength
+DROP FUNCTION IF EXISTS dbo.fn_ingredient_strength
 go
 Print 'Create Function [dbo].[fn_ingredient_strength]'
 GO

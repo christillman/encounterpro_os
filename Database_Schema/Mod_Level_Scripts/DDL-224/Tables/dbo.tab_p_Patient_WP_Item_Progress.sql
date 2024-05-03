@@ -2,12 +2,12 @@
 -- DROP TRIGGER [dbo].[tr_patient_wp_item_progress_insert]
 -- DROP PROCEDURE [dbo].sp_update_patient_wp_item_2
 
-DROP TYPE IF EXISTS [tab_p_Patient_WP_Item_Progress]
 
 SET ANSI_NULLS ON
 
 SET QUOTED_IDENTIFIER ON
 
+IF (select count(*) from sys.types where name = 'tab_p_Patient_WP_Item_Progress') = 0
 CREATE TYPE [tab_p_Patient_WP_Item_Progress]
 	AS TABLE (
 	[patient_workplan_id] [int] NOT NULL,

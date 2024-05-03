@@ -55,7 +55,7 @@ GO
 Print 'Drop Procedure [dbo].[jmj_upload_config_object]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_upload_config_object]') AND [type]='P'))
-DROP PROCEDURE [dbo].[jmj_upload_config_object]
+DROP PROCEDURE IF EXISTS [dbo].[jmj_upload_config_object]
 GO
 
 -- Create Procedure [dbo].[jmj_upload_config_object]

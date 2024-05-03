@@ -11,7 +11,7 @@ GO
 Print 'Drop Function [dbo].[fn_workplan_item_owned_by_2]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_workplan_item_owned_by_2]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_workplan_item_owned_by_2]
+DROP FUNCTION IF EXISTS [dbo].[fn_workplan_item_owned_by_2]
 GO
 
 -- Create Function [dbo].[fn_workplan_item_owned_by_2]

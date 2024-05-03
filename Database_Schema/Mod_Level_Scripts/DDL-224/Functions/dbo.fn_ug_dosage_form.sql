@@ -1,6 +1,6 @@
 IF  EXISTS (SELECT * FROM sys.objects 
 where object_id = OBJECT_ID(N'fn_ug_dosage_form') AND type in (N'FN'))
-DROP FUNCTION dbo.fn_ug_dosage_form
+DROP FUNCTION IF EXISTS dbo.fn_ug_dosage_form
 GO
 
 CREATE FUNCTION dbo.fn_ug_dosage_form (@ug_df varchar(1000))

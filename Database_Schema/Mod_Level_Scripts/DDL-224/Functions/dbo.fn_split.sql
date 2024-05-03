@@ -2,7 +2,7 @@
 Print 'Drop Function [dbo].[fn_split]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_split]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION dbo.fn_split
+DROP FUNCTION IF EXISTS dbo.fn_split
 go
 Print 'Create Function [dbo].[fn_split]'
 GO

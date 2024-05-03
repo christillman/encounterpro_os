@@ -55,7 +55,7 @@ GO
 Print 'Drop Procedure [dbo].[sp_get_ss_prescriber_spi]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_get_ss_prescriber_spi]') AND [type]='P'))
-DROP PROCEDURE [dbo].[sp_get_ss_prescriber_spi]
+DROP PROCEDURE IF EXISTS [dbo].[sp_get_ss_prescriber_spi]
 GO
 
 -- Create Procedure [dbo].[sp_get_ss_prescriber_spi]

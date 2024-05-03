@@ -4,7 +4,7 @@ GO
 IF (EXISTS(SELECT 1
 	FROM sys.objects WHERE [object_id] = OBJECT_ID(N'dbo.fn_next_country_id') 
 	AND [type] = 'FN'))
-DROP Function dbo.fn_next_country_id
+DROP FUNCTION IF EXISTS dbo.fn_next_country_id
 GO
 
 Print 'Create Function dbo.fn_next_country_id'

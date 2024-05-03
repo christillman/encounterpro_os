@@ -55,7 +55,7 @@ GO
 Print 'Drop Function [dbo].[fn_patient_object_document_status]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_patient_object_document_status]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_patient_object_document_status]
+DROP FUNCTION IF EXISTS [dbo].[fn_patient_object_document_status]
 GO
 
 -- Create Function [dbo].[fn_patient_object_document_status]

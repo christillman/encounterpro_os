@@ -1,4 +1,4 @@
-DROP FUNCTION [fn_excl_enc_type]
+DROP FUNCTION IF EXISTS [fn_excl_enc_type]
 GO
 SET ANSI_NULLS ON
 GO

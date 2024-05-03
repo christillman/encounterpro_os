@@ -1,4 +1,4 @@
-DROP FUNCTION [fn_excl_injury_intent]
+DROP FUNCTION IF EXISTS [fn_excl_injury_intent]
 GO
 SET ANSI_NULLS ON
 GO

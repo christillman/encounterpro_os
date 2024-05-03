@@ -11,7 +11,7 @@ GO
 Print 'Drop Function [dbo].[fn_attribute_desc_unit]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_attribute_desc_unit]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_attribute_desc_unit]
+DROP FUNCTION IF EXISTS [dbo].[fn_attribute_desc_unit]
 GO
 
 -- Create Function [dbo].[fn_attribute_desc_unit]

@@ -11,7 +11,7 @@ GO
 Print 'Drop Function [dbo].[fn_current_epro_user_context]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_current_epro_user_context]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_current_epro_user_context]
+DROP FUNCTION IF EXISTS [dbo].[fn_current_epro_user_context]
 GO
 
 -- Create Function [dbo].[fn_current_epro_user_context]

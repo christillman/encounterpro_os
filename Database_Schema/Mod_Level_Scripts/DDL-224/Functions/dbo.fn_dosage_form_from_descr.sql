@@ -1,7 +1,7 @@
 Print 'Drop Function dbo.fn_dosage_form_from_descr'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'dbo.fn_dosage_form_from_descr') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION dbo.fn_dosage_form_from_descr
+DROP FUNCTION IF EXISTS dbo.fn_dosage_form_from_descr
 go
 Print 'Create Function dbo.fn_dosage_form_from_descr'
 GO

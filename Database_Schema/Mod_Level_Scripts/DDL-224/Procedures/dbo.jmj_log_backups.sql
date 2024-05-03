@@ -12,7 +12,7 @@ GO
 Print 'Drop Procedure [dbo].[jmj_log_backups]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_log_backups]') AND [type]='P'))
-DROP PROCEDURE [dbo].[jmj_log_backups]
+DROP PROCEDURE IF EXISTS [dbo].[jmj_log_backups]
 GO
 
 -- Create Procedure [dbo].[jmj_log_backups]

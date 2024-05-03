@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[sp_Order_Workplan_Treatment]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_Order_Workplan_Treatment]') AND [type]='P'))
-DROP PROCEDURE [dbo].[sp_Order_Workplan_Treatment]
+DROP PROCEDURE IF EXISTS [dbo].[sp_Order_Workplan_Treatment]
 GO
 
 -- Create Procedure [dbo].[sp_Order_Workplan_Treatment]

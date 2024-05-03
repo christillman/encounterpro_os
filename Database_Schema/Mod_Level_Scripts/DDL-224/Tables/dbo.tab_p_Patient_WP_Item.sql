@@ -1,10 +1,10 @@
 
-DROP TYPE IF EXISTS [tab_p_Patient_WP_Item]
 
 SET ANSI_NULLS ON
 
 SET QUOTED_IDENTIFIER ON
 
+IF (select count(*) from sys.types where name = 'tab_p_Patient_WP_Item') = 0
 CREATE TYPE [tab_p_Patient_WP_Item] 
 	AS TABLE (
 	[patient_workplan_id] [int] NOT NULL,

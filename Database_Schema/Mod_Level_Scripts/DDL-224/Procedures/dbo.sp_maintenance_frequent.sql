@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[sp_maintenance_frequent]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_maintenance_frequent]') AND [type]='P'))
-DROP PROCEDURE [dbo].[sp_maintenance_frequent]
+DROP PROCEDURE IF EXISTS [dbo].[sp_maintenance_frequent]
 GO
 
 -- Create Procedure [dbo].[sp_maintenance_frequent]

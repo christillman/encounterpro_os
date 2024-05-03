@@ -11,7 +11,7 @@ GO
 Print 'Drop Function [dbo].[fn_user_in_room]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_user_in_room]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_user_in_room]
+DROP FUNCTION IF EXISTS [dbo].[fn_user_in_room]
 GO
 
 -- Create Function [dbo].[fn_user_in_room]
@@ -46,7 +46,7 @@ IF @ls_user_in_room IS NOT NULL
 
 ;WITH usersinroom AS (
 	SELECT l.user_id,
-			CASE u.license_flag WHEN 'P' THEN 1 WHEN 'E' THEN 2 ELSE 3 END
+			CASE u.license_flag WHEN 'P' THEN 1 WHEN 'E' THEN 2 ELSE 3 END AS sort_sequence 
 	FROM o_User_Service_Lock l
 		INNER JOIN o_Active_Services s
 		ON s.patient_workplan_item_id = l.patient_workplan_item_id

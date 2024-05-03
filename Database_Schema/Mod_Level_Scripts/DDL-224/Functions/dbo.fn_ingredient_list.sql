@@ -1,10 +1,10 @@
 IF  EXISTS (SELECT * FROM sys.objects 
 where object_id = OBJECT_ID(N'fn_ingredient_list') AND type in (N'TF'))
-DROP FUNCTION dbo.fn_ingredient_list
+DROP FUNCTION IF EXISTS dbo.fn_ingredient_list
 GO
 
 -- Must be at least 90 (SQL 2005) to use CROSS APPLY with column name
-ALTER DATABASE EncounterPro_OS SET COMPATIBILITY_LEVEL = 100
+-- ALTER DATABASE EncounterPro_OS SET COMPATIBILITY_LEVEL = 100
 GO
 
 CREATE FUNCTION dbo.fn_ingredient_list (@form_descr varchar(1000))

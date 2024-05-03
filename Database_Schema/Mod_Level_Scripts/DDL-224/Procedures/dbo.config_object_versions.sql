@@ -55,7 +55,7 @@ GO
 Print 'Drop Procedure [dbo].[config_object_versions]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[config_object_versions]') AND [type]='P'))
-DROP PROCEDURE [dbo].[config_object_versions]
+DROP PROCEDURE IF EXISTS [dbo].[config_object_versions]
 GO
 
 -- Create Procedure [dbo].[config_object_versions]

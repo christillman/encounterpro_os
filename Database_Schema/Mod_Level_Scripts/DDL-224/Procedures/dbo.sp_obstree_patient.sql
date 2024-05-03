@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[sp_obstree_patient]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_obstree_patient]') AND [type]='P'))
-DROP PROCEDURE [dbo].[sp_obstree_patient]
+DROP PROCEDURE IF EXISTS [dbo].[sp_obstree_patient]
 GO
 
 -- Create Procedure [dbo].[sp_obstree_patient]

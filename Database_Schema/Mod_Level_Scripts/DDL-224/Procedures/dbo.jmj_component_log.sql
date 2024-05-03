@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[jmj_component_log]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_component_log]') AND [type]='P'))
-DROP PROCEDURE [dbo].[jmj_component_log]
+DROP PROCEDURE IF EXISTS [dbo].[jmj_component_log]
 GO
 
 -- Create Procedure [dbo].[jmj_component_log]

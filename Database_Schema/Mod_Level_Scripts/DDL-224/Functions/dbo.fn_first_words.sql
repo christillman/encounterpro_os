@@ -1,7 +1,7 @@
 Print 'Drop Function dbo.fn_first_words'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'dbo.fn_first_words') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION dbo.fn_first_words
+DROP FUNCTION IF EXISTS dbo.fn_first_words
 go
 Print 'Create Function dbo.fn_first_words'
 GO

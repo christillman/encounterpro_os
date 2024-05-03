@@ -1,6 +1,6 @@
 IF  EXISTS (SELECT * FROM sys.objects 
 where object_id = OBJECT_ID(N'fn_std_default_dispense_unit') AND type in (N'FN'))
-DROP FUNCTION dbo.fn_std_default_dispense_unit
+DROP FUNCTION IF EXISTS dbo.fn_std_default_dispense_unit
 GO
 
 CREATE FUNCTION dbo.fn_std_default_dispense_unit (@dosage_form varchar(30), @dose_unit varchar(30))

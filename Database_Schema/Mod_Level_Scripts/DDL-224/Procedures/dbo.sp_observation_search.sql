@@ -11,7 +11,7 @@ GO
 Print 'Drop Procedure [dbo].[sp_observation_search]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_observation_search]') AND [type]='P'))
-DROP PROCEDURE [dbo].[sp_observation_search]
+DROP PROCEDURE IF EXISTS [dbo].[sp_observation_search]
 GO
 
 -- Create Procedure [dbo].[sp_observation_search]
