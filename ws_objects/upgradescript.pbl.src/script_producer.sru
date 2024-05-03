@@ -198,6 +198,7 @@ public function integer add_scripts_in_folder (string ps_mod_folder, string ps_o
 string ls_scripts[]
 string ls_scriptnames[]
 integer li_script
+string ls_script
 string ls_folder, ls_nodename
 pbdom_element le_script
 
@@ -210,11 +211,13 @@ end if
 if FileExists (ls_folder) then
 	get_scripts(ls_folder, ls_scripts, ls_scriptnames)
 	for li_script = 1 to UpperBound(ls_scripts)
+		// print statements drive the executeSQL crazy
+		ls_script = f_string_substitute(ls_scripts[li_script], "~nprint ", "~n-- print ")
 		try
 			le_script = CREATE pbdom_element
-   		ls_nodename = f_string_substitute(ls_scriptnames[li_script], ' ', '_')
+   			ls_nodename = f_string_substitute(ls_scriptnames[li_script], ' ', '_')
 			le_script.SetName(ps_object_folder + "." + ls_nodename)
-			le_script.SetText(ls_scripts[li_script])
+			le_script.SetText(ls_script)
 			pe_root.AddContent(le_script)
 		catch (pbdom_exception ex)
 			MessageBox("PBDOM Exception", ex.getMessage())
@@ -231,22 +234,25 @@ integer li_sts
 string ls_ddl_path
 string ls_dml_path
 string ls_output_path
+string ls_building_from
 string ls_mod_level
 
-ls_dml_path = gs_building_from + "\EncounterPRO.OS.Database\Scripts\Mod_Level_Upgrade\DML-"
+ls_building_from = GetCurrentDirectory ( )
+
+ls_dml_path = "C:\EncounterPro\encounterpro_os\EncounterPRO.OS.Database\Scripts\Mod_Level_Upgrade\DML-"
 li_sts = GetFolder ("Select DML Mod Folder", ls_dml_path)
 If li_sts <= 0 Then return
 
 ls_mod_level = Right(ls_dml_path,3)
 
-ls_ddl_path = gs_building_from + "\Database_Schema\Mod_Level_Scripts\DDL-" + ls_mod_level
+ls_ddl_path = "C:\EncounterPro\encounterpro_os\Database_Schema\Mod_Level_Scripts\DDL-" + ls_mod_level
 IF Not FileExists(ls_ddl_path) THEN
 	li_sts = CreateDirectory(ls_ddl_path)
 END IF
 //li_sts = GetFolder ("Select Database Schema Mod Folder", ls_ddl_path)
 //If li_sts <= 0 Then return
 
-ls_output_path = gs_building_from + "..\Builds\EncounterPRO-OS\Database\Upgrade\" + ls_mod_level
+ls_output_path = "C:\EncounterPro\Builds\EncounterPRO-OS\Database\Upgrade\" + ls_mod_level
 IF Not FileExists(ls_output_path) THEN
 	li_sts = CreateDirectory(ls_output_path)
 END IF
