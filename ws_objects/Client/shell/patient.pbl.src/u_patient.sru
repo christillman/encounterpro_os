@@ -1692,7 +1692,7 @@ open_encounter.billing_hold_flag = "N"
 
 open_encounter.deleted = false
 open_encounter.updated = false
-open_encounter.exists = false
+open_encounter.ib_exists = false
 li_sts = current_patient.encounters.new_encounter(open_encounter)
 if li_sts < 0 then return -1
 
