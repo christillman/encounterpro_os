@@ -6,7 +6,12 @@ forward prototypes
 global function integer f_set_progress2 (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_risk_level, long pl_attachment_id, long pl_patient_workplan_item_id, integer pi_diagnosis_sequence, string ps_severity)
 end prototypes
 
-global function integer f_set_progress2 (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_risk_level, long pl_attachment_id, long pl_patient_workplan_item_id, integer pi_diagnosis_sequence, string ps_severity);return f_set_patient_object_progress(ps_cpr_id, &
+global function integer f_set_progress2 (string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, string ps_progress, datetime pdt_progress_date_time, long pl_risk_level, long pl_attachment_id, long pl_patient_workplan_item_id, integer pi_diagnosis_sequence, string ps_severity);
+// This version of f_set_progress is only for assessments which need to include the diagnosis_sequence and the severity.
+// At some point all of the progress calls will be unified and f_set_progress and f_set_progress2 will merge into a single
+// function
+
+return f_set_patient_object_progress(ps_cpr_id, &
 							ps_context_object, &
 							pl_object_key, &
 							ps_progress_type, &

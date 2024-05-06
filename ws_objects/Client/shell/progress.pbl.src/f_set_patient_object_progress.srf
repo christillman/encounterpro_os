@@ -131,10 +131,6 @@ integer li_sts
 string ls_observation_id
 long ll_treatment_id
 
-// This version of f_set_progress is only for assessments which need to include the diagnosis_sequence and the severity.
-// At some point all of the progress calls will be unified and f_set_progress and f_set_progress2 will merge into a single
-// function
-
 setnull(ls_observation_id)  // Set it null and the stored procedure will look it up
 setnull(ll_treatment_id)  // Set it null and the stored procedure will look it up
 setnull(ll_encounter_id)
