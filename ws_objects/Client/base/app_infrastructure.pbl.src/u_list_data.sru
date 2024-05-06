@@ -410,6 +410,7 @@ public function long load_room_types ()
 public function string age_range_description (long pl_age_range_id)
 public function integer load_office_preferences ()
 public function string office_preference (string ps_preference_id)
+public function long load_recent_observations ()
 end prototypes
 
 public function string attachment_button (string ps_attachment_type);string ls_find
@@ -2234,21 +2235,9 @@ return la_value
 
 end function
 
-public function string service_secure_flag (string ps_service);string ls_find
-long ll_row
-string ls_secure_flag
+public function string service_secure_flag (string ps_service);
+RETURN service(ps_service, "secure_flag")
 
-SELECT secure_flag
-INTO :ls_secure_flag
-FROM o_Service
-WHERE service = :ps_service;
-if not tf_check() then return "Y"
-if sqlca.sqlcode = 100 then
-	log.log(this, "u_list_data.service_secure_flag:0011", "Service not found (" + ps_service + ")", 3)
-	return "Y"
-end if
-
-return ls_secure_flag
 
 end function
 
@@ -3868,6 +3857,8 @@ if isnull(ps_observation_id) then return 0
 
 // Count how many there are now
 ll_rowcount = observations.rowcount()
+
+if ll_rowcount <= 0 then ll_rowcount = load_recent_observations()
 
 // See if the one we're looking for is there
 ls_find = "observation_id='" + ps_observation_id + "'"
@@ -7597,6 +7588,43 @@ if isnull(ls_preference_value) then return ls_null
 if ls_preference_value = "" then return ls_null
 
 return ls_preference_value
+
+end function
+
+public function long load_recent_observations ();
+string ls_find
+long ll_row
+string ls_query
+long i, j
+long ll_rowcount
+long ll_tree_index
+long ll_results_index
+datetime ldt_last_updated
+integer li_column_count
+long ll_found
+str_observation_tree lstr_observation_tree
+u_ds_data recent_obs
+recent_obs = CREATE u_ds_data
+recent_obs.set_dataobject("dw_sp_cache_recent_observations")
+
+ll_found = recent_obs.retrieve()
+if ll_found <= 0 then return 0
+
+for i = 1 to ll_found
+	// See if the observation already exists
+	ls_find = "observation_id='" + string(recent_obs.Object.observation_id[i]) + "'"
+	ll_row = observations.find(ls_find, 1, ll_rowcount)
+	if ll_row <= 0 then
+		// It didn't exist so create a new cache record
+		ll_row = observations.insertrow(0)
+		// Copy the observation data into the cache record
+		observations.object.data[ll_row] = recent_obs.object.data[i]
+		// Set the lst_update time to now indicating that we just refreshed from the database
+		observations.object.last_updated[ll_row] = datetime(today(), now())
+	end if
+next
+
+return observations.rowcount()
 
 end function
 
