@@ -387,9 +387,8 @@ protected function integer xx_initialize ();integer li_attribute_count
 string lsa_attributes[]
 string lsa_values[]
 
-li_attribute_count = get_attributes(lsa_attributes, lsa_values)
-
 if ole_class and isvalid(ole) and not isnull(ole) then
+	li_attribute_count = get_attributes(lsa_attributes, lsa_values)
 	return ole.initialize(li_attribute_count, lsa_attributes, lsa_values)
 else
 	return 100
