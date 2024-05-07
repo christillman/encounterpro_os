@@ -2220,11 +2220,11 @@ end if
 
 end function
 
-public function integer upgrade_database (long pl_modification_level);//
+public function integer upgrade_database (long pl_modification_level);
 // This method calls the upgrade scripts to upgrade the database from its current modification level
 // to the next modification level.
-//
-//
+// It references the commercial jmjsys_daily_sync and jmjsys_upgrade_mod_level versions
+// and gets the upgrade scripts from there (not used in the open source version)
 
 u_ds_data luo_scripts
 long ll_script_count
@@ -2237,7 +2237,7 @@ long ll_error_index
 str_sql_script_status lstr_status
 integer li_please_wait_index
 long ll_current_modification_level
-string ls_modlevel_from, ls_modlevel_to, ls_client_link
+string ls_client_link
 
 lstr_status = f_empty_sql_script_status()
 
@@ -2246,11 +2246,10 @@ INTO :ll_current_modification_level
 FROM c_Database_Status;
 if not check() then return -1
 
-ls_modlevel_from = string(ll_current_modification_level)
-
 if pl_modification_level > ll_current_modification_level + 1 then
 	// Upgrades cannot skip mod levels
-	log.log(this, "u_sqlca.upgrade_database:0028", "Attempting to upgrade mod level " + string(ll_current_modification_level) + " to mod level " + string(pl_modification_level) + ".  Mod levels may not be skipped.", 4)
+	log.log(this, "u_sqlca.upgrade_database:0029", "Attempting to upgrade mod level " + string(ll_current_modification_level) + " to mod level " + string(pl_modification_level) + ".  Mod levels may not be skipped.", 4)
+	return -1
 end if
 
 if pl_modification_level > ll_current_modification_level then
@@ -2280,7 +2279,7 @@ for li_count = 1 to ll_script_count
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		log.log(this, "u_sqlca.upgrade_database:0058", "Error executing upgrade script #" + string(ll_script_id), 4)
+		log.log(this, "u_sqlca.upgrade_database:0060", "Error executing upgrade script #" + string(ll_script_id), 4)
 		exit
 	end if
 	
@@ -2289,21 +2288,24 @@ next
 
 if li_sts >= 0 and pl_modification_level > modification_level then
 	this.modification_level = pl_modification_level
-end if
-	
-UPDATE c_Database_Status
-SET modification_level = :this.modification_level;
-if not check() then li_sts = -1
-
-ls_modlevel_to = string(pl_modification_level)
-
-select count(*) into :li_count from sys.columns where name = 'client_link';
-if li_count > 0 then
-	
+		
 	UPDATE c_Database_Status
-	SET client_link = REPLACE(client_link, :ls_modlevel_from, :ls_modlevel_to);
-	
+	SET modification_level = :this.modification_level;
 	if not check() then li_sts = -1
+	
+	// Set the client_link to the upgrade mod level
+	// Lower mod level clients connecting to the database will use this link to 
+	// download the matching client in f_check_version
+	ls_client_link = gnv_app.client_link_start + string(pl_modification_level) + ".exe"
+	
+	select count(*) into :li_count from sys.columns where name = 'client_link';
+	if li_sts >= 0 and li_count > 0 then
+		
+		UPDATE c_Database_Status
+		SET client_link = :ls_client_link;
+		
+		if not check() then li_sts = -1
+	end if
 end if
 
 f_please_wait_close(li_please_wait_index)
@@ -3632,7 +3634,11 @@ private subroutine execute_sql_script (string ps_string, ref str_sql_script_stat
 
 end subroutine
 
-public function integer upgrade_database ();long ll_modification_level
+public function integer upgrade_database ();
+// This method calls the upgrade scripts to upgrade the database from its current modification level
+// to the next modification level in the open source version. Upgrades are delivered via .mdlvl files.
+
+long ll_modification_level
 long ll_material_id
 blob lbl_script
 string ls_xml
@@ -3648,11 +3654,10 @@ integer li_please_wait_index
 integer li_script, li_count
 integer li_num_scripts
 string ls_element
-string ls_modlevel_from, ls_modlevel_to
+string ls_client_link
 str_sql_script_status lstr_sql_script_status
 
 ll_modification_level = this.modification_level + 1
-ls_modlevel_from = string(this.modification_level)
 
 ll_material_id = upgrade_material_id(ls_script)
 if ll_material_id < 0 then
@@ -3667,7 +3672,7 @@ WHERE material_id = :ll_material_id;
 if not tf_check() then return -1
 
 if isnull(lbl_script) or len(lbl_script) <= 0 then
-	log.log(this, "u_sqlca.upgrade_database:0034", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
+	log.log(this, "u_sqlca.upgrade_database:0039", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
 	return -1
 end if
 
@@ -3686,11 +3691,11 @@ TRY
 	lo_doc = pbdombuilder_new.BuildFromString(ls_xml)
 	lo_root = lo_doc.getrootelement()
 	if lo_root.GetName() <> "EproDBSchema" then
-		log.log(this, "u_sqlca.upgrade_database:0049", "XML schema incorrect", 4)
+		log.log(this, "u_sqlca.upgrade_database:0058", "XML schema incorrect", 4)
 		return -1
 	end if		
 CATCH (throwable lo_error)
-	log.log(this, "u_sqlca.upgrade_database:0053", "Error reading XML schema data (" + lo_error.text + ")", 4)
+	log.log(this, "u_sqlca.upgrade_database:0062", "Error reading XML schema data (" + lo_error.text + ")", 4)
 	return -1
 END TRY
 
@@ -3706,13 +3711,13 @@ for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
 	
-	log.log_db(this, "u_sqlca.upgrade_database:0076", "Executing " + ls_element, 2)
+	log.log_db(this, "u_sqlca.upgrade_database:0078", "Executing " + ls_element, 2)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
 		rollback_transaction()
 		f_please_wait_close(li_please_wait_index)
-		log.log(this, "u_sqlca.upgrade_database:0082", "Failed executing " + ls_script, 5)
+		log.log(this, "u_sqlca.upgrade_database:0084", "Failed executing " + ls_script, 5)
 		DESTROY pbdombuilder_new
 		return -1
 	end if
@@ -3724,11 +3729,14 @@ commit_transaction()
 
 select count(*) into :li_count from sys.columns where name = 'client_link';
 if li_count > 0 then
-	
-	ls_modlevel_to = string(ll_modification_level)		
+	// Set the client_link to the upgrade mod level
+	// Lower mod level clients connecting to the database will use this link to 
+	// download the matching client in f_check_version
+	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
+
 	UPDATE c_Database_Status
 	SET modification_level = :ll_modification_level,
-		client_link = REPLACE(client_link, :ls_modlevel_from, :ls_modlevel_to)
+		client_link = :ls_client_link
 	USING this;
 else		
 	UPDATE c_Database_Status

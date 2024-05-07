@@ -44,7 +44,7 @@ ls_sqlversion = string(sqlca.db_script_major_release) + "." + sqlca.db_script_da
 ls_myversion = string(gnv_app.major_release) + "." + gnv_app.database_version
 ls_mybuild = ls_myversion + "." + gnv_app.build
 
-// With Azure, we will be upgradinig the database independently first, then the clients will need to automatically install the new client version.
+// With Azure, we will be upgrading the database independently first, then the clients will need to automatically install the new client version.
 if gnv_app.target_modification_level < sqlca.modification_level then
 	openwithparm(w_pop_message, "The GreenOlive EHR database has been upgraded. Your new application version is being downloaded.")
 	
@@ -58,7 +58,7 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 	
 	ls_target = "C:\Users\Public\Downloads\" + ls_expectedfile
 	if NOT FileExists(ls_target) then
-		ls_download_link = sqlca.client_link // "https://github.com/christillman/encounterpro_os/releases/download/v223/GreenOlive_EHR_Azure_Demo_Install_223.exe"
+		ls_download_link = sqlca.client_link // eg "https://github.com/christillman/encounterpro_os/releases/download/v223/GreenOlive_EHR_Azure_Demo_Install_223.exe"
 		// tried to use WebView2, but then Windows falsely flags my downloads as having a virus. 
 		// and quarantines them. With Powershell, no questions are asked; it just works.
 		// ProgressPreference setting prevents byte-by-byte setting of progress display, which increases the download time from 10 seconds to 4 minutes

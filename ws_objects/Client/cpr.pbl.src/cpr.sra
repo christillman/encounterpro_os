@@ -207,6 +207,7 @@ type variables
 
 
 string product_name = 'GreenOliveEHR'
+string client_link_start = "https://github.com/christillman/encounterpro_os/releases/download/v224/GreenOlive_EHR_Install_"
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
@@ -316,7 +317,7 @@ CHOOSE CASE ls_parm
 			common_thread.default_database = trim(ls_arg)
 		else
 			common_thread.default_database = "<Default>"
-		end if
+		end if		
 	CASE "SERVER", "NTSERVER"
 		messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
 		event close()
