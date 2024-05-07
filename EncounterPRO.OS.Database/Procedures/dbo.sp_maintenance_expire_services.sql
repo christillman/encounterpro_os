@@ -105,14 +105,14 @@ SELECT i.patient_workplan_id,
             i.cpr_id,
             i.encounter_id,
             @ps_user_id,
-            getdate(),
+            dbo.get_client_datetime(),
             'Expired',
-            getdate(),
+            dbo.get_client_datetime(),
             @ps_created_by
 FROM p_Patient_WP_Item i
 WHERE i.active_service_flag = 'Y'
 AND expiration_date IS NOT NULL
-AND expiration_date < getdate()
+AND expiration_date < dbo.get_client_datetime()
 
 GO
 GRANT EXECUTE

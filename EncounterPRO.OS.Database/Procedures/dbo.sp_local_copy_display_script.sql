@@ -161,7 +161,7 @@ SELECT
 	@ps_new_description,
 	example,
 	@ll_customer_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	updated_by,
 	@lid_new_id,
 	'OK',

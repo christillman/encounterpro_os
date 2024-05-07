@@ -140,7 +140,7 @@ SELECT @ps_new_description,
 	context_object,
 	menu_category,
 	@ll_customer_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	@lid_new_id,
 	'OK'
 FROM c_menu

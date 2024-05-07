@@ -36,23 +36,23 @@ DECLARE @ll_error int,
 -- Integration Tables (Keep only last 14 days arrivals)
 if exists (select * from sysobjects where id = object_id('dbo.x_MedMan_Arrived') )
 	DELETE FROM x_MedMan_Arrived
-	WHERE encounter_date_time < dateadd(day, -14, getdate())
+	WHERE encounter_date_time < dateadd(day, -14, dbo.get_client_datetime())
 
 if exists (select * from sysobjects where id = object_id('dbo.x_EncounterPro_Arrived') )
 	DELETE FROM x_EncounterPro_Arrived
-	WHERE encounter_date_time < dateadd(day, -14, getdate())
+	WHERE encounter_date_time < dateadd(day, -14, dbo.get_client_datetime())
 
 DELETE FROM o_Message_Log
-WHERE message_date_time < dateadd(day, -14, getdate())
+WHERE message_date_time < dateadd(day, -14, dbo.get_client_datetime())
 AND status IN ('SENT', 'RECEIVED')
 -- End Of Integration Tables
 
 DELETE FROM o_event_queue
-WHERE event_date_time < dateadd(day, -14, getdate())
+WHERE event_date_time < dateadd(day, -14, dbo.get_client_datetime())
 AND event_status = 'COMPLETE'
 -- Clear out o_Log
 DELETE FROM o_Log
-WHERE log_date_time < dateadd(day, -14, getdate())
+WHERE log_date_time < dateadd(day, -14, dbo.get_client_datetime())
 
 -- Cancel All the Pending Billing Services Older than 7 days
 INSERT INTO p_Patient_WP_Item_Progress (
@@ -70,9 +70,9 @@ SELECT i.patient_workplan_id,
             i.cpr_id,
             i.encounter_id,
             @ps_user_id,
-            getdate(),
+            dbo.get_client_datetime(),
             'CANCELLED',
-            getdate(),
+            dbo.get_client_datetime(),
             @ps_created_by
 FROM p_Patient_WP_Item i
 	INNER JOIN p_Patient_Encounter e
@@ -81,7 +81,7 @@ FROM p_Patient_WP_Item i
 WHERE i.active_service_flag = 'Y'
 AND i.ordered_service = 'SENDBILLING'
 AND e.encounter_status = 'CLOSED'
-AND i.created < dateadd(day, -7, getdate())
+AND i.created < dateadd(day, -7, dbo.get_client_datetime())
 
 -- close the open in-office services if an encounter is "Closed"
 INSERT INTO p_Patient_WP_Item_Progress (
@@ -99,9 +99,9 @@ SELECT i.patient_workplan_id,
             i.cpr_id,
             i.encounter_id,
             @ps_user_id,
-            getdate(),
+            dbo.get_client_datetime(),
             'CANCELLED',
-            getdate(),
+            dbo.get_client_datetime(),
             @ps_created_by
 FROM p_Patient_WP_Item i
 	INNER JOIN p_Patient_Encounter e
@@ -360,7 +360,7 @@ DELETE
 FROM p_Attachment
 WHERE status = 'DELETED'
 AND cpr_id IS NULL
-AND created < DATEADD(DAY, -14, getdate())
+AND created < DATEADD(DAY, -14, dbo.get_client_datetime())
 
 -- Delete invalid records from o_User_Service_Lock
 DELETE
@@ -390,7 +390,7 @@ IF @ll_error <> 0
 DELETE i
 FROM p_Patient_WP_Item i
 WHERE i.status = 'Skipped'
-AND i.created < dateadd(day, -14, getdate())
+AND i.created < dateadd(day, -14, dbo.get_client_datetime())
 
 -- Clean up p_patient name_prefix field
 UPDATE p_patient 
@@ -427,7 +427,7 @@ SET @ls_workflow_model = dbo.fn_get_preference('SYSTEM', 'Workflow Model', NULL,
 SET @ls_workflow_model_standard_date = dbo.fn_get_preference('SYSTEM', 'Workflow Model Standard Date', NULL, NULL)
 IF ISDATE(@ls_workflow_model_standard_date) = 1 AND @ls_workflow_model IS NULL
 	BEGIN
-	IF CAST(@ls_workflow_model_standard_date AS datetime) <= getdate()
+	IF CAST(@ls_workflow_model_standard_date AS datetime) <= dbo.get_client_datetime()
 		EXEC sp_set_preference 'SYSTEM', 'Global', 'Global', 'Workflow Model', 'Standard'
 
 	SELECT @ll_error = @@ERROR,
@@ -457,7 +457,7 @@ FROM p_Patient_WP_Item i WITH (NOLOCK)
 	ON i.[owned_by] = s.[user_id]
 	AND i.[ordered_service] = s.[service]
 	AND i.active_service_flag = 'N'
-	AND i.dispatch_date < DATEADD(day, -30, getdate())
+	AND i.dispatch_date < DATEADD(day, -30, dbo.get_client_datetime())
 WHERE i.patient_workplan_id = 0
 AND workplan_id = 0
 
@@ -607,7 +607,7 @@ DECLARE lc_nodistiller CURSOR LOCAL FAST_FORWARD FOR
 	FROM o_computers c
 		INNER JOIN o_user_logins l
 		ON l.computer_id = c.computer_id
-	WHERE l.action_time > DATEADD(DAY, -7, getdate())
+	WHERE l.action_time > DATEADD(DAY, -7, dbo.get_client_datetime())
 	AND NOT EXISTS (
 		SELECT 1
 		FROM o_computer_printer p

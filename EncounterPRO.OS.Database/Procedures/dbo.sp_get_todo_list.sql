@@ -94,7 +94,7 @@ SELECT
 	i.expiration_date,
 	u.user_short_name,
 	u.color,
-	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, getdate()),
+	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()),
 	selected_flag=0,
 	dbo.fn_pretty_name
 		(

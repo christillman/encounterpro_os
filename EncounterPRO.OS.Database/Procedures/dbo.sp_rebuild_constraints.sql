@@ -87,8 +87,8 @@ DECLARE @ls_dump_log_sql varchar(1000)
 
 SET @ls_dump_log_sql = 'BACKUP LOG ' + db_name(db_id()) + ' WITH NO_LOG'
 
-SELECT @ld_start_time = getdate()
-SELECT @ll_running_duration = DATEDIFF(minute, @ld_start_time, getdate())
+SELECT @ld_start_time = dbo.get_client_datetime()
+SELECT @ll_running_duration = DATEDIFF(minute, @ld_start_time, dbo.get_client_datetime())
 
 SELECT @ls_error = 'Beginning Rebuild_Constraints job with Parameter: ' + @ps_TableName
 SET @ls_error = REPLACE(@ls_Error, '%', '%%')
@@ -127,7 +127,7 @@ INTO
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-	SELECT @ld_running_time = getdate()
+	SELECT @ld_running_time = dbo.get_client_datetime()
 	PRINT 'Rebuilding constraints for ' + @TableName
 	SELECT @ls_error = 'Start rebuilding constraints for ' + @TableName
 	PRINT @ls_error
@@ -203,7 +203,7 @@ BEGIN
 	
 	-- Release table lock
 	COMMIT TRANSACTION
-	SELECT @ll_running_duration = DATEDIFF(minute, @ld_running_time, getdate())
+	SELECT @ll_running_duration = DATEDIFF(minute, @ld_running_time, dbo.get_client_datetime())
 	SELECT @ls_error = 'Finished rebuilding constraints for ' + @TableName + '.  Duration: ' + CAST(@ll_running_duration AS VARCHAR) + ' minute(s).' 
 	PRINT @ls_error
 	INSERT INTO o_log (
@@ -223,7 +223,7 @@ END
 CLOSE TableCursor
 
 DEALLOCATE TableCursor
-SELECT @ll_running_duration = DATEDIFF(minute, @ld_start_time, getdate())
+SELECT @ll_running_duration = DATEDIFF(minute, @ld_start_time, dbo.get_client_datetime())
 SELECT @ls_error = 'Finished Rebuild_Constraints job with Parameter: ' + @ps_TableName + '.  Total Estimated Duration: ' + CAST(@ll_running_duration AS VARCHAR) + ' minutes.'
 SET @ls_error = REPLACE(@ls_Error, '%', '%%')
 INSERT INTO o_log (

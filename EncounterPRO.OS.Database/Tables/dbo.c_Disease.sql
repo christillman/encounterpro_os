@@ -97,7 +97,7 @@ GO
 ALTER TABLE [dbo].[c_Disease]
 	ADD
 	CONSTRAINT [DF_c_Disease_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Disease]
 	ADD

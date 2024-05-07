@@ -72,7 +72,7 @@ AS
 IF NOT UPDATE(last_updated)
 	BEGIN
 	UPDATE r
-	SET last_updated = getdate()
+	SET last_updated = dbo.get_client_datetime()
 	FROM c_observation_Result as r
 		JOIN inserted as i
 			ON r.observation_id = i.observation_id

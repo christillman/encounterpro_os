@@ -115,7 +115,7 @@ VALUES (
 	@ps_component_id,
 	@ps_status,
 	@pl_owner_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	newid(),
 	@ps_machine_component_id,
 	@ps_long_description,

@@ -18,7 +18,6 @@ end forward
 
 global type w_svc_monitor_result from w_window_base
 string title = "Retry Posting"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -146,7 +145,7 @@ else
 	WHERE observation_id = :observation_id
 	AND result_sequence = :result_sequence
 	AND (:current_patient.sex IS NULL OR ISNULL(sex, '@') = :current_patient.sex)
-	AND (age_range_id IS NULL OR dbo.fn_age_range_compare(age_range_id, :current_patient.date_of_birth, getdate()) = 0)
+	AND (age_range_id IS NULL OR dbo.fn_age_range_compare(age_range_id, :current_patient.date_of_birth, dbo.get_client_datetime()) = 0)
 	ORDER BY search_sequence;
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then

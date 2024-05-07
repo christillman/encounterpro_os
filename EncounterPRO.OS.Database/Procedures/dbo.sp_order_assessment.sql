@@ -92,7 +92,7 @@ IF @@ROWCOUNT <> 1
 
 
 IF @pdt_begin_date IS NULL
-	SELECT @pdt_begin_date = getdate()
+	SELECT @pdt_begin_date = dbo.get_client_datetime()
 
 EXECUTE sp_get_next_key
 	@ps_cpr_id = @ps_cpr_id,
@@ -121,7 +121,7 @@ VALUES (
 	@ps_assessment_id,
 	@ls_assessment,
 	@ps_diagnosed_by,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by )
 
 

@@ -49,13 +49,13 @@ AND (c_Age_Range.age_range_category = @ps_age_range_category
 
 SELECT @ll_temp = min(sort_sequence)
 FROM #tmp_patient_ages
-WHERE (patient_age_from <= getdate() OR patient_age_from IS NULL)
-AND (patient_age_to > getdate() OR patient_age_to IS NULL)
+WHERE (patient_age_from <= dbo.get_client_datetime() OR patient_age_from IS NULL)
+AND (patient_age_to > dbo.get_client_datetime() OR patient_age_to IS NULL)
 
 SELECT @pl_age_range_id = min(age_range_id)
 FROM #tmp_patient_ages
-WHERE (patient_age_from <= getdate() OR patient_age_from IS NULL)
-AND (patient_age_to > getdate() OR patient_age_to IS NULL)
+WHERE (patient_age_from <= dbo.get_client_datetime() OR patient_age_from IS NULL)
+AND (patient_age_to > dbo.get_client_datetime() OR patient_age_to IS NULL)
 AND sort_sequence = @ll_temp
 
 GO

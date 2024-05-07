@@ -80,7 +80,7 @@ IF @ps_flag = 'S' -- Encounters started
 			encounter_id
 		FROM p_Patient_Encounter e
 		WHERE encounter_status = 'OPEN'
-		AND  encounter_date < dateadd(day, -@pi_days, getdate())
+		AND  encounter_date < dateadd(day, -@pi_days, dbo.get_client_datetime())
 		AND EXISTS (
 			SELECT e.patient_workplan_id
 			FROM p_patient_wp_item
@@ -96,7 +96,7 @@ IF @ps_flag = 'N' -- encounter not started and still in waiting room
 			INNER JOIN o_Rooms r
 			on e.patient_location = r.room_id
 		WHERE encounter_status = 'OPEN'
-		AND  encounter_date < dateadd(day, -@pi_days, getdate())
+		AND  encounter_date < dateadd(day, -@pi_days, dbo.get_client_datetime())
 		AND r.room_type = '$WAITING'
 		AND NOT EXISTS (
 			SELECT e.patient_workplan_id

@@ -86,7 +86,7 @@ GO
 ALTER TABLE [dbo].[c_Privilege]
 	ADD
 	CONSTRAINT [DF__c_Privile__creat__33AA9866]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[c_Privilege]

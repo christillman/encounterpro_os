@@ -2,6 +2,16 @@
 forward
 global type u_graph_properties from nonvisualobject
 end type
+type str_graph_category from structure within u_graph_properties
+end type
+type str_graph_data from structure within u_graph_properties
+end type
+type str_graph_type from structure within u_graph_properties
+end type
+type str_sort_type from structure within u_graph_properties
+end type
+type str_legend_loc from structure within u_graph_properties
+end type
 end forward
 
 type str_graph_category from structure
@@ -620,7 +630,7 @@ for i = 1 to ll_restriction_count
 			end if
 		CASE "AGERANGE"
 			if ll_restriction_value_count >= 2 then
-				ls_where = " AND DATEDIFF(YEAR, " + ls_column + ", getdate()) BETWEEN "
+				ls_where = " AND DATEDIFF(YEAR, " + ls_column + ", dbo.get_client_datetime()) BETWEEN "
 
 				ls_value = restriction_values.object.value[1]
 				ls_where +=  ls_value + " AND "
@@ -954,11 +964,13 @@ return ll_new_row
 end function
 
 on u_graph_properties.create
+call super::create
 TriggerEvent( this, "constructor" )
 end on
 
 on u_graph_properties.destroy
 TriggerEvent( this, "destructor" )
+call super::destroy
 end on
 
 event constructor;str_selected_data_item lstr_data

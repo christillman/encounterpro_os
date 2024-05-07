@@ -35,7 +35,7 @@ DECLARE @ll_sort_sequence int,
 IF @ps_user_id IS NULL
 	SET @ps_user_id = '%'
 
-SET @ls_today = convert(varchar(10),getdate(), 101)
+SET @ls_today = convert(varchar(10),dbo.get_client_datetime(), 101)
 SET @ldt_today = CAST(@ls_today AS datetime)
 
 DECLARE @services TABLE (
@@ -88,7 +88,7 @@ AND CASE LEFT(interval_unit, 3) WHEN 'SEC' THEN DATEADD(second, interval_amount,
 								WHEN 'MIN' THEN DATEADD(minute, interval_amount, last_service_date)
 								WHEN 'HOU' THEN DATEADD(hour, interval_amount, last_service_date)
 								WHEN 'DAY' THEN DATEADD(day, interval_amount, last_service_date)
-								ELSE CAST(0 as datetime) END > getdate()
+								ELSE CAST(0 as datetime) END > dbo.get_client_datetime()
 
 -- Get the Daily Services
 INSERT INTO @services (
@@ -112,7 +112,7 @@ AND ISDATE(@ls_today + ' ' + schedule_interval) = 1
 
 DELETE @services
 WHERE schedule_type = 'DAILY'
-AND getdate() < daily_datetime
+AND dbo.get_client_datetime() < daily_datetime
 
 SELECT t.service_sequence,
 	t.service,

@@ -87,7 +87,7 @@ GO
 ALTER TABLE [dbo].[c_Database_Script_Log]
 	ADD
 	CONSTRAINT [DF__c_Databas__end_d__776A2C49]
-	DEFAULT (getdate()) FOR [end_date]
+	DEFAULT (dbo.get_client_datetime()) FOR [end_date]
 GO
 GRANT DELETE
 	ON [dbo].[c_Database_Script_Log]

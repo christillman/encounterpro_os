@@ -88,7 +88,7 @@ GO
 ALTER TABLE [dbo].[c_Equivalence]
 	ADD
 	CONSTRAINT [DF__c_Equiv_creat_33]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Equivalence]
 	ADD

@@ -70,7 +70,7 @@ AS
 
 -- Set the last_updated field
 UPDATE c_Table_Update
-SET last_updated = getdate()
+SET last_updated = dbo.get_client_datetime()
 WHERE table_name = 'c_User'
 
 

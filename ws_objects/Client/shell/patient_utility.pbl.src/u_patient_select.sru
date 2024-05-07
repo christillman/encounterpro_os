@@ -284,7 +284,7 @@ string ls_cpr_id
 integer li_index
 
 // Get the date/time before we import
-SELECT getdate()
+SELECT dbo.get_client_datetime()
 INTO :ldt_before
 FROM c_1_record;
 if not tf_check() then return

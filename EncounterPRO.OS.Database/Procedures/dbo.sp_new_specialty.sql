@@ -146,7 +146,7 @@ IF @ps_specialty_id IS NULL
 		@ps_description,
 		newid(),
 		@pl_owner_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_status)
 	
 	END

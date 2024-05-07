@@ -76,7 +76,7 @@ Declare @end_date varchar(10)
 Declare @today datetime
 Select @begin_date = @ps_begin_date
 Select @end_date = @ps_end_date
-SELECT @today = Getdate()
+SELECT @today = dbo.get_client_datetime()
 SELECT pp.billing_id As Bill_Id,
 pp.first_name + ', ' + pp.last_name AS Patient,
 convert(varchar(10),p_treatment_item.end_date,101) As Shot_Date,

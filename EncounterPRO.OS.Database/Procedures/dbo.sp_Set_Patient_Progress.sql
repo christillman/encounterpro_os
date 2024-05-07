@@ -102,7 +102,7 @@ IF @pdt_progress_date_time IS NULL
 	
 	-- If it's still NULL then use the current date/time
 	IF @pdt_progress_date_time IS NULL
-		SELECT @pdt_progress_date_time = getdate()
+		SELECT @pdt_progress_date_time = dbo.get_client_datetime()
 
 	END
 
@@ -137,7 +137,7 @@ IF @ll_length <= 40
 		@pl_patient_workplan_item_id,
 		@pl_risk_level,
 		@pl_attachment_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -164,7 +164,7 @@ ELSE
 		@pl_patient_workplan_item_id,
 		@pl_risk_level,
 		@pl_attachment_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 

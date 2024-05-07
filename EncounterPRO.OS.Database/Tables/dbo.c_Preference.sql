@@ -106,7 +106,7 @@ GO
 ALTER TABLE [dbo].[c_Preference]
 	ADD
 	CONSTRAINT [DF__c_Preference_last_updated_50]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Preference]
 	ADD

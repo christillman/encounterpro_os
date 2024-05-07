@@ -54,7 +54,7 @@ UPDATE c_Display_Script
 SET display_script = :pstr_display_script.display_script,
 	description = :pstr_display_script.description,
 	example = :pstr_display_script.example,
-	last_updated = getdate(),
+	last_updated = dbo.get_client_datetime(),
 	updated_by = :current_scribe.user_id,
 	owner_id = :sqlca.customer_id,
 	script_type = :pstr_display_script.script_type,

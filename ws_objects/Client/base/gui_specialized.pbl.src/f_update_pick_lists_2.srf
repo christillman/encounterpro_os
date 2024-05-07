@@ -12,7 +12,7 @@ global function integer f_update_pick_lists_2 (string ps_top_20_code_1, string p
 if len(ps_top_20_code_1) > 0 then
 	UPDATE u_top_20
 	SET hits = hits + 1,
-			last_hit = getdate()
+			last_hit = dbo.get_client_datetime()
 	WHERE user_id = :current_scribe.user_id
 	AND top_20_code = :ps_top_20_code_1
 	AND item_id = :ps_item_id;
@@ -36,7 +36,7 @@ end if
 if len(ps_top_20_code_2) > 0 then
 	UPDATE u_top_20
 	SET hits = hits + 1,
-			last_hit = getdate()
+			last_hit = dbo.get_client_datetime()
 	WHERE user_id = :current_scribe.user_id
 	AND top_20_code = :ps_top_20_code_2
 	AND item_id = :ps_item_id;

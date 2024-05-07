@@ -352,9 +352,9 @@ IF @ls_encounter_status = 'OPEN' AND @li_in_count = 0
 				@ls_cpr_id,
 				@ll_encounter_id,
 				@ps_user_id,
-				getdate(),
+				dbo.get_client_datetime(),
 				'Closed',
-				getdate(),
+				dbo.get_client_datetime(),
 				@ps_created_by)
 			END
 		END

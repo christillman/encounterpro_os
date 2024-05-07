@@ -95,10 +95,10 @@ VALUES (
 	@pl_patient_workplan_id,
 	@ps_ordered_by,
 	@ps_ordered_for,
-	getdate(),
+	dbo.get_client_datetime(),
 	'NOTE',
 	@ps_encounter_note,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by)
 
 SELECT @ls_description = CONVERT(varchar(80), @ps_encounter_note),

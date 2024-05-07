@@ -91,7 +91,7 @@ SET	@trace_options = 2
 SET	@max_file_size = 50
 SET	@event_id = 0
 SET	@on_trace = 1
-SET	@now = getdate()
+SET	@now = dbo.get_client_datetime()
 SET	@stop_time = DATEADD( minute, @run_minutes, @now )
 
 SET	@trace_file = @trace_file +

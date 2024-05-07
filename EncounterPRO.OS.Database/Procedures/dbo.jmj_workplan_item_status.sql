@@ -138,7 +138,7 @@ WHILE @ll_count > 0
 			i.description,
 			w.status,
 			ISNULL(i.status, 'Pending'),
-			DATEDIFF(minute, i.dispatch_date, getdate()) as minutes,
+			DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()) as minutes,
 			i.owned_by,
 			i.workplan_id
 	FROM @wpitems t

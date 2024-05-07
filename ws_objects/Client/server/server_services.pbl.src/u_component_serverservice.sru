@@ -278,7 +278,7 @@ for i = 1 to ll_count
 		ls_status = "COMPLETED"
 	end if
 	UPDATE o_Service_Schedule
-	SET last_service_date = getdate(),
+	SET last_service_date = dbo.get_client_datetime(),
 		last_service_status = :ls_status
 	WHERE user_id = :current_user.user_id
 	AND service_sequence = :ll_service_sequence;

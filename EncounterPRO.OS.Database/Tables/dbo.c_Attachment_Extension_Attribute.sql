@@ -84,7 +84,7 @@ GO
 ALTER TABLE [dbo].[c_Attachment_Extension_Attribute]
 	ADD
 	CONSTRAINT [DF__c_att_ext_att_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Attachment_Extension_Attribute]
 	ADD

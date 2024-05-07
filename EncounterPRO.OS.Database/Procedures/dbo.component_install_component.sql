@@ -344,7 +344,7 @@ SET	component_id = x.component_id
 	,id = x.id
 	,status = x.status
 	,owner_id = x.owner_id
-	,last_updated = getdate()
+	,last_updated = dbo.get_client_datetime()
 FROM dbo.c_Component_Definition d
 	INNER JOIN @Component_Definition x
 	ON d.component_id = x.component_id
@@ -388,7 +388,7 @@ IF @ll_rowcount = 0
 		,id
 		,status
 		,owner_id
-		,last_updated = getdate()
+		,last_updated = dbo.get_client_datetime()
 	FROM @Component_Definition
 
 	SELECT @ll_error = @@ERROR,
@@ -431,7 +431,7 @@ SET component_id = x.component_id
 	,min_modification_level = x.min_modification_level
 	,max_modification_level = x.max_modification_level
 	,owner_id = x.owner_id
-	,last_updated = getdate()
+	,last_updated = dbo.get_client_datetime()
 	,id = x.id
 FROM dbo.c_Component_Version v
 	INNER JOIN @Component_Version x
@@ -510,9 +510,9 @@ SELECT component_id
 	,min_modification_level
 	,max_modification_level
 	,owner_id
-	,created = getdate()
+	,created = dbo.get_client_datetime()
 	,created_by = dbo.fn_current_epro_user()
-	,last_updated = getdate()
+	,last_updated = dbo.get_client_datetime()
 	,id
 FROM @Component_Version x
 WHERE NOT EXISTS (

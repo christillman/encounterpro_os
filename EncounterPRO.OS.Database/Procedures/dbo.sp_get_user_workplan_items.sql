@@ -30,7 +30,7 @@ AS
 -- use "5 minutes ago" as a default
 IF @pdt_not_started_since IS NULL
 	BEGIN
-	SET @pdt_not_started_since = DATEADD(minute, -5, getdate())
+	SET @pdt_not_started_since = DATEADD(minute, -5, dbo.get_client_datetime())
 	END
 
 SELECT i.ordered_for,

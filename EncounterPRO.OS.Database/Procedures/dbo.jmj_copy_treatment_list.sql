@@ -73,7 +73,7 @@ IF EXISTS(SELECT 1
 			FROM u_Assessment_Treat_Definition 
 			WHERE assessment_id = @To_assessment_id
 			AND [user_id] = @To_user_id
-			AND created > DATEADD(ss, -20, getdate()) )
+			AND created > DATEADD(ss, -20, dbo.get_client_datetime()) )
 	BEGIN
 	Select 
 		assessment_id,

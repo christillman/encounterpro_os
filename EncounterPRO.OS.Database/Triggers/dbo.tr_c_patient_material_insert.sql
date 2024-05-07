@@ -110,7 +110,7 @@ INSERT INTO c_Equivalence (
 	owner_id)
 SELECT m.id,
 	NULL,
-	getdate(),
+	dbo.get_client_datetime(),
 	'#SYSTEM',
 	object_key = CAST(m.material_id AS varchar(64)),
 	description = ISNULL(m.title, '<No Description>'),

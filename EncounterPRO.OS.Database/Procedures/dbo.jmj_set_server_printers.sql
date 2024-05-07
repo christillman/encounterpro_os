@@ -125,7 +125,7 @@ FROM o_Computer_Printer op1
 WHERE op1.printer NOT LIKE '%(from%in session%'
 
 UPDATE op1
-SET last_discovered = getdate()
+SET last_discovered = dbo.get_client_datetime()
 FROM o_Computer_Printer op1
 	INNER JOIN o_Computer_Printer op2
 	ON op1.printer = op2.printer
@@ -138,7 +138,7 @@ AND op2.computer_id = @pl_computer_id
 DELETE op1
 FROM o_Computer_Printer op1
 WHERE op1.computer_id = 0
-AND last_discovered < DATEADD(week, -1, getdate())
+AND last_discovered < DATEADD(week, -1, dbo.get_client_datetime())
 
 DELETE po
 FROM o_Computer_Printer_Office po

@@ -98,7 +98,7 @@ GO
 ALTER TABLE [dbo].[u_assessment_treat_definition]
 	ADD
 	CONSTRAINT [DF_u_assessment_treat_definition_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE CLUSTERED INDEX [idx_assessment_id]
 	ON [dbo].[u_assessment_treat_definition] ([assessment_id], [user_id], [definition_id])

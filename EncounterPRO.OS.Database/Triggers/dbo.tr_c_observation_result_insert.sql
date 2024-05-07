@@ -139,7 +139,7 @@ INSERT INTO c_Equivalence (
 	object_type )
 SELECT r.id,
 	NULL,
-	getdate(),
+	dbo.get_client_datetime(),
 	'#SYSTEM',
 	object_key = r.observation_id + '|' + CAST(r.result_sequence AS varchar(8)),
 	description = r.result,

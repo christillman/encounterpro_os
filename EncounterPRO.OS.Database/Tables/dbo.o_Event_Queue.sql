@@ -83,7 +83,7 @@ GO
 ALTER TABLE [dbo].[o_Event_Queue]
 	ADD
 	CONSTRAINT [DF_o_Event_Qu_event_date_5__11]
-	DEFAULT (getdate()) FOR [event_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [event_date_time]
 GO
 GRANT DELETE
 	ON [dbo].[o_Event_Queue]

@@ -70,7 +70,7 @@ INSERT INTO c_Equivalence (
 	owner_id)
 SELECT p.id,
 	NULL,
-	getdate(),
+	dbo.get_client_datetime(),
 	'#SYSTEM',
 	object_key = p.procedure_id,
 	description = ISNULL(p.description, '<No Description>'),

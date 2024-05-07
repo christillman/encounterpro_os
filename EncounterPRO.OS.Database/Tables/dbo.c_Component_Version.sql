@@ -146,7 +146,7 @@ GO
 ALTER TABLE [dbo].[c_Component_Version]
 	ADD
 	CONSTRAINT [DF__c_Compone__last___748DBF9E]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Component_Version]
 	ADD
@@ -156,7 +156,7 @@ GO
 ALTER TABLE [dbo].[c_Component_Version]
 	ADD
 	CONSTRAINT [DF_c_Component_Version_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Component_Version]
 	ADD

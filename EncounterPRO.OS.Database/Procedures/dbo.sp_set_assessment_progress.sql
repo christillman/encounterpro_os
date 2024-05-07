@@ -100,7 +100,7 @@ IF @pdt_progress_date_time IS NULL
 	-- If it's still null, then if it's a realtime encounter, then use the current datetime.
 	-- Otherwise, use the encounter date
 	IF @pdt_progress_date_time IS NULL
-		SET @pdt_progress_date_time = getdate()
+		SET @pdt_progress_date_time = dbo.get_client_datetime()
 	END
 
 
@@ -144,7 +144,7 @@ IF LEN(CONVERT(varchar(50), @ps_progress)) <= 40
 		@pl_attachment_id,
 		@pl_patient_workplan_item_id,
 		@pl_risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -179,7 +179,7 @@ ELSE
 		@pl_attachment_id,
 		@pl_patient_workplan_item_id,
 		@pl_risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 

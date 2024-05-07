@@ -148,7 +148,7 @@ VALUES (
 	@ls_abnormal_flag,
 	@li_severity,
 	@ps_observed_by,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by )
 
 SELECT @pl_location_result_sequence = @@IDENTITY

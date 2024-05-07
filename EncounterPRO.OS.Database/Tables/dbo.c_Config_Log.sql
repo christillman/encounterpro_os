@@ -89,7 +89,7 @@ GO
 ALTER TABLE [dbo].[c_Config_Log]
 	ADD
 	CONSTRAINT [DF_c_Config_Log_operation_datetime]
-	DEFAULT (getdate()) FOR [operation_datetime]
+	DEFAULT (dbo.get_client_datetime()) FOR [operation_datetime]
 GO
 GRANT INSERT
 	ON [dbo].[c_Config_Log]

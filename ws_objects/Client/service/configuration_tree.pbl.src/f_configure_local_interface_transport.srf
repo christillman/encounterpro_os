@@ -256,7 +256,7 @@ if ls_direction = "O" and len(ls_new_document_route) > 0 then
 				'Sent',
 				'OK',
 				:sqlca.customer_id,
-				getdate(),
+				dbo.get_client_datetime(),
 				newid(),
 				:ls_document_format,
 				NULL,

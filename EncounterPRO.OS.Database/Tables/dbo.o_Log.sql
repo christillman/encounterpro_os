@@ -67,7 +67,7 @@ GO
 ALTER TABLE [dbo].[o_Log]
 	ADD
 	CONSTRAINT [DF_o_log_log_date_time_21]
-	DEFAULT (getdate()) FOR [log_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [log_date_time]
 GO
 CREATE NONCLUSTERED INDEX [idx_cpr_encouner]
 	ON [dbo].[o_Log] ([cpr_id], [encounter_id])

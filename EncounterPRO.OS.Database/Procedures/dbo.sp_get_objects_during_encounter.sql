@@ -93,7 +93,7 @@ DECLARE @objects_first_touch TABLE (
 	progress_sequence int NOT NULL )
 
 SELECT 	@ldt_begin_date = encounter_date,
-		@ldt_end_date = ISNULL(discharge_date, getdate())
+		@ldt_end_date = ISNULL(discharge_date, dbo.get_client_datetime())
 FROM p_Patient_Encounter
 WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id

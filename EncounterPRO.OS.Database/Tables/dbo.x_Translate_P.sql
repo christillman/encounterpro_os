@@ -84,7 +84,7 @@ GO
 ALTER TABLE [dbo].[x_Translate_P]
 	ADD
 	CONSTRAINT [DF_x_Translate_P_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[x_Translate_P]

@@ -83,7 +83,7 @@ GO
 ALTER TABLE [dbo].[c_Equivalence_Group]
 	ADD
 	CONSTRAINT [DF__c_Equiv_grp_creat_33]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[c_Equivalence_Group]

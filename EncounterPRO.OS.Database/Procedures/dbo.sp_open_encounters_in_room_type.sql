@@ -128,7 +128,7 @@ SELECT 	e.cpr_id ,
 	p.date_of_birth,
 	p.sex,
 	ISNULL(p.last_name, '') + ', ' + ISNULL(p.first_name, '') + ' ' + ISNULL(p.middle_name, '') AS patient_name,
-	dbo.fn_pretty_age(p.date_of_birth, getdate())
+	dbo.fn_pretty_age(p.date_of_birth, dbo.get_client_datetime())
 FROM p_Patient_Encounter e WITH (NOLOCK)
 INNER JOIN o_Rooms r WITH (NOLOCK)
 ON e.patient_location = r.room_id
@@ -183,7 +183,7 @@ SELECT
 	e.patient_name,
 	e.date_of_birth,
 	e.sex,
-	DATEDIFF(minute, e.dispatch_date, getdate()) as minutes,
+	DATEDIFF(minute, e.dispatch_date, dbo.get_client_datetime()) as minutes,
 	e.room_name,
 	e.room_sequence,
 	e.color,

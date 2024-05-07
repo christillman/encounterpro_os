@@ -173,7 +173,7 @@ IF (@pi_step_number IS NULL) OR (@li_last_step_dispatched IS NULL) OR (@pi_step_
 		@pl_patient_workplan_item_id,
 		@ll_encounter_id,
 		@ps_ordered_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'DISPATCHED',
 		@ps_created_by)
 

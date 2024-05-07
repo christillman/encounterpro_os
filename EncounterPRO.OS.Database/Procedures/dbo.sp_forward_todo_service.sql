@@ -174,7 +174,7 @@ SELECT
 	patient_workplan_item_id,
 	encounter_id,
 	COALESCE(@ps_from_user_id, ordered_by) ,
-	getdate(),
+	dbo.get_client_datetime(),
 	'DISPATCHED',
 	@ps_created_by
 FROM p_Patient_WP_Item

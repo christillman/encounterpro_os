@@ -136,14 +136,14 @@ VALUES (
 	,'General'
 	,@ls_description
 	,1
-	,getdate()
+	,dbo.get_client_datetime()
 	,'checkedin'
 	,1
-	,getdate()
+	,dbo.get_client_datetime()
 	,'checkedin'
 	,@ll_customer_id
 	,dbo.fn_owner_description(@ll_customer_id)
-	,getdate()
+	,dbo.get_client_datetime()
 	,dbo.fn_current_epro_user()
 	,'OK'
 	)
@@ -178,10 +178,10 @@ VALUES (
 	,'Initial Local Version'
 	,'Vaccine Schedule'
 	,@ll_customer_id
-	,getdate()
+	,dbo.get_client_datetime()
 	,dbo.fn_current_epro_user()
 	,'CheckedIn'
-	,getdate()
+	,dbo.get_client_datetime()
 	,'SQL'
 	)
 

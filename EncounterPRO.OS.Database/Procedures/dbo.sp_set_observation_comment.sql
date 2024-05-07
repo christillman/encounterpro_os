@@ -62,7 +62,7 @@ IF @pdt_comment_date_time IS NULL
 	AND [user_id] = @ps_user_id
 	
 	IF @pdt_comment_date_time IS NULL
-		SET @pdt_comment_date_time = getdate()
+		SET @pdt_comment_date_time = dbo.get_client_datetime()
 	END
 
 IF @ps_observation_id IS NULL OR @pl_treatment_id IS NULL
@@ -109,7 +109,7 @@ IF @ll_length <= 40
 		@pl_encounter_id,
 		@pl_attachment_id,
 		@ps_user_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -142,7 +142,7 @@ ELSE
 		@pl_encounter_id,
 		@pl_attachment_id,
 		@ps_user_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 GO

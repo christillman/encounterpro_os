@@ -96,7 +96,7 @@ GO
 ALTER TABLE [dbo].[c_XML_Code]
 	ADD
 	CONSTRAINT [DF_c_XML_Code_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_XML_Code]
 	ADD
@@ -111,7 +111,7 @@ GO
 ALTER TABLE [dbo].[c_XML_Code]
 	ADD
 	CONSTRAINT [DF_c_XML_Code_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_XML_Code]
 	ADD

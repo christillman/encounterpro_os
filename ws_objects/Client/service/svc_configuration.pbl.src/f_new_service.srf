@@ -215,7 +215,7 @@ VALUES (
 		:ls_status,
 		newid(),
 		:ll_owner_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		:ls_description,
 		:ls_default_expiration_time,
 		:ls_default_expiration_unit_id,

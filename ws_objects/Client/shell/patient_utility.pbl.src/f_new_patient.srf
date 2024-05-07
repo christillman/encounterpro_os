@@ -127,12 +127,12 @@ VALUES (
 	:pstr_patient.cpr_id,
 	'Initial Data Load',
 	'OK',
-	getdate(),
+	dbo.get_client_datetime(),
 	'Initial Data Load',
 	'N',
 	:current_user.user_id,
 	:gnv_app.office_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	:current_user.user_id);
 if not tf_check() then return -1	
 

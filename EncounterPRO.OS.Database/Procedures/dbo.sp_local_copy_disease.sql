@@ -145,7 +145,7 @@ SELECT @ll_new_disease_id
            ,[sort_sequence]
            ,[status]
 			,@lid_new_id
-           ,getdate()
+           ,dbo.get_client_datetime()
            ,@ll_customer_id
 FROM c_disease
 WHERE disease_id = @pl_disease_id

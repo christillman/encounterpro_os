@@ -106,7 +106,7 @@ AND d.last_updated > DATEADD(second, -30, r.last_updated)
 
 
 UPDATE a
-SET last_modified = getdate()
+SET last_modified = dbo.get_client_datetime()
 FROM c_report_attribute a
 	INNER JOIN inserted i
 	ON a.report_id = i.report_id

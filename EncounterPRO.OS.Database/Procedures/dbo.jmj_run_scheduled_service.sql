@@ -174,7 +174,7 @@ VALUES (
 	0,
 	@ll_patient_workplan_item_id,
 	@ps_ordered_by,
-	getdate(),
+	dbo.get_client_datetime(),
 	'DISPATCHED',
 	@ps_created_by)
 
@@ -188,7 +188,7 @@ IF @ll_error <> 0
 	END
 
 UPDATE o_Service_Schedule
-SET last_service_date = getdate(),
+SET last_service_date = dbo.get_client_datetime(),
 	last_service_status = 'Ordered'
 WHERE service_sequence = @pl_service_sequence
 

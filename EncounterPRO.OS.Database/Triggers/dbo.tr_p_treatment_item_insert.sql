@@ -72,7 +72,7 @@ IF @@ROWCOUNT = 0
 	RETURN
 
 UPDATE t
-SET begin_date = COALESCE(t.begin_date, t.created, getdate())
+SET begin_date = COALESCE(t.begin_date, t.created, dbo.get_client_datetime())
 FROM inserted i
 	INNER JOIN p_treatment_item t
 	ON i.cpr_id = t.cpr_id
@@ -141,13 +141,13 @@ IF UPDATE( original_treatment_id )
 		i.treatment_id,
 		i.open_encounter_id,
 		i.ordered_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		p.progress_type,
 		p.progress_key,
 		p.progress_value,
 		p.progress,
 		p.risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		i.created_by
 	FROM inserted i
 		INNER JOIN p_Treatment_Progress p

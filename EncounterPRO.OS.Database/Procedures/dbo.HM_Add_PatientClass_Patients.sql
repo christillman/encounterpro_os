@@ -133,7 +133,7 @@ INSERT INTO dbo.p_Maintenance_Class (
 	,current_flag)
 SELECT @pl_maintenance_rule_id
 	,cpr_id
-	,GETDATE()
+	,dbo.get_client_datetime()
 	,'Y'
 	,'Y'
 	,'Y'

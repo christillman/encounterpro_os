@@ -159,14 +159,14 @@ IF @ll_length <= 40
 	VALUES (@ps_cpr_id,
 		@ll_encounter_id,
 		@ps_created_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'ID',
 		@ls_progress_key,
 		@ls_progress_value,
 		NULL,
 		NULL,
 		NULL,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -186,14 +186,14 @@ ELSE
 	VALUES (@ps_cpr_id,
 		@ll_encounter_id,
 		@ps_created_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'ID',
 		@ls_progress_key,
 		@ps_IDValue,
 		NULL,
 		NULL,
 		NULL,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 

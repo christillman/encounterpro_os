@@ -101,7 +101,7 @@ GO
 ALTER TABLE [dbo].[p_Chart_Alert]
 	ADD
 	CONSTRAINT [DF_p_Chart_Alert_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[p_Chart_Alert]

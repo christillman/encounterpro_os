@@ -93,7 +93,7 @@ IF NOT EXISTS (SELECT 1
 		@ls_default_treatment_key,
 		@ps_office_id,
 		@ps_treatment_mode,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by)
 	END
 ELSE

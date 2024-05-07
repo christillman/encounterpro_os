@@ -95,12 +95,12 @@ GO
 ALTER TABLE [dbo].[p_Treatment_Progress]
 	ADD
 	CONSTRAINT [DF__p_Treatme__creat__33A076C5]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_Treatment_Progress]
 	ADD
 	CONSTRAINT [DF__p_Treatme__progr__32AC528C]
-	DEFAULT (getdate()) FOR [progress_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [progress_date_time]
 GO
 ALTER TABLE [dbo].[p_Treatment_Progress]
 	ADD

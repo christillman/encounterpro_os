@@ -101,7 +101,7 @@ END
 
 -- Disable because we really don't want anyone passing in the created timestamp
 --IF @pdt_created IS NULL
---	SELECT @pdt_created = getdate()
+--	SELECT @pdt_created = dbo.get_client_datetime()
 
 SELECT @lc_in_office_flag = in_office_flag
 FROM c_Treatment_Type
@@ -123,7 +123,7 @@ WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id
 
 IF @ls_encounter_status = 'OPEN'
-	SET @ldt_treatment_date = getdate()
+	SET @ldt_treatment_date = dbo.get_client_datetime()
 ELSE
 	SET @ldt_treatment_date = @ldt_encounter_date
 
@@ -200,7 +200,7 @@ VALUES (
 	@ps_created_by,
 	@ps_description,
 	@ps_created_by,
-	getdate() )
+	dbo.get_client_datetime() )
 
 IF @@rowcount <> 1
 	BEGIN

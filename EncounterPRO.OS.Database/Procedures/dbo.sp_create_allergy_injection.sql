@@ -106,12 +106,12 @@ Values
 	@pl_encounter_id,
 	'AllergyInjection',
 	@ps_description,
-	getdate(),
+	dbo.get_client_datetime(),
 	'CLOSED',
 	@pl_parent_treatment_id,
 	@ps_ordered_by,
 	@ps_created_by,
-	getdate(),
+	dbo.get_client_datetime(),
 	@pl_encounter_id,
 	@ps_ordered_by
 )

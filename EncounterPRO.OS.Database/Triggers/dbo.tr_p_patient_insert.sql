@@ -58,9 +58,9 @@ INSERT INTO p_Patient_Progress(
 	created_by)
 SELECT cpr_id,
 	ISNULL(created_by, '#SYSTEM'),
-	ISNULL(created, getdate()),
+	ISNULL(created, dbo.get_client_datetime()),
 	'Created',
-	ISNULL(created, getdate()),
+	ISNULL(created, dbo.get_client_datetime()),
 	ISNULL(created_by, '#SYSTEM')
 FROM inserted
 

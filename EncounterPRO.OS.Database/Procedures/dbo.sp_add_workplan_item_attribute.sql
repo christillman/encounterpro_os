@@ -45,7 +45,7 @@ FROM c_User
 WHERE [user_id] = @ps_user_id
 
 IF @pdt_created IS NULL
-	SET @pdt_created = getdate()
+	SET @pdt_created = dbo.get_client_datetime()
 
 IF (@ps_cpr_id IS NULL) OR (@pl_patient_workplan_id IS NULL)
 	BEGIN

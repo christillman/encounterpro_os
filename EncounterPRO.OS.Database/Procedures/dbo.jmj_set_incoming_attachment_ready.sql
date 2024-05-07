@@ -167,9 +167,9 @@ VALUES (
 	@pl_attachment_id,
 	@ll_patient_workplan_item_id,
 	@ps_user_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	'Incoming',
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by )
 
 SELECT @ll_error = @@ERROR,

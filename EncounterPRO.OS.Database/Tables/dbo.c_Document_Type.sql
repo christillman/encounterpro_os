@@ -95,7 +95,7 @@ GO
 ALTER TABLE [dbo].[c_Document_Type]
 	ADD
 	CONSTRAINT [DF__c_Document_Type_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Document_Type]
 	ADD

@@ -137,7 +137,7 @@ GO
 ALTER TABLE [dbo].[c_User]
 	ADD
 	CONSTRAINT [DF_c_User_cre_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_User]
 	ADD
@@ -147,7 +147,7 @@ GO
 ALTER TABLE [dbo].[c_User]
 	ADD
 	CONSTRAINT [DF_c_User_mod_40]
-	DEFAULT (getdate()) FOR [modified]
+	DEFAULT (dbo.get_client_datetime()) FOR [modified]
 GO
 ALTER TABLE [dbo].[c_User]
 	ADD

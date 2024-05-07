@@ -51,7 +51,7 @@ INSERT INTO c_Equivalence (
 	owner_id )
 SELECT d.id,
 	NULL,
-	getdate(),
+	dbo.get_client_datetime(),
 	'#SYSTEM',
 	object_key = d.drug_id,
 	description = ISNULL(d.common_name, '<No Description>'),

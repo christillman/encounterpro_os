@@ -103,7 +103,7 @@ SET @ls_billing_hold_flag = 'N'
 SET @ls_encounter_status = 'OPEN'
 
 IF @pdt_encounter_date IS NULL
-	SET @pdt_encounter_date = getdate()
+	SET @pdt_encounter_date = dbo.get_client_datetime()
 
 IF @ps_encounter_description IS NULL
 	SET @ps_encounter_description = @ls_encounter_type_description

@@ -84,7 +84,7 @@ SELECT DISTINCT
 	e.attending_doctor,
 	e.patient_location,
 	encounter_description = COALESCE(e.encounter_description, et.description),  
-	minutes=DATEDIFF(minute, i.dispatch_date, getdate()),   
+	minutes=DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()),   
 	p.first_name,
 	p.middle_name,
 	p.last_name,

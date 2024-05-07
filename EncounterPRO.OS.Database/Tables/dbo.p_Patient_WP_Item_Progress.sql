@@ -95,7 +95,7 @@ GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress]
 	ADD
 	CONSTRAINT [DF_p_Patient_WP_Item_Progress_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE NONCLUSTERED INDEX [idx_user_created]
 	ON [dbo].[p_Patient_WP_Item_Progress] ([user_id], [created], [patient_workplan_item_id])

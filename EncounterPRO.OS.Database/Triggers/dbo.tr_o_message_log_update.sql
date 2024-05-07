@@ -74,7 +74,7 @@ IF @@ROWCOUNT = 0
 IF UPDATE( status)
 BEGIN
 	UPDATE o_Message_Log
-	SET message_ack_datetime = getdate()
+	SET message_ack_datetime = dbo.get_client_datetime()
 	FROM inserted
 	WHERE inserted.message_id = o_Message_Log.message_id
 	AND inserted.status in ('SENT','ACK_REJECT','NEVERSENT')

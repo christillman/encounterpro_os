@@ -73,7 +73,7 @@ CREATE PROCEDURE jmj_patient_immunization_schedule (
 AS
 
 IF @pdt_current_date IS NULL
-	SET @pdt_current_date = getdate()
+	SET @pdt_current_date = dbo.get_client_datetime()
 
 SELECT disease_group ,
 	disease_id ,

@@ -47,7 +47,7 @@ GO
 ALTER TABLE [dbo].[u_Top_20]
 	ADD
 	CONSTRAINT [DF__u_Top_20__create__40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[u_Top_20]
 	ADD
@@ -57,7 +57,7 @@ GO
 ALTER TABLE [dbo].[u_Top_20]
 	ADD
 	CONSTRAINT [DF__u_Top_20__last_h__18F6A22A]
-	DEFAULT (getdate()) FOR [last_hit]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_hit]
 GO
 CREATE NONCLUSTERED INDEX [idx_top_20_sequence]
 	ON [dbo].[u_Top_20] ([top_20_sequence])

@@ -57,7 +57,7 @@ Declare @mytype integer
 Declare @mycount integer
 Declare @vacc_descrip varchar(24),@drug_id varchar(24)
 Declare @immune varchar(24)
-SELECT @today = Getdate()
+SELECT @today = dbo.get_client_datetime()
 
 SELECT @mycount =  (SELECT Count(p_treatment_item.treatment_description)
 FROM p_treatment_item with (NOLOCK)

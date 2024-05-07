@@ -124,7 +124,7 @@ AND t.treatment_type = 'FOLLOWUP'
 AND t.open_flag = 'Y'
 
 -- Set the default cutoff
-SET @ldt_today = dbo.fn_date_truncate(getdate(), 'Day')
+SET @ldt_today = dbo.fn_date_truncate(dbo.get_client_datetime(), 'Day')
 
 SET @ldt_follwup_cutoff = NULL
 

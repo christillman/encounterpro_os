@@ -191,13 +191,13 @@ AND encounter_id = @pl_encounter_id
 
 IF @ls_encounter_status = 'OPEN'
 	BEGIN
-	IF day(@ldt_encounter_date) = day(getdate()) AND month(@ldt_encounter_date) = month(getdate()) AND year(@ldt_encounter_date) = year(getdate())
-		SET @ldt_begin_date = getdate()
+	IF day(@ldt_encounter_date) = day(dbo.get_client_datetime()) AND month(@ldt_encounter_date) = month(dbo.get_client_datetime()) AND year(@ldt_encounter_date) = year(dbo.get_client_datetime())
+		SET @ldt_begin_date = dbo.get_client_datetime()
 	ELSE
 		SET @ldt_begin_date = @ldt_encounter_date	
 	END
 ELSE
-	SET @ldt_begin_date = getdate()
+	SET @ldt_begin_date = dbo.get_client_datetime()
 
 -- See if the treatment already exists
 IF @ll_existing_treatment_id > 0
@@ -287,9 +287,9 @@ ELSE
 		@pl_treatment_id,
 		@pl_encounter_id,
 		@ps_ordered_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'Created',
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 

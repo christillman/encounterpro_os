@@ -105,12 +105,12 @@ GO
 ALTER TABLE [dbo].[c_Patient_material]
 	ADD
 	CONSTRAINT [DF__c_Patmat_created_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Patient_material]
 	ADD
 	CONSTRAINT [DF__c_Patmat_last_update_40]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Patient_material]
 	ADD

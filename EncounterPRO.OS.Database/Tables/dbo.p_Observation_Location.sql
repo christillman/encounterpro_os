@@ -100,7 +100,7 @@ GO
 ALTER TABLE [dbo].[p_Observation_Location]
 	ADD
 	CONSTRAINT [DF_p_Obs_created_01]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[p_Observation_Location]

@@ -94,12 +94,12 @@ GO
 ALTER TABLE [dbo].[p_Patient_Encounter_Progress]
 	ADD
 	CONSTRAINT [DF__p_Patient__creat__2A170C8B]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_Patient_Encounter_Progress]
 	ADD
 	CONSTRAINT [DF__p_Patient__progr__2922E852]
-	DEFAULT (getdate()) FOR [progress_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [progress_date_time]
 GO
 ALTER TABLE [dbo].[p_Patient_Encounter_Progress]
 	ADD

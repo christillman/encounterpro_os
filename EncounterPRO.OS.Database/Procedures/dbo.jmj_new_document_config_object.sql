@@ -114,7 +114,7 @@ VALUES (
 	@ls_report_component_id,
 	@ps_status,
 	@ll_owner_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ls_document_format,
 	@ps_config_object_type,
 	newid(),

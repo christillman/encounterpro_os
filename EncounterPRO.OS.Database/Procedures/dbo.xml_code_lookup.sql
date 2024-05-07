@@ -146,9 +146,9 @@ IF @ls_epro_id IS NOT NULL
 			epro_domain = @ps_epro_domain,   
 			epro_id = @ls_epro_id,   
 			unique_flag = 1,   
-			created = getdate(),   
+			created = dbo.get_client_datetime(),   
 			created_by = @ps_created_by,   
-			last_updated = getdate()
+			last_updated = dbo.get_client_datetime()
 	FROM c_1_Record
 ELSE
 	SELECT c_XML_Code.code_id,   

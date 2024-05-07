@@ -74,7 +74,7 @@ CREATE PROCEDURE sp_close_box (
 	@pl_box_id int )
 AS
 UPDATE o_box
-SET box_close_date = getdate()
+SET box_close_date = dbo.get_client_datetime()
 WHERE box_id = @pl_box_id
 
 GO

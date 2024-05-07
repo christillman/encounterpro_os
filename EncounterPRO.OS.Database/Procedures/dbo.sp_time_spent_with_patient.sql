@@ -90,9 +90,9 @@ WHILE @@FETCH_STATUS = 0
 		-- The service changed so if there is a pending "Started" event within the past 2 hours, assume that it's still
 		-- active and count from the started event to the current time
 		
-		IF DATEDIFF(second, @ldt_started, getdate()) < 7200
+		IF DATEDIFF(second, @ldt_started, dbo.get_client_datetime()) < 7200
 			BEGIN
-			SET @ldt_finished = getdate()
+			SET @ldt_finished = dbo.get_client_datetime()
 			
 			INSERT INTO @starts (
 				patient_workplan_item_id,
@@ -160,9 +160,9 @@ DEALLOCATE lc_events
 
 IF @ll_started_patient_workplan_item_id IS NOT NULL 
 	AND @ls_started_user_id IS NOT NULL
-	AND DATEDIFF(second, @ldt_started, getdate()) < 7200
+	AND DATEDIFF(second, @ldt_started, dbo.get_client_datetime()) < 7200
 	BEGIN
-	SET @ldt_finished = getdate()
+	SET @ldt_finished = dbo.get_client_datetime()
 	
 	INSERT INTO @starts (
 		patient_workplan_item_id,

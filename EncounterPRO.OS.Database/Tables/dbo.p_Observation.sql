@@ -68,12 +68,12 @@ GO
 ALTER TABLE [dbo].[p_Observation]
 	ADD
 	CONSTRAINT [DF_p_Obs40_res_exp_21]
-	DEFAULT (getdate()) FOR [result_expected_date]
+	DEFAULT (dbo.get_client_datetime()) FOR [result_expected_date]
 GO
 ALTER TABLE [dbo].[p_Observation]
 	ADD
 	CONSTRAINT [DF_p_Observation_created_21]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [idx_obs_sequence]
 	ON [dbo].[p_Observation] ([observation_sequence])

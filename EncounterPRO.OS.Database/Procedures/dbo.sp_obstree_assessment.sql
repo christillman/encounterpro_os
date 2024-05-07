@@ -122,7 +122,7 @@ IF @ps_attached_observations_only = 'N'
 		SET @ps_attached_observations_only = 'Y'
 	
 	IF @ldt_end_date IS NULL
-		SET @ldt_end_date = getdate()
+		SET @ldt_end_date = dbo.get_client_datetime()
 	END
 
 DECLARE @tmp_patient_results TABLE

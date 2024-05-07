@@ -32,7 +32,7 @@ SELECT DISTINCT
 	p_Patient_Encounter.encounter_id,   
 	p_Patient_Encounter.attending_doctor,   
 	encounter_description = COALESCE(p_Patient_Encounter.encounter_description, c_Encounter_Type.description),  
-	minutes=DATEDIFF(minute, p_Patient_WP_Item.dispatch_date, getdate()),   
+	minutes=DATEDIFF(minute, p_Patient_WP_Item.dispatch_date, dbo.get_client_datetime()),   
 	p_Patient.last_name,
 	p_Patient.first_name,
 	fullname = p_Patient.first_name + ' '+ p_Patient.last_name,

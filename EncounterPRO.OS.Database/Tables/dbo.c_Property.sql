@@ -103,7 +103,7 @@ GO
 ALTER TABLE [dbo].[c_Property]
 	ADD
 	CONSTRAINT [DF__c_Propert__last___63695C8A]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Property]
 	ADD

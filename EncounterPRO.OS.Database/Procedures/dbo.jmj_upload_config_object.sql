@@ -196,7 +196,7 @@ AS
 --	'OK' ,
 --	status_date_time ,
 --	@ls_release_status ,
---	getdate() ,
+--	dbo.get_client_datetime() ,
 --	objectdata ,
 --	@ps_user_id
 --FROM c_Config_Object_Version

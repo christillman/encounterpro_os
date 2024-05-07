@@ -189,7 +189,7 @@ VALUES (
 	,'N'
 	,'N'
 	,'Y'
-	,getdate()
+	,dbo.get_client_datetime()
 	,'Dispatched'
 	,@ps_created_by)
 

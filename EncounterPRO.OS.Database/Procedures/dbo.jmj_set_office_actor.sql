@@ -91,11 +91,11 @@ INSERT INTO c_User_Progress (
 	[created_by] )
 SELECT @ls_office_user_id ,
 	@ps_created_by ,
-	getdate() ,
+	dbo.get_client_datetime() ,
 	[progress_type] ,
 	[progress_key] ,
 	[progress_value] ,
-	getdate() ,
+	dbo.get_client_datetime() ,
 	@ps_created_by
 FROM c_User_Progress
 WHERE [user_id] = @ps_unmapped_office_user_id

@@ -133,7 +133,7 @@ WHERE document_route = @ps_document_route
 IF NOT EXISTS(SELECT 1
 				FROM o_Computers
 				WHERE status = 'SERVER'
-				AND last_connected_date > DATEADD(DAY, -7, GETDATE())
+				AND last_connected_date > DATEADD(DAY, -7, dbo.get_client_datetime())
 			)
 	UPDATE @route_info
 	SET send_from = 'Client'

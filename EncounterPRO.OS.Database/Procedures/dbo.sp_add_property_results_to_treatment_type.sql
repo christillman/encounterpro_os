@@ -156,7 +156,7 @@ SELECT [observation_id] ,
 	'REFER_TREATMENT' ,
 	'=' ,
 	'OK' ,
-	getdate() ,
+	dbo.get_client_datetime() ,
 	'#SYSTEM'
 FROM @result_sequence
 

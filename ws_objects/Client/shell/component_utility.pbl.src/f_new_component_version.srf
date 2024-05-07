@@ -215,12 +215,12 @@ VALUES (
 	:ls_component_location,
 	:ls_component_data,
 	:ll_owner_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	:current_scribe.user_id,
 	'OK',
-	getdate(),
+	dbo.get_client_datetime(),
 	:ls_release_status,
-	getdate(),
+	dbo.get_client_datetime(),
 	50000,
 	:ll_min_modification_level,
 	newid(),
@@ -233,7 +233,7 @@ VALUES (
 	:ls_compile_name,
 	:ls_build_status,
 	:ll_max_modification_level,
-	getdate() );
+	dbo.get_client_datetime() );
 if not tf_check() then
 	tf_rollback()
 	return ls_null

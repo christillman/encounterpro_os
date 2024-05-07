@@ -85,7 +85,7 @@ AND p_Assessment.assessment_id IN
 where assessment_type = 'OB' and assessment_category_id = 'OB')
 AND (p_Assessment.assessment_status IS NULL 
 OR p_Assessment.assessment_status <> 'CLOSED') 
-AND DATEDIFF(Week,p_Assessment.begin_date,GETDATE()) < 44) > 0 
+AND DATEDIFF(Week,p_Assessment.begin_date,dbo.get_client_datetime()) < 44) > 0 
 AND p_Observation.cpr_id = @cprid 
 AND p_Observation.cpr_id = p_Observation_Result.cpr_id 
 AND p_Observation.observation_sequence = p_Observation_Result.observation_Sequence 
@@ -99,7 +99,7 @@ If ((@result_value IS NOT NULL) OR (@result_value <> ''))
   Select @EDD = 'Ultrasound exam not current' 
   if (ISDATE(@result_value)= 1)
    Begin 
-    if DATEDIFF(Week,@result_value,GETDATE()) < 4 
+    if DATEDIFF(Week,@result_value,dbo.get_client_datetime()) < 4 
      Begin
       Select @EDD = 'By ultrasound exam '+ @result_value
      END
@@ -117,7 +117,7 @@ ELSE
  where assessment_type = 'OB' and assessment_category_id = 'OB')
  AND (p_Assessment.assessment_status IS NULL 
  OR p_Assessment.assessment_status <> 'CLOSED')
- AND DATEDIFF(Week,p_Assessment.begin_date,GETDATE()) < 44) > 0  
+ AND DATEDIFF(Week,p_Assessment.begin_date,dbo.get_client_datetime()) < 44) > 0  
  AND p_Observation.cpr_id = @cprid 
  AND p_Observation.cpr_id = p_Observation_Result.cpr_id 
  AND p_Observation.observation_sequence = p_Observation_Result.observation_Sequence 
@@ -130,7 +130,7 @@ ELSE
    Select @EDD = 'No def LMP' 
    if isdate(@result_value) = 1
     Begin
-     if DATEDIFF(Week,@result_value,GETDATE()) < 44
+     if DATEDIFF(Week,@result_value,dbo.get_client_datetime()) < 44
       Begin
        Select @result_value = DateAdd(day,280,@result_value)
        Select @EDD = 'By LMP ' + @result_value

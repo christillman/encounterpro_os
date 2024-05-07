@@ -129,7 +129,7 @@ GO
 ALTER TABLE [dbo].[p_Attachment]
 	ADD
 	CONSTRAINT [DF_p_att_created_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE CLUSTERED INDEX [idx_cpr_id]
 	ON [dbo].[p_Attachment] ([cpr_id], [attachment_id])

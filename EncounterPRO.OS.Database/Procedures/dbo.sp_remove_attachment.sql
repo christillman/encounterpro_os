@@ -98,7 +98,7 @@ IF @ps_context_object = 'Patient'
 		progress_key,
 		patient_workplan_item_id,
 		risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM p_Patient_Progress
 	WHERE cpr_id = @ps_cpr_id
@@ -130,7 +130,7 @@ IF @ps_context_object = 'Encounter'
 		progress_key,
 		patient_workplan_item_id,
 		risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM p_Patient_Encounter_Progress
 	WHERE cpr_id = @ps_cpr_id
@@ -165,7 +165,7 @@ IF @ps_context_object = 'Assessment'
 		progress_key,
 		patient_workplan_item_id,
 		risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM p_Assessment_Progress
 	WHERE cpr_id = @ps_cpr_id
@@ -200,7 +200,7 @@ IF @ps_context_object = 'Treatment'
 		progress_key,
 		patient_workplan_item_id,
 		risk_level,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM p_Treatment_Progress
 	WHERE cpr_id = @ps_cpr_id
@@ -233,7 +233,7 @@ IF @ps_context_object = 'Observation'
 		comment_date_time,
 		comment_type,
 		comment_title,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM p_Observation_Comment
 	WHERE cpr_id = @ps_cpr_id

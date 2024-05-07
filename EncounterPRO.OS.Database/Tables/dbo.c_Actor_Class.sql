@@ -89,7 +89,7 @@ GO
 ALTER TABLE [dbo].[c_Actor_Class]
 	ADD
 	CONSTRAINT [DF__c_Actor_Class_last_updated_4]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Actor_Class]
 	ADD

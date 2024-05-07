@@ -92,7 +92,7 @@ SET @lui_config_object_id = CAST(@ps_config_object_id AS uniqueidentifier)
 IF @ps_created_by IS NULL
 	SET @ps_created_by = dbo.fn_current_epro_user()
 
-SET @ldt_created = getdate()
+SET @ldt_created = dbo.get_client_datetime()
 
 
 SELECT @ll_current_owner_id = owner_id
@@ -130,7 +130,7 @@ IF @ll_count = 0
 		@ps_config_object_category ,
 		@pl_owner_id ,
 		dbo.fn_owner_description(@pl_owner_id),
-		getdate() ,
+		dbo.get_client_datetime() ,
 		@ps_created_by ,
 		'OK' 
 		)

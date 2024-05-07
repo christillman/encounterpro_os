@@ -89,7 +89,7 @@ GO
 ALTER TABLE [dbo].[c_XML_Class_Selection]
 	ADD
 	CONSTRAINT [DF_c_XML_Class_Selection_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_XML_Class_Selection]
 	ADD
@@ -99,7 +99,7 @@ GO
 ALTER TABLE [dbo].[c_XML_Class_Selection]
 	ADD
 	CONSTRAINT [DF_c_XML_Class_Selection_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_XML_Class_Selection]
 	ADD

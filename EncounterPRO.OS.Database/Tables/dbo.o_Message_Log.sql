@@ -98,7 +98,7 @@ GO
 ALTER TABLE [dbo].[o_Message_Log]
 	ADD
 	CONSTRAINT [DF_o_Message__message_dat1__10]
-	DEFAULT (getdate()) FOR [message_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [message_date_time]
 GO
 ALTER TABLE [dbo].[o_Message_Log]
 	ADD

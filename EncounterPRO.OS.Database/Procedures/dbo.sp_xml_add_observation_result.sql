@@ -253,7 +253,7 @@ if can't find, call sp_new_observation_result
 IF @ll_result_value_length <= 40 AND @pl_attachment_id IS NULL
 	BEGIN
 	-- For results, if no date/time is passed in then use the current date/time
-	SET @pdt_result_date_time = COALESCE(@pdt_result_date_time, getdate())
+	SET @pdt_result_date_time = COALESCE(@pdt_result_date_time, dbo.get_client_datetime())
 
 	SET @ls_result_value = CONVERT(varchar(40), @ps_result_value)
 	IF @ls_result_value = ''
@@ -389,7 +389,7 @@ ELSE
 		END
 		
 	-- If we still don't have a date/time, use the current date/time
-	SET @pdt_result_date_time = COALESCE(@pdt_result_date_time, getdate())
+	SET @pdt_result_date_time = COALESCE(@pdt_result_date_time, dbo.get_client_datetime())
 	
 	EXECUTE sp_set_observation_comment
 				@ps_cpr_id = @ls_cpr_id,

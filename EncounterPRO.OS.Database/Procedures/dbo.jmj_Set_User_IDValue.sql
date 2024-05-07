@@ -86,11 +86,11 @@ IF @ll_length <= 40
 		[created_by] )
 	VALUES (@ps_user_id,
 		@ps_created_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'ID',
 		@ls_progress_key,
 		@ls_progress_value,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -105,11 +105,11 @@ ELSE
 		[created_by] )
 	VALUES (@ps_user_id,
 		@ps_created_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		'ID',
 		@ls_progress_key,
 		@ps_IDValue,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 

@@ -256,7 +256,7 @@ SELECT @ps_new_observation_id ,
 	on_results_entered ,
 	unit_preference ,
 	sort_sequence ,
-	getdate() ,
+	dbo.get_client_datetime() ,
 	@ps_user_id
 FROM c_Observation_Tree
 WHERE parent_observation_id = @ps_observation_id

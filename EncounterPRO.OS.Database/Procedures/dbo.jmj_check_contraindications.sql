@@ -78,7 +78,7 @@ AS
 
 DECLARE @ldt_check_date datetime
 
-SET @ldt_check_date = getdate()
+SET @ldt_check_date = dbo.get_client_datetime()
 
 -- Epro is expecting an 80-character treatment_description in the datawindow dw_jmj_check_contraindications.  If the full
 -- 255 character description is needed then call the fn_treatment_contraindications function directly

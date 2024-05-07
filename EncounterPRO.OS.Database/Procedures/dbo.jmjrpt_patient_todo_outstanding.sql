@@ -76,7 +76,7 @@ SELECT
             ,i.dispatch_date
             ,i.description as TODO
             ,a.value
-            ,DATEDIFF( hour, i.dispatch_date, getdate() ) - 24 AS Hours_Late
+            ,DATEDIFF( hour, i.dispatch_date, dbo.get_client_datetime() ) - 24 AS Hours_Late
 FROM
             p_patient_WP_Item I  WITH (NOLOCK)
 INNER JOIN P_patient p WITH (NOLOCK) ON  
@@ -95,7 +95,7 @@ AND     i.ordered_service = 'TODO'
 AND     i.active_service_flag = 'Y'
 AND     i.dispatch_date IS NOT NULL
 AND     a.attribute = 'message'
-AND     DATEDIFF( hour, i.dispatch_date, getdate() ) >= 
+AND     DATEDIFF( hour, i.dispatch_date, dbo.get_client_datetime() ) >= 
        24*(1 + CHARINDEX ( CAST(DATEPART( weekday, i.dispatch_date)AS VARCHAR (1) ), '76' ) )
 ORDER BY
              Hours_Late DESC

@@ -90,7 +90,7 @@ GO
 ALTER TABLE [dbo].[c_Datawindow]
 	ADD
 	CONSTRAINT [DF_c_Datawindow_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Datawindow]
 	ADD

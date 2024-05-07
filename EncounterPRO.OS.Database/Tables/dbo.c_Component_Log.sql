@@ -81,7 +81,7 @@ GO
 ALTER TABLE [dbo].[c_Component_Log]
 	ADD
 	CONSTRAINT [DF_c_Component_Log_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Component_Log]
 	ADD

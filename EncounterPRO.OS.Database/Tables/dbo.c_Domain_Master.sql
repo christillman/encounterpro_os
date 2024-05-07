@@ -110,7 +110,7 @@ GO
 ALTER TABLE [dbo].[c_Domain_Master]
 	ADD
 	CONSTRAINT [DF__c_Domain_Master_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Domain_Master]
 	ADD
@@ -120,7 +120,7 @@ GO
 ALTER TABLE [dbo].[c_Domain_Master]
 	ADD
 	CONSTRAINT [DF__c_Domain_Master_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 GRANT DELETE
 	ON [dbo].[c_Domain_Master]

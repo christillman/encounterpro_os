@@ -47,7 +47,7 @@ IF UPDATE(last_updated)
 ELSE
 	BEGIN
 	UPDATE o
-	SET last_updated = getdate()
+	SET last_updated = dbo.get_client_datetime()
 	FROM c_Observation as o
 		JOIN inserted as i
 			ON o.observation_id = i.observation_id

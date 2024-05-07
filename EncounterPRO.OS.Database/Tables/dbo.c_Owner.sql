@@ -87,7 +87,7 @@ GO
 ALTER TABLE [dbo].[c_Owner]
 	ADD
 	CONSTRAINT [DF_c_Owner_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Owner]
 	ADD
@@ -97,7 +97,7 @@ GO
 ALTER TABLE [dbo].[c_Owner]
 	ADD
 	CONSTRAINT [DF_c_Owner_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Owner]
 	ADD

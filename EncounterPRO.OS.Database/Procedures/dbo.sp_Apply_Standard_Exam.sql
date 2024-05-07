@@ -386,12 +386,12 @@ WHILE @@FETCH_STATUS = 0
 						@ls_description,
 						@pl_treatment_id,
 						@pl_encounter_id,
-						getdate(),
+						dbo.get_client_datetime(),
 						@ls_observation_tag,
 						@ll_parent_observation_sequence,
 						@ps_user_id,
 						@ll_branch_sort_sequence,
-						getdate(),
+						dbo.get_client_datetime(),
 						@ps_created_by,
 						@ll_branch_id
 						)
@@ -442,7 +442,7 @@ WHILE @@FETCH_STATUS = 0
 				@li_result_sequence, 
 				@ls_result_type,
 				@ls_result,
-				getdate(),
+				dbo.get_client_datetime(),
 				@ls_result_value,
 				@ls_long_result_value,
 				@ls_result_unit,
@@ -450,7 +450,7 @@ WHILE @@FETCH_STATUS = 0
 				@li_severity,
 				@ps_user_id,
 				'Y',
-				getdate(),
+				dbo.get_client_datetime(),
 				@ps_created_by
 				)
 			

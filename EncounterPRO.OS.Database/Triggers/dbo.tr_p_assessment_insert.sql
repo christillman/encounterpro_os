@@ -88,7 +88,7 @@ SELECT cpr_id,
 	created,
 	diagnosis_sequence,
 	'Created',
-	getdate(),
+	dbo.get_client_datetime(),
 	created_by
 FROM inserted
 WHERE diagnosis_sequence = 1

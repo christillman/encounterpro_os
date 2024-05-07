@@ -23,5 +23,5 @@ CREATE TABLE [Kenya_Drugs](
 GO
 ALTER TABLE [Kenya_Drugs] ADD  DEFAULT ((0)) FOR [generic_only]
 GO
-ALTER TABLE [Kenya_Drugs] ADD  DEFAULT (getdate()) FOR [date_added]
+ALTER TABLE [Kenya_Drugs] ADD  DEFAULT (dbo.get_client_datetime()) FOR [date_added]
 GO

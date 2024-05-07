@@ -96,7 +96,7 @@ IF @ll_patient_workplan_id IS NOT NULL
 		CAST(@ll_patient_workplan_id AS varchar(20)),
 		@ll_actor_id,
 		@ps_created_by,
-		getdate())
+		dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -120,7 +120,7 @@ IF @ls_cpr_id IS NOT NULL
 		@ls_cpr_id,
 		@ll_actor_id,
 		@ps_created_by,
-		getdate())
+		dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -144,7 +144,7 @@ IF @ll_encounter_id IS NOT NULL
 		CAST(@ll_encounter_id AS varchar(20)),
 		@ll_actor_id,
 		@ps_created_by,
-		getdate())
+		dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -168,7 +168,7 @@ IF @ll_workplan_id IS NOT NULL
 		CAST(@ll_workplan_id AS varchar(20)),
 		@ll_actor_id,
 		@ps_created_by,
-		getdate())
+		dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -192,7 +192,7 @@ IF @ls_in_office_flag IS NOT NULL
 		@ls_in_office_flag,
 		@ll_actor_id,
 		@ps_created_by,
-		getdate())
+		dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -250,7 +250,7 @@ VALUES (
 	'N',
 	@ll_actor_id,
 	@ps_created_by,
-	getdate())
+	dbo.get_client_datetime())
 
 If @@ERROR <> 0
 	BEGIN
@@ -275,7 +275,7 @@ INSERT INTO o_Log (
 	scribe_user_id)
 VALUES (
 	'WARNING',
-	getdate(),
+	dbo.get_client_datetime(),
 	'Stored Procedure',
 	'jmj_remove_patient_context_from_wp_item',
 	'Patient context removed from workplan item',

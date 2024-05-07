@@ -51,7 +51,7 @@ select o.name,
 	d.name,
 	d.definition,
 	@ll_modification_level + 1,
-	getdate()
+	dbo.get_client_datetime()
 from sys.objects o
 	inner join sys.columns c
 	on c.object_id = o.object_id

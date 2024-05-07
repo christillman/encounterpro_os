@@ -141,7 +141,7 @@ IF @pl_patient_count >= @ll_population_count
 	END
 ELSE
 	BEGIN
-	SET @ll_seed = DATEDIFF(second, '1/1/2010', getdate()) + ISNULL(@pl_maintenance_rule_id, 0)
+	SET @ll_seed = DATEDIFF(second, '1/1/2010', dbo.get_client_datetime()) + ISNULL(@pl_maintenance_rule_id, 0)
 
 	SET @ll_patient_count = 0
 

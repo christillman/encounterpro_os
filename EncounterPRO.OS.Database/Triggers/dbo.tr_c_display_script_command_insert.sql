@@ -69,7 +69,7 @@ FOR INSERT
 AS
 
 UPDATE d
-SET last_updated = getdate()
+SET last_updated = dbo.get_client_datetime()
 FROM c_display_script as d
 	INNER JOIN inserted as i
 		ON d.display_script_id = i.display_script_id

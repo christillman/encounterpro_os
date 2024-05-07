@@ -147,7 +147,7 @@ BEGIN
 					'Modify',
 					@ls_progress_key,
 					@ls_last_progress_value,
-					getdate(),
+					dbo.get_client_datetime(),
 					@ls_created_by )
 			ELSE
 				INSERT INTO c_User_Progress (
@@ -166,7 +166,7 @@ BEGIN
 					'Modify',
 					@ls_progress_key,
 					@ls_last_progress_value,
-					getdate(),
+					dbo.get_client_datetime(),
 					@ls_created_by )
 			END
 		
@@ -259,7 +259,7 @@ BEGIN
 			i.user_id,
 			CAST(i.progress_value AS varchar(24)),
 			'G',
-			getdate(),
+			dbo.get_client_datetime(),
 			i.created_by
 	FROM inserted i
 	WHERE i.progress_type = 'Grant Privilege'
@@ -286,7 +286,7 @@ BEGIN
 			i.user_id,
 			CAST(i.progress_value AS varchar(24)),
 			'R',
-			getdate(),
+			dbo.get_client_datetime(),
 			i.created_by
 	FROM inserted i
 	WHERE i.progress_type = 'Revoke Privilege'

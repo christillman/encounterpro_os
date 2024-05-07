@@ -134,7 +134,7 @@ GO
 ALTER TABLE [dbo].[p_Observation_Result]
 	ADD
 	CONSTRAINT [DF_p_obs_rslt_created_21]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE NONCLUSTERED INDEX [idx_location_result_sequence]
 	ON [dbo].[p_Observation_Result] ([location_result_sequence])

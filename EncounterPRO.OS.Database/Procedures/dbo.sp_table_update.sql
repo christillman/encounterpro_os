@@ -71,7 +71,7 @@ AS
 
 
 UPDATE c_Table_Update
-SET last_updated = getdate(),
+SET last_updated = dbo.get_client_datetime(),
 	updated_by = @ps_updated_by
 WHERE table_name = @ps_table_name
 
@@ -82,7 +82,7 @@ IF @@ROWCOUNT <> 1
 		updated_by)
 	VALUES (
 		@ps_table_name,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_updated_by)
 
 

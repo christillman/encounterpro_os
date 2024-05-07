@@ -75,7 +75,7 @@ DECLARE @ldt_last_updated datetime,
 
 SET NOCOUNT ON
 
-SET @ldt_current_datetime = getdate()
+SET @ldt_current_datetime = dbo.get_client_datetime()
 
 SELECT @ldt_last_updated = last_updated 
 FROM c_Table_Update

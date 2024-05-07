@@ -239,7 +239,7 @@ IF @ll_code_id > 0
 		code_description = COALESCE(code_description, @ps_code_description) ,
 		epro_owner_id = @pl_epro_owner_id,
 		status = 'OK',
-		created = getdate(),
+		created = dbo.get_client_datetime(),
 		created_by = @ps_created_by
 	WHERE code_id = @ll_code_id
 ELSE

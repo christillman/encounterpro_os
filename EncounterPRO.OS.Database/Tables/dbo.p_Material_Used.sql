@@ -87,7 +87,7 @@ GO
 ALTER TABLE [dbo].[p_Material_Used]
 	ADD
 	CONSTRAINT [DF_p_material_21]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[p_Material_Used]

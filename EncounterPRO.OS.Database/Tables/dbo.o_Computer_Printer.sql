@@ -91,7 +91,7 @@ GO
 ALTER TABLE [dbo].[o_Computer_Printer]
 	ADD
 	CONSTRAINT [DF__o_Compute__last___646C666E]
-	DEFAULT (getdate()) FOR [last_discovered]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_discovered]
 GO
 GRANT DELETE
 	ON [dbo].[o_Computer_Printer]

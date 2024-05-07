@@ -91,7 +91,7 @@ GO
 ALTER TABLE [dbo].[c_Report_Attribute]
 	ADD
 	CONSTRAINT [DF_c_Report_Attribute_last_modified]
-	DEFAULT (getdate()) FOR [last_modified]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_modified]
 GO
 GRANT DELETE
 	ON [dbo].[c_Report_Attribute]

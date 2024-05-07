@@ -29,7 +29,7 @@ declare @spid varchar(6), @blocked varchar(6) --,@uid varchar(6)
 declare @tmpchar varchar(255)
 declare @time datetime
 
-select @time = getdate()
+select @time = dbo.get_client_datetime()
 
 select spid, blocked, waittype, dbid into #probclients from master..sysprocesses where blocked!=0 or waittype != 0x0000
 create unique clustered index pc on #probclients (blocked,spid)
@@ -220,9 +220,9 @@ begin
       exec ('dbcc opentran (tempdb)')
    end
    
-   if datediff(millisecond, @time, getdate()) > 1000
+   if datediff(millisecond, @time, dbo.get_client_datetime()) > 1000
    begin
-      select @tmpchar='End time: ' + convert(varchar(26), getdate(), 113)
+      select @tmpchar='End time: ' + convert(varchar(26), dbo.get_client_datetime(), 113)
       print @tmpchar
    end
 

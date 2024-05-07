@@ -81,7 +81,7 @@ IF UPDATE(status) OR UPDATE(item_type ) OR UPDATE(owned_by) OR UPDATE(descriptio
 				--	@ll_patient_workplan_item_id,
 				--	@ll_encounter_id,
 				--	'#SYSTEM',
-				--	getdate(),
+				--	dbo.get_client_datetime(),
 				--	@ls_new_status,
 				--	'#SYSTEM')
 			END
@@ -90,9 +90,9 @@ IF UPDATE(status) OR UPDATE(item_type ) OR UPDATE(owned_by) OR UPDATE(descriptio
 			BEGIN
 			-- Update the status of the Scheduled Service
 			UPDATE s
-			SET last_service_date = getdate(),
+			SET last_service_date = dbo.get_client_datetime(),
 				last_service_status = @ls_new_status,
-				last_successful_date = CASE @ls_new_status WHEN 'Completed' THEN getdate() ELSE s.last_successful_date END
+				last_successful_date = CASE @ls_new_status WHEN 'Completed' THEN dbo.get_client_datetime() ELSE s.last_successful_date END
 			FROM o_Service_Schedule s
 			INNER JOIN inserted i
 				ON i.item_number = s.service_sequence

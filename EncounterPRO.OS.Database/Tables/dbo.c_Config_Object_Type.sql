@@ -103,7 +103,7 @@ GO
 ALTER TABLE [dbo].[c_Config_Object_Type]
 	ADD
 	CONSTRAINT [DF_c_Config_Object_Type_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT INSERT
 	ON [dbo].[c_Config_Object_Type]

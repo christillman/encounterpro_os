@@ -106,7 +106,7 @@ SELECT
 	a.expiration_date,
 	u.user_short_name,
 	u.color,
-	dispatch_minutes = DATEDIFF(minute, a.dispatch_date, getdate()),
+	dispatch_minutes = DATEDIFF(minute, a.dispatch_date, dbo.get_client_datetime()),
 	selected_flag=0,
 	ISNULL(p.last_name, '') + ', ' + ISNULL(p.first_name, '') + ' ' + ISNULL(p.middle_name, '') AS patient_name,
 	CAST(NULL AS varchar(24)) as room_name,
@@ -128,7 +128,7 @@ AND (a.owned_by = '!Exception' OR a.ordered_service <> 'MESSAGE')
 
 -- Turn on WAIT ready flag if we think the service is ready to complete
 UPDATE @services
-SET ready = dbo.fn_is_wait_service_ready(patient_workplan_item_id, getdate())
+SET ready = dbo.fn_is_wait_service_ready(patient_workplan_item_id, dbo.get_client_datetime())
 WHERE ordered_service = 'WAIT'
 
 UPDATE s

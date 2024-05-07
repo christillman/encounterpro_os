@@ -94,7 +94,7 @@ GO
 ALTER TABLE [dbo].[o_User_Logins]
 	ADD
 	CONSTRAINT [DF__o_user_logins_action_time]
-	DEFAULT (getdate()) FOR [action_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [action_time]
 GO
 GRANT INSERT
 	ON [dbo].[o_User_Logins]

@@ -420,7 +420,7 @@ BEGIN
 			i.patient_workplan_item_id,
 			i.risk_level,
 			'N',
-			getdate(),
+			dbo.get_client_datetime(),
 			i.created_by,
 			newid()
 	FROM inserted i

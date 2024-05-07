@@ -77,7 +77,7 @@ Declare @end_date varchar(10)
 Select @begin_date = @ps_begin_date
 Select @end_date = @ps_end_date
 Declare @today DateTime
-Select @today = GetDate()
+Select @today = dbo.get_client_datetime()
 --Select @Today
 Declare jmc_curse1 Insensitive cursor for
 SELECT p_treatment_item.treatment_description,

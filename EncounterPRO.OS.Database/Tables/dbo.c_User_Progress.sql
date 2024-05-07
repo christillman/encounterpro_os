@@ -91,7 +91,7 @@ GO
 ALTER TABLE [dbo].[c_User_Progress]
 	ADD
 	CONSTRAINT [DF_c_User_prog_cre_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_User_Progress]
 	ADD

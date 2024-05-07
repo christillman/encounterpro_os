@@ -84,7 +84,7 @@ GO
 ALTER TABLE [dbo].[o_Component_Selection]
 	ADD
 	CONSTRAINT [DF_o_Component_Selection_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[o_Component_Selection]
 	ADD

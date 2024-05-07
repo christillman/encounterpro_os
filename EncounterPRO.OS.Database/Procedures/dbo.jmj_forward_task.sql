@@ -36,7 +36,7 @@ AS
 DECLARE @ll_actor_id int,
 		@ldt_datetime datetime
 
-SET @ldt_datetime = getdate()
+SET @ldt_datetime = dbo.get_client_datetime()
 
 SELECT @ll_actor_id = actor_id
 FROM c_User

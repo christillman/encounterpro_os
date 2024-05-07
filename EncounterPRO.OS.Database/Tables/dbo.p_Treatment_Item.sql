@@ -141,7 +141,7 @@ GO
 ALTER TABLE [dbo].[p_Treatment_Item]
 	ADD
 	CONSTRAINT [DF__p_Treatme__creat__75235608]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_Treatment_Item]
 	ADD

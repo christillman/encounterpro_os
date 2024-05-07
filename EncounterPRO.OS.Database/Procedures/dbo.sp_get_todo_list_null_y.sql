@@ -109,7 +109,7 @@ SELECT
 	i.expiration_date,
 	u.user_short_name,
 	u.color,
-	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, getdate()),
+	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()),
 	selected_flag=0,
 	ISNULL(p.last_name, '') + ', ' + ISNULL(p.first_name, '') + ' ' + ISNULL(p.middle_name, '') AS patient_name,
 	CAST(NULL AS varchar(24)) as room_name,
@@ -138,7 +138,7 @@ IF LEFT(@ps_user_id, 1) = '#'
 		FROM p_Patient_WP_Item_Progress p
 		WHERE s.patient_workplan_item_id = p.patient_workplan_item_id
 		AND p.progress_type IN ('CLICKED', 'STARTED')
-		AND p.progress_date_time > DATEADD(minute, -1, getdate()) )
+		AND p.progress_date_time > DATEADD(minute, -1, dbo.get_client_datetime()) )
 	END
 ELSE
 	BEGIN
@@ -150,7 +150,7 @@ ELSE
 
 -- Turn on WAIT ready flag if we think the service is ready to complete
 UPDATE @services
-SET ready = dbo.fn_is_wait_service_ready(patient_workplan_item_id, getdate())
+SET ready = dbo.fn_is_wait_service_ready(patient_workplan_item_id, dbo.get_client_datetime())
 WHERE ordered_service = 'WAIT'
 
 
@@ -162,7 +162,7 @@ IF LEFT(@ps_user_id, 1) = '#'
 		FROM @services x
 			INNER JOIN o_User_Service_Lock l
 			ON x.patient_workplan_item_id = l.patient_workplan_item_id
-		WHERE x.begin_date < DATEADD(hour, -1, getdate())
+		WHERE x.begin_date < DATEADD(hour, -1, dbo.get_client_datetime())
 	
 	OPEN lc_locked
 	

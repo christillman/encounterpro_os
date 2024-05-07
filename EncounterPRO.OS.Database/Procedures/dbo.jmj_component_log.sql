@@ -34,7 +34,7 @@ CREATE PROCEDURE dbo.jmj_component_log (
 AS
 
 IF @pdt_operation_date_time IS NULL
-	SET @pdt_operation_date_time = getdate()
+	SET @pdt_operation_date_time = dbo.get_client_datetime()
 
 IF @ps_operation_as_user IS NULL
 	SET @ps_operation_as_user = ORIGINAL_LOGIN()

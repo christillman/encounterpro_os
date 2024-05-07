@@ -88,7 +88,7 @@ GO
 ALTER TABLE [dbo].[c_Config_Object_Version_Dependency]
 	ADD
 	CONSTRAINT [DF_c_Config_Object_Version_Dep_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Version_Dependency]
 	ADD

@@ -106,7 +106,7 @@ IF @pl_observation_sequence IS NULL
 		@pl_parent_observation_sequence,
 		composite_flag,
 		@ps_observed_by,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by
 	FROM c_Observation
 	WHERE observation_id = @ps_observation_id

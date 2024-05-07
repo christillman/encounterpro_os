@@ -32,7 +32,7 @@ AS
 
 IF @pdt_begin_date IS NULL OR @pdt_end_date IS NULL
 	BEGIN
-	SET @pdt_end_date = getdate()
+	SET @pdt_end_date = dbo.get_client_datetime()
 	SET @pdt_begin_date = DATEADD(day, -5, @pdt_end_date)
 	END
 
@@ -113,7 +113,7 @@ SELECT
 	i.expiration_date,
 	u.user_short_name,
 	u.color,
-	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, getdate()),
+	dispatch_minutes = DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()),
 	selected_flag=0,
 	ISNULL(p.last_name, '') + ', ' + ISNULL(p.first_name, '') + ' ' + ISNULL(p.middle_name, '') AS patient_name,
 	CAST(NULL AS varchar(24)) as room_name,

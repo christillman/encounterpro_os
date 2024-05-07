@@ -93,7 +93,7 @@ AND p.cpr_id not in
 (SELECT cpr_id from p_assessment a3 WITH (NOLOCK)
 WHERE   a3.assessment_type = 'WELL'
 AND     ISNULL( a3.assessment_status, 'OPEN' ) <> 'CANCELLED'
-AND     DATEDIFF( month, a3.begin_date, getdate() ) <= Cast(@months As integer)
+AND     DATEDIFF( month, a3.begin_date, dbo.get_client_datetime() ) <= Cast(@months As integer)
 AND     a3.begin_date =  (SELECT MAX( a4.begin_date ) 
                          FROM p_assessment a4 WITH (NOLOCK)
                          WHERE p.cpr_id = a4.cpr_id

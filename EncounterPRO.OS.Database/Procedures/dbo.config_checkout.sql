@@ -118,7 +118,7 @@ IF @ll_last_version_status NOT IN ('CheckedIn', 'Cancelled')
 
 			UPDATE c_Config_Object
 			SET checked_out_by = @ps_checked_out_by,
-				checked_out_date_time = getdate()
+				checked_out_date_time = dbo.get_client_datetime()
 			WHERE config_object_id = @lui_config_object_id
 
 			RETURN @ll_last_version
@@ -153,10 +153,10 @@ SELECT config_object_id,
 	@ps_version_description,
 	config_object_type ,
 	owner_id ,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_checked_out_by,
 	@ls_checkout_status,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ll_installed_version,
 	@ps_checked_out_by,
 	object_encoding_method

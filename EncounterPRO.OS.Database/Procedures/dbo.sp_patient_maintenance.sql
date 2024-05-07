@@ -54,13 +54,13 @@ FROM	 p_Patient p WITH (NOLOCK)
 		AND (m.race IS NULL OR p.race = m.race)
 	JOIN c_Age_Range ar WITH (NOLOCK) ON m.age_range_id = ar.age_range_id
 WHERE p.cpr_id = @ps_cpr_id
-AND getdate() >= CASE ar.age_from_unit
+AND dbo.get_client_datetime() >= CASE ar.age_from_unit
 			WHEN 'YEAR' THEN dateadd(year, ar.age_from, p.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, ar.age_from, p.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, ar.age_from, p.date_of_birth)
 			END
 AND (ar.age_to IS NULL OR
-	getdate() < CASE ar.age_to_unit
+	dbo.get_client_datetime() < CASE ar.age_to_unit
 			WHEN 'YEAR' THEN dateadd(year, ar.age_to, p.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, ar.age_to, p.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, ar.age_to, p.date_of_birth)

@@ -100,7 +100,7 @@ DECLARE @treatments TABLE (
 	treatment_definition_id int NULL
 	)
 
--- SQL 2000 would not allow a getdate() inside a function so we have to pass in the effective check_date.
+-- SQL 2000 would not allow a dbo.get_client_datetime() inside a function so we have to pass in the effective check_date.
 -- If NULL is passed in, then use 
 IF @pdt_check_date IS NULL
 	SELECT @pdt_check_date = log_date_time

@@ -98,7 +98,7 @@ SET @ps_completed_by = COALESCE(@ps_completed_by, @ps_owned_by)
 -- If neither completed_by or owned_by were specified, then use created_by
 SET @ps_completed_by = COALESCE(@ps_completed_by, @ps_created_by)
 
-SET @pdt_progress_date_time = COALESCE(@pdt_progress_date_time, getdate())
+SET @pdt_progress_date_time = COALESCE(@pdt_progress_date_time, dbo.get_client_datetime())
 
 -- Update the status of patient workplan table and replace the encounter_id
 -- if the current encounter_id is null.  If an owned_by value was passed in, then

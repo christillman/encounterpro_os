@@ -95,12 +95,12 @@ GO
 ALTER TABLE [dbo].[p_Chart_Alert_Progress]
 	ADD
 	CONSTRAINT [DF_p_Cht_Alrt_Progress_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_Chart_Alert_Progress]
 	ADD
 	CONSTRAINT [DF_p_Cht_Alrt_Progress_d_t]
-	DEFAULT (getdate()) FOR [progress_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [progress_date_time]
 GO
 GRANT DELETE
 	ON [dbo].[p_Chart_Alert_Progress]

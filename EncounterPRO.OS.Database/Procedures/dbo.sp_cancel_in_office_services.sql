@@ -101,7 +101,7 @@ AND i.item_type = 'Service'
 AND i.ordered_service = 'MESSAGE'
 AND (wp.status <> 'Pending' OR wp.workplan_type NOT IN ('Followup', 'Referral'))
 
-SET @ldt_progress_date_time = getdate()
+SET @ldt_progress_date_time = dbo.get_client_datetime()
 SET @ls_wp_item_status = 'Cancelled'
 
 -- Close/Cancel all the workplan items which are still pending

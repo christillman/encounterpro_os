@@ -85,7 +85,7 @@ inner join c_Office with (NOLOCK)
 ON p_patient_encounter.office_id = c_Office.office_id
 WHERE
 p_patient_encounter.attending_doctor = @user_id
-AND DATEDIFF(day, p_patient_encounter.encounter_date, getdate()) = 0
+AND DATEDIFF(day, p_patient_encounter.encounter_date, dbo.get_client_datetime()) = 0
 ORDER BY
 c_Office.office_id,Name,Type
 GO

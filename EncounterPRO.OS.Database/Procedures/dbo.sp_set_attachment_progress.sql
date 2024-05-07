@@ -79,7 +79,7 @@ DECLARE @ll_attachment_progress_sequence int
 
 
 IF @pdt_progress_date_time IS NULL
-	SET @pdt_progress_date_time = getdate()
+	SET @pdt_progress_date_time = dbo.get_client_datetime()
 
 INSERT INTO p_Attachment_Progress (
 	attachment_id,
@@ -99,7 +99,7 @@ VALUES (
 	@pdt_progress_date_time,
 	@ps_progress_type,
 	@ps_progress,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by )
 
 SET @ll_attachment_progress_sequence = SCOPE_IDENTITY()

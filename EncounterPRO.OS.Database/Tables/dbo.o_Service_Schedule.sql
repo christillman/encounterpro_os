@@ -93,7 +93,7 @@ GO
 ALTER TABLE [dbo].[o_Service_Schedule]
 	ADD
 	CONSTRAINT [DF_o_Service_Schedule_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[o_Service_Schedule]
 	ADD

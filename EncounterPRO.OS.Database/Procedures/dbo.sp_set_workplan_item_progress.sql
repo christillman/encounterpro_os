@@ -121,7 +121,7 @@ IF @ls_cpr_id IS NOT NULL
 	END
 
 IF @pdt_progress_date_time IS NULL
-	SET @pdt_progress_date_time = getdate()
+	SET @pdt_progress_date_time = dbo.get_client_datetime()
 
 INSERT INTO p_Patient_WP_Item_Progress (
 	cpr_id,

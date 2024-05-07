@@ -1226,7 +1226,7 @@ for i = 1 to popup_return.item_count
 		AND item_type = 'Service'
 		AND ordered_service = :export_service
 		AND status = 'Completed'
-		AND dbo.fn_date_add_interval(end_date, :ll_exclude_date_range_amount, :exclude_date_range_unit_id) > getdate();
+		AND dbo.fn_date_add_interval(end_date, :ll_exclude_date_range_amount, :exclude_date_range_unit_id) > dbo.get_client_datetime();
 		if not tf_check() then return
 		
 		if ll_count > 0 then

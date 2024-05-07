@@ -99,7 +99,7 @@ DECLARE @ls_property varchar(64),
 		@ldt_status_date datetime
 
 -- Anything before 5am counts as yesterday
-SET @ldt_status_date = dbo.fn_date_truncate(DATEADD(hour, -5, getdate()), 'DAY')
+SET @ldt_status_date = dbo.fn_date_truncate(DATEADD(hour, -5, dbo.get_client_datetime()), 'DAY')
 
 SELECT @ls_sex = sex,
 		@ls_race = race,
@@ -164,7 +164,7 @@ WHILE @@FETCH_STATUS = 0
 		END
 	ELSE IF @ls_operation = 'In Age Range'
 		BEGIN
-		SET @ldt_today = dbo.fn_date_truncate(getdate(), 'Day')
+		SET @ldt_today = dbo.fn_date_truncate(dbo.get_client_datetime(), 'Day')
 		SELECT @ll_age_from = age_from,
 				@ls_age_from_unit = age_from_unit,
 				@ll_age_to = age_to,
@@ -395,7 +395,7 @@ FROM p_Maintenance_Class pmc
 	ON pmc.cpr_id = x.cpr_id
 	AND p.protocol_sequence = x.protocol_sequence
 WHERE pmc.maintenance_rule_id = @pl_maintenance_rule_id
-AND getdate() < CASE p.interval_unit
+AND dbo.get_client_datetime() < CASE p.interval_unit
 							WHEN 'YEAR' THEN dateadd(year, p.interval, x.last_begin_date)
 							WHEN 'MONTH' THEN dateadd(month, p.interval, x.last_begin_date)
 							WHEN 'DAY' THEN dateadd(day, p.interval, x.last_begin_date)
@@ -404,7 +404,7 @@ AND getdate() < CASE p.interval_unit
 
 
 UPDATE c_Maintenance_Rule
-SET last_reset = getdate()
+SET last_reset = dbo.get_client_datetime()
 WHERE maintenance_rule_id = @pl_maintenance_rule_id
 
 GO

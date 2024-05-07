@@ -90,7 +90,7 @@ INNER JOIN c_vaccine v WITH (NOLOCK)
 ON	v.vaccine_id = vs.vaccine_id
 WHERE
 	p.patient_status = 'ACTIVE'
-AND	DATEDIFF (year, p.date_of_birth, getdate() ) < 18.0
+AND	DATEDIFF (year, p.date_of_birth, dbo.get_client_datetime() ) < 18.0
 AND	v.status = 'OK'
 AND	vs.schedule_sequence = 1
 
@@ -140,7 +140,7 @@ INNER JOIN p_patient p WITH (NOLOCK)
 ON	p.cpr_id = t.cpr_id
 WHERE
 	next_sequence IS NOT NULL
-AND	next_vaccine_due_date <= getdate()
+AND	next_vaccine_due_date <= dbo.get_client_datetime()
 ORDER BY
 	 next_vaccine_due_date
 

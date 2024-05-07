@@ -146,7 +146,7 @@ SELECT workplan_type,
 	encounter_description_flag,
 	specialty_id,
 	@ll_customer_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	@lid_new_id,
 	'OK'
 FROM c_Workplan

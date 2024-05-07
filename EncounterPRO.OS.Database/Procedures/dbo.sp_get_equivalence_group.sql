@@ -104,7 +104,7 @@ INSERT INTO c_Equivalence_Group (
 VALUES (
 	@ps_object_type ,
 	@ps_description ,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by )
 
 SET @ll_equivalence_group_id = SCOPE_IDENTITY()

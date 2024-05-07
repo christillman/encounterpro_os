@@ -183,7 +183,7 @@ SELECT cpr_id ,
 	treatment_id
 FROM inserted
 WHERE current_flag = 'Y'
-AND result_date_time >= DATEADD(second, -3, getdate())
+AND result_date_time >= DATEADD(second, -3, dbo.get_client_datetime())
 
 -- Remove the candidates whose encounter is today and open
 DELETE x
@@ -195,7 +195,7 @@ FROM @commentdates x
 	ON x.cpr_id = t.cpr_id
 	AND x.treatment_id = t.treatment_id
 WHERE e.encounter_status = 'OPEN'
-AND dbo.fn_date_truncate(e.encounter_date, 'DAY') = dbo.fn_date_truncate(getdate(), 'DAY')
+AND dbo.fn_date_truncate(e.encounter_date, 'DAY') = dbo.fn_date_truncate(dbo.get_client_datetime(), 'DAY')
 AND ISNULL(t.treatment_status, 'OPEN') = 'OPEN'
 
 -- Update the remaining comment_date_time values to the greater of the treatment
@@ -326,7 +326,7 @@ DEALLOCATE lc_bill_treatment_observation
 
 
 -- Now set the abnormal fields from the c_Observation_Result_Range table
-SET @ldt_current_date = getdate()
+SET @ldt_current_date = dbo.get_client_datetime()
 
 DECLARE lc_results CURSOR LOCAL FAST_FORWARD FOR
 	SELECT i.cpr_id,
@@ -560,7 +560,7 @@ AND i.current_flag = 'Y'
 --	ON t.cpr_id = e.cpr_id
 --	AND t.open_encounter_id = e.encounter_id
 --WHERE r.current_flag = 'Y'
---AND r.result_date_time >= DATEADD(second, -2, getdate())
+--AND r.result_date_time >= DATEADD(second, -2, dbo.get_client_datetime())
 --AND (ISNULL(t.treatment_status, 'OPEN') <> 'OPEN'
 --	OR e.encounter_status <> 'OPEN' )
 

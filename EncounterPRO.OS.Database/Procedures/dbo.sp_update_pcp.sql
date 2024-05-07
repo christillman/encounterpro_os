@@ -101,7 +101,7 @@ INSERT INTO @tmp_well
         	INNER JOIN c_Assessment_Definition ad
         	ON a.assessment_id = ad.assessment_id 
 	WHERE ad.assessment_type = 'WELL'
-	AND e.encounter_date > getdate() - 30
+	AND e.encounter_date > dbo.get_client_datetime() - 30
       	AND e.encounter_status = 'CLOSED'
 	AND r.role_id ='!Physician'
       	GROUP BY e.cpr_id, ad.assessment_type

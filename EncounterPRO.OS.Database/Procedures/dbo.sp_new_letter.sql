@@ -88,7 +88,7 @@ VALUES (
 	@ps_letter_type,
 	@ps_description,
 	@pl_attachment_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by)
 
 GO

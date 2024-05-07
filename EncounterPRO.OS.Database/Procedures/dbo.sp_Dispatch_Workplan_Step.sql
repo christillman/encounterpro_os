@@ -94,7 +94,7 @@ DECLARE @ll_encounter_id int,
 
 WHILE @pi_step_number > 0
 	BEGIN
-	SET @ldt_progress_date_time = getdate()
+	SET @ldt_progress_date_time = dbo.get_client_datetime()
 
 	-- Get some info from the workplan table
 	SELECT @ps_cpr_id = COALESCE(cpr_id, @ps_cpr_id),
@@ -201,7 +201,7 @@ WHILE @pi_step_number > 0
 				WHEN 'MINUTE' THEN dateadd(minute, @ll_step_delay, @ldt_workplan_date)
 				END
 		
-			IF @ldt_start_date > getdate()
+			IF @ldt_start_date > dbo.get_client_datetime()
 				BEGIN
 				-- We can't start the step yet, so queue an event to start it later
 				EXECUTE sp_queue_event
@@ -612,7 +612,7 @@ WHILE @pi_step_number > 0
 							@ll_ordered_workplan_id,
 							@ls_description,
 							@ls_ordered_for,
-							getdate() )
+							dbo.get_client_datetime() )
 						END
 					ELSE
 						BEGIN
@@ -749,7 +749,7 @@ WHILE @pi_step_number > 0
 	-- Update the last_step info on the workplan record
 	IF @li_last_step_dispatched < @pi_step_number OR @li_last_step_dispatched IS NULL
 		BEGIN
-		SET @ldt_last_step_date = getdate()
+		SET @ldt_last_step_date = dbo.get_client_datetime()
 		UPDATE p_Patient_WP
 		SET last_step_dispatched = @pi_step_number,
 			last_step_date = @ldt_last_step_date

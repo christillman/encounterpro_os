@@ -71,7 +71,7 @@ CREATE PROCEDURE sp_queue_event (
 AS
 
 IF @pdt_start_date IS NULL
-	SELECT @pdt_start_date = getdate()
+	SELECT @pdt_start_date = dbo.get_client_datetime()
 
 INSERT INTO o_Event_Queue (
 	event,
@@ -80,7 +80,7 @@ INSERT INTO o_Event_Queue (
 	event_status)
 VALUES (
 	@ps_event,
-	getdate(),
+	dbo.get_client_datetime(),
 	@pdt_start_date,
 	'NOTREADY')
 SELECT @pl_event_id = @@IDENTITY

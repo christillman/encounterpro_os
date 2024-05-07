@@ -141,7 +141,7 @@ SELECT [age_range_category]
            ,[sort_sequence]
            ,@ll_customer_id
            ,[status]
-           ,getdate()
+           ,dbo.get_client_datetime()
 			,@lid_new_id
 FROM c_Age_Range
 WHERE age_range_id = @pl_age_range_id

@@ -91,7 +91,7 @@ GO
 ALTER TABLE [dbo].[x_Performance_Log]
 	ADD
 	CONSTRAINT [DF_x_Performance_Log_log_date_time_21]
-	DEFAULT (getdate()) FOR [log_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [log_date_time]
 GO
 CREATE NONCLUSTERED INDEX [idx_perf_metric]
 	ON [dbo].[x_Performance_Log] ([metric], [log_date_time])

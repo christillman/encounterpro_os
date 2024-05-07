@@ -65,7 +65,7 @@ INSERT INTO [dbo].[c_Database_Maintenance] (
 		@ls_database_name ,
 		@ps_action ,
 		@ps_completion_status ,
-		getdate() ,
+		dbo.get_client_datetime() ,
 		@ps_action_argument ,
 		@ps_build ,
 		@ll_db_revision ,

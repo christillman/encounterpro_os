@@ -63,7 +63,7 @@ INSERT INTO o_Log (
 	scribe_user_id)
 VALUES (
 	@ps_severity,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_caller,
 	@ps_script,
 	@ps_message,

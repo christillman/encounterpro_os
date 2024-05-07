@@ -33,7 +33,6 @@ end forward
 global type w_menu_selection from w_window_base
 integer width = 3401
 integer height = 2092
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -458,8 +457,6 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_menu_selection
 integer x = 3333
 integer y = 32
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_menu_selection
@@ -696,7 +693,7 @@ VALUES (
 	:ll_new_menu_id,
 	:ll_sort_sequence,
 	:sqlca.customer_id,
-	getdate(),
+	dbo.get_client_datetime(),
 	newid(),
 	'OK');
 if not tf_check() then return

@@ -92,7 +92,7 @@ WHERE description = @ps_report_name
 
 IF @ldt_last_updated IS NOT NULL
 	BEGIN
-	IF @ldt_last_updated > DATEADD(second, -5, getdate())
+	IF @ldt_last_updated > DATEADD(second, -5, dbo.get_client_datetime())
 		BEGIN
 		SELECT 'New ' + @ps_context_object + ' Report - "' + @ps_report_name + '" Successfully Created'
 		RETURN

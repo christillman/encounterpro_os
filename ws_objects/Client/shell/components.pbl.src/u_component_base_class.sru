@@ -116,7 +116,7 @@ TRY
 	
 	if not isnull(server_service_id) then
 		UPDATE o_Server_Component
-		SET last_run = getdate(),
+		SET last_run = dbo.get_client_datetime(),
 			last_spid = :cprdb.spid
 		WHERE service_id = :server_service_id
 		USING cprdb;

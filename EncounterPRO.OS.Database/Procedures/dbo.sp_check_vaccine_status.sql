@@ -81,9 +81,9 @@ ELSE
 	WHERE disease_id = @pl_disease_id 	AND schedule_sequence = @li_vaccine_count + 1
 	SELECT @pdt_due_date_time = dateadd(day, datediff(day, '1/1/1980', @ldt_age), @ldt_date_of_birth)
 	SELECT @ldt_warning_date = dateadd(day, -@li_warning_days, @pdt_due_date_time)
-	IF @ldt_warning_date > getdate()
+	IF @ldt_warning_date > dbo.get_client_datetime()
 		SELECT	@pi_status = 1
-	ELSE IF @pdt_due_date_time > getdate()
+	ELSE IF @pdt_due_date_time > dbo.get_client_datetime()
 		SELECT	@pi_status = 2
 	ELSE
 		SELECT	@pi_status = 3

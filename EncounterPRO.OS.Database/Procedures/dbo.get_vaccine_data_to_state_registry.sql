@@ -101,7 +101,7 @@ IF @ls_interval_unit IS NULL or Len(@ls_interval_unit) = 0
 	SET @ls_interval_unit = 'Month'
 
 
-SET @ldt_min_datetime = dbo.fn_date_add_interval(getdate(), -@ll_interval_amount, @ls_interval_unit)
+SET @ldt_min_datetime = dbo.fn_date_add_interval(dbo.get_client_datetime(), -@ll_interval_amount, @ls_interval_unit)
 
 DECLARE @immunizations TABLE (
 	cpr_id varchar(12) NOT NULL,

@@ -87,7 +87,7 @@ GO
 ALTER TABLE [dbo].[x_External_Application_Message]
 	ADD
 	CONSTRAINT [DF_x_ext_appl_message_created_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[x_External_Application_Message]
 	ADD

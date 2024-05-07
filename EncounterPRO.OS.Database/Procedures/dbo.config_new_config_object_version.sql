@@ -100,7 +100,7 @@ SET @lui_config_object_id = CAST(@ps_config_object_id AS uniqueidentifier)
 IF @ps_created_by IS NULL
 	SET @ps_created_by = dbo.fn_current_epro_user()
 
-SET @ldt_created = getdate()
+SET @ldt_created = dbo.get_client_datetime()
 
 -- If the status is NULL then set it based on whether or not @pi_objectdata is NULL
 IF @ps_status IS NULL
@@ -198,7 +198,7 @@ ELSE
 	UPDATE v
 	SET description = @ls_description,
 		config_object_type = @ls_config_object_type,
-		created = getdate(),
+		created = dbo.get_client_datetime(),
 		created_by = @ps_created_by,
 		objectdata = @pi_objectdata,
 		status = @ps_status,

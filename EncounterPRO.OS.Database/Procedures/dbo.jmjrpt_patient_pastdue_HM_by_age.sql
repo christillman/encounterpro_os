@@ -78,13 +78,13 @@ JOIN c_Maintenance_Rule m WITH (NOLOCK)
 	AND (m.race IS NULL OR p.race = m.race)
 JOIN c_Age_Range ar WITH (NOLOCK) ON m.age_range_id = ar.age_range_id
 WHERE ar.age_range_id = @age_range_control
-AND getdate() >= CASE ar.age_from_unit
+AND dbo.get_client_datetime() >= CASE ar.age_from_unit
 			WHEN 'YEAR' THEN dateadd(year, ar.age_from, p.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, ar.age_from, p.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, ar.age_from, p.date_of_birth)
 			END
 AND (ar.age_to IS NULL OR
-	getdate() < CASE ar.age_to_unit
+	dbo.get_client_datetime() < CASE ar.age_to_unit
 			WHEN 'YEAR' THEN dateadd(year, ar.age_to, p.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, ar.age_to, p.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, ar.age_to, p.date_of_birth)
@@ -165,7 +165,7 @@ SELECT billing_id AS Bill_ID,
 	description,
 	Due
 FROM @tmp_maint_procs
-Where (schedule_date is null or (DATEDIFF( day, schedule_date, getdate() ) > 0 ))
+Where (schedule_date is null or (DATEDIFF( day, schedule_date, dbo.get_client_datetime() ) > 0 ))
 Order By Patient,description
 
 GO

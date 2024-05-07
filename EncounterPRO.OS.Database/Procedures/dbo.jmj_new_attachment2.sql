@@ -121,7 +121,7 @@ VALUES (
 	@pl_transportsequence ,
 	@pl_patient_workplan_item_id ,
 	'New',
-	getdate(),
+	dbo.get_client_datetime(),
 	'D',
 	@ps_attached_by ,
 	@ps_created_by,

@@ -97,12 +97,12 @@ GO
 ALTER TABLE [dbo].[p_assessment_Progress]
 	ADD
 	CONSTRAINT [DF__p_assessm__creat__2EDBC1A8]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_assessment_Progress]
 	ADD
 	CONSTRAINT [DF__p_assessm__progr__2DE79D6F]
-	DEFAULT (getdate()) FOR [progress_date_time]
+	DEFAULT (dbo.get_client_datetime()) FOR [progress_date_time]
 GO
 ALTER TABLE [dbo].[p_assessment_Progress]
 	ADD

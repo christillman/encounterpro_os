@@ -83,7 +83,7 @@ IF UPDATE(last_updated)
 ELSE
 	BEGIN
 	UPDATE t
-	SET last_updated = getdate()
+	SET last_updated = dbo.get_client_datetime()
 	FROM c_observation_tree as t
 		JOIN inserted as i
 			ON t.branch_id = i.branch_id

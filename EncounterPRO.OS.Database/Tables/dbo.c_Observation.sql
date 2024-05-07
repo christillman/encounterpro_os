@@ -117,7 +117,7 @@ GO
 ALTER TABLE [dbo].[c_Observation]
 	ADD
 	CONSTRAINT [DF__c_Observa__last___32EB7E57]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 ALTER TABLE [dbo].[c_Observation]
 	ADD

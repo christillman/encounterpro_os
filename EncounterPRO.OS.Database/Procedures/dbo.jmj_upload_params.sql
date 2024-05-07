@@ -87,7 +87,7 @@ AS
 --	END
 
 --SET @lui_batch_id = newid()
---SET @ldt_batch_date = getdate()
+--SET @ldt_batch_date = dbo.get_client_datetime()
 
 ---- First save the existing records
 --DECLARE @params TABLE (

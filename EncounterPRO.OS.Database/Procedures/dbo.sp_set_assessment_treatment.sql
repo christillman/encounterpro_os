@@ -90,7 +90,7 @@ IF NOT EXISTS (select *
 		@pl_problem_id,
 		@pl_treatment_id,
 		@pl_encounter_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by,
 		newid())
 

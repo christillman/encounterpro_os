@@ -86,7 +86,7 @@ DECLARE @ll_encounter_log_id integer,
 	@ll_length int
 
 IF @pdt_progress_date_time IS NULL
-	SET @pdt_progress_date_time = getdate()
+	SET @pdt_progress_date_time = dbo.get_client_datetime()
 
 
 -- First add the progress record.  If the length of @ps_progress is <= 40 then
@@ -118,7 +118,7 @@ IF @ll_length <= 40
 		@ps_progress_type,
 		@ps_progress_key,
 		@ls_progress_value,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 	END
 ELSE
@@ -143,7 +143,7 @@ ELSE
 		@ps_progress_type,
 		@ps_progress_key,
 		@ps_progress,
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by )
 
 

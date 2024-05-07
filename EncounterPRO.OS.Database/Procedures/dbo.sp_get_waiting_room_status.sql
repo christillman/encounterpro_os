@@ -83,7 +83,7 @@ SELECT
 	p_Patient.name_suffix,
 	p_Patient.locked_by,
 	o_Service.description,
-	minutes=DATEDIFF(minute, p_Patient_WP_Item.dispatch_date, getdate()),
+	minutes=DATEDIFF(minute, p_Patient_WP_Item.dispatch_date, dbo.get_client_datetime()),
 	pretty_name='',
 	status=0,
 	p_Patient_WP_Item.ordered_service,

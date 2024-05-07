@@ -58,7 +58,7 @@ SELECT p.cpr_id
 -- A vaccine already done
       WHERE
         p.patient_status = 'ACTIVE' 
-        AND datediff(year, p.date_of_birth, getdate()) <= 24
+        AND datediff(year, p.date_of_birth, dbo.get_client_datetime()) <= 24
         -- if patient had disease then vaccine not needed
         AND p.cpr_id not in
         (select cpr_id from p_assessment a WITH (NOLOCK)
@@ -90,7 +90,7 @@ FROM c_vaccine_disease cvd WITH (NOLOCK)
      JOIN c_Immunization_Schedule cid WITH (NOLOCK) ON cvd.disease_id = cid.disease_id 
      CROSS JOIN p_patient p WITH (NOLOCK)
      WHERE p.patient_status = 'ACTIVE' 
-        AND datediff(year, p.date_of_birth, getdate()) <= 24
+        AND datediff(year, p.date_of_birth, dbo.get_client_datetime()) <= 24
          -- if patient had disease then vaccine not needed
         AND p.cpr_id not in
         (select cpr_id from p_assessment a WITH (NOLOCK)
@@ -135,9 +135,9 @@ IF @switch = 'Y'
   IF @ldt_age IS NOT NULL 
   BEGIN
       SELECT @ldt_due_date_time = dateadd(day, datediff(day, '1/1/1980', @ldt_age), @ldt_date_of_birth)
-      IF @ldt_due_date_time < getdate()
+      IF @ldt_due_date_time < dbo.get_client_datetime()
           BEGIN
-            SELECT @diseaseid = datediff(day,@ldt_due_date_time,getdate())
+            SELECT @diseaseid = datediff(day,@ldt_due_date_time,dbo.get_client_datetime())
             INSERT INTO #OVERDUE_VACC VALUES(@cprid,@ldt_date_of_birth,@vaccid,@li_vaccine_count,@diseaseid)
           END
    END
@@ -155,7 +155,7 @@ IF @switch = 'Y'
 	 WHERE c_Immunization_Schedule.disease_id = @diseaseid AND schedule_sequence = 1
     BEGIN
       SELECT @ldt_due_date_time = dateadd(day, datediff(day, '1/1/1980', @ldt_age), @ldt_date_of_birth)
-      IF @ldt_due_date_time < getdate()
+      IF @ldt_due_date_time < dbo.get_client_datetime()
           BEGIN
             INSERT INTO #OVERDUE_VACC VALUES(@cprid,@ldt_date_of_birth,@vaccid,1,@diseaseid)
           END
@@ -217,7 +217,7 @@ SELECT
  from #OVERDUE_VACC2
 where odue_days > 0
 and vacc_descp not like ('NO %')
-and (datediff(day,dob,getdate()) - odue_days) > 0
+and (datediff(day,dob,dbo.get_client_datetime()) - odue_days) > 0
  group by Namer,dob, vacc_descp
 order by Days_over desc,Namer,vacc_descp
 

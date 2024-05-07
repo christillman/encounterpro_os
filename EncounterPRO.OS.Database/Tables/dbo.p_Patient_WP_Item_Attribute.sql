@@ -95,7 +95,7 @@ GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute]
 	ADD
 	CONSTRAINT [DF_p_Patient_WP_Item_Attribute_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 CREATE NONCLUSTERED INDEX [idx_pt_wp_Item_ID_and_Attribute]
 	ON [dbo].[p_Patient_WP_Item_Attribute] ([patient_workplan_item_id], [attribute])

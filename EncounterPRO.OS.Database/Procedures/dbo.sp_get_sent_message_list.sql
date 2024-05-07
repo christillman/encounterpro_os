@@ -88,9 +88,9 @@ ELSE
 	SET @li_sent_since_amount = CONVERT(smallint, LEFT(@ls_sent_since, @li_space - 1))
 	SET @ls_sent_since_unit = SUBSTRING(@ls_sent_since, @li_space + 1, 1)
 	SET @ldt_sent_since =  CASE @ls_sent_since_unit
-								WHEN 'Y' THEN dateadd(year, -@li_sent_since_amount, getdate())
-								WHEN 'M' THEN dateadd(month, -@li_sent_since_amount, getdate())
-								WHEN 'D' THEN dateadd(day, -@li_sent_since_amount, getdate())
+								WHEN 'Y' THEN dateadd(year, -@li_sent_since_amount, dbo.get_client_datetime())
+								WHEN 'M' THEN dateadd(month, -@li_sent_since_amount, dbo.get_client_datetime())
+								WHEN 'D' THEN dateadd(day, -@li_sent_since_amount, dbo.get_client_datetime())
 								END
 	END
 	

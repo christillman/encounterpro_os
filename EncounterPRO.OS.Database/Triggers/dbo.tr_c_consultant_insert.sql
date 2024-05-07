@@ -147,7 +147,7 @@ WHILE @@FETCH_STATUS = 0
 				name_suffix,
 				CAST(contact AS varchar(64)),
 				'OK',
-				getdate(),
+				dbo.get_client_datetime(),
 				'#SYSTEM',
 				id
 		FROM c_Consultant

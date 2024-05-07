@@ -735,7 +735,7 @@ end if
            :i,
            :ls_insurance_id,   
            null,   
-           getdate(),
+          dbo.get_client_datetime(),
            :system_user_id,
 			  :system_user_id)		
 			USING cprdb;

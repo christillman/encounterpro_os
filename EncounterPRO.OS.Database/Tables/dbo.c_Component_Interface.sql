@@ -91,7 +91,7 @@ GO
 ALTER TABLE [dbo].[c_Component_Interface]
 	ADD
 	CONSTRAINT [DF_c_Component_Interface_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[c_Component_Interface]
 	ADD
@@ -101,7 +101,7 @@ GO
 ALTER TABLE [dbo].[c_Component_Interface]
 	ADD
 	CONSTRAINT [DF_c_Component_Interface_last_updated]
-	DEFAULT (getdate()) FOR [last_updated]
+	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
 GRANT DELETE
 	ON [dbo].[c_Component_Interface]

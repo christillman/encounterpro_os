@@ -93,7 +93,7 @@ GO
 ALTER TABLE [dbo].[x_Message_Type]
 	ADD
 	CONSTRAINT [DF_x_Message_Type_created_40]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[x_Message_Type]
 	ADD

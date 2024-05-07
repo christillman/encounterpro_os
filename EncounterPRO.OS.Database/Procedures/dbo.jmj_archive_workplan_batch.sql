@@ -80,7 +80,7 @@ SELECT TOP 1000 patient_workplan_id
 FROM p_Patient_WP
 WHERE workplan_type IN ('Patient', 'Treatment')
 AND status IN ('Completed', 'Cancelled')
-AND created < DATEADD(month, -6, getdate())
+AND created < DATEADD(month, -6, dbo.get_client_datetime())
 
 -- Now archive each workplan in the temp table
 DECLARE lc_archive CURSOR LOCAL FAST_FORWARD FOR

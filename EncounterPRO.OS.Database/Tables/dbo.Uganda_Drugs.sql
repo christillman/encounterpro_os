@@ -17,7 +17,7 @@ CREATE TABLE [Uganda_Drugs](
 	[brand_name] [varchar](200) NULL,
 	[brand_name_RXCUI] [varchar](20) NULL,
 	[notes] [varchar](600) NULL,
-	[date_added] [date] NOT NULL DEFAULT (getdate()),
+	[date_added] [date] NOT NULL DEFAULT (dbo.get_client_datetime()),
 	reviewed tinyint NOT NULL default 0
 ) 
 

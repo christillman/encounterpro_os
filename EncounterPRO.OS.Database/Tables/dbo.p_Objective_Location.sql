@@ -93,7 +93,7 @@ GO
 ALTER TABLE [dbo].[p_Objective_Location]
 	ADD
 	CONSTRAINT [DF__p_Objecti__creat__74643BF9]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 GRANT DELETE
 	ON [dbo].[p_Objective_Location]

@@ -153,7 +153,7 @@ IF @ll_last_version_status <> 'CheckedOut'
 
 -- If we get here then we're ready to update the version record
 
-SET @ldt_checkin_datetime = getdate()
+SET @ldt_checkin_datetime = dbo.get_client_datetime()
 
 UPDATE v
 SET objectdata = CASE @ls_object_encoding_method WHEN 'None' THEN v.objectdata ELSE @pi_objectdata END,

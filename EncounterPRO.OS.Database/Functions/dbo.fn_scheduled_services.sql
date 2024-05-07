@@ -97,7 +97,7 @@ RETURNS @schedules TABLE (
 	interval_unit varchar(40) NULL,
 	running_status varchar(12) NOT NULL DEFAULT ('Not Running'),
 	running_patient_workplan_item_id int NULL,
-	next_run_date datetime NULL DEFAULT (getdate())
+	next_run_date datetime NULL DEFAULT (dbo.get_client_datetime())
 )
 
 AS
@@ -207,7 +207,7 @@ WHERE schedule_type = 'INTERVAL'
 AND running_status = 'Not Running'
 
 -- Calculate the next_run_date for the daily schedules that haven't run yet
--- Remember next_run_date contains getdate() at this point
+-- Remember next_run_date contains dbo.get_client_datetime() at this point
 -- Assume the next run date is today
 UPDATE @schedules
 SET next_run_date = CAST(convert(varchar(10),next_run_date, 101) + ' ' + schedule_interval AS datetime)

@@ -83,7 +83,7 @@ SELECT i.patient_workplan_id,
 	i.begin_date,   
 	i.status,
 	i.room_id,
-	DATEDIFF(minute, i.dispatch_date, getdate()) as minutes,
+	DATEDIFF(minute, i.dispatch_date, dbo.get_client_datetime()) as minutes,
 	l.user_id,
 	l.computer_id
 FROM p_Patient_WP_Item i WITH (NOLOCK, INDEX (idx_active_services) )

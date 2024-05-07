@@ -103,7 +103,7 @@ IF @ll_count = 0
 			'#SYSTEM',
 			'Current',
 			'#SYSTEM',
-			getdate(),
+			dbo.get_client_datetime(),
 			newid() )
 		
 		SET IDENTITY_INSERT p_Patient_WP OFF

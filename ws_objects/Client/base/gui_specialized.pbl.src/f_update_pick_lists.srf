@@ -3,59 +3,8 @@ global type f_update_pick_lists from function_object
 end type
 
 forward prototypes
-global function integer update_pick_lists (string ps_top_20_code_1, string ps_top_20_code_2, string ps_new_pick)
 global function integer f_update_pick_lists (string ps_top_20_code_1, string ps_top_20_code_2, string ps_new_pick)
 end prototypes
-
-global function integer update_pick_lists (string ps_top_20_code_1, string ps_top_20_code_2, string ps_new_pick);
-
-// Update the first ps_top_20_code
-UPDATE u_top_20
-SET hits = hits + 1,
-		last_hit = getdate()
-WHERE user_id = :current_user.user_id
-AND top_20_code = :ps_top_20_code_1
-AND item_text = :ps_new_pick;
-if not tf_check() then return -1
-if sqlca.sqlnrows = 0 then
-	INSERT INTO u_top_20 (
-		user_id,
-		top_20_code,
-		item_text)
-	VALUES (
-		:current_user.user_id,
-		:ps_top_20_code_1,
-		:ps_new_pick);
-	if not tf_check() then return -1
-end if
-
-// Update the 2nd ps_top_20_code
-if ps_top_20_code_2 <> "" then
-	UPDATE u_top_20
-	SET hits = hits + 1,
-			last_hit = getdate()
-	WHERE user_id = :current_user.user_id
-	AND top_20_code = :ps_top_20_code_2
-	AND item_text = :ps_new_pick;
-	if not tf_check() then return -1
-	if sqlca.sqlnrows = 0 then
-		INSERT INTO u_top_20 (
-			user_id,
-			top_20_code,
-			item_text)
-		VALUES (
-			:current_user.user_id,
-			:ps_top_20_code_2,
-			:ps_new_pick);
-		if not tf_check() then return -1
-	end if
-end if
-
-return 1
-
-
-
-end function
 
 global function integer f_update_pick_lists (string ps_top_20_code_1, string ps_top_20_code_2, string ps_new_pick);
 
@@ -63,7 +12,7 @@ global function integer f_update_pick_lists (string ps_top_20_code_1, string ps_
 if len(ps_top_20_code_1) > 0 then
 	UPDATE u_top_20
 	SET hits = hits + 1,
-			last_hit = getdate()
+			last_hit = dbo.get_client_datetime()
 	WHERE user_id = :current_user.user_id
 	AND top_20_code = :ps_top_20_code_1
 	AND item_text = :ps_new_pick;
@@ -85,7 +34,7 @@ end if
 if len(ps_top_20_code_2) > 0 then
 	UPDATE u_top_20
 	SET hits = hits + 1,
-			last_hit = getdate()
+			last_hit = dbo.get_client_datetime()
 	WHERE user_id = :current_user.user_id
 	AND top_20_code = :ps_top_20_code_2
 	AND item_text = :ps_new_pick;

@@ -132,11 +132,11 @@ IF UPDATE(referring_doctor)
 		SELECT i.cpr_id,
 			i.encounter_id,
 			'#SYSTEM',
-			getdate(),
+			dbo.get_client_datetime(),
 			'Modify',
 			'referring_provider_id',
 			i.referring_doctor,
-			getdate(),
+			dbo.get_client_datetime(),
 			'#SYSTEM'
 		FROM inserted i
 			INNER JOIN p_Patient p

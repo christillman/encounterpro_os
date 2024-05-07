@@ -125,9 +125,9 @@ IF @ls_encounter_status = 'OPEN'
 		@ps_cpr_id,
 		@pl_encounter_id,
 		@ps_user_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		'Closed',
-		getdate(),
+		dbo.get_client_datetime(),
 		@ps_created_by)
 
 

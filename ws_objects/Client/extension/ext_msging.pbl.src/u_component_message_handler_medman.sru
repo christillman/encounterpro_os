@@ -1506,7 +1506,7 @@ setnull(ls_allocation)
            :i,
            :ls_insurance_id,   
            null,   
-           getdate(),
+           dbo.get_client_datetime(),
            :system_user_id,
 			  :system_user_id)		
 			USING cprdb;
@@ -1539,7 +1539,7 @@ i = 2
            :i,
            :ls_insurance_id,   
            null,   
-           getdate(),
+           dbo.get_client_datetime(),
            :system_user_id,
 			  :system_user_id)		
 			USING cprdb;
@@ -1573,7 +1573,7 @@ i = 3
            :i,
            :ls_insurance_id,   
            null,   
-           getdate(),
+           dbo.get_client_datetime(),
            :system_user_id,
 			  :system_user_id)		
 			USING cprdb;

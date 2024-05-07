@@ -309,7 +309,7 @@ SET testing_version = NULL,
 FROM @components c
 WHERE testing_started IS NULL
 OR testing_expiration IS NULL
-OR testing_expiration < getdate()
+OR testing_expiration < dbo.get_client_datetime()
 
 RETURN
 

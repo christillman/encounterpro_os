@@ -365,11 +365,11 @@ BEGIN
 	SELECT DISTINCT p.cpr_id,
 		i.encounter_id,
 		i.user_id,
-		getdate(),
+		dbo.get_client_datetime(),
 		'Care Team',
 		p.progress_key,
 		'Y',
-		getdate(),
+		dbo.get_client_datetime(),
 		i.created_by
 	FROM @progress p
 		INNER JOIN inserted i

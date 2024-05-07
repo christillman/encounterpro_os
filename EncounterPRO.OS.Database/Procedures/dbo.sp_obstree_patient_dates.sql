@@ -76,7 +76,7 @@ IF @pdt_begin_date IS NULL
 	SET @pdt_begin_date = CAST('1/1/1900' AS datetime)
 
 IF @pdt_end_date IS NULL
-	SET @pdt_end_date = getdate()
+	SET @pdt_end_date = dbo.get_client_datetime()
 
 DECLARE @tmp_patient_results TABLE
 (	 record_type varchar(12) NOT NULL

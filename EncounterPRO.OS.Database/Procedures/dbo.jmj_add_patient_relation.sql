@@ -127,10 +127,10 @@ VALUES (
 	@ls_guarantor_flag ,
 	@ls_payor_flag ,
 	@ls_primary_decision_maker_flag ,
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by,
 	'OK',
-	getdate())
+	dbo.get_client_datetime())
 
 
 

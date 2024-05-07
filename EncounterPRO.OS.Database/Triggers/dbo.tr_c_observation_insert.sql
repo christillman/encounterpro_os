@@ -121,7 +121,7 @@ INSERT INTO c_Equivalence (
 	owner_id)
 SELECT o.id,
 	NULL,
-	getdate(),
+	dbo.get_client_datetime(),
 	'#SYSTEM',
 	object_key = o.observation_id,
 	description = ISNULL(o.description, '<No Description>'),

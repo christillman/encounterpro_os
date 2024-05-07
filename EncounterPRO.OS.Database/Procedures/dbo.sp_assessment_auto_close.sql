@@ -193,7 +193,7 @@ DECLARE lc_assessment CURSOR LOCAL FAST_FORWARD TYPE_WARNING FOR
 		diagnosis_sequence,
 		expected_end_date
 	FROM @close_candidates
-	WHERE getdate() >= expected_end_date
+	WHERE dbo.get_client_datetime() >= expected_end_date
 	UNION
 	SELECT
 		 p.cpr_id

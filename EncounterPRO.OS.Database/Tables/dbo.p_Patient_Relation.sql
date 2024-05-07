@@ -97,7 +97,7 @@ GO
 ALTER TABLE [dbo].[p_Patient_Relation]
 	ADD
 	CONSTRAINT [DF__p_Patient_Relation_created]
-	DEFAULT (getdate()) FOR [created]
+	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
 ALTER TABLE [dbo].[p_Patient_Relation]
 	ADD
@@ -142,7 +142,7 @@ GO
 ALTER TABLE [dbo].[p_Patient_Relation]
 	ADD
 	CONSTRAINT [DF__p_Patient_Relation_status_date]
-	DEFAULT (getdate()) FOR [status_date]
+	DEFAULT (dbo.get_client_datetime()) FOR [status_date]
 GO
 GRANT DELETE
 	ON [dbo].[p_Patient_Relation]

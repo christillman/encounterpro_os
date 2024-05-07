@@ -22,13 +22,13 @@ CREATE VIEW v_Patient_Age_Ranges (cpr_id, age_range_id, age_range_category, desc
 select p_Patient.cpr_id, c_Age_Range.age_range_id, c_Age_Range.age_range_category, c_Age_Range.description
 FROM p_Patient
 JOIN c_Age_Range
-ON getdate() >= CASE c_Age_Range.age_from_unit
+ON dbo.get_client_datetime() >= CASE c_Age_Range.age_from_unit
 			WHEN 'YEAR' THEN dateadd(year, c_Age_Range.age_from, p_Patient.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, c_Age_Range.age_from, p_Patient.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, c_Age_Range.age_from, p_Patient.date_of_birth)
 			END
 AND (c_Age_Range.age_to_unit IS NULL
-	OR getdate() < CASE c_Age_Range.age_to_unit
+	OR dbo.get_client_datetime() < CASE c_Age_Range.age_to_unit
 			WHEN 'YEAR' THEN dateadd(year, c_Age_Range.age_to, p_Patient.date_of_birth)
 			WHEN 'MONTH' THEN dateadd(month, c_Age_Range.age_to, p_Patient.date_of_birth)
 			WHEN 'DAY' THEN dateadd(day, c_Age_Range.age_to, p_Patient.date_of_birth)

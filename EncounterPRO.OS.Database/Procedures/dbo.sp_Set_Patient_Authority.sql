@@ -173,7 +173,7 @@ VALUES (
 	@pl_authority_sequence,
 	@ps_authority_id,
 	'OK',
-	getdate(),
+	dbo.get_client_datetime(),
 	@ps_created_by)
 
 SELECT @ll_error = @@ERROR,
