@@ -807,7 +807,7 @@ end function
 public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_logid, string ps_logpass);
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
-return dbconnect(ps_server, ps_dbname, ps_dbms, "EncounterPRO", ps_logid, ps_logpass)
+return dbconnect(ps_server, ps_dbname, ps_dbms, "EncounterPRO_OS", ps_logid, ps_logpass)
 
 end function
 
@@ -1102,7 +1102,7 @@ end if
 ls_computername = mylog.get_computername()
 
 
-dbms = "MSOLEDBSQL SQL Server"
+dbms = "MSOLEDBSQL"
 
 ls_dbms = UPPER(LEFT(dbms, 3))
 
@@ -1603,10 +1603,8 @@ long ll_is_dbo
 long ll_pos
 long ll_file_id
 string ls_physical_name
-string ls_client_link
 
 luo_this = this
-
 
 // Make sure we're in the right database
 ls_sql = "USE [" + database + "]"
@@ -1731,16 +1729,14 @@ if luo_this.sqlcode = 0 then
 				database_mode,
 				database_status,
 				master_configuration_date,
-				modification_level,
-				client_link
+				modification_level
 		INTO :ll_customer_id,
 				:db_script_major_release,
 				:db_script_database_version,
 				:ls_database_mode,
 				:ls_database_status,
 				:ldt_master_configuration_date,
-				:ll_modification_level,
-				:ls_client_link
+				:ll_modification_level
 		FROM c_Database_Status
 		USING luo_this;
 		if not this.check() then return -1
@@ -1754,7 +1750,6 @@ if luo_this.sqlcode = 0 then
 		this.database_status = ls_database_status
 		this.master_configuration_date = ldt_master_configuration_date
 		this.modification_level = ll_modification_level
-		this.client_link = ls_client_link
 		
 //		epro_40_synch_* were original encounterpro servers
 //		select count(*) 
