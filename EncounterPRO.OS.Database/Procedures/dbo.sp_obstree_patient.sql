@@ -487,7 +487,7 @@ BEGIN
 END
 
 /* Debugging
-xELECT
+SELECT
 	 'P-tree'
 	,history_sequence
 	,parent_history_sequence
@@ -766,7 +766,7 @@ BEGIN
 END
 
 /* Debugging
-xELECT
+SELECT
 	 'Full Data'
 	,level_1_2_flag 
 	,record_type	 
