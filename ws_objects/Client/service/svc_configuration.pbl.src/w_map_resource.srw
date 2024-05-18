@@ -191,16 +191,6 @@ If recordtype = 'NEW' then
 		sle_resource.setfocus()
 		return
 	End If
-//	If isnull(sle_appointment.text) or len(sle_appointment.text) = 0 Then
-//		openwithparm(w_pop_message,"Enter a valid appointment type")
-//		sle_appointment.setfocus()
-//		return
-//	End If
-//	If isnull(st_encounter_type.text) or len(st_encounter_type.text) = 0 Then
-//		openwithparm(w_pop_message,"Select a valid encounter type")
-//		st_encounter_type.setfocus()
-//		return
-//	End If
 	Insert Into b_resource (
 	appointment_type,
 	resource,
@@ -334,7 +324,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Type"
+string text = "Appointment Type"
 alignment alignment = center!
 borderstyle borderstyle = styleraised!
 boolean focusrectangle = false

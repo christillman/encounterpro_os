@@ -468,7 +468,7 @@ date ld_temp
 
 ld_temp = close_date
 
-ls_temp = f_select_date(ld_temp, "Encounter Close Date (opened " + st_open_date.text + ")")
+ls_temp = f_select_date(ld_temp, "Appointment Close Date (opened " + st_open_date.text + ")")
 if isnull(ls_temp) then return
 
 if ld_temp < date(assessment.begin_date) then
@@ -543,7 +543,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Bill with this Encounter:"
+string text = "Bill with this Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

@@ -331,7 +331,7 @@ integer li_sts
 string ls_encounter_type
 
 if not isvalid(puo_encounter) or isnull(puo_encounter) then
-	log.log(this, "u_ds_patient_encounter.refresh_encounter:0006", "Invalid Encounter Object", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter:0006", "Invalid Appointment Object", 4)
 	return -1
 end if
 
@@ -342,7 +342,7 @@ end if
 
 ll_row = find_encounter(puo_encounter.encounter_id)
 if isnull(ll_row) then
-	log.log(this, "u_ds_patient_encounter.refresh_encounter:0017", "Encounter not found (" + string(puo_encounter.encounter_id) + ")", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter:0017", "Appointment not found (" + string(puo_encounter.encounter_id) + ")", 4)
 	return -1
 end if
 
@@ -459,7 +459,7 @@ end if
 ls_find = "encounter_id=" + string(pl_encounter_id)
 ll_row = find(ls_find, 1, rowcount())
 if ll_row <= 0 then
-	log.log(this, "u_ds_patient_encounter.set_encounter_progress:0029", "encounter not found", 4)
+	log.log(this, "u_ds_patient_encounter.set_encounter_progress:0029", "appointment not found", 4)
 	return -1
 end if
 

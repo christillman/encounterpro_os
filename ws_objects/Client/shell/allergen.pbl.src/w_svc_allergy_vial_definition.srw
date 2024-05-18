@@ -628,7 +628,7 @@ if isnull(current_patient) then
 end if
 
 if isnull(service.treatment) then
-	ls_text="treatment object is null for patient,encounter "+current_patient.cpr_id+","+string(current_patient.open_encounter_id)
+	ls_text="treatment object is null for patient,appointment "+current_patient.cpr_id+","+string(current_patient.open_encounter_id)
 	log.log(this,"w_svc_allergy_vial_definition:open",ls_text,4)
 	closewithreturn(this,popup_return)
 	return

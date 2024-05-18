@@ -356,7 +356,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Date:"
+string text = "Appointment Date:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

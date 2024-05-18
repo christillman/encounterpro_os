@@ -10,7 +10,7 @@ global function string f_get_message (integer pi_message);string ls_message
 
 CHOOSE CASE pi_message
 	CASE 1
-		ls_message = "You have exceeded 100 patients with a demonstration license.  You will not be allowed to create any more encounters."
+		ls_message = "You have exceeded 100 patients with a demonstration license.  You will not be allowed to create any more appointments."
 	CASE 2
 		ls_message = "The license for this installation has expired.  You will not be allowed to create a new encounter."
 	CASE 3
@@ -38,7 +38,7 @@ CHOOSE CASE pi_message
 	CASE 14
 		ls_message = "This is a demonstration installation.  All clinical data herein is fictitious.  Do not chart any actual patient encounters.  Do not configure any short lists, examinations, progress notes or histories that cannot be deleted.  Nothing in this database can be transferred to a database containing the charts of actual patients."
 	CASE 15
-		ls_message = "This installation is not properly licensed and contains more than 100 patients.  You will not be able to create new encounters."
+		ls_message = "This installation is not properly licensed and contains more than 100 patients.  You will not be able to create new appointments."
 	CASE 16
 		ls_message = "This database is configured to use Application Role security, and you are connecting using the DBLib (MSS) drivers.  This combination is not allowed.  Please contact your system administrator or JMJ Technical Support for assistance."
 	CASE 17

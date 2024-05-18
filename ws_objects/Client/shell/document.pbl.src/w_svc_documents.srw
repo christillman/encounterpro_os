@@ -1402,7 +1402,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Documents"
+string text = "Appointment Documents"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

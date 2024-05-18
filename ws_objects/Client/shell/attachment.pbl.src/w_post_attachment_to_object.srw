@@ -221,7 +221,7 @@ CHOOSE CASE lower(attachment_context.context_object)
 	CASE "encounter"
 		st_type.visible = false
 		st_type_title.visible = false
-		st_pick_title.text = "Encounter Type"
+		st_pick_title.text = "Appointment Type"
 
 		mle_description.text = attachment_context.description
 		
@@ -235,7 +235,7 @@ CHOOSE CASE lower(attachment_context.context_object)
 		
 		st_end_date.visible = false
 		st_end_date_title.visible = false
-		st_begin_date_title.text = "Encounter Date"
+		st_begin_date_title.text = "Appointment Date"
 		
 		if isnull(attachment_context.context_object_type) then
 			ls_find = "1=1"
@@ -599,7 +599,7 @@ lstr_encounter = f_empty_encounter()
 
 lstr_encounter.encounter_type = attachment_context.context_object_type
 if isnull(lstr_encounter.encounter_type) then
-	openwithparm(w_pop_message, "Please select an encounter type")
+	openwithparm(w_pop_message, "Please select an appointment type")
 	return 0
 end if
 

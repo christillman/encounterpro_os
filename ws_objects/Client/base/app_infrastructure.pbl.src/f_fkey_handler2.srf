@@ -107,7 +107,7 @@ CHOOSE CASE key
 			end if
 		elseif keyflags = 2 then
 			if isnull(lstr_service_info.context.encounter_id) then
-				openwithparm(w_pop_message, "No Encounter Context")
+				openwithparm(w_pop_message, "No Appointment Context")
 				return false
 			end if
 			lstr_service_info.context.context_object = "Encounter"

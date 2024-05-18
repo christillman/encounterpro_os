@@ -15,7 +15,7 @@ end prototypes
 public function integer xx_do_service ();str_popup_return popup_return
 
 if isnull(encounter_id) then
-	log.log(this, "u_component_service_approve.xx_do_service:0004", "No encounter context", 4)
+	log.log(this, "u_component_service_approve.xx_do_service:0004", "No appointment context", 4)
 	return -1
 end if
 

@@ -557,7 +557,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
-string text = "No Encounters"
+string text = "No Appointments"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

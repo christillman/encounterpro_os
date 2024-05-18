@@ -889,7 +889,7 @@ END IF
 
 // Get the billing code for this office
 If isnull(ls_office_id) then 
-	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0109", "office id is null in patient_encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0109", "office id is null in patient_appointment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 3)
 	return 0
 end if
 

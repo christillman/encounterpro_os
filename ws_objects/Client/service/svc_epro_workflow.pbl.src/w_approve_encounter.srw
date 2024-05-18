@@ -702,7 +702,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Bill This Encounter:"
+string text = "Bill This Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

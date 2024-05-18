@@ -839,7 +839,7 @@ long ll_open_encounter_id
 datetime ldt_original_begin_date
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "u_ds_treatment_item.update_treatment:0008", "Cannot save treatment without an encounter context", 4)
+	log.log(this, "u_ds_treatment_item.update_treatment:0008", "Cannot save treatment without an appointment context", 4)
 	return -1
 end if
 
@@ -1759,7 +1759,7 @@ Setnull(ll_null)
 
 if isnull(pstr_treatment.open_encounter_id) then
 	if isnull(current_patient.open_encounter) then
-		openwithparm(w_pop_message, "You may not create a new treatment without an encounter context")
+		openwithparm(w_pop_message, "You may not create a new treatment without an appointment context")
 		return -1
 	else
 		pstr_treatment.open_encounter_id = current_patient.open_encounter.encounter_id
@@ -2799,7 +2799,7 @@ Setnull(ll_null)
 
 if isnull(puo_treatment.open_encounter_id) then
 	if isnull(current_patient.open_encounter) then
-		openwithparm(w_pop_message, "You may not create a new treatment without an encounter context")
+		openwithparm(w_pop_message, "You may not create a new treatment without an appointment context")
 		return -1
 	else
 		puo_treatment.open_encounter_id = current_patient.open_encounter.encounter_id
@@ -3063,7 +3063,7 @@ setnull(ll_null)
 
 if isnull(pl_open_encounter_id) then
 	if isnull(current_patient.open_encounter) then
-		openwithparm(w_pop_message, "You may not create a new treatment without an encounter context")
+		openwithparm(w_pop_message, "You may not create a new treatment without an appointment context")
 		return -1
 	else
 		pl_open_encounter_id = current_patient.open_encounter.encounter_id
@@ -3218,7 +3218,7 @@ Setnull(ll_null)
 
 if isnull(puo_treatment.open_encounter_id) then
 	if isnull(current_patient.open_encounter) then
-		openwithparm(w_pop_message, "You may not create a new treatment without an encounter context")
+		openwithparm(w_pop_message, "You may not create a new treatment without an appointment context")
 		return -1
 	else
 		puo_treatment.open_encounter_id = current_patient.open_encounter.encounter_id

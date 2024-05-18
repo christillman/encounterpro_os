@@ -367,21 +367,21 @@ end if
 if allow_editing then
 	popup.button_count = popup.button_count + 1
 	popup.button_icons[popup.button_count] = "button17.bmp"
-	popup.button_helps[popup.button_count] = "Edit Encounter Type"
-	popup.button_titles[popup.button_count] = "Edit Encounter Type"
+	popup.button_helps[popup.button_count] = "Edit Appointment Type"
+	popup.button_titles[popup.button_count] = "Edit Appointment Type"
 	buttons[popup.button_count] = "EDIT"
 else
 	popup.button_count = popup.button_count + 1
 	popup.button_icons[popup.button_count] = "button17.bmp"
-	popup.button_helps[popup.button_count] = "Display Encounter Type"
-	popup.button_titles[popup.button_count] = "Display Encounter Type"
+	popup.button_helps[popup.button_count] = "Display Appointment Type"
+	popup.button_titles[popup.button_count] = "Display Appointment Type"
 	buttons[popup.button_count] = "EDIT"
 end if
 
 if allow_editing then
 	popup.button_count = popup.button_count + 1
 	popup.button_icons[popup.button_count] = "button13.bmp"
-	popup.button_helps[popup.button_count] = "Delete Encounter Type"
+	popup.button_helps[popup.button_count] = "Delete Appointment Type"
 	popup.button_titles[popup.button_count] = "Delete"
 	buttons[popup.button_count] = "DELETE"
 end if
@@ -436,7 +436,7 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.item_count <> 1 then return
 		object.description[pl_row] = popup_return.descriptions[1]
 	CASE "DELETE"
-		ls_temp = "Are you sure you wish to delete the encounter type '" + ls_description + "'?"
+		ls_temp = "Are you sure you wish to delete the appointment type '" + ls_description + "'?"
 		openwithparm(w_pop_yes_no, ls_temp)
 		popup_return = message.powerobjectparm
 		if popup_return.item = "YES" then

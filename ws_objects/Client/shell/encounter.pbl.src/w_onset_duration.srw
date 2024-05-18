@@ -539,7 +539,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Current Encounter:"
+string text = "Current Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -647,7 +647,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Other Encounter:"
+string text = "Other Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

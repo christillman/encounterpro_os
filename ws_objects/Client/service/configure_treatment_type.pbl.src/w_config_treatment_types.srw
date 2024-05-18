@@ -113,7 +113,7 @@ CHOOSE CASE buttons[button_pressed]
 		if popup_return.item_count <> 1 then return
 		dw_treatment_types.setitem(pl_row, "description", popup_return.descriptions[1])
 	CASE "DELETE"
-		ls_temp = "Are you sure you wish to delete the encounter type '" + dw_treatment_types.object.description[pl_row] + "'?"
+		ls_temp = "Are you sure you wish to delete the appointment type '" + dw_treatment_types.object.description[pl_row] + "'?"
 		openwithparm(w_pop_yes_no, ls_temp)
 		popup_return = message.powerobjectparm
 		if popup_return.item = "YES" then

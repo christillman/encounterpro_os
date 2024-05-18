@@ -462,7 +462,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 
-popup.title = "Select Encounter Date"
+popup.title = "Select Appointment Date"
 popup.data_row_count = 1
 popup.items[1] = string(from_date, date_format_string)
 
@@ -559,7 +559,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 
-popup.title = "Select Encounter Date"
+popup.title = "Select Appointment Date"
 popup.data_row_count = 1
 popup.items[1] = string(to_date, date_format_string)
 

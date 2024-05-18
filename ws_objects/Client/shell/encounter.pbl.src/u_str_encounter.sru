@@ -550,7 +550,7 @@ WHERE cpr_id = :current_patient.cpr_id
 AND	encounter_id = :encounter_id; 
 if not tf_check() then return -1
 if sqlca.sqlcode = 100 then
-	log.log(this, "u_str_encounter.save_attachment:0023", "Encounter not found", 4)
+	log.log(this, "u_str_encounter.save_attachment:0023", "Appointment not found", 4)
 	return -1
 end if
 

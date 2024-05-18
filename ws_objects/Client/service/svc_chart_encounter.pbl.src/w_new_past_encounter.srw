@@ -256,7 +256,7 @@ end type
 
 event clicked;string ls_date
 
-ls_date = f_select_date(encounter_date, "Past Encounter Date")
+ls_date = f_select_date(encounter_date, "Past Appointment Date")
 if not isnull(ls_date) then
 	text = ls_date
 	encounter_date = date(ls_date)
@@ -277,7 +277,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Date:"
+string text = "Appointment Date:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -295,7 +295,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Type:"
+string text = "Appointment Type:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -356,7 +356,7 @@ end type
 event clicked;str_popup_return popup_return
 
 if isnull(encounter_type) then
-	openwithparm(w_pop_message, "You must Select an Encounter Type")
+	openwithparm(w_pop_message, "You must Select an Appointment Type")
 	return
 end if
 

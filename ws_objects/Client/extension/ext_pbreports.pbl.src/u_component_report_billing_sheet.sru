@@ -43,7 +43,7 @@ If isnull(current_patient) Then
 	mylog.log(this, "u_component_report_billing_sheet.xx_printreport:0029", "No patient context ", 4)
 	Return -1
 Elseif isnull(current_patient.open_encounter) Then
-	mylog.log(this, "u_component_report_billing_sheet.xx_printreport:0032", "No encounter context ", 4)
+	mylog.log(this, "u_component_report_billing_sheet.xx_printreport:0032", "No appointment context ", 4)
 	Return -1
 End If 
 

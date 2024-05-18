@@ -352,9 +352,9 @@ end if
 lb_open_encounter = true
 
 if lstr_encounter.encounter_date < ldt_one_hour_ago then
-	popup.title = "This encounter happened in the past.  Do you wish to:"
+	popup.title = "This appointment happened in the past.  Do you wish to:"
 	popup.data_row_count = 2
-	popup.items[1] = "Chart a Past Encounter"
+	popup.items[1] = "Chart a Past Appointment"
 	popup.items[2] = "Check the patient into the office"
 	openwithparm(w_pop_choices_2, popup)
 	li_sts = message.doubleparm

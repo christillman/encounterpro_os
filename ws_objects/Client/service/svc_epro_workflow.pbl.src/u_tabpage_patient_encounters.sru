@@ -76,9 +76,9 @@ AND encounter_status = 'OPEN';
 if not tf_check() then return -1
 
 if li_count > 0 then
-	text = "Open Encounters (" + string(li_count) + ")"
+	text = "Open Appointments (" + string(li_count) + ")"
 else
-	text = "Open Encounters (0)"
+	text = "Open Appointments (0)"
 end if
 
 return 1
@@ -100,21 +100,21 @@ li_count = dw_encounters.rowcount()
 
 if upper(encounter_status) = "OPEN" then
 	if li_count > 0 then
-		text = "Open Encounters (" + string(li_count) + ")"
+		text = "Open Appointments (" + string(li_count) + ")"
 	else
-		text = "Open Encounters (0)"
+		text = "Open Appointments (0)"
 	end if
 elseif upper(encounter_status) = "CANCELED" then
 	if li_count > 0 then
-		text = "Canceled Encounters (" + string(li_count) + ")"
+		text = "Canceled Appointments (" + string(li_count) + ")"
 	else
-		text = "Canceled Encounters (0)"
+		text = "Canceled Appointments (0)"
 	end if
 else
 	if li_count > 0 then
-		text = "Encounters (" + string(li_count) + ")"
+		text = "Appointments (" + string(li_count) + ")"
 	else
-		text = "Encounters (0)"
+		text = "Appointments (0)"
 	end if
 end if
 
@@ -349,7 +349,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Patient Encounters"
+string text = "Patient Appointments"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

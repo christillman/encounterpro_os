@@ -701,7 +701,7 @@ if isvalid(encounter) and not isnull(encounter) then
 else
 	li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
 	if li_sts <= 0 then
-		log.log(this, "w_billing_edit.refresh:0010", "Error getting encounter (" + string(service.encounter_id) + ")", 4)
+		log.log(this, "w_billing_edit.refresh:0010", "Error getting appointment (" + string(service.encounter_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -1399,7 +1399,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Bill this Encounter:"
+string text = "Bill this Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

@@ -569,7 +569,7 @@ IF NOT cprdb.check() THEN
 end if
 	
 IF ll_count = 0 THEN
-	log.log(this, "u_component_billing_encounterpro.xx_post_other:0073", "no arrival encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)	
+	log.log(this, "u_component_billing_encounterpro.xx_post_other:0073", "no arrival appointment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)	
 	lb_interface_arrival= false
 	ls_facility = is_facilitycode
 	ld_scheduledatetime = idt_encounter_date

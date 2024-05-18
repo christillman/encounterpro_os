@@ -358,7 +358,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Date:"
+string text = "Appointment Date:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -391,7 +391,7 @@ string ls_text
 ld_encounter_date = date(new_encounter.encounter_date)
 lt_encounter_time = time(new_encounter.encounter_date)
 
-ls_text = f_select_date(ld_encounter_date, "Encounter Date")
+ls_text = f_select_date(ld_encounter_date, "Appointment Date")
 if isnull(ls_text) then return
 
 new_encounter.encounter_date = datetime(ld_encounter_date, lt_encounter_time)
@@ -432,7 +432,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Type:"
+string text = "Appointment Type:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -497,7 +497,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Time:"
+string text = "Appointment Time:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -530,7 +530,7 @@ time lt_encounter_time
 
 ld_encounter_date = date(new_encounter.encounter_date)
 
-popup.title = "Set Encounter Time"
+popup.title = "Set Appointment Time"
 popup.item = string(new_encounter.encounter_date, date_format_string + " " + time_format_string)
 openwithparm(w_pop_prompt_date_time, popup)
 popup_return = message.powerobjectparm

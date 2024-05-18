@@ -489,7 +489,7 @@ next
 ll_rows = dw_encounters.rowcount()
 if ll_rows <= 0 then
 	ll_row = dw_encounters.insertrow(0)
-	dw_encounters.object.description[ll_row] = "<No Encounters>"
+	dw_encounters.object.description[ll_row] = "<No Appointments>"
 	dw_encounters.object.more_rows.visible = false
 else
 	ll_lastrow = long(dw_encounters.object.datawindow.lastrowonpage)
@@ -1321,7 +1321,7 @@ string facename = "Arial"
 boolean underline = true
 long backcolor = 7191717
 boolean enabled = false
-string text = "Past Encounters"
+string text = "Past Appointments"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
@@ -1451,7 +1451,7 @@ str_popup_return popup_return
 str_attributes lstr_attributes
 w_window_base lw_window
 
-popup.title = "Past Encounters"
+popup.title = "Past Appointments"
 popup.data_row_count = 2
 popup.items[1] = current_patient.cpr_id
 popup.items[2] = "SHOW"

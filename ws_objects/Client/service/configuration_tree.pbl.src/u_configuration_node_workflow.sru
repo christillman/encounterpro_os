@@ -29,7 +29,7 @@ lstr_nodes.node[lstr_nodes.node_count].key = "CONFIG_SERVICE"
 lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)
 
 lstr_nodes.node_count += 1
-lstr_nodes.node[lstr_nodes.node_count].label = "Encounter Types"
+lstr_nodes.node[lstr_nodes.node_count].label = "Appointment Types"
 lstr_nodes.node[lstr_nodes.node_count].class = "u_configuration_node_service"
 lstr_nodes.node[lstr_nodes.node_count].key = "CONFIG_ENCOUNTER_TYPES"
 lstr_nodes.node[lstr_nodes.node_count].button = datalist.service_button(lstr_nodes.node[lstr_nodes.node_count].key)

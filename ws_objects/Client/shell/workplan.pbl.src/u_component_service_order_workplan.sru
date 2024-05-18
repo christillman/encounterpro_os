@@ -74,7 +74,7 @@ end if
 
 if upper(ls_in_office_flag) = "Y" then
 	if isnull(encounter_id) then
-		mylog.log(this, "u_component_service_order_workplan.xx_do_service:0062", "An in-office workplan cannot be ordered without an encounter context", 4)
+		mylog.log(this, "u_component_service_order_workplan.xx_do_service:0062", "An in-office workplan cannot be ordered without an appointment context", 4)
 		return 2
 	end if
 	ls_encounter_status = current_patient.encounters.encounter_status(encounter_id)

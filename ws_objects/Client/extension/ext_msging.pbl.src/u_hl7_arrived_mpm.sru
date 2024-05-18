@@ -385,7 +385,7 @@ Else
 		setnull(ls_encounter_type)
 		setnull(ls_new_flag)
 	else
-		mylog.log(this, "u_hl7_arrived_mpm.arrived:0374", "Appointment Type, Encounter type (" + ls_appointment_type +", "+ls_encounter_type+" )" , 2)
+		mylog.log(this, "u_hl7_arrived_mpm.arrived:0374", "Appointment Type, Appointment type (" + ls_appointment_type +", "+ls_encounter_type+" )" , 2)
 	end if
 End If
 
@@ -583,7 +583,7 @@ end if
 if not isnull(ls_provider_message) or len(ls_provider_message) > 0 then
 	ls_message += "~r~n"+ls_provider_message
 end if
-ls_message += "~r~n"+"Processed:"+"~r~nAssigned Provider: "+ls_patient_provider+"~r~nEncounter Type: "	+ls_encounter_type_description
+ls_message += "~r~n"+"Processed:"+"~r~nAssigned Provider: "+ls_patient_provider+"~r~nAppointment Type: "	+ls_encounter_type_description
 
 // for now we are reporting this error for rejected messages and not sending rejection in acks
 

@@ -203,7 +203,7 @@ if li_sts <= 0 then
 	openwithparm(w_pop_message, "Uncancelling Encounter Failed.  Check the error log and try again later.")
 	return
 else
-	openwithparm(w_pop_message, "Uncancelling Encounter Succeeded.")
+	openwithparm(w_pop_message, "Uncancelling Appointment Succeeded.")
 end if
 
 popup_return.item_count = 1
@@ -248,7 +248,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Uncancel Encounter Utility"
+string text = "Uncancel Appointment Utility"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

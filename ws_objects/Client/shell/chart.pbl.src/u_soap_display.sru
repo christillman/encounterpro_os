@@ -270,7 +270,7 @@ new_data = pb_new_data
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_encounter:0019", "Error checking encounter context", 2)
+	log.log(this, "u_soap_display.load_encounter:0019", "Error checking appointment context", 2)
 	return -1
 end if
 
@@ -293,7 +293,7 @@ if ll_count > 0 then
 	// Add the header for the past objects
 	ll_row = insertrow(0)
 	this.object.soap_type[ll_row] = "SINCELAST"
-	this.object.description[ll_row] = "Items Added/Modified Since Last Encounter (" + string(ll_count) + ")"
+	this.object.description[ll_row] = "Items Added/Modified Since Last Appointment (" + string(ll_count) + ")"
 	this.object.icon_bitmap[ll_row] = "button21.bmp"
 	this.object.text_color[ll_row] = text_color_new
 end if
@@ -379,7 +379,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_treatment_list:0008", "Error checking encounter context", 2)
+	log.log(this, "u_soap_display.load_treatment_list:0008", "Error checking appointment context", 2)
 	return -1
 end if
 
@@ -415,7 +415,7 @@ string ls_right
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.refresh_row:0014", "Error checking encounter context", 2)
+	log.log(this, "u_soap_display.refresh_row:0014", "Error checking appointment context", 2)
 	return -1
 end if
 
@@ -477,7 +477,7 @@ end if
 if isnull(encounter_context.encounter_id) or encounter_context.encounter_id <> current_display_encounter.encounter_id then
 	li_sts = current_patient.encounters.encounter(encounter_context, current_display_encounter.encounter_id)
 	if li_sts <= 0 then
-		log.log(this, "u_soap_display.check_encounter_context:0017", "Error getting encounter context", 4)
+		log.log(this, "u_soap_display.check_encounter_context:0017", "Error getting appointment context", 4)
 		return -1
 	end if
 end if
@@ -1165,7 +1165,7 @@ new_data = false
 
 li_sts = check_encounter_context()
 if li_sts <= 0 then
-	log.log(this, "u_soap_display.load_patient:0016", "Error checking encounter context", 2)
+	log.log(this, "u_soap_display.load_patient:0016", "Error checking appointment context", 2)
 	return -1
 end if
 

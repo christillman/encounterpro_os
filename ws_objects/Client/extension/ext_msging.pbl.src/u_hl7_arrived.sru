@@ -676,7 +676,7 @@ end if
 if not isnull(ls_provider_message) or len(ls_provider_message) > 0 then
 	ls_message += "~r~n"+ls_provider_message
 end if
-ls_message += "~r~n"+"Processed:"+"~r~nAssigned Provider: "+ls_patient_provider+"~r~nEncounter Type: "	+ls_encounter_type_description
+ls_message += "~r~n"+"Processed:"+"~r~nAssigned Provider: "+ls_patient_provider+"~r~nAppointment Type: "	+ls_encounter_type_description
 
 // for now we are reporting this error for rejected messages and not sending rejection in acks
 error:

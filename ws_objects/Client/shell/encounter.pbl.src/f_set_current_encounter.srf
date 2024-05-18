@@ -22,7 +22,7 @@ f_clear_current_encounter()
 
 li_sts = current_patient.encounters.encounter(current_display_encounter, pl_encounter_id)
 if li_sts <= 0 then
-	log.log(po_null, "f_set_current_encounter:0017", "Unable to set display encounter (" + string(pl_encounter_id) + ")", 4)
+	log.log(po_null, "f_set_current_encounter:0017", "Unable to set display appointment (" + string(pl_encounter_id) + ")", 4)
 	return -1
 end if
 

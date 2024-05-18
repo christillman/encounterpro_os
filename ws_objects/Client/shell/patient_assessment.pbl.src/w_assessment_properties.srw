@@ -416,7 +416,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Date:"
+string text = "Appointment Date:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -533,7 +533,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter By:"
+string text = "Appointment By:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

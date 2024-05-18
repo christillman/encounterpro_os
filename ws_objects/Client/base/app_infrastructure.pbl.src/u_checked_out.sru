@@ -345,7 +345,7 @@ if encounter_date = today() then
 	st_title.text = "Patients Checked Out Today"
 	cb_today.visible = false
 else
-	st_title.text = "Patient Encounters on " + string(encounter_date, date_format_string)
+	st_title.text = "Patient Appointments on " + string(encounter_date, date_format_string)
 	cb_today.visible = true
 end if
 
@@ -368,7 +368,7 @@ dw_checked_out.suppress_scroll_event = false
 
 st_office.text = filter_description
 
-st_count.text = string(ll_rowcount) + " Encounters"
+st_count.text = string(ll_rowcount) + " Appointments"
 
 
 refresh_tab()
@@ -604,7 +604,7 @@ str_popup_return popup_return
 popup.data_row_count = 3
 popup.items[1] = "<<All>>"
 popup.items[2] = "By Patient"
-popup.items[3] = "By Encounter Mode"
+popup.items[3] = "By Appointment Mode"
 openwithparm(w_pop_pick, popup)
 popup_return = message.powerobjectparm
 
@@ -644,7 +644,7 @@ CHOOSE CASE text
 		dw_checked_out.setfilter(ls_exp)
 		dw_checked_out.filter()
 		ll_rows = dw_checked_out.rowcount()
-	Case "By Encounter Mode"
+	Case "By Appointment Mode"
 		st_type_title.visible = true
 		st_pick_encounter_type.visible = true
 		popup.data_row_count = 5
@@ -835,7 +835,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "20 Encounters"
+string text = "20 Appointments"
 boolean focusrectangle = false
 end type
 
@@ -1066,7 +1066,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 
-popup.title = "Select Encounter Date"
+popup.title = "Select Appointment Date"
 popup.data_row_count = 1
 popup.items[1] = string(encounter_date, date_format_string)
 

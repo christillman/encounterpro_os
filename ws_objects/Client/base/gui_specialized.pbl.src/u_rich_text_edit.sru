@@ -3942,7 +3942,7 @@ lstr_last_encounter = last_encounter
 
 li_sts = current_patient.encounters.encounter(lstr_encounter, pl_encounter_id)
 if li_sts <= 0 then
-	log_error("Error getting encounter data")
+	log_error("Error getting appointment data")
 	return
 end if
 

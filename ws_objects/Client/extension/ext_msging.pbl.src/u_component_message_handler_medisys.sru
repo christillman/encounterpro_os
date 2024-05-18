@@ -978,7 +978,7 @@ end if
 if isnull(ls_encounter_type) then
 	ls_encounter_type = get_attribute("default_encounter_type")
 	if isnull(ls_encounter_type) then ls_encounter_type = "SICK"
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0126","Interface did not provide mapped encounter type (" + ls_appointment_type + ")" ,2)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0126","Interface did not provide mapped appointment type (" + ls_appointment_type + ")" ,2)
 end if
 
 if isnull(is_Array[4]) then

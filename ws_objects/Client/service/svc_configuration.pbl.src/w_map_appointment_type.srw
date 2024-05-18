@@ -140,7 +140,7 @@ If recordtype = 'NEW' then
 		return
 	End If
 	If isnull(st_encounter_type.text) or len(st_encounter_type.text) = 0 Then
-		openwithparm(w_pop_message,"Enter a valid encounter type")
+		openwithparm(w_pop_message,"Enter a valid appointment type")
 		st_encounter_type.setfocus()
 		return
 	End If
@@ -271,7 +271,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Type"
+string text = "Appointment Type"
 alignment alignment = center!
 borderstyle borderstyle = styleraised!
 boolean focusrectangle = false

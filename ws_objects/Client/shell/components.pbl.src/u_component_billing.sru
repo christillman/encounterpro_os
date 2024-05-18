@@ -87,11 +87,11 @@ long ll_sts
 //   @pl_encounter_id = :pl_encounter_id
 //USING cprdb;
 
-mylog.log(this, "u_component_billing.post_encounter:0024", "Posting Encounter (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
+mylog.log(this, "u_component_billing.post_encounter:0024", "Posting Appointment (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 
 ll_sts = x_post_encounter( ps_cpr_id, pl_encounter_id )
 if ll_sts < 0 then 
-	mylog.log(this, "u_component_billing.post_encounter:0028", "Posting Encounter Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing.post_encounter:0028", "Posting Appointment Failed (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	return ll_sts
 end if
 
@@ -130,7 +130,7 @@ cprdb.sp_set_encounter_posted   ( &
 //EXECUTE lsp_set_encounter_posted;
 if not cprdb.check() then return -1
 
-mylog.log(this, "u_component_billing.post_encounter:0065", "Encounter Successfully Posted (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
+mylog.log(this, "u_component_billing.post_encounter:0065", "Appointment Successfully Posted (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 2)
 
 return 1
 

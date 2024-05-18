@@ -725,7 +725,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Default Encounter Type:"
+string text = "Default Appointment Type:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

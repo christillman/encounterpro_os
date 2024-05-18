@@ -356,7 +356,7 @@ HL7ORU.RepGrpORU1.Item[0].PatientIdentification.PatientIdentification.PatientNam
 HL7ORU.RepGrpORU1.Item[0].ORCGroup.Add(1)
 HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationsReportID.SetID.valuestring = "1"
 HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationsReportID.UniversalServiceID.Identifier.valuestring = ls_observation_id
-HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationsReportID.UniversalServiceID.Text.valuestring = "Encounter Notes"
+HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationsReportID.UniversalServiceID.Text.valuestring = "Appointment Notes"
 HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationsReportID.ObservationDateTime.valuestring = ls_encounter_datetime
 
 i=0
@@ -380,7 +380,7 @@ Do While ll_pos > 0
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.SetID.valuestring = i
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ValueType.valuestring = "TX"
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservationIdentifier.Identifier.valuestring = ls_observation_id
-	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservationIdentifier.Text.valuestring = "Encounter Notes"
+	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservationIdentifier.Text.valuestring = "Appointment Notes"
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservationValue.Add(1)
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservationValue[0].ValueString = ls_report_line
 	HL7ORU.RepGrpORU1.Item[0].ORCGroup.Item[0].ObservationResultsGroup.Item[k].ObservationResult.ObservResultStatus.ValueString = "F"
@@ -603,7 +603,7 @@ end if
 ls_pid = "PID|1||"+ls_billing_id+"||"+ls_last_name+"^"+ls_first_name+"~h0D"
 
 /* Observation Request Segment (OBR)*/
-ls_obr = "OBR|1|||ETNOTE^Encounter Notes|||"+ls_encounter_datetime+"~h0D"
+ls_obr = "OBR|1|||ETNOTE^Appointment Notes|||"+ls_encounter_datetime+"~h0D"
 
 /* Observation Results Segment (OBX)*/
 i=0
@@ -625,7 +625,7 @@ Do While ll_pos > 0
 
 	// end of custom fix for shands
 	i++
-	ls_obx +="OBX|"+string(i)+"|TX|ETNOTE^Encounter Notes||"+ls_report_line+"||||||F"+"~h0D"
+	ls_obx +="OBX|"+string(i)+"|TX|ETNOTE^Appointment Notes||"+ls_report_line+"||||||F"+"~h0D"
 
 	ls_report_text = mid(ls_report_text,ll_pos + 1)
 	ll_pos = pos(ls_report_text,"~n")

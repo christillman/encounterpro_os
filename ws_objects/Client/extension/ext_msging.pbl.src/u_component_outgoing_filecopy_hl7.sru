@@ -605,7 +605,7 @@ else
 end if	
 ldt_encounter_datetime = Datetime(Date(left(ls_encounter_date,10)),Time(Mid(ls_encounter_date,12)))
 if isnull(ldt_encounter_datetime) then 
-	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg:0149", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg:0149", "MessageId: "+string(message_id)+":No Appointment Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 procedurecodeidentifier = ls_fields[22] // procedure code
@@ -1375,7 +1375,7 @@ else
 end if	
 ldt_encounter_datetime = Datetime(Date(left(ls_encounter_date,10)),Time(Mid(ls_encounter_date,12)))
 if isnull(ldt_encounter_datetime) then 
-	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm:0142", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mpm:0142", "MessageId: "+string(message_id)+":No Appointment Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 
@@ -2192,7 +2192,7 @@ else
 end if	
 ldt_encounter_date = Date(left(ls_encounter_date,10))
 if isnull(ldt_encounter_date) then 
-	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson:0119", "MessageId: "+string(message_id)+":No Encounter Date, Billing message( " + ls_temp + "), Posting failed", 4)	
+	mylog.log(this, "u_component_outgoing_filecopy_hl7.chrg_mckesson:0119", "MessageId: "+string(message_id)+":No Appointment Date, Billing message( " + ls_temp + "), Posting failed", 4)	
 	return f_posting_failed(message_id,"NO ENCDATE")
 end if
 

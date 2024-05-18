@@ -427,7 +427,7 @@ end if
 
 // Make sure we have an encounter date
 if isnull(lstr_encounter.encounter_date) then
-	log.log(this, "u_component_xml_handler_jmj.process_encounter:0066", "Encounter must have an encounter date", 4)
+	log.log(this, "u_component_xml_handler_jmj.process_encounter:0066", "Encounter must have an appointment date", 4)
 	return -1
 end if
 
@@ -441,7 +441,7 @@ if lower(ls_purpose) = "check in" then
 	end if
 	if ld_encounter_date < today() then
 		if not datalist.get_preference_boolean( "Preferences", "ALLOW_PAST_ENCOUNTERS", false) then
-			log.log(this, "u_component_xml_handler_jmj.process_encounter:0080", "Encounter date may not be in the past", 3)
+			log.log(this, "u_component_xml_handler_jmj.process_encounter:0080", "Appointment date may not be in the past", 3)
 			// Do not leave this case for the to-be-posted screen
 			return 0
 		end if

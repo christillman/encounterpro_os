@@ -66,6 +66,6 @@ integer x = 18
 integer y = 16
 integer width = 3090
 integer height = 1428
-string text = "Encounter Data"
+string text = "Appointment Data"
 end type
 

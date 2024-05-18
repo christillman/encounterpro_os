@@ -203,7 +203,7 @@ integer x = 18
 integer y = 16
 integer width = 3003
 integer height = 1416
-string text = "Open Encounters"
+string text = "Open Appointments"
 end type
 
 type tabpage_documents from u_tabpage_documents within u_tab_patient_data

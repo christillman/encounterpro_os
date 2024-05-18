@@ -1091,7 +1091,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Followup Encounter Type"
+string text = "Followup Appointment Type"
 boolean focusrectangle = false
 end type
 

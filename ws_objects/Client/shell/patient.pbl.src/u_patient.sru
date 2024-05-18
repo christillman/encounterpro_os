@@ -479,7 +479,7 @@ integer li_sts
 
 ll_count = encounters.retrieve(cpr_id)
 if ll_count < 0 then
-	log.log(this, "u_patient.load_encounters:0006", "Error loading encounters", 4)
+	log.log(this, "u_patient.load_encounters:0006", "Error loading appointments", 4)
 	return -1
 end if
 
@@ -1582,13 +1582,13 @@ setnull(ls_null)
 setnull(ll_null)
 
 if isnull(pstr_encounter.encounter_date) then
-	log.log(this, "u_patient.new_encounter:0038", "Null encounter date", 4)
+	log.log(this, "u_patient.new_encounter:0038", "Null appointment date", 4)
 	return -1
 end if
 
 lstr_stamp = f_get_stamp()
 if not lstr_stamp.create_encounters then
-	log.log(this, "u_patient.new_encounter:0044", "This installation is not properly licensed to create encounters", 4)
+	log.log(this, "u_patient.new_encounter:0044", "This installation is not properly licensed to create appointments", 4)
 	return 0
 end if
 

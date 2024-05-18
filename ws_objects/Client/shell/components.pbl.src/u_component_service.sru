@@ -161,7 +161,7 @@ End if
 if not isnull(encounter_id) then
 	li_sts = f_set_current_encounter(encounter_id)
 	If li_sts <= 0 Then
-		mylog.log(this, "u_component_service.do_service:0142", "unable to set current encounter (" + cpr_id + ", " + string(encounter_id) + ")", 4)
+		mylog.log(this, "u_component_service.do_service:0142", "unable to set current appointment (" + cpr_id + ", " + string(encounter_id) + ")", 4)
 		restore_service_state(-1)
 		Return -1
 	End If

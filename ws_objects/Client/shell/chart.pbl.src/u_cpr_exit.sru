@@ -700,7 +700,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Bill This Encounter:"
+string text = "Bill This Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -770,7 +770,7 @@ if upper(current_display_encounter.encounter_status) = "OPEN" &
 	and not current_display_encounter.billing_posted &
 	and current_display_encounter.attending_doctor = current_user.user_id &
 	and is_billed then
-	popup.title = "This encounter has not yet been sent to the billing system."
+	popup.title = "This appointment has not yet been sent to the billing system."
 	popup.title += "  Do you wish to send this encounter to the billing system now"
 	popup.title += " or wait until you are finished charting?"
 	popup.data_row_count = 3

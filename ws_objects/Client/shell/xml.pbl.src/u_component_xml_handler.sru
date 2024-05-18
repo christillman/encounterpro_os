@@ -1087,7 +1087,7 @@ if not isnull(pstr_encounter.encounter_date) and pb_create_automatically then
 			return ll_encounter_id
 		end if
 		
-		log.log(this, "u_component_xml_handler.find_encounter:0113", "Error creating new encounter (" + string(pstr_encounter.encounter_date) + ")", 4)
+		log.log(this, "u_component_xml_handler.find_encounter:0113", "Error creating new appointment (" + string(pstr_encounter.encounter_date) + ")", 4)
 	end if
 end if
 

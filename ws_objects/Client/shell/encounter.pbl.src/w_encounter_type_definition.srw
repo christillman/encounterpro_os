@@ -476,7 +476,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Type Definition"
+string text = "Appointment Type Definition"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
@@ -659,7 +659,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Encounter Mode:"
+string text = "Appointment Mode:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type
@@ -709,7 +709,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Bill Encounter:"
+string text = "Bill Appointment:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

@@ -89,7 +89,7 @@ If isnull(current_patient) Then
 	Return -1
 Elseif isnull(ll_encounter_id) Then
 	if isnull(current_patient.open_encounter_id) then
-		mylog.log(this, "u_component_report_prescription.xx_printreport:0078", "No encounter context ", 4)
+		mylog.log(this, "u_component_report_prescription.xx_printreport:0078", "No appointment context ", 4)
 		Return -1
 	else
 		ll_encounter_id = current_patient.open_encounter_id
@@ -393,7 +393,7 @@ add_attribute("%SIGNING_PROVIDER_LICENSE_NPI%", ls_temp)
 If report_datastore.rowcount() > 0 Then
 	print_datastore()
 Else
-	mylog.log(this, "u_component_report_prescription.xx_printreport:0382", "No prescriptions for this encounter (" + &
+	mylog.log(this, "u_component_report_prescription.xx_printreport:0382", "No prescriptions for this appointment (" + &
 					current_patient.cpr_id + ", " + string(ll_encounter_id) + ")", 2)
 End if
 

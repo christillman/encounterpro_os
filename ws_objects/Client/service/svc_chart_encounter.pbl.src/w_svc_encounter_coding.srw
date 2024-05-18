@@ -430,7 +430,7 @@ end if
 
 title = current_patient.id_line()
 
-st_title.text = "Encounter Coding Levels"
+st_title.text = "Appointment Coding Levels"
 if upper(encounter.new_flag) = "Y" then
 	st_title.text += " (New Patient)"
 else
@@ -1317,7 +1317,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Coding Levels"
+string text = "Appointment Coding Levels"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

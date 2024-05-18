@@ -461,7 +461,7 @@ if gnv_app.cpr_mode = "CLIENT" then
 				current_patient.encounters.modify_encounter(encounter_id, "attending_doctor", current_user.user_id)
 				lb_is_owner = true
 			else
-				ls_message += "  This encounter is supposed to be owned by someone in the '"
+				ls_message += "  This appointment is supposed to be owned by someone in the '"
 				ls_message += user_list.role_description(luo_user.user_id) + "' role."
 			end if
 		else

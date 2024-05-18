@@ -69,7 +69,7 @@ If isnull(ls_component_id) then // send to encounter location
 	USING cprdb;
 	if not cprdb.check() then return -1
 	if cprdb.sqlcode = 100 then
-		mylog.log(this, "u_component_service_send_billing.xx_do_service:0052", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
+		mylog.log(this, "u_component_service_send_billing.xx_do_service:0052", "Appointment not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
 		return -1
 	end if
 end if
@@ -92,12 +92,12 @@ AND encounter_id = :encounter_id
 Using cprdb;
 if not cprdb.check() then return -1
 if cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_service_send_billing.xx_do_service:0075", "Encounter not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service:0075", "Appointment not found (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 4)
 	return -1
 end if
 
 If ls_bill_flag = 'N' Then
-	mylog.log(this, "u_component_service_send_billing.xx_do_service:0080", "Encounter is not billable (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service:0080", "Appointment is not billable (" + current_patient.cpr_id + ", " + string(encounter_id) + ")", 1)
 	Return 2 //  // Cancell the service
 end if
 

@@ -124,7 +124,7 @@ dw_encounter_types.object.description.width = dw_encounter_types.width - 150
 dw_encounter_types.initialize(ls_indirect_flag)
 
 
-st_title.text = "Select Encounter Type"
+st_title.text = "Select Appointment Type"
 
 if isnull(current_patient) then
 	title = st_title.text
@@ -464,7 +464,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "New Encounter Type"
+string text = "New Appointment Type"
 end type
 
 event clicked;str_popup popup
@@ -631,7 +631,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Mode"
+string text = "Appointment Mode"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
