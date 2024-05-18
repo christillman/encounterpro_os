@@ -57,7 +57,7 @@ If Not tf_check() Then Return -1
 
 ll_encounter_id = current_service.encounter_id
 if isnull(ls_cpr_id) then
-	log.log(this,"u_component_send_report_lcr.xx_sendreport:0041","no encounter id",4)
+	log.log(this,"u_component_send_report_lcr.xx_sendreport:0041","no appointment id",4)
 	Return -1
 end if
 

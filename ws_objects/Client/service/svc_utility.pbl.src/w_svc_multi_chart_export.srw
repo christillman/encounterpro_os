@@ -561,7 +561,7 @@ if not isnull(ls_temp) then
 	ll_row = dw_perform.insertrow(0)
 	dw_perform.object.context_object[ll_row] = "Encounter"
 	dw_perform.object.display_script_id[ll_row] = long(ls_temp)
-	dw_perform.object.description[ll_row] = "Include Encounter Reports"
+	dw_perform.object.description[ll_row] = "Include Appointment Reports"
 end if
 
 //ls_temp = service.get_attribute("attachment_report")

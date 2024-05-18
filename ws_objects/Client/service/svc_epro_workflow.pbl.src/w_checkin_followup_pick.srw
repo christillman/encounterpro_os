@@ -223,10 +223,10 @@ closewithreturn(parent, window_return)
 end event
 
 type st_instructions from statictext within w_checkin_followup_pick
-integer x = 201
-integer y = 156
-integer width = 2405
-integer height = 176
+integer x = 142
+integer y = 184
+integer width = 2418
+integer height = 208
 integer textsize = -12
 integer weight = 700
 fontcharset fontcharset = ansi!
@@ -235,16 +235,16 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 12632256
-string text = "This patient has these appointments and followup orders pending.  Select the followup order which is related to this encounter."
+string text = "This patient has these appointments and followup orders pending. Select the followup order which is related to this appointment."
 alignment alignment = center!
 boolean border = true
 boolean focusrectangle = false
 end type
 
 type cb_not_related from commandbutton within w_checkin_followup_pick
-integer x = 626
+integer x = 613
 integer y = 1296
-integer width = 1541
+integer width = 983
 integer height = 112
 integer taborder = 30
 integer textsize = -10
@@ -253,7 +253,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "This encounter is not related to a followup order"
+string text = "Not related to a followup order"
 end type
 
 event clicked;long ll_row

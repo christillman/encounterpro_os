@@ -611,7 +611,7 @@ lstr_encounter.encounter_id = current_patient.new_encounter(lstr_encounter, &
 																				current_scribe.user_id, &
 																				false)
 if lstr_encounter.encounter_id <= 0 then
-	log.log(this, "w_post_attachment_to_object.order_encounter:0021", "Could not create a new encounter", 4)
+	log.log(this, "w_post_attachment_to_object.order_encounter:0021", "Could not create a new appointment", 4)
 	return -1
 end if
 

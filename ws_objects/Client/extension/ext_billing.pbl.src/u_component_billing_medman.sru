@@ -883,7 +883,7 @@ USING cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 // IF we don't get an Encounter record, THEN QUIT
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0103", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0103", "Unable to retrieve an Appointment Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  	RETURN -1
 END IF
 
@@ -957,7 +957,7 @@ f_split_string(ls_billing_id, ".", ss_charge_acct, ss_charge_dep)
 IF isNull(ldt_encounter_date) THEN
 	// If we don't have an Encounter date and time, then we can't pass the encounter
 	// to the Medical Manager billing system
-	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0177", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_medman.xx_post_encounter:0177", "Unable to determine the Appointment Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 		

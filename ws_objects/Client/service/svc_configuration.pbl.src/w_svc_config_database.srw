@@ -310,7 +310,7 @@ li_sts = dbo_connection.upgrade_database()
 if li_sts <= 0 then
 	openwithparm(w_pop_message, "Error upgrading mod level")
 else
-	openwithparm(w_pop_message, "Successfully upgraded mod level.  EncounterPRO will exit now.")
+	openwithparm(w_pop_message, "Successfully upgraded mod level. " + gnv_app.product_name + " will exit now.")
 
 	popup_return.item_count = 1
 	popup_return.items[1] = "OK"

@@ -203,7 +203,7 @@ service = message.powerobjectparm
 
 top_20_code_1 = "MyScribeContexts"
 setnull(top_20_code_2)
-scribe_message = "By logging into the EncounterPRO® Electronic Health Record as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into the EncounterPRO EHR as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information."
+scribe_message = "By logging into " + gnv_app.product_name + " as a scribe for a licensed provider, I hereby affirm that the provider I designate has specifically asked me to do so.  I further affirm that when I am logged into " + gnv_app.product_name + " as a scribe, I am only recording observations and orders made and communicated to me by such provider.  I am not recording my own observations, orders or other information."
 
 if current_scribe.user_id = current_user.user_id then
 	st_current_scribe_context.text = "Yourself"

@@ -38,11 +38,11 @@ for i = 1 to this_section.page_count
 	TRY
 		tab_pages.opentab(this_section.page[i].page_object, this_section.page[i].page_class, 0)
 	CATCH (throwable lt_error)
-		ls_text = "EncounterPRO encountered an error opening a chart page ("
+		ls_text = "Error opening a chart page ("
 		ls_text += this_section.page[i].page_class + ").  The following error message was returned:  "
 		ls_text += lt_error.text
 		log.log(this, "u_cpr_multi_page_section.open_pages:0012", ls_text, 4)
-		chart_window.event POST load_error("EncounterPRO encountered an error opening the chart")
+		chart_window.event POST load_error("Error opening the chart")
 		return -1
 	END TRY
 	
@@ -59,11 +59,11 @@ for i = 1 to this_section.page_count
 	TRY
 		this_section.page[i].page_object.initialize(this_section, i)
 	CATCH (throwable lt_error2)
-		ls_text = "EncounterPRO encountered an error initializing a chart page ("
+		ls_text = "Error initializing a chart page ("
 		ls_text += this_section.page[i].page_class + ").  The following error message was returned:  "
 		ls_text += lt_error2.text
 		log.log(this, "u_cpr_multi_page_section.open_pages:0033", ls_text, 4)
-		chart_window.event POST load_error("EncounterPRO encountered an error initializing the chart")
+		chart_window.event POST load_error("Error initializing the chart")
 		return -1
 	END TRY
 	

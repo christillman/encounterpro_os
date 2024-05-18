@@ -1126,7 +1126,7 @@ elseif lastcolumnname = "compute_docs" then
 elseif lastcolumnname = "compute_code_checker" then
 	ls_code_check_status = dw_checked_out.object.code_check_status[selected_row]
 	if isnull(ls_code_check_status) then
-		openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this encounter.  Do you with to perform the Code Check service now?")
+		openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this appointment.  Do you with to perform the Code Check service now?")
 		popup_return = message.powerobjectparm
 		if popup_return.item <> "YES" then return
 	

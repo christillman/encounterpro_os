@@ -500,6 +500,9 @@ destroy(this.st_encounter_status)
 destroy(this.st_encounter_count)
 end on
 
+type cb_configure_tab from u_cpr_page_base`cb_configure_tab within u_soap_page_base
+end type
+
 type st_encounter_id from statictext within u_soap_page_base
 integer x = 1838
 integer y = 100
@@ -856,7 +859,7 @@ str_popup_return popup_return
 integer li_sts
 w_window_base lw_window
 
-popup.title = "Select Encounter"
+popup.title = "Select Appointment"
 popup.data_row_count = 2
 popup.items[1] = current_patient.cpr_id
 popup.items[2] = "PICK"

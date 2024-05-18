@@ -179,7 +179,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "The highlighted records indicated which rules which have passed for this encounter."
+string text = "The highlighted records indicated which rules which have passed for this appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

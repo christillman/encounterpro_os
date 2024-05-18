@@ -193,7 +193,7 @@ IF cprdb.sqlcode = 0 THEN
 			message_id = :is_message_id
 			USING 	cprdb;
 			IF NOT cprdb.check() THEN RETURN -1
-			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0136","Encounter Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ") is out of date",2)
+			mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0136","Appointment Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ") is out of date",2)
 			Return 1
 		ENd If	
 	else
@@ -244,7 +244,7 @@ ELSE
 END IF	
 
 // A valid row has now been processed from x_encounterpro_Arrived
-mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0187","Encounter Message has been processed, Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ")",2)
+mylog.log(this, "u_component_schedule_encounterpro.xx_get_next_checked_in:0187","Appointment Message has been processed, Billing ID, Message ID (" + ls_billing_id + ", " + ls_message_id + ")",2)
 
 UPDATE x_encounterpro_Arrived
 SET  status = 'OK'

@@ -1020,7 +1020,7 @@ if not isnull(open_encounter) then
 	if li_sts < 0 then
 		return li_sts
 	elseif li_sts = 0 then
-		log.log(this, "u_patient.exit_office_old:0013", "Unable to close current encounter", 4)
+		log.log(this, "u_patient.exit_office_old:0013", "Unable to close current appointment", 4)
 		return 0
 	end if
 end if
@@ -1697,7 +1697,7 @@ li_sts = current_patient.encounters.new_encounter(open_encounter)
 if li_sts < 0 then return -1
 
 if isnull(open_encounter.encounter_id) then
-	log.log(this, "u_patient.new_encounter:0153", "Error creating new encounter", 4)
+	log.log(this, "u_patient.new_encounter:0153", "Error creating new appointment", 4)
 	// Since we know we created this encounter object, we can destroy it here
 	DESTROY open_encounter
 	setnull(open_encounter)
@@ -1714,7 +1714,7 @@ display_only = false
 if pb_order_workplan then
 	li_sts = open_encounter.order_encounter_workplan()
 	if li_sts <= 0 then
-		log.log(this, "u_patient.new_encounter:0170", "Error ordering encounter workplan", 4)
+		log.log(this, "u_patient.new_encounter:0170", "Error ordering appointment workplan", 4)
 	end if
 end if
 
@@ -1769,7 +1769,7 @@ public subroutine chart_encounter_old ();//str_popup_return popup_return
 //string lsa_value[]
 //
 //if not isnull(open_encounter) then
-//	openwithparm(w_pop_message, "An encounter is already open")
+//	openwithparm(w_pop_message, "An appointment is already open")
 //	return
 //end if
 //

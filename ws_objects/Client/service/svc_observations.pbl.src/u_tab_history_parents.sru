@@ -257,7 +257,7 @@ integer x = 18
 integer y = 16
 integer width = 1143
 integer height = 1136
-string text = "This Encounter"
+string text = "This Appointment"
 end type
 
 type tabpage_patient from u_tabpage_history_parents_patient within u_tab_history_parents

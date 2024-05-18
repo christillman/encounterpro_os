@@ -421,9 +421,9 @@ if popup_return.item <> "YES" then return
 
 ls_message = service.get_attribute("Are You Sure Text 2")
 if isnull(ls_message) then
-	ls_message = "In order to merge these charts, EncounterPRO will need to lock all of the patient"
+	ls_message = "In order to merge these charts, the application will need to lock all of the patient"
 	ls_message += " tables for the duration of the merge processing.  The processing may take up to"
-	ls_message += " a minute and may result in other users seeing EncounterPRO freeze during that time."
+	ls_message += " a minute and may result in other users seeing an application freeze during that time."
 	ls_message += "  Are you absolutely sure you want to do this?"
 end if
 

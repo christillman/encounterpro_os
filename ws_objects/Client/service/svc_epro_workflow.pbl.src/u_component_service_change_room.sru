@@ -5,6 +5,8 @@ end type
 end forward
 
 global type u_component_service_change_room from u_component_service
+integer max_retries = 5
+boolean do_autoperform = true
 end type
 global u_component_service_change_room u_component_service_change_room
 
@@ -30,7 +32,7 @@ integer li_sts
 
 if in_office_flag = "Y" then
 	If isnull(current_patient.open_encounter) Then
-		log.log(this, "u_component_service_change_room.xx_do_service:0019", "No current encounter", 3)
+		log.log(this, "u_component_service_change_room.xx_do_service:0019", "No current appointment", 3)
 		Return 2
 	End If
 	

@@ -514,7 +514,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Exit EncounterPRO"
+string text = "Exit Application"
 end type
 
 event clicked;

@@ -484,7 +484,7 @@ string ls_icon
 
 u_ds_data dw_char_key
 
-popup.title = "Enter new Encounter Type description"
+popup.title = "Enter new Appointment Type description"
 
 openwithparm(w_pop_prompt_string, popup)
 popup_return = message.powerobjectparm

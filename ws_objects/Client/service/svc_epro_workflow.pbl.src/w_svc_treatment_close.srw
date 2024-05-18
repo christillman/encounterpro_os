@@ -179,7 +179,7 @@ service.get_attribute("prompt_for_progress", close_progress_required)
 
 if isnull(service.encounter_id) then
 	if isnull(current_patient.open_encounter_id) then
-		log.log(this, "w_svc_treatment_close.initialize:0048", "No open encounter", 4)
+		log.log(this, "w_svc_treatment_close.initialize:0048", "No open appointment", 4)
 		return -1
 	else
 		close_encounter_id = current_patient.open_encounter_id
@@ -1246,7 +1246,7 @@ type st_cancel_help from statictext within w_svc_treatment_close
 boolean visible = false
 integer x = 457
 integer y = 1144
-integer width = 2002
+integer width = 5051
 integer height = 236
 integer textsize = -12
 integer weight = 400
@@ -1256,7 +1256,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 12632256
-string text = "Cancelling a treatment tells EncounterPRO that this treatment wasn~'t really ordered and should not be displayed in the chart.  A comment is required (e.g. ~"Entered in error~")."
+string text = "Cancelling a treatment signifies that this treatment wasn~'t really ordered and should not be displayed in the chart.  A comment is required (e.g. ~"Entered in error~")."
 alignment alignment = center!
 boolean border = true
 boolean focusrectangle = false

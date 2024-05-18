@@ -695,7 +695,7 @@ DO WHILE ll_row > 0
 				//dw_holding_list.object.failed_once[ll_row] = 1
 				
 				if ll_count > 0 then
-					openwithparm(w_pop_yes_no, "This document contains data elements that do not correspond to EncounterPRO objects.  Do you wish to map these elements now?")
+					openwithparm(w_pop_yes_no, "This document contains data elements that do not correspond to application objects.  Do you wish to map these elements now?")
 					popup_return = message.powerobjectparm
 					if popup_return.item = "YES" then
 						edit_mappings(ll_row)
@@ -744,7 +744,7 @@ DO WHILE ll_row > 0
 				// Already OK
 			else
 				log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0220", "The current patient does not match the patient found for this XML document.", 4)
-				openwithparm(w_pop_message, "The current patient does not match the desired patient context for this attachment.  EncounterPRO is unable to process this attachment.")
+				openwithparm(w_pop_message, "The current patient does not match the desired patient context for this attachment.  Unable to process this attachment.")
 				return
 			end if
 		end if
@@ -797,7 +797,7 @@ DO WHILE ll_row > 0
 		ll_attachment_id = current_patient.attachments.new_attachment(lstr_attachment, ls_file, lstr_attachment_context.context_object)
 		if ll_attachment_id <= 0 then
 			log.log(this, "u_tabpage_incoming_documents_base.post_attachments:0273", "Error posting document", 4)
-			openwithparm(w_pop_message, "An error occured while posting this document.  Please correct the error and post the document again, or contact EncounterPRO customer support for assistance.")
+			openwithparm(w_pop_message, "An error occured while posting this document.  Please correct the error and post the document again, or contact " + gnv_app.product_name + " customer support for assistance.")
 			return
 		end if
 	

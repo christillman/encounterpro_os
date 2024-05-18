@@ -24,12 +24,11 @@ type pb_down from u_picture_button within w_em_component_rules
 end type
 type st_page from statictext within w_em_component_rules
 end type
-type st_1 from statictext within w_em_component_rules
+type st_info from statictext within w_em_component_rules
 end type
 end forward
 
 global type w_em_component_rules from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -45,7 +44,7 @@ st_type_level_title st_type_level_title
 pb_up pb_up
 pb_down pb_down
 st_page st_page
-st_1 st_1
+st_info st_info
 end type
 global w_em_component_rules w_em_component_rules
 
@@ -107,7 +106,7 @@ this.st_type_level_title=create st_type_level_title
 this.pb_up=create pb_up
 this.pb_down=create pb_down
 this.st_page=create st_page
-this.st_1=create st_1
+this.st_info=create st_info
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_component_level
 this.Control[iCurrent+2]=this.cb_done
@@ -120,7 +119,7 @@ this.Control[iCurrent+8]=this.st_type_level_title
 this.Control[iCurrent+9]=this.pb_up
 this.Control[iCurrent+10]=this.pb_down
 this.Control[iCurrent+11]=this.st_page
-this.Control[iCurrent+12]=this.st_1
+this.Control[iCurrent+12]=this.st_info
 end on
 
 on w_em_component_rules.destroy
@@ -136,7 +135,7 @@ destroy(this.st_type_level_title)
 destroy(this.pb_up)
 destroy(this.pb_down)
 destroy(this.st_page)
-destroy(this.st_1)
+destroy(this.st_info)
 end on
 
 event open;call super::open;str_popup_return popup_return
@@ -415,10 +414,10 @@ alignment alignment = right!
 boolean focusrectangle = false
 end type
 
-type st_1 from statictext within w_em_component_rules
+type st_info from statictext within w_em_component_rules
 integer x = 50
 integer y = 1560
-integer width = 2208
+integer width = 2254
 integer height = 64
 boolean bringtotop = true
 integer textsize = -10
@@ -429,7 +428,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "The highlighted records indicated which rules which have passed for this encounter."
+string text = "The highlighted records indicated which rules which have passed for this appointment"
 boolean focusrectangle = false
 end type
 

@@ -1306,7 +1306,7 @@ if not document_created or failed_mappings then
 		// If the mappings have still failed then fail the get_document unless the force_send flag is true
 		if failed_mappings then
 			ls_interfacename = document_interface_name()
-			openwithparm(w_pop_yes_no, "This document contains EncounterPRO data elements have not been mapped to required " + ls_interfacename + " fields.  Do you wish to map these elements now?")
+			openwithparm(w_pop_yes_no, "This document contains application data elements have not been mapped to required " + ls_interfacename + " fields.  Do you wish to map these elements now?")
 			popup_return = message.powerobjectparm
 			if popup_return.item = "YES" then
 				edit_mappings()

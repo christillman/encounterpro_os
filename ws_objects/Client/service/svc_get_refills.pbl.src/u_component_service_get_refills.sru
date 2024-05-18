@@ -5,6 +5,8 @@ end type
 end forward
 
 global type u_component_service_get_refills from u_component_service
+integer max_retries = 5
+boolean do_autoperform = true
 end type
 global u_component_service_get_refills u_component_service_get_refills
 
@@ -55,7 +57,7 @@ if len(refill_event_type) > 0 then
 				refill_event_type = "Request"
 			end if
 		CASE ELSE
-			log.log(this, "u_component_service_get_refills.xx_do_service:0039", "Warning:  invalid Refill Event Type (" + refill_event_type + ").  EncounterPRO will infer the event type from the context.", 3)
+			log.log(this, "u_component_service_get_refills.xx_do_service:0039", "Warning:  invalid Refill Event Type (" + refill_event_type + ").  The event type will be inferred from the context.", 3)
 			setnull(refill_event_type)
 	END CHOOSE
 end if

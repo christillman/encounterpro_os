@@ -513,7 +513,7 @@ integer ll_patient_workplan_item_id
 setnull(ll_patient_workplan_item_id)
 
 if isnull(parent_patient.open_encounter) then
-	log.log(this, "u_ds_assessment.set_progress:0013", "No Open Encounter", 4)
+	log.log(this, "u_ds_assessment.set_progress:0013", "No Open Appointment", 4)
 	return -1
 end if
 

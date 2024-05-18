@@ -17,10 +17,10 @@ global w_reinstall w_reinstall
 event post_open;call super::post_open;String		ls_setup
 str_popup_return popup_return
 
-openwithparm(w_pop_yes_no, "Are you sure you want to reinstall the EncounterPRO Client on this computer?")
+openwithparm(w_pop_yes_no, "Are you sure you want to reinstall the " + gnv_app.product_name + " Client on this computer?")
 popup_return = message.powerobjectparm
 If popup_return.item = "YES" then
-	ls_Setup = f_default_attachment_path() + "\Install\EncounterPRO\SETUP.EXE"
+	ls_Setup = f_default_attachment_path() + "\Install\" + gnv_app.product_name + "\SETUP.EXE"
 	run(ls_setup,Normal!)
 	yield()
 	gnv_app.event close()

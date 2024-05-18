@@ -31,7 +31,7 @@ WHERE extension = :ls_extension;
 if not tf_check() then return ls_null
 
 if ll_count > 0 then
-	openwithparm(w_pop_message, "The attachment extension ~"" + ls_extension + "~" already exists in this EncounterPRO installaion")
+	openwithparm(w_pop_message, "The attachment extension ~"" + ls_extension + "~" already exists in this " + gnv_app.product_name + " installation")
 	return ls_null
 end if
 

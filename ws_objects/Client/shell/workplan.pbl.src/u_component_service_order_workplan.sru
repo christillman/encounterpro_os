@@ -80,15 +80,15 @@ if upper(ls_in_office_flag) = "Y" then
 	ls_encounter_status = current_patient.encounters.encounter_status(encounter_id)
 	if upper(ls_encounter_status) = "CLOSED" then
 		if gnv_app.cpr_mode = "CLIENT" then
-			ls_prompt = "You are attempting to order an in-office workplan when the associated encounter is already closed."
-			ls_prompt += "  Do you wish to re-open the encounter?"
+			ls_prompt = "You are attempting to order an in-office workplan when the associated appointment is already closed."
+			ls_prompt += "  Do you wish to re-open the appointment?"
 			openwithparm(w_pop_yes_no, ls_prompt)
 			popup_return = message.powerobjectparm
 			if popup_return.item <> "YES" then
 				return 2
 			end if
 		else
-			mylog.log(this, "u_component_service_order_workplan.xx_do_service:0076", "An in-office workplan cannot be ordered when the encounter is closed", 4)
+			mylog.log(this, "u_component_service_order_workplan.xx_do_service:0076", "An in-office workplan cannot be ordered when the appointment is closed", 4)
 			return 2
 		end if
 	end if

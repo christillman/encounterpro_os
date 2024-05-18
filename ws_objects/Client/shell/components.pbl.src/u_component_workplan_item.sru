@@ -441,7 +441,7 @@ if gnv_app.cpr_mode = "CLIENT" then
 	
 	// If the owner flag is set then make sure the user owns the encounter
 	if owner_flag = "Y" and not isnull(encounter_id) then
-		ls_message = "In order to perform this service you will need to take over the encounter."
+		ls_message = "In order to perform this service you will need to take over the appointment."
 		lb_is_owner = false
 		// Find the provider for this encounter
 		ls_attending_doctor = current_patient.encounters.attending_doctor(encounter_id)
@@ -465,7 +465,7 @@ if gnv_app.cpr_mode = "CLIENT" then
 				ls_message += user_list.role_description(luo_user.user_id) + "' role."
 			end if
 		else
-			ls_message += "  This encounter is already owned by "
+			ls_message += "  This appointment is already owned by "
 			ls_message += luo_user.user_full_name + "."
 		end if
 	
@@ -473,7 +473,7 @@ if gnv_app.cpr_mode = "CLIENT" then
 			// See if this user may take over an encounter aleady owned by luo_user
 			if user_list.user_may_take_over_encounter(current_user.user_id, luo_user.user_id) then
 				// Otherwise, prompt the user before taking over the encounter
-				ls_message += "  Are you sure you wish to take over this encounter?"
+				ls_message += "  Are you sure you wish to take over this appointment?"
 				openwithparm(w_pop_yes_no, ls_message)
 				popup_return = message.powerobjectparm
 				if popup_return.item = "YES" then
@@ -483,7 +483,7 @@ if gnv_app.cpr_mode = "CLIENT" then
 					return 0
 				end if
 			else
-				ls_message += "  You are not authorized to take over this encounter."
+				ls_message += "  You are not authorized to take over this appointment."
 				openwithparm(w_pop_message, ls_message)
 				not_doing_service()
 				return 0
@@ -1380,13 +1380,13 @@ CHOOSE CASE lower(context_object)
 		setnull(object_key)
 	CASE "encounter"
 		if isnull(cpr_id) then
-			log.log(this, "u_component_workplan_item.set_object_key:0015", "encounter context but no cpr_id", 4)
+			log.log(this, "u_component_workplan_item.set_object_key:0015", "appointment context but no cpr_id", 4)
 			return -1
 		end if
 		if isnull(encounter_id) then
 			get_attribute("object_key", ll_object_key)
 			if isnull(ll_object_key) then
-				log.log(this, "u_component_workplan_item.set_object_key:0021", "encounter context but no encounter_id", 4)
+				log.log(this, "u_component_workplan_item.set_object_key:0021", "appointment context but no encounter_id", 4)
 				return -1
 			else
 				encounter_id = ll_object_key

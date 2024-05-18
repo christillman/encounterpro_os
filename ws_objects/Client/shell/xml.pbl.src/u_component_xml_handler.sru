@@ -501,7 +501,7 @@ if not isnull(pstr_treatment.begin_date) &
 			if lstr_encounter.encounter_id > 0 then
 				pstr_treatment.open_encounter_id = lstr_encounter.encounter_id
 			else
-				log.log(this, "u_component_xml_handler.find_treatment:0156", "Unable to find last encounter", 4)
+				log.log(this, "u_component_xml_handler.find_treatment:0156", "Unable to find last appointment", 4)
 				return -1
 			end if
 		else
@@ -845,7 +845,7 @@ if not isnull(ls_cpr_id) then
 	else
 		log.log(this, "u_component_xml_handler.find_patient:0104", "The current patient does not match the patient found for this XML document.", 4)
 		if pb_prompt_user then
-			openwithparm(w_pop_message, "The current patient does not match the patient found for this XML document.  EncounterPRO is unable to process this XML document.")
+			openwithparm(w_pop_message, "The current patient does not match the patient found for this XML document. Unable to process this XML document.")
 		end if
 		return -1
 	end if
@@ -1060,7 +1060,7 @@ if not isnull(pstr_encounter.encounter_date) and pb_create_automatically then
 		pstr_encounter.encounter_type = datalist.get_preference( "PREFERENCES", "default_encounter_type")
 	end if
 	if isnull(pstr_encounter.encounter_type) then
-		log.log(this, "u_component_xml_handler.find_encounter:0086", "Unable to create new encounter because the message contains no Encounter Type and no default Encounter Type is set in Preferences.", 3)
+		log.log(this, "u_component_xml_handler.find_encounter:0086", "Unable to create new appointment because the message contains no Appointment Type and no default Appointment Type is set in Preferences.", 3)
 	else
 		if pb_checkin then
 			lb_workflow = true

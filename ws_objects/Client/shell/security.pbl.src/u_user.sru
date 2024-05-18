@@ -280,7 +280,7 @@ elseif isnull(sticky_logon) then
 	return
 elseif not sticky_logon then
 	if sticky_logon_prompt then
-		popup.title = "You have completed a service and are about to be logged out of EncounterPRO"
+		popup.title = "You have completed a service and are about to be logged out of " + gnv_app.product_name + "."
 		popup.data_row_count = 4
 		popup.items[1] = "Log Out"
 		popup.items[2] = "Stay Logged On"

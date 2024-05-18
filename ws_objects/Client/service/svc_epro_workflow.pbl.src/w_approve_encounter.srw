@@ -339,7 +339,7 @@ popup_return.item_count = 0
 service = Message.Powerobjectparm
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "w_approve_encounter:open", "No open encounter", 4)
+	log.log(this, "w_approve_encounter:open", "No open appointment", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -416,7 +416,7 @@ end type
 type cb_finished from commandbutton within w_approve_encounter
 integer x = 2258
 integer y = 1612
-integer width = 608
+integer width = 617
 integer height = 108
 integer taborder = 30
 boolean bringtotop = true
@@ -426,7 +426,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Approve Encounter"
+string text = "Approve Appointment"
 end type
 
 event clicked;string				ls_temp,ls_service
@@ -473,7 +473,7 @@ if capture_signature then
 	f_attribute_add_attribute(lstra_attributes, "progress_type", ls_temp)
 	
 	ls_temp = service.get_attribute("signature_progress_key")
-	if isnull(ls_temp) then ls_temp = "Encounter Owner"
+	if isnull(ls_temp) then ls_temp = "Appointment Owner"
 	f_attribute_add_attribute(lstra_attributes, "progress_key", ls_temp)
 	
 	li_sts = service_list.do_service(ls_service,lstra_attributes)
@@ -728,7 +728,7 @@ end type
 
 event clicked;
 if not some_assessments then
-	openwithparm(w_pop_message, "This encounter cannot be billed since there are no assessments associated with it.")
+	openwithparm(w_pop_message, "This appointment cannot be billed since there are no assessments associated with it.")
 	return
 end if
 

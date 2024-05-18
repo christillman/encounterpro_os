@@ -252,7 +252,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
-string text = "Include EncounterPRO Users"
+string text = "Include Application Users"
 end type
 
 event clicked;refresh()

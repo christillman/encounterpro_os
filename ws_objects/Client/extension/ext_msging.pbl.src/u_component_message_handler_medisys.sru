@@ -37,7 +37,7 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_medisys.medisys_diagnosis:0011", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medisys.medisys_diagnosis:0011", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
@@ -157,7 +157,7 @@ long ll_array_count
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_medisys.medisys_procedure:0016", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medisys.medisys_procedure:0016", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF
 ll_array_count = UpperBound(is_array)
@@ -562,7 +562,7 @@ IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	//	If the FileClose() function returns less than 1, then quit
 	IF li_sts < 1 THEN
-		mylog.log(this, "u_component_message_handler_medisys.xx_handle_message:0128", "Unable to close the medisys.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medisys.xx_handle_message:0128", "Unable to close the medisys.mmi incoming transfer file...Aborting Appointment Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 END IF
@@ -596,7 +596,7 @@ setnull(ls_allocation)
 integer li_sts
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_medisys.medisys_insurance:0022", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medisys.medisys_insurance:0022", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
@@ -738,7 +738,7 @@ integer li_priority
 
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-	mylog.log(this, "u_component_message_handler_medisys.medisys_patient:0041", "The parse_csv() function failed Aborting Encounter Creation)", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_patient:0041", "The parse_csv() function failed Aborting Appointment Creation)", 4)
 	RETURN -1
 END IF	
 
@@ -904,7 +904,7 @@ setnull(ls_Attending_doctor)
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(255)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0052", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0052", "The parse_csv() function failed Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
@@ -930,13 +930,13 @@ end if
 //	Populate variables with the array contents
 ls_billing_id = is_array[1] 
 If isnull(ls_billing_id) or ls_billing_id = "" then
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0078", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0078", "Billingid not found Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 If isnumber(ls_billing_id) then
 	ll_encounter_billing_id = long(ls_billing_id)
 else
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0084", "Billingid not numeric Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0084", "Billingid not numeric Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF
 
@@ -1035,7 +1035,7 @@ and patient_status = 'ACTIVE'
 USING		cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0183", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0183", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN 1
 END IF
 
@@ -1050,7 +1050,7 @@ END IF
 string ls_error
 If Isnull(ls_primary_provider_id) then
 	ls_error = is_array[4]
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0198", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0198", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 End if			
 
@@ -1090,7 +1090,7 @@ VALUES (
 
 IF NOT cprdb.check() THEN 
 	// The new entry failed
-	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0238", "Unable write a record to x_medisys_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_medisys.medisys_arrived:0238", "Unable write a record to x_medisys_Arrived...Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 	RETURN -1									
 END IF
 	

@@ -27,7 +27,6 @@ end type
 end forward
 
 global type w_new_past_encounter from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -410,7 +409,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
 boolean enabled = false
-string text = "Chart Past Encounter"
+string text = "Chart Past Appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

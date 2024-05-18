@@ -303,7 +303,7 @@ if not isnull(ls_scheduledatetime) then
 			mylog.log(this, "u_hl7_arrived_mpm.arrived:0289", ls_message , 4)
 			GOTO error
 		else
-			mylog.log(this, "u_hl7_arrived_mpm.arrived:0292", "formatted date(" + ls_scheduledate + ") not today. but allowing the encounter to be created", 3)
+			mylog.log(this, "u_hl7_arrived_mpm.arrived:0292", "formatted date(" + ls_scheduledate + ") not today. but allowing the appointment to be created", 3)
 			ldt_encounter_date_time = datetime(ld_scheduledate,now())
 		end if
 	end if
@@ -574,7 +574,7 @@ END IF
 is_last_message_id = is_message_id
 is_cpr_id = ls_cprid
 
-mylog.log(this, "u_hl7_arrived_mpm.arrived:0563", "Encounter arrived for ("+ls_cprid+")", 1)
+mylog.log(this, "u_hl7_arrived_mpm.arrived:0563", "Appointment arrived for ("+ls_cprid+")", 1)
 
 ls_message = "Warnings:"
 if not isnull(ls_appointment_message) or len(ls_appointment_message) > 0 Then

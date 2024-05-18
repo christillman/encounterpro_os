@@ -73,8 +73,8 @@ end if
 if len(ls_cpr_id) > 0 and ll_encounter_id > 0 then
 	popup.button_count += 1
 	popup.button_icons[popup.button_count] = "button_workflow.bmp"
-	popup.button_helps[popup.button_count] = "Show workplan for this encounter"
-	popup.button_titles[popup.button_count] = "Encounter Workplan"
+	popup.button_helps[popup.button_count] = "Show workplan for this appointment"
+	popup.button_titles[popup.button_count] = "Appointment Workplan"
 	lsa_button[popup.button_count] = "ENCOUNTERWORKPLAN"
 end if
 

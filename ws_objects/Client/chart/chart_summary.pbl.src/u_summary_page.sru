@@ -1400,7 +1400,7 @@ string facename = "Arial"
 boolean underline = true
 long backcolor = 7191717
 boolean enabled = false
-string text = "This Encounter"
+string text = "This Appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

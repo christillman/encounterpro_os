@@ -74,7 +74,6 @@ end forward
 
 global type w_svc_rx_refill_request from w_window_base
 string title = "Retry Posting"
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -1173,7 +1172,7 @@ CHOOSE CASE lower(refill_response)
 	CASE "approved"
 		if controlled_substance and not local_request then
 			// If this is a controlled substance and not a local request, then we're going to treat it like a physician initiated refill request and send a NEWRX message
-			ls_message = "This medication is a controlled substance so EncounterPRO will not be able to send the refill electronically.  Do you wish to print the refill now?"
+			ls_message = "This medication is a controlled substance so the refill cannot be sent electronically.  Do you wish to print the refill now?"
 			openwithparm(w_pop_yes_no, ls_message)
 			popup_return = message.powerobjectparm
 			if popup_return.item = "YES" then
@@ -1966,8 +1965,6 @@ integer width = 1669
 integer height = 244
 integer taborder = 30
 boolean bringtotop = true
-borderstyle borderstyle = stylebox!
-string binarykey = "w_svc_rx_refill_request.win"
 end type
 
 

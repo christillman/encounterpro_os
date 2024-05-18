@@ -85,7 +85,7 @@ end if
 if gnv_app.cpr_mode = "CLIENT" then
 	if isnull(current_patient.date_of_birth) then
 		ls_message = "The correct workplan may not be selected because this patient does not have a date-of-birth.  "
-		ls_message += "Are you sure you want to create a new encounter without a date-of-birth?"
+		ls_message += "Are you sure you want to create a new appointment without a date-of-birth?"
 		openwithparm(w_pop_yes_no, ls_message)
 		popup_return = message.powerobjectparm
 		if popup_return.item <> "YES" then	return 2
@@ -263,7 +263,7 @@ public function long checkin_patient ();////////////////////////////////////////
 //
 // Description:  Prompt user (if needed) and perform the actual checking
 //
-// Returns: encounter_id for new encounter if successful
+// Returns: encounter_id for new appointment if successful
 //			0 if user selected "I'll Be Back"
 //			-1 if error
 //			-2 if user cancelled
@@ -283,7 +283,7 @@ boolean lb_show_screen
 
 ldt_one_hour_ago = datetime(today(), relativetime(now(), -3600))
 
-// Set the defaults for the new encounter
+// Set the defaults for the new appointment
 ls_temp = get_attribute("encounter_date")
 if isnull(ls_temp) then
 	lstr_encounter.encounter_date = datetime(today(), now())
@@ -361,12 +361,12 @@ if lstr_encounter.encounter_date < ldt_one_hour_ago then
 	if li_sts = 1 then lb_open_encounter = false
 end if
 
-// Create the new encounter
+// Create the new appointment
 ll_encounter_id = current_patient.new_encounter(lstr_encounter, &
 										current_scribe.user_id, &
 										lb_open_encounter)
 if ll_encounter_id <= 0 then
-	log.log(this, "u_component_service_patient_checkin.checkin_patient:0108", "Could not create a new encounter", 4)
+	log.log(this, "u_component_service_patient_checkin.checkin_patient:0108", "Could not create a new appointment", 4)
 	return -1
 end if
 

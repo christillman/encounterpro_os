@@ -404,7 +404,7 @@ IF cprdb.sqlcode = 0 THEN
 				ps_attending_doctor = ls_primary_provider_id
 				ls_status = "OPEN"
 			ELSE
-				mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in:0266", "A new Encounter Message has invalid facility, Billing ID, Message ID (" + ls_billing_id + ", " + ls_facility + ")",4)
+				mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in:0266", "A new Appointment Message has invalid facility, Billing ID, Message ID (" + ls_billing_id + ", " + ls_facility + ")",4)
 				RETURN -1
 			END IF	
 		ELSE	
@@ -426,7 +426,7 @@ else
 		USING cprdb;
 		if not cprdb.check() then return -1
 end if	
-mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in:0288","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
+mylog.log(this, "u_component_schedule_foxmeadows.xx_get_next_checked_in:0288","Appointment Message has been processed, Billing ID (" + ls_billing_id + ")",1)
 If ii_office_count = 1 then
 	ps_office = is_offices[1]
 	return 1

@@ -207,7 +207,7 @@ CHOOSE CASE lower(ls_attribute)
 		refresh()
 	CASE "encounter_status"
 		if ls_old_value = "Cancelled" then
-			openwithparm(w_pop_yes_no, "Do you wish to un-cancel this encounter?")
+			openwithparm(w_pop_yes_no, "Do you wish to un-cancel this appointment?")
 			popup_return = message.powerobjectparm
 			if popup_return.item <> "YES" then return
 			

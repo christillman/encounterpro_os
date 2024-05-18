@@ -115,14 +115,14 @@ IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	//	If the FileClose() function returns less than 1, then quit
 	IF li_sts < 1 THEN
-		mylog.log(this, "u_component_message_handler_lytec.xx_handle_message:0093", "Unable to close the lytec.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_lytec.xx_handle_message:0093", "Unable to close the lytec.mmi incoming transfer file...Aborting Appointment Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 	
 	lb_sts = FileDelete(ls_filepath)
 	//	If the FileDelete() function does not return TRUE, then quit	
 	IF NOT lb_sts THEN
-		mylog.log(this, "u_component_message_handler_lytec.xx_handle_message:0100", "Unable to delete the lytec.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_lytec.xx_handle_message:0100", "Unable to delete the lytec.mmi incoming transfer file...Aborting Appointment Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 END IF
@@ -376,7 +376,7 @@ setnull(ls_ssn)
 
 li_sts = parse_csv(10)
 IF li_sts < 0 THEN
-	mylog.log(this, "u_component_message_handler_lytec.lytec_patient:0063", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(ii_message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_lytec.lytec_patient:0063", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(ii_message_id) + ")", 4)
 	RETURN -1
 END IF	
 

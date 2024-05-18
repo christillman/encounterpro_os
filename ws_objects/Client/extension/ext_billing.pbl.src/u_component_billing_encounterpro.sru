@@ -465,7 +465,7 @@ USING cprdb;
 if not cprdb.check() then return -1
 
 If cprdb.sqlcode = 100 then
-	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter:0058", "Patient encounter Record does not exist ", 4)
+	mylog.log(this, "u_component_billing_encounterpro.xx_post_encounter:0058", "Patient appointment Record does not exist ", 4)
 	return -1
 End If
 

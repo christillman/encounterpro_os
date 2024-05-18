@@ -4077,7 +4077,7 @@ luo_data = CREATE u_ds_data
 luo_data.set_dataobject("dw_sp_get_encounter_observations")
 ll_count = luo_data.retrieve(current_patient.cpr_id, pstr_encounter.encounter_id, ps_observation_id)
 if ll_count < 0 then
-	log_error("Error getting encounter observations")
+	log_error("Error getting appointment observations")
 	DESTROY luo_data
 	return 0
 end if

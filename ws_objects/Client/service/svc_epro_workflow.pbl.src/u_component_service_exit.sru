@@ -5,6 +5,8 @@ end type
 end forward
 
 global type u_component_service_exit from u_component_service
+integer max_retries = 5
+boolean do_autoperform = true
 end type
 global u_component_service_exit u_component_service_exit
 
@@ -51,9 +53,9 @@ end if
 // If the encounter is being closed or cancelled, prompt the user for a reason
 if upper(ls_encounter_status) = "CLOSED" or upper(ls_encounter_status) = "CANCELED" then
 	if upper(ls_encounter_status) = "CLOSED" then
-		popup.title = "Enter reason for closing encounter"
+		popup.title = "Enter reason for closing appointment"
 	else
-		popup.title = "Enter reason for cancelling encounter"
+		popup.title = "Enter reason for cancelling appointment"
 	end if
 	popup.argument_count = 2
 	popup.argument[1] = "ENCOUNTER_" + upper(ls_encounter_status)
@@ -67,7 +69,7 @@ end if
 
 // One final warning for deleting an encounter
 if upper(ls_encounter_status) = "CANCELED" then
-	openwithparm(w_pop_yes_no, "You are about to delete this entire encounter for the patient including all of the chart information recorded during this encounter.  Are you sure that you want to do this?")
+	openwithparm(w_pop_yes_no, "You are about to delete this entire appointment for the patient including all of the chart information recorded during the appointment.  Are you sure that you want to do this?")
 	popup_return = message.powerobjectparm
 	if popup_return.item <> "YES" then return 1
 end if

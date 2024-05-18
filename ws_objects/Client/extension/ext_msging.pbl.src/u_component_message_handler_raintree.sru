@@ -118,14 +118,14 @@ IF li_filenum >0 THEN
 	li_sts = FileClose(li_filenum)
 	//	If the FileClose() function returns less than 1, then quit
 	IF li_sts < 1 THEN
-		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message:0094", "Unable to close the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message:0094", "Unable to close the raintree.mmi incoming transfer file...Aborting Appointment Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 	
 	lb_sts = FileDelete(ls_filepath)
 	//	If the FileDelete() function does not return TRUE, then quit	
 	IF NOT lb_sts THEN
-		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message:0101", "Unable to delete the raintree.mmi incoming transfer file...Aborting Encounter Creation for Message ID (" + string(li_message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.xx_handle_message:0101", "Unable to delete the raintree.mmi incoming transfer file...Aborting Appointment Creation for Message ID (" + string(li_message_id) + ")", 4)
 		RETURN -1									
 	END IF
 END IF
@@ -140,7 +140,7 @@ public function integer raintree_diagnosis ();//
 ////	Call the parsing function to put the comma separated values into ls_array[]
 //li_sts = parse_csv(2)
 //IF li_sts < 0 THEN
-//		mylog.log(this, "u_component_message_handler_raintree.raintree_diagnosis:0007", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+//		mylog.log(this, "u_component_message_handler_raintree.raintree_diagnosis:0007", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(message_id) + ")", 4)
 //		RETURN -1
 //END IF
 //
@@ -232,7 +232,7 @@ public function integer raintree_procedure ();//int li_sts
 ////	Call the parsing function to put the comma separated values into ls_array[]
 //li_sts = parse_csv(7)
 //IF li_sts < 0 THEN
-//		mylog.log(this, "u_component_message_handler_raintree.raintree_procedure:0006", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(message_id) + ")", 4)
+//		mylog.log(this, "u_component_message_handler_raintree.raintree_procedure:0006", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(message_id) + ")", 4)
 //		RETURN -1
 //END IF
 //
@@ -544,7 +544,7 @@ long ll_array_count
 
 li_sts = parse_csv(14)
 IF li_sts < 0 THEN
-	mylog.log(this, "u_component_message_handler_raintree.raintree_patient:0049", "The parse_csv() function failed Aborting Encounter Creation for Message ID (" + string(ii_message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_patient:0049", "The parse_csv() function failed Aborting Appointment Creation for Message ID (" + string(ii_message_id) + ")", 4)
 	RETURN -1
 END IF	
 ll_array_count = UpperBound(is_array)
@@ -800,7 +800,7 @@ ld_scheduledatetime = ldt_encounter_date_time
 //	Call the parsing function to put the comma separated values into ls_array[]
 li_sts = parse_csv(10)
 IF li_sts < 0 THEN
-		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0058", "The parse_csv() function failed Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0058", "The parse_csv() function failed Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 END IF	
 
@@ -808,7 +808,7 @@ END IF
 //	Populate variables with the array contents
 ls_billing_id = is_array[1] 
 If isnull(ls_billing_id) or ls_billing_id = "" then
-	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0066", "Billingid not found Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0066", "Billingid not found Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 END IF	
 
@@ -831,7 +831,7 @@ else
 	If isnumber(char2) then
 		ll_encounter_billing_id = long(char2)
 	else
-		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0089", "Billingid cannot be converted ...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+		mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0089", "Billingid cannot be converted ...Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		RETURN -1
 	END IF	
 END IF
@@ -939,7 +939,7 @@ end if
 				//	LOG an ERROR, no cpr_ID on file, 
 				//	CANNOT process the encounter request
 				//	Demographic data not received yet
-				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0197", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0197", "Unable to retrieve a CPR_ID to match the Billing_ID..Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 		 		RETURN 1
 			END IF
 
@@ -954,7 +954,7 @@ END IF
 string ls_error
 If Isnull(ls_primary_provider_id) then
 	ls_error = is_array[4]
-	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0212", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
+	mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0212", "Unable to retrieve a provider_ID to match the input provider_ID " + ls_error + " ..Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(message_id) + ")", 4)
 	RETURN -1
 End if			
 
@@ -994,7 +994,7 @@ ls_status = "SCHEDULED"
 	
 			IF NOT cprdb.check() THEN 
 				// The new entry failed
-				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0252", "Unable write a record to x_raintree_Arrived...Aborting Encounter Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
+				mylog.log(this, "u_component_message_handler_raintree.raintree_arrived:0252", "Unable write a record to x_raintree_Arrived...Aborting Appointment Creation for Billing ID, Message ID (" + ls_billing_id + ", " + string(li_message_id) + ")", 4)
 				RETURN -1									
 			END IF
 	

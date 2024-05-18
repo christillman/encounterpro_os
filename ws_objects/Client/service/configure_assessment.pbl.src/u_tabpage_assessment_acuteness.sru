@@ -409,7 +409,7 @@ integer y = 696
 integer width = 626
 integer height = 92
 integer taborder = 40
-string text = "End of Encounter"
+string text = "End of Appointment"
 end type
 
 event clicked;call super::clicked;auto_close = "Y"

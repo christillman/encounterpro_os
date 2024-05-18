@@ -97,7 +97,7 @@ end on
 event open;call super::open;str_popup popup
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "w_order_recheck:open", "No open encounter", 4)
+	log.log(this, "w_order_recheck:open", "No open appointment", 4)
 	close(this)
 	return
 end if
@@ -234,6 +234,8 @@ event clicked pbm_bnclicked
 event mouse_move pbm_mousemove
 integer x = 2130
 integer y = 1136
+integer width = 256
+integer height = 224
 integer taborder = 21
 boolean default = true
 string picturename = "button26.bmp"
@@ -362,6 +364,8 @@ end type
 type pb_cancel from u_picture_button within w_order_recheck
 integer x = 114
 integer y = 1136
+integer width = 256
+integer height = 224
 integer taborder = 20
 boolean cancel = true
 string picturename = "button11.bmp"

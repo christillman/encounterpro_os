@@ -105,11 +105,11 @@ openwithparm(lw_pick, popup, "w_pop_pick")
 popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then
 	if popup_return.choices_count = 0 then
-		ls_message = "The selected observation does not have any numeric results, so EncounterPRO will not produce graphs for this metric.  Do you still wish to use ~""
+		ls_message = "The selected observation does not have any numeric results, so graphs will not be produced for this metric.  Do you still wish to use ~""
 		ls_message += ls_observation_description
 		ls_message += "~" as a metric for this class?"
 	else
-		ls_message = "If you do not select a specific numeric result, then EncounterPRO will not produce graphs for this metric.  Do you wish to use ~""
+		ls_message = "If you do not select a specific numeric result, then graphs will not be produced for this metric.  Do you wish to use ~""
 		ls_message += ls_observation_description
 		ls_message += "~" as a metric for this class?"
 	end if

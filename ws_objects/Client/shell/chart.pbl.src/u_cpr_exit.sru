@@ -491,7 +491,7 @@ integer li_idx
 
 ls_code_check_status = current_patient.encounters.get_property_value(current_display_encounter.encounter_id, "Code Check Status")
 if isnull(ls_code_check_status) then
-	openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this encounter.  Do you with to perform the Code Check service now?")
+	openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this appointment.  Do you with to perform the Code Check service now?")
 	popup_return = message.powerobjectparm
 	if popup_return.item <> "YES" then return
 
@@ -674,7 +674,7 @@ boolean focusrectangle = false
 end type
 
 event clicked;if not some_assessments then
-	openwithparm(w_pop_message, "This encounter cannot be billed since there are no assessments associated with it.")
+	openwithparm(w_pop_message, "This appointment cannot be billed since there are no assessments associated with it.")
 	return
 end if
 
@@ -771,7 +771,7 @@ if upper(current_display_encounter.encounter_status) = "OPEN" &
 	and current_display_encounter.attending_doctor = current_user.user_id &
 	and is_billed then
 	popup.title = "This appointment has not yet been sent to the billing system."
-	popup.title += "  Do you wish to send this encounter to the billing system now"
+	popup.title += "  Do you wish to send this appointment to the billing system now"
 	popup.title += " or wait until you are finished charting?"
 	popup.data_row_count = 3
 	popup.items[1] = "Send Billing Now"
@@ -834,7 +834,7 @@ if not isnull(current_display_encounter) then
 		lb_send_billing_suspended = f_string_to_boolean(current_patient.encounters.get_property_value(current_display_encounter.encounter_id, "send_billing_suspended"))
 		if lb_send_billing_suspended then
 			// We're suspended so see if the user wants to release the suspension
-			ls_prompt = "The billing send for this encounter was previously suspended.  Do you wish to release this encounter to be sent to the billing system now?"
+			ls_prompt = "The billing send for this appointment was previously suspended.  Do you wish to release this appointment to be sent to the billing system now?"
 			openwithparm(w_pop_yes_no, ls_prompt)
 			popup_return = message.powerobjectparm
 			if popup_return.item = "YES" then

@@ -54,7 +54,6 @@ integer y = 132
 integer width = 2528
 integer height = 1680
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -359,6 +358,8 @@ end type
 type pb_done from u_picture_button within w_onset_duration
 integer x = 2181
 integer y = 1392
+integer width = 256
+integer height = 224
 string picturename = "button26.bmp"
 string disabledname = "b_push26.bmp"
 end type
@@ -916,7 +917,7 @@ str_popup_return popup_return
 integer li_sts
 w_window_base lw_window
 
-popup.title = "Select Encounter"
+popup.title = "Select Appointment"
 popup.data_row_count = 2
 popup.items[1] = current_patient.cpr_id
 popup.items[2] = "PICK"

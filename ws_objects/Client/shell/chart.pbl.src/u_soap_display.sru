@@ -306,7 +306,7 @@ if display_mode = "OBJ" then
 	// Add the header for the past objects
 	ll_row = insertrow(0)
 	this.object.soap_type[ll_row] = "DURING"
-	this.object.description[ll_row] = "Items Added/Modified During This Encounter"
+	this.object.description[ll_row] = "Items Added/Modified During This Appointment"
 	this.object.icon_bitmap[ll_row] = "button21.bmp"
 	
 	// Load the objects since the last encounter

@@ -416,14 +416,14 @@ popup_return.item_count = 0
 service = Message.powerobjectparm
 
 if isnull(service.encounter_id) then
-	log.log(this, "w_svc_encounter_coding:open", "No current encounter", 4)
+	log.log(this, "w_svc_encounter_coding:open", "No current appointment", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
 
 li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_encounter_coding:open", "Error getting encounter", 4)
+	log.log(this, "w_svc_encounter_coding:open", "Error getting appointment", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -546,7 +546,7 @@ elseif current_user.user_id = encounter.attending_doctor &
 	or current_user.check_privilege("Encounter Coding")    then
 	setnull(ls_display_only)
 else
-	ls_display_only = "Display Only (You are not the encounter owner)"
+	ls_display_only = "Display Only (You are not the appointment owner)"
 end if
 
 if isnull(ls_display_only) then

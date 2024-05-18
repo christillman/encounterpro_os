@@ -1394,7 +1394,7 @@ if sqlcode < 0 then
 		DISCONNECT USING luo_this;
 		li_sts = dbreconnect()
 		if li_sts <= 0 then
-			log.log(this, "u_sqlca.check:0065", "Unable to reconnect to database.  Exiting EncounterPRO.", 5)
+			log.log(this, "u_sqlca.check:0065", "Unable to reconnect to database.  Exiting application.", 5)
 			return false
 		end if
 		deadlock = false

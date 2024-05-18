@@ -167,7 +167,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 
-popup.title = "Enter new Encounter Type description"
+popup.title = "Enter new Appointment Type description"
 popup.item = st_description.text
 
 openwithparm(w_pop_prompt_string, popup)

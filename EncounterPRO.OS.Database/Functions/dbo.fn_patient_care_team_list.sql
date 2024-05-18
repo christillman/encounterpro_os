@@ -206,7 +206,7 @@ SELECT DISTINCT u.user_id,
 		u.color ,
 		'button_provider.bmp' ,
 		u.status  ,
-		'Encounter Owner' ,
+		'Appointment Owner' ,
 		NULL ,
 		u.email_address ,
 		u.actor_class

@@ -78,7 +78,7 @@ end if
 if isnull(ls_office_name) then ls_office_name = ""
 if isnull(ls_office_id) then ls_office_id = ""
 if isnull(ls_component_id) then
-	mylog.log(this, "u_component_service_send_billing.xx_do_service:0061", "Billing not enabled for Encounter("+current_patient.cpr_id + ", " + string(encounter_id) + ") Office (" + ls_office_name + ", " + string(ls_office_id) + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service:0061", "Billing not enabled for Appointment("+current_patient.cpr_id + ", " + string(encounter_id) + ") Office (" + ls_office_name + ", " + string(ls_office_id) + ")", 1)
 	return 2
 end if
 
@@ -111,7 +111,7 @@ end if
 //
 ls_billable = sqlca.fn_check_encounter_owner_billable(current_patient.cpr_id,encounter_id)
 if isnull(ls_billable) or len(ls_billable) = 0 then
-	mylog.log(this, "u_component_service_send_billing.xx_do_service:0094", "Billing disabled for this encounter owner (" + ls_billable + ")", 1)
+	mylog.log(this, "u_component_service_send_billing.xx_do_service:0094", "Billing disabled for this appointment owner (" + ls_billable + ")", 1)
 	Return 2 //  // Cancell the service
 end if
 

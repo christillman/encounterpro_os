@@ -514,150 +514,6 @@ refresh()
 return
 
 
-//str_popup popup
-//str_popup_return popup_return
-//string buttons[]
-//integer button_pressed, li_sts, li_service_count
-//window lw_pop_buttons
-//string ls_procedure_type
-//long ll_encounter_charge_id
-//long ll_problem_id
-//
-//ls_procedure_type = dw_billing.object.procedure_type[pl_row]
-//ll_encounter_charge_id = dw_billing.object.encounter_charge_id[pl_row]
-//ll_problem_id = dw_billing.object.problem_id[pl_row]
-//
-//if ls_procedure_type = "PRIMARY" or ls_procedure_type = "SECONDARY" then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button05.bmp"
-//	popup.button_helps[popup.button_count] = "Change Encounter Procedure"
-//	popup.button_titles[popup.button_count] = "Change"
-//	buttons[popup.button_count] = "CHANGE"
-//end if
-//
-//if ls_procedure_type = "PRIMARY" then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button05.bmp"
-//	popup.button_helps[popup.button_count] = "Change Encounter Procedure Level"
-//	popup.button_titles[popup.button_count] = "Change Level"
-//	buttons[popup.button_count] = "LEVEL"
-//end if
-//
-//if ls_procedure_type = "PRIMARY" or ls_procedure_type = "SECONDARY" then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button13.bmp"
-//	popup.button_helps[popup.button_count] = "Delete Encounter Procedure"
-//	popup.button_titles[popup.button_count] = "Delete"
-//	buttons[popup.button_count] = "DELETE"
-//end if
-//
-//if ls_procedure_type = "TESTCOLLECT" then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button05.bmp"
-//	popup.button_helps[popup.button_count] = "Bill For Perform Procedure"
-//	popup.button_titles[popup.button_count] = "Perform Code"
-//	buttons[popup.button_count] = "TESTPERFORM"
-//end if
-//
-//if ls_procedure_type = "TESTPERFORM" then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button05.bmp"
-//	popup.button_helps[popup.button_count] = "Bill For Collect Procedure"
-//	popup.button_titles[popup.button_count] = "Collect Code"
-//	buttons[popup.button_count] = "TESTCOLLECT"
-//end if
-//
-//if not isnull(ll_encounter_charge_id) and ls_procedure_type <> "ENCOUNTER" and not isnull(ll_problem_id) then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "buttonxm.bmp"
-//	popup.button_helps[popup.button_count] = "Don't bill this item"
-//	popup.button_titles[popup.button_count] = "Don't Bill"
-//	buttons[popup.button_count] = "DONTBILL"
-//end if
-//
-//if not isnull(ll_encounter_charge_id) then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button17.bmp"
-//	popup.button_helps[popup.button_count] = "Edit Charge Modifier"
-//	popup.button_titles[popup.button_count] = "Modifier"
-//	buttons[popup.button_count] = "MODIFIER"
-//end if
-//
-//if not isnull(ll_encounter_charge_id) then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button17.bmp"
-//	popup.button_helps[popup.button_count] = "Edit Encounter Charge"
-//	popup.button_titles[popup.button_count] = "Edit Charge"
-//	buttons[popup.button_count] = "EDIT"
-//end if
-//
-//if not isnull(ll_encounter_charge_id) then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button17.bmp"
-//	popup.button_helps[popup.button_count] = "Change number of units to bill"
-//	popup.button_titles[popup.button_count] = "Change Units"
-//	buttons[popup.button_count] = "UNITS"
-//end if
-//
-//if not isnull(ll_encounter_charge_id) then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button21.bmp"
-//	popup.button_helps[popup.button_count] = "Attach This Item to Another Diagnosis"
-//	popup.button_titles[popup.button_count] = "Attach to Diagnosis"
-//	buttons[popup.button_count] = "ATTACH"
-//end if
-//
-//if popup.button_count > 1 then
-//	popup.button_count = popup.button_count + 1
-//	popup.button_icons[popup.button_count] = "button11.bmp"
-//	popup.button_helps[popup.button_count] = "Cancel"
-//	popup.button_titles[popup.button_count] = "Cancel"
-//	buttons[popup.button_count] = "CANCEL"
-//end if
-//
-//popup.button_titles_used = true
-//
-//if popup.button_count > 1 then
-//	openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
-//	button_pressed = message.doubleparm
-//	if button_pressed < 1 or button_pressed > popup.button_count then return
-//elseif popup.button_count = 1 then
-//	button_pressed = 1
-//else
-//	return
-//end if
-//
-//dw_billing.setitem(pl_row, "selected_flag", 0)
-//
-//CHOOSE CASE buttons[button_pressed]
-//	CASE "CHANGE"
-//		change_procedure(pl_row)
-//	CASE "LEVEL"
-//		change_level(pl_row)
-//	CASE "DELETE"
-//		delete_charge(pl_row)
-//	CASE "TESTPERFORM"
-//		test_perform(pl_row)
-//	CASE "TESTCOLLECT"
-//		test_collect(pl_row)
-//	CASE "DONTBILL"
-//		dont_bill(pl_row)
-//	CASE "UNITS"
-//		change_units(pl_row)
-//	CASE "EDIT"
-//		edit_charges(pl_row)
-//	CASE "MODIFIER"
-//		edit_modifier(pl_row)
-//	CASE "ATTACH"
-//		attach_to_assessments(pl_row)
-//	CASE "CANCEL"
-//		return
-//	CASE ELSE
-//END CHOOSE
-//
-//return
-//
-//
 end subroutine
 
 public subroutine change_level (long pl_row);str_popup popup
@@ -762,7 +618,7 @@ elseif current_user.user_id = encounter.attending_doctor &
 	or current_user.check_privilege("Encounter Coding")    then
 	setnull(ls_display_only)
 else
-	ls_display_only = "Display Only (You are not the encounter owner)"
+	ls_display_only = "Display Only (You are not the appointment owner)"
 end if
 
 if isnull(ls_display_only) then
@@ -1130,7 +986,7 @@ dw_billing.settransobject(sqlca)
 
 li_sts = refresh()
 if li_sts < 0 then
-	log.log(this, "w_billing_edit:open", "Error displaying encounter billing", 4)
+	log.log(this, "w_billing_edit:open", "Error displaying appointment billing", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -1549,7 +1405,7 @@ integer li_idx
 
 ls_code_check_status = current_patient.encounters.get_property_value(current_display_encounter.encounter_id, "Code Check Status")
 if isnull(ls_code_check_status) then
-	openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this encounter.  Do you with to perform the Code Check service now?")
+	openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this appointment.  Do you with to perform the Code Check service now?")
 	popup_return = message.powerobjectparm
 	if popup_return.item <> "YES" then return
 

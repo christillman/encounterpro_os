@@ -474,7 +474,7 @@ string ls_bill_flag
 string ls_button
 string ls_icon
 
-popup.title = "Enter new Encounter Type description"
+popup.title = "Enter new Appointment Type description"
 
 openwithparm(w_pop_prompt_string, popup)
 popup_return = message.powerobjectparm
@@ -499,7 +499,7 @@ DO
 LOOP WHILE i < 100
 
 if i >= 100 then
-	log.log(this, "w_config_encounter_types.cb_new_encounter_type.clicked:0041", "Unable to generate new encounter_type key (" + ls_description + ")", 4)
+	log.log(this, "w_config_encounter_types.cb_new_encounter_type.clicked:0041", "Unable to generate new appointment_type key (" + ls_description + ")", 4)
 	return
 end if
 

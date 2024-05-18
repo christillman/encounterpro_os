@@ -339,7 +339,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Create New Encounter"
+string text = "Create New Appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
@@ -787,7 +787,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Owner:"
+string text = "Appointment Owner:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

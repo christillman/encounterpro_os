@@ -26,7 +26,6 @@ end forward
 
 global type w_encounter_list_pick from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -381,7 +380,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
 boolean enabled = false
-string text = "Select Encounter"
+string text = "Select Appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type

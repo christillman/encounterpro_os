@@ -427,7 +427,7 @@ end if
 
 // Make sure we have an encounter date
 if isnull(lstr_encounter.encounter_date) then
-	log.log(this, "u_component_xml_handler_jmj.process_encounter:0066", "Encounter must have an appointment date", 4)
+	log.log(this, "u_component_xml_handler_jmj.process_encounter:0066", "Appointment must have an appointment date", 4)
 	return -1
 end if
 
@@ -436,7 +436,7 @@ if lower(ls_purpose) = "check in" then
 	// Make sure the encounter date is valid
 	ld_encounter_date = date(lstr_encounter.encounter_date)
 	if ld_encounter_date > today() then
-		log.log(this, "u_component_xml_handler_jmj.process_encounter:0075", "Encounter date may not be in the future", 4)
+		log.log(this, "u_component_xml_handler_jmj.process_encounter:0075", "Appointment date may not be in the future", 4)
 		return -1
 	end if
 	if ld_encounter_date < today() then
@@ -460,7 +460,7 @@ if lower(ls_purpose) = "check in" then
 			end if
 		end if
 		if isnull(lstr_encounter.office_id) then
-			log.log(this, "u_component_xml_handler_jmj.process_encounter:0099", "Encounter Location must be mapped to an Office for check-in events", 4)
+			log.log(this, "u_component_xml_handler_jmj.process_encounter:0099", "Appointment Location must be mapped to an Office for check-in events", 4)
 			return -1
 		end if
 	end if

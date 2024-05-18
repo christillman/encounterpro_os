@@ -48,6 +48,7 @@ u_patient parent_patient
 
 
 end variables
+
 forward prototypes
 public subroutine edit_objective ()
 public function u_user provider ()
@@ -532,7 +533,7 @@ public function integer save_attachment ();integer li_sts
 long ll_attachment_id
 
 if isnull(encounter_id) then
-	log.log(this, "u_str_encounter.save_attachment:0005", "ERROR! Cannot save attachment when encounter_id=null", 4)
+	log.log(this, "u_str_encounter.save_attachment:0005", "ERROR! Cannot save attachment when encounter_id is null", 4)
 	return -1
 end if
 

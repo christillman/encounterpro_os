@@ -20,13 +20,12 @@ type st_title from statictext within w_encounter_list
 end type
 type dw_encounters from u_dw_pick_list within w_encounter_list
 end type
-type cb_OK from commandbutton within w_encounter_list
+type cb_ok from commandbutton within w_encounter_list
 end type
 end forward
 
 global type w_encounter_list from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -40,7 +39,7 @@ st_type_title st_type_title
 st_pick_encounter_type st_pick_encounter_type
 st_title st_title
 dw_encounters dw_encounters
-cb_OK cb_OK
+cb_ok cb_ok
 end type
 global w_encounter_list w_encounter_list
 
@@ -108,7 +107,7 @@ this.st_type_title=create st_type_title
 this.st_pick_encounter_type=create st_pick_encounter_type
 this.st_title=create st_title
 this.dw_encounters=create dw_encounters
-this.cb_OK=create cb_OK
+this.cb_ok=create cb_ok
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_page
 this.Control[iCurrent+2]=this.pb_down
@@ -119,7 +118,7 @@ this.Control[iCurrent+6]=this.st_type_title
 this.Control[iCurrent+7]=this.st_pick_encounter_type
 this.Control[iCurrent+8]=this.st_title
 this.Control[iCurrent+9]=this.dw_encounters
-this.Control[iCurrent+10]=this.cb_OK
+this.Control[iCurrent+10]=this.cb_ok
 end on
 
 on w_encounter_list.destroy
@@ -133,7 +132,7 @@ destroy(this.st_type_title)
 destroy(this.st_pick_encounter_type)
 destroy(this.st_title)
 destroy(this.dw_encounters)
-destroy(this.cb_OK)
+destroy(this.cb_ok)
 end on
 
 event open;call super::open;string ls_encounter_mode
@@ -379,7 +378,7 @@ string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
 boolean enabled = false
-string text = "Select Encounter"
+string text = "Select Appointment"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
@@ -417,7 +416,7 @@ event selected;call super::selected;clear_selected()
 
 end event
 
-type cb_OK from commandbutton within w_encounter_list
+type cb_ok from commandbutton within w_encounter_list
 integer x = 2427
 integer y = 1668
 integer width = 407

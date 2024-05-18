@@ -107,7 +107,7 @@ if li_sts < 0 then return -1
 
 li_sts = f_set_current_encounter(ll_encounter_id)
 if li_sts <= 0 then
-	log.log(this, "u_waiting_room_status.patient_menu:0021", "Error setting encounter", 4)
+	log.log(this, "u_waiting_room_status.patient_menu:0021", "Error setting appointment ", 4)
 	f_clear_patient()
 	return -1
 end if

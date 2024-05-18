@@ -336,7 +336,7 @@ if not isvalid(puo_encounter) or isnull(puo_encounter) then
 end if
 
 if isnull(puo_encounter.encounter_id) then
-	log.log(this, "u_ds_patient_encounter.refresh_encounter:0011", "Null Encounter Id", 4)
+	log.log(this, "u_ds_patient_encounter.refresh_encounter:0011", "Null Appointment Id", 4)
 	return -1
 end if
 
@@ -447,7 +447,7 @@ str_popup	popup
 str_popup_return popup_return
 
 if isnull(parent_patient.open_encounter) then
-	log.log(this, "u_ds_patient_encounter.set_encounter_progress:0017", "No open encounter", 4)
+	log.log(this, "u_ds_patient_encounter.set_encounter_progress:0017", "No open appointment", 4)
 	return -1
 end if
 

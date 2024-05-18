@@ -140,7 +140,7 @@ integer li_sts
 string ls_statement
 
 if isnull(current_patient.open_encounter) then
-	log.log(this, "w_vaccine_signature:open", "No open encounter", 4)
+	log.log(this, "w_vaccine_signature:open", "No open appointment", 4)
 	popup_return.item_count = 1
 	popup_return.items[1] = "ERROR"
 	closewithreturn(this, popup_return)

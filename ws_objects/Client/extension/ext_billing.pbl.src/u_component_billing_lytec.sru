@@ -220,7 +220,7 @@ IF li_file_sts < 0 THEN
 	RETURN -1
 END IF
 If FileLength(ls_current_filename) <= 0 Then
-	mylog.log(this, "u_component_billing_lytec.xx_post_other:0147", "Billing failed for cpr-id ("+ps_cpr_id+" and encounter id ("+string(pl_encounter_id)+")",4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_other:0147", "Billing failed for cpr-id ("+ps_cpr_id+" and appointment id ("+string(pl_encounter_id)+")",4)
 	FileDelete(ls_current_filename)
 	Return 1
 End If
@@ -863,7 +863,7 @@ USING cprdb;
 IF NOT cprdb.check() THEN RETURN -1
 // IF we don't get an Encounter record, THEN QUIT
 IF cprdb.sqlcode = 100 THEN
-	mylog.log(this, "u_component_billing_lytec.xx_post_encounter:0092", "Unable to retrieve an Encounter Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter:0092", "Unable to retrieve an Appointment Record..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
  	RETURN -1
 END IF
 
@@ -917,7 +917,7 @@ ss_charge_acct = ls_billing_id
 IF isNull(ldt_encounter_date) THEN
 	// If we don't have an Encounter date and time, then we can't pass the encounter
 	// to the lytec billing system
-	mylog.log(this, "u_component_billing_lytec.xx_post_encounter:0146", "Unable to determine the Encounter Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
+	mylog.log(this, "u_component_billing_lytec.xx_post_encounter:0146", "Unable to determine the Appointment Date and Time..Aborting Billing (" + ps_cpr_id + ", " + string(pl_encounter_id) + ")", 4)
 	RETURN -1
 END IF
 		

@@ -206,7 +206,7 @@ end prototypes
 type variables
 
 
-string product_name = 'GreenOliveEHR'
+string product_name = 'GreenOlive EHR'
 string client_link_start = "https://github.com/christillman/encounterpro_os/releases/download/v224/GreenOlive_EHR_Install_"
 
 ///////////////////////////////////////////////////////////

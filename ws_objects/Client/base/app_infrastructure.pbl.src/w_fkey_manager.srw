@@ -93,7 +93,7 @@ dw_fkey_assignment.object.assignment[ll_row] = "Display Document Manager for Cur
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F8"
 dw_fkey_assignment.object.flags[ll_row] = 2
-dw_fkey_assignment.object.assignment[ll_row] = "Display Document Manager for Current Encounter"
+dw_fkey_assignment.object.assignment[ll_row] = "Display Document Manager for Current Appointment"
 
 ll_row = dw_fkey_assignment.insertrow(0)
 dw_fkey_assignment.object.fkey[ll_row] = "F8"

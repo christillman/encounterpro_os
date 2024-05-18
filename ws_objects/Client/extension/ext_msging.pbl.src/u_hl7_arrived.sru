@@ -332,7 +332,7 @@ if not isnull(ls_scheduledatetime) then
 				mylog.log(this, "u_hl7_arrived.arrived:0318", ls_message , 4)
 				GOTO error
 			end if
-			mylog.log(this, "u_hl7_arrived.arrived:0321", "formatted date(" + ls_scheduledate + ") not today. but allowing the encounter to be created", 3)
+			mylog.log(this, "u_hl7_arrived.arrived:0321", "formatted date(" + ls_scheduledate + ") not today. but allowing the appointment to be created", 3)
 			ldt_encounter_date_time = datetime(ld_scheduledate,now())
 		end if
 	end if
@@ -597,7 +597,7 @@ SELECT count(*)
   	using cprdb ;
 	IF NOT cprdb.check() THEN RETURN -1
 If ll_count > 0 then 
-	mylog.log(this, "u_hl7_arrived.arrived:0586", "Patient already arrived this day within the hour" + ls_cprid + " ..Aborting Encounter Creation, Message ID (" + ls_billing_id + ", " + is_message_id + ")", 2)
+	mylog.log(this, "u_hl7_arrived.arrived:0586", "Patient already arrived this day within the hour" + ls_cprid + " ..Aborting Appointment Creation, Message ID (" + ls_billing_id + ", " + is_message_id + ")", 2)
 	return 1	
 end if
 

@@ -167,7 +167,7 @@ if original_encounter.encounter_type <> modified_encounter.encounter_type then
 	if not isnull(current_patient.open_encounter) then
 		if service.encounter_id = current_patient.open_encounter.encounter_id &
 		 and current_patient.open_encounter.encounter_status = "OPEN" then
-			openwithparm(w_pop_yes_no, "The Encounter Type has been changed.  Do you wish to cancel the existing encounter workplan and order a new one?")
+			openwithparm(w_pop_yes_no, "The Appointment Type has been changed.  Do you wish to cancel the existing appointment workplan and order a new one?")
 			popup_return = message.powerobjectparm
 			if popup_return.item = "YES" then
 				current_patient.open_encounter.order_encounter_workplan()
@@ -299,7 +299,7 @@ title = current_patient.id_line()
 
 li_sts = current_patient.encounters.encounter(original_encounter, service.encounter_id)
 if li_sts <= 0 then
-	log.log(this, "w_svc_edit_encounter:open", "Inavlid encounter_id (" + string(service.encounter_id) + ")", 4)
+	log.log(this, "w_svc_edit_encounter:open", "Invalid encounter_id (" + string(service.encounter_id) + ")", 4)
 	closewithreturn(this, popup_return)
 	return
 end if
@@ -429,16 +429,16 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Edit Encounter Information"
+string text = "Edit Appointment Information"
 alignment alignment = center!
 boolean focusrectangle = false
 end type
 
 type st_date_title from statictext within w_svc_edit_encounter
 integer x = 64
-integer y = 252
+integer y = 232
 integer width = 507
-integer height = 84
+integer height = 120
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -510,9 +510,9 @@ end type
 
 type st_encounter_type_title from statictext within w_svc_edit_encounter
 integer x = 64
-integer y = 460
+integer y = 440
 integer width = 507
-integer height = 84
+integer height = 128
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -567,9 +567,9 @@ end event
 
 type st_encounter_time_title from statictext within w_svc_edit_encounter
 integer x = 1600
-integer y = 252
+integer y = 228
 integer width = 507
-integer height = 84
+integer height = 132
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -851,9 +851,9 @@ end event
 
 type st_1 from statictext within w_svc_edit_encounter
 integer x = 37
-integer y = 876
+integer y = 856
 integer width = 535
-integer height = 84
+integer height = 140
 boolean bringtotop = true
 integer textsize = -10
 integer weight = 700
@@ -863,7 +863,7 @@ fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
 long backcolor = 7191717
-string text = "Encounter Owner:"
+string text = "Appointment Owner:"
 alignment alignment = right!
 boolean focusrectangle = false
 end type

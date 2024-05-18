@@ -282,7 +282,7 @@ else
 	and billing_id = :is_billing_id
 	USING 	cprdb;
 	IF NOT cprdb.check() THEN RETURN -1
-	mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in:0135","Encounter Billing ID, Message ID (" + is_billing_id + ", " + string(il_message_id) + ") is out of date",2)
+	mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in:0135","Appointment Billing ID, Message ID (" + is_billing_id + ", " + string(il_message_id) + ") is out of date",2)
 	Return 1
 End if	
 
@@ -334,7 +334,7 @@ else
 	USING cprdb;
 	if not cprdb.check() then return -1
 end if	
-mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in:0187","Encounter Message has been processed, Billing ID (" + ls_billing_id + ")",1)
+mylog.log(this, "u_component_schedule_medman.xx_get_next_checked_in:0187","Appointment Message has been processed, Billing ID (" + ls_billing_id + ")",1)
 If ii_office_count = 1 then
 	ps_office = is_offices[1]
 	return 1

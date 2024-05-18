@@ -54,7 +54,6 @@ end forward
 
 global type w_encounter_type_definition from w_window_base
 boolean titlebar = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -336,7 +335,7 @@ end if
 
 li_sts = load_encounter_type()
 if li_sts <= 0 then
-	log.log(this, "w_encounter_type_definition:open", "Error loading encounter_type (" + encounter_type + ")", 4)
+	log.log(this, "w_encounter_type_definition:open", "Error loading appointment type (" + encounter_type + ")", 4)
 	close(this)
 	return
 end if
@@ -614,7 +613,7 @@ end type
 event clicked;str_popup popup
 str_popup_return popup_return
 
-popup.title = "Enter new Encounter Type description"
+popup.title = "Enter new Appointment Type description"
 popup.item = sle_description.text
 
 openwithparm(w_pop_prompt_string, popup)

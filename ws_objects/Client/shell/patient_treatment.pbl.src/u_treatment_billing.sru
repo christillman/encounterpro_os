@@ -514,7 +514,7 @@ end event
 type st_no_charges from statictext within u_treatment_billing
 integer x = 73
 integer y = 228
-integer width = 713
+integer width = 2167
 integer height = 308
 integer textsize = -14
 integer weight = 700
@@ -523,7 +523,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long backcolor = 7191717
-string text = "No charges have been issued for this encounter"
+string text = "No charges have been issued for this appointment "
 alignment alignment = center!
 boolean focusrectangle = false
 end type

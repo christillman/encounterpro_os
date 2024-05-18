@@ -133,7 +133,7 @@ end type
 type cb_finished from commandbutton within w_svc_uncancel_encounter
 integer x = 1138
 integer y = 1308
-integer width = 686
+integer width = 713
 integer height = 108
 integer taborder = 20
 boolean bringtotop = true
@@ -143,7 +143,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Uncancel Encounter"
+string text = "Uncancel Appointment"
 end type
 
 event clicked;string ls_warning
@@ -161,7 +161,7 @@ integer li_please_wait_index
 
 ls_warning = service.get_attribute("Are You Sure Text")
 if isnull(ls_warning) then
-	ls_warning = "Are you sure you want to uncancel this encounter?"
+	ls_warning = "Are you sure you want to uncancel this appointment?"
 end if
 
 openwithparm(w_pop_yes_no_alert, ls_warning)
@@ -173,7 +173,7 @@ if dw_encounters.rowcount() = 1 then
 else
 	ll_row = dw_encounters.get_selected_row()
 	if ll_row <= 0 then
-		openwithparm(w_pop_message, "Please select an encounter")
+		openwithparm(w_pop_message, "Please select an appointment")
 		return
 	end if
 end if
@@ -200,7 +200,7 @@ li_sts = f_set_progress(current_patient.cpr_id, &
 f_please_wait_close(li_please_wait_index)
 
 if li_sts <= 0 then
-	openwithparm(w_pop_message, "Uncancelling Encounter Failed.  Check the error log and try again later.")
+	openwithparm(w_pop_message, "Uncancelling Appointment Failed.  Check the error log and try again later.")
 	return
 else
 	openwithparm(w_pop_message, "Uncancelling Appointment Succeeded.")
