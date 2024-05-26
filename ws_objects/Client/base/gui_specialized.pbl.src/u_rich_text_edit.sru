@@ -6295,7 +6295,7 @@ for i = 1 to lstr_progress.progress_count
 		continue
 	end if
 	
-	// Skip progress not if it's not for the current encounter and the current_only flag is set
+	// Skip progress note if it's not for the current encounter and the current_only flag is set
 	if pb_current_only and not isnull(ll_current_encounter_id) then
 		if lstr_progress.progress[i].encounter_id <> ll_current_encounter_id then continue
 	end if
@@ -6400,11 +6400,17 @@ for i = 1 to lstr_progress.progress_count
 				lstr_grid.grid_row[ll_row].column[3].field_data = ls_fielddata
 			CASE ELSE
 				// Standard Display Style
+				// Change from grid to title+content, #57
 				
 				// Add the title
-				lstr_grid.grid_row[ll_row].column[1].column_text = lstr_progress.progress[i].progress_key_description
+				ls_display_style = "fontsize=11,left,bold,margin=0/0/0, fc=0"
+				apply_formatting(ls_display_style)
+				add_text(lstr_progress.progress[i].progress_key_description)
+				add_cr()
 				
 				// Add the description
+				ls_display_style = "fontsize=11,left,xbold,margin=0/0/0, fc=10485760"
+				apply_formatting(ls_display_style)			
 				ls_fieldtext = ""
 				ls_fielddata = ""
 				if not isnull(lstr_progress.progress[i].progress_note_description) then
@@ -6415,23 +6421,55 @@ for i = 1 to lstr_progress.progress_count
 					if isnull(ls_temp) or trim(ls_temp) = "" then ls_temp = "Attachment"
 					ls_fieldtext += " <" + ls_temp + ">"
 					
-					lstr_service.service = "ATTACHMENT"
-					f_attribute_add_attribute(lstr_service.attributes, "attachment_id", string(lstr_progress.progress[i].attachment_id))
-					f_attribute_add_attribute(lstr_service.attributes, "action", "display")
-					ls_fielddata = f_service_to_field_data(lstr_service)
+					// field_data is being ignored by add_grid
+//					lstr_service.service = "ATTACHMENT"
+//					f_attribute_add_attribute(lstr_service.attributes, "attachment_id", string(lstr_progress.progress[i].attachment_id))
+//					f_attribute_add_attribute(lstr_service.attributes, "action", "display")
+//					ls_fielddata = f_service_to_field_data(lstr_service)
 				end if
-				lstr_grid.grid_row[ll_row].column[2].column_text = ls_fieldtext
-				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata
+				add_text(ls_fieldtext)
+				blank_lines(1)
+//				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata				
+				
+//				// Add the title
+//				lstr_grid.grid_row[ll_row].column[1].column_text = lstr_progress.progress[i].progress_key_description
+//				
+//				// Add the description
+//				ls_fieldtext = ""
+//				ls_fielddata = ""
+//				if not isnull(lstr_progress.progress[i].progress_note_description) then
+//					ls_fieldtext = lstr_progress.progress[i].progress_note_description
+//				end if
+//				if not isnull(lstr_progress.progress[i].attachment_id) then
+//					ls_temp = current_patient.attachments.attachment_extension_description(lstr_progress.progress[i].attachment_id)
+//					if isnull(ls_temp) or trim(ls_temp) = "" then ls_temp = "Attachment"
+//					ls_fieldtext += " <" + ls_temp + ">"
+//					
+//					lstr_service.service = "ATTACHMENT"
+//					f_attribute_add_attribute(lstr_service.attributes, "attachment_id", string(lstr_progress.progress[i].attachment_id))
+//					f_attribute_add_attribute(lstr_service.attributes, "action", "display")
+//					ls_fielddata = f_service_to_field_data(lstr_service)
+//				end if
+//				lstr_grid.grid_row[ll_row].column[2].column_text = ls_fieldtext
+//				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata
 		END CHOOSE
 	end if
 next
 
 if lb_found then
-	if lower(ls_display_style) = "value" then
-		add_text(ls_value)
-	else
-		add_grid(lstr_grid)
-	end if
+	CHOOSE CASE lower(ls_display_style)
+		CASE "dates"
+			add_grid(lstr_grid)
+		CASE "reviewed by"
+			add_grid(lstr_grid)
+		CASE "times"
+			add_grid(lstr_grid)
+		CASE "value"
+			add_text(ls_value)
+		CASE ELSE
+			// Standard text was added above
+	END CHOOSE
+
 	return 1
 else
 	return 0
