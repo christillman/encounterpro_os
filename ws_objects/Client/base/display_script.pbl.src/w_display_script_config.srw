@@ -31,7 +31,6 @@ end forward
 global type w_display_script_config from w_window_base
 integer width = 3063
 integer height = 2036
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -177,7 +176,9 @@ end if
 debugging = false
 cb_stop_debugging.visible = false
 cb_next.visible = false
-rtf_display.clear_breakpoint()
+If IsValid(rtf_display) Then
+	rtf_display.clear_breakpoint()
+End If
 
 tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
@@ -302,8 +303,6 @@ end event
 type pb_epro_help from w_window_base`pb_epro_help within w_display_script_config
 integer x = 2994
 integer y = 8
-integer width = 256
-integer height = 128
 end type
 
 type st_config_mode_menu from w_window_base`st_config_mode_menu within w_display_script_config
