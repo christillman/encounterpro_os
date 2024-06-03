@@ -43,6 +43,7 @@ end type
 
 global type u_rich_text_edit from u_richtextedit
 long init_leftmargin = 1
+boolean border = false
 event lbuttondown pbm_renlbuttondown
 event scrollto ( long pl_scrollto )
 event signature_captured ( str_captured_signature pstr_captured_signature )
@@ -206,7 +207,6 @@ public function integer display_document (str_c_display_script_command pstr_comm
 public subroutine add_object_menu (integer pi_object_id, long pl_menu_id)
 public function integer display_attachment (string ps_context_object, long pl_object_key, string ps_progress_type, string ps_progress_key, long pl_bitmap_width_inches, long pl_bitmap_height_inches, string ps_placement, boolean pb_text_flow_around, long pl_xpos, long pl_ypos, boolean pb_page_break, string ps_which, boolean pb_sort_descending, string ps_caption, boolean pb_carriage_return, long pl_menu_id)
 public function integer add_property_attachment (str_property_value ps_property_value, long pl_bitmap_width_inches, long pl_bitmap_height_inches, string ps_placement, boolean pb_text_flow_around, long pl_xpos, long pl_ypos, string ps_caption, boolean pb_carriage_return, long pl_menu_id)
-private subroutine display_treatment_treatments (str_treatment_description pstr_treatment, string ps_treatment_type, long pl_display_script_id, string ps_sort_column, string ps_sort_direction, boolean pb_include_deleted)
 public subroutine log_error (string ps_error_text)
 public subroutine set_breakpoint (str_c_display_script_command pstr_breakpoint)
 public subroutine clear_breakpoint ()
@@ -217,6 +217,10 @@ public function boolean breakpoint (ref str_c_display_script_command pstr_comman
 public subroutine open_editor (str_c_display_script_command_stack pstr_stack)
 public subroutine open_editor ()
 public function str_c_display_script_command_stack command_stack_for_charposition (str_charposition pstr_charposition)
+private subroutine display_treatment_child_treatments (str_treatment_description pstr_treatment, string ps_treatment_type, long pl_display_script_id, string ps_sort_column, string ps_sort_direction, boolean pb_include_deleted)
+public function integer display_treatment_results (ref str_c_display_script_command pstr_command, str_treatment_description pstr_treatment)
+public function integer display_treatment_result (ref str_c_display_script_command pstr_command, str_treatment_description pstr_treatment)
+public function boolean will_display_results_or_progress (ref str_display_script pstr_display_script, ref str_treatment_description pstr_treatment)
 end prototypes
 
 public function string workplan_item_attribute (u_ds_data puo_workplan_items, string ps_which_item, string ps_attribute);string ls_item
@@ -2833,18 +2837,12 @@ return 1
 end function
 
 public function long display_script_command_treatment (str_c_display_script_command pstr_command, str_treatment_description pstr_treatment);string ls_operator
-string ls_abnormal_flag
 string ls_comment_display_style
 string ls_progress_display_style
 string ls_text
 string ls_temp
-string ls_temp1
-string ls_temp2
-string ls_temp3
-string ls_find
-integer li_count
-integer i
 integer li_sts
+integer li_problem
 str_drug_definition lstr_drug
 str_observation_comment lstr_comment
 string ls_mode
@@ -2856,8 +2854,6 @@ integer li_step_number
 long ll_item_number
 boolean lb_flag
 string ls_comment_title
-string ls_root_observation_id
-string ls_exclude_observation_tag
 string ls_progress_type
 string ls_progress_key
 long ll_width
@@ -2876,9 +2872,6 @@ integer li_result_sequence
 string ls_location
 string ls_consultant_id
 string ls_field_name
-string ls_root_observation_tag
-string ls_child_observation_id
-string ls_child_observation_tag
 boolean lb_current_only
 string ls_null
 boolean lb_include_formatting
@@ -2902,8 +2895,6 @@ str_encounter_description lstr_encounter
 boolean lb_use_supervisor
 string ls_user_id
 string ls_supervisor_user_id
-boolean lb_include_comments
-boolean lb_include_attachments
 string ls_which
 boolean lb_condition2
 string ls_true_phrase
@@ -2924,9 +2915,6 @@ long ll_menu_id
 str_service_info lstr_service
 string ls_fielddata
 string ls_drug
-string ls_abnormal_font_settings
-str_font_settings lstr_abnormal_font_settings
-str_font_settings lstr_comment_font_settings
 string ls_which_user
 string ls_progress_property
 string ls_user_property
@@ -2944,8 +2932,6 @@ string ls_comment_font_settings
 boolean lb_sort_descending
 string ls_caption
 boolean lb_carriage_return
-boolean lb_formatted_numbers
-boolean lb_show_actor_full
 boolean lb_include_deleted
 str_charposition lstr_startpos
 str_charposition lstr_curpos
@@ -2979,8 +2965,8 @@ CHOOSE CASE lower(pstr_command.display_command)
 		ll_display_script_id = long(f_attribute_find_attribute(pstr_command.attributes, "display_script_id"))
 
 		ll_problem_id_count = current_patient.treatments.get_treatment_assessments(pstr_treatment.treatment_id, ll_problem_id)
-		for i = 1 to ll_problem_id_count
-			li_sts = current_patient.assessments.assessment(lstr_assessment_description, ll_problem_id[i])
+		for li_problem = 1 to ll_problem_id_count
+			li_sts = current_patient.assessments.assessment(lstr_assessment_description, ll_problem_id[li_problem])
 			if li_sts > 0 then
 				if isnull(ll_display_script_id) then
 					if len(ls_text) > 0 then
@@ -3070,6 +3056,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		
 		return 1
+		
 	CASE "begin date"
 		ls_argument = f_attribute_find_attribute(pstr_command.attributes, "date_format")
 		if isnull(ls_argument) or trim(ls_argument) = "" then
@@ -3077,6 +3064,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		else
 			ls_text = string(date(pstr_treatment.begin_date), ls_argument)
 		end if
+		
 	CASE "begin date time"
 		ls_argument = f_attribute_find_attribute(pstr_command.attributes, "date_time_format")
 		if isnull(ls_argument) or trim(ls_argument) = "" then 
@@ -3084,6 +3072,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		else
 			ls_text = string(pstr_treatment.begin_date, ls_argument)
 		end if
+		
 	CASE "begin time"
 		ls_argument = f_attribute_find_attribute(pstr_command.attributes, "time_format")
 		if isnull(ls_argument) or trim(ls_argument) = "" then 
@@ -3091,6 +3080,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		else
 			ls_text = string(time(pstr_treatment.begin_date), ls_argument)
 		end if
+		
 	CASE "child treatments"
 		ls_treatment_type = f_attribute_find_attribute(pstr_command.attributes, "treatment_type")
 		ll_display_script_id = long(f_attribute_find_attribute(pstr_command.attributes, "display_script_id"))
@@ -3108,7 +3098,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 
 		lstr_curpos = charposition()
 		
-		display_treatment_treatments(pstr_treatment, ls_treatment_type, ll_display_script_id, ls_sort_column, ls_sort_direction, lb_include_deleted)
+		display_treatment_child_treatments(pstr_treatment, ls_treatment_type, ll_display_script_id, ls_sort_column, ls_sort_direction, lb_include_deleted)
 		
 		// If we didn't add any treatments then remove the header
 		if f_char_position_compare(charposition(), lstr_curpos) = 0 then
@@ -3482,141 +3472,9 @@ CHOOSE CASE lower(pstr_command.display_command)
 		end if
 		return li_sts
 	CASE "result"
-		ls_result_type = f_attribute_find_attribute(pstr_command.attributes, "result_type")
-		if isnull(ls_result_type) then ls_result_type = "PERFORM"
-		ls_abnormal_flag = f_attribute_find_attribute(pstr_command.attributes, "abnormal_flag")
-		if isnull(ls_abnormal_flag) then ls_abnormal_flag = "N"
-		ls_observation_id = f_attribute_find_attribute(pstr_command.attributes, "observation_id")
-		li_result_sequence = integer(f_attribute_find_attribute(pstr_command.attributes, "result_sequence"))
-		ls_location = f_attribute_find_attribute(pstr_command.attributes, "location")
-		ls_empty_phrase = f_attribute_find_attribute(pstr_command.attributes, "empty_phrase")
-		
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_result")
-		if isnull(ls_temp) then
-			// check the "amount_only" attribute for backward compatibility
-			lb_display_result = not f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "amount_only"))
-		else
-			lb_display_result = f_string_to_boolean(ls_temp)
-		end if
-		
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_location")
-		if isnull(ls_temp) then
-			lb_display_location = true
-		else
-			lb_display_location = f_string_to_boolean(ls_temp)
-		end if
-		
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_unit")
-		if isnull(ls_temp) then
-			lb_display_unit = true
-		else
-			lb_display_unit = f_string_to_boolean(ls_temp)
-		end if
-		
-		luo_results = CREATE u_ds_observation_results
-		
-		// If we have a child observation_id and not a root, then assume the treatment root
-		if not isnull(ls_child_observation_id) and isnull(ls_root_observation_id) then
-			ls_root_observation_id = pstr_treatment.observation_id
-		end if
-		
-		luo_results.set_dataobject("dw_sp_obstree_treatment")
-		ll_count = luo_results.retrieve(current_patient.cpr_id, &
-													pstr_treatment.treatment_id)
-		
-		luo_results.display_observation_result(ls_observation_id, ls_result_type, ls_abnormal_flag, ls_location, li_result_sequence, lb_display_result, lb_display_location, lb_display_unit, this)
-		
-		DESTROY luo_results
-		
-		if f_char_position_compare(charposition(), lstr_startpos) = 0 then
-			add_text(ls_empty_phrase)
-			return 0
-		end if
-		
-		return 1
+		return display_treatment_result(pstr_command, pstr_treatment)
 	CASE "results"
-		ls_result_type = f_attribute_find_attribute(pstr_command.attributes, "result_type")
-		if isnull(ls_result_type) then ls_result_type = "PERFORM"
-		ls_abnormal_flag = f_attribute_find_attribute(pstr_command.attributes, "abnormal_flag")
-		if isnull(ls_abnormal_flag) then ls_abnormal_flag = "N"
-		ls_root_observation_id = f_attribute_find_attribute(pstr_command.attributes, "root_observation_id")
-		ls_root_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "root_observation_tag")
-		ls_child_observation_id = f_attribute_find_attribute(pstr_command.attributes, "child_observation_id")
-		ls_child_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "child_observation_tag")
-		ls_exclude_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "exclude_observation_tag")
-		ls_empty_phrase = f_attribute_find_attribute(pstr_command.attributes, "empty_phrase")
-		ls_abnormal_font_settings = f_attribute_find_attribute(pstr_command.attributes, "abnormal_font_settings")
-		if isnull(ls_abnormal_font_settings) then ls_abnormal_font_settings = "bold"
-		ls_format = f_attribute_find_attribute(pstr_command.attributes, "format")
-		if isnull(ls_format) then ls_format = "Roots"
-		ls_prefix = f_attribute_find_attribute(pstr_command.attributes, "prefix")
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "include_comments")
-		if isnull(ls_temp) then
-			lb_include_comments = true
-		else
-			lb_include_comments = f_string_to_boolean(ls_temp)
-		end if
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "include_attachments")
-		if isnull(ls_temp) then
-			lb_include_attachments = true
-		else
-			lb_include_attachments = f_string_to_boolean(ls_temp)
-		end if
-		ls_comment_font_settings = f_attribute_find_attribute(pstr_command.attributes, "comment_font_settings")
-		if isnull(ls_comment_font_settings) then
-			ls_comment_font_settings = "fn=courier new"
-		end if
-		ls_temp = f_attribute_find_attribute(pstr_command.attributes, "formatted_numbers")  // 
-		if isnull(ls_temp) then
-			lb_formatted_numbers = true
-		else
-			lb_formatted_numbers = f_string_to_boolean(ls_temp)
-		end if
-		lb_show_actor_full = f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "show_actor_full"))
-		
-		lb_latest_root_only = f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "latest_root_only"))
-		
-		luo_results = CREATE u_ds_observation_results
-		
-		// If we have a child observation_id and not a root, then assume the treatment root
-		if not isnull(ls_child_observation_id) and isnull(ls_root_observation_id) then
-			ls_root_observation_id = pstr_treatment.observation_id
-		end if
-		
-		luo_results.formatted_numbers = lb_formatted_numbers
-		
-		luo_results.set_dataobject("dw_sp_obstree_treatment_all")
-		ll_count = luo_results.retrieve(current_patient.cpr_id, &
-													pstr_treatment.treatment_id, &
-													ls_root_observation_id, &
-													ls_root_observation_tag, &
-													ls_child_observation_id, &
-													ls_child_observation_tag, &
-													ls_exclude_observation_tag)
-		
-		if ll_count > 0 then
-			CHOOSE CASE lower(ls_format)
-				CASE "roots"
-					luo_results.display_roots(ls_result_type, ls_abnormal_flag, lb_include_comments, lb_include_attachments, this)
-				CASE "grid"
-					luo_results.display_grid_stage(ls_result_type, ls_abnormal_flag, lstr_table_attributes, this)
-				CASE "lab"
-					lstr_abnormal_font_settings = f_interpret_font_settings(ls_abnormal_font_settings)
-					lstr_comment_font_settings = f_interpret_font_settings(ls_comment_font_settings)
-					luo_results.display_grid_lab(ls_result_type, ls_abnormal_flag, lstr_abnormal_font_settings, lstr_comment_font_settings, lstr_table_attributes, this, lb_show_actor_full, lb_latest_root_only)
-				CASE "list"
-					luo_results.display_list(ls_result_type, ls_abnormal_flag, ls_prefix, this)
-			END CHOOSE
-		end if
-		
-		DESTROY luo_results
-		
-		if f_char_position_compare(charposition(), lstr_startpos) = 0 then
-			add_text(ls_empty_phrase)
-			return 0
-		end if
-		
-		return 1
+		return display_treatment_results(pstr_command, pstr_treatment)
 	CASE "service owned by"
 		ls_service = f_attribute_find_attribute(pstr_command.attributes, "service")
 		li_step_number = integer(f_attribute_find_attribute(pstr_command.attributes, "step_number"))
@@ -6403,13 +6261,13 @@ for i = 1 to lstr_progress.progress_count
 				// Change from grid to title+content, #57
 				
 				// Add the title
-				ls_display_style = "fontsize=11,left,bold,margin=0/0/0, fc=0"
+				ls_display_style = datalist.get_preference('SCRIPT', 'Progress Note Title Format')
 				apply_formatting(ls_display_style)
 				add_text(lstr_progress.progress[i].progress_key_description)
 				add_cr()
 				
 				// Add the description
-				ls_display_style = "fontsize=11,left,xbold,margin=0/0/0, fc=10485760"
+				ls_display_style = datalist.get_preference('SCRIPT', 'Progress Note Text Format')
 				apply_formatting(ls_display_style)			
 				ls_fieldtext = ""
 				ls_fielddata = ""
@@ -6802,47 +6660,6 @@ return li_sts
 
 end function
 
-private subroutine display_treatment_treatments (str_treatment_description pstr_treatment, string ps_treatment_type, long pl_display_script_id, string ps_sort_column, string ps_sort_direction, boolean pb_include_deleted);///////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// Description: show the assessments & treatments
-//
-//
-// Created By:Sumathi Chinnasamy										Creation dt: 1/11/2002
-//
-// Modified By:															Modified On:
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-String	ls_treatment_description
-integer 	j, k
-integer 	li_treatment_count,li_child_treatment_count
-string ls_in_office_flag
-string ls_null
-str_treatment_description		lstra_treatments[]
-string ls_find
-
-setnull(ls_null)
-
-ls_find = "parent_treatment_id = " + string(pstr_treatment.treatment_id)
-
-if len(ps_treatment_type) > 0 then
-	ls_find += " and treatment_type = '" + ps_treatment_type + "'"
-end if
-
-if not pb_include_deleted then
-	ls_find += " and (isnull(treatment_status) OR lower(treatment_status) <> 'cancelled')"
-end if
-
-li_treatment_count = current_patient.treatments.get_treatments(ls_find, lstra_treatments)
-
-f_sort_treatments(li_treatment_count, lstra_treatments, ps_sort_column, ps_sort_direction)
-
-For j = 1 to li_treatment_count
-	display_treatment(lstra_treatments[j].treatment_id, pl_display_script_id)
-Next
-
-
-end subroutine
-
 public subroutine log_error (string ps_error_text);
 command_error = true
 command_error_text = ps_error_text
@@ -6869,24 +6686,24 @@ boolean lb_nested
 string ls_rtf
 ulong ll_hCursor
 long ll_temp_indentl
-long ll_first_command_index
+long li_first_command_index
 
 time lt_start_loading
 time lt_done_loading
 decimal ld_loadtime, ld_elapsed
 lt_start_loading = now()
 
-log.log_db(this, "display_script", "Script id " + string(pl_display_script_id), 2)
+log.log_db(this, "display_script_a", "Script id " + string(pl_display_script_id), 2)
 
 is_on_break = false
 
 if pb_is_reentry then
 	lstr_display_script = reentry_state.display_script
-	ll_first_command_index = reentry_state.last_index + 1
+	li_first_command_index = reentry_state.last_index + 1
 	lstr_font_settings = reentry_state.font_settings
 	lb_nested = false
 else
-	ll_first_command_index = 1
+	li_first_command_index = 1
 	
 	// Don't do anything if we don't have a display_script_id
 	if isnull(pl_display_script_id) then
@@ -6941,6 +6758,11 @@ else
 	li_sts = datalist.display_script(pl_display_script_id,lstr_display_script)
 	if li_sts <= 0 then
 		log_error("Error getting display script (" + string(pl_display_script_id) + ")")
+		return ls_rtf
+	end if
+	
+	if not will_display_results_or_progress(lstr_display_script, pstr_treatment) then 
+		log.log_db(this, "display_script_a", "Nothing to display (" + string(pl_display_script_id) + ")", 2)
 		return ls_rtf
 	end if
 	
@@ -7013,7 +6835,7 @@ if (gnv_app.cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) 
 end if
 
 
-for i = ll_first_command_index to lstr_display_script.display_command_count
+for i = li_first_command_index to lstr_display_script.display_command_count
 	display_script_command(lstr_display_script.display_command[i], pstr_encounter, pstr_assessment, pstr_treatment)
 	if not lb_nested then
 		if breakpoint_set and (lstr_display_script.display_command[i].display_script_id = breakpoint.display_script_id AND lstr_display_script.display_command[i].display_command_id = breakpoint.display_command_id) then
@@ -7215,6 +7037,374 @@ next
 
 return lstr_stack2
 
+
+end function
+
+private subroutine display_treatment_child_treatments (str_treatment_description pstr_treatment, string ps_treatment_type, long pl_display_script_id, string ps_sort_column, string ps_sort_direction, boolean pb_include_deleted);///////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Description: show the assessments & treatments
+//
+//
+// Created By:Sumathi Chinnasamy										Creation dt: 1/11/2002
+//
+// Modified By:															Modified On:
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+String	ls_treatment_description
+integer 	j, k
+integer 	li_treatment_count,li_child_treatment_count
+string ls_in_office_flag
+string ls_null
+str_treatment_description		lstra_treatments[]
+string ls_find
+
+setnull(ls_null)
+
+ls_find = "parent_treatment_id = " + string(pstr_treatment.treatment_id)
+
+if len(ps_treatment_type) > 0 then
+	ls_find += " and treatment_type = '" + ps_treatment_type + "'"
+end if
+
+if not pb_include_deleted then
+	ls_find += " and (isnull(treatment_status) OR lower(treatment_status) <> 'cancelled')"
+end if
+
+li_treatment_count = current_patient.treatments.get_treatments(ls_find, lstra_treatments)
+
+f_sort_treatments(li_treatment_count, lstra_treatments, ps_sort_column, ps_sort_direction)
+
+For j = 1 to li_treatment_count
+	display_treatment(lstra_treatments[j].treatment_id, pl_display_script_id)
+Next
+
+
+end subroutine
+
+public function integer display_treatment_results (ref str_c_display_script_command pstr_command, str_treatment_description pstr_treatment);
+
+boolean lb_include_comments
+boolean lb_include_attachments
+boolean lb_formatted_numbers
+boolean lb_show_actor_full
+boolean lb_latest_root_only
+
+string ls_root_observation_id
+string ls_root_observation_tag
+string ls_child_observation_id
+string ls_child_observation_tag
+string ls_exclude_observation_tag
+string ls_result_type
+string ls_abnormal_flag
+string ls_abnormal_font_settings
+string ls_comment_font_settings
+string ls_format
+string ls_prefix
+string ls_temp
+string ls_empty_phrase
+
+long ll_count
+
+u_ds_observation_results luo_results
+str_rtf_table_attributes lstr_table_attributes
+
+str_font_settings lstr_abnormal_font_settings
+str_font_settings lstr_comment_font_settings
+
+str_charposition lstr_startpos
+str_charposition lstr_curpos
+
+ls_result_type = f_attribute_find_attribute(pstr_command.attributes, "result_type")
+if isnull(ls_result_type) then ls_result_type = "PERFORM"
+ls_abnormal_flag = f_attribute_find_attribute(pstr_command.attributes, "abnormal_flag")
+if isnull(ls_abnormal_flag) then ls_abnormal_flag = "N"
+ls_root_observation_id = f_attribute_find_attribute(pstr_command.attributes, "root_observation_id")
+ls_root_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "root_observation_tag")
+ls_child_observation_id = f_attribute_find_attribute(pstr_command.attributes, "child_observation_id")
+ls_child_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "child_observation_tag")
+ls_exclude_observation_tag = f_attribute_find_attribute(pstr_command.attributes, "exclude_observation_tag")
+ls_empty_phrase = f_attribute_find_attribute(pstr_command.attributes, "empty_phrase")
+ls_abnormal_font_settings = f_attribute_find_attribute(pstr_command.attributes, "abnormal_font_settings")
+if isnull(ls_abnormal_font_settings) then ls_abnormal_font_settings = "bold"
+ls_format = f_attribute_find_attribute(pstr_command.attributes, "format")
+if isnull(ls_format) then ls_format = "Roots"
+ls_prefix = f_attribute_find_attribute(pstr_command.attributes, "prefix")
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "include_comments")
+if isnull(ls_temp) then
+	lb_include_comments = true
+else
+	lb_include_comments = f_string_to_boolean(ls_temp)
+end if
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "include_attachments")
+if isnull(ls_temp) then
+	lb_include_attachments = true
+else
+	lb_include_attachments = f_string_to_boolean(ls_temp)
+end if
+ls_comment_font_settings = f_attribute_find_attribute(pstr_command.attributes, "comment_font_settings")
+if isnull(ls_comment_font_settings) then
+	ls_comment_font_settings = "fn=courier new"
+end if
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "formatted_numbers")  // 
+if isnull(ls_temp) then
+	lb_formatted_numbers = true
+else
+	lb_formatted_numbers = f_string_to_boolean(ls_temp)
+end if
+lb_show_actor_full = f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "show_actor_full"))
+
+lb_latest_root_only = f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "latest_root_only"))
+
+luo_results = CREATE u_ds_observation_results
+
+// If we have a child observation_id and not a root, then assume the treatment root
+if not isnull(ls_child_observation_id) and isnull(ls_root_observation_id) then
+	ls_root_observation_id = pstr_treatment.observation_id
+end if
+
+luo_results.formatted_numbers = lb_formatted_numbers
+
+luo_results.set_dataobject("dw_sp_obstree_treatment_all")
+ll_count = luo_results.retrieve(current_patient.cpr_id, &
+											pstr_treatment.treatment_id, &
+											ls_root_observation_id, &
+											ls_root_observation_tag, &
+											ls_child_observation_id, &
+											ls_child_observation_tag, &
+											ls_exclude_observation_tag)
+
+if ll_count > 0 then
+	CHOOSE CASE lower(ls_format)
+		CASE "roots"
+			luo_results.display_roots(ls_result_type, ls_abnormal_flag, lb_include_comments, lb_include_attachments, this)
+		CASE "grid"
+			luo_results.display_grid_stage(ls_result_type, ls_abnormal_flag, lstr_table_attributes, this)
+		CASE "lab"
+			lstr_abnormal_font_settings = f_interpret_font_settings(ls_abnormal_font_settings)
+			lstr_comment_font_settings = f_interpret_font_settings(ls_comment_font_settings)
+			luo_results.display_grid_lab(ls_result_type, ls_abnormal_flag, lstr_abnormal_font_settings, lstr_comment_font_settings, lstr_table_attributes, this, lb_show_actor_full, lb_latest_root_only)
+		CASE "list"
+			luo_results.display_list(ls_result_type, ls_abnormal_flag, ls_prefix, this)
+	END CHOOSE
+end if
+
+DESTROY luo_results
+
+if f_char_position_compare(charposition(), lstr_startpos) = 0 then
+	add_text(ls_empty_phrase)
+	return 0
+end if
+
+return 1
+end function
+
+public function integer display_treatment_result (ref str_c_display_script_command pstr_command, str_treatment_description pstr_treatment);
+boolean lb_display_result
+boolean lb_display_location
+boolean lb_display_unit
+
+string ls_observation_id
+string ls_result_type
+string ls_abnormal_flag
+string ls_abnormal_font_settings
+string ls_comment_font_settings
+string ls_format
+string ls_prefix
+string ls_temp
+string ls_empty_phrase
+string ls_location
+
+long ll_count
+int li_result_sequence
+
+u_ds_observation_results luo_results
+str_rtf_table_attributes lstr_table_attributes
+
+str_font_settings lstr_abnormal_font_settings
+str_font_settings lstr_comment_font_settings
+
+str_charposition lstr_startpos
+str_charposition lstr_curpos
+
+ls_result_type = f_attribute_find_attribute(pstr_command.attributes, "result_type")
+if isnull(ls_result_type) then ls_result_type = "PERFORM"
+ls_abnormal_flag = f_attribute_find_attribute(pstr_command.attributes, "abnormal_flag")
+if isnull(ls_abnormal_flag) then ls_abnormal_flag = "N"
+ls_observation_id = f_attribute_find_attribute(pstr_command.attributes, "observation_id")
+li_result_sequence = integer(f_attribute_find_attribute(pstr_command.attributes, "result_sequence"))
+ls_location = f_attribute_find_attribute(pstr_command.attributes, "location")
+ls_empty_phrase = f_attribute_find_attribute(pstr_command.attributes, "empty_phrase")
+
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_result")
+if isnull(ls_temp) then
+	// check the "amount_only" attribute for backward compatibility
+	lb_display_result = not f_string_to_boolean(f_attribute_find_attribute(pstr_command.attributes, "amount_only"))
+else
+	lb_display_result = f_string_to_boolean(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_location")
+if isnull(ls_temp) then
+	lb_display_location = true
+else
+	lb_display_location = f_string_to_boolean(ls_temp)
+end if
+
+ls_temp = f_attribute_find_attribute(pstr_command.attributes, "display_unit")
+if isnull(ls_temp) then
+	lb_display_unit = true
+else
+	lb_display_unit = f_string_to_boolean(ls_temp)
+end if
+
+luo_results = CREATE u_ds_observation_results
+luo_results.set_dataobject("dw_sp_obstree_treatment")
+ll_count = luo_results.retrieve(current_patient.cpr_id, &
+											pstr_treatment.treatment_id)
+
+luo_results.display_observation_result(ls_observation_id, ls_result_type, ls_abnormal_flag, ls_location, li_result_sequence, lb_display_result, lb_display_location, lb_display_unit, this)
+
+DESTROY luo_results
+
+if f_char_position_compare(charposition(), lstr_startpos) = 0 then
+	add_text(ls_empty_phrase)
+	return 0
+end if
+
+return 1
+
+end function
+
+public function boolean will_display_results_or_progress (ref str_display_script pstr_display_script, ref str_treatment_description pstr_treatment);
+boolean lb_current_only
+boolean lb_include_deleted
+
+int li_cmd_idx , li_first_command_index
+int li_result_sequence
+long ll_count, ll_row
+long ll_display_script_id
+
+string ls_find
+string ls_observation_id
+string ls_location
+string ls_treatment_type
+
+string ls_root_observation_id
+string ls_root_observation_tag
+string ls_child_observation_id
+string ls_child_observation_tag
+string ls_exclude_observation_tag
+string ls_progress_display_style
+string ls_progress_type
+string ls_progress_key
+
+
+u_ds_observation_results luo_results
+str_treatment_description	 lstra_treatments[]
+str_progress_list lstr_progress
+str_c_display_script_command lstr_command
+
+return true
+// If there are only treatments and general children in this script, and the 
+// treatment results and progress are missing, then avoid printing the script
+
+li_first_command_index = 1
+for li_cmd_idx = li_first_command_index to pstr_display_script.display_command_count
+	lstr_command = pstr_display_script.display_command[li_cmd_idx]
+	CHOOSE CASE pstr_display_script.display_command[li_cmd_idx].context_object
+		CASE "General"
+			// don't care, ignore
+		CASE "Treatment"
+			CHOOSE CASE lower(pstr_display_script.display_command[li_cmd_idx].display_command)
+				CASE "result"
+					
+					luo_results = CREATE u_ds_observation_results
+					luo_results.set_dataobject("dw_sp_obstree_treatment")
+					ll_count = luo_results.retrieve(current_patient.cpr_id, &
+													pstr_treatment.treatment_id)
+
+					li_result_sequence = integer(f_attribute_find_attribute(lstr_command.attributes, "result_sequence"))
+					ls_location = f_attribute_find_attribute(lstr_command.attributes, "location")
+					ls_find = "observation_id='" + ls_observation_id + "'"
+					if not isnull(ls_location) then
+						ls_find += " and location='" + ls_location + "'"
+					end if
+					
+					if not isnull(li_result_sequence) then
+						ls_find += " and result_sequence=" + string(li_result_sequence)
+					end if
+					
+					// Add a check for the record type
+					if isnull(ls_location) and isnull(li_result_sequence) then
+						ls_find += " and (record_type='Root' OR record_type='Observation')"
+					else
+						ls_find += " and record_type='Result'"
+					end if
+					
+					ll_row = luo_results.find(ls_find, 1, ll_count)
+					if ll_row > 0 then return true
+					
+				CASE "results"
+
+					ls_root_observation_id = f_attribute_find_attribute(lstr_command.attributes, "root_observation_id")
+					ls_root_observation_tag = f_attribute_find_attribute(lstr_command.attributes, "root_observation_tag")
+					ls_child_observation_id = f_attribute_find_attribute(lstr_command.attributes, "child_observation_id")
+					ls_child_observation_tag = f_attribute_find_attribute(lstr_command.attributes, "child_observation_tag")
+					ls_exclude_observation_tag = f_attribute_find_attribute(lstr_command.attributes, "exclude_observation_tag")
+					
+					luo_results = CREATE u_ds_observation_results
+					
+					// If we have a child observation_id and not a root, then assume the treatment root
+					if not isnull(ls_child_observation_id) and isnull(ls_root_observation_id) then
+						ls_root_observation_id = pstr_treatment.observation_id
+					end if
+					
+					luo_results.set_dataobject("dw_sp_obstree_treatment_all")
+					ll_count = luo_results.retrieve(current_patient.cpr_id, &
+																pstr_treatment.treatment_id, &
+																ls_root_observation_id, &
+																ls_root_observation_tag, &
+																ls_child_observation_id, &
+																ls_child_observation_tag, &
+																ls_exclude_observation_tag)
+					if ll_count > 0 then return true
+
+				CASE "child treatments"
+					
+
+					ls_treatment_type = f_attribute_find_attribute(lstr_command.attributes, "treatment_type")
+	//				ll_display_script_id = long(f_attribute_find_attribute(lstr_command.attributes, "display_script_id"))
+					lb_include_deleted = f_string_to_boolean(f_attribute_find_attribute(lstr_command.attributes, "include_deleted"))
+					
+					ls_find = "parent_treatment_id = " + string(pstr_treatment.treatment_id)
+					
+					if len(ls_treatment_type) > 0 then
+						ls_find += " and treatment_type = '" + ls_treatment_type + "'"
+					end if
+					
+					if not lb_include_deleted then
+						ls_find += " and (isnull(treatment_status) OR lower(treatment_status) <> 'cancelled')"
+					end if
+					
+					ll_count = current_patient.treatments.get_treatments(ls_find, lstra_treatments)
+					if ll_count > 0 then return true
+
+				CASE "progress"
+					ls_progress_type = f_attribute_find_attribute(lstr_command.attributes, "progress_type")
+					ls_progress_key = f_attribute_find_attribute(lstr_command.attributes, "progress_key")
+					ll_display_script_id = long(f_attribute_find_attribute(lstr_command.attributes, "display_script_id"))
+					lstr_progress = f_get_progress(current_patient.cpr_id, lstr_command.context_object, &
+											pstr_treatment.treatment_id, ls_progress_type, ls_progress_key)
+					if lstr_progress.progress_count > 0 then return true
+					
+			END CHOOSE
+		CASE ELSE
+			// script includes something else besides General and Treatment
+			return true
+	END CHOOSE
+next
+
+return false
 
 end function
 
