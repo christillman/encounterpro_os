@@ -70,9 +70,9 @@ end type
 
 type dw_message from datawindow within w_pop_window_base
 integer x = 59
-integer y = 36
+integer y = 120
 integer width = 1906
-integer height = 624
+integer height = 608
 string dataobject = "dw_ok"
 boolean vscrollbar = true
 boolean border = false
