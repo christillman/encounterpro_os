@@ -114,10 +114,12 @@ REM move /Y "Client\dbmaint.pbd" %build_folder%
 REM move /Y "Client\eprodbmaint.exe" %build_folder%
 
 REM -- only for IDE builds
-move /Y "Client\encounterpro.os.client.exe" %build_folder%
+REM move /Y "Client\encounterpro.os.client.exe" %build_folder%
+REM move /Y "Client\encounterpro.os.client.exe.manifest" %build_folder%
 
 copy %build_folder%\..\pb.ini %build_folder%
 copy %build_folder%\..\EncounterPRO.ini %build_folder%
+copy "Help\EncounterPro-OS Help.chm" %build_folder%
 copy "%build_folder%\..\..\Resources\Open Source License.rtf" %build_folder%
 
 REM Now building pbdom / pbsoap separately as of PB 2019 R3
@@ -127,3 +129,6 @@ copy %build_folder%\..\pbsoapclient.pbd %build_folder%
 
 REM now adding runtime into the EPro folder, so we don't need to run runtime installer
 xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" %build_folder% /S /Y
+REM add lines to manifest to immprove font appearance
+REM https://www.appeon.com/developers/get-help/knowledgebase/4498
+copy /Y "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\encounterpro.os.client.exe.manifest.doctored" %build_folder%\encounterpro.os.client.exe.manifest
