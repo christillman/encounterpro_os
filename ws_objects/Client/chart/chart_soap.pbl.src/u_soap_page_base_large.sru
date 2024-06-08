@@ -166,6 +166,7 @@ string indirect_flag
 
 
 end variables
+
 forward prototypes
 public subroutine refresh_subjective ()
 public subroutine xx_initialize ()
@@ -256,6 +257,9 @@ long ll_firstrowonpage
 long ll_lastrowonpage
 long ll_current_display_encounter_id
 
+if dw_encounters.visible then 
+	load_encounters() // to refresh the list after a new one is added
+end if
 if isnull(current_display_encounter) then
 	ll_current_display_encounter_id = 0
 else
@@ -284,19 +288,18 @@ else
 end if
 
 if ll_row > 0 then
-	st_encounter_count.visible = true
 	st_encounter_count.text = string(ll_count - ll_row + 1) + " of " + string(ll_count)
-else
-	st_encounter_count.visible = false
 end if
 
 // If we're not displaying the service encounter then display the "current" button
-if ll_current_display_encounter_id = current_service.encounter_id then
-	cb_current.visible = false
-else
-	cb_current.visible = true
+cb_current.visible = true
+if Not IsNull(current_service) then
+	if Not IsNull(current_service.encounter_id) then
+		if ll_current_display_encounter_id = current_service.encounter_id then
+			cb_current.visible = false
+		end if
+	end if
 end if
-
 
 refresh_coding()
 
@@ -1071,7 +1074,11 @@ end type
 
 event clicked;integer li_sts
 
-li_sts = f_set_current_encounter(current_service.encounter_id)
+if Not IsNull(current_service) then
+	if Not IsNull(current_service.encounter_id) then
+		li_sts = f_set_current_encounter(current_service.encounter_id)
+	end if
+end if
 
 refresh()
 
@@ -1320,8 +1327,8 @@ end type
 type st_no_encounters from statictext within u_soap_page_base_large
 integer x = 46
 integer y = 636
-integer width = 955
-integer height = 164
+integer width = 965
+integer height = 344
 integer textsize = -22
 integer weight = 700
 fontcharset fontcharset = ansi!

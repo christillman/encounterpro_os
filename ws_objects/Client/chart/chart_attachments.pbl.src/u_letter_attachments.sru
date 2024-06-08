@@ -30,7 +30,11 @@ If ll_row > 0 Then
 	ll_attachment_id = dw_attachments.object.attachment_id[ll_row]
 	ls_attachment_type = dw_attachments.object.attachment_type[ll_row]
 	this.event Post ue_attachment_clicked(ls_attachment_type,ll_attachment_id)
+Else
+	// show new encounter
+	parent.dynamic event post ue_clicked()
 End If
+
 end event
 
 type pb_new_attachments from u_attachments`pb_new_attachments within u_letter_attachments
