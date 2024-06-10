@@ -31,6 +31,10 @@ current_patient.open_encounter_id = current_display_encounter.encounter_id
 current_patient.open_encounter_date = current_display_encounter.encounter_date
 current_patient.open_encounter = current_display_encounter
 
+if not isnull(current_service) then 
+	current_service.encounter_id = pl_encounter_id
+end if
+
 return 1
 
 

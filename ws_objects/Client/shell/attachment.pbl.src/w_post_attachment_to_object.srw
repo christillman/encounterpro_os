@@ -65,7 +65,6 @@ end type
 
 global type w_post_attachment_to_object from w_window_base
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -107,10 +106,10 @@ datetime end_date
 str_attributes folder_attributes
 
 long encounter_id
+string is_context_object
 
 boolean open_only = true
 end variables
-
 forward prototypes
 public function integer initialize ()
 public function integer pick_treatment ()
@@ -128,6 +127,50 @@ str_popup popup
 str_popup_return popup_return
 string ls_message
 
+
+// First we need to determine the context object
+
+// If one is passed in, then we're done here
+if isnull(attachment_context.context_object) or trim(attachment_context.context_object) = "" then
+	// Null out any context_object_type passed in because it can't be
+	// valid without also passing in the context_object
+	setnull(attachment_context.context_object_type)
+	
+	// 2024-06-08 Since we are posting encounter first, then we don't have a folder yet.
+	attachment_context.context_object = "Encounter"
+	
+	/*
+	// If a context object is not passed in, then figure it out from the folder
+	
+	// Make sure we have a folder
+	if isnull(attachment_context.folder) then
+		log.log(this,"w_post_attachment_to_object:open","Null Folder",4)
+		setnull(attachment_context.object_key)
+		closewithreturn(this, attachment_context)
+		Return
+	end if
+	
+	// Make sure our folder exists and get its context info
+	SELECT context_object
+	INTO :attachment_context.context_object
+	FROM c_Folder
+	WHERE folder = :attachment_context.folder;
+	if not tf_check() then
+		log.log(this,"w_post_attachment_to_object:open","Error getting Folder",4)
+		setnull(attachment_context.object_key)
+		closewithreturn(this, attachment_context)
+		Return
+	end if
+	if sqlca.sqlcode = 100 then
+		log.log(this,"w_post_attachment_to_object:open","Folder not found (" + attachment_context.folder + ")",4)
+		setnull(attachment_context.object_key)
+		closewithreturn(this, attachment_context)
+		Return
+	end if
+	*/
+end if
+
+
 // Now we need to determine the context_object_type
 if isnull(attachment_context.context_object_type) or trim(attachment_context.context_object_type) = "" then
 	attachment_context.context_object_type = get_context_object_type(true)
@@ -143,7 +186,7 @@ end if
 //	Return
 //end if
 
-li_sts = initialize()
+li_sts = this.initialize()
 if li_sts <= 0 then
 	log.log(this,"w_post_attachment_to_object:post","Initialize failed", 4)
 	setnull(attachment_context.object_key)
@@ -166,6 +209,7 @@ long ll_row
 integer li_sts
 long ll_new_encounter_id
 string ls_preference_id
+string is_context_object
 
 setnull(end_date)
 setnull(encounter_id)
@@ -195,24 +239,28 @@ if not isnull(current_service) then
 	encounter_id = current_service.encounter_id
 end if
 
-if len(attachment_context.folder) > 0 then
-	luo_folder_attributes = CREATE u_ds_data
-	luo_folder_attributes.set_dataobject("dw_c_folder_attribute")
-	ll_count = luo_folder_attributes.retrieve(attachment_context.folder)
-	if ll_count < 0 then return -1
-	
-	f_attribute_ds_to_str(luo_folder_attributes, folder_attributes)
-	
-	DESTROY luo_folder_attributes
-end if
+// folder_attributes is not used anywhere
+//if len(attachment_context.folder) > 0 then
+//	luo_folder_attributes = CREATE u_ds_data
+//	luo_folder_attributes.set_dataobject("dw_c_folder_attribute")
+//	ll_count = luo_folder_attributes.retrieve(attachment_context.folder)
+//	if ll_count < 0 then return -1
+//	
+//	f_attribute_ds_to_str(luo_folder_attributes, folder_attributes)
+//	
+//	DESTROY luo_folder_attributes
+//end if
+//
 
+is_context_object = attachment_context.context_object
+IF is_context_object = "Encounter" THEN is_context_object = "Appointment"
 
-st_pick_title.text = "Select " + wordcap(attachment_context.context_object)
-cb_post_existing.text = "Post to " + wordcap(attachment_context.context_object)
-cb_post_new.text = "New " + wordcap(attachment_context.context_object)
-st_existing_title.text = "Post to Existing " + wordcap(attachment_context.context_object)
-st_new_title.text = "Post to New " + wordcap(attachment_context.context_object)
-st_type_title.text = wordcap(attachment_context.context_object) + " Type"
+st_pick_title.text = "Select " + wordcap(is_context_object)
+cb_post_existing.text = "Post to " + wordcap(is_context_object)
+cb_post_new.text = "New " + wordcap(is_context_object)
+st_existing_title.text = "Post to Existing " + wordcap(is_context_object)
+st_new_title.text = "Post to New " + wordcap(is_context_object)
+st_type_title.text = wordcap(is_context_object) + " Type"
 
 // Set the encounter context
 if isnull(current_display_encounter) then current_patient.encounters.last_encounter()
@@ -248,10 +296,10 @@ CHOOSE CASE lower(attachment_context.context_object)
 		end if
 		
 		ll_count = current_patient.encounters.get_encounters(ls_find, lstr_encounters)
-		// Put the most recent treatments at the top
+		// Put the most recent encounters at the top
 		for i = ll_count to 1 step -1
 			ll_row = dw_post_to.insertrow(0)
-			dw_post_to.object.context_object[ll_row] = attachment_context.context_object
+			dw_post_to.object.context_object[ll_row] = is_context_object
 			dw_post_to.object.object_key[ll_row] = lstr_encounters[i].encounter_id
 			dw_post_to.object.description[ll_row] = lstr_encounters[i].description
 			dw_post_to.object.begin_date[ll_row] = lstr_encounters[i].encounter_date
@@ -581,6 +629,8 @@ if isnull(ls_encounter_type) then return 0
 st_pick.text = datalist.encounter_type_description(ls_encounter_type)
 mle_description.text = st_pick.text
 
+attachment_context.context_object_type = ls_encounter_type
+		
 attachment_context.object_attributes.attribute_count = 0
 f_attribute_add_attribute(attachment_context.object_attributes, "encounter_type", ls_encounter_type)
 
@@ -608,8 +658,8 @@ lstr_encounter.discharge_date = end_date
 lstr_encounter.description = mle_description.text
 
 lstr_encounter.encounter_id = current_patient.new_encounter(lstr_encounter, &
-																				current_scribe.user_id, &
-																				false)
+								current_scribe.user_id, &
+								false)
 if lstr_encounter.encounter_id <= 0 then
 	log.log(this, "w_post_attachment_to_object.order_encounter:0021", "Could not create a new appointment", 4)
 	return -1
@@ -618,7 +668,7 @@ end if
 
 
 attachment_context.object_key = lstr_encounter.encounter_id
-attachment_context.description = mle_description.text
+attachment_context.description = lstr_encounter.description
 
 return 1
 
@@ -754,50 +804,8 @@ destroy(this.st_1)
 destroy(this.ln_1)
 end on
 
-event open;call super::open;integer li_sts
-str_popup popup
-str_popup_return popup_return
-string ls_message
-
+event open;call super::open;
 attachment_context = message.powerobjectparm
-
-// First we need to determine the context object
-
-// If one is passed in, then we're done here
-if isnull(attachment_context.context_object) or trim(attachment_context.context_object) = "" then
-	// Null out any context_object_type passed in because it can't be
-	// valid without also passing in the context_object
-	setnull(attachment_context.context_object_type)
-	
-	// If a context object is not passed in, then figure it out from the folder
-	
-	// Make sure we have a folder
-	if isnull(attachment_context.folder) then
-		log.log(this,"w_post_attachment_to_object:open","Null Folder",4)
-		setnull(attachment_context.object_key)
-		closewithreturn(this, attachment_context)
-		Return
-	end if
-	
-	// Make sure our folder exists and get its context info
-	SELECT context_object
-	INTO :attachment_context.context_object
-	FROM c_Folder
-	WHERE folder = :attachment_context.folder;
-	if not tf_check() then
-		log.log(this,"w_post_attachment_to_object:open","Error getting Folder",4)
-		setnull(attachment_context.object_key)
-		closewithreturn(this, attachment_context)
-		Return
-	end if
-	if sqlca.sqlcode = 100 then
-		log.log(this,"w_post_attachment_to_object:open","Folder not found (" + attachment_context.folder + ")",4)
-		setnull(attachment_context.object_key)
-		closewithreturn(this, attachment_context)
-		Return
-	end if
-end if
-
 
 postevent("post_open")
 
@@ -968,8 +976,8 @@ if not attachment_context.posting_file and (ld_context_begin_date < relativedate
 	
 	popup.title = ls_message
 	popup.data_row_count = 3
-	popup.items[1] = "Post To New Treatment"
-	popup.items[2] = "Post To Existing Treatment"
+	popup.items[1] = "Post To New " + is_context_object
+	popup.items[2] = "Post To Existing " + is_context_object
 	popup.items[3] = "Cancel"
 	openwithparm(w_pop_choices_3, popup)
 	ll_response = message.doubleparm
@@ -1016,7 +1024,7 @@ end type
 
 event clicked;
 setnull(attachment_context.object_key)
-
+attachment_context.user_cancelled = true
 closewithreturn(parent, attachment_context)
 
 
@@ -1123,14 +1131,6 @@ ls_context_object_type = get_context_object_type(false)
 if isnull(ls_context_object_type) then return
 
 attachment_context.context_object_type = ls_context_object_type
-
-li_sts = initialize()
-if li_sts <= 0 then
-	log.log(this,"w_post_attachment_to_object.st_type.clicked:0011","Initialize failed", 4)
-	setnull(attachment_context.object_key)
-	closewithreturn(parent, attachment_context)
-	Return
-End If
 
 
 

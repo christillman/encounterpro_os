@@ -14,7 +14,11 @@ setnull(current_display_encounter)
 if not isnull(current_patient) then 
 	setnull(current_patient.open_encounter_id)
 	setnull(current_patient.open_encounter_date)
-	setnull(current_patient.open_encounter)
+	setnull(current_patient.open_encounter)	
+end if
+
+if not isnull(current_service) then 
+	setnull(current_service.encounter_id)
 end if
 
 return 1

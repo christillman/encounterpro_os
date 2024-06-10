@@ -2778,6 +2778,7 @@ ls_find = "observation_id='" + ps_observation_id + "'"
 if not isnull(ps_location) then
 	ls_find += " and location='" + ps_location + "'"
 end if
+
 if not isnull(pi_result_sequence) then
 	ls_find += " and result_sequence=" + string(pi_result_sequence)
 end if

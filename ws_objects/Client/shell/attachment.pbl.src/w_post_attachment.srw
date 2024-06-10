@@ -66,6 +66,99 @@ public function integer post_to_folder (string ps_folder, string ps_context_obje
 end prototypes
 
 event post_open;
+long ll_folder_count, ll_row
+string ls_context_object, ls_context_object_type
+integer li_sts
+string ls_find
+
+dw_post_to.settransobject(sqlca)
+ll_folder_count = dw_post_to.retrieve(folder_selection_info.context_object, &
+													folder_selection_info.context_object_type, &
+													folder_selection_info.attachment_type, &
+													folder_selection_info.extension)
+if ll_folder_count < 0 then
+	log.log(this, "w_post_attachment:open", "Error getting folder list", 4)
+	setnull(attachment_context.folder)
+	closewithreturn(this, attachment_context)
+	return
+end if
+if ll_folder_count = 0 then
+	setnull(attachment_context.folder)
+	closewithreturn(this, attachment_context)
+	return
+end if
+
+// If a folder has already been specified, then find it
+if len(folder_selection_info.attachment_folder) > 0 then
+	SELECT context_object,
+			context_object_type
+	INTO	:ls_context_object,
+			:ls_context_object_type
+	FROM c_Folder
+	WHERE folder = :folder_selection_info.attachment_folder;
+	if not tf_check() then
+		log.log(this, "w_post_attachment:open", "Error looking up pre-selected folder (" + folder_selection_info.attachment_folder + ")", 4)
+		setnull(attachment_context.folder)
+		closewithreturn(this, attachment_context)
+		return
+	end if
+	if sqlca.sqlcode = 100 then
+		log.log(this, "w_post_attachment:open", "Pre-selected folder not valid (" + folder_selection_info.attachment_folder + ")", 4)
+		setnull(attachment_context.folder)
+		closewithreturn(this, attachment_context)
+		return
+	end if
+	
+	// We found the selected folder so go ahead and post to it
+	li_sts = post_to_folder(folder_selection_info.attachment_folder, ls_context_object, ls_context_object_type)
+	if li_sts > 0 then
+		closewithreturn(this, attachment_context)
+		return
+	end if
+end if
+
+// If there's a folder with the auto_select_flag = 'Y', then pick it automatically
+ls_find = "auto_select_flag='Y'"
+ll_row = dw_post_to.find(ls_find, 1, ll_folder_count)
+if ll_row > 0 then
+	li_sts = post_to_folder(ll_row)
+	if li_sts <= 0 then
+		setnull(attachment_context.folder)
+	end if
+	closewithreturn(this, attachment_context)
+	return
+end if
+
+// If there's only one folder, then pick it automatically
+if ll_folder_count = 1 then
+	li_sts = post_to_folder(1)
+	if li_sts <= 0 then
+		setnull(attachment_context.folder)
+	end if
+	closewithreturn(this, attachment_context)
+	return
+end if
+
+// If we didn't find an auto_pick row but we're in server mode, then pick the first folder
+if gnv_app.cpr_mode = "SERVER" then
+	li_sts = post_to_folder(1)
+	if li_sts <= 0 then
+		setnull(attachment_context.folder)
+	end if
+	closewithreturn(this, attachment_context)
+	return
+end if
+
+if isnull(current_patient) then
+	title = "Post Attachment To Folder"
+else
+	title = current_patient.id_line1()
+end if
+
+uo_image.initialize()
+
+dw_post_to.object.description.width = dw_post_to.width - 128
+
 uo_image.display_picture(rendered_attachment_file)
 
 
@@ -183,10 +276,11 @@ else
 	CHOOSE CASE lower(attachment_context.context_object)
 		CASE "encounter","assessment","treatment"
 			if gnv_app.cpr_mode = "CLIENT" then
-				attachment_context.posting_file = true
-				openwithparm(w_post_attachment_to_object, attachment_context)
-				attachment_context = message.powerobjectparm
-				if isnull(attachment_context.object_key) then return 0
+				// moved posting to encounter to before post to folder
+//				attachment_context.posting_file = true
+//				openwithparm(w_post_attachment_to_object, attachment_context)
+//				attachment_context = message.powerobjectparm
+//				if isnull(attachment_context.object_key) then return 0
 			else
 				log.log(this, "w_post_attachment.post_to_folder:0093", "Cannot assign object key in server mode", 4)
 				return 0
@@ -262,13 +356,8 @@ destroy(this.st_apply_yes)
 destroy(this.st_apply_no)
 end on
 
-event open;call super::open;str_popup popup
-long ll_folder_count
-string ls_find
-long ll_row
-integer li_sts
-string ls_context_object
-string ls_context_object_type
+event open;call super::open;
+str_popup popup
 
 folder_selection_info = message.powerobjectparm
 
@@ -316,95 +405,6 @@ CHOOSE CASE upper(folder_selection_info.remove_flag)
 		st_remove_no.visible = false
 		attachment_context.remove = false
 END CHOOSE
-
-
-dw_post_to.settransobject(sqlca)
-ll_folder_count = dw_post_to.retrieve(folder_selection_info.context_object, &
-													folder_selection_info.context_object_type, &
-													folder_selection_info.attachment_type, &
-													folder_selection_info.extension)
-if ll_folder_count < 0 then
-	log.log(this, "w_post_attachment:open", "Error getting folder list", 4)
-	setnull(attachment_context.folder)
-	closewithreturn(this, attachment_context)
-	return
-end if
-if ll_folder_count = 0 then
-	setnull(attachment_context.folder)
-	closewithreturn(this, attachment_context)
-	return
-end if
-
-// If a folder has already been specified, then find it
-if len(folder_selection_info.attachment_folder) > 0 then
-	SELECT context_object,
-			context_object_type
-	INTO	:ls_context_object,
-			:ls_context_object_type
-	FROM c_Folder
-	WHERE folder = :folder_selection_info.attachment_folder;
-	if not tf_check() then
-		log.log(this, "w_post_attachment:open", "Error looking up pre-selected folder (" + folder_selection_info.attachment_folder + ")", 4)
-		setnull(attachment_context.folder)
-		closewithreturn(this, attachment_context)
-		return
-	end if
-	if sqlca.sqlcode = 100 then
-		log.log(this, "w_post_attachment:open", "Pre-selected folder not valid (" + folder_selection_info.attachment_folder + ")", 4)
-		setnull(attachment_context.folder)
-		closewithreturn(this, attachment_context)
-		return
-	end if
-	
-	// We found the selected folder so go ahead and post to it
-	li_sts = post_to_folder(folder_selection_info.attachment_folder, ls_context_object, ls_context_object_type)
-	if li_sts > 0 then
-		closewithreturn(this, attachment_context)
-		return
-	end if
-end if
-
-// If there's a folder with the auto_select_flag = 'Y', then pick it automatically
-ls_find = "auto_select_flag='Y'"
-ll_row = dw_post_to.find(ls_find, 1, ll_folder_count)
-if ll_row > 0 then
-	li_sts = post_to_folder(ll_row)
-	if li_sts <= 0 then
-		setnull(attachment_context.folder)
-	end if
-	closewithreturn(this, attachment_context)
-	return
-end if
-
-// If there's only one folder, then pick it automatically
-if ll_folder_count = 1 then
-	li_sts = post_to_folder(1)
-	if li_sts <= 0 then
-		setnull(attachment_context.folder)
-	end if
-	closewithreturn(this, attachment_context)
-	return
-end if
-
-// If we didn't find an auto_pick row but we're in server mode, then pick the first folder
-if gnv_app.cpr_mode = "SERVER" then
-	li_sts = post_to_folder(1)
-	if li_sts <= 0 then
-		setnull(attachment_context.folder)
-	end if
-	closewithreturn(this, attachment_context)
-	return
-end if
-
-if isnull(current_patient) then
-	title = "Post Attachment To Folder"
-else
-	title = current_patient.id_line1()
-end if
-
-uo_image.initialize()
-
-dw_post_to.object.description.width = dw_post_to.width - 128
 
 postevent("post_open")
 

@@ -29,7 +29,8 @@ ll_row = dw_attachments.get_selected_row()
 If ll_row > 0 Then
 	ll_attachment_id = dw_attachments.object.attachment_id[ll_row]
 	ls_attachment_type = dw_attachments.object.attachment_type[ll_row]
-	this.event Post ue_attachment_clicked(ls_attachment_type,ll_attachment_id)
+	yield() // sometimes, it says this event doesn't exist
+	event Post ue_attachment_clicked(ls_attachment_type,ll_attachment_id)
 Else
 	// show new encounter
 	parent.dynamic event post ue_clicked()

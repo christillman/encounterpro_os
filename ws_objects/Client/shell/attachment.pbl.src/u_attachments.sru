@@ -57,7 +57,6 @@ public function integer display_attachments ()
 public subroutine display ()
 public function integer delete_attachment ()
 public function integer delete_record ()
-public function integer refresh (string ps_attachment_folder)
 public function integer refresh ()
 public function string get_progress_type ()
 public subroutine display_image ()
@@ -67,6 +66,8 @@ public function integer initialize (string ps_context_object, string ps_attachme
 public function integer initialize (string ps_context_object, long pl_object_key)
 public function integer initialize (string ps_context_object, string ps_attachment_tag, long pl_object_key, string ps_attachment_folder)
 public function integer initialize (string ps_context_object, string ps_attachment_tag, long pl_object_key, string ps_attachment_folder, string ps_progress_type, string ps_progress_key, string ps_new_attachment_folder)
+public function integer show_attachments (string ps_show_what)
+public subroutine show_last_posted_attachment_folder ()
 end prototypes
 
 event ue_clicked();long ll_row
@@ -76,9 +77,9 @@ ll_row = dw_attachments.get_selected_row()
 If ll_row > 0 Then
 	ll_attachment_id = dw_attachments.object.attachment_id[ll_row]
 	current_patient.attachments.menu(ll_attachment_id, context_object, object_key)
+	refresh()
 End If
 
-refresh()
 
 end event
 
@@ -141,12 +142,6 @@ if context_object = "Patient" then
 	ls_filter += "upper(attachment_type)<>'SIGNATURE'"
 End If
 
-// encounter filter ??
-if current_display_encounter.encounter_id > 0 then
-	if len(ls_filter) > 0 then ls_filter += " and "
-	ls_filter += "encounter_id='" + string(current_display_encounter.encounter_id) + "'"
-End If
-
 // Is any progress_type filter ??
 If Len(progress_type) > 0 Then 
 	if len(ls_filter) > 0 then ls_filter += " and "
@@ -159,7 +154,7 @@ If Len(progress_key) > 0 Then
 	ls_filter += "progress_key='"+progress_key+"'"
 End If
 
-dw_attachments.Setfilter(ls_filter)
+dw_attachments.SetFilter(ls_filter)
 dw_attachments.Filter()
 
 // Up & Down Buttons
@@ -237,12 +232,6 @@ If ll_row > 0 Then
 End If
 
 Return dw_attachments.rowcount()
-
-
-end function
-
-public function integer refresh (string ps_attachment_folder);attachment_folder = ps_attachment_folder
-Return display_attachments()
 
 
 end function
@@ -387,6 +376,109 @@ Return 1
 
 end function
 
+public function integer show_attachments (string ps_show_what);Long ll_rows
+string ls_filter
+
+dw_attachments.Setredraw(false)
+dw_attachments.reset()
+dw_attachments.Setfilter("")
+dw_attachments.Filter()
+
+ll_rows = dw_attachments.retrieve(current_patient.cpr_id, context_object, object_key)
+If not tf_check() Then Return -1
+
+ls_filter = ""
+
+if ps_show_what = "current encounter" then
+	if current_display_encounter.encounter_id > 0 then
+		if len(ls_filter) > 0 then ls_filter += " and "
+		ls_filter += "encounter_id='" + string(current_display_encounter.encounter_id) + "'"
+	End If
+	if len(ls_filter) > 0 then ls_filter += " and "
+	ls_filter += "(isnull(folder_status) or upper(folder_status) = 'OK')"
+else
+	// Filter by attachment folder??
+	If Len(ps_show_what) > 0 Then
+		if ps_show_what <> "<All>" then
+			if len(ls_filter) > 0 then ls_filter += " and "
+			ls_filter += "attachment_folder='"+ps_show_what+"'"
+		end if
+	End If
+end if	
+
+if context_object = "Patient" then
+	if len(ls_filter) > 0 then ls_filter += " and "
+	ls_filter += "upper(attachment_type)<>'SIGNATURE'"
+End If
+
+dw_attachments.SetFilter(ls_filter)
+dw_attachments.Filter()
+
+// Up & Down Buttons
+dw_attachments.last_page = 0
+dw_attachments.set_page(1, pb_up,pb_down,st_page)
+
+dw_attachments.Setredraw(true)
+
+ll_rows = dw_attachments.rowcount()
+
+if ll_rows <= 0 then
+	text = tab_title
+else
+	text = tab_title + " (" + string(ll_rows) + ")"
+end if
+
+Return ll_rows
+
+
+end function
+
+public subroutine show_last_posted_attachment_folder ();Long ll_rows
+string ls_filter
+
+dw_attachments.Setredraw(false)
+dw_attachments.reset()
+dw_attachments.Setfilter("")
+dw_attachments.Filter()
+
+ll_rows = dw_attachments.retrieve(current_patient.cpr_id, context_object, object_key)
+If not tf_check() Then Return
+
+ls_filter = ""
+if ll_rows > 0 then
+	// the attachments are sorted in descending date order
+	attachment_folder = dw_attachments.object.attachment_folder[1]
+end if
+
+If Len(attachment_folder) > 0 Then
+	ls_filter = "attachment_folder='"+attachment_folder+"'"
+End If
+
+if context_object = "Patient" then
+	if len(ls_filter) > 0 then ls_filter += " and "
+	ls_filter += "upper(attachment_type)<>'SIGNATURE'"
+End If
+
+dw_attachments.SetFilter(ls_filter)
+dw_attachments.Filter()
+
+// Up & Down Buttons
+dw_attachments.last_page = 0
+dw_attachments.set_page(1, pb_up,pb_down,st_page)
+
+dw_attachments.Setredraw(true)
+
+ll_rows = dw_attachments.rowcount()
+
+if ll_rows <= 0 then
+	text = tab_title
+else
+	text = tab_title + " (" + string(ll_rows) + ")"
+end if
+
+
+end subroutine
+
 on u_attachments.create
 this.pb_new_attachments=create pb_new_attachments
 this.st_page=create st_page
@@ -432,10 +524,6 @@ If isnull(current_patient) Then
 	log.log(this,"u_attachments.pb_new_attachments.clicked:0012","Attachments can't be created without valid patient context",3)
 	Return
 End If
-If Not isnull(current_patient.open_encounter) Then
-	// except patient attach. everything else need valid encounter
-	ll_encounter_id = current_patient.open_encounter.encounter_id
-End If
 
 If isnull(attachment_service) Or Len(attachment_service) = 0 Then &
 	attachment_service = "EXTERNAL_SOURCE"
@@ -446,19 +534,26 @@ if isnull(ls_progress_type) then return
 f_attribute_add_attribute(lstra_attributes, "attachment_context_object", context_object)
 
 ls_attachment_folder = new_attachment_folder
-if isnull(ls_attachment_folder) then ls_attachment_folder = attachment_folder
+// this causes the folder to be retained from the last attachment
+// and doesn't offer the folder selection again
+// if isnull(ls_attachment_folder) then ls_attachment_folder = attachment_folder
 
 if not isnull(object_key) then f_attribute_add_attribute(lstra_attributes, "attachment_object_key", string(object_key))
 if not isnull(ls_attachment_folder) then f_attribute_add_attribute(lstra_attributes, "attachment_folder", ls_attachment_folder)
 if not isnull(attachment_tag) then f_attribute_add_attribute(lstra_attributes, "comment_title", attachment_tag)
 if not isnull(ls_progress_type) then f_attribute_add_attribute(lstra_attributes, "progress_type", ls_progress_type)
 if not isnull(progress_key) then f_attribute_add_attribute(lstra_attributes, "progress_key", progress_key)
+if not isnull(current_display_encounter) then f_attribute_add_attribute(lstra_attributes, "encounter_id", string(current_display_encounter.encounter_id))
 
 li_sts = service_list.do_service(attachment_service,lstra_attributes)
 If li_sts <= 0 Then Return
 
-refresh()
+if current_display_encounter.encounter_id <> posted_encounter_id then
+		// set the current display encounter to the one where the attachment was posted
+	f_set_current_encounter(posted_encounter_id)
+end if
 
+parent.event dynamic post ue_attachment_added()
 
 end event
 

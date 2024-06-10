@@ -64,14 +64,18 @@ setredraw(false)
 ll_page = uo_attachments.dw_attachments.current_page
 if ll_page <= 0 then ll_page = 1
 
-uo_attachments.refresh(attachment_folder)
+if dw_encounters.visible then
+	uo_attachments.show_attachments("current encounter")
+else
+	uo_attachments.show_attachments(attachment_folder)
+end if
 
 uo_attachments.dw_attachments.last_page = 0
 uo_attachments.dw_attachments.set_page(ll_page, ls_text)
 
 ll_first_row_on_page = long(uo_folder_list.object.DataWindow.FirstRowOnPage)
 
-//refresh_folder_list()
+refresh_folder_list()
 
 i = 1
 DO WHILE true
@@ -534,6 +538,7 @@ boolean focusrectangle = false
 end type
 
 type uo_attachments from u_letter_attachments within u_soap_page_attachments
+event ue_attachment_added ( )
 integer x = 1294
 integer y = 108
 integer width = 1920
@@ -541,6 +546,50 @@ integer height = 1628
 integer taborder = 40
 boolean bringtotop = true
 end type
+
+event ue_attachment_added();long ll_row, ll_count
+long ll_firstrowonpage, ll_lastrowonpage
+string ls_find
+
+// show the new attachment
+if dw_encounters.visible then
+	// select the encounter for the new attachment (the new current_display_encounter)
+	show_attachments("current encounter")
+	ll_count = dw_encounters.rowcount()
+	if ll_count > 0 then
+		// Set the encounter counter
+		ls_find = "encounter_id=" + string(current_display_encounter.encounter_id)
+		ll_row = dw_encounters.find(ls_find, 1, ll_count)
+		if isnull(ll_row) or ll_row <= 0 then ll_row = 1
+		
+		ll_firstrowonpage = long(dw_encounters.Object.DataWindow.FirstRowOnPage)
+		ll_lastrowonpage = long(dw_encounters.Object.DataWindow.LastRowOnPage)
+		if ll_row < ll_firstrowonpage or ll_row > ll_lastrowonpage then
+			dw_encounters.scrolltorow(ll_row)
+		end if
+		
+		dw_encounters.clear_selected()
+		dw_encounters.object.selected_flag[ll_row] = 1
+	end if
+end if
+
+if uo_folder_list.visible then
+	// select the folder for the new attachment
+	show_last_posted_attachment_folder()
+	ls_find = "folder='" + attachment_folder + "'"
+	ll_row = uo_folder_list.find(ls_find,1,uo_folder_list.rowcount())
+	if ll_row > 0 then
+		uo_folder_list.clear_selected()
+		uo_folder_list.object.selected_flag[ll_row] = 1
+	end if
+end if
+
+if dw_attachments.rowcount() > 0 then
+	this.dw_attachments.set_row(1)
+	select_image(1)
+end if
+
+end event
 
 on uo_attachments.destroy
 call u_letter_attachments::destroy
@@ -551,22 +600,17 @@ long ll_row
 
 ll_row = this.dw_attachments.get_selected_row()
 
-select_image(ll_row)
-
-attachment_menu(pl_attachment_id, ps_attachment_type)
-
-this.dw_attachments.set_row(ll_row)
-
-end event
-
-event ue_clicked;
-if dw_encounters.visible then
-	load_encounters()
-	// select the newly created encoutner
-	dw_encounters.event selected(1)
+if ll_row > 0 then
+	select_image(ll_row)
+	
+	attachment_menu(pl_attachment_id, ps_attachment_type)
 end if
 
-
+// if it was deleted, it can't be set
+ll_row = this.dw_attachments.get_selected_row()
+if ll_row > 0 then
+	this.dw_attachments.set_row(ll_row)
+end if
 end event
 
 type uo_folder_list from u_dw_pick_list within u_soap_page_attachments
@@ -620,11 +664,13 @@ event clicked;
 If dw_encounters.visible Then
 		dw_encounters.visible = False
 		text = "View Appointments"
-		attachment_folder = "<All>"
+		if isnull(attachment_folder) then
+			attachment_folder = "<All>"
+		end if
+		refresh_folder_list()
 Else
 		dw_encounters.visible = True
 		text = "View Folders"
-		attachment_folder = ""
 End If
 
 // follow along
