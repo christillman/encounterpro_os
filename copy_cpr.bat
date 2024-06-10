@@ -110,3 +110,5 @@ REM move /Y "Client\dbmaint.dll" %build_folder%
 REM move /Y "Client\eprodbmaint.exe" %build_folder%
 
 move /Y "Client\encounterpro.os.client.exe" %build_folder%
+
+xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime 19.2.0.2797\*" "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\7.2.1.7Demo" /S /Y

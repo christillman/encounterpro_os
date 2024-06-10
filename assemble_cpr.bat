@@ -131,4 +131,4 @@ REM now adding runtime into the EPro folder, so we don't need to run runtime ins
 xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" %build_folder% /S /Y
 REM add lines to manifest to immprove font appearance
 REM https://www.appeon.com/developers/get-help/knowledgebase/4498
-copy /Y "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\encounterpro.os.client.exe.manifest.doctored" %build_folder%\encounterpro.os.client.exe.manifest
+copy /Y "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\encounterpro.os.client.exe.dpi-fix.manifest" %build_folder%\encounterpro.os.client.exe.manifest
