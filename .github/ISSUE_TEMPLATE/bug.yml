@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-title: "Bug: "
+title: "Title"
 labels: ["bug", "triage"]
 assignees:
   - christillman
@@ -39,7 +39,6 @@ body:
       label: Expectations
       description: What the world should look like
       placeholder: Tell us what you expected
-      value: "I expected ..."
     validations:
       required: false
   - type: textarea
