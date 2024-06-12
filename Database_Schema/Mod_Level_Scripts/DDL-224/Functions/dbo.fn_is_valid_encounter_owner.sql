@@ -1,3 +1,18 @@
+
+Print 'Drop Function dbo.fn_is_valid_encounter_owner'
+GO
+IF (EXISTS(SELECT 1
+	FROM sys.objects WHERE [object_id] = OBJECT_ID(N'dbo.fn_is_valid_encounter_owner') 
+	AND [type] = 'FN'))
+DROP FUNCTION IF EXISTS dbo.fn_is_valid_encounter_owner
+GO
+
+Print 'Create Function dbo.fn_is_valid_encounter_owner'
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER OFF
+GO
+
 CREATE FUNCTION fn_is_valid_encounter_owner (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int	)

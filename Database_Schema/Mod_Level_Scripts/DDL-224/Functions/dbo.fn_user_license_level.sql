@@ -1,4 +1,19 @@
 
+Print 'Drop Function dbo.fn_user_license_level'
+GO
+IF (EXISTS(SELECT 1
+	FROM sys.objects WHERE [object_id] = OBJECT_ID(N'dbo.fn_user_license_level') 
+	AND [type] = 'FN'))
+DROP FUNCTION IF EXISTS dbo.fn_user_license_level
+GO
+
+Print 'Create Function dbo.fn_user_license_level'
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER OFF
+GO
+
+
 CREATE FUNCTION fn_user_license_level (
 	@ps_user_id varchar(24) )
 
