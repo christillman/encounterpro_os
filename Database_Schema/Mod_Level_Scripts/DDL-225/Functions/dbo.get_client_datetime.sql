@@ -76,7 +76,7 @@ RETURNS DATETIME
 WITH SCHEMABINDING
 AS
 BEGIN
-RETURN (SELECT TOP 1 CAST(SYSDATETIMEOFFSET() AT TIME ZONE IsNull(timezone,'E. Africa Standard Time') AS datetime)
+RETURN (SELECT TOP 1 CAST(SYSDATETIMEOFFSET() AT TIME ZONE /* IsNull(timezone, */'E. Africa Standard Time' /*)*/ AS datetime)
 	FROM dbo.c_Database_Status)
 END
 -- select dbo.get_client_datetime()
