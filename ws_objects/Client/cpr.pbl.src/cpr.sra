@@ -58,6 +58,7 @@ u_patient current_patient
 
 // Currently displayed encounter
 u_str_encounter current_display_encounter
+int posted_encounter_id
 
 // Current user object - user performing service
 u_user current_user
@@ -212,14 +213,14 @@ string client_link_start = "https://github.com/christillman/encounterpro_os/rele
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 224
+long target_modification_level = 225
 
-date compile_date = date("2024-05-03")
+date compile_date = date("2024-06-12")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "1.9"
-// Resulting in 7.2.1.9
+string build = "2.0"
+// Resulting in 7.2.3.0
 
 /// !!! Remember to also change this in markbuild project entry spots
 //  7   2   1   9
