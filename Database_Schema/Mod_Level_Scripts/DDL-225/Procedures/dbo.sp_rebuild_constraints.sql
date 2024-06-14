@@ -95,10 +95,9 @@ SET @ls_error = REPLACE(@ls_Error, '%', '%%')
 INSERT INTO o_log (
 	severity ,
 	caller ,
-	message ,
-	id
+	message
 	)
-	VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error, newid())
+	VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error)
 
 DECLARE TableCursor CURSOR LOCAL FAST_FORWARD FOR
 	SELECT t.tablename,
@@ -134,10 +133,9 @@ BEGIN
 	INSERT INTO o_log (
 		severity ,
 		caller ,
-		message ,
-		id
+		message
 		)
-		VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error, newid())
+		VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error)
 	
 	
 	
@@ -185,10 +183,9 @@ BEGIN
 					INSERT INTO o_log (
 						severity ,
 						caller ,
-						message ,
-						id
+						message
 						)
-						VALUES ('ERROR', 'Rebuild_Constraints', @ls_error, newid())
+						VALUES ('ERROR', 'Rebuild_Constraints', @ls_error)
 					RETURN
 				END
 		END
@@ -209,10 +206,9 @@ BEGIN
 	INSERT INTO o_log (
 		severity ,
 		caller ,
-		message ,
-		id
+		message
 		)
-		VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error, newid())
+		VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error)
 
 	FETCH NEXT FROM TableCursor
 	INTO
@@ -229,10 +225,9 @@ SET @ls_error = REPLACE(@ls_Error, '%', '%%')
 INSERT INTO o_log (
 	severity ,
 	caller ,
-	message ,
-	id
+	message
 	)
-	VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error, newid())
+	VALUES ('INFORMATION', 'Rebuild_Constraints', @ls_error)
 
 
 GO

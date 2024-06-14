@@ -97,7 +97,7 @@ RETURNS @schedules TABLE (
 	interval_unit varchar(40) NULL,
 	running_status varchar(12) NOT NULL DEFAULT ('Not Running'),
 	running_patient_workplan_item_id int NULL,
-	next_run_date datetime NULL DEFAULT (dbo.get_client_datetime())
+	next_run_date datetime NULL 
 )
 
 AS
@@ -129,7 +129,8 @@ INSERT INTO @schedules (
 	parent_object_owner_id ,
 	parent_object_status ,
 	parent_object_base_table ,
-	parent_object_base_table_key
+	parent_object_base_table_key,
+	next_run_date
 	)
 SELECT s.user_id,
 	ISNULL(u.user_full_name, '<No Name>'),
@@ -159,7 +160,8 @@ SELECT s.user_id,
 	parent_object_owner_id = o.owner_id,
 	parent_object_status = o.status,
 	parent_object_base_table = o.base_table,
-	parent_object_base_table_key = o.base_table_key
+	parent_object_base_table_key = o.base_table_key,
+	dbo.get_client_datetime()
 FROM o_Service_Schedule s
 	INNER JOIN o_Service os
 	ON s.service = os.service

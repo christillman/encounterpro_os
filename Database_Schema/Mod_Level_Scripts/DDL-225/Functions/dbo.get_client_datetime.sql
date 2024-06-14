@@ -1,6 +1,7 @@
 
 -- Because the getdate replacement is used in defaults, it can't be changed
 -- unless the defaults are dropped first
+--alter table o_log drop constraint DF_o_log_log_date_time_21
 
 DECLARE @ls_tablename varchar (64) ,
 	@ls_columnname varchar (64) ,
@@ -8,6 +9,7 @@ DECLARE @ls_tablename varchar (64) ,
 	@ls_default_constraint_definition varchar(64),
 	@ls_sql nvarchar(max)
 
+DROP TABLE IF EXISTS #columns
 CREATE TABLE #columns (
 	[tablename] [varchar] (64) NOT NULL ,
 	[columnname] [varchar] (64) NOT NULL ,
@@ -35,6 +37,7 @@ SELECT
 	AND (d.definition like '%get_client_datetime%'
 		OR d.definition like '%getdate%')
 	WHERE o.type = 'U'
+	AND o.name != 'o_log'
 
 DECLARE lc_columns CURSOR LOCAL FAST_FORWARD FOR
 SELECT 
@@ -57,6 +60,7 @@ WHILE @@FETCH_STATUS = 0
 
 		SET @ls_sql = 'ALTER TABLE ' + @ls_tablename + ' DROP CONSTRAINT ' + @ls_default_constraint_name
 
+		--PRINT @ls_sql
 		EXECUTE (@ls_sql)
 
 	FETCH lc_columns 
@@ -112,9 +116,10 @@ WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 		SET @ls_sql = 'ALTER TABLE [dbo].[' + @ls_tablename + '] ADD '
-		SET @ls_sql = @ls_sql + 'CONSTRAINT [' + @ls_default_constraint_name + '] DEFAULT '
+		SET @ls_sql = @ls_sql + 'CONSTRAINT [DF_' + @ls_tablename + '_' + @ls_columnname +'] DEFAULT '
 		SET @ls_sql = @ls_sql + '([dbo].[get_client_datetime]())' + ' FOR [' + @ls_columnname + ']'
 
+		--PRINT @ls_sql
 		EXECUTE (@ls_sql)
 
 	FETCH lc_columns 
