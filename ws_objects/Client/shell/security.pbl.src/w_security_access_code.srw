@@ -242,7 +242,7 @@ end type
 
 event clicked;call super::clicked;
 
-MessageBox("Hint","For the GreenOlive EHR demo, you can log in as Dr. Pat Pedia with access id 0222")
+MessageBox("Hint","For the " + gnv_app.product_name + " demo, you can log in as Dr. Pat Pedia with access id 0222")
 
 end event
 

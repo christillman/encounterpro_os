@@ -336,7 +336,7 @@ lcx_key.GetContextKeywords ('USERPROFILE', ls_values)
 windows_userprofile = ls_values[1]
 
 // Get our application path so we can set the INI file
-// Default installation application path is C:\Users\Public\Documents\GreenOliveEHR\Client
+// Default installation application path is C:\Users\Public\Documents\GreenOlive_EHR\Client
 // so we can write to it without admin, and every user on the computer can see it
 lul_hinst = Handle( GetApplication() )
 lul_maxpath = 260
@@ -346,7 +346,7 @@ IF ls_apppath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\PB190.exe" THEN
 	// If we are running in the IDE, the app is "running" in Program Files. But we don't
 	// want to create / modify files here, because of admin issues and writing to virtualstore
 	// So make it the default location for dev
-	ls_apppath = "C:\Users\Public\Documents\GreenOliveEHR\Client\EncounterPRO.OS.Client.exe"
+	ls_apppath = "C:\Users\Public\Documents\" + f_string_substitute(gnv_app.product_name," ","_") + "\Client\EncounterPRO.OS.Client.exe"
 END IF
 IF lul_rc > 0 THEN
 	f_parse_filepath(ls_apppath, ls_drive, ls_dir, ls_filename, ls_extension)

@@ -255,6 +255,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -298,7 +299,7 @@ common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
 
-this.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(target_modification_level) + "/GreenOlive_EHR_Install_"
+this.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(target_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
 // Moved application path so we can set the INI file into common_thread.initialize()
 // Moved Initialize the logging system into common_thread.initialize()
 

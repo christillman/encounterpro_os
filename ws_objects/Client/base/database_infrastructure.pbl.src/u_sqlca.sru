@@ -1834,7 +1834,7 @@ if luo_this.sqlcode = 0 then
 	if not is_masterdb and (isnull(ll_customer_id) or ll_customer_id <= 0) then
 		// If the customer_id is invalid and this is a production database then issue an error
 		if is_dbmode("production") then
-			ls_temp = "This database has an invalid customer id.  Please contact GreenOlive Customer Support to get a valid customer id."
+			ls_temp = "This database has an invalid customer id.  Please contact " + gnv_app.product_name + " Customer Support to get a valid customer id."
 			openwithparm(w_pop_message, ls_temp)
 			log.log(this, "u_sqlca.check_database:0259", "Invalid Customer ID", 5)
 			gnv_app.event close()
@@ -2309,7 +2309,7 @@ if li_sts >= 0 and pl_modification_level > modification_level then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/GreenOlive_EHR_Install_"
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
 	ls_client_link = gnv_app.client_link_start + string(pl_modification_level) + ".exe"
 	
 	select count(*) into :li_count from sys.columns where name = 'client_link';
@@ -3716,6 +3716,7 @@ CATCH (throwable lo_error)
 	return -1
 END TRY
 
+// "C:\Users\Public\Downloads\"
 begin_transaction(this, "Upgrade Mod Level")
 
 lo_root.GetChildElements(ref pbdom_element_array)
@@ -3762,7 +3763,7 @@ if li_count > 0 then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/GreenOlive_EHR_Install_"
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
 	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
 
 	UPDATE c_Database_Status
