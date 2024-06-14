@@ -215,7 +215,7 @@ string client_link_start
 
 long target_modification_level = 225
 
-date compile_date = date("2024-06-12")
+date compile_date = date("2024-06-15")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
