@@ -63,7 +63,7 @@ if first_time then
 	first_time = false
 end if
 
-uo_attachments.refresh(attachment_folder)
+uo_attachments.show_attachments(attachment_folder)
 
 
 end subroutine

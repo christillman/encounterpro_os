@@ -64,7 +64,7 @@ long ll_row
 
 uo_letter_type.setredraw(false)
 
-uo_attachments.refresh(attachment_folder)
+uo_attachments.show_attachments(attachment_folder)
 
 ll_first_row_on_page = long(uo_letter_type.object.DataWindow.FirstRowOnPage)
 

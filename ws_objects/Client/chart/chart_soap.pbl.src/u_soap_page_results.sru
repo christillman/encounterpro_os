@@ -81,7 +81,7 @@ if ll_page <= 0 then ll_page = 1
 uo_attachments.dw_attachments.last_page = 0
 uo_attachments.dw_attachments.set_page(ll_page, ls_text)
 
-uo_attachments.refresh(attachment_folder)
+uo_attachments.show_attachments(attachment_folder)
 
 setredraw(true)
 end subroutine

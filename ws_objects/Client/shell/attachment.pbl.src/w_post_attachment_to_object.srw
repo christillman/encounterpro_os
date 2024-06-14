@@ -110,6 +110,7 @@ string is_context_object
 
 boolean open_only = true
 end variables
+
 forward prototypes
 public function integer initialize ()
 public function integer pick_treatment ()
@@ -209,7 +210,6 @@ long ll_row
 integer li_sts
 long ll_new_encounter_id
 string ls_preference_id
-string is_context_object
 
 setnull(end_date)
 setnull(encounter_id)
