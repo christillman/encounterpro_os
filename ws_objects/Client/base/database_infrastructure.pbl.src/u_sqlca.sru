@@ -2233,6 +2233,9 @@ str_sql_script_status lstr_status
 integer li_please_wait_index
 long ll_current_modification_level
 string ls_client_link
+string ls_log_file
+long ll_dochandle
+string ls_message
 
 lstr_status = f_empty_sql_script_status()
 
@@ -2265,6 +2268,15 @@ ll_script_count = luo_scripts.retrieve("Database", db_script_major_release, db_s
 if ll_script_count < 0 then return -1
 if ll_script_count = 0 then return 0
 
+// Avoid o_log conflicts, write messages to file instead
+ls_log_file = GetCurrentDirectory( ) + "\Installation-" + string(pl_modification_level) + ".log"
+ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
+if ll_dochandle = -1 then	
+	Clipboard("Cannot write to " + ls_log_file)
+	DebugBreak()
+	return -1
+end if
+
 f_please_wait_progress_bar(li_please_wait_index, 0, ll_script_count)
 
 li_sts = 1
@@ -2274,12 +2286,18 @@ for li_count = 1 to ll_script_count
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		log.log(this, "u_sqlca.upgrade_database:0060", "Error executing upgrade script #" + string(ll_script_id), 4)
+		ls_message = "u_sqlca.upgrade_database:0072: Error executing upgrade script #" + string(ll_script_id)
+		FileWrite(ll_dochandle, ls_message)
 		exit
 	end if
 	
 	f_please_wait_progress_bump(li_please_wait_index)
 next
+
+FileClose(ll_dochandle)
+if li_sts < 0 then
+	log.log(this, "u_sqlca.upgrade_database:0082", "Upgrade failed mod level " + string(ll_current_modification_level) + " to mod level " + string(pl_modification_level) + ".  " + ls_message, 4)
+end if
 
 if li_sts >= 0 and pl_modification_level > modification_level then
 	this.modification_level = pl_modification_level
@@ -3651,6 +3669,9 @@ integer li_script, li_count
 integer li_num_scripts
 string ls_element
 string ls_client_link
+string ls_log_file
+long ll_dochandle
+string ls_message
 str_sql_script_status lstr_sql_script_status
 
 ll_modification_level = this.modification_level + 1
@@ -3700,26 +3721,39 @@ begin_transaction(this, "Upgrade Mod Level")
 lo_root.GetChildElements(ref pbdom_element_array)
 li_num_scripts = UpperBound(pbdom_element_array)
 
+// Avoid o_log conflicts, write messages to file instead
+ls_log_file = GetCurrentDirectory( ) + "\Installation-" + string(ll_modification_level) + ".log"
+ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
+if ll_dochandle = -1 then	
+	Clipboard("Cannot write to " + ls_log_file)
+	DebugBreak()
+	return -1
+end if
+
 li_please_wait_index = f_please_wait_open()
 f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
 
 for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
-	
-	log.log_db(this, "u_sqlca.upgrade_database:0078", "Executing " + ls_element, 2)
+	ls_message = "u_sqlca.upgrade_database:0089: Executing " + ls_element
+	FileWrite(ll_dochandle, ls_message)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
 		rollback_transaction()
 		f_please_wait_close(li_please_wait_index)
-		log.log(this, "u_sqlca.upgrade_database:0084", "Failed executing " + ls_script, 5)
+		ls_message = "u_sqlca.upgrade_database:0096: Failed executing " + ls_script
+		FileWrite(ll_dochandle, ls_message)
+		log.log(this, "u_sqlca.upgrade_database:0098", "Failed executing " + ls_script, 5)
+		FileClose(ll_dochandle)
 		DESTROY pbdombuilder_new
 		return -1
 	end if
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
+FileClose(ll_dochandle)
 
 commit_transaction()
 
@@ -4019,7 +4053,6 @@ for i = 1 to lstr_scripts.script_count
 	CHOOSE CASE lower(lstr_scripts.script[i].script_type)
 		CASE "sql"
 			if pos(lstr_scripts.script[i].script, "tr_Patient_WP_Item_Update") > 0 then
-				ls_error = lstr_scripts.script[i].script
 				ls_error = lstr_scripts.script[i].script
 			end if
 			
