@@ -2291,6 +2291,7 @@ if li_sts >= 0 and pl_modification_level > modification_level then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/GreenOlive_EHR_Install_"
 	ls_client_link = gnv_app.client_link_start + string(pl_modification_level) + ".exe"
 	
 	select count(*) into :li_count from sys.columns where name = 'client_link';
@@ -3727,6 +3728,7 @@ if li_count > 0 then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/GreenOlive_EHR_Install_"
 	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
 
 	UPDATE c_Database_Status

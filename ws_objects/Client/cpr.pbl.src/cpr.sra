@@ -208,7 +208,7 @@ type variables
 
 
 string product_name = 'GreenOlive EHR'
-string client_link_start = "https://github.com/christillman/encounterpro_os/releases/download/v224/GreenOlive_EHR_Install_"
+string client_link_start
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
@@ -298,6 +298,7 @@ common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
 if li_sts <= 0 then halt
 
+this.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(target_modification_level) + "/GreenOlive_EHR_Install_"
 // Moved application path so we can set the INI file into common_thread.initialize()
 // Moved Initialize the logging system into common_thread.initialize()
 
