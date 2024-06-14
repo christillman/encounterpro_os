@@ -2269,7 +2269,7 @@ if ll_script_count < 0 then return -1
 if ll_script_count = 0 then return 0
 
 // Avoid o_log conflicts, write messages to file instead
-ls_log_file = GetCurrentDirectory( ) + "\Installation-" + string(pl_modification_level) + ".log"
+ls_log_file = "C:\Users\Public\Downloads\Installation-" + string(pl_modification_level) + ".log"
 ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
 if ll_dochandle = -1 then	
 	Clipboard("Cannot write to " + ls_log_file)
@@ -3723,13 +3723,14 @@ lo_root.GetChildElements(ref pbdom_element_array)
 li_num_scripts = UpperBound(pbdom_element_array)
 
 // Avoid o_log conflicts, write messages to file instead
-ls_log_file = GetCurrentDirectory( ) + "\Installation-" + string(ll_modification_level) + ".log"
+ls_log_file = "C:\Users\Public\Downloads\Installation-" + string(ll_modification_level) + ".log"
 ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
 if ll_dochandle = -1 then	
-	Clipboard("Cannot write to " + ls_log_file)
+	MessageBox("Upgrade log cannot be opened","Cannot open " + ls_log_file)
 	DebugBreak()
 	return -1
 end if
+FileWrite(ll_dochandle, "Starting upgade " + string(Now()))
 
 li_please_wait_index = f_please_wait_open()
 f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
@@ -3754,6 +3755,7 @@ for li_script = 1 to li_num_scripts
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
+FileWrite(ll_dochandle, "Finished upgade " + string(Now()))
 FileClose(ll_dochandle)
 
 commit_transaction()
