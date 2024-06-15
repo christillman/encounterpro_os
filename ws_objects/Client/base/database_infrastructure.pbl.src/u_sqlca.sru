@@ -2286,7 +2286,7 @@ for li_count = 1 to ll_script_count
 	
 	li_sts = execute_script(ll_script_id)
 	if li_sts < 0 then
-		ls_message = "u_sqlca.upgrade_database:0072: Error executing upgrade script #" + string(ll_script_id)
+		ls_message = "Error executing upgrade script #" + string(ll_script_id)
 		FileWrite(ll_dochandle, ls_message)
 		exit
 	end if
@@ -3730,7 +3730,7 @@ if ll_dochandle = -1 then
 	DebugBreak()
 	return -1
 end if
-FileWrite(ll_dochandle, "Starting upgade " + string(Now()))
+FileWrite(ll_dochandle, "Starting upgrade " + string(Now()))
 
 li_please_wait_index = f_please_wait_open()
 f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
@@ -3738,14 +3738,14 @@ f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
 for li_script = 1 to li_num_scripts
 	ls_element = pbdom_element_array[li_script].getname()
 	ls_script = pbdom_element_array[li_script].gettext()
-	ls_message = "u_sqlca.upgrade_database:0089: Executing " + ls_element
+	ls_message = "Executing " + ls_element
 	FileWrite(ll_dochandle, ls_message)
 	execute_sql_script(ls_script, true, lstr_sql_script_status)
 	if lstr_sql_script_status.status < 0 then
 		check()
 		rollback_transaction()
 		f_please_wait_close(li_please_wait_index)
-		ls_message = "u_sqlca.upgrade_database:0096: Failed executing " + ls_script
+		ls_message = "Failed executing " + ls_script
 		FileWrite(ll_dochandle, ls_message)
 		log.log(this, "u_sqlca.upgrade_database:0098", "Failed executing " + ls_script, 5)
 		FileClose(ll_dochandle)
@@ -3755,7 +3755,7 @@ for li_script = 1 to li_num_scripts
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
-FileWrite(ll_dochandle, "Finished upgade " + string(Now()))
+FileWrite(ll_dochandle, "Finished upgrade " + string(Now()))
 FileClose(ll_dochandle)
 
 commit_transaction()
