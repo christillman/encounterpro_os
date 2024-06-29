@@ -32,6 +32,7 @@ str_config_object_info contraindication_alerts[]
 
 nvo_utilities mm
 nvo_utilities eprolibnet4
+nvo_imagemanipulation imageutils
 
 CoderObject inv_CoderObject
 
@@ -1749,6 +1750,8 @@ end function
 public function boolean utilities_ok ();integer li_sts
 boolean lb_ok
 string ls_appversion
+powerobject err_handler
+string current_event = "test"
 
 //// Initialize utility com objects
 //mm = CREATE oleobject
@@ -1759,7 +1762,7 @@ string ls_appversion
 //end if
 
 // IsNull doesn't seem to work
-lb_ok =  IsValid(this.eprolibnet4)
+lb_ok = IsValid(this.eprolibnet4)
 IF NOT lb_ok THEN 
 	this.eprolibnet4 = CREATE nvo_utilities	
 	ls_appversion = string(gnv_app.major_release) + "." &
@@ -1774,7 +1777,17 @@ IF NOT lb_ok THEN
 	this.mm = this.eprolibnet4
 END IF
 
-lb_ok =  IsValid(this.eprolibnet4)
+lb_ok = IsValid(this.imageutils)
+IF NOT lb_ok THEN 
+	this.imageutils = CREATE nvo_imagemanipulation	
+	try 
+		this.imageutils.of_geterrorhandler(err_handler, current_event)
+	catch (throwable e1)
+		openwithparm(w_pop_message, "nvo_ImageManipulation error: " + e1.Text)
+	end try
+END IF
+
+lb_ok =  IsValid(this.eprolibnet4) AND IsValid(this.imageutils)
 RETURN lb_ok
 end function
 

@@ -150,8 +150,8 @@ ll_height = pixelstounits(ll_picture_pixels_y, YPixelsToUnits! )
 
 p_picture.picturename = ""
 
-lr_picture_aspect = real(ll_height) / real(ll_width)
-lr_display_aspect = real(picture_height) / real(picture_width)
+IF ll_width > 0 THEN lr_picture_aspect = real(ll_height) / real(ll_width)
+IF picture_width > 0 THEN lr_display_aspect = real(picture_height) / real(picture_width)
 
 if lr_display_aspect > lr_picture_aspect then
 	// In this case the aspect ratio of the actual picture is less than the
@@ -166,7 +166,7 @@ else
 	// aspect ratio of the display, so make the picture as wide as the display but shorten
 	// the height.
 	p_picture.height = picture_height
-	p_picture.width = picture_height / lr_picture_aspect
+	IF lr_picture_aspect > 0 THEN p_picture.width = picture_height / lr_picture_aspect
 	p_picture.x = (picture_width - p_picture.width) / 2
 	p_picture.y = 0
 end if

@@ -10,7 +10,6 @@ global subroutine f_get_picture_dimensions (string ps_picture, ref long pl_inche
 // Returns the width and height of the image in 1000ths of an inch
 //
 
-oleobject lo_image
 integer li_sts
 long ll_screen_resolution_x
 long ll_screen_resolution_y
@@ -22,17 +21,15 @@ long ll_vresolution
 ll_screen_resolution_x = common_thread.screen_resolution_x()
 ll_screen_resolution_y = common_thread.screen_resolution_y()
 
-lo_image = CREATE oleobject
-li_sts = lo_image.connecttonewobject("EncounterPRO.OS.ImageManipulation")
-if li_sts <> 0 then
-	messagebox("Error", string(li_sts))
-	return
-end if
-
-lo_image.GetImageInfo(ps_picture, ref ll_pixels_x, ref ll_pixels_y, ref ll_hresolution, ref ll_vresolution)
-
-lo_image.disconnectobject( )
-DESTROY lo_image
+If IsValid(common_thread.imageutils) THEN
+	TRY
+		common_thread.imageutils.of_GetImageInfo(ps_picture, ref ll_pixels_x, ref ll_pixels_y, ref ll_hresolution, ref ll_vresolution)
+	CATCH (throwable lo_error)
+		log.log(po_null, "f_get_picture_dimensions:0020", "Error calling of_GetImageInfo (" + lo_error.text + ")", 3)
+	END TRY
+Else
+	log.log(po_null, "f_get_picture_dimensions:0023", "common_thread.imageutils not valid", 3)
+End If
 
 pl_inches_x = (1000 * ll_pixels_x) / ll_screen_resolution_x
 pl_inches_y = (1000 * ll_pixels_y) / ll_screen_resolution_y
