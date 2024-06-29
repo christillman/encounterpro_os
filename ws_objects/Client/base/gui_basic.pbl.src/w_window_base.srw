@@ -218,8 +218,12 @@ CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
 		// Perform the menu item
 		li_sts = f_do_menu_item_with_attributes(istr_menu.menu_id, istr_menu.menu_item[li_menu_index].menu_item_id, state_attributes)
 		
-		ls_auto_close_flag = istr_menu.menu_item[li_menu_index].auto_close_flag
-		
+		ls_auto_close_flag = "N"
+		IF NOT IsNull(istr_menu) THEN
+			IF NOT IsNull(istr_menu.menu_item[li_menu_index]) THEN
+				ls_auto_close_flag = istr_menu.menu_item[li_menu_index].auto_close_flag
+			END IF
+		END IF
 		// If the auto_close_flag is not "N" then see if we need to click a button
 		// on this window
 		if upper(ls_auto_close_flag) = "N" then
