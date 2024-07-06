@@ -74,7 +74,6 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 				li_return = lnv_extractor.extract (ls_source, ls_target)
 				if li_return <> 1 then
 					openwithparm(w_pop_message, "The extraction of " + ls_expectedfile + " resulted in error code " + string(li_return) + ". Please request assistance from your " + gnv_app.product_name + " representative.")
-					return -1
 				end if
 			end if
 		Else
@@ -93,7 +92,6 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 		return -1 // quit and restart
 	else 
 		openwithparm(w_pop_message, "The download was not completed. Please try again soon.")
-		return -1
 	end if
 
 end if
