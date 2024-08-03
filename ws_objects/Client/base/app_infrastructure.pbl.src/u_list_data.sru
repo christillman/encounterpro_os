@@ -6822,8 +6822,8 @@ for i = 1 to lstr_script.display_command_count
 		ls_value = display_script_command_attributes.object.value[ll_row]
 		ll_attribute_sequence = display_script_command_attributes.object.attribute_sequence[ll_row]
 		
-		// The datawindow will only hold 8000 characters, so if the value is over 7500 characters, then make sure
-		// we have the whole thing
+		// The datawindow will only hold 8000 characters, so if the value is over 7500 characters, 
+		// then make sure we have the whole thing
 		if len(ls_value) >= 7500 then
 			SELECT long_value
 			INTO :ls_value
