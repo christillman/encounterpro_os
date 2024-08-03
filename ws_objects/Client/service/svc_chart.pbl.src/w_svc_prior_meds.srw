@@ -173,6 +173,7 @@ else
 	li_sts = current_patient.encounters.last_encounter()
 end if
 
+
 refresh()
 
 // Don't offer the "I'll Be Back" option for manual services
