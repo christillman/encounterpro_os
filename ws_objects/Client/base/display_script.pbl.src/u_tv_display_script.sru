@@ -2081,7 +2081,7 @@ CHOOSE CASE upper(lstr_item_data.node_type)
 					end if
 					this.function post selectitem(ll_prev_handle)
 					changes_made()
-				elseif keyflags = 3 then
+				elseif keyflags = 3 then 
 					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "NA"
 					 if left(ltvi_item.label, 10) <> "Disabled: " then
 						ltvi_item.label = "Disabled: " + ltvi_item.label
