@@ -443,6 +443,10 @@ parent_command_index = command_count
 command_error = false
 command_error_text = ""
 
+if pstr_command.display_script_id = debug_display_script_id and pstr_command.display_command_id = debug_display_command_id then
+	// fake statement for breakpoint (DebugBreak() is crashing)
+	debug_display_script_id = pstr_command.display_script_id
+end if
 
 TRY
 	CHOOSE CASE lower(current_context_object)
@@ -6286,7 +6290,7 @@ for i = 1 to lstr_progress.progress_count
 //					ls_fielddata = f_service_to_field_data(lstr_service)
 				end if
 				add_text(ls_fieldtext)
-				//blank_lines(1)
+				//blank_lines(1) // removed as it seemed to be part of the extra-line problem (#71)
 //				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata				
 				
 //				// Add the title
@@ -6834,6 +6838,10 @@ if (gnv_app.cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) 
 	return ls_rtf
 end if
 
+if pl_display_script_id = debug_display_script_id then
+	// fake statement for breakpoint (DebugBreak() is crashing)
+	debug_display_script_id = pl_display_script_id
+end if
 
 for i = li_first_command_index to lstr_display_script.display_command_count
 	display_script_command(lstr_display_script.display_command[i], pstr_encounter, pstr_assessment, pstr_treatment)
@@ -7590,6 +7598,33 @@ open_editor(lstr_stack)
 
 redisplay()
 
+
+end event
+
+event key;call super::key;
+str_charposition lstr_charposition
+long i, j
+str_c_display_script_command_stack lstr_stack
+
+if key = KeyShift! then return
+if key = KeyControl! then return
+
+if keyflags = 2 /* Ctrl */ and key = keyE! then
+	if not config_mode or isnull(first_display_script_id) or first_display_script_id = 0 then return
+	
+	// It's not easy to see where the cursor was when the right mouse button was clicked, so for now let's use the insertion point.  This means that the user
+	// must first click the left mouse button to set the insertion point at the desired location and then click the right mouse button to bring up the RTF Script Editor with that
+	// command highlighted
+	lstr_charposition = charposition()
+	
+	lstr_stack = command_stack_for_charposition(lstr_charposition)
+	
+	open_editor(lstr_stack)
+	
+	redisplay()
+else
+	return
+end if
 
 end event
 
