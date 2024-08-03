@@ -2622,7 +2622,7 @@ SetPointer(HourGlass!)
 puo_rtf.set_level(0)
 puo_rtf.wrap_on()
 
-// The process the roots
+// Then process the roots
 ll_row = find(ls_find, 1, ll_count)
 DO WHILE ll_row > 0 and ll_row <= ll_count
 	li_sts = display_observation(ll_row, ps_result_type, ls_title_sep, pb_continuous, false, lb_context_needed, ps_abnormal_flag, pb_include_comments, pb_include_attachments, puo_rtf)
