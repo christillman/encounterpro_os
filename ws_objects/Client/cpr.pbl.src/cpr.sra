@@ -173,7 +173,7 @@ u_windows_api windows_api
 powerobject po_null
 
 // Set using D on a display script in the treeview. Then when debugging with Powerbuilder,
-// it will break at that display script.
+// it will break at that display script. 
 long debug_display_script_id
 long debug_display_command_id
 
