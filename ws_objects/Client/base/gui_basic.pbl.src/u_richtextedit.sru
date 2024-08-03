@@ -2552,7 +2552,8 @@ end on
 on u_richtextedit.destroy
 end on
 
-event constructor;initialize()
+event constructor;
+initialize()
 initialize_margins()
 
 end event
