@@ -139,7 +139,13 @@ Declare jmc_curse3 cursor LOCAL FAST_FORWARD for
 	ORDER BY p_Treatment_Item.treatment_id 
 
 
-SELECT @mycount =  (Select count(p_Treatment_Item.treatment_id) From p_Treatment_Item (NOLOCK), c_Treatment_Type Where p_Treatment_Item.cpr_id = @cprid AND p_Treatment_Item.open_encounter_id = @encounterid AND p_Treatment_Item.treatment_type = c_Treatment_Type.treatment_type AND c_Treatment_Type.observation_type = 'Lab/Test' AND (isNull(p_Treatment_Item.treatment_status,'Open') <> 'CANCELLED'))
+SELECT @mycount =  (Select count(p_Treatment_Item.treatment_id) 
+	From p_Treatment_Item (NOLOCK), c_Treatment_Type 
+	Where p_Treatment_Item.cpr_id = @cprid 
+	AND p_Treatment_Item.open_encounter_id = @encounterid 
+	AND p_Treatment_Item.treatment_type = c_Treatment_Type.treatment_type 
+	AND c_Treatment_Type.observation_type = 'Lab/Test' 
+	AND (isNull(p_Treatment_Item.treatment_status,'Open') <> 'CANCELLED'))
 If @mycount > 0
  BEGIN
  open jmc_curse3

@@ -172,8 +172,12 @@ u_windows_api windows_api
 // Replace with po_null.
 powerobject po_null
 
-end variables
+// Set using D on a display script in the treeview. Then when debugging with Powerbuilder,
+// it will break at that display script.
+long debug_display_script_id
+long debug_display_command_id
 
+end variables
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"

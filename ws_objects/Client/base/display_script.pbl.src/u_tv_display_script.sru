@@ -41,7 +41,7 @@ integer height = 876
 integer taborder = 10
 string dragicon = "AppIcon!"
 boolean dragauto = true
-integer textsize = -10
+integer textsize = -9
 integer weight = 400
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -50,8 +50,9 @@ string facename = "Arial"
 long textcolor = 33554432
 borderstyle borderstyle = stylelowered!
 boolean hideselection = false
-string picturename[] = {"Report!","Step!","Custom041!","","",""}
+string picturename[] = {"Report!","Step!","Custom041!","Custom009!","",""}
 long picturemaskcolor = 536870912
+string statepicturename[] = {""}
 long statepicturemaskcolor = 536870912
 event changes_made ( )
 event command_selected ( str_c_display_script_command pstr_command )
@@ -108,7 +109,6 @@ public function integer display_display_script (long pl_display_script_id, str_c
 public subroutine changes_made ()
 public subroutine display_command_menu (long pl_handle)
 public subroutine display_command_attribute_menu (long pl_handle)
-public function treeviewitem create_command_item (str_c_display_script_command pstr_command)
 public function long temp_display_command_id ()
 public function integer display_children (long pl_handle)
 public function string attribute_description (long pl_display_script_index, long pl_display_command_index, string ps_attribute, string ps_param_title)
@@ -125,6 +125,7 @@ public function integer selected_command (ref str_c_display_script_command pstr_
 public subroutine select_next ()
 public function integer first_command (ref str_c_display_script_command pstr_command)
 public function integer select_command (str_c_display_script_command pstr_command)
+private function treeviewitem create_command_item (str_c_display_script_command pstr_command, integer pi_cmd_index)
 end prototypes
 
 public subroutine redisplay_parent (long pl_handle);long ll_parent_handle
@@ -426,7 +427,7 @@ else
 end if
 
 ltvi_node.data = lstr_new_item_data
-ltvi_node.label = display_script[ll_index].description
+ltvi_node.label = display_script[ll_index].description + " (" + string(display_script[ll_index].display_script_id) + ")"
 ltvi_node.children = true
 ltvi_node.PictureIndex = 1
 ltvi_node.SelectedPictureIndex = 1
@@ -436,6 +437,7 @@ expanditem(ll_handle)
 
 if last_command_handle > 0 then
 	selectitem(last_command_handle)
+	setfirstvisible(last_command_handle)
 end if
 
 setredraw(true)
@@ -584,15 +586,19 @@ end if
 CHOOSE CASE buttons[button_pressed]
 	CASE "DISABLE"
 		 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "NA"
-		 if right(ltvi_item.label, 11) <> " (Disabled)" then
-			ltvi_item.label += " (Disabled)"
+		 if left(ltvi_item.label, 10) <> "Disabled: " then
+			ltvi_item.label = "Disabled: " + ltvi_item.label
+			ltvi_item.PictureIndex = 4
+			ltvi_item.SelectedPictureIndex = 4
 			setitem(pl_handle, ltvi_item)
 		end if
 		changes_made()
 	CASE "ENABLE"
 		 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "OK"
-		 if right(ltvi_item.label, 11) = " (Disabled)" then
-			ltvi_item.label = left(ltvi_item.label, len(ltvi_item.label) - 11)
+		 if left(ltvi_item.label, 10) = "Disabled: " then
+			ltvi_item.label = right(ltvi_item.label, len(ltvi_item.label) - 10)
+			ltvi_item.PictureIndex = 2
+			ltvi_item.SelectedPictureIndex = 2
 			setitem(pl_handle, ltvi_item)
 		end if
 		changes_made()
@@ -771,39 +777,6 @@ return
 
 end subroutine
 
-public function treeviewitem create_command_item (str_c_display_script_command pstr_command);string ls_description
-str_item_data lstr_new_item_data
-treeviewitem ltvi_new_item
-
-if lower(pstr_command.context_object) = "general" then
-	ls_description = wordcap(pstr_command.display_command)
-else
-	ls_description = wordcap(pstr_command.context_object + " " + pstr_command.display_command)
-end if
-
-if upper(pstr_command.status) = "NA" then
-	ls_description += " (Disabled)"
-end if
-
-// Set data structure for new item
-lstr_new_item_data.node_type = "COMMAND"
-lstr_new_item_data.display_script_id = pstr_command.display_script_id
-lstr_new_item_data.display_command_id = pstr_command.display_command_id
-lstr_new_item_data.attribute = ""
-lstr_new_item_data.value = ""
-lstr_new_item_data.command_index = 0
-lstr_new_item_data.command = pstr_command
-
-ltvi_new_item.data = lstr_new_item_data
-ltvi_new_item.label = ls_description
-ltvi_new_item.children = true
-ltvi_new_item.PictureIndex = 2
-ltvi_new_item.SelectedPictureIndex = 2
-
-return ltvi_new_item
-
-end function
-
 public function long temp_display_command_id ();temp_display_command_id -= 1
 
 return temp_display_command_id
@@ -871,7 +844,7 @@ CHOOSE CASE upper(lstr_parent_item_data.node_type)
 		// If this is a display_script then show the steps
 		for i = 1 to display_script[ll_display_script_index].display_command_count
 			// Create the treeviewitem
-			ltvi_new_item = create_command_item(display_script[ll_display_script_index].display_command[i])
+			ltvi_new_item = create_command_item(display_script[ll_display_script_index].display_command[i],i)
 			
 			// Update some fields before adding the item to the tree
 			lstr_new_item_data = ltvi_new_item.data
@@ -926,7 +899,7 @@ CHOOSE CASE upper(lstr_parent_item_data.node_type)
 			lstr_new_item_data.param_title = lstr_params.params[i].param_title
 			lstr_new_item_data.attribute = lstr_params.params[i].token1
 			lstr_new_item_data.value = f_attribute_find_attribute(display_script[ll_display_script_index].display_command[ll_display_command_index].attributes, lstr_new_item_data.attribute)
-			ltvi_new_item.label = attribute_description(ll_display_script_index, ll_display_command_index, lstr_new_item_data.attribute, lstr_new_item_data.param_title)
+			ltvi_new_item.label = attribute_description(ll_display_script_index, ll_display_command_index, lstr_new_item_data.attribute, lstr_new_item_data.param_title) + "         p[" + string(i) + "]"
 			lstr_new_item_data.command_index = 0
 
 			if lower(right(lstr_new_item_data.attribute, 17)) = "display_script_id" &
@@ -979,7 +952,7 @@ CHOOSE CASE upper(lstr_parent_item_data.node_type)
 			ll_idx_2 = get_display_script(lstr_new_item_data.display_script_id)
 			if ll_idx_2 > 0 then
 				ltvi_new_item.data = lstr_new_item_data
-				ltvi_new_item.label = display_script[ll_idx_2].description
+				ltvi_new_item.label = display_script[ll_idx_2].description + "        (" + string(lstr_new_item_data.display_script_id) + ")" 
 				ltvi_new_item.children = true
 				ltvi_new_item.PictureIndex = 1
 				ltvi_new_item.SelectedPictureIndex = 1
@@ -1307,7 +1280,7 @@ display_script[lstr_target_ds_index].display_command[ll_insert_before_idx].sort_
 setnull(display_script[lstr_target_ds_index].display_command[ll_insert_before_idx].id)
 
 // Now create the new treeviewitem
-ltvi_new_item = create_command_item(display_script[lstr_target_ds_index].display_command[ll_insert_before_idx])
+ltvi_new_item = create_command_item(display_script[lstr_target_ds_index].display_command[ll_insert_before_idx],ll_insert_before_idx)
 
 ll_parenthandle = FindItem(ParentTreeItem!, pl_target_handle)
 if ll_parenthandle < 0 then return -1
@@ -1489,7 +1462,7 @@ display_script[ll_ds_idx].display_command[ll_insert_before_idx].attributes.attri
 display_script[ll_ds_idx].display_command[ll_insert_before_idx].command_component_id = lstr_command.id
 
 // Now create the new treeviewitem
-ltvi_new_item = create_command_item(display_script[ll_ds_idx].display_command[ll_insert_before_idx])
+ltvi_new_item = create_command_item(display_script[ll_ds_idx].display_command[ll_insert_before_idx],ll_insert_before_idx)
 
 
 CHOOSE CASE lower(ls_where)
@@ -1590,7 +1563,7 @@ display_script[ll_ds_idx].display_command[ll_insert_before_idx].attributes.attri
 display_script[ll_ds_idx].display_command[ll_insert_before_idx].command_component_id = lstr_command.id
 
 // Now create the new treeviewitem
-ltvi_new_item = create_command_item(display_script[ll_ds_idx].display_command[ll_insert_before_idx])
+ltvi_new_item = create_command_item(display_script[ll_ds_idx].display_command[ll_insert_before_idx],ll_insert_before_idx)
 
 ll_parenthandle = FindItem(ParentTreeItem!, pl_handle)
 if ll_parenthandle < 0 then return
@@ -1736,6 +1709,44 @@ LOOP
 
 return 0
 
+
+end function
+
+private function treeviewitem create_command_item (str_c_display_script_command pstr_command, integer pi_cmd_index);string ls_description
+str_item_data lstr_new_item_data
+treeviewitem ltvi_new_item
+
+if lower(pstr_command.context_object) = "general" then
+	ls_description = wordcap(pstr_command.display_command)
+else
+	ls_description = wordcap(pstr_command.context_object + " " + pstr_command.display_command)
+end if
+
+ls_description += "         (" + string(pstr_command.display_script_id) + " : " + string(pstr_command.display_command_id) + " c[" + string(pi_cmd_index) + "]" + ")"
+
+// Set data structure for new item
+lstr_new_item_data.node_type = "COMMAND"
+lstr_new_item_data.display_script_id = pstr_command.display_script_id
+lstr_new_item_data.display_command_id = pstr_command.display_command_id
+lstr_new_item_data.attribute = ""
+lstr_new_item_data.value = ""
+lstr_new_item_data.command_index = 0
+lstr_new_item_data.command = pstr_command
+
+if upper(pstr_command.status) = "NA" then
+	ls_description = "Disabled: " + ls_description
+	ltvi_new_item.PictureIndex = 4
+	ltvi_new_item.SelectedPictureIndex = 4
+else
+	ltvi_new_item.PictureIndex = 2
+	ltvi_new_item.SelectedPictureIndex = 2
+end if
+
+ltvi_new_item.label = ls_description
+ltvi_new_item.data = lstr_new_item_data
+ltvi_new_item.children = true
+
+return ltvi_new_item
 
 end function
 
@@ -1935,6 +1946,8 @@ event key;//keyflags:
 // Shift-Insert = Append Above (Top if Display Script is selected)
 // Shift-up = move up
 // Shift-down = move down
+// Ctrl-Up = Enable the item
+// Ctrl-Down = Disable the item
 
 integer li_sts
 str_item_data lstr_item_data
@@ -1946,7 +1959,6 @@ boolean lb_above
 long ll_new_item_handle
 long ll_ds_idx
 long ll_dc_idx
-str_attributes lstr_attributes
 long i
 long ll_prev_handle
 
@@ -1965,16 +1977,14 @@ if li_sts <= 0 then return
 
 lstr_item_data = ltvi_item.data
 
-ll_ds_idx = get_display_script(lstr_item_data.display_script_id)
-if ll_ds_idx <= 0 then return
-
-ll_dc_idx = get_display_command(ll_ds_idx, lstr_item_data.display_command_id)
-if ll_dc_idx <= 0 then return
-
-lstr_attributes = display_script[ll_ds_idx].display_command[ll_dc_idx].attributes
-
+if key = KeyD! and keyflags = 2 then
+	// Ctrl-D to debug in this display script and command
+	debug_display_script_id = lstr_item_data.display_script_id
+	debug_display_command_id = lstr_item_data.display_command_id
+end if
 
 CHOOSE CASE upper(lstr_item_data.node_type)
+		
 	CASE "DISPLAY_SCRIPT"
 		CHOOSE CASE key
 			CASE KeySpaceBar!
@@ -1994,7 +2004,14 @@ CHOOSE CASE upper(lstr_item_data.node_type)
 					new_command(ll_handle, "bottom")
 				end if
 		END CHOOSE
+		
 	CASE "COMMAND"
+		ll_ds_idx = get_display_script(lstr_item_data.display_script_id)
+		if ll_ds_idx <= 0 then return
+		
+		ll_dc_idx = get_display_command(ll_ds_idx, lstr_item_data.display_command_id)
+		if ll_dc_idx <= 0 then return
+		
 		CHOOSE CASE key
 			CASE KeyInsert!
 				if keyflags = 1 then
@@ -2055,17 +2072,21 @@ CHOOSE CASE upper(lstr_item_data.node_type)
 					this.function post selectitem(ll_handle)
 					changes_made()
 				elseif keyflags = 2 then
-					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "NA"
-					 if right(ltvi_item.label, 11) <> " (Disabled)" then
-						ltvi_item.label += " (Disabled)"
+					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "OK"
+					 if left(ltvi_item.label, 10) = "Disabled: " then
+						ltvi_item.label = right(ltvi_item.label, len(ltvi_item.label) - 10)
+						ltvi_item.PictureIndex = 2
+						ltvi_item.SelectedPictureIndex = 2
 						setitem(ll_handle, ltvi_item)
 					end if
 					this.function post selectitem(ll_prev_handle)
 					changes_made()
 				elseif keyflags = 3 then
-					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "OK"
-					 if right(ltvi_item.label, 11) = " (Disabled)" then
-						ltvi_item.label = left(ltvi_item.label, len(ltvi_item.label) - 11)
+					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "NA"
+					 if left(ltvi_item.label, 10) <> "Disabled: " then
+						ltvi_item.label = "Disabled: " + ltvi_item.label
+						ltvi_item.PictureIndex = 4
+						ltvi_item.SelectedPictureIndex = 4
 						setitem(ll_handle, ltvi_item)
 					end if
 					this.function post selectitem(ll_prev_handle)
@@ -2081,22 +2102,27 @@ CHOOSE CASE upper(lstr_item_data.node_type)
 					changes_made()
 				elseif keyflags = 2 then
 					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "NA"
-					 if right(ltvi_item.label, 11) <> " (Disabled)" then
-						ltvi_item.label += " (Disabled)"
+					 if left(ltvi_item.label, 10) <> "Disabled: " then
+						ltvi_item.label = "Disabled: " + ltvi_item.label
+						ltvi_item.PictureIndex = 4
+						ltvi_item.SelectedPictureIndex = 4
 						setitem(ll_handle, ltvi_item)
 					end if
 					this.function post selectitem(ll_prev_handle)
 					changes_made()
 				elseif keyflags = 3 then
 					 display_script[ll_ds_idx].display_command[ll_dc_idx].status = "OK"
-					 if right(ltvi_item.label, 11) = " (Disabled)" then
-						ltvi_item.label = left(ltvi_item.label, len(ltvi_item.label) - 11)
+					 if left(ltvi_item.label, 10) = "Disabled: " then
+						ltvi_item.label = right(ltvi_item.label, len(ltvi_item.label) - 10)
+						ltvi_item.PictureIndex = 2
+						ltvi_item.SelectedPictureIndex = 2
 						setitem(ll_handle, ltvi_item)
 					end if
 					this.function post selectitem(ll_prev_handle)
 					changes_made()
 				end if
 		END CHOOSE
+		
 	CASE "ATTRIBUTE"
 		CHOOSE CASE key
 			CASE KeyEnter!

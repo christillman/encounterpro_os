@@ -22,13 +22,13 @@ ORDER BY LEN(alternate) desc, LEN(term) desc
 
 IF @@rowcount = 0 SET @f_descr = @form_descr
 
-SELECT TOP 1 @g_descr = REPLACE(IsNull(@generic_descr,'zzz'), term, alternate)
+SELECT TOP 1 @g_descr = REPLACE(CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END), term, alternate)
 FROM c_Synonym 
-WHERE IsNull(@generic_descr,'zzz') LIKE '%' + term + '%'
+WHERE CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END LIKE '%' + term + '%'
 AND term_type = 'dosage_form'
 ORDER BY LEN(alternate) desc, LEN(term) desc
 
-IF @@rowcount = 0 SET @g_descr = IsNull(@generic_descr,'zzz')
+IF @@rowcount = 0 SET @g_descr = CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END
 
 -- Insulin has special preference: instead of Inhalant Powder it should be Cartridge
 IF @f_descr LIKE '%insulin%' OR @g_descr LIKE '%insulin%'

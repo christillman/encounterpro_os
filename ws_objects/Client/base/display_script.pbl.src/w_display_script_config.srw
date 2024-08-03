@@ -316,7 +316,7 @@ integer y = 136
 integer width = 3013
 integer height = 1640
 integer taborder = 20
-long backcolor = 12632256
+long backcolor = 134217750
 end type
 
 event changes_made;call super::changes_made;cb_cancel.visible = true

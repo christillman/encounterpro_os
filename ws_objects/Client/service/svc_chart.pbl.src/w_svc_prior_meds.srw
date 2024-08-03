@@ -204,9 +204,9 @@ integer y = 1576
 end type
 
 type cb_add_formulation from commandbutton within w_svc_prior_meds
-integer x = 2309
+integer x = 2295
 integer y = 528
-integer width = 590
+integer width = 617
 integer height = 108
 integer taborder = 50
 boolean bringtotop = true
@@ -216,7 +216,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Known Strength"
+string text = "Name and Strength"
 end type
 
 event clicked;wf_add_meds(true)
@@ -301,9 +301,9 @@ boolean bringtotop = true
 end type
 
 type cb_add_drug from commandbutton within w_svc_prior_meds
-integer x = 2309
+integer x = 2295
 integer y = 652
-integer width = 590
+integer width = 617
 integer height = 108
 integer taborder = 60
 boolean bringtotop = true
@@ -313,7 +313,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Unknown Strength"
+string text = "Name Only"
 end type
 
 event clicked;wf_add_meds(false)

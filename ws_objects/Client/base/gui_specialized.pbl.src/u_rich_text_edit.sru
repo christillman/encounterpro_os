@@ -6286,7 +6286,7 @@ for i = 1 to lstr_progress.progress_count
 //					ls_fielddata = f_service_to_field_data(lstr_service)
 				end if
 				add_text(ls_fieldtext)
-				blank_lines(1)
+				//blank_lines(1)
 //				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata				
 				
 //				// Add the title

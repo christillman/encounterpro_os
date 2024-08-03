@@ -561,6 +561,9 @@ public subroutine delete_range (long pl_startline, long pl_startchar, long pl_en
 long ll_length
 boolean lb_displayonly
 
+// don't disturb if nothing is to be cleared
+if pl_startline = pl_endline and pl_startchar = pl_endchar then return
+
 lb_displayonly = displayonly
 
 displayonly = false
@@ -645,6 +648,10 @@ end function
 public subroutine delete_range (str_charrange pstr_charrange);long ll_line
 long ll_length
 boolean lb_displayonly
+
+
+// don't disturb if nothing is to be cleared
+if pstr_charrange.from_position.line_number = pstr_charrange.to_position.line_number and pstr_charrange.from_position.char_position = pstr_charrange.to_position.char_position then return
 
 lb_displayonly = displayonly
 

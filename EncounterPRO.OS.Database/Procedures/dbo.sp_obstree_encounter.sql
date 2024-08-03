@@ -136,7 +136,6 @@ BEGIN
 		,observation_type
 		,composite_flag
 		,in_context_flag
-		,display_style
 		,perform_location_domain
 		,parent_history_sequence
 		,sort_sequence
@@ -150,7 +149,6 @@ BEGIN
 		,observation_type
 		,'Y'
 		,'N'
-		,'OBORRRCBT'
 		,'NA'
 		,0
 		,sort_sequence
