@@ -1,0 +1,6 @@
+﻿$PBExportHeader$str_office_status.srs
+global type str_office_status from structure
+	string		tablename
+	datetime		last_updated
+end type
+
