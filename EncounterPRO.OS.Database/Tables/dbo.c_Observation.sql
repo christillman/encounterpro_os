@@ -192,3 +192,5 @@ GO
 ALTER TABLE [dbo].[c_Observation] SET (LOCK_ESCALATION = TABLE)
 GO
 
+CREATE NONCLUSTERED INDEX [ix_c_Observation_last_updated]
+ON [dbo].[c_Observation] ([last_updated])
