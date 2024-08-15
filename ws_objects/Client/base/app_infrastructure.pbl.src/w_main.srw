@@ -266,6 +266,7 @@ tab_main.initialize()
 li_refresh_timer = datalist.get_preference_int("PREFERENCES", "refresh_timer", 20)
 timer(li_refresh_timer)
 
+datalist.office_refresh_interval = li_refresh_timer
 refresh()
 
 tab_main.setfocus()

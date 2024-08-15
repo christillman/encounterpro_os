@@ -70,6 +70,8 @@ u_ds_data workplan
 u_ds_data xml_class
 
 // Office status datastores
+u_ds_data office_status
+str_office_status previous_status[], current_status[]
 u_ds_data open_encounters
 u_ds_data active_services
 u_ds_data office_rooms
@@ -4180,6 +4182,8 @@ return lstr_default_results
 end function
 
 private function integer load_office_status (ref long pl_room_count, ref long pl_encounter_count, ref long pl_service_count);long ll_rows
+boolean lb_rooms_changed, lb_active_services_changed, lb_table_count_changed, lb_encounters_changed
+int li_status_row, li_prev_status_row
 
 // See if we need to refresh the data stores
 if secondsafter(office_last_refresh, now()) <= office_refresh_interval then
@@ -4188,24 +4192,63 @@ if secondsafter(office_last_refresh, now()) <= office_refresh_interval then
 	pl_service_count = active_services.rowcount()
 else
 	// refresh the data stores
+	// See if the underlying tables have been updated
+	ll_rows = office_status.retrieve()
 	
-	// Get the groups and rooms in this office
-	pl_room_count = office_rooms.retrieve(gnv_app.office_id)
-	if pl_room_count < 0 then return -1
+	if upperbound(previous_status) = 0 then 
+		// initialize first time
+		for li_status_row = 1 to ll_rows
+			previous_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+			previous_status[li_status_row].last_updated = datetime("2024-07-28")
+		next
+	end if
 	
-	// Get all the open encounters
-	pl_encounter_count = open_encounters.retrieve('%')
-	if pl_encounter_count < 0 then return -1
+	for li_status_row = 1 to ll_rows
+		current_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+		current_status[li_status_row].last_updated = office_status.object.last_updated[li_status_row]
+		for li_prev_status_row = 1 to upperbound(previous_status)
+			if previous_status[li_prev_status_row].tablename = current_status[li_status_row].tablename then
+				if previous_status[li_prev_status_row].last_updated < current_status[li_status_row].last_updated then
+					choose case previous_status[li_prev_status_row].tablename
+						case "c_Table_Update"
+							lb_table_count_changed = true
+						case "o_Active_Services"
+							lb_active_services_changed = true
+						case "o_Rooms"
+							lb_rooms_changed = true
+						case "p_Patient_Encounter", "p_Patient_WP_Item"
+							lb_encounters_changed = true
+					end choose
+					 previous_status[li_prev_status_row].last_updated = current_status[li_status_row].last_updated
+				end if
+			end if
+		next
+	next
+
+	if lb_rooms_changed then 
+		// Get the groups and rooms in this office
+		pl_room_count = office_rooms.retrieve(gnv_app.office_id)
+		if pl_room_count < 0 then return -1
+	end if
 	
-	// Get all the active services
-	pl_service_count = active_services.retrieve("Y")
-	if pl_service_count < 0 then return -1
+	if lb_encounters_changed then 
+		// Get all the open encounters
+		pl_encounter_count = open_encounters.retrieve('%')
+		if pl_encounter_count < 0 then return -1
+	end if
 	
+	if lb_active_services_changed then 
+		// Get all the active services
+		pl_service_count = active_services.retrieve("Y")
+		if pl_service_count < 0 then return -1
+	end if
+	
+	if lb_table_count_changed then 
+		check_table_update()
+	end if
+
 	// Set the refresh time stamp to now
 	office_last_refresh = now()
-	
-	// Now is a good time to see if any tables have been updated
-	check_table_update()
 end if
 
 
@@ -7729,6 +7772,8 @@ observation_stages = CREATE u_ds_data
 observation_stages.set_dataobject("dw_c_observation_stage")
 setnull(stage_observation_id)
 
+office_status = CREATE u_ds_data
+office_status.set_dataobject("dw_sp_check_office_status")
 open_encounters = CREATE u_ds_data
 open_encounters.set_dataobject("dw_sp_open_encounters")
 active_services = CREATE u_ds_data
