@@ -6,10 +6,10 @@ COM:EncounterPRO Healthcare Resources, Inc.
 DES:Electronic Medical Record System
 CPY:(c) 1994-2021 EncounterPRO Healthcare Resources, Inc.  All Rights Reserved
 PRD:EncounterPRO_OS (tm)
-PVS:7.2.2.0
-PVN:7,2,2,0
-FVS:7.2.2.0
-FVN:7,2,2,0
+PVS:7.2.3.0
+PVN:7,2,3,0
+FVS:7.2.3.0
+FVN:7,2,3,0
 MAN:2,asInvoker,0
 PBD:cpr.pbl,,0
 PBD:pbdom.pbd,,1
