@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-title: "Title"
+title: "Bug: "
 labels: ["bug", "triage"]
 assignees:
   - christillman
@@ -62,6 +62,16 @@ body:
         - 7.2.1.7
         - 7.2.1.8
         - 7.2.1.9
+        - 7.2.2.0
+        - 7.2.2.1
+        - 7.2.2.2
+        - 7.2.2.3
+        - 7.2.2.4
+        - 7.2.2.5
+        - 7.2.2.6
+        - 7.2.2.7
+        - 7.2.2.8
+        - 7.2.2.9
         - other
     validations:
       required: true
