@@ -22,7 +22,7 @@ ORDER BY LEN(alternate) desc, LEN(term) desc
 
 IF @@rowcount = 0 SET @f_descr = @form_descr
 
-SELECT TOP 1 @g_descr = REPLACE(CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END), term, alternate)
+SELECT TOP 1 @g_descr = REPLACE(CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END, term, alternate)
 FROM c_Synonym 
 WHERE CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END LIKE '%' + term + '%'
 AND term_type = 'dosage_form'
