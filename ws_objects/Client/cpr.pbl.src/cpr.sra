@@ -242,7 +242,6 @@ string source_url = "https://github.com/christillman/encounterpro_os"
 string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
 
-
 string registry_key
 string ini_file
 string program_directory
