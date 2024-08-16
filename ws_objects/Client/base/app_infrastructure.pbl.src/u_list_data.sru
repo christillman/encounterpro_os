@@ -4182,7 +4182,7 @@ return lstr_default_results
 end function
 
 private function integer load_office_status (ref long pl_room_count, ref long pl_encounter_count, ref long pl_service_count);long ll_rows
-boolean lb_rooms_changed, lb_active_services_changed, lb_table_count_changed, lb_encounters_changed
+boolean lb_rooms_changed, lb_active_services_changed, lb_encounters_changed
 int li_status_row, li_prev_status_row
 
 // See if we need to refresh the data stores
@@ -4193,6 +4193,7 @@ if secondsafter(office_last_refresh, now()) <= office_refresh_interval then
 else
 	// refresh the data stores
 	// See if the underlying tables have been updated
+	
 	ll_rows = office_status.retrieve()
 	
 	if upperbound(previous_status) = 0 then 
@@ -4210,8 +4211,6 @@ else
 			if previous_status[li_prev_status_row].tablename = current_status[li_status_row].tablename then
 				if previous_status[li_prev_status_row].last_updated < current_status[li_status_row].last_updated then
 					choose case previous_status[li_prev_status_row].tablename
-						case "c_Table_Update"
-							lb_table_count_changed = true
 						case "o_Active_Services"
 							lb_active_services_changed = true
 						case "o_Rooms"
@@ -4242,11 +4241,9 @@ else
 		pl_service_count = active_services.retrieve("Y")
 		if pl_service_count < 0 then return -1
 	end if
-	
-	if lb_table_count_changed then 
-		check_table_update()
-	end if
 
+	check_table_update()
+	
 	// Set the refresh time stamp to now
 	office_last_refresh = now()
 end if

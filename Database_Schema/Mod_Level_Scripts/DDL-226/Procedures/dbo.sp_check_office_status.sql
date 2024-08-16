@@ -24,6 +24,7 @@ GO
 CREATE PROCEDURE dbo.sp_check_office_status 
 AS
 
+/* needs VIEW SERVER STATE
 DECLARE @server_start datetime2
 SELECT  @server_start = sqlserver_start_time  from sys.dm_os_sys_info
 
@@ -31,14 +32,23 @@ SELECT t.name AS TableName,
 	max(IsNull(last_user_update,  @server_start)) as last_updated
 FROM sys.tables t 
 left join sys.dm_db_index_usage_stats s on OBJECT_NAME(s.OBJECT_ID) = t.name
-WHERE t.name in ('o_Rooms','p_Patient_Encounter','p_Patient_WP_Item','o_Active_Services','c_Table_Update')
+WHERE t.name in ('o_Rooms','p_Patient_Encounter','p_Patient_WP_Item','o_Active_Services')
 GROUP BY t.name
 ORDER BY t.name
+*/
+
+SELECT [table_name] AS TableName, [last_updated]
+FROM c_Table_Update
+WHERE [table_name] in ('o_Rooms','p_Patient_Encounter','p_Patient_WP_Item','o_Active_Services')
+ORDER BY [table_name]
 
 GO
 GRANT EXECUTE
 	ON [dbo].sp_check_office_status
 	TO [cprsystem] AS dbo
 GO
+/*
 -- required to use sys.dm_db_index_usage_stats
-GRANT VIEW DATABASE PERFORMANCE STATE TO cprsystem AS dbo
+IF @@version LIKE '%Azure%' 
+	GRANT VIEW DATABASE PERFORMANCE STATE TO cprsystem AS dbo
+*/

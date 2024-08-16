@@ -71,9 +71,7 @@ AS
 IF @@ROWCOUNT = 0
 	RETURN
 
-UPDATE c_Table_Update
-SET last_updated = dbo.get_client_datetime()
-WHERE table_name = 'c_vaccine'
+EXECUTE sp_table_update @ps_table_name = 'c_vaccine'
 
 GO
 
