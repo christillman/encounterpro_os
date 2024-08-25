@@ -379,7 +379,7 @@ else
 	lb_ole_class = false
 end if
 
-log.log(this,"u_component_manager.create_component:0017", "Creating component: " + ls_class , 1)
+log.log(this,"u_component_manager.create_component:0017", "Creating component: " + ls_class , 2)
 
 luo_component = CREATE USING ls_class
 if not isvalid(luo_component) or isnull(luo_component) then
