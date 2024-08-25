@@ -22,14 +22,12 @@ str_popup_return popup_return
 string ls_user_id
 string ls_username
 
+setnull(ls_username)
 
 popup.item = "NOLOGON"
 popup.title = "Enter Access Code"
 openwithparm(w_security_access_code, popup)
-
-popup_return = message.powerobjectparm
-setnull(ls_username)
-
+popup_return = f_popup_return("w_security_access_code,u_component_security_pin.x_authenticate:11")
 if popup_return.item_count >= 1 then
 	SELECT	user_id, username
 	INTO	:ls_user_id, :ls_username
