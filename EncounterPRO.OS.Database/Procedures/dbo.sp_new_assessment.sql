@@ -179,7 +179,12 @@ ELSE
 	
 	SET @ls_key = @ls_key + '^'
 	
-	EXECUTE sp_get_char_key 'c_Assessment', 'assessment_id', @ls_key, @ls_assessment_id OUTPUT
+	
+	create table #temp (value varchar(100))
+	insert into #temp
+	EXECUTE sp_get_char_key 'c_Assessment', 'assessment_id', @ls_key
+	
+	SELECT top 1 @ls_assessment_id = value from #temp
 
 	INSERT INTO c_Assessment_Definition (
 		assessment_id,
