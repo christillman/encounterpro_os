@@ -49,7 +49,6 @@ integer width = 2610
 integer height = 1552
 boolean titlebar = false
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 windowtype windowtype = response!
@@ -503,6 +502,10 @@ end subroutine
 public function integer get_document_elements ();integer li_sts
 
 document_elements_available = false
+
+if isnull(report_document) then
+	return -1
+end if
 
 li_sts = report_document.get_document_elements(document_elements)
 if li_sts < 0 then
