@@ -179,7 +179,7 @@ end function
 public subroutine change_location_domain ();str_popup_return popup_return
 
 open(w_pick_location_domain)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pick_location_domain,w_composite_observation_definition.change_location:4")
 if popup_return.item_count <> 1 then return
 
 perform_location_domain = popup_return.items[1]
@@ -211,7 +211,7 @@ string ls_location_domain
 //
 popup.item = "Enter New Location Domain:"
 openwithparm(w_pop_get_string, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_get_string,w_composite_observation_definition.new_location_domain:13")
 if isnull(popup_return.item) or popup_return.item = "" then return
 
 sqlca.sp_new_location_domain(ref ls_location_domain, popup_return.item);
@@ -645,7 +645,7 @@ CHOOSE CASE buttons[button_pressed]
 		popup.items[2] = f_boolean_to_string(allow_editing)
 		
 		openwithparm(w_observation_definition, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_observation_definition,w_composite_observation_definition.observation_menu:87")
 		if popup_return.item_count <> 1 then return
 		
 		dw_observations.object.child_observation_id[pl_row] = popup_return.items[1]
@@ -666,7 +666,7 @@ CHOOSE CASE buttons[button_pressed]
 		lstr_branch.unit_preference = dw_observations.object.unit_preference[pl_row]
 		
 		openwithparm(w_observation_tree_attributes, lstr_branch)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_observation_tree_attributes,w_composite_observation_definition.observation_menu:108")
 		if popup_return.item_count <> 1 then return
 		if popup_return.items[1] <> "OK" then return
 		
@@ -884,7 +884,7 @@ popup.dataobject = "dw_observation_type_pick_list"
 popup.datacolumn = 1
 popup.displaycolumn = 1
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_composite_observation_definition.st_observation_type.clicked:8")
 if popup_return.item_count <> 1 then
 	// If the observation_type is null, then this is a new observation.
 	// In that case, if the user cancels the observation_type selection,
@@ -1221,7 +1221,7 @@ CHOOSE CASE buttons[button_pressed]
 		popup.items[1] = "TESTCOLLECT"
 		popup.items[2] = collection_procedure_id
 		openwithparm(w_procedure_definition, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_procedure_definition,w_composite_observation_definition.st_collection_procedure.clicked:63")
 		if popup_return.item_count <> 4 then return
 		collection_procedure_id = popup_return.item
 		text = popup_return.items[4] + " (" + popup_return.items[1] + ")"
@@ -1332,7 +1332,7 @@ CHOOSE CASE buttons[button_pressed]
 		popup.items[1] = "TESTPERFORM"
 		popup.items[2] = perform_procedure_id
 		openwithparm(w_procedure_definition, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_procedure_definition,w_composite_observation_definition.st_perform_procedure.clicked:62")
 		if popup_return.item_count <> 4 then return
 		perform_procedure_id = popup_return.item
 		text = popup_return.items[4] + " (" + popup_return.items[1] + ")"
@@ -1593,7 +1593,7 @@ else
 	popup.items[2] = "Remove Image"
 	popup.items[3] = "Change Image"
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_composite_observation_definition.cb_image.clicked:28")
 	if popup_return.item_count <> 1 then return
 	
 	li_choice = popup_return.item_indexes[1]
@@ -1666,7 +1666,7 @@ popup.datacolumn = 1
 popup.displaycolumn = 1
 
 Openwithparm(w_pop_pick, popup)
-popup_return = Message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_composite_observation_definition.cb_results.clicked:21")
 If popup_return.item_count <> 1 Then Return
 
 
@@ -1905,7 +1905,7 @@ popup.item = display_style
 popup.argument_count = 1
 popup.argument[1] = "observation_display_style"
 openwithparm(w_pop_prompt_string, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_prompt_string,w_composite_observation_definition.st_display_style.clicked:9")
 if popup_return.item_count <> 1 then return
 
 text = popup_return.items[1]
@@ -1939,7 +1939,7 @@ popup.title = "Legal Notice for " + sle_description.text
 popup.item = legal_notice
 
 openwithparm(w_pop_prompt_string_multiline, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_prompt_string,w_composite_observation_definition.cb_legal_notice.clicked:9")
 if popup_return.item_count <> 1 then return
 
 if len(trim(popup_return.items[1])) > 0 then

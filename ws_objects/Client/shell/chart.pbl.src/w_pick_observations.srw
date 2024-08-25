@@ -432,7 +432,7 @@ popup.displaycolumn = 4
 popup.add_blank_row = true
 popup.blank_text = "<All>"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_pick_observations.st_treatment_type.clicked:10")
 if popup_return.item_count <> 1 then return
 
 if popup_return.items[1] = "" then
@@ -1116,11 +1116,11 @@ popup.data_row_count = 0
 
 if ls_composite_flag = "Y" then
 	openwithparm(lw_window, popup, "w_composite_observation_definition")
+	popup_return = f_popup_return("w_composite_observation_definition,w_pick_observation.cb_new_observation.clicked:27")
 else
 	openwithparm(lw_window, popup, "w_observation_definition")
+	popup_return = f_popup_return("w_observation_definition,w_pick_observation.cb_new_observation.clicked:30")
 end if
-
-popup_return = message.powerobjectparm
 if popup_return.item_count <> 1 then return
 
 // Automatically associate the new observation with the current treatment_type

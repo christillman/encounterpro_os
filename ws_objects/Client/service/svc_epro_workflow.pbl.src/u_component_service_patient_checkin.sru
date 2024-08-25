@@ -329,8 +329,8 @@ setnull(lstr_encounter.bill_flag)
 get_attribute("Show Screen", lb_show_screen, true)
 if lb_show_screen then
 	Openwithparm(service_window, lstr_encounter, "w_svc_patient_checkin")
-	popup_return = Message.powerobjectparm
-	if popup_return.item_count <> 1 then return 0
+	popup_return = f_popup_return("w_svc_patient_checkin,u_component_service_patient_checkin.checkin_patient:71")
+	if popup_return.item_count <> 1 then return 0 	
 
 	if (popup_return.items[1] = "COMPLETE") or (popup_return.items[1] = "OK") then
 		lstr_encounter = popup_return.returnobject

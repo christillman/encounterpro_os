@@ -684,7 +684,7 @@ popup.displaycolumn = 2
 popup.argument_count = 1
 popup.argument[1] = "Country"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_tabpage_patient_data.st_country.clicked:15")
 if popup_return.item_count <> 1 then return
 
 text = popup_return.items[1]
@@ -752,7 +752,7 @@ popup.displaycolumn = 2
 popup.argument_count = 1
 popup.argument[1] = "Id Document"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_tabpage_patient_data.st_id_document.clicked:13")
 if popup_return.item_count <> 1 then return
 
 li_rc = w_container.set_patient_list_item("Id Document", popup_return.items[1], ls_empty)
@@ -817,11 +817,11 @@ end type
 event clicked;str_popup_return popup_return
 
 openwithparm(w_pop_yes_no, "Are you sure you want to make this patient a test patient?")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_yes_no,u_tabpage_patient_data.cb_make_test.clicked:4")
 if popup_return.item <> "YES" then return
 
 openwithparm(w_pop_yes_no, "Are you ABSOLUTELY sure you want to make this patient a test patient?  THIS CANNOT BE UNDONE!")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_yes_no,u_tabpage_patient_data.cb_make_test.clicked:8")
 if popup_return.item <> "YES" then return
 
 UPDATE p_Patient
@@ -980,7 +980,7 @@ popup.title = "Enter Patient's Birth Time"
 popup.item = string(current_patient.time_of_birth)
 
 openwithparm(w_pop_prompt_time, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_prompt_time,u_tabpage_patient_data.st_time_of_birth.clicked:10")
 if popup_return.item_count < 1 then return
 
 lt_time_of_birth = time(popup_return.items[1])
@@ -1144,11 +1144,11 @@ u_ds_data luo_sp_generate_billing_id
 
 if not isnull(st_billing_id.text) and trim(st_billing_id.text) <> "" then
 	openwithparm(w_pop_yes_no, "Are you sure you wish to change the billing id?")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_yes_no,u_tabpage_patient_data.cb_change_billing_id.clicked:13")
 	if popup_return.item <> "YES" then return
 else
 	openwithparm(w_pop_yes_no, "Do you wish to automatically assign the billing id?")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_yes_no,u_tabpage_patient_data.cb_change_billing_id.clicked:17")
 	if popup_return.item = "YES" then
 		
 		luo_sp_generate_billing_id	= CREATE u_ds_data
@@ -1172,7 +1172,7 @@ destroy luo_sp_generate_billing_id
 popup.item = st_billing_id.text
 popup.title = "Enter patient billing id"
 openwithparm(w_pop_prompt_string, popup)
-popup_return =  message.powerobjectparm
+popup_return = f_popup_return("w_pop_prompt_string,u_tabpage_patient_data.cb_change_billing_id.clicked:41")
 if popup_return.item_count <> 1 then return
 
 // Check for duplicate
@@ -1232,7 +1232,7 @@ popup.displaycolumn = 2
 popup.argument_count = 1
 popup.argument[1] = "RACE"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_tabpage_patient_data.cb_race.clicked:11")
 if popup_return.item_count <> 1 then return
 
 if f_string_modified(current_patient.race, popup_return.items[1]) then
@@ -1289,7 +1289,7 @@ popup.displaycolumn = 2
 popup.argument_count = 1
 popup.argument[1] = "PATIENT_STATUS"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_tabpage_patient_data.st_patient_status.clicked:11")
 if popup_return.item_count <> 1 then return
 
 if f_string_modified(current_patient.patient_status, popup_return.items[1]) then
@@ -1505,7 +1505,7 @@ popup.datacolumn = 1
 popup.displaycolumn = 2
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_tabpage_patient_data.st_office.clicked:10")
 if popup_return.item_count <> 1 then return
 
 if f_string_modified(current_patient.patient_office_id, popup_return.items[1]) then

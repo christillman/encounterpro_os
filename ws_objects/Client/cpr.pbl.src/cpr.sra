@@ -259,6 +259,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -300,7 +301,7 @@ log = CREATE u_event_log
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
-if li_sts <= 0 then halt
+if li_sts <= 0 then HALT CLOSE
 
 this.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(target_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
 // Moved application path so we can set the INI file into common_thread.initialize()
@@ -347,7 +348,7 @@ if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
 		log.log(this, "cpr:open", "Error initializing EncounterPRO", 5)
 	end if
-	halt
+	HALT CLOSE
 end if
 
 // Enable the display of log events
@@ -370,12 +371,12 @@ end if
 // Check the versions
 if f_check_version() < 0 then
 	// After an upgrade, we don't want an error message but rather a nice quiet exit
-	halt
+	HALT CLOSE
 end if
 
 li_sts = f_crash_clean_up()
 if li_sts < 0 then
-	log.log(po_null, "cpr.open:155","crash clean up failed", 5)
+	log.log(po_null, "cpr.open:114","crash clean up failed for computer_id " + string(gnv_app.computer_id), 4)
 end if
 
 li_sts = f_logon()

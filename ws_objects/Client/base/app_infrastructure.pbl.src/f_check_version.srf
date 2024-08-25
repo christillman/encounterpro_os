@@ -145,7 +145,7 @@ CHOOSE CASE gnv_app.cpr_mode
 				log.log(po_null, "f_check_version:0095", ls_message, 2)
 				ls_message += " Do you wish to configure the database now?"
 				openwithparm(w_pop_yes_no, ls_message)
-				popup_return = message.powerobjectparm
+				popup_return = f_popup_return("w_pop_yes_no.f_check_version:140")
 				if popup_return.item = "YES" then
 					open(w_svc_config_database)
 				end if
