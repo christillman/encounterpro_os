@@ -18,9 +18,7 @@ string ls_returning_class
 DO WHILE true
 	openwithparm(service_window, this, "w_cpr_main")
 	
-	IF IsNull(message.powerobjectparm) THEN return -1
-	
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_cpr_main,u_component_service_chart.xx_do_service:7")
 	if popup_return.item_count <> 1 then return 0
 	
 	CHOOSE CASE upper(popup_return.items[1])
