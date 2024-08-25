@@ -9,7 +9,7 @@ end prototypes
 global subroutine f_unrecoverable (string ps_message);
 IF sqlca.sqldbcode = 999 AND Pos(sqlca.sqlerrtext, "unrecoverable") > 0 THEN
 	MessageBox("Unrecoverable error","Application terminating: " + ps_message)
-	halt
+	HALT CLOSE
 END IF
 end subroutine
 

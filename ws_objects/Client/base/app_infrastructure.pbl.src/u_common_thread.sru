@@ -373,7 +373,7 @@ end if
 log.initialize("gnv_app.product_name")
 if li_sts <= 0 then
 	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
+	HALT CLOSE
 end if
 
 return 1
