@@ -801,7 +801,7 @@ service_list.order_service( current_patient.cpr_id, &
 
 
 // Act like the user clicked "I'm Finished"
-this_section.my_cpr_main.close("CLOSE")
+this_section.my_cpr_main.close_me("CLOSE")
 
 
 end event
@@ -850,7 +850,7 @@ if not isnull(current_display_encounter) then
 end if
 
 
-this_section.my_cpr_main.close("CLOSE")
+this_section.my_cpr_main.close_me("CLOSE")
 
 end event
 

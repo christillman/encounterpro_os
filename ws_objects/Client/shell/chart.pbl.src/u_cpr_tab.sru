@@ -391,7 +391,7 @@ if section[newindex].section_object.tag = "EXIT" and current_service.manual_serv
 	// Determined this is causing a crash; but without it we get an invalid service bookmark
 	// Added post, seems to have fixed it
 	lw_cpr = section[newindex].my_cpr_main
-	lw_cpr.post close("CLOSE")
+	lw_cpr.post close_me("CLOSE")
 end if
 
 li_sts = 0

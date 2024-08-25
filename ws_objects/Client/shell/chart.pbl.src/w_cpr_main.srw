@@ -110,7 +110,7 @@ public subroutine display_portrait ()
 public subroutine refresh_screen ()
 public function integer refresh ()
 public function integer initialize_property (string ps_prop_num, ref u_st_property pst_prop, ref statictext pst_prop_title, ref str_attributes pstr_attributes)
-private function integer close_me (string ps_status)
+public function integer close_me (string ps_status)
 end prototypes
 
 event post_open;integer li_sts
@@ -271,7 +271,7 @@ end if
 return 0
 end function
 
-private function integer close_me (string ps_status);str_popup_return popup_return
+public function integer close_me (string ps_status);str_popup_return popup_return
 
 if isnull(ps_status) then
 	popup_return.item_count = 0
