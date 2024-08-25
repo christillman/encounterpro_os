@@ -103,6 +103,9 @@ ELSE
 SELECT @ll_customer_id = customer_id
 FROM c_Database_Status
 
+
+BEGIN TRANSACTION
+
 SELECT @ll_owner_id = owner_id,
 		@lid_id = id,
 		@ps_new_description = COALESCE(@ps_new_description, description),
@@ -139,7 +142,6 @@ IF @li_count > 0
 	RETURN -1
 	END
 
-BEGIN TRANSACTION
 
 INSERT INTO c_display_script (
 	script_type,
