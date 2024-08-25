@@ -142,6 +142,8 @@ f_get_picture_info(ls_picturefile, ll_picture_pixels_x, ll_picture_pixels_y, ll_
 ll_width = pixelstounits(ll_picture_pixels_x, XPixelsToUnits! )
 ll_height = pixelstounits(ll_picture_pixels_y, YPixelsToUnits! )
 
+IF ll_width = 0 or ll_height = 0 THEN return
+
 //p_hidden_picture.picturename = ls_picturefile
 //p_hidden_picture.originalsize = true
 
@@ -150,8 +152,8 @@ ll_height = pixelstounits(ll_picture_pixels_y, YPixelsToUnits! )
 
 p_picture.picturename = ""
 
-IF ll_width > 0 THEN lr_picture_aspect = real(ll_height) / real(ll_width)
-IF picture_width > 0 THEN lr_display_aspect = real(picture_height) / real(picture_width)
+lr_picture_aspect = real(ll_height) / real(ll_width)
+lr_display_aspect = real(picture_height) / real(picture_width)
 
 if lr_display_aspect > lr_picture_aspect then
 	// In this case the aspect ratio of the actual picture is less than the
