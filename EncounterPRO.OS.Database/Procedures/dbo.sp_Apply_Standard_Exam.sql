@@ -48,7 +48,7 @@ DECLARE @tmp_observation_results TABLE (
 	result_type varchar(12) NULL,
 	result varchar(80) NULL,
 	result_value varchar(40) NULL,
-	long_result_value text NULL,
+	long_result_value varchar(max) NULL,
 	result_unit varchar(24) NULL,
 	abnormal_flag char(1) NULL,
 	severity smallint NULL,

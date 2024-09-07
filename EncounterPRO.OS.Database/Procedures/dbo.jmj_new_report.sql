@@ -73,7 +73,7 @@ CREATE PROCEDURE jmj_new_report (
 	@ps_created_by varchar(24) ,
 	@pl_owner_id int = NULL ,
 	@ps_status varchar(12) ,
-	@ps_long_description text = NULL ,
+	@ps_long_description varchar(max) = NULL ,
 	@pl_version int = NULL ,
 	@ps_report_id varchar(36) OUTPUT )
 AS

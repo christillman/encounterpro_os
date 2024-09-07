@@ -68,7 +68,7 @@ CREATE PROCEDURE sp_xml_add_observation_result (
 	@pl_observation_sequence int,
 	@ps_location varchar(24),
 	@ps_result varchar(80),
-	@ps_result_value text = NULL,
+	@ps_result_value varchar(max) = NULL,
 	@ps_print_result_flag char(1),
 	@ps_result_unit varchar(12),
 	@ps_abnormal_flag char(1),

@@ -69,7 +69,7 @@ CREATE PROCEDURE sp_c_display_cmd_att_insert (
 	@pl_display_command_id int,
 	@pl_attribute_sequence int OUTPUT,
 	@ps_attribute varchar(40),
-	@ps_value text )
+	@ps_value varchar(max) )
 AS
 
 DECLARE @ls_value varchar(256)

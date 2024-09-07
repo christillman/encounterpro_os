@@ -71,7 +71,7 @@ CREATE PROCEDURE sp_set_observation_result_progress (
 	@pl_encounter_id int,
 	@ps_progress_type varchar(24),
 	@ps_progress_key varchar(40) = NULL,
-	@ps_progress text = NULL,
+	@ps_progress varchar(max) = NULL,
 	@pdt_progress_date_time datetime = NULL,
 	@ps_user_id varchar(24),
 	@ps_created_by varchar(24) )

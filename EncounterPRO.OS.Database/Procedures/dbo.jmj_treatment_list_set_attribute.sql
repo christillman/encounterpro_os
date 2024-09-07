@@ -67,7 +67,7 @@ GO
 CREATE PROCEDURE jmj_treatment_list_set_attribute (
 	@pl_definition_id int,
 	@ps_attribute varchar(80),
-	@ps_value text)
+	@ps_value varchar(max))
 AS
 
 DECLARE @ls_value varchar(255),

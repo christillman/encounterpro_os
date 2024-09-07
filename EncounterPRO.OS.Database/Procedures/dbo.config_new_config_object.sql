@@ -69,7 +69,7 @@ CREATE PROCEDURE config_new_config_object (
 	@ps_config_object_type varchar(24) ,
 	@ps_context_object varchar(24),
 	@ps_description varchar(80) ,
-	@ps_long_description text = NULL,
+	@ps_long_description varchar(max) = NULL,
 	@ps_config_object_category varchar(80) ,
 	@pl_owner_id int ,
 	@ps_created_by varchar(24) 

@@ -70,7 +70,7 @@ CREATE PROCEDURE sp_Set_Encounter_Progress (
 	@pl_attachment_id int = NULL,
 	@ps_progress_type varchar(24),
 	@ps_progress_key varchar(40) = NULL,
-	@ps_progress text = NULL ,
+	@ps_progress varchar(max) = NULL ,
 	@pdt_progress_date_time datetime = NULL,
 	@pl_patient_workplan_item_id integer = NULL,
 	@pl_risk_level int = NULL ,

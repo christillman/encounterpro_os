@@ -68,7 +68,7 @@ CREATE PROCEDURE config_create_object (
 	@pui_config_object_id varchar(40) ,
 	@ps_config_object_type varchar(24) ,
 	@ps_description varchar(80) = NULL,
-	@ps_long_description text = NULL,
+	@ps_long_description varchar(max) = NULL,
 	@ps_config_object_category varchar(80) ,
 	@pi_objectdata image ,
 	@ps_created_by varchar(24) )

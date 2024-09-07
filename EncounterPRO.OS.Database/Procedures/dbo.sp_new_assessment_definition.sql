@@ -76,7 +76,7 @@ CREATE PROCEDURE sp_new_assessment_definition (
 	@ps_auto_close_interval_unit varchar(24) = NULL,
 	@pl_risk_level integer = NULL,
 	@pl_complexity integer = NULL,
-	@ps_long_description text = NULL )
+	@ps_long_description varchar(max) = NULL )
 AS
 
 DECLARE @ll_key_value integer

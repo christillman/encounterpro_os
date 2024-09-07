@@ -75,7 +75,7 @@ CREATE PROCEDURE sp_update_assessment_def (
 	@ps_auto_close_interval_unit varchar(24) = NULL,
 	@pl_risk_level integer = NULL,
 	@pl_complexity integer = NULL,
-	@ps_long_description text )
+	@ps_long_description varchar(max) )
 AS
 
 UPDATE c_Assessment_Definition

@@ -71,7 +71,7 @@ CREATE PROCEDURE sp_set_attachment_progress (
 	@ps_user_id varchar(24),
 	@pdt_progress_date_time datetime = NULL,
 	@ps_progress_type varchar(24),
-	@ps_progress text = NULL ,
+	@ps_progress varchar(max) = NULL ,
 	@ps_created_by varchar(24) )
 AS
 

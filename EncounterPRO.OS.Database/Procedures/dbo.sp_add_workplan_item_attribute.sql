@@ -26,7 +26,7 @@ CREATE PROCEDURE sp_add_workplan_item_attribute
 	@pl_patient_workplan_id int = NULL,
 	@pl_patient_workplan_item_id int,
 	@ps_attribute varchar(64),
-	@ps_value text = NULL,
+	@ps_value varchar(max) = NULL,
 	@ps_created_by varchar(24),
 	@ps_user_id varchar(24) = NULL,
 	@pdt_created datetime = NULL

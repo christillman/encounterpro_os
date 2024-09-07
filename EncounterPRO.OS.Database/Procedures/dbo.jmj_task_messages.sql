@@ -71,7 +71,7 @@ AS
 DECLARE @attributes TABLE (
 	attribute_sequence int NOT NULL,
 	attribute varchar(64) NULL,
-	message TEXT NULL,
+	message varchar(max) NULL,
 	value_short varchar(50) NULL,
 	created datetime NOT NULL,
 	created_by varchar(24) NOT NULL,
@@ -81,7 +81,7 @@ DECLARE @messages TABLE (
 	message_from_user_id varchar(24),
 	message_date_time datetime NOT NULL,
 	message_type varchar(24) NOT NULL DEFAULT ('Sent to'),
-	message TEXT NULL,
+	message varchar(max) NULL,
 	message_subject varchar(80) NULL,
 	forwarded_to_user_id varchar(24) NULL)
 

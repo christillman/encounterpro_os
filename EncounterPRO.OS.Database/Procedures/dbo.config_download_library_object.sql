@@ -93,7 +93,7 @@ AS
 --	config_object_type varchar(24) NOT NULL,
 --	context_object varchar(24) NOT NULL,
 --	description varchar(80) NOT NULL,
---	long_description text NULL,
+--	long_description varchar(max) NULL,
 --	config_object_category varchar(80) NULL,
 --	owner_id int NOT NULL,
 --	status varchar(12) NOT NULL,
@@ -107,7 +107,7 @@ AS
 --		config_object_id uniqueidentifier NOT NULL,
 --		version int NOT NULL,
 --		description varchar(80) NOT NULL,
---		version_description TEXT NULL,
+--		version_description varchar(max) NULL,
 --		config_object_type varchar(24) NOT NULL,
 --		owner_id int NOT NULL,
 --		objectdata image NULL,
@@ -251,7 +251,7 @@ AS
 --	RETURN -1
 
 
----- Update the text and image columns
+---- Update the varchar(max) and image columns
 --UPDATE o
 --SET long_description = x.long_description
 --FROM c_Config_Object o

@@ -52,7 +52,7 @@ DECLARE @workplan_item TABLE (
 	to_user_id varchar(24) NULL,
 	to_user varchar(12) NULL,
 	to_user_color int NULL,
-	message text NULL,
+	message varchar(max) NULL,
 	cpr_id varchar(12) NULL,
 	patient_name varchar(80) NULL,
 	selected_flag int NOT NULL DEFAULT (0),

@@ -82,7 +82,7 @@ RETURNS @patient_results TABLE (
 	result_date_time datetime NOT NULL,
 	result varchar(80) NOT NULL,
 	result_value varchar(40) NULL,
-	result_long_value text NULL,
+	result_long_value varchar(max) NULL,
 	result_unit varchar(12) NULL,
 	abnormal_flag char(1) NULL,
 	abnormal_nature varchar(8) NULL,

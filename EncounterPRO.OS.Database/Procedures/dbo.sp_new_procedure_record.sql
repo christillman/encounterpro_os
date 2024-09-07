@@ -83,7 +83,7 @@ CREATE PROCEDURE sp_new_procedure_record (
 	@pl_owner_id int = NULL,
 	@ps_status varchar(12) = NULL,
 	@ps_allow_dup_cpt_code char(1) = 'Y',
-	@ps_long_description text = NULL,
+	@ps_long_description varchar(max) = NULL,
 	@ps_default_location varchar(24)= NULL,
 	@ps_bill_assessment_id varchar(24) = NULL,
 	@ps_well_encounter_flag char(1) = NULL

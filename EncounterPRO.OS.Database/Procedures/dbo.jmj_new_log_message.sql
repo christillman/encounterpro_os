@@ -26,7 +26,7 @@ CREATE PROCEDURE jmj_new_log_message
 	@ps_caller varchar(40),
 	@ps_script varchar(40),
 	@ps_message varchar(255),
-	@ps_log_data text = NULL,
+	@ps_log_data varchar(max) = NULL,
 	@ps_created_by varchar(24) = NULL
 	)
 AS

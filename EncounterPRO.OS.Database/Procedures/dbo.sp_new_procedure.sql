@@ -79,7 +79,7 @@ CREATE PROCEDURE sp_new_procedure (
 	@ps_location_domain varchar(12) = NULL,
 	@pi_risk_level integer = NULL,
 	@ps_default_bill_flag char(1) = NULL,
-	@ps_long_description text = NULL,
+	@ps_long_description varchar(max) = NULL,
 	@ps_default_location varchar(24)= NULL,
 	@ps_bill_assessment_id varchar(24) = NULL,
 	@ps_well_encounter_flag char(1) = NULL

@@ -66,7 +66,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE config_checkin (
 	@pui_config_object_id varchar(40) ,
-	@ps_version_description text = NULL ,
+	@ps_version_description varchar(max) = NULL ,
 	@pi_objectdata image ,
 	@ps_checked_out_by varchar(24) )
 AS

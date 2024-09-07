@@ -72,7 +72,7 @@ CREATE PROCEDURE [dbo].[config_new_config_object_version] (
 	@ps_created_by varchar(24) ,
 	@ps_status varchar(12) = NULL ,
 	@pdt_status_date_time datetime ,
-	@ps_version_description text = NULL ,
+	@ps_version_description varchar(max) = NULL ,
 	@ps_release_status varchar(12) = NULL ,
 	@pdt_release_status_date_time datetime
 	)

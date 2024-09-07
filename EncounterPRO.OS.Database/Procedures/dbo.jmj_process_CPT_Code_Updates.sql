@@ -73,7 +73,7 @@ CREATE PROCEDURE jmj_process_CPT_Code_Updates (
 	@ps_units float(8) = NULL ,
 	@ps_default_bill_flag char(1) = NULL ,
 	@ps_new_procedure_desc varchar(80) = NULL ,
-	@ps_long_description text = NULL ,
+	@ps_long_description varchar(max) = NULL ,
 	@ps_from_cpt varchar(12) = NULL ,
 	@ps_from_desc varchar(80) = NULL ,
 	@ps_vaccine_id varchar(24) = NULL ,

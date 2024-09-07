@@ -29,7 +29,7 @@ AS
 DECLARE @tmp_comp_attr TABLE
 (	attribute_sequence int IDENTITY (1,1) NOT NULL,
 	attribute varchar(64) NOT NULL,
-	value text NULL
+	value varchar(max) NULL
 )
 
 INSERT INTO @tmp_comp_attr

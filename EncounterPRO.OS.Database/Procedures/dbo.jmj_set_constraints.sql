@@ -86,7 +86,7 @@ AND script_name LIKE 'Tables\Constraints\%'
 -- Set the index script 
 DECLARE @index_scripts TABLE (
 	script_name varchar(255) NOT NULL,
-	index_script text NULL)
+	index_script varchar(max) NULL)
 
 -- Add the Constraint scripts
 INSERT INTO @index_scripts (

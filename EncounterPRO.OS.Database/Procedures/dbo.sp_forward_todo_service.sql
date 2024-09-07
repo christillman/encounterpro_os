@@ -71,7 +71,7 @@ CREATE PROCEDURE sp_forward_todo_service (
 	@ps_description varchar(80) = NULL,
 	@ps_service varchar(24) = NULL,
 	@ps_created_by varchar(24),
-	@ps_new_message text = NULL )
+	@ps_new_message varchar(max) = NULL )
 AS
 
 DECLARE @ll_patient_workplan_item_id integer

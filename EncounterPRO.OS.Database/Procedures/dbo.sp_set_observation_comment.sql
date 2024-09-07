@@ -27,7 +27,7 @@ CREATE PROCEDURE sp_set_observation_comment (
 	@ps_comment_type varchar(24),
 	@ps_comment_title varchar(48) = NULL,
 	@pdt_comment_date_time datetime = NULL,
-	@ps_comment text = NULL,
+	@ps_comment varchar(max) = NULL,
 	@ps_abnormal_flag char(1),
 	@pi_severity smallint,
 	@pl_treatment_id integer,

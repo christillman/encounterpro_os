@@ -22,7 +22,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE config_checkout (
 	@pui_config_object_id varchar(40) ,
-	@ps_version_description text ,
+	@ps_version_description varchar(max) ,
 	@ps_checked_out_by varchar(24) )
 AS
 -- Make sure config object is not already checked out.  If not then assign new version number.

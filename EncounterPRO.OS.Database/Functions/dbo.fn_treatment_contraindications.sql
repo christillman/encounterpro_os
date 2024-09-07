@@ -85,9 +85,9 @@ RETURNS @contra TABLE (
 	icon varchar(64) NULL,
 	severity int NULL,
 	shortdescription varchar(255) NULL,
-	longdescription text NULL,
+	longdescription varchar(max) NULL,
 	contraindication_warning varchar(255) NULL,
-	contraindication_references text NULL)
+	contraindication_references varchar(max) NULL)
 AS
 
 BEGIN

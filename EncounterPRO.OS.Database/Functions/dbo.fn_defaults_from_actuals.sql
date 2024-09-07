@@ -78,7 +78,7 @@ RETURNS @actual_results TABLE (
 	result_value varchar(40) NULL,
 	result_unit varchar(12) NULL,
 	sort_sequence smallint NULL,
-	long_result_value text NULL,
+	long_result_value varchar(max) NULL,
 	result_type varchar(12) NULL,
 	result varchar(80) NULL,
 	abnormal_flag char(1) NULL,

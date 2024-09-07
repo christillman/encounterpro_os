@@ -28,7 +28,7 @@ CREATE PROCEDURE dbo.jmj_component_log (
 	@pl_computer_id int ,
 	@ps_operation_as_user varchar(64) ,
 	@ps_completion_status varchar(12) ,
-	@ps_error_message text ,
+	@ps_error_message varchar(max) ,
 	@ps_created_by varchar(24)
 	)
 AS
