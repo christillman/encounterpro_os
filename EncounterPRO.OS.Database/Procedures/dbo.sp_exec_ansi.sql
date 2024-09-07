@@ -10,10 +10,10 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-create procedure sp_exec_ansi (@ps_sql varchar(4000))
+create procedure sp_exec_ansi (@ps_sql nvarchar(max))
 AS BEGIN
 -- wrapper to allow dynamic sql execution from powerbuilder
-declare @sql nvarchar(4000)
+declare @sql nvarchar(max)
 
 set @sql = @ps_sql
 exec sp_executesql @sql

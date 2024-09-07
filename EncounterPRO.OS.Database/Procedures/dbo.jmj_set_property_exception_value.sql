@@ -67,12 +67,12 @@ GO
 CREATE PROCEDURE [dbo].[jmj_set_property_exception_value] (
 	@pl_spid int,
 	@ps_datatype varchar(12),
-	@ps_select varchar(4000) )
+	@ps_select nvarchar(max) )
 AS
 
 DECLARE @ll_error int,
 		@ll_rowcount int,
-		@ls_sql varchar(4000)
+		@ls_sql nvarchar(max)
 
 -- Make sure there is a record in the X table
 IF NOT EXISTS (SELECT 1 FROM x_Property_Exception WHERE spid = @pl_spid)

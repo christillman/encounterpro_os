@@ -104,7 +104,7 @@ SELECT
 	result ,
 	location ,
 	result_value ,
-	CAST(long_result_value AS varchar(4000)),
+	CAST(long_result_value AS nvarchar(max)),
 	result_unit ,
 	abnormal_flag ,
 	severity ,

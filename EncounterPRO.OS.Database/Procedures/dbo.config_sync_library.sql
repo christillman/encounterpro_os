@@ -68,11 +68,11 @@ CREATE PROCEDURE [dbo].[config_sync_library]
 AS
 
 DECLARE @ls_temp_tablename varchar(128) ,
-	@ls_primary_key_where_clause varchar(4000) ,
-	@ls_insert_column_list varchar(4000) ,
-	@ls_select_column_list varchar(4000) ,
-	@ls_update_set_clause varchar(4000) ,
-	@ls_sql varchar(4000),
+	@ls_primary_key_where_clause nvarchar(max) ,
+	@ls_insert_column_list nvarchar(max) ,
+	@ls_select_column_list nvarchar(max) ,
+	@ls_update_set_clause nvarchar(max) ,
+	@ls_sql nvarchar(max),
 	@ll_error int,
 	@ll_id_exists int,
 	@ll_owner_id int

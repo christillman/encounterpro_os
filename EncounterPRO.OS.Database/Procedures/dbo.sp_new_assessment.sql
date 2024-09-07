@@ -46,7 +46,7 @@ DECLARE @ll_key_value integer ,
 	@ls_trimmed_description varchar(80),
 	@ls_key varchar(20),
 	@ll_key_suffix int,
-	@ls_long_description_varchar varchar(4000)
+	@ls_long_description_varchar nvarchar(max)
 
 IF @ps_description IS NULL OR @ps_description = ''
 	BEGIN
@@ -65,7 +65,7 @@ IF @pl_owner_id IS NULL
 	SELECT @pl_owner_id = customer_id
 	FROM c_Database_Status
 
-SET @ls_long_description_varchar = CAST(@ps_long_description AS varchar(4000))
+SET @ls_long_description_varchar = CAST(@ps_long_description AS nvarchar(max))
 
 SELECT TOP 1 @ps_assessment_id = assessment_id,
 			@ls_old_status = status
@@ -73,7 +73,7 @@ FROM c_Assessment_Definition
 WHERE assessment_type = @ps_assessment_type
 AND description = @ps_description
 AND ISNULL(icd10_code, '<Null>') = ISNULL(@ps_icd10_code, '<Null>')
-AND ISNULL(CAST(long_description AS varchar(4000)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
+AND ISNULL(CAST(long_description AS nvarchar(max)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
 ORDER BY status desc, last_updated desc
 
 SET @ll_rows = @@ROWCOUNT
@@ -110,7 +110,7 @@ IF @ll_rows = 0
 	FROM c_Assessment_Definition
 	WHERE REPLACE(REPLACE(description, ',', ''), ' ', '') = @ls_trimmed_description
 	AND ISNULL(icd10_code, '<Null>') = ISNULL(@ps_icd10_code, '<Null>')
-	AND ISNULL(CAST(long_description AS varchar(4000)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
+	AND ISNULL(CAST(long_description AS nvarchar(max)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
 	ORDER BY status desc, last_updated desc
 
 	SET @ll_rows = @@ROWCOUNT

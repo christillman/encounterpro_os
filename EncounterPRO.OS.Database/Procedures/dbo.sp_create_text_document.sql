@@ -67,7 +67,7 @@ GO
 CREATE PROCEDURE sp_create_text_document (
 	@ps_title varchar(255),
 	@pl_category int = NULL,
-	@ps_document varchar(4000),
+	@ps_document nvarchar(max),
 	@pl_material_id int OUTPUT )
 AS
 DECLARE @ptrval binary(16)

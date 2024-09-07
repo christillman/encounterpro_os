@@ -75,7 +75,7 @@ DECLARE @ls_tablename varchar(64),
 		@ls_columnname varchar(64),
 		@ll_count int,
 		@ll_error int,
-		@ls_sql varchar(4000),
+		@ls_sql nvarchar(max),
 		@ll_IsPrimaryKey int
 
 DECLARE lc_refs CURSOR LOCAL FAST_FORWARD FOR
