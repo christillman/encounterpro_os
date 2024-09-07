@@ -95,7 +95,9 @@ SET @ll_length = LEN(CONVERT(varchar(50), @ps_progress))
 
 IF @ll_length <= 40
 	BEGIN
-	SET @ls_progress_value = CONVERT(varchar(40), @ps_progress)
+	SET @ls_progress_value = CASE WHEN @ps_progress LIKE char(13) + char(10) + '%' THEN substring(@ps_progress,3,100) ELSE @ps_progress END
+	SET @ls_progress_value = CASE WHEN @ls_progress_value LIKE '%' + char(13) + char(10) THEN left(@ls_progress_value, len(@ls_progress_value) - 2) ELSE @ls_progress_value END
+	SET @ls_progress_value = CONVERT(varchar(40), TRIM(@ls_progress_value))
 
 	INSERT INTO p_observation_result_Progress (
 		cpr_id,
