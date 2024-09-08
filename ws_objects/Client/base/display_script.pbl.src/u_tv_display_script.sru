@@ -48,6 +48,7 @@ fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
 long textcolor = 33554432
+long backcolor = 15793151
 borderstyle borderstyle = stylelowered!
 boolean hideselection = false
 string picturename[] = {"Report!","Step!","Custom041!","Custom009!","",""}
@@ -438,6 +439,7 @@ expanditem(ll_handle)
 if last_command_handle > 0 then
 	selectitem(last_command_handle)
 	setfirstvisible(last_command_handle)
+	expandall(last_command_handle)
 end if
 
 setredraw(true)
@@ -866,7 +868,7 @@ CHOOSE CASE upper(lstr_parent_item_data.node_type)
 				if lstr_new_item_data.command_index > 0 then
 					last_command_handle = ll_new_handle
 					last_command_index = lstr_new_item_data.command_index
-					expanditem(ll_new_handle)
+					expandall(ll_new_handle)
 				end if
 			end if
 		next
@@ -1955,11 +1957,13 @@ event key;//keyflags:
 // Ctrl-V = Paste
 // Delete = Delete
 // Insert = Append Below (bottom if Display Script is selected)
-// Shift-Insert = Append Above (Top if Display Script is selected)
+// Shift-Insert = Insert Above (Top if Display Script is selected)
 // Shift-up = move up
 // Shift-down = move down
 // Ctrl-Up = Enable the item
 // Ctrl-Down = Disable the item
+// Space = Expand / Collapse Item
+// Shift-Space = Expand / Collapse all children
 
 integer li_sts
 str_item_data lstr_item_data
@@ -2167,6 +2171,8 @@ if li_sts <= 0 then
 end if
 
 lstr_item_data = ltvi_item.data
+last_command_handle = newhandle
+last_command_index = lstr_item_data.command_index
 
 if upper(lstr_item_data.node_type) = "COMMAND" then
 	this.event post command_selected(lstr_item_data.command)
