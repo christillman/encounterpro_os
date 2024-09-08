@@ -6857,10 +6857,10 @@ for i = li_first_command_index to lstr_display_script.display_command_count
 			is_on_break = true
 			
 			SetPointer(Arrow!)
+			this.scroll_down() // to see the bottom of scripts during debugging
 			//if auto_redraw_off then set_redraw(true)
 			return ls_rtf
 		end if
-
 		yield()
 		// If not valid, likely the user clicked Finished in the window to cancel the script
 		if not isvalid(this) then exit
