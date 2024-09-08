@@ -79,7 +79,7 @@ INSERT INTO c_Patient_Material (
 VALUES (
 	@ps_title,
 	@pl_category,
-	@ps_document,
+	convert(varbinary(max),@ps_document),
 	'OK')
 SELECT @pl_material_id = @@IDENTITY
 
