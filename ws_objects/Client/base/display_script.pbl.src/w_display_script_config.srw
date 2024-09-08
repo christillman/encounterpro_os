@@ -29,12 +29,15 @@ end type
 end forward
 
 global type w_display_script_config from w_window_base
+integer x = 18
 integer width = 3063
-integer height = 2036
+integer height = 2016
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
+long backcolor = 1073741824
+integer transparency = 5
 boolean auto_resize_objects = false
 tv_display_script tv_display_script
 cb_finished cb_finished
@@ -236,6 +239,9 @@ string ls_parent_config_object_id
 
 popup = message.powerobjectparm
 
+this.width = this.width * 0.3
+this.height = this.height * 0.9
+
 if popup.data_row_count < 3 then
 	log.log(this, "w_display_script_config:open", "Invalid Parameters", 4)
 	close(this)
@@ -300,6 +306,13 @@ if li_sts <= 0 then close(this)
 
 end event
 
+event key;call super::key;
+if key = KeyN! then
+	tv_display_script.select_next()
+end if
+
+end event
+
 type pb_epro_help from w_window_base`pb_epro_help within w_display_script_config
 integer x = 2994
 integer y = 8
@@ -316,6 +329,7 @@ integer y = 136
 integer width = 3013
 integer height = 1640
 integer taborder = 20
+integer transparency = 5
 long backcolor = 134217750
 end type
 
@@ -334,6 +348,7 @@ if debugging and ll_command_index = 0 and upper(pstr_command.status) = "OK" then
 	last_command_index = ll_command_index
 	rtf_display.set_breakpoint(pstr_command)
 	rtf_display.display_script_reentry()
+	parent.cb_next.setfocus()
 end if
 
 end event
@@ -356,6 +371,7 @@ end type
 
 event clicked;integer li_sts
 
+rtf_display.show_newlines = false
 if allow_editing and tv_display_script.changes_made then
 	li_sts = tv_display_script.save_changes()
 	if li_sts <= 0 then
@@ -694,6 +710,7 @@ cb_stop_debugging.visible = true
 cb_next.visible = true
 debugging = true
 last_command_index = 0
+rtf_display.show_newlines = true
 
 rtf_display.redisplay()
 
@@ -756,6 +773,7 @@ cb_next.visible = false
 debugging = false
 last_command_index = 0
 
+rtf_display.show_newlines = false
 rtf_display.redisplay()
 
 
@@ -774,7 +792,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Next"
+string text = "Next (n key)"
 end type
 
 event clicked;tv_display_script.select_next()
