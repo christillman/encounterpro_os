@@ -126,7 +126,7 @@ boolean lb_exiting_nested_params
 lb_exiting_nested_params = exiting_nested_params
 exiting_nested_params = false
 
-li_sts = OpenUserObject(lo_new_param, &
+li_sts = this.OpenUserObject(lo_new_param, &
 						params.params[current_index[nesting_level]].param_class,&
 						obj_x, &
 						obj_y)
@@ -390,8 +390,10 @@ if params.param_count <= 0 then
 	Return 1
 end if
 
+if IsNull(param_object) OR NOT IsValid(param_object) THEN return 1
+
 // validate param required
-If param_object.check_required() < 0 Then return
+If param_object.check_required() < 0 Then return 1
 
 // get the report attribute value
 //open_obj[current_index[nesting_level]].set_values(rpt_params,current_index[nesting_level])
@@ -447,6 +449,7 @@ if li_sts = 0 then
 end if
 
 activate_param(true)
+return 0
 
 end event
 

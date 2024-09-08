@@ -34,7 +34,7 @@ integer li_sts
 // If there aren't any params then we're done
 if params.param_count = 0 Then return 0
 
-li_sts = OpenUserObject(param_object, &
+li_sts = this.OpenUserObject(param_object, &
 						params.params[1].param_class,&
 						obj_x, &
 						obj_y)
@@ -96,7 +96,7 @@ if len(ls_value) > 0 then
 	f_attribute_add_attribute(attributes, params.params[1].token1, ls_value)
 end if
 
-li_sts = OpenUserObject(param_object, &
+li_sts = this.OpenUserObject(param_object, &
 						params.params[1].param_class,&
 						obj_x, &
 						obj_y)
