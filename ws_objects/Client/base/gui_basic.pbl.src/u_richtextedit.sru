@@ -42,6 +42,8 @@ long	detail_fromline=1,detail_fromchar=1,detail_toline=0,detail_tochar=0
 long	header_fromline=1,header_fromchar=1,header_toline=0,header_tochar=0
 long	footer_fromline=1,footer_fromchar=1,footer_toline=0,footer_tochar=0
 
+public boolean show_newlines = false
+
 private str_rtf_input_field input_fields[]
 private long input_field_count
 
@@ -384,7 +386,7 @@ if ll_startchar < 1 then ll_startchar = 1
 
 // Select the text and clear it
 SelectText(ll_startline, ll_startchar, ll_endline, ll_endchar)
-clear()
+replacetext("")
 
 // Restore the previous displayonly setting
 displayonly = lb_displayonly
@@ -402,12 +404,12 @@ lb_displayonly = displayonly
 
 displayonly = false
 selecttextall(Footer!)
-clear()
+replacetext("")
 selecttextall(Header!)
-clear()
+replacetext("")
 // must clear detail last, so cursor ends up there
 selecttextall(Detail!)
-clear()
+replacetext("")
 set_margins()
 set_color(color_text_normal)
 set_bold(false)
@@ -570,7 +572,7 @@ displayonly = false
 
 selecttext(pl_startline, pl_startchar, pl_endline, pl_endchar)
 
-clear()
+replacetext("")
 
 set_margins()
 
@@ -659,7 +661,7 @@ displayonly = false
 
 select_text(pstr_charrange)
 
-clear()
+replacetext("")
 
 set_margins()
 
@@ -945,6 +947,9 @@ else
 end if
 
 for i = 1 to (pi_lines - ll_blank_lines + 1)
+	if show_newlines then
+		add_text("+")
+	end if
 	add_cr()
 next
 return
@@ -2499,7 +2504,11 @@ selecttext(ll_line - 1, 1, 0, 0)
 ll_prev_length = len(textline())
 
 // Now select everthing from the end of the previous line to the end of the specified line
-selecttext(ll_line - 1, ll_prev_length + 1, ll_line, 1)
+if show_newlines then
+	selecttext(ll_line - 1, ll_prev_length - 1, ll_line, 1)	
+else
+	selecttext(ll_line - 1, ll_prev_length + 1, ll_line, 1)
+end if
 replacetext("")
 
 set_margins()
@@ -2510,15 +2519,12 @@ displayonly = lb_displayonly
 end subroutine
 
 public subroutine add_cr ();
-replacetext("~r~n")
 
-//set_margins()
-
-//set_color(color_text_normal)
-//set_bold(false)
-//set_italic(false)
-//set_underline(false)
-
+if show_newlines then
+	replacetext("|~r~n")
+else
+	replacetext("~r~n")
+end if
 
 return
 
