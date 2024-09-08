@@ -513,11 +513,15 @@ log.log_db_with_seconds(this, "display_script", ls_msg, 2, ld_elapsed)
 
 // Save the final footprint end
 command[ll_command_index].footprint.to_position = charposition()
-// The charposition() actually returns the character after the insertion point but we want the character before the insertion point, unless the insertion point is before the first character already.
+// The charposition() actually returns the character after the insertion point but we want the character before the insertion point, 
+// unless the insertion point is before the first character already.
 if command[ll_command_index].footprint.to_position.char_position > 1 then
 	command[ll_command_index].footprint.to_position.char_position -= 1
 end if
-
+if command[ll_command_index].footprint.to_position.char_position = 1 &
+	and command[ll_command_index].footprint.to_position.line_number > command[ll_command_index].footprint.from_position.line_number then
+	command[ll_command_index].footprint.to_position.line_number -= 1
+end if
 // Restore the previous parent command index
 parent_command_index = ll_parent_command_index
 
