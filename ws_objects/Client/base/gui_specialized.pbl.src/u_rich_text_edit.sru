@@ -624,7 +624,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		li_lines = integer(f_attribute_find_attribute(pstr_command.attributes, "lines"))
 		blank_lines(li_lines)
 	CASE "body"
-		blank_lines(0)
+		add_cr()
 		set_detail()
 		return 1
 	CASE "capture signature"
@@ -3962,7 +3962,7 @@ for i = ll_count to 1 step -1
 	
 	ll_result_count = luo_results.retrieve(current_patient.cpr_id, ll_observation_sequence)
 	if ll_result_count > 0 then
-		if not lb_first_result then blank_lines(0)
+		if not lb_first_result then add_cr()
 		li_sts = luo_results.display_observation_sequence(ll_observation_sequence, ps_result_type, "Y", pb_continuous, this)
 		if li_sts > 0 then lb_first_result = false
 	end if
@@ -4104,7 +4104,7 @@ CHOOSE CASE lower(ps_format)
 	CASE "message", "task"
 		// Show services in reverse chronological order
 		for i = ll_count to 1 step -1
-			blank_lines(1)
+			add_cr()
 			set_margins(0, 0, 0)
 			ll_patient_workplan_item_id = puo_data.object.patient_workplan_item_id[i]
 			ls_service = puo_data.object.ordered_service[i]
@@ -4169,7 +4169,7 @@ CHOOSE CASE lower(ps_format)
 				// Print another line if the ordered-for isn't the owned-by
 				ls_owned_by = puo_data.object.owned_by[i]
 				if ls_owned_by <> ls_ordered_for and lower(ls_status) <> "skipped" then
-					blank_lines(0)
+					add_cr()
 					if lower(ls_status) = "completed" then
 						add_text("Completed By: ")
 					elseif lower(ls_status) = "cancelled" then
@@ -4186,7 +4186,7 @@ CHOOSE CASE lower(ps_format)
 		
 				ls_text = puo_data.get_field_display(i, "service", "description")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					
 					add_text("Subject: ")
 					
@@ -4198,18 +4198,18 @@ CHOOSE CASE lower(ps_format)
 		
 				ls_text = puo_data.get_field_display(i, "service", "message")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					add_text("Message: ")
 					add_text(ls_text)
 				end if
 		
 				ls_text = puo_data.get_field_display(i, "service", "disposition")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					add_text("Disposition: ")
 					add_text(ls_text)
 				end if
-				blank_lines(0)
+				add_cr()
 			end if
 		next
 		add_cr()

@@ -1737,7 +1737,7 @@ for i = 1 to li_constituent_count
 									// case put a carriage return between them so they all line up at
 									// the wrap margin
 									if not pb_continuous then
-										puo_rtf.blank_lines(0)
+										puo_rtf.add_cr()
 										puo_rtf.add_tab()
 									else
 										puo_rtf.Add_text(lsa_group_sep[i])
@@ -1930,7 +1930,7 @@ else
 		puo_rtf.delete_from_position(lstr_startpos)
 	else
 		// Otherwise, add a carriage return and indent one level
-		puo_rtf.blank_lines(0)
+		puo_rtf.add_cr()
 		puo_rtf.next_level()
 	end if
 	
@@ -1948,7 +1948,7 @@ else
 							DO WHILE ll_row > 0 and ll_row <= ll_count
 								li_sts = display_observation(ll_row, ps_result_type, lsa_title_sep[i], false, false, lb_child_context_needed, ps_abnormal_flag, pb_include_comments, pb_include_attachments, puo_rtf)
 								if li_sts > 0 then
-									if puo_rtf.linelength() > 0 then puo_rtf.blank_lines(0)
+									if puo_rtf.linelength() > 0 then puo_rtf.add_cr()
 									lb_loop_found = true
 								end if
 								
@@ -2080,14 +2080,14 @@ else
 				CASE "R"
 					li_sts = display_results(pl_row, ps_result_type, false, lsa_how[i], ps_abnormal_flag, lsa_group_sep[i], lsa_title_sep[i], lsa_item_sep[i], puo_rtf)
 					if li_sts > 0 then
-						puo_rtf.blank_lines(0)
+						puo_rtf.add_cr()
 						lb_loop_found = true
 					end if
 				CASE "C"
 					if pb_include_comments then
 						li_sts = display_comments(pl_row, false, lsa_how[i], ps_abnormal_flag, pb_include_attachments, puo_rtf)
 						if li_sts > 0 then
-							puo_rtf.blank_lines(0)
+							puo_rtf.add_cr()
 							lb_loop_found = true
 						end if
 					end if
