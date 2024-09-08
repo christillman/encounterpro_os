@@ -1712,7 +1712,8 @@ return 0
 
 end function
 
-private function treeviewitem create_command_item (str_c_display_script_command pstr_command, integer pi_cmd_index);string ls_description
+private function treeviewitem create_command_item (str_c_display_script_command pstr_command, integer pi_cmd_index);string ls_description, ls_value
+long ll_command_id
 str_item_data lstr_new_item_data
 treeviewitem ltvi_new_item
 
@@ -1722,7 +1723,18 @@ else
 	ls_description = wordcap(pstr_command.context_object + " " + pstr_command.display_command)
 end if
 
-ls_description += "         (" + string(pstr_command.display_script_id) + " : " + string(pstr_command.display_command_id) + " c[" + string(pi_cmd_index) + "]" + ")"
+ll_command_id = pstr_command.display_command_id
+select top 1 value into :ls_value
+from c_Display_Script_Cmd_Attribute
+where display_command_id = :ll_command_id
+and attribute IN ('header_phrase', 'print_string', 'treatment_type', 'progress_type', 'progress_key')
+order by attribute;
+tf_check()
+if not isNull(ls_value) and len(ls_value) > 0 then
+	ls_description += " " + ls_value
+end if
+
+ls_description += "         (" + string(pstr_command.display_script_id) + " c[" + string(pi_cmd_index) + "]" + ")"
 
 // Set data structure for new item
 lstr_new_item_data.node_type = "COMMAND"
@@ -1962,12 +1974,7 @@ long ll_dc_idx
 long i
 long ll_prev_handle
 
-
 if not allow_editing then return
-
-if key = KeyShift! then return
-if key = KeyControl! then return
-
 
 ll_handle = FindItem ( CurrentTreeItem!	, 0 )
 if ll_handle <= 0 then return
@@ -1982,6 +1989,9 @@ if key = KeyD! and keyflags = 2 then
 	debug_display_script_id = lstr_item_data.display_script_id
 	debug_display_command_id = lstr_item_data.display_command_id
 end if
+
+if key = KeyShift! then return
+if key = KeyControl! then return
 
 CHOOSE CASE upper(lstr_item_data.node_type)
 		
