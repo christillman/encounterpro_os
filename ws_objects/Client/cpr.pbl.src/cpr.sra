@@ -178,6 +178,7 @@ long debug_display_script_id
 long debug_display_command_id
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -217,17 +218,17 @@ string client_link_start
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 226
+long target_modification_level = 227
 
-date compile_date = date("2024-08-17")
+date compile_date = date("2024-09-08")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "3.0"
+string build = "4.0"
 // Resulting in 7.2.3.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   3   0
+//  7   2   4   0
 
 // Using Powerbuilder Runtime 2797
 
@@ -258,7 +259,6 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
