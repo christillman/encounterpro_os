@@ -658,10 +658,8 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-cb_run.text = "Run"
-cb_debug.text = "Debug"
-
 rtf_display.redisplay()
+tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 
 end event
@@ -692,9 +690,6 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-cb_run.text = "Run"
-cb_debug.text = "Debug"
-
 li_sts = tv_display_script.selected_command(lstr_command)
 if li_sts <= 0 then
 	li_sts = tv_display_script.first_command(lstr_command)
@@ -713,6 +708,7 @@ last_command_index = 0
 rtf_display.show_newlines = true
 
 rtf_display.redisplay()
+tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 // If the rtf control did actually break, then highlight the command that it broke on
 if rtf_display.breakpoint(lstr_command) then
@@ -775,7 +771,7 @@ last_command_index = 0
 
 rtf_display.show_newlines = false
 rtf_display.redisplay()
-
+tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 
 end event
