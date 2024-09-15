@@ -1729,14 +1729,16 @@ if luo_this.sqlcode = 0 then
 				database_mode,
 				database_status,
 				master_configuration_date,
-				modification_level
+				modification_level,
+				client_link
 		INTO :ll_customer_id,
 				:db_script_major_release,
 				:db_script_database_version,
 				:ls_database_mode,
 				:ls_database_status,
 				:ldt_master_configuration_date,
-				:ll_modification_level
+				:ll_modification_level,
+				:client_link
 		FROM c_Database_Status
 		USING luo_this;
 		if not this.check() then return -1

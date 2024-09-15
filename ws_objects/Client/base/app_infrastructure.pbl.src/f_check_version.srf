@@ -52,7 +52,6 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 	ls_product_underscore = f_string_substitute(gnv_app.product_name," ","_")
 	if sqlca.logid = "demo1" OR (Pos(gnv_app.program_directory,"Demo") > 0 &
 			OR Pos(gnv_app.program_filename,"Demo") > 0 OR Pos(sqlca.client_link,"Demo") > 0) then
-		ls_expectedfile = ls_product_underscore + "_Demo_Install_" + string(sqlca.modification_level) + ".exe"
 		ls_expectedfile =  ls_product_underscore + "_Azure_Demo_Install_" + string(sqlca.modification_level) + ".exe"
 	else		
 		ls_expectedfile =  ls_product_underscore + "_Install_" + string(sqlca.modification_level) + ".exe"
@@ -79,19 +78,22 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 		Else
 			ls_errormsg = iRun.LastErrorText
 			openwithparm(w_pop_message, "The download of " + ls_expectedfile + " was not completed. Please try again soon.")
+			log.log(po_null, "f_check_version:0074", ls_errormsg, 4)
 		End If
 	End if
 	
 	// downloaded just now, or previously
 	if FileExists(ls_target) then
 		openwithparm(w_pop_message, gnv_app.product_name + " will quit now, and the new version will be installed. Afterwards, please start " + gnv_app.product_name + " again to use the new version.")
-		li_sts = Run(ls_target)
-		If li_sts <> 1 Then
+		If NOT iRun.ShellRun(ls_target, "runas", iRun.SW_SHOWNORMAL) Then
+			ls_errormsg = iRun.LastErrorText
+			log.log(po_null, "f_check_version:0083", ls_errormsg, 4)
 			openwithparm(w_pop_message, "The installation of " + ls_expectedfile + " was not completed. Please request assistance from your " + gnv_app.product_name + " representative.")
 		End If
 		return -1 // quit and restart
 	else 
 		openwithparm(w_pop_message, "The download was not completed. Please try again soon.")
+		log.log(po_null, "f_check_version:0087", "File " + ls_target + " does not exist.", 2)
 	end if
 
 end if
