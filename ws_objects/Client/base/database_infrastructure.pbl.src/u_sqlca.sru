@@ -652,7 +652,6 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
-
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -733,6 +732,7 @@ public function long upgrade_material_id (ref string as_filename)
 public function long load_schema_file (string ps_rootpath, long pl_modification_level, ref string as_filename)
 public function string fn_strength (string ps_form_rxcui)
 public subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
+public subroutine test_playback ()
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -750,8 +750,10 @@ if transaction_open = false then
 end if
 
 rollback using luo_this;
-
+// When you change the value of AutoCommit from false to true, PowerBuilder issues a COMMIT statement by default.
 autocommit = true
+// After rolling back, re-record the logs that occurred during the transaction
+mylog.play_back()
 
 if transaction_open = false then
 	return
@@ -1305,7 +1307,9 @@ else
 //	commit using luo_this;
 	transaction_level = 0
 	transaction_open = false
+	// When you change the value of AutoCommit from false to true, PowerBuilder issues a COMMIT statement by default.
 	autocommit = true
+	mylog.clear_playback()
 end if
 
 if li_transaction_level > 0 then	
@@ -1324,6 +1328,7 @@ transaction_level += 1
 transaction_open = true
 caller_object[transaction_level] = po_caller_object
 caller_text[transaction_level] = ps_caller_text
+mylog.clear_playback()
 
 mylog.log(this, "u_sqlca.begin_transaction:0009", "level=" + string(transaction_level) + ", caller=" + who_called(po_caller_object) + ", script=" + ps_caller_text, 1)
 
@@ -3732,7 +3737,7 @@ if ll_dochandle = -1 then
 	DebugBreak()
 	return -1
 end if
-FileWrite(ll_dochandle, "Starting upgrade " + string(Now()))
+FileWrite(ll_dochandle, "Starting upgrade " + string(Today()) + " " + string(Now()))
 
 li_please_wait_index = f_please_wait_open()
 f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
@@ -3757,7 +3762,7 @@ for li_script = 1 to li_num_scripts
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
-FileWrite(ll_dochandle, "Finished upgrade " + string(Now()))
+FileWrite(ll_dochandle, "Finished upgrade " + string(Today()) + " " + string(Now()))
 FileClose(ll_dochandle)
 
 commit_transaction()
@@ -4098,6 +4103,14 @@ end if
 
 return
 
+
+end subroutine
+
+public subroutine test_playback ();
+begin_transaction(this,"Test")
+log.log(this,"test_playback","Test 1",2)
+log.log(this,"test_playback","Test 2",2)
+rollback_transaction()
 
 end subroutine
 
