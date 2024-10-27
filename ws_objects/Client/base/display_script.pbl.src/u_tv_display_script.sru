@@ -363,12 +363,16 @@ integer li_sts
 // Now loop through each display script we're referenced and save it
 for i = 1 to display_script_count
 	ll_old_display_script_id = display_script[i].display_script_id
+	tf_begin_transaction(this, "Save Display Script")
 	li_sts = f_save_display_script(display_script[i])
 	if li_sts <= 0 then
+		sqlca.rollback_transaction()
 		log.log(this, "u_tv_display_script.save_changes:0011", "Saving display script failed", 4)
-		openwithparm(w_pop_message, "Saving display script failed")
+		// already displayed with log statement at level 4
+		// openwithparm(w_pop_message, "Saving display script failed")
 		return -1
 	end if
+	tf_commit_transaction( )
 next
 
 changes_made = false
