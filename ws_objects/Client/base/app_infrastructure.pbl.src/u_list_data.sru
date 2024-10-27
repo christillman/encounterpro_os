@@ -6277,17 +6277,16 @@ long i
 integer li_sts
 
 // Search the menu cache
-for i = 1 to menu_cache_count
-	if pl_menu_id = menu_cache[i].menu_id then
-		if config_mode then
-			// if we're in config mode then we want to make sure we have the latest
-			// menu items if they've changed
-			li_sts = get_menu_items(menu_cache[i])
+if NOT config_mode then
+	// if we're in config mode then we want to make sure we have 
+	// the latest menu items if they've changed, so refresh below.
+	// Only consult cache if not in config mode
+	for i = 1 to menu_cache_count
+		if pl_menu_id = menu_cache[i].menu_id then
+		  return menu_cache[i]
 		end if
-
-	  return menu_cache[i]
-	end if
-next
+	next
+end if
 
 // Any script calling this method is really asking for the active menu with the same [id] as
 // the specified menu_id.
