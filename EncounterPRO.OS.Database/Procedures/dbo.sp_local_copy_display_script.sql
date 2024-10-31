@@ -181,7 +181,10 @@ IF @@ERROR <> 0
 SET @ll_new_display_script_id = SCOPE_IDENTITY()
 
 IF @ll_new_display_script_id <= 0 OR @ll_new_display_script_id IS NULL
+	BEGIN
+	ROLLBACK TRANSACTION
 	RETURN -1
+	END
 
 -- Disable any other copies of this display_script
 UPDATE c_display_script
@@ -304,6 +307,12 @@ WHILE @@FETCH_STATUS = 0
 			AND display_command_id = @ll_display_command_id
 			AND attribute_sequence = @ll_attribute_sequence
 			END
+		ELSE
+			-- recursive call failed, bail out
+			BEGIN
+			ROLLBACK TRANSACTION
+			RETURN -1
+			END		
 		END
 	FETCH lc_NestedScript INTO @ll_display_command_id, @ll_attribute_sequence, @ls_attribute, @ls_value 
 	END
