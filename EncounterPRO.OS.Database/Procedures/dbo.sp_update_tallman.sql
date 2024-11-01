@@ -41,13 +41,11 @@ join c_Drug_Brand b
 */
 
 declare @SQL nvarchar(max)
-declare @tablename varchar(100)
-declare @colname varchar(100)
+declare @table_name varchar(100)
+declare @column_name varchar(100)
 
-drop table if exists #drive_update
-create table #drive_update (tablename varchar(100), colname varchar(100))
-insert into #drive_update values
-('Uganda_Drugs', 'brand_name'),
+create table #cols_update (table_name varchar(100), column_name varchar(100))
+insert into #cols_update values
 ('Uganda_Drugs', 'generic_name'),
 ('Uganda_Drugs', 'SCD_PSN_Version'),
 ('Uganda_Drugs', 'SBD_Version'),
@@ -71,22 +69,22 @@ insert into #drive_update values
 
 
 DECLARE cr_update CURSOR FOR 
-select tablename, colname from #drive_update
+select table_name, column_name from #cols_update
 
 OPEN cr_update
 
-FETCH NEXT FROM cr_update INTO @tablename, @colname
+FETCH NEXT FROM cr_update INTO @table_name, @column_name
  
 WHILE @@FETCH_STATUS = 0
 	BEGIN
 	SET @SQL = '
-	UPDATE '+@tablename+' 
-	SET  '+@colname+' = dbo.fn_tallman('+@colname+') 
-	WHERE '+@colname+' != dbo.fn_tallman('+@colname+') COLLATE SQL_Latin1_General_CP1_CS_AS
+	UPDATE '+@table_name+' 
+	SET  '+@column_name+' = dbo.fn_tallman('+@column_name+') 
+	WHERE '+@column_name+' != dbo.fn_tallman('+@column_name+') COLLATE SQL_Latin1_General_CP1_CS_AS
 	'
 	exec sp_executeSQL @SQL
 
-	FETCH NEXT FROM cr_update INTO @tablename, @colname
+	FETCH NEXT FROM cr_update INTO @table_name, @column_name
 	END
 
 CLOSE cr_update
