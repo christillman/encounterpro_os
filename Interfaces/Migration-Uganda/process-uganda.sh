@@ -2,7 +2,7 @@
 # Download PDF from Uganda website 
 # https://www.nda.or.ug/drug-register-downloads/
 # e.g.
-# https://www.nda.or.ug/wp-content/uploads/2022/04/NATIONAL-DRUG-REGISTER-OF-UGANDA-HUMAN-MEDICINES-APRIL-2022.pdf
+# https://www.nda.or.ug/wp-content/uploads/2024/07/NATIONAL-DRUG-REGISTER-OF-UGANDA-HUMAN-MEDICINES-JULY-2024-1.pdf
 # https://www.adobe.com/acrobat/online/pdf-to-excel.html to convert to Excel
 
 # Open in OpenOffice Calc
@@ -518,5 +518,5 @@ sed 's/   */ /g' | cut -f 2- -d "," > last.csv
 #	4. Add the header back in
 # NDA	LICENSE HOLDER	LOCAL TECHNICAL REPRESENTATIVE	NAME OF DRUG	GENERIC NAME OF DRUG	STRENGTH OF DRUG	MANUFACTURER	COUNTRY OF MANUFACTURE	DOSAGE FORM	PACK SIZE	REG DATE
 # 	4. Save as UgandaApr2022.csv, close the worksheet
-# 	6. Use ImportKenya.ps1 to import Uganda2022.csv to the database
+# 	6. Use ImportUganda.ps1 to import Uganda2022.csv to the database
 # 	7. Use ImportUgandaDrugs.sql to repopulate Uganda_Drugs table.

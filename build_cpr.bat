@@ -22,7 +22,7 @@ xcopy "%build_folder%\*.exe" "%build_folder%Demo" /S /Y
 
 
 copy %build_folder%\..\pb.ini "%build_folder%Demo"
-copy %build_folder%\..\EncounterPRO.ini "%build_folder%Demo"
+copy %build_folder%\..\EncounterPRODemo.ini "%build_folder%Demo\EncounterPRO.ini"
 copy "%build_folder%\..\..\Resources\Open Source License.rtf" "%build_folder%Demo"
 
 REM now adding runtime into the EPro folder, so we don't need to run runtime installer

@@ -218,17 +218,17 @@ string client_link_start
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 227
+long target_modification_level = 228
 
-date compile_date = date("2024-09-08")
+date compile_date = date("2024-11-01")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "4.0"
-// Resulting in 7.2.3.0
+string build = "5.0"
+// Resulting in 7.2.5.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   4   0
+//  7   2   5   0
 
 // Using Powerbuilder Runtime 2797
 
