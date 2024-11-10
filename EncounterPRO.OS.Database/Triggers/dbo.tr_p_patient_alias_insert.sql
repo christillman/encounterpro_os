@@ -78,18 +78,6 @@ WHERE a.alias_sequence < i.alias_sequence
 AND i.current_flag = 'Y'
 AND a.current_flag = 'Y'
 
-UPDATE p
-SET last_name = i.last_name,
-	first_name = i.first_name,
-	middle_name = i.middle_name,
-	name_prefix = i.name_prefix,
-	name_suffix = i.name_suffix,
-	degree = i.degree
-FROM p_Patient p
-	INNER JOIN inserted i
-	ON p.cpr_id = i.cpr_id
-WHERE i.current_flag = 'Y'
-AND i.alias_type = 'Primary'
 
 GO
 
