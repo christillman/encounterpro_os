@@ -78,14 +78,14 @@ RETURNS @latest_scripts TABLE (
 	[database_version] [varchar] (4) NOT NULL ,
 	[script_name] [varchar] (255) NOT NULL ,
 	[description] [varchar] (255) NOT NULL ,
-	[db_script] [text] NULL ,
+	[db_script] [nvarchar](max) NULL ,
 	[last_executed] [datetime] NULL ,
 	[last_completion_status] [varchar] (12) NULL ,
 	[status] [varchar] (12) NOT NULL ,
 	[id] [uniqueidentifier] NOT NULL ,
 	[modification_level] [int] NULL ,
 	[sort_sequence] [int] NULL ,
-	[comment] [text] NULL,
+	[comment] [nvarchar](max) NULL,
 	[allow_users] [bit] NOT NULL )
 
 AS

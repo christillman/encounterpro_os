@@ -68,7 +68,7 @@ CREATE PROCEDURE [dbo].[jmj_upload_module] (
 	@ps_module_type [varchar] (24) ,
 	@ps_context_object [varchar] (24) ,
 	@ps_object_id [varchar] (36) ,
-	@ps_module_data [text] ,
+	@ps_module_data [nvarchar](max) ,
 	@ps_user_id [varchar] (24) )
 AS
 

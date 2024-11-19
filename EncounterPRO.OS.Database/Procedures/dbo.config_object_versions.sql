@@ -85,7 +85,7 @@ AS
 
 --DECLARE @object TABLE (
 --	[version] [int] NOT NULL ,
---	[version_description] [text] NULL ,
+--	[version_description] [nvarchar](max) NULL ,
 --	[release_status] [varchar] (24) NOT NULL ,
 --	[release_status_date_time] [datetime] NULL ,
 --	[downloaded] [int] NOT NULL DEFAULT (0) )

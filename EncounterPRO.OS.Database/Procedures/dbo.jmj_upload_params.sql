@@ -106,8 +106,8 @@ AS
 --	[initial3] [varchar](128) NULL,
 --	[initial4] [varchar](128) NULL,
 --	[required_flag] [char](1) NULL,
---	[helptext] [text] NULL,
---	[query] [text] NULL,
+--	[helptext] [nvarchar](max) NULL,
+--	[query] [nvarchar](max) NULL,
 --	[min_build] [varchar](12) NULL,
 --	[last_updated] [datetime] NOT NULL,
 --	[param_id] [uniqueidentifier] NOT NULL

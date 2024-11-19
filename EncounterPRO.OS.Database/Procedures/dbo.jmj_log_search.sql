@@ -70,7 +70,7 @@ DECLARE @log TABLE (
 	[sql_version] [varchar](256) NULL,
 	[spid] [int] NULL ,
 	progress_seconds numeric(18,4) NULL,
-	[log_data] [text] NULL,
+	[log_data] [nvarchar](max) NULL,
 	scribe_user_full_name varchar(64) NULL
 	)
 

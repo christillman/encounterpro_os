@@ -76,7 +76,7 @@ RETURNS @progress TABLE (
 	[progress_date_time] [datetime] NOT NULL,
 	[progress_type] [varchar](24) NOT NULL,
 	[progress_key] [varchar](40) NULL,
-	[progress] [text] NULL,
+	[progress] [nvarchar](max) NULL,
 	[created] [datetime] NOT NULL ,
 	[created_by] [varchar](24) NOT NULL
 )

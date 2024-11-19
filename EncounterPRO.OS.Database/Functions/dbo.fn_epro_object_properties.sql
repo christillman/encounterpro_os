@@ -71,7 +71,7 @@ RETURNS @columns TABLE (
 	[property_name] [varchar](64) NOT NULL,
 	[property_datatype] [varchar](12) NOT NULL,
 	[property_column] [varchar](64) NULL,
-	[property_formula] [text] NULL,
+	[property_formula] [nvarchar](max) NULL,
 	[cache_column_length] [int] NULL,
 	[property_id] [int] NULL,
 	[property_type] [varchar] (12) NOT NULL)

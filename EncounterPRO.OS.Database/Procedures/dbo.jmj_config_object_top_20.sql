@@ -76,7 +76,7 @@ DECLARE @objects TABLE (
 	[config_object_type] [varchar] (24) NOT NULL ,
 	[context_object] [varchar] (24) NOT NULL ,
 	[description] [varchar] (80) NOT NULL ,
-	[long_description] [text] NULL ,
+	[long_description] [nvarchar](max) NULL ,
 	[config_object_category] [varchar] (80) NULL ,
 	[installed_version] [int] NULL ,
 	[installed_version_date] [datetime] NULL ,

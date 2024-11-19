@@ -75,7 +75,7 @@ RETURNS @attribute TABLE (
 	[cpr_id] [varchar] (12)  NULL ,
 	[attribute] [varchar] (64)  NOT NULL ,
 	[value] [varchar] (255)  NULL ,
-	[message] [text]  NULL ,
+	[message] [nvarchar](max)  NULL ,
 	[created_by] [varchar] (24)  NOT NULL ,
 	[created] [datetime] NULL )
 
