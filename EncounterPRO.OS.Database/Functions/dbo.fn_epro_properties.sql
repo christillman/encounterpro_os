@@ -252,8 +252,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_epro_properties]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_epro_properties] TO [cprsystem]
 GO
 

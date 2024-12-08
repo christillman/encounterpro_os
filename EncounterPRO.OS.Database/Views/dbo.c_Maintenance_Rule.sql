@@ -83,16 +83,10 @@ SELECT [maintenance_rule_id],
 FROM c_Maintenance_Patient_Class
 WHERE maintenance_rule_type = 'Rule'
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Rule]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Rule] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Rule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Rule] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Rule]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Rule] TO [cprsystem]
 GO
 

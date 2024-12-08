@@ -85,8 +85,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_all_patients_overdue_vaccines]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_all_patients_overdue_vaccines] TO [cprsystem]
 GO
 

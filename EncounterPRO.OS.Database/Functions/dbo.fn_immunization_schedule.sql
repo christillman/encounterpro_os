@@ -144,8 +144,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_immunization_schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_immunization_schedule] TO [cprsystem]
 GO
 

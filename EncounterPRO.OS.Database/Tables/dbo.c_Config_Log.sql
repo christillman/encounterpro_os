@@ -91,17 +91,11 @@ ALTER TABLE [dbo].[c_Config_Log]
 	CONSTRAINT [DF_c_Config_Log_operation_datetime]
 	DEFAULT (dbo.get_client_datetime()) FOR [operation_datetime]
 GO
-GRANT INSERT
-	ON [dbo].[c_Config_Log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Config_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Config_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Config_Log] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Config_Log]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Config_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Config_Log] SET (LOCK_ESCALATION = TABLE)
 GO

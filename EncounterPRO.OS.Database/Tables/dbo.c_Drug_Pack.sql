@@ -12,7 +12,17 @@ CREATE TABLE [c_Drug_Pack](
 	[valid_in] [varchar](100) NULL,
  CONSTRAINT [PK_Drug_Pack] PRIMARY KEY CLUSTERED 
 (
-	[rxcui] ASC
+	[pack_rxcui] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+GRANT DELETE ON [dbo].[c_Drug_Pack] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[c_Drug_Pack] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[c_Drug_Pack] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[c_Drug_Pack] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[c_Drug_Pack] TO [cprsystem]
 GO

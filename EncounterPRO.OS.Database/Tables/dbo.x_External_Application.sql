@@ -66,12 +66,12 @@ GO
 CREATE TABLE [dbo].[x_External_Application] (
 		[external_application_id]     [varchar](24) NOT NULL,
 		[description]                 [varchar](80) NOT NULL,
-		[notes]                       [text] NULL,
+		[notes]                       [nvarchar](max) NULL,
 		[created]                     [datetime] NOT NULL,
 		[created_by]                  [varchar](24) NOT NULL,
 		[status]                      [varchar](12) NOT NULL,
 		[id]                          [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[x_External_Application]
 	ADD
@@ -97,25 +97,15 @@ ALTER TABLE [dbo].[x_External_Application]
 	CONSTRAINT [DF__x_External_A__id__786B6DB5]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[x_External_Application]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_External_Application] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_External_Application]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_External_Application] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_External_Application]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_External_Application] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_External_Application]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_External_Application] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_External_Application]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_External_Application] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_External_Application] SET (LOCK_ESCALATION = TABLE)
 GO

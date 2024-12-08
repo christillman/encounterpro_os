@@ -122,21 +122,13 @@ ALTER TABLE [dbo].[c_Maintenance_Patient_Class]
 	CONSTRAINT [DF__c_Maintenance_Patient_Class_status_]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Patient_Class]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Patient_Class] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Patient_Class]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Patient_Class] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Patient_Class]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Patient_Class] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Patient_Class]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Patient_Class] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Patient_Class] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -77,25 +77,15 @@ ALTER TABLE [dbo].[c_Preferred_Provider]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Preferred_Provider]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Preferred_Provider] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Preferred_Provider]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Preferred_Provider] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Preferred_Provider]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Preferred_Provider] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Preferred_Provider]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Preferred_Provider] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Preferred_Provider]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Preferred_Provider] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Preferred_Provider] SET (LOCK_ESCALATION = TABLE)
 GO

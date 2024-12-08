@@ -74,8 +74,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_actor_route_purposes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_actor_route_purposes] TO [cprsystem]
 GO
 

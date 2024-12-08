@@ -77,25 +77,15 @@ ALTER TABLE [dbo].[o_Computer_External_Source]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Computer_External_Source]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Computer_External_Source] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Computer_External_Source]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Computer_External_Source] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Computer_External_Source]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Computer_External_Source] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computer_External_Source]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Computer_External_Source] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Computer_External_Source]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Computer_External_Source] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Computer_External_Source] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -88,8 +88,6 @@ FROM c_Display_Script_Command c
 	AND p.token1 = a.attribute
 WHERE p.token1 IS NOT NULL
 GO
-GRANT SELECT
-	ON [dbo].[v_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
 

@@ -268,8 +268,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_disease_group_schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_disease_group_schedule] TO [cprsystem]
 GO
 

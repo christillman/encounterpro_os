@@ -139,8 +139,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_latest_system_version_for_db_version]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_latest_system_version_for_db_version] TO [cprsystem]
 GO
 

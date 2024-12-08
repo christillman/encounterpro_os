@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[c_Attachment_Location]
 	CONSTRAINT [DF__c_Attachm__statu__71A7CADF]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Attachment_Location]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Attachment_Location] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Attachment_Location]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Attachment_Location] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Attachment_Location]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Attachment_Location] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Attachment_Location]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Attachment_Location] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Attachment_Location]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Attachment_Location] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Attachment_Location] SET (LOCK_ESCALATION = TABLE)
 GO

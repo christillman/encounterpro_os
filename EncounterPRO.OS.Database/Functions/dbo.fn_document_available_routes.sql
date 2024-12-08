@@ -107,8 +107,6 @@ FROM dbo.fn_document_available_routes_2(@ps_ordered_by, @ps_ordered_for, @ps_pur
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_available_routes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_available_routes] TO [cprsystem]
 GO
 

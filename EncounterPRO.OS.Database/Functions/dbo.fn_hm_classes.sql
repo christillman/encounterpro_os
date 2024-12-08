@@ -156,8 +156,6 @@ FROM @classes c
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_hm_classes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_hm_classes] TO [cprsystem]
 GO
 

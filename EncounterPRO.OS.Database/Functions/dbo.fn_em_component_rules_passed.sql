@@ -232,8 +232,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_component_rules_passed]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_component_rules_passed] TO [cprsystem]
 GO
 

@@ -109,25 +109,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_c_Chart_id]
 	ON [dbo].[c_Chart] ([id], [owner_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Chart]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Chart] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Chart]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Chart] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Chart]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Chart] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Chart]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Chart] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Chart]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Chart] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Chart] SET (LOCK_ESCALATION = TABLE)
 GO

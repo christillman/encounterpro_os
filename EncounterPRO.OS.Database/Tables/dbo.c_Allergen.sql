@@ -13,3 +13,13 @@ CREATE TABLE [c_Allergen](
 	[old_assessment_id] [varchar](24) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[c_Allergen] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[c_Allergen] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[c_Allergen] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[c_Allergen] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[c_Allergen] TO [cprsystem]
+GO

@@ -94,21 +94,13 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX [pbcattbl_idx]
 	ON [dbo].[pbcattbl] ([pbt_tnam], [pbt_ownr]) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[pbcattbl]
-	TO [public]
+GRANT DELETE ON [dbo].[pbcattbl] TO [public]
 GO
-GRANT INSERT
-	ON [dbo].[pbcattbl]
-	TO [public]
+GRANT INSERT ON [dbo].[pbcattbl] TO [public]
 GO
-GRANT SELECT
-	ON [dbo].[pbcattbl]
-	TO [public]
+GRANT SELECT ON [dbo].[pbcattbl] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[pbcattbl]
-	TO [public]
+GRANT UPDATE ON [dbo].[pbcattbl] TO [public]
 GO
 ALTER TABLE [dbo].[pbcattbl] SET (LOCK_ESCALATION = TABLE)
 GO

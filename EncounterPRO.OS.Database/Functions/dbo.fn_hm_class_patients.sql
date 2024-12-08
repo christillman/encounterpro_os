@@ -90,8 +90,6 @@ AND current_flag = 'Y'
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_hm_class_patients]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_hm_class_patients] TO [cprsystem]
 GO
 

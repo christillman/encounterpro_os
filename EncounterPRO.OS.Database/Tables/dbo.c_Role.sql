@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[c_Role]
 	CONSTRAINT [DF_c_Role_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Role]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Role] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Role]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Role] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Role]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Role] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Role]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Role] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Role]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Role] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Role] SET (LOCK_ESCALATION = TABLE)
 GO

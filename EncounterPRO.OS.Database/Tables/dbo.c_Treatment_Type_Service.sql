@@ -93,25 +93,15 @@ ALTER TABLE [dbo].[c_Treatment_Type_Service]
 	CONSTRAINT [DF_c_Treatment_Type_Service_auto_perform_flag]
 	DEFAULT ('N') FOR [auto_perform_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Treatment_Type_Service]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Treatment_Type_Service] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Treatment_Type_Service]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Treatment_Type_Service] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Treatment_Type_Service]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Treatment_Type_Service] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Treatment_Type_Service]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Treatment_Type_Service] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Treatment_Type_Service]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Treatment_Type_Service] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Treatment_Type_Service] SET (LOCK_ESCALATION = TABLE)
 GO

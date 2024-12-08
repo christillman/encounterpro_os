@@ -213,8 +213,6 @@ FROM @codes x
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_xml_code_domain_codes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_xml_code_domain_codes] TO [cprsystem]
 GO
 

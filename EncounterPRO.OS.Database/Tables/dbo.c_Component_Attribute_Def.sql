@@ -66,8 +66,8 @@ GO
 CREATE TABLE [dbo].[c_Component_Attribute_Def] (
 		[component_id]     [varchar](24) NOT NULL,
 		[attribute]        [varchar](64) NOT NULL,
-		[description]      [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[description]      [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Component_Attribute_Def]
 	ADD
@@ -78,25 +78,15 @@ ALTER TABLE [dbo].[c_Component_Attribute_Def]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Component_Attribute_Def]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Component_Attribute_Def] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Attribute_Def]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Attribute_Def] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Component_Attribute_Def]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Component_Attribute_Def] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Attribute_Def]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Attribute_Def] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Attribute_Def]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Attribute_Def] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Attribute_Def] SET (LOCK_ESCALATION = TABLE)
 GO

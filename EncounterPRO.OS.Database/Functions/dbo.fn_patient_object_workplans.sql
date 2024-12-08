@@ -387,8 +387,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_object_workplans]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_object_workplans] TO [cprsystem]
 GO
 

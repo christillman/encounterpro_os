@@ -247,8 +247,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_check_document_route_errors]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_check_document_route_errors] TO [cprsystem]
 GO
 

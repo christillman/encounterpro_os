@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[c_Config_Object] (
 		[config_object_type]           [varchar](24) NOT NULL,
 		[context_object]               [varchar](24) NOT NULL,
 		[description]                  [varchar](80) NOT NULL,
-		[long_description]             [text] NULL,
+		[long_description]             [nvarchar](max) NULL,
 		[config_object_category]       [varchar](80) NULL,
 		[installed_version]            [int] NULL,
 		[installed_version_date]       [datetime] NULL,
@@ -89,7 +89,7 @@ CREATE TABLE [dbo].[c_Config_Object] (
 		[license_data]                 [varchar](2000) NULL,
 		[license_status]               [varchar](24) NULL,
 		[license_expiration_date]      [datetime] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Config_Object]
 	ADD
@@ -125,17 +125,11 @@ ALTER TABLE [dbo].[c_Config_Object]
 	CONSTRAINT [DF_c_Config_Object_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT INSERT
-	ON [dbo].[c_Config_Object]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Config_Object] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Config_Object]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Config_Object] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Config_Object]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Config_Object] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Config_Object] SET (LOCK_ESCALATION = TABLE)
 GO

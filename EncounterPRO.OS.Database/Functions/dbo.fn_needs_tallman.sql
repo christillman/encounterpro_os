@@ -17,17 +17,17 @@ AS BEGIN
 		FROM c_Drug_Tall_Man tm
 		WHERE 
 		(
-		 (@drug_description LIKE tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+		 (@drug_description LIKE tm.spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE tm.spelling + '%')
-			OR (@drug_description LIKE '% ' + tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+			OR (@drug_description LIKE '% ' + tm.spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '% ' + tm.spelling + '%')
-			OR (@drug_description LIKE '%(' + tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+			OR (@drug_description LIKE '%(' + tm.spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '%(' + tm.spelling + '%')
-			OR (@drug_description = tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS
+			OR (@drug_description = tm.spelling COLLATE DATABASE_DEFAULT
 				AND @drug_description COLLATE SQL_Latin1_General_CP1_CS_AS != tm.spelling)
 			)
-		AND @drug_description NOT LIKE '%[A-Za-z]' + tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
-		AND @drug_description NOT LIKE '%' + tm.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '[A-Za-z]%'
+		AND @drug_description NOT LIKE '%[A-Za-z]' + tm.spelling COLLATE DATABASE_DEFAULT + '%'
+		AND @drug_description NOT LIKE '%' + tm.spelling COLLATE DATABASE_DEFAULT + '[A-Za-z]%'
 		)
 		RETURN 1
 
@@ -40,9 +40,9 @@ END
 
 select *
 from c_Drug_Tall_Man t 
-where (		 ('bromhexine / guaifenesin / terbutaline' COLLATE SQL_Latin1_General_CP1_CI_AS LIKE t.spelling + '%'
+where (		 ('bromhexine / guaifenesin / terbutaline' COLLATE DATABASE_DEFAULT LIKE t.spelling + '%'
 				and 'bromhexine / guaifenesin / terbutaline' COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE t.spelling + '%')
-			or ('bromhexine / guaifenesin / terbutaline' COLLATE SQL_Latin1_General_CP1_CI_AS LIKE '% ' + t.spelling + '%'
+			or ('bromhexine / guaifenesin / terbutaline' COLLATE DATABASE_DEFAULT LIKE '% ' + t.spelling + '%'
 				and 'bromhexine / guaifenesin / terbutaline' COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '% ' + t.spelling + '%')
 )
 */

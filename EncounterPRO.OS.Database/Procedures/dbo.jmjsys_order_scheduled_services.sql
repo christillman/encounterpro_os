@@ -1,8 +1,16 @@
-DROP PROCEDURE [jmjsys_order_scheduled_services]
+
+-- Drop Procedure [dbo].[jmjsys_order_scheduled_services]
+Print 'Drop Procedure [dbo].[jmjsys_order_scheduled_services]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmjsys_order_scheduled_services]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[jmjsys_order_scheduled_services]
+GO
+
+-- Create Procedure [dbo].[jmjsys_order_scheduled_services]
+Print 'Create Procedure [dbo].[jmjsys_order_scheduled_services]'
 GO
 SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [jmjsys_order_scheduled_services]
 	(

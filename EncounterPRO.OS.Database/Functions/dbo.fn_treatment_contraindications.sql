@@ -219,8 +219,6 @@ AND ISNULL(t.treatment_status, 'OPEN') <> 'Cancelled'
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_treatment_contraindications]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_treatment_contraindications] TO [cprsystem]
 GO
 

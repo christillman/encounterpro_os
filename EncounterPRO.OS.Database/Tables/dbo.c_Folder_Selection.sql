@@ -74,25 +74,15 @@ CREATE TABLE [dbo].[c_Folder_Selection] (
 		[sort_sequence]           [int] NULL
 ) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Folder_Selection]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Folder_Selection] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Folder_Selection]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Folder_Selection] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Folder_Selection]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Folder_Selection] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Folder_Selection]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Folder_Selection] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Folder_Selection]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Folder_Selection] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Folder_Selection] SET (LOCK_ESCALATION = TABLE)
 GO

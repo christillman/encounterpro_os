@@ -1,7 +1,15 @@
-DROP PROCEDURE IF EXISTS [sp_last_child_select]
+
+-- Drop Procedure [dbo].[sp_last_child_select]
+Print 'Drop Procedure [dbo].[sp_last_child_select]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_last_child_select]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[sp_last_child_select]
+GO
+
+-- Create Procedure [dbo].[sp_last_child_select]
+Print 'Create Procedure [dbo].[sp_last_child_select]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [sp_last_child_select] (

@@ -347,8 +347,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_observation_tree]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_observation_tree] TO [cprsystem]
 GO
 

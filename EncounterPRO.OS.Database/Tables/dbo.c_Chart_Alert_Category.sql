@@ -84,25 +84,15 @@ ALTER TABLE [dbo].[c_Chart_Alert_Category]
 	CONSTRAINT [DF__c_Chart_Aler__id__0BD1B136]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Chart_Alert_Category]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Chart_Alert_Category] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Chart_Alert_Category]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Chart_Alert_Category] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Chart_Alert_Category]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Chart_Alert_Category] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Chart_Alert_Category]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Chart_Alert_Category] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Chart_Alert_Category]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Chart_Alert_Category] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Chart_Alert_Category] SET (LOCK_ESCALATION = TABLE)
 GO

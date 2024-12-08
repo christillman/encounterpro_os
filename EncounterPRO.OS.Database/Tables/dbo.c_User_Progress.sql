@@ -71,13 +71,13 @@ CREATE TABLE [dbo].[c_User_Progress] (
 		[progress_type]              [varchar](24) NOT NULL,
 		[progress_key]               [varchar](40) NULL,
 		[progress_value]             [varchar](40) NULL,
-		[progress]                   [text] NULL,
+		[progress]                   [nvarchar](max) NULL,
 		[created]                    [datetime] NOT NULL,
 		[created_by]                 [varchar](24) NOT NULL,
 		[id]                         [uniqueidentifier] NOT NULL,
 		[current_flag]               [char](1) NOT NULL,
 		[c_actor_id]                 [uniqueidentifier] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_User_Progress]
 	ADD
@@ -103,25 +103,15 @@ ALTER TABLE [dbo].[c_User_Progress]
 	CONSTRAINT [DF_c_User_prog_id_40]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_User_Progress]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_User_Progress] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_User_Progress]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_User_Progress] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_User_Progress]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_User_Progress] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_User_Progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_User_Progress] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_User_Progress]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_User_Progress] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_User_Progress] SET (LOCK_ESCALATION = TABLE)
 GO

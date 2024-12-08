@@ -69,20 +69,20 @@ CREATE TABLE [dbo].[c_Report_Definition] (
 		[report_type]              [varchar](24) NOT NULL,
 		[report_category]          [varchar](24) NULL,
 		[component_id]             [varchar](24) NULL,
-		[sql]                      [text] NULL,
-		[template]                 [image] NULL,
+		[sql]                      [nvarchar](max) NULL,
+		[template]                 [varbinary](max) NULL,
 		[status]                   [varchar](12) NULL,
 		[owner_id]                 [int] NOT NULL,
 		[last_updated]             [datetime] NOT NULL,
 		[id]                       [uniqueidentifier] NOT NULL,
 		[machine_component_id]     [varchar](24) NULL,
-		[long_description]         [text] NULL,
-		[example]                  [image] NULL,
+		[long_description]         [nvarchar](max) NULL,
+		[example]                  [varbinary](max) NULL,
 		[version]                  [int] NULL,
 		[document_format]          [varchar](24) NOT NULL,
 		[config_object_type]       [varchar](24) NOT NULL,
 		[created_by]               [varchar](24) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Report_Definition]
 	ADD
@@ -128,25 +128,15 @@ ALTER TABLE [dbo].[c_Report_Definition]
 	CONSTRAINT [DF_c_Report_Definition_report_id]
 	DEFAULT (newid()) FOR [report_id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Report_Definition]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Report_Definition] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Report_Definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Report_Definition] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Report_Definition]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Report_Definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Report_Definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Report_Definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Report_Definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Report_Definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Report_Definition] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -100,8 +100,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_result_percentile]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_result_percentile] TO [cprsystem]
 GO
 

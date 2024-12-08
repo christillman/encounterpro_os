@@ -141,8 +141,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_followup_treatment_status]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_followup_treatment_status] TO [cprsystem]
 GO
 

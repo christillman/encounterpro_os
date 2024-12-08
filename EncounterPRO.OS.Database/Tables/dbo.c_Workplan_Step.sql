@@ -90,25 +90,15 @@ ALTER TABLE [dbo].[c_Workplan_Step]
 	CONSTRAINT [DF__c_Workpla__mutua__4AB84CBA]
 	DEFAULT ((0)) FOR [mutually_exclusive_items]
 GO
-GRANT DELETE
-	ON [dbo].[c_Workplan_Step]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Workplan_Step] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Workplan_Step]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Workplan_Step] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Workplan_Step]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Workplan_Step] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Workplan_Step]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Workplan_Step] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Workplan_Step]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Workplan_Step] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Workplan_Step] SET (LOCK_ESCALATION = TABLE)
 GO

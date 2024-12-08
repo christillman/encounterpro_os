@@ -84,25 +84,15 @@ ALTER TABLE [dbo].[c_Maintenance_Procedure]
 	CONSTRAINT [DF__c_Maintenance_Proc_treatment_type_]
 	DEFAULT ('PROCEDURE') FOR [treatment_type]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Procedure]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Procedure] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Procedure]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Procedure] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Maintenance_Procedure]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Maintenance_Procedure] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Procedure]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Procedure] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Procedure]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Procedure] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Procedure] SET (LOCK_ESCALATION = TABLE)
 GO

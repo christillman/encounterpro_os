@@ -1,16 +1,17 @@
 
-/****** Object:  StoredProcedure [dbo].[sp_ResetEproPermissions]    Script Date: 17/07/2023 2:03:13 pm ******/
-DROP PROCEDURE IF EXISTS [dbo].[sp_ResetEproPermissions]
+-- Drop Procedure [dbo].[sp_ResetEproPermissions]
+Print 'Drop Procedure [dbo].[sp_ResetEproPermissions]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_ResetEproPermissions]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[sp_ResetEproPermissions]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_ResetEproPermissions]    Script Date: 17/07/2023 2:03:13 pm ******/
+-- Create Procedure [dbo].[sp_ResetEproPermissions]
+Print 'Create Procedure [dbo].[sp_ResetEproPermissions]'
+GO
 SET ANSI_NULLS ON
-GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 CREATE   PROCEDURE [dbo].[sp_ResetEproPermissions]
 AS
 

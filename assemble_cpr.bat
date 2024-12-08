@@ -132,3 +132,6 @@ xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %ru
 REM add lines to manifest to immprove font appearance
 REM https://www.appeon.com/developers/get-help/knowledgebase/4498
 copy /Y "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\encounterpro.os.client.exe.dpi-fix.manifest" %build_folder%\encounterpro.os.client.exe.manifest
+
+REM Add Utilities in EPro folder
+xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Utilities 1.0.6.0\*" %build_folder% /S /Y

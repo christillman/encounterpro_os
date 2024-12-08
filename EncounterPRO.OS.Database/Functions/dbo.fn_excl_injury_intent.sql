@@ -1,7 +1,15 @@
-DROP FUNCTION [fn_excl_injury_intent]
+
+-- Drop Function [dbo].[fn_excl_injury_intent]
+Print 'Drop Function [dbo].[fn_excl_injury_intent]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_excl_injury_intent]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_excl_injury_intent]
+GO
+
+-- Create Function [dbo].[fn_excl_injury_intent]
+Print 'Create Function [dbo].[fn_excl_injury_intent]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION [fn_excl_injury_intent] (

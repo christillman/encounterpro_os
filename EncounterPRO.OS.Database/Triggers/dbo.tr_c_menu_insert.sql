@@ -75,13 +75,14 @@ FROM c_menu
 	ON c_menu.menu_id = inserted.menu_id
 	CROSS JOIN c_Database_Status
 WHERE inserted.owner_id = -1
-
+/*
 UPDATE c
 SET installed_local_key = i.menu_id
 FROM dbo.c_config_object c
 	INNER JOIN inserted i
 	ON c.config_object_id = i.id
 WHERE c.config_object_type = 'Menu'
+*/
 
 GO
 

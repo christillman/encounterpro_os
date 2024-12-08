@@ -85,21 +85,13 @@ ALTER TABLE [dbo].[c_Equivalence_Group]
 	CONSTRAINT [DF__c_Equiv_grp_creat_33]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[c_Equivalence_Group]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Equivalence_Group] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Equivalence_Group]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Equivalence_Group] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Equivalence_Group]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Equivalence_Group] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Equivalence_Group]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Equivalence_Group] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Equivalence_Group] SET (LOCK_ESCALATION = TABLE)
 GO

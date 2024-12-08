@@ -107,21 +107,13 @@ ALTER TABLE [dbo].[c_component_interface_route]
 	CONSTRAINT [DF_route_id]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_component_interface_route]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_component_interface_route] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_component_interface_route]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_component_interface_route] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_component_interface_route]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_component_interface_route] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_component_interface_route]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_component_interface_route] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_component_interface_route] SET (LOCK_ESCALATION = TABLE)
 GO

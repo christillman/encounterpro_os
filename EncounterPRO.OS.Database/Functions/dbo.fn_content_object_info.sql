@@ -126,8 +126,6 @@ ELSE IF @ls_epro_object = '!Enumerated'
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_content_object_info]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_content_object_info] TO [cprsystem]
 GO
 

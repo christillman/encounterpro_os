@@ -352,8 +352,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_object_progress_types]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_object_progress_types] TO [cprsystem]
 GO
 

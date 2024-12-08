@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[o_Treatment_Type_Default_Mode]
 	CONSTRAINT [DF__o_Treatme__creat__00EC7074]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[o_Treatment_Type_Default_Mode]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Treatment_Type_Default_Mode] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Treatment_Type_Default_Mode]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Treatment_Type_Default_Mode] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Treatment_Type_Default_Mode]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Treatment_Type_Default_Mode] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Treatment_Type_Default_Mode]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Treatment_Type_Default_Mode] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Treatment_Type_Default_Mode]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Treatment_Type_Default_Mode] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Treatment_Type_Default_Mode] SET (LOCK_ESCALATION = TABLE)
 GO

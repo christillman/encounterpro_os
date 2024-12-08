@@ -84,25 +84,15 @@ ALTER TABLE [dbo].[c_Unit_Type]
 	CONSTRAINT [DF__c_Unit_Type__id__133DC8D4]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Unit_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Unit_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Unit_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Unit_Type] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Unit_Type]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Unit_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Unit_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Unit_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Unit_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Unit_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Unit_Type] SET (LOCK_ESCALATION = TABLE)
 GO

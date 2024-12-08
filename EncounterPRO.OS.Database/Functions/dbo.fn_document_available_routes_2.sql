@@ -335,8 +335,6 @@ IF @ls_document_format IS NOT NULL
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_available_routes_2]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_available_routes_2] TO [cprsystem]
 GO
 

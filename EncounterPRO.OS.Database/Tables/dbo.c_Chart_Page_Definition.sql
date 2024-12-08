@@ -91,25 +91,15 @@ ALTER TABLE [dbo].[c_Chart_Page_Definition]
 	CONSTRAINT [DF__c_Chart_Page__id__46DC0387]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Chart_Page_Definition]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Chart_Page_Definition] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Chart_Page_Definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Chart_Page_Definition] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Chart_Page_Definition]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Chart_Page_Definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Chart_Page_Definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Chart_Page_Definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Chart_Page_Definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Chart_Page_Definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Chart_Page_Definition] SET (LOCK_ESCALATION = TABLE)
 GO

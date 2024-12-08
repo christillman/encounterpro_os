@@ -253,8 +253,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_observation_result_range]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_observation_result_range] TO [cprsystem]
 GO
 

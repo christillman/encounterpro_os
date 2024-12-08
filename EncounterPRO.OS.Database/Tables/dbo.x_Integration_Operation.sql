@@ -96,25 +96,15 @@ ALTER TABLE [dbo].[x_Integration_Operation]
 	CONSTRAINT [DF__x_Integratio__id__01F4D7EF]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[x_Integration_Operation]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Integration_Operation] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Integration_Operation]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Integration_Operation] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Integration_Operation]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Integration_Operation] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Integration_Operation]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Integration_Operation] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Integration_Operation]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Integration_Operation] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Integration_Operation] SET (LOCK_ESCALATION = TABLE)
 GO

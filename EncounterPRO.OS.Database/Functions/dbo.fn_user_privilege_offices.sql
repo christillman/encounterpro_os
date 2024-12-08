@@ -106,8 +106,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_privilege_offices]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_privilege_offices] TO [cprsystem]
 GO
 

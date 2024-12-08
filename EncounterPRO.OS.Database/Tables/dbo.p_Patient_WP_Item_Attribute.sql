@@ -69,14 +69,14 @@ CREATE TABLE [dbo].[p_Patient_WP_Item_Attribute] (
 		[patient_workplan_id]          [int] NOT NULL,
 		[cpr_id]                       [varchar](12) NULL,
 		[attribute]                    [varchar](64) NOT NULL,
-		[message]                      [text] NULL,
+		[message]                      [nvarchar](max) NULL,
 		[created_by]                   [varchar](24) NOT NULL,
 		[created]                      [datetime] NULL,
 		[id]                           [uniqueidentifier] NOT NULL,
 		[value_short]                  [varchar](50) NULL,
 		[actor_id]                     [int] NULL,
 		[value]                        AS (convert(varchar(255),[value_short]))
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute]
 	ADD
@@ -105,25 +105,15 @@ CREATE CLUSTERED INDEX [idx_wp_item_att_cluster]
 	ON [dbo].[p_Patient_WP_Item_Attribute] ([cpr_id], [patient_workplan_item_id], [attribute_sequence])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_WP_Item_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_WP_Item_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_WP_Item_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_WP_Item_Attribute] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_WP_Item_Attribute]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_WP_Item_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_WP_Item_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_WP_Item_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_WP_Item_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_WP_Item_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

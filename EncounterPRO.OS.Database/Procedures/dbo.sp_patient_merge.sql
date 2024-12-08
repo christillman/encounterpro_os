@@ -1,8 +1,16 @@
-DROP PROCEDURE IF EXISTS [sp_patient_merge]
+
+-- Drop Procedure [dbo].[sp_patient_merge]
+Print 'Drop Procedure [dbo].[sp_patient_merge]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_patient_merge]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[sp_patient_merge]
+GO
+
+-- Create Procedure [dbo].[sp_patient_merge]
+Print 'Create Procedure [dbo].[sp_patient_merge]'
 GO
 SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [sp_patient_merge]
 	 @cpr_id_keep VARCHAR (12)

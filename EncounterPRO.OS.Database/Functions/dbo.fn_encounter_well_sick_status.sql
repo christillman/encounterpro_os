@@ -118,8 +118,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_encounter_well_sick_status]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_encounter_well_sick_status] TO [cprsystem]
 GO
 

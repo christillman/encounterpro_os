@@ -14,3 +14,13 @@ CREATE TABLE [p_Adverse_Reaction](
 	[observation_method] [varchar](24) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[p_Adverse_Reaction] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[p_Adverse_Reaction] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[p_Adverse_Reaction] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[p_Adverse_Reaction] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[p_Adverse_Reaction] TO [cprsystem]
+GO

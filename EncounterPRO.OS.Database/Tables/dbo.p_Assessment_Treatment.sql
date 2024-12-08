@@ -93,25 +93,15 @@ ALTER TABLE [dbo].[p_Assessment_Treatment]
 	CONSTRAINT [DF__p_Assessment__id__7246E95D]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[p_Assessment_Treatment]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Assessment_Treatment] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Assessment_Treatment]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Assessment_Treatment] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Assessment_Treatment]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Assessment_Treatment] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Assessment_Treatment]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Assessment_Treatment] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Assessment_Treatment]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Assessment_Treatment] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Assessment_Treatment] SET (LOCK_ESCALATION = TABLE)
 GO

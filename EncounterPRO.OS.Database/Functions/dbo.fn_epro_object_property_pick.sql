@@ -113,8 +113,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_epro_object_property_pick]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_epro_object_property_pick] TO [cprsystem]
 GO
 

@@ -237,8 +237,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_encounter_data_reviewed_detail]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_encounter_data_reviewed_detail] TO [cprsystem]
 GO
 

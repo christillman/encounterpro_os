@@ -1,7 +1,15 @@
-DROP FUNCTION [fn_enc_type]
+
+-- Drop Function [dbo].[fn_enc_type]
+Print 'Drop Function [dbo].[fn_enc_type]'
 GO
-SET ANSI_NULLS ON
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_enc_type]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_enc_type]
 GO
+
+-- Create Function [dbo].[fn_enc_type]
+Print 'Create Function [dbo].[fn_enc_type]'
+GO
+SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION [fn_enc_type] (

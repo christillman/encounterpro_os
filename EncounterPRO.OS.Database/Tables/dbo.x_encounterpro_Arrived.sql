@@ -97,25 +97,15 @@ ALTER TABLE [dbo].[x_encounterpro_Arrived]
 	WITH FILLFACTOR=80
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[x_encounterpro_Arrived]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_encounterpro_Arrived] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_encounterpro_Arrived]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_encounterpro_Arrived] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_encounterpro_Arrived]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_encounterpro_Arrived] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_encounterpro_Arrived]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_encounterpro_Arrived] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_encounterpro_Arrived]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_encounterpro_Arrived] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_encounterpro_Arrived] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -100,29 +100,17 @@ CREATE UNIQUE NONCLUSTERED INDEX [uidx_office_computer]
 	ON [dbo].[o_Computers] ([computername], [logon_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 100) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Computers]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Computers] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Computers]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Computers] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Computers]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Computers] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computers]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Computers] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computers]
-	TO [public]
+GRANT SELECT ON [dbo].[o_Computers] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Computers]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Computers] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Computers] SET (LOCK_ESCALATION = TABLE)
 GO

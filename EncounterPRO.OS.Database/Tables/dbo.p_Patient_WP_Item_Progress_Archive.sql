@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[p_Patient_WP_Item_Progress_Archive] (
 		[created]                           [datetime] NULL,
 		[created_by]                        [varchar](24) NOT NULL,
 		[id]                                [uniqueidentifier] NOT NULL
-) ON [Workflow]
+) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress_Archive]
 	ADD
@@ -84,11 +84,11 @@ ALTER TABLE [dbo].[p_Patient_WP_Item_Progress_Archive]
 	NONCLUSTERED
 	([patient_workplan_item_id], [patient_workplan_item_prog_id])
 	WITH FILLFACTOR=90
-	ON [Workflow]
+	
 GO
 CREATE CLUSTERED INDEX [idx_wp_item_prg_cluster]
 	ON [dbo].[p_Patient_WP_Item_Progress_Archive] ([cpr_id], [encounter_id], [patient_workplan_item_id], [patient_workplan_item_prog_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress_Archive] SET (LOCK_ESCALATION = TABLE)
 GO

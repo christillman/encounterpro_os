@@ -223,8 +223,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_visit_rules_passed]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_visit_rules_passed] TO [cprsystem]
 GO
 

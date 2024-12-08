@@ -80,21 +80,13 @@ ALTER TABLE [dbo].[c_Procedure_Extra_Charge]
 	WITH FILLFACTOR=80
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Procedure_Extra_Charge]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Procedure_Extra_Charge] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Procedure_Extra_Charge]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Procedure_Extra_Charge] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Procedure_Extra_Charge]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Procedure_Extra_Charge] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Procedure_Extra_Charge]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Procedure_Extra_Charge] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Procedure_Extra_Charge] SET (LOCK_ESCALATION = TABLE)
 GO

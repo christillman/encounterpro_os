@@ -175,8 +175,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_observation_custom_range]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_observation_custom_range] TO [cprsystem]
 GO
 

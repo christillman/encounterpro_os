@@ -166,8 +166,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_type_rules_element_details]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_type_rules_element_details] TO [cprsystem]
 GO
 

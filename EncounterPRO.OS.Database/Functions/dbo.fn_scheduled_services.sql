@@ -232,8 +232,6 @@ AND LEFT(schedule_interval, 2) <> '1 '
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_scheduled_services]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_scheduled_services] TO [cprsystem]
 GO
 

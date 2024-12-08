@@ -107,25 +107,15 @@ CREATE CLUSTERED INDEX [idx_parent_observation]
 	ON [dbo].[c_Observation_Tree] ([parent_observation_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 100) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation_Tree]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation_Tree] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation_Tree]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation_Tree] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Observation_Tree]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Observation_Tree] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation_Tree]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation_Tree] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation_Tree]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation_Tree] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation_Tree] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -110,8 +110,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_attachment_location]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_attachment_location] TO [cprsystem]
 GO
 

@@ -93,29 +93,17 @@ ALTER TABLE [dbo].[c_Domain]
 	CONSTRAINT [DF__c_Domain_last_updated]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT DELETE
-	ON [dbo].[c_Domain]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Domain] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Domain]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Domain] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Domain]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Domain] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Domain]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Domain] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Domain]
-	TO [public]
+GRANT SELECT ON [dbo].[c_Domain] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Domain]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Domain] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Domain] SET (LOCK_ESCALATION = TABLE)
 GO

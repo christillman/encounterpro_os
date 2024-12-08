@@ -101,17 +101,11 @@ ALTER TABLE [dbo].[c_Classification_Set_Item]
 	CONSTRAINT [DF_c_Classification_Set_Item_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT INSERT
-	ON [dbo].[c_Classification_Set_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Classification_Set_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Classification_Set_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Classification_Set_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Classification_Set_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Classification_Set_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Classification_Set_Item] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -16,3 +16,13 @@ CREATE TABLE [p_Propensity](
 	[status] [varchar](10) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[p_Propensity] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[p_Propensity] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[p_Propensity] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[p_Propensity] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[p_Propensity] TO [cprsystem]
+GO

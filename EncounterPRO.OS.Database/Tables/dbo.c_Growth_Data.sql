@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[c_Growth_Data]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Growth_Data]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Growth_Data] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Growth_Data]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Growth_Data] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Growth_Data]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Growth_Data] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Growth_Data]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Growth_Data] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Growth_Data]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Growth_Data] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Growth_Data] SET (LOCK_ESCALATION = TABLE)
 GO

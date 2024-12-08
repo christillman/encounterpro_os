@@ -206,8 +206,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_incoming_documents_for_context]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_incoming_documents_for_context] TO [cprsystem]
 GO
 

@@ -147,8 +147,6 @@ AND (p.progress_value IS NOT NULL OR p.progress IS NOT NULL)
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_communication]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_communication] TO [cprsystem]
 GO
 

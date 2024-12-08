@@ -81,21 +81,13 @@ ALTER TABLE [dbo].[c_Vial_Schedule]
 	WITH FILLFACTOR=70
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Vial_Schedule]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Vial_Schedule] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Vial_Schedule]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Vial_Schedule] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Vial_Schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Vial_Schedule] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Vial_Schedule]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Vial_Schedule] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Vial_Schedule] SET (LOCK_ESCALATION = TABLE)
 GO

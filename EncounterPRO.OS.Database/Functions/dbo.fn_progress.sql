@@ -425,8 +425,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_progress] TO [cprsystem]
 GO
 

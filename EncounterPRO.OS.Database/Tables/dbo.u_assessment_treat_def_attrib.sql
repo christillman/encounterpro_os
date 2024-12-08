@@ -68,8 +68,8 @@ CREATE TABLE [dbo].[u_assessment_treat_def_attrib] (
 		[attribute_sequence]     [int] IDENTITY(1, 1) NOT NULL,
 		[attribute]              [varchar](80) NOT NULL,
 		[value]                  [varchar](255) NULL,
-		[long_value]             [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[long_value]             [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[u_assessment_treat_def_attrib]
 	ADD
@@ -80,25 +80,15 @@ ALTER TABLE [dbo].[u_assessment_treat_def_attrib]
 	WITH FILLFACTOR=80
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[u_assessment_treat_def_attrib]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_assessment_treat_def_attrib] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_assessment_treat_def_attrib]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_assessment_treat_def_attrib] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_assessment_treat_def_attrib]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_assessment_treat_def_attrib] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_assessment_treat_def_attrib]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_assessment_treat_def_attrib] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_assessment_treat_def_attrib]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_assessment_treat_def_attrib] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_assessment_treat_def_attrib] SET (LOCK_ESCALATION = TABLE)
 GO

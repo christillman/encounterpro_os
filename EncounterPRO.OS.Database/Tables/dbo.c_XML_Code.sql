@@ -136,21 +136,13 @@ CREATE NONCLUSTERED INDEX [lookup_by_epro]
 	ON [dbo].[c_XML_Code] ([epro_domain], [epro_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_XML_Code]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_XML_Code] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_XML_Code]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_XML_Code] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_XML_Code]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_XML_Code] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_XML_Code]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_XML_Code] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_XML_Code] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -1,13 +1,17 @@
-DROP PROCEDURE [jmjrpt_get_bill_coding]
+
+-- Drop Procedure [dbo].[jmjrpt_get_bill_coding]
+Print 'Drop Procedure [dbo].[jmjrpt_get_bill_coding]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmjrpt_get_bill_coding]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[jmjrpt_get_bill_coding]
+GO
+
+-- Create Procedure [dbo].[jmjrpt_get_bill_coding]
+Print 'Create Procedure [dbo].[jmjrpt_get_bill_coding]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
-
 CREATE PROCEDURE [jmjrpt_get_bill_coding] @ps_cpr_id varchar(12), @pi_encounter_id integer, @ps_billing_id varchar(24), @pi_count integer, @ps_name varchar(40), @pdt_encounterdate datetime, @pdt_dischargedate datetime
 AS
 Declare @ls_cpr_id varchar(12)

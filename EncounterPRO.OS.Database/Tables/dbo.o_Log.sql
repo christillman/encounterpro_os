@@ -23,32 +23,32 @@ CREATE TABLE [dbo].[o_Log] (
 		[log_id]                       [int] IDENTITY(1, 1) NOT NULL,
 		[severity]                     [varchar](12) NULL,
 		[log_date_time]                [datetime] NULL,
-		[caller]                       [varchar](40) NULL,
-		[script]                       [varchar](40) NULL,
+	[caller] [varchar](255) NULL,
+	[script] [varchar](255) NULL,
 		[message]                      [varchar](1000) NULL,
 		[computer_id]                  [int] NULL,
-		[computername]                 [varchar](40) NULL,
-		[windows_logon_id]             [varchar](40) NULL,
-		[cpr_id]                       [varchar](12) NULL,
+	[computername] [varchar](255) NULL,
+	[windows_logon_id] [varchar](255) NULL,
+	[cpr_id] [varchar](255) NULL,
 		[encounter_id]                 [int] NULL,
 		[treatment_id]                 [int] NULL,
 		[patient_workplan_item_id]     [varchar](12) NULL,
 		[service]                      [varchar](24) NULL,
 		[user_id]                      [varchar](24) NULL,
 		[scribe_user_id]               [varchar](24) NULL,
-		[program]                      [varchar](32) NULL,
+	[program] [varchar](255) NULL,
 		[cleared]                      [datetime] NULL,
-		[cleared_by]                   [varchar](12) NULL,
+	[cleared_by] [varchar](255) NULL,
 		[os_version]                   [varchar](64) NULL,
 		[epro_version]                 [varchar](64) NULL,
-		[sql_version]                  [varchar](256) NULL,
+	[sql_version] [varchar](255) NULL,
 		[exception_object]             [binary](1) NULL,
 		[spid]                         [int] NULL,
-		[log_data]                     [text] NULL,
+		[log_data]                     [nvarchar](max) NULL,
 		[component_id]                 [varchar](24) NULL,
 		[compile_name]                 [nvarchar](128) NULL,
-		[progress_seconds]				[numeric(18,4) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[progress_seconds]				[numeric](18,4) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[o_Log]
 	ADD
@@ -73,33 +73,19 @@ CREATE NONCLUSTERED INDEX [idx_cpr_encouner]
 	ON [dbo].[o_Log] ([cpr_id], [encounter_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Log]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Log] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Log] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Log]
-	TO [public]
+GRANT INSERT ON [dbo].[o_Log] TO [public]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Log]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Log]
-	TO [public]
+GRANT SELECT ON [dbo].[o_Log] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Log]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Log] SET (LOCK_ESCALATION = TABLE)
 GO

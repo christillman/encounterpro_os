@@ -353,8 +353,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_encounter_charges]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_encounter_charges] TO [cprsystem]
 GO
 

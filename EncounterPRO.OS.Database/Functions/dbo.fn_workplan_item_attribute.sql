@@ -117,8 +117,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_workplan_item_attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_workplan_item_attribute] TO [cprsystem]
 GO
 

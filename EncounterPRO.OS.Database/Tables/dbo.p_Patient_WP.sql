@@ -87,7 +87,7 @@ CREATE TABLE [dbo].[p_Patient_WP] (
 		[id]                                  [uniqueidentifier] NOT NULL,
 		[context_object]                      [varchar](24) NULL,
 		[room_id]                             [varchar](12) NULL
-) ON [Workflow]
+) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP]
 	ADD
@@ -96,7 +96,7 @@ ALTER TABLE [dbo].[p_Patient_WP]
 	NONCLUSTERED
 	([patient_workplan_id])
 	WITH FILLFACTOR=100
-	ON [Workflow]
+	
 GO
 ALTER TABLE [dbo].[p_Patient_WP]
 	ADD
@@ -115,39 +115,29 @@ ALTER TABLE [dbo].[p_Patient_WP]
 GO
 CREATE NONCLUSTERED INDEX [idx_parent_WP_item_id]
 	ON [dbo].[p_Patient_WP] ([parent_patient_workplan_item_id], [patient_workplan_id], [in_office_flag])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 CREATE CLUSTERED INDEX [idx_workplan_cluster]
 	ON [dbo].[p_Patient_WP] ([cpr_id], [encounter_id], [treatment_id], [patient_workplan_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 CREATE NONCLUSTERED INDEX [idx_WP_cpr_trt]
 	ON [dbo].[p_Patient_WP] ([cpr_id], [treatment_id], [patient_workplan_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 CREATE NONCLUSTERED INDEX [idx_WP_treatment_id]
 	ON [dbo].[p_Patient_WP] ([treatment_id], [patient_workplan_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_WP]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_WP] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_WP]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_WP] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_WP]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_WP] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_WP]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_WP] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_WP]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_WP] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_WP] SET (LOCK_ESCALATION = TABLE)
 GO

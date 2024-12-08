@@ -436,8 +436,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_audit]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_audit] TO [cprsystem]
 GO
 

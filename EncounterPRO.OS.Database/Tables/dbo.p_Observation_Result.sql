@@ -88,9 +88,9 @@ CREATE TABLE [dbo].[p_Observation_Result] (
 		[created_by]                    [varchar](24) NULL,
 		[id]                            [uniqueidentifier] NOT NULL,
 		[normal_range]                  [varchar](40) NULL,
-		[long_result_value]             [text] NULL,
+		[long_result_value]             [nvarchar](max) NULL,
 		[object_key]                    AS (([observation_id]+'|')+CONVERT([varchar](12),[result_sequence],0))
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Observation_Result]
 	ADD
@@ -152,25 +152,15 @@ CREATE NONCLUSTERED INDEX [idx_root_obs_sequence]
 	ON [dbo].[p_Observation_Result] ([cpr_id], [root_observation_sequence])
 	WITH ( FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Observation_Result]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Observation_Result] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Observation_Result]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Observation_Result] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Observation_Result]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Observation_Result] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Observation_Result]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Observation_Result] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Observation_Result]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Observation_Result] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Observation_Result] SET (LOCK_ESCALATION = TABLE)
 GO

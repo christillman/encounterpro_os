@@ -89,25 +89,15 @@ ALTER TABLE [dbo].[p_Material_Used]
 	CONSTRAINT [DF_p_material_21]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[p_Material_Used]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Material_Used] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Material_Used]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Material_Used] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Material_Used]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Material_Used] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Material_Used]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Material_Used] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Material_Used]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Material_Used] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Material_Used] SET (LOCK_ESCALATION = TABLE)
 GO

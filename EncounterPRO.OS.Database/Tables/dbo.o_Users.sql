@@ -82,25 +82,15 @@ ALTER TABLE [dbo].[o_Users]
 	WITH FILLFACTOR=25
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Users]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Users] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Users]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Users] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Users]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Users] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Users]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Users] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Users]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Users] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Users] SET (LOCK_ESCALATION = TABLE)
 GO

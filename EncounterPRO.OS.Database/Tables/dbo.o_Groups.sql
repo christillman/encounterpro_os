@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[o_Groups]
 	CONSTRAINT [DF__o_Groups_persistence_flag]
 	DEFAULT ('Y') FOR [persistence_flag]
 GO
-GRANT DELETE
-	ON [dbo].[o_Groups]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Groups] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Groups]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Groups] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Groups]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Groups] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Groups]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Groups] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Groups]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Groups] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Groups] SET (LOCK_ESCALATION = TABLE)
 GO

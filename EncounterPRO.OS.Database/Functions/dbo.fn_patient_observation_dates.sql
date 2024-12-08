@@ -192,8 +192,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_observation_dates]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_observation_dates] TO [cprsystem]
 GO
 

@@ -69,9 +69,9 @@ CREATE TABLE [dbo].[c_Drug_Instruction] (
 		[package_id]                  [varchar](24) NULL,
 		[administration_sequence]     [int] NULL,
 		[default_flag]                [char](1) NOT NULL,
-		[instruction]                 [text] NULL,
+		[instruction]                 [nvarchar](max) NULL,
 		[instruction_for]             [char](1) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Drug_Instruction]
 	ADD
@@ -82,25 +82,15 @@ ALTER TABLE [dbo].[c_Drug_Instruction]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Drug_Instruction]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Drug_Instruction] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Drug_Instruction]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Drug_Instruction] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Drug_Instruction]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Drug_Instruction] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Drug_Instruction]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Drug_Instruction] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Drug_Instruction]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Drug_Instruction] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Drug_Instruction] SET (LOCK_ESCALATION = TABLE)
 GO

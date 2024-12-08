@@ -111,8 +111,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_interface_objects_to_send_sample]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_interface_objects_to_send_sample] TO [cprsystem]
 GO
 

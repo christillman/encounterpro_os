@@ -23,7 +23,7 @@ CREATE TABLE [dbo].[u_Top_20] (
 		[user_id]             [varchar](24) NOT NULL,
 		[top_20_code]         [varchar](64) NOT NULL,
 		[top_20_sequence]     [int] IDENTITY(1, 1) NOT NULL,
-		[item_text]           [varchar](255) NULL,
+		[item_text]           [varchar](512) NULL,
 		[item_id]             [varchar](64) NULL,
 		[item_id2]            [varchar](24) NULL,
 		[item_id3]            [int] NULL,
@@ -32,8 +32,8 @@ CREATE TABLE [dbo].[u_Top_20] (
 		[last_hit]            [datetime] NULL,
 		[risk_level]          [int] NULL,
 		[created]             [datetime] NULL,
-		[item_text_long]      [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[item_text_long]      [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[u_Top_20]
 	ADD
@@ -67,25 +67,15 @@ CREATE NONCLUSTERED INDEX [idx_top_20_item_id]
 	ON [dbo].[u_Top_20] ([item_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[u_Top_20]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_Top_20] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_Top_20]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_Top_20] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_Top_20]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_Top_20] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_Top_20]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_Top_20] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_Top_20]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_Top_20] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_Top_20] SET (LOCK_ESCALATION = TABLE)
 GO

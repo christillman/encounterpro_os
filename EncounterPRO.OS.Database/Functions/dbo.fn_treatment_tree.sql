@@ -178,8 +178,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_treatment_tree]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_treatment_tree] TO [cprsystem]
 GO
 

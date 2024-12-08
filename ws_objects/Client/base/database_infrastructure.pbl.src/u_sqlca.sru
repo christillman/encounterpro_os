@@ -652,6 +652,7 @@ u_ds_data database_columns
 long temp_proc_number = 0
 
 end variables
+
 forward prototypes
 public subroutine checkpoint (string ps_text)
 public subroutine rollback_transaction ()
@@ -872,42 +873,36 @@ integer li_sts
 
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
-if common_thread.default_database = "JMJIssueManager" then
-	ls_dbserver = "techserv"
-	ls_dbname = "issues"
-	ls_dbms = "SNC"
+if pos(common_thread.default_database, "|") > 0 then
+	f_split_string(common_thread.default_database, "|", ls_dbserver, ls_dbname)
+	if ls_dbserver = "" or ls_dbname = "" then
+		log.log(this, "u_sqlca.dbconnect:0016", "Invalid DB specification (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 else
-	if pos(common_thread.default_database, "|") > 0 then
-		f_split_string(common_thread.default_database, "|", ls_dbserver, ls_dbname)
-		if ls_dbserver = "" or ls_dbname = "" then
-			log.log(this, "u_sqlca.dbconnect:0016", "Invalid DB specification (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-	else
-		ls_dbserver = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "")
-		if ls_dbserver = "" then
-			log.log(this, "u_sqlca.dbconnect:0022", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-		
-		ls_dbname = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "")
-		if ls_dbserver = "" then
-			log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-		
-		ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "")
-		ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "")
-end if
+	ls_dbserver = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "srv-goehr-demo.database.windows.net")
+	if ls_dbserver = "" then
+		log.log(this, "u_sqlca.dbconnect:0022", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 	
+	ls_dbname = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
+	if ls_dbserver = "" then
+		log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 	
-	ls_dbms = "SNC"
 //	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
 //	if ls_dbserver = "" then
 //		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 //		return -1
 //	end if
 end if
+
+ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "demo1@srv-goehr-demo1")
+ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "Gr33nOl1ve")
+
+ls_dbms = "MSO"
 
 if len(ls_logid) > 0 and len(ls_logpass) > 0 then
 	return dbconnect(ls_dbserver, ls_dbname, ls_dbms, ps_appname, ls_logid, ls_logpass)

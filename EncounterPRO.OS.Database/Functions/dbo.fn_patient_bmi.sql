@@ -180,8 +180,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_bmi]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_bmi] TO [cprsystem]
 GO
 

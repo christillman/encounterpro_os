@@ -69,21 +69,13 @@ CREATE TABLE [dbo].[x_document_mapping] (
 		[map_action]                   [varchar](12) NOT NULL
 ) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[x_document_mapping]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_document_mapping] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_document_mapping]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_document_mapping] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_document_mapping]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_document_mapping] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_document_mapping]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_document_mapping] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_document_mapping] SET (LOCK_ESCALATION = TABLE)
 GO

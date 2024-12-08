@@ -72,29 +72,17 @@ ALTER TABLE [dbo].[c_1_record]
 	CONSTRAINT [DF__c_1_record__col1__20651BCD]
 	DEFAULT ((1)) FOR [col1]
 GO
-GRANT DELETE
-	ON [dbo].[c_1_record]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_1_record] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_1_record]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_1_record] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_1_record]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_1_record] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_1_record]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_1_record] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_1_record]
-	TO [public]
+GRANT SELECT ON [dbo].[c_1_record] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[c_1_record]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_1_record] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_1_record] SET (LOCK_ESCALATION = TABLE)
 GO

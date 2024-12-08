@@ -103,21 +103,13 @@ ALTER TABLE [dbo].[c_Component_Interface]
 	CONSTRAINT [DF_c_Component_Interface_last_updated]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT DELETE
-	ON [dbo].[c_Component_Interface]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Component_Interface] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Interface]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Interface] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Interface]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Interface] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Interface]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Interface] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Interface] SET (LOCK_ESCALATION = TABLE)
 GO

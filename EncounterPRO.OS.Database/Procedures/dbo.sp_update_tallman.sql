@@ -27,17 +27,17 @@ BEGIN
 /*
 select * from c_Drug_Tall_Man t
 join c_Drug_Generic g 
-	ON g.generic_name like '%[A-Za-z]' + t.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+	ON g.generic_name like '%[A-Za-z]' + t.spelling COLLATE DATABASE_DEFAULT + '%'
 select * from c_Drug_Tall_Man t
 join c_Drug_Generic g 
-	ON g.generic_name like '%' + t.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '[A-Za-z]%'
+	ON g.generic_name like '%' + t.spelling COLLATE DATABASE_DEFAULT + '[A-Za-z]%'
 
 select * from c_Drug_Tall_Man t
 join c_Drug_Brand b 
-	ON b.brand_name like '%[A-Za-z]' + t.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+	ON b.brand_name like '%[A-Za-z]' + t.spelling COLLATE DATABASE_DEFAULT + '%'
 select * from c_Drug_Tall_Man t
 join c_Drug_Brand b 
-	ON b.brand_name like '%' + t.spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '[A-Za-z]%'
+	ON b.brand_name like '%' + t.spelling COLLATE DATABASE_DEFAULT + '[A-Za-z]%'
 */
 
 declare @SQL nvarchar(max)

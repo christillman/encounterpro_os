@@ -101,25 +101,15 @@ ALTER TABLE [dbo].[c_Location_Domain]
 	CONSTRAINT [DF__c_Location_D__id__10966653]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Location_Domain]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Location_Domain] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Location_Domain]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Location_Domain] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Location_Domain]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Location_Domain] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Location_Domain]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Location_Domain] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Location_Domain]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Location_Domain] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Location_Domain] SET (LOCK_ESCALATION = TABLE)
 GO

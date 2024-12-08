@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[p_Lastkey]
 	CONSTRAINT [DF__p_Lastkey__id__2B4A5C8F]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[p_Lastkey]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Lastkey] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Lastkey]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Lastkey] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Lastkey]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Lastkey] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Lastkey]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Lastkey] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Lastkey]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Lastkey] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Lastkey] SET (LOCK_ESCALATION = TABLE)
 GO

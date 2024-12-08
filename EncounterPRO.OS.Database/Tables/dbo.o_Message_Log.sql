@@ -73,13 +73,13 @@ CREATE TABLE [dbo].[o_Message_Log] (
 		[status]                   [varchar](12) NULL,
 		[tries]                    [smallint] NULL,
 		[message_date_time]        [datetime] NULL,
-		[message]                  [image] NULL,
+		[message]                  [varbinary](max) NULL,
 		[direction]                [char](1) NULL,
 		[message_ack_datetime]     [datetime] NULL,
 		[comments]                 [varchar](255) NULL,
 		[id]                       [uniqueidentifier] NULL,
 		[batch_mode]               [char](1) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[o_Message_Log]
 	ADD
@@ -122,21 +122,13 @@ CREATE NONCLUSTERED INDEX [idx_status]
 	ON [dbo].[o_Message_Log] ([status], [tries], [direction], [message_date_time])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 100) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Message_Log]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Message_Log] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Message_Log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Message_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Message_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Message_Log] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Message_Log]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Message_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Message_Log] SET (LOCK_ESCALATION = TABLE)
 GO

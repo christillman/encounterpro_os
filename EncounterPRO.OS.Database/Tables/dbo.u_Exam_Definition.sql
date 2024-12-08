@@ -84,25 +84,15 @@ ALTER TABLE [dbo].[u_Exam_Definition]
 	CONSTRAINT [DF__u_Exam_De__defau__507BE13E]
 	DEFAULT ('N') FOR [default_flag]
 GO
-GRANT DELETE
-	ON [dbo].[u_Exam_Definition]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_Exam_Definition] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_Exam_Definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_Exam_Definition] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_Exam_Definition]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_Exam_Definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_Exam_Definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_Exam_Definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_Exam_Definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_Exam_Definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_Exam_Definition] SET (LOCK_ESCALATION = TABLE)
 GO

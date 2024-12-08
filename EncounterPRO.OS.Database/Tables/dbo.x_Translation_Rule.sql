@@ -102,25 +102,15 @@ ALTER TABLE [dbo].[x_Translation_Rule]
 	CONSTRAINT [DF_x_Translation_Rule_status_40]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[x_Translation_Rule]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Translation_Rule] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Translation_Rule]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Translation_Rule] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Translation_Rule]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Translation_Rule] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Translation_Rule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Translation_Rule] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Translation_Rule]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Translation_Rule] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Translation_Rule] SET (LOCK_ESCALATION = TABLE)
 GO

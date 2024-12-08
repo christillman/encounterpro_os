@@ -28,14 +28,14 @@ CREATE TABLE [dbo].[p_Patient_Progress] (
 		[progress_type]                 [varchar](24) NOT NULL,
 		[progress_key]                  [varchar](40) NULL,
 		[progress_value]                [varchar](40) NULL,
-		[progress]                      [text] NULL,
+		[progress]                      [nvarchar](max) NULL,
 		[attachment_id]                 [int] NULL,
 		[patient_workplan_item_id]      [int] NULL,
 		[risk_level]                    [int] NULL,
 		[current_flag]                  [char](1) NOT NULL,
 		[created]                       [datetime] NULL,
 		[created_by]                    [varchar](24) NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Patient_Progress]
 	ADD
@@ -84,25 +84,15 @@ CREATE NONCLUSTERED INDEX [idx_pprg_progress_key]
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
 
-GRANT DELETE
-	ON [dbo].[p_Patient_Progress]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_Progress] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_Progress]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_Progress] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_Progress]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_Progress] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_Progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_Progress] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_Progress]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_Progress] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_Progress] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -106,21 +106,13 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_communication_sequence]
 	ON [dbo].[c_Actor_Communication] ([communication_sequence])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Actor_Communication]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Actor_Communication] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Actor_Communication]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Actor_Communication] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Actor_Communication]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Actor_Communication] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Actor_Communication]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Actor_Communication] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Actor_Communication] SET (LOCK_ESCALATION = TABLE)
 GO

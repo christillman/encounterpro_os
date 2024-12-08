@@ -83,25 +83,15 @@ ALTER TABLE [dbo].[b_Resource]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[b_Resource]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[b_Resource] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[b_Resource]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[b_Resource] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[b_Resource]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[b_Resource] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[b_Resource]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[b_Resource] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[b_Resource]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[b_Resource] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[b_Resource] SET (LOCK_ESCALATION = TABLE)
 GO

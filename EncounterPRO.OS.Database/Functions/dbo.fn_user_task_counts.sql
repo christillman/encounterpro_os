@@ -124,8 +124,6 @@ END
 
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_task_counts]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_task_counts] TO [cprsystem]
 GO
 

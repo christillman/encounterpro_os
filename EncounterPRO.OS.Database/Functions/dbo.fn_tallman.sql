@@ -18,7 +18,7 @@ AS BEGIN
 
 	DECLARE cr_update CURSOR FOR 
 	SELECT spelling from c_Drug_Tall_Man 
-	WHERE @tallman_version LIKE '%' + spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+	WHERE @tallman_version LIKE '%' + spelling COLLATE DATABASE_DEFAULT + '%'
 	
 	IF @@ROWCOUNT = 0 RETURN @drug_description
 
@@ -30,16 +30,16 @@ AS BEGIN
 		BEGIN
 		SELECT @tallman_version = REPLACE(@tallman_version, @spelling, @spelling)
 		FROM c_1_record
-		WHERE (@tallman_version LIKE @spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+		WHERE (@tallman_version LIKE @spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @tallman_version COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE @spelling + '%')
-			OR (@tallman_version LIKE '% ' + @spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+			OR (@tallman_version LIKE '% ' + @spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @tallman_version COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '% ' + @spelling + '%')
-			OR (@tallman_version LIKE '%(' + @spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
+			OR (@tallman_version LIKE '%(' + @spelling COLLATE DATABASE_DEFAULT + '%'
 				AND @tallman_version COLLATE SQL_Latin1_General_CP1_CS_AS NOT LIKE '%(' + @spelling + '%')
-			OR (@tallman_version = @spelling COLLATE SQL_Latin1_General_CP1_CI_AS
+			OR (@tallman_version = @spelling COLLATE DATABASE_DEFAULT
 				AND @tallman_version COLLATE SQL_Latin1_General_CP1_CS_AS != @spelling)
-			AND @tallman_version NOT LIKE '%[A-Za-z]' + @spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '%'
-			AND @tallman_version NOT LIKE '%' + @spelling COLLATE SQL_Latin1_General_CP1_CI_AS + '[A-Za-z]%'
+			AND @tallman_version NOT LIKE '%[A-Za-z]' + @spelling COLLATE DATABASE_DEFAULT + '%'
+			AND @tallman_version NOT LIKE '%' + @spelling COLLATE DATABASE_DEFAULT + '[A-Za-z]%'
 
 		FETCH NEXT FROM cr_update INTO @spelling
 		END

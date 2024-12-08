@@ -181,8 +181,6 @@ IF @ll_transportsequence > 0
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_route_information]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_route_information] TO [cprsystem]
 GO
 

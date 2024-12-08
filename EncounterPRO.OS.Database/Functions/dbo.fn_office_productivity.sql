@@ -266,8 +266,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_office_productivity]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_office_productivity] TO [cprsystem]
 GO
 

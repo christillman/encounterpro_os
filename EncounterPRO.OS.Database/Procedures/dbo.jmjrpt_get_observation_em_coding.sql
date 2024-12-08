@@ -1,11 +1,17 @@
-DROP PROCEDURE [jmjrpt_get_observation_em_coding]
+
+-- Drop Procedure [dbo].[jmjrpt_get_observation_em_coding]
+Print 'Drop Procedure [dbo].[jmjrpt_get_observation_em_coding]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmjrpt_get_observation_em_coding]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[jmjrpt_get_observation_em_coding]
+GO
+
+-- Create Procedure [dbo].[jmjrpt_get_observation_em_coding]
+Print 'Create Procedure [dbo].[jmjrpt_get_observation_em_coding]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 CREATE PROCEDURE [jmjrpt_get_observation_em_coding]
 	@ps_observation_id varchar(24)
 AS

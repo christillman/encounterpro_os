@@ -308,7 +308,7 @@ setnull(adodb)
 
 randomize(0)
 
-default_database = "<Default>"
+default_database = "srv-goehr-demo.database.windows.net|GreenOliveDemo"
 
 // Set osversion
 // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vista or 2008
@@ -362,10 +362,10 @@ else
 END IF
 
 // If the INI file doesn't exist, then create an empty one
-if not fileexists(gnv_app.ini_file) then
-	lbl_file = blob("")
-	log.file_write(lbl_file, gnv_app.ini_file)
-end if
+//if not fileexists(gnv_app.ini_file) then
+//	lbl_file = blob("")
+//	log.file_write(lbl_file, gnv_app.ini_file)
+//end if
 
 // Initialize the logging system; the log system uses the ini file
 // Logging system must be initialized after common thread,

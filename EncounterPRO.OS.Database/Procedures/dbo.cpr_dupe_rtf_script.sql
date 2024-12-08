@@ -1,12 +1,17 @@
-DROP PROCEDURE IF EXISts [cpr_dupe_rtf_script]
+
+-- Drop Procedure [dbo].[cpr_dupe_rtf_script]
+Print 'Drop Procedure [dbo].[cpr_dupe_rtf_script]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[cpr_dupe_rtf_script]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[cpr_dupe_rtf_script]
+GO
+
+-- Create Procedure [dbo].[cpr_dupe_rtf_script]
+Print 'Create Procedure [dbo].[cpr_dupe_rtf_script]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
 CREATE PROCEDURE [cpr_dupe_rtf_script]
 	@sourceid Integer
 AS

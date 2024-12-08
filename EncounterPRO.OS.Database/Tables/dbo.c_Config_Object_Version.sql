@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[c_Config_Object_Version] (
 		[config_object_id]             [uniqueidentifier] NOT NULL,
 		[version]                      [int] NOT NULL,
 		[description]                  [varchar](80) NOT NULL,
-		[version_description]          [text] NULL,
+		[version_description]          [nvarchar](max) NULL,
 		[config_object_type]           [varchar](24) NOT NULL,
 		[owner_id]                     [int] NOT NULL,
 		[created]                      [datetime] NOT NULL,
@@ -78,10 +78,10 @@ CREATE TABLE [dbo].[c_Config_Object_Version] (
 		[status_date_time]             [datetime] NOT NULL,
 		[release_status]               [varchar](12) NULL,
 		[release_status_date_time]     [datetime] NULL,
-		[objectdata]                   [image] NULL,
+		[objectdata]                   [varbinary](max) NULL,
 		[checked_out_by]               [varchar](24) NULL,
 		[object_encoding_method]       [varchar](12) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Version]
 	ADD
@@ -117,17 +117,11 @@ ALTER TABLE [dbo].[c_Config_Object_Version]
 	CONSTRAINT [DF_c_Config_Object_Version_version]
 	DEFAULT ((1)) FOR [version]
 GO
-GRANT INSERT
-	ON [dbo].[c_Config_Object_Version]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Config_Object_Version] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Config_Object_Version]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Config_Object_Version] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Config_Object_Version]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Config_Object_Version] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Version] SET (LOCK_ESCALATION = TABLE)
 GO

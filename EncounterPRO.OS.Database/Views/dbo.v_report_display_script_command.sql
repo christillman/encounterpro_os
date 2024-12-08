@@ -71,8 +71,6 @@ FROM dbo.fn_report_display_scripts() f
 
 
 GO
-GRANT SELECT
-	ON [dbo].[v_report_display_script_command]
-	TO [public]
+GRANT SELECT ON [dbo].[v_report_display_script_command] TO [public]
 GO
 

@@ -213,8 +213,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_encounter_audit]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_encounter_audit] TO [cprsystem]
 GO
 

@@ -964,8 +964,6 @@ ELSE
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_object_info]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_object_info] TO [cprsystem]
 GO
 

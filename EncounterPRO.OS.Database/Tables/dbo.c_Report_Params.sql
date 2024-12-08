@@ -78,9 +78,9 @@ CREATE TABLE [dbo].[c_Report_Params] (
 		[initial4]              [varchar](40) NULL,
 		[required_flag]         [char](1) NULL,
 		[config_or_runtime]     [char](1) NULL,
-		[helptext]              [text] NULL,
-		[query]                 [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[helptext]              [nvarchar](max) NULL,
+		[query]                 [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Report_Params]
 	ADD
@@ -96,25 +96,15 @@ ALTER TABLE [dbo].[c_Report_Params]
 	CONSTRAINT [DF__c_report___confi__10B661E4]
 	DEFAULT ('C') FOR [config_or_runtime]
 GO
-GRANT DELETE
-	ON [dbo].[c_Report_Params]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Report_Params] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Report_Params]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Report_Params] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Report_Params]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Report_Params] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Report_Params]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Report_Params] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Report_Params]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Report_Params] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Report_Params] SET (LOCK_ESCALATION = TABLE)
 GO

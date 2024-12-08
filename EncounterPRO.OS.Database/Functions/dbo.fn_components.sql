@@ -316,8 +316,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_components]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_components] TO [cprsystem]
 GO
 

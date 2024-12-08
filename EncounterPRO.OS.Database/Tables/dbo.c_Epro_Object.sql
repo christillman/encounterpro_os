@@ -76,9 +76,9 @@ CREATE TABLE [dbo].[c_Epro_Object] (
 		[object_help]                       [varchar](1024) NULL,
 		[id]                                [uniqueidentifier] NOT NULL,
 		[last_updated]                      [datetime] NOT NULL,
-		[base_table_query]                  [text] NULL,
+		[base_table_query]                  [nvarchar](max) NULL,
 		[default_ordinal]                   [nchar](10) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Epro_Object]
 	ADD
@@ -99,9 +99,7 @@ ALTER TABLE [dbo].[c_Epro_Object]
 	CONSTRAINT [DF__c_Epro_Object_last_updated_4]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT SELECT
-	ON [dbo].[c_Epro_Object]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Epro_Object] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Epro_Object] SET (LOCK_ESCALATION = TABLE)
 GO

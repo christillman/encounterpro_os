@@ -72,7 +72,7 @@ CREATE TABLE [dbo].[p_Chart_Alert] (
 		[begin_date]              [datetime] NULL,
 		[expiration_date]         [datetime] NULL,
 		[alert_category_id]       [varchar](12) NULL,
-		[alert_text]              [text] NULL,
+		[alert_text]              [nvarchar](max) NULL,
 		[priority]                [int] NULL,
 		[attachment_id]           [int] NULL,
 		[created]                 [datetime] NULL,
@@ -82,7 +82,7 @@ CREATE TABLE [dbo].[p_Chart_Alert] (
 		[close_encounter_id]      [int] NULL,
 		[patient_workplan_id]     [int] NULL,
 		[id]                      [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Chart_Alert]
 	ADD
@@ -103,25 +103,15 @@ ALTER TABLE [dbo].[p_Chart_Alert]
 	CONSTRAINT [DF_p_Chart_Alert_created]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[p_Chart_Alert]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Chart_Alert] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Chart_Alert]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Chart_Alert] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Chart_Alert]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Chart_Alert] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Chart_Alert]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Chart_Alert] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Chart_Alert]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Chart_Alert] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Chart_Alert] SET (LOCK_ESCALATION = TABLE)
 GO

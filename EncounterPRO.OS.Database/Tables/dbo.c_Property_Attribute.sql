@@ -79,25 +79,15 @@ ALTER TABLE [dbo].[c_Property_Attribute]
 	WITH FILLFACTOR=90
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Property_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Property_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Property_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Property_Attribute] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Property_Attribute]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Property_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Property_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Property_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Property_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Property_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Property_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

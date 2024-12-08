@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[c_Config_Object_Library] (
 		[config_object_type]          [varchar](24) NOT NULL,
 		[context_object]              [varchar](24) NOT NULL,
 		[description]                 [varchar](80) NOT NULL,
-		[long_description]            [text] NULL,
+		[long_description]            [nvarchar](max) NULL,
 		[config_object_category]      [varchar](80) NULL,
 		[production_version]          [int] NULL,
 		[production_version_date]     [datetime] NULL,
@@ -89,7 +89,7 @@ CREATE TABLE [dbo].[c_Config_Object_Library] (
 		[latest_version]              [int] NULL,
 		[latest_version_date]         [datetime] NULL,
 		[latest_version_status]       [varchar](12) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Library]
 	ADD
@@ -125,17 +125,11 @@ ALTER TABLE [dbo].[c_Config_Object_Library]
 	CONSTRAINT [DF_c_Config_Object_Library_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT INSERT
-	ON [dbo].[c_Config_Object_Library]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Config_Object_Library] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Config_Object_Library]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Config_Object_Library] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Config_Object_Library]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Config_Object_Library] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Library] SET (LOCK_ESCALATION = TABLE)
 GO

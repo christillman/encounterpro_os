@@ -83,7 +83,7 @@ CREATE TABLE [dbo].[c_User] (
 		[license_number]                 [varchar](40) NULL,
 		[certification_number]           [varchar](40) NULL,
 		[upin]                           [varchar](24) NULL,
-		[signature_stamp]                [image] NULL,
+		[signature_stamp]                [varbinary](max) NULL,
 		[supervisor_user_id]             [varchar](24) NULL,
 		[certified]                      [char](1) NULL,
 		[billing_id]                     [varchar](24) NULL,
@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[c_User] (
 		[actor_type]                     [varchar](24) NULL,
 		[parent_actor_user_id]           [varchar](24) NULL,
 		[signature_stamp_filetype]       [varchar](24) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_User]
 	ADD
@@ -158,25 +158,15 @@ CREATE NONCLUSTERED INDEX [idx_actor_id]
 	ON [dbo].[c_User] ([actor_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_User]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_User] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_User]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_User] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_User]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_User] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_User]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_User] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_User]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_User] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_User] SET (LOCK_ESCALATION = TABLE)
 GO

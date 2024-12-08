@@ -249,8 +249,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_id_list]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_id_list] TO [cprsystem]
 GO
 

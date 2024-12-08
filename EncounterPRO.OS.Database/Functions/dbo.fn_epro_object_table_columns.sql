@@ -162,8 +162,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_epro_object_table_columns]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_epro_object_table_columns] TO [cprsystem]
 GO
 

@@ -12,3 +12,13 @@ CREATE TABLE [p_patient_list_item](
 	[list_item_patient_data] [varchar](80) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[p_patient_list_item] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[p_patient_list_item] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[p_patient_list_item] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[p_patient_list_item] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[p_patient_list_item] TO [cprsystem]
+GO

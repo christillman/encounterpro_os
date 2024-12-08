@@ -86,6 +86,6 @@ from sys.objects o
 	and c.column_id = d.parent_column_id
 	inner join sys.types t
 	on c.user_type_id = t.user_type_id
-where o.name = @ps_tablename
+where o.name COLLATE DATABASE_DEFAULT = @ps_tablename
 
 GO

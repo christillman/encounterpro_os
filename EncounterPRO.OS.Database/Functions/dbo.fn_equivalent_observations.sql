@@ -108,8 +108,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_equivalent_observations]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_equivalent_observations] TO [cprsystem]
 GO
 

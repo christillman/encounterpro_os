@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[c_Component_Version] (
 		[component_id]                 [varchar](24) NOT NULL,
 		[version]                      [int] NOT NULL,
 		[description]                  [varchar](80) NOT NULL,
-		[version_description]          [text] NULL,
+		[version_description]          [nvarchar](max) NULL,
 		[component_type]               [varchar](24) NOT NULL,
 		[component_class]              [varchar](128) NULL,
 		[component_location]           [varchar](255) NULL,
@@ -81,7 +81,7 @@ CREATE TABLE [dbo].[c_Component_Version] (
 		[release_status_date_time]     [datetime] NULL,
 		[min_build]                    [int] NOT NULL,
 		[min_modification_level]       [int] NOT NULL,
-		[objectdata]                   [image] NULL,
+		[objectdata]                   [varbinary](max) NULL,
 		[id]                           [uniqueidentifier] NOT NULL,
 		[installer]                    [varchar](24) NOT NULL,
 		[independence]                 [varchar](24) NOT NULL,
@@ -94,10 +94,10 @@ CREATE TABLE [dbo].[c_Component_Version] (
 		[beta_begin_date]              [datetime] NULL,
 		[release_date]                 [datetime] NULL,
 		[build_status]                 [varchar](12) NOT NULL,
-		[notes]                        [text] NULL,
+		[notes]                        [nvarchar](max) NULL,
 		[max_modification_level]       [int] NULL,
 		[last_updated]                 [datetime] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Component_Version]
 	ADD
@@ -178,17 +178,11 @@ ALTER TABLE [dbo].[c_Component_Version]
 	CONSTRAINT [DF_c_Component_Version_version]
 	DEFAULT ((1)) FOR [version]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Version]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Version] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Version]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Version] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Version]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Version] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Version] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -1,8 +1,16 @@
-DROP PROCEDURE IF EXISTS [jmj_patient_search]
+
+-- Drop Procedure [dbo].[jmj_patient_search]
+Print 'Drop Procedure [dbo].[jmj_patient_search]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmj_patient_search]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[jmj_patient_search]
+GO
+
+-- Create Procedure [dbo].[jmj_patient_search]
+Print 'Create Procedure [dbo].[jmj_patient_search]'
 GO
 SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE   PROCEDURE [jmj_patient_search]
 (

@@ -67,12 +67,12 @@ CREATE TABLE [dbo].[c_Display_Command_Definition] (
 		[context_object]      [varchar](24) NOT NULL,
 		[display_command]     [varchar](40) NOT NULL,
 		[description]         [varchar](128) NULL,
-		[command_help]        [text] NULL,
+		[command_help]        [nvarchar](max) NULL,
 		[id]                  [uniqueidentifier] NOT NULL,
 		[script_type]         [varchar](24) NOT NULL,
 		[min_build]           [int] NULL,
 		[last_updated]        [datetime] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Display_Command_Definition]
 	ADD
@@ -102,25 +102,15 @@ CREATE NONCLUSTERED INDEX [idx_c_Display_Command_Definition_id]
 	ON [dbo].[c_Display_Command_Definition] ([id], [script_type], [context_object], [display_command])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Display_Command_Definition]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Display_Command_Definition] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Display_Command_Definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Display_Command_Definition] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Display_Command_Definition]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Display_Command_Definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Display_Command_Definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Display_Command_Definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Display_Command_Definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Display_Command_Definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Display_Command_Definition] SET (LOCK_ESCALATION = TABLE)
 GO

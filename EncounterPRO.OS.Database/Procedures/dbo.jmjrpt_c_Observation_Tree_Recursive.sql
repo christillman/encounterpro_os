@@ -1,12 +1,17 @@
-DROP PROCEDURE [jmjrpt_c_Observation_Tree_Recursive]
+
+-- Drop Procedure [dbo].[jmjrpt_c_Observation_Tree_Recursive]
+Print 'Drop Procedure [dbo].[jmjrpt_c_Observation_Tree_Recursive]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[jmjrpt_c_Observation_Tree_Recursive]') AND [type] = 'P'))
+DROP PROCEDURE [dbo].[jmjrpt_c_Observation_Tree_Recursive]
+GO
+
+-- Create Procedure [dbo].[jmjrpt_c_Observation_Tree_Recursive]
+Print 'Create Procedure [dbo].[jmjrpt_c_Observation_Tree_Recursive]'
 GO
 SET ANSI_NULLS ON
-GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-
 CREATE PROCEDURE [jmjrpt_c_Observation_Tree_Recursive]
 	@level int, @obsarg VARCHAR(24)
 AS

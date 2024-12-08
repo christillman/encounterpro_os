@@ -109,8 +109,6 @@ AND NOT EXISTS (
 	WHERE c.id = p.id
 	AND a.attribute = p.token1)
 GO
-GRANT SELECT
-	ON [dbo].[v_External_Source_Component_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_External_Source_Component_Attribute] TO [cprsystem]
 GO
 

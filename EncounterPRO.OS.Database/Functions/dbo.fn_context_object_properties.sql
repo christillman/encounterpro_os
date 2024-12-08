@@ -139,8 +139,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_context_object_properties]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_context_object_properties] TO [cprsystem]
 GO
 

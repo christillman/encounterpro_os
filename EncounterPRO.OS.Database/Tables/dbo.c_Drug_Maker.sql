@@ -83,25 +83,15 @@ ALTER TABLE [dbo].[c_Drug_Maker]
 	CONSTRAINT [DF__c_Drug_Maker__id__0DB9F9A8]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Drug_Maker]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Drug_Maker] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Drug_Maker]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Drug_Maker] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Drug_Maker]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Drug_Maker] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Drug_Maker]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Drug_Maker] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Drug_Maker]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Drug_Maker] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Drug_Maker] SET (LOCK_ESCALATION = TABLE)
 GO

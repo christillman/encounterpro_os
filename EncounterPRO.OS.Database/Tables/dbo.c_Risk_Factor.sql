@@ -72,8 +72,8 @@ CREATE TABLE [dbo].[c_Risk_Factor] (
 		[location]                  [varchar](24) NULL,
 		[result_range_sequence]     [int] NULL,
 		[risk_level]                [int] NULL,
-		[comments]                  [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[comments]                  [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Risk_Factor]
 	ADD
@@ -84,25 +84,15 @@ ALTER TABLE [dbo].[c_Risk_Factor]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Risk_Factor]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Risk_Factor] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Risk_Factor]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Risk_Factor] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Risk_Factor]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Risk_Factor] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Risk_Factor]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Risk_Factor] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Risk_Factor]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Risk_Factor] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Risk_Factor] SET (LOCK_ESCALATION = TABLE)
 GO

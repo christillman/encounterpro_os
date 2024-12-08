@@ -75,12 +75,12 @@ CREATE TABLE [dbo].[p_Observation_Result_Progress] (
 		[progress_type]                [varchar](24) NOT NULL,
 		[progress_key]                 [varchar](40) NULL,
 		[progress_value]               [varchar](40) NULL,
-		[progress]                     [text] NULL,
+		[progress]                     [nvarchar](max) NULL,
 		[current_flag]                 [char](1) NOT NULL,
 		[created]                      [datetime] NOT NULL,
 		[created_by]                   [varchar](24) NOT NULL,
 		[id]                           [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Observation_Result_Progress]
 	ADD
@@ -109,17 +109,11 @@ GO
 CREATE NONCLUSTERED INDEX [idx_obs_res_prg_treatment]
 	ON [dbo].[p_Observation_Result_Progress] ([cpr_id], [treatment_id], [observation_sequence], [location_result_sequence], [result_progress_sequence]) ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[p_Observation_Result_Progress]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Observation_Result_Progress] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Observation_Result_Progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Observation_Result_Progress] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Observation_Result_Progress]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Observation_Result_Progress] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Observation_Result_Progress] SET (LOCK_ESCALATION = TABLE)
 GO

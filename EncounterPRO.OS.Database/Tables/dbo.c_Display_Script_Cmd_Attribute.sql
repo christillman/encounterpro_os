@@ -69,9 +69,9 @@ CREATE TABLE [dbo].[c_Display_Script_Cmd_Attribute] (
 		[attribute_sequence]     [int] IDENTITY(1, 1) NOT NULL,
 		[attribute]              [varchar](40) NOT NULL,
 		[value]                  [varchar](255) NULL,
-		[long_value]             [text] NULL,
+		[long_value]             [nvarchar](max) NULL,
 		[id]                     [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Display_Script_Cmd_Attribute]
 	ADD
@@ -87,25 +87,15 @@ ALTER TABLE [dbo].[c_Display_Script_Cmd_Attribute]
 	CONSTRAINT [DF_c_Display_Script_cmd_att_id]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Display_Script_Cmd_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Display_Script_Cmd_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Display_Script_Cmd_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

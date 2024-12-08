@@ -246,8 +246,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_defaults_from_actuals]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_defaults_from_actuals] TO [cprsystem]
 GO
 

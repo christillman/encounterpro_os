@@ -191,8 +191,6 @@ RETURN
 
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_documents_for_object]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_documents_for_object] TO [cprsystem]
 GO
 

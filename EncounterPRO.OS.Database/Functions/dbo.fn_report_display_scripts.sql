@@ -114,8 +114,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_report_display_scripts]
-	TO [public]
+GRANT SELECT ON [dbo].[fn_report_display_scripts] TO [public]
 GO
 

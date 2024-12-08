@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[x_Translate_P]
 	CONSTRAINT [DF_x_Translate_P_created]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[x_Translate_P]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Translate_P] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Translate_P]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Translate_P] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Translate_P]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Translate_P] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Translate_P]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Translate_P] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Translate_P]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Translate_P] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Translate_P] SET (LOCK_ESCALATION = TABLE)
 GO

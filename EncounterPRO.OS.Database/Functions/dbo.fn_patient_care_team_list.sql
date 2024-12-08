@@ -435,8 +435,6 @@ WHERE u.actor_class IN ('Special', 'System')
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_care_team_list]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_care_team_list] TO [cprsystem]
 GO
 

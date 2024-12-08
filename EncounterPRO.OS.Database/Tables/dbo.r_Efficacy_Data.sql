@@ -82,21 +82,13 @@ ALTER TABLE [dbo].[r_Efficacy_Data]
 	WITH FILLFACTOR=70
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[r_Efficacy_Data]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[r_Efficacy_Data] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[r_Efficacy_Data]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[r_Efficacy_Data] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[r_Efficacy_Data]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[r_Efficacy_Data] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[r_Efficacy_Data]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[r_Efficacy_Data] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[r_Efficacy_Data] SET (LOCK_ESCALATION = TABLE)
 GO

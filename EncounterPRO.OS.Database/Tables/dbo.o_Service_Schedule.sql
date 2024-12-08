@@ -105,25 +105,15 @@ ALTER TABLE [dbo].[o_Service_Schedule]
 	CONSTRAINT [DF_o_Service_Schedule_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[o_Service_Schedule]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Service_Schedule] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Service_Schedule]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Service_Schedule] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Service_Schedule]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Service_Schedule] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Service_Schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Service_Schedule] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Service_Schedule]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Service_Schedule] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Service_Schedule] SET (LOCK_ESCALATION = TABLE)
 GO

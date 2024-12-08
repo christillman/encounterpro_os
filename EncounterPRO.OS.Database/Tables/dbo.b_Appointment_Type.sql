@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[b_Appointment_Type]
 	CONSTRAINT [DF_b_Appointment_Type_Domain]
 	DEFAULT ('JMJBILLINGID') FOR [billing_domain]
 GO
-GRANT DELETE
-	ON [dbo].[b_Appointment_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[b_Appointment_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[b_Appointment_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[b_Appointment_Type] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[b_Appointment_Type]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[b_Appointment_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[b_Appointment_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[b_Appointment_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[b_Appointment_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[b_Appointment_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[b_Appointment_Type] SET (LOCK_ESCALATION = TABLE)
 GO

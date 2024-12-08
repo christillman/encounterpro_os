@@ -65,9 +65,9 @@ SET ANSI_PADDING OFF
 GO
 CREATE TABLE [dbo].[x_Property_Exception] (
 		[spid]                      [int] NOT NULL,
-		[property_value_binary]     [image] NULL,
-		[property_value_text]       [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[property_value_binary]     [varbinary](max) NULL,
+		[property_value_text]       [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[x_Property_Exception]
 	ADD
@@ -78,21 +78,13 @@ ALTER TABLE [dbo].[x_Property_Exception]
 	WITH FILLFACTOR=70
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[x_Property_Exception]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Property_Exception] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Property_Exception]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Property_Exception] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Property_Exception]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Property_Exception] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Property_Exception]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Property_Exception] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Property_Exception] SET (LOCK_ESCALATION = TABLE)
 GO

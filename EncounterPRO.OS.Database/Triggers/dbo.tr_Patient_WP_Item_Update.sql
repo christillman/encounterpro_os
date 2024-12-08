@@ -1,10 +1,15 @@
-
-DROP TRIGGER IF EXISTS [dbo].[tr_Patient_WP_Item_Update]
-/****** Object:  Trigger [dbo].[tr_Patient_WP_Item_Update]    Script Date: 14/07/2023 6:42:27 pm ******/
-SET ANSI_NULLS ON
+-- Drop TRIGGER [dbo].[tr_Patient_WP_Item_Update]
+Print 'Drop TRIGGER [dbo].[tr_Patient_WP_Item_Update]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[tr_Patient_WP_Item_Update]') AND ([type]='TR')))
+DROP TRIGGER [dbo].[tr_Patient_WP_Item_Update]
 GO
 
-SET QUOTED_IDENTIFIER OFF
+-- Create TRIGGER [dbo].[tr_Patient_WP_Item_Update]
+Print 'Create TRIGGER [dbo].[tr_Patient_WP_Item_Update]'
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TRIGGER [dbo].[tr_Patient_WP_Item_Update] ON [dbo].[p_Patient_WP_Item]

@@ -762,8 +762,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_object_progress_user]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_object_progress_user] TO [cprsystem]
 GO
 

@@ -9,7 +9,7 @@
 
 ; ------------------------------------------
 ; DEFINES
-  !define PRODUCT   "GreenOlive_EHR_Demo"
+  !define PRODUCT   "GreenOlive_EHR_Public_Demo"
 
 ; Client Setup Version
   !define VERSION   7.2.1.8
@@ -194,6 +194,9 @@
       ; File "${SRC_TextMaker}\${SRC_TextMaker_Filename}"
       ; nsExec::Exec 'msiexec /i "$INSTDIR\${SRC_TextMaker_Filename}" /passive /norestart /l*v "$INSTDIR\TextMaker.log" APPLICATIONFOLDER="C:\Program Files (x86)\SoftMaker FreeOffice 2021" INSTALLTM=1 INSTALLUPDATER=0'
       ; Delete '$INSTDIR\${SRC_TextMaker_Filename}'
+
+      ; CreateDirectory "C:\Users\Public\Documents\"
+      ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021\TB"
   
 	; Dont install utilites on demo versions, it would need admin installer
       ; SetDetailsPrint both
@@ -216,14 +219,14 @@
         SetDetailsPrint both
         File "${SRC_EPRO}\*.*"
 
-        DetailPrint "Setting ini SERVER and DATABASE to $SERVER and $DATABASE"
-        DetailPrint "Setting ini DBLOGID and DBLOGPASS to $LOGID and $LOGPASS"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" "tcp:4.222.21.254,54321"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" "EncounterPro_OS"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "MSOLEDBSQL"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid" "demo1"
-        WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass" "gr33nol1ve"
+        ; DetailPrint "Setting ini SERVER and DATABASE to $SERVER and $DATABASE"
+        ; DetailPrint "Setting ini DBLOGID and DBLOGPASS to $LOGID and $LOGPASS"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver" "tcp:4.222.21.254,54321"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname" "EncounterPro_OS"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dbms" "MSOLEDBSQL"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "office_id" "0001"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid" "demo1"
+        ; WriteINIStr "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass" "gr33nol1ve"
         File "${SOURCE_ROOT}\Icons\green-olive-avi-02.ico"
         ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
@@ -403,58 +406,58 @@ Function un.onUninstSuccess
 FunctionEnd
 
 Function createServerDBPage
-    !insertmacro MUI_HEADER_TEXT $(PAGE_SERVDB_TITLE) $(PAGE_SERVDB_SUBTITLE)
+    ; !insertmacro MUI_HEADER_TEXT $(PAGE_SERVDB_TITLE) $(PAGE_SERVDB_SUBTITLE)
 
-    ${If} $SERVER == ""
-        StrCpy $SERVER "tcp:4.222.21.254,54321"
-    ${EndIf}
-    ${If} $DATABASE == ""
-        StrCpy $DATABASE "EncounterPro_OS"
-    ${EndIf}
-    ${If} $LOGID == ""
-        StrCpy $LOGID "demo1"
-    ${EndIf}
-    ${If} $LOGPASS == ""
-        StrCpy $LOGPASS "gr33nol1ve"
-    ${EndIf}
+    ; ${If} $SERVER == ""
+        ; StrCpy $SERVER "tcp:4.222.21.254,54321"
+    ; ${EndIf}
+    ; ${If} $DATABASE == ""
+        ; StrCpy $DATABASE "EncounterPro_OS"
+    ; ${EndIf}
+    ; ${If} $LOGID == ""
+        ; StrCpy $LOGID "demo1"
+    ; ${EndIf}
+    ; ${If} $LOGPASS == ""
+        ; StrCpy $LOGPASS "gr33nol1ve"
+    ; ${EndIf}
     
-    nsDialogs::Create /NOUNLOAD 1018
-    Pop $Dialog
+    ; nsDialogs::Create /NOUNLOAD 1018
+    ; Pop $Dialog
 
-    ${If} $Dialog == error
-        Abort
-    ${EndIf}
+    ; ${If} $Dialog == error
+        ; Abort
+    ; ${EndIf}
     
-    ${NSD_CreateLabel} 0 0 100% 12u "Server Name"
+    ; ${NSD_CreateLabel} 0 0 100% 12u "Server Name"
 
-    ${NSD_CreateText} 0 13u 100% 12u $SERVER
-    Pop $SText
+    ; ${NSD_CreateText} 0 13u 100% 12u $SERVER
+    ; Pop $SText
     
-    ${NSD_CreateLabel} 0 30u 100% 12u "Database Name"
+    ; ${NSD_CreateLabel} 0 30u 100% 12u "Database Name"
 
-    ${NSD_CreateText} 0 43u 100% 12u $DATABASE
-    Pop $DText
+    ; ${NSD_CreateText} 0 43u 100% 12u $DATABASE
+    ; Pop $DText
 
-    ${NSD_CreateLabel} 0 60u 100% 12u "DB Login"
+    ; ${NSD_CreateLabel} 0 60u 100% 12u "DB Login"
 
-    ${NSD_CreateText} 0 73u 100% 12u $LOGID
-    Pop $LText
+    ; ${NSD_CreateText} 0 73u 100% 12u $LOGID
+    ; Pop $LText
 	
-    ${NSD_CreateLabel} 0 90u 100% 12u "DB Password"
+    ; ${NSD_CreateLabel} 0 90u 100% 12u "DB Password"
 
-    ${NSD_CreateText} 0 103u 100% 12u $LOGPASS
-    Pop $PText
+    ; ${NSD_CreateText} 0 103u 100% 12u $LOGPASS
+    ; Pop $PText
 	
-    ${NSD_SetFocus} $SText
+    ; ${NSD_SetFocus} $SText
 
-    nsDialogs::Show    
+    ; nsDialogs::Show    
 FunctionEnd
 
 Function endServerDBPage
-    ${NSD_GetText} $SText $SERVER
-    ${NSD_GetText} $DText $DATABASE
-    ${NSD_GetText} $LText $LOGID
-    ${NSD_GetText} $PText $LOGPASS
+    ; ${NSD_GetText} $SText $SERVER
+    ; ${NSD_GetText} $DText $DATABASE
+    ; ${NSD_GetText} $LText $LOGID
+    ; ${NSD_GetText} $PText $LOGPASS
 FunctionEnd
 
 Function ProcessDrives
@@ -486,9 +489,9 @@ Function cpServerAndDatabase
   ; if EncounterPRO.ini doesn't exist, don't try to get its data
   IfFileExists "$INSTDIR\EncounterPRO.ini" 0 lbl_?servdbdone
   ; Read Server and Database from EncounterPRO.ini
-  ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
-  ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
-  ReadINIStr $LOGID "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid"
-  ReadINIStr $LOGPASS "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass"
+  ; ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
+  ; ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
+  ; ReadINIStr $LOGID "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid"
+  ; ReadINIStr $LOGPASS "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass"
   lbl_?servdbdone:
 FunctionEnd

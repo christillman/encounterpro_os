@@ -108,25 +108,15 @@ CREATE NONCLUSTERED INDEX [idx_treatment_key]
 	ON [dbo].[u_assessment_treat_definition] ([treatment_type], [treatment_key], [assessment_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[u_assessment_treat_definition]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_assessment_treat_definition] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_assessment_treat_definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_assessment_treat_definition] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_assessment_treat_definition]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_assessment_treat_definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_assessment_treat_definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_assessment_treat_definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_assessment_treat_definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_assessment_treat_definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_assessment_treat_definition] SET (LOCK_ESCALATION = TABLE)
 GO

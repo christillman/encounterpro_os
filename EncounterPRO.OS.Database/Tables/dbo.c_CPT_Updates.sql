@@ -73,7 +73,7 @@ CREATE TABLE [dbo].[c_CPT_Updates] (
 		[units]                     [real] NULL,
 		[default_bill_flag]         [char](1) NULL,
 		[new_procedure_desc]        [varchar](80) NULL,
-		[long_description]          [text] NULL,
+		[long_description]          [nvarchar](max) NULL,
 		[from_cpt]                  [varchar](12) NULL,
 		[from_desc]                 [varchar](80) NULL,
 		[vaccine_id]                [varchar](24) NULL,
@@ -84,8 +84,8 @@ CREATE TABLE [dbo].[c_CPT_Updates] (
 		[operation]                 [varchar](24) NOT NULL,
 		[update_year]               [int] NULL,
 		[comment]                   [varchar](80) NULL,
-		[from_long_desc]            [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[from_long_desc]            [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_CPT_Updates]
 	ADD

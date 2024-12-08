@@ -89,21 +89,13 @@ ALTER TABLE [dbo].[c_Maintenance_Metric]
 	CONSTRAINT [DF_c_mt_Metric_created]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Metric]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Metric] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Metric]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Metric] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Metric]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Metric] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Metric]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Metric] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Metric] SET (LOCK_ESCALATION = TABLE)
 GO

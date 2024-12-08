@@ -87,21 +87,13 @@ ALTER TABLE [dbo].[c_Maintenance_Protocol]
 	CONSTRAINT [DF_c_mt_protocol_created]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Protocol]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Protocol] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Protocol]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Protocol] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Protocol]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Protocol] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Protocol]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Protocol] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Protocol] SET (LOCK_ESCALATION = TABLE)
 GO

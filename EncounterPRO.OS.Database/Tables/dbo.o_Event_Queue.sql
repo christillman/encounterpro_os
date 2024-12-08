@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[o_Event_Queue]
 	CONSTRAINT [DF_o_Event_Qu_event_date_5__11]
 	DEFAULT (dbo.get_client_datetime()) FOR [event_date_time]
 GO
-GRANT DELETE
-	ON [dbo].[o_Event_Queue]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Event_Queue] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Event_Queue]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Event_Queue] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Event_Queue]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Event_Queue] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Event_Queue]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Event_Queue] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Event_Queue]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Event_Queue] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Event_Queue] SET (LOCK_ESCALATION = TABLE)
 GO

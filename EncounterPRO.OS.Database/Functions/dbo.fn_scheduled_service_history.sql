@@ -233,8 +233,6 @@ AND item_number = @pl_service_sequence
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_scheduled_service_history]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_scheduled_service_history] TO [cprsystem]
 GO
 

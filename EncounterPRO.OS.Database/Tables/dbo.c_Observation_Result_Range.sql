@@ -102,21 +102,13 @@ ALTER TABLE [dbo].[c_Observation_Result_Range]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation_Result_Range]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation_Result_Range] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation_Result_Range]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation_Result_Range] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation_Result_Range]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation_Result_Range] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation_Result_Range]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation_Result_Range] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation_Result_Range] SET (LOCK_ESCALATION = TABLE)
 GO

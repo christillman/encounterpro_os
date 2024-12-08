@@ -130,8 +130,6 @@ IF @ls_ordered_for_user_id IS NOT NULL
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_recipient_info]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_recipient_info] TO [cprsystem]
 GO
 

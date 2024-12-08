@@ -12,7 +12,7 @@ global nvo_utilities nvo_utilities
 type variables
 
 PUBLIC:
-String is_assemblypath = "C:\Program Files (x86)\Common Files\EncounterPRO-OS\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
+String is_assemblypath = "C:\Users\Public\Documents\Utilities\EncounterPRO.OS.Utilities.dll"
 String is_classname = "EncounterPRO.OS.Utilities"
 
 /* Exception handling -- Indicates how proxy handles .NET exceptions */
@@ -38,7 +38,6 @@ Boolean ib_objectCreated
 PowerObject ipo_errorHandler // Each error triggers <ErrorHandler, ErrorEvent>
 String is_errorEvent
 end variables
-
 forward prototypes
 public subroutine of_seterrorhandler (powerobject apo_newhandler, string as_newevent)
 public subroutine of_signalerror ()
@@ -1545,11 +1544,11 @@ end subroutine
 
 on nvo_utilities.create
 call super::create
-triggerevent( this, "constructor" )
+TriggerEvent( this, "constructor" )
 end on
 
 on nvo_utilities.destroy
-triggerevent( this, "destructor" )
+TriggerEvent( this, "destructor" )
 call super::destroy
 end on
 

@@ -123,25 +123,15 @@ ALTER TABLE [dbo].[c_Workplan_Item]
 	CONSTRAINT [DF_c_Workplan_Item_step_flag]
 	DEFAULT ('Y') FOR [step_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Workplan_Item]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Workplan_Item] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Workplan_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Workplan_Item] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Workplan_Item]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Workplan_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Workplan_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Workplan_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Workplan_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Workplan_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Workplan_Item] SET (LOCK_ESCALATION = TABLE)
 GO

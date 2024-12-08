@@ -70,7 +70,7 @@ CREATE TABLE [dbo].[c_Database_Script] (
 		[database_version]           [varchar](4) NOT NULL,
 		[script_name]                [varchar](255) NOT NULL,
 		[description]                [varchar](255) NOT NULL,
-		[db_script]                  [text] NULL,
+		[db_script]                  [nvarchar](max) NULL,
 		[last_executed]              [datetime] NULL,
 		[last_completion_status]     [varchar](12) NULL,
 		[status]                     [varchar](12) NOT NULL,
@@ -79,9 +79,9 @@ CREATE TABLE [dbo].[c_Database_Script] (
 		[sort_sequence]              [int] NULL,
 		[system_id]                  [varchar](24) NULL,
 		[created]                    [datetime] NOT NULL,
-		[comment]                    [text] NULL,
+		[comment]                    [nvarchar](max) NULL,
 		[allow_users]                [bit] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Database_Script]
 	ADD
@@ -116,25 +116,15 @@ CREATE NONCLUSTERED INDEX [idx_id]
 	ON [dbo].[c_Database_Script] ([id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Database_Script]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Database_Script] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Database_Script]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Database_Script] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Database_Script]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Database_Script] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Database_Script]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Database_Script] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Database_Script]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Database_Script] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Database_Script] SET (LOCK_ESCALATION = TABLE)
 GO

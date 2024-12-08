@@ -520,8 +520,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_context_object_services]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_context_object_services] TO [cprsystem]
 GO
 

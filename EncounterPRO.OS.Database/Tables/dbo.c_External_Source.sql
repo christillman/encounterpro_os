@@ -99,25 +99,15 @@ ALTER TABLE [dbo].[c_External_Source]
 	CONSTRAINT [DF_c_External_Source_owner]
 	DEFAULT ([dbo].[fn_customer_id]()) FOR [owner_id]
 GO
-GRANT DELETE
-	ON [dbo].[c_External_Source]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_External_Source] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_External_Source]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_External_Source] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_External_Source]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_External_Source] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_External_Source]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_External_Source] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_External_Source]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_External_Source] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_External_Source] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -96,25 +96,15 @@ ALTER TABLE [dbo].[o_box]
 	CONSTRAINT [DF_o_box_last_item]
 	DEFAULT ((0)) FOR [last_item]
 GO
-GRANT DELETE
-	ON [dbo].[o_box]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_box] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_box]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_box] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_box]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_box] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_box]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_box] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_box]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_box] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_box] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -120,8 +120,6 @@ IF @@ROWCOUNT = 0
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_hm_metric_observation_results]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_hm_metric_observation_results] TO [cprsystem]
 GO
 

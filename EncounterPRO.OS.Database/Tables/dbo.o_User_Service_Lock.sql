@@ -78,25 +78,15 @@ ALTER TABLE [dbo].[o_User_Service_Lock]
 	WITH FILLFACTOR=25
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_User_Service_Lock]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_User_Service_Lock] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_User_Service_Lock]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_User_Service_Lock] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_User_Service_Lock]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_User_Service_Lock] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_User_Service_Lock]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_User_Service_Lock] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_User_Service_Lock]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_User_Service_Lock] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_User_Service_Lock] SET (LOCK_ESCALATION = TABLE)
 GO

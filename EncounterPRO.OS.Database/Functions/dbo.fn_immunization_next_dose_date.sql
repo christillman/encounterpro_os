@@ -153,8 +153,6 @@ RETURN
 
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_immunization_next_dose_date]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_immunization_next_dose_date] TO [cprsystem]
 GO
 

@@ -80,25 +80,15 @@ ALTER TABLE [dbo].[c_Display_Format_Item]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Display_Format_Item]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Display_Format_Item] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Display_Format_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Display_Format_Item] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Display_Format_Item]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Display_Format_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Display_Format_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Display_Format_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Display_Format_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Display_Format_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Display_Format_Item] SET (LOCK_ESCALATION = TABLE)
 GO

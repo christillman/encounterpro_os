@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[c_Observation_Type]
 	CONSTRAINT [DF__c_Observa__displ__11B57315]
 	DEFAULT ('Y') FOR [display_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation_Type] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Observation_Type]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Observation_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation_Type] SET (LOCK_ESCALATION = TABLE)
 GO

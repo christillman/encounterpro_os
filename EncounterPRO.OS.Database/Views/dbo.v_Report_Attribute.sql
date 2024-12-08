@@ -108,8 +108,6 @@ FROM c_Report_Definition r
 	AND p.token1 = a.attribute
 WHERE p.token1 IS NOT NULL
 GO
-GRANT SELECT
-	ON [dbo].[v_Report_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Report_Attribute] TO [cprsystem]
 GO
 

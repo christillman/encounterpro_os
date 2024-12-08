@@ -162,8 +162,6 @@ WHERE LEN(s.suffix) > 0
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_practice_interfaces]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_practice_interfaces] TO [cprsystem]
 GO
 

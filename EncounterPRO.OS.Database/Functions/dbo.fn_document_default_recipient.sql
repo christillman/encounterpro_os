@@ -269,8 +269,6 @@ ELSE
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_default_recipient]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_default_recipient] TO [cprsystem]
 GO
 

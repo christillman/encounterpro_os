@@ -74,8 +74,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_parse_string]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_parse_string] TO [cprsystem]
 GO
 

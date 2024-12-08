@@ -304,8 +304,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_latest_scripts]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_latest_scripts] TO [cprsystem]
 GO
 

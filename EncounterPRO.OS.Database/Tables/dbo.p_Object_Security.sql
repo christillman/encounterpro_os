@@ -93,21 +93,13 @@ ALTER TABLE [dbo].[p_Object_Security]
 	CONSTRAINT [DF_p_Object_Security_id]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[p_Object_Security]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Object_Security] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Object_Security]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Object_Security] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Object_Security]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Object_Security] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Object_Security]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Object_Security] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Object_Security] SET (LOCK_ESCALATION = TABLE)
 GO
