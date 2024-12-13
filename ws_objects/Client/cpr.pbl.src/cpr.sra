@@ -178,7 +178,6 @@ long debug_display_script_id
 long debug_display_command_id
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -214,6 +213,7 @@ type variables
 
 string product_name = 'GreenOlive EHR'
 string client_link_start
+boolean is_demo_version
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
@@ -317,30 +317,34 @@ f_split_string(ls_parm, "=", ls_parm, ls_arg)
 
 ls_parm = upper(trim(ls_parm))
 
-CHOOSE CASE ls_parm
-	CASE "CLIENT"
-		if len(ls_arg) > 0 then
-			common_thread.default_database = trim(ls_arg)
-		else
-			common_thread.default_database = "<Default>"
-		end if		
-	CASE "SERVER", "NTSERVER"
-		messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
-		event close()
-	CASE "DBMAINT"
-		messagebox("CPR Open", "DB Maintenance Mode is no longer supported from EncounterPRO.exe.  Please use EproDBMaint.exe.")
-		event close()
-	CASE "ASK"
-		open(w_pop_which_database)
-		common_thread.default_database = message.stringparm
-		// If the user didn't pick a database then exit
-		if common_thread.default_database = "" then
+if gnv_app.is_demo_version then
+ 	common_thread.default_database = "<Default>"
+else
+	CHOOSE CASE ls_parm
+		CASE "CLIENT"
+			if len(ls_arg) > 0 then
+				common_thread.default_database = trim(ls_arg)
+			else
+				common_thread.default_database = "<Default>"
+			end if		
+		CASE "SERVER", "NTSERVER"
+			messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
 			event close()
-		end if
-	CASE ELSE
-		// Assume the parameter is a database
-		common_thread.default_database = ls_parm
-END CHOOSE
+		CASE "DBMAINT"
+			messagebox("CPR Open", "DB Maintenance Mode is no longer supported from EncounterPRO.exe.  Please use EproDBMaint.exe.")
+			event close()
+		CASE "ASK"
+			open(w_pop_which_database)
+			common_thread.default_database = message.stringparm
+			// If the user didn't pick a database then exit
+			if common_thread.default_database = "" then
+				event close()
+			end if
+		CASE ELSE
+			// Assume the parameter is a database
+			common_thread.default_database = ls_parm
+	END CHOOSE
+end if
 
 li_sts = f_initialize_common("EncounterPRO")
 if li_sts < 0 then
