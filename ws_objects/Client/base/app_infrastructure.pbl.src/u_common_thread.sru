@@ -300,6 +300,7 @@ string ls_filename
 string ls_extension
 ulong lul_hinst, lul_maxpath, lul_rc
 blob lbl_file
+string ls_database
 
 // We don't have access to the database yet, so set the beeps to null.  The priority_alert
 // method will query the beeps setting when it first runs
@@ -361,11 +362,21 @@ else
 	epcompinfo = "EPCompInfo.ini"
 END IF
 
-// If the INI file doesn't exist, then create an empty one
-//if not fileexists(gnv_app.ini_file) then
-//	lbl_file = blob("")
-//	log.file_write(lbl_file, gnv_app.ini_file)
-//end if
+// If the INI file doesn't exist, then this is a demo version
+if not fileexists(gnv_app.ini_file) then
+	gnv_app.is_demo_version = True
+	// write blank file so ini errors don't pop up
+	lbl_file = blob("")
+	log.file_write(lbl_file, gnv_app.ini_file)
+end if
+
+// For development, the INI file must specify a demo database, or if a blank file was written before then assume it is demo
+gnv_app.is_demo_version = False
+ls_database = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
+
+if ls_database = "GreenOliveDemo" OR Pos(gnv_app.program_directory,"Demo") > 0 OR Pos(gnv_app.program_filename,"Demo") > 0 then
+	gnv_app.is_demo_version = True
+end if
 
 // Initialize the logging system; the log system uses the ini file
 // Logging system must be initialized after common thread,
