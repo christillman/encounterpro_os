@@ -50,8 +50,7 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 	openwithparm(w_pop_message, "The " + gnv_app.product_name + " database has been upgraded. Your new application version is being downloaded.")
 	
 	ls_product_underscore = f_string_substitute(gnv_app.product_name," ","_")
-	if sqlca.logid = "demo1" OR (Pos(gnv_app.program_directory,"Demo") > 0 &
-			OR Pos(gnv_app.program_filename,"Demo") > 0 OR Pos(sqlca.client_link,"Demo") > 0) then
+	if gnv_app.is_demo_version OR sqlca.logid = "demo1" OR Pos(sqlca.client_link,"Demo") > 0 then
 		ls_expectedfile =  ls_product_underscore + "_Azure_Demo_Install_" + string(sqlca.modification_level) + ".exe"
 	else		
 		ls_expectedfile =  ls_product_underscore + "_Install_" + string(sqlca.modification_level) + ".exe"
