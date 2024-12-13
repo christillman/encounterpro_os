@@ -899,7 +899,7 @@ else
 //	end if
 end if
 
-ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "demo1@srv-goehr-demo1")
+ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "demo1@srv-goehr-demo")
 ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "Gr33nOl1ve")
 
 ls_dbms = "MSO"
@@ -1044,7 +1044,7 @@ return 1
 
 end function
 
-public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_appname, string ps_logid, string ps_logpass, string ps_dbparm, string ps_connectstring);u_sqlca luo_this
+public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_appname, string ps_logid, string ps_logpass, string ps_dbparm, string ps_connectstring);
 string ls_computername
 integer li_sts
 string ls_sql
@@ -1059,8 +1059,6 @@ string ls_adodb_connectstring
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
 if isnull(servername) then set_server(ps_server)
-
-luo_this = this
 
 // Set sqlca.sqlcode = 1 before connection to database is made
 sqlcode = 1
@@ -1177,6 +1175,24 @@ setnull(ls_sql_error)
 
 SetPointer(HourGlass!)
 
+// For public demo access, first try the "free" server then the alternate if not successful
+if gnv_app.is_demo_version then
+	// The ServerName, logid, logpass parameters are defaulted
+	CONNECT USING this; 
+	if SQLCode = 0 then
+		connected = true
+	end if
+	if not connected then
+		// try the alternate
+		this.ServerName = "srv-goehr-demo1.database.windows.net"
+		this.logid += "1"
+		CONNECT USING this; 
+		if SQLCode = 0 then
+			connected = true
+		end if
+	end if
+end if
+
 // First try connecting with sql_authentication if it's available
 if not connected and sql_authentication then
 	if isnull(logpass) then
@@ -1186,26 +1202,21 @@ if not connected and sql_authentication then
 	// Reset the dbparm
 	dbparm = ls_dbparm
 
-	CONNECT USING luo_this; 
+	CONNECT USING this; 
 	if SQLCode = 0 then
 		autocommit = true
 		connected = true
 		connected_using = "SQL"
-		adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
-		// Check the database for EncounterPRO objects and security status
-		li_sts = check_database()
-		if li_sts <= 0 then
-			ls_sql_error = "check_database failed (" + database + ")"
-			if len(sqlerrtext) > 0 then
-				ls_sql_error += " - " + sqlerrtext
-			end if
-			log.log(this, "u_sqlca.dbconnect:0125", "SQL Authentication - " + ls_sql_error, 1)
-			dbdisconnect()
-		end if
 	else
 		ls_sql_error = sqlerrtext
 		log.log(this, "u_sqlca.dbconnect:0130", "SQL Authentication - " + ls_sql_error, 1)
 	end if
+end if
+
+if connected then
+	autocommit = true
+	connected_using = "SQL"
+	adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
 end if
 
 // If we didn't connect with sql authentication, try windows authentication if it's available
@@ -1225,35 +1236,21 @@ if not connected and windows_authentication then
 		CASE ELSE
 	END CHOOSE
 	
-	CONNECT USING luo_this;
+	CONNECT USING this;
 	if SQLCode <> 0 THEN 
 		// retry once
-		CONNECT USING luo_this;
+		CONNECT USING this;
 	end if
 	if SQLCode = 0 then
 		autocommit = true
 		connected = true
 		connected_using = "Windows"
 		adodb_connectstring = ls_adodb_connectstring
-		// Check the database for EncounterPRO objects and security status
-		li_sts = check_database()
-		if li_sts <= 0 then
-			ls_windows_error = "check_database failed (" + database + ")"
-			if len(sqlerrtext) > 0 then
-				ls_windows_error += " - " + sqlerrtext
-			end if
-			log.log(this, "u_sqlca.dbconnect:0166", "Windows Authentication - " + ls_windows_error, 1)
-			dbdisconnect()
-		end if
 	else
 		ls_windows_error = sqlerrtext
 		log.log(this, "u_sqlca.dbconnect:0171", "Windows Authentication - " + ls_windows_error, 1)
 	end if
 end if
-
-if not connected then DebugBreak()
-
-setpointer ( arrow! )
 
 if not connected then
 	// Construct the error message
@@ -1275,6 +1272,23 @@ if not connected then
 	log.log(this, "u_sqlca.dbconnect:0179", ls_message, 4)
 	return -1
 end if
+
+if connected then
+	// Check the database for EncounterPRO objects and security status
+	li_sts = check_database()
+	if li_sts <= 0 then
+		ls_windows_error = "check_database failed (" + database + ")"
+		if len(sqlerrtext) > 0 then
+			ls_windows_error += " - " + sqlerrtext
+		end if
+		log.log(this, "u_sqlca.dbconnect:0166", ls_windows_error, 4)
+		dbdisconnect()
+		return -1
+	end if
+else
+	DebugBreak()
+end if
+setpointer ( arrow! )
 
 // If we get here then we've successfully connected
 
@@ -1487,7 +1501,7 @@ elseif lower(ps_user) = lower(application_role) then
 			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
 		end if		
 	end if
-	if Mid(ls_servername,1,5) = "goehr" OR Pos(sqlca.database, "Demo") > 0  Then
+	if Mid(ls_servername,1,5) = "goehr" OR gnv_app.is_demo_version Then
 		// Azure SQL password complexity constraints
 		ls_temp  = "A"
 		ls_temp  += "p"
