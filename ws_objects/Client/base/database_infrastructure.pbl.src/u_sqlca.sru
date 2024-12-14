@@ -810,7 +810,7 @@ end function
 public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_logid, string ps_logpass);
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
-return dbconnect(ps_server, ps_dbname, ps_dbms, "EncounterPRO_OS", ps_logid, ps_logpass)
+return dbconnect(ps_server, ps_dbname, ps_dbms, gnv_app.product_name, ps_logid, ps_logpass)
 
 end function
 

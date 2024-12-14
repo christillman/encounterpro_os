@@ -178,6 +178,7 @@ long debug_display_script_id
 long debug_display_command_id
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -218,17 +219,17 @@ boolean is_demo_version
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 228
+long target_modification_level = 229
 
-date compile_date = date("2024-11-01")
+date compile_date = date("2024-12-14")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "5.0"
-// Resulting in 7.2.5.0
+string build = "6.0"
+// Resulting in 7.2.6.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   5   0
+//  7   2   6  0
 
 // Using Powerbuilder Runtime 2797
 
