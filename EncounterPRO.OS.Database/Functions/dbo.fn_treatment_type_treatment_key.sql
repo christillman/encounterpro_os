@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_treatment_type_treatment_key (
+CREATE FUNCTION dbo.fn_treatment_type_treatment_key (
 	@ps_treatment_type varchar(24) )
 
 RETURNS varchar(64)

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_hm_class_patients (
+CREATE FUNCTION dbo.fn_hm_class_patients (
 	@pl_maintenance_rule_id int )
 
 RETURNS @patients TABLE (

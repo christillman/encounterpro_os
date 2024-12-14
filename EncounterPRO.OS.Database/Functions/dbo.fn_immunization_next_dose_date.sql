@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_immunization_next_dose_date (
+CREATE FUNCTION dbo.fn_immunization_next_dose_date (
 	@pl_disease_id int,
 	@pl_dose_number int,
 	@pdt_date_of_birth datetime,

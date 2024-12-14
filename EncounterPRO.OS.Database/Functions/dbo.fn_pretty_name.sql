@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_pretty_name (
+CREATE FUNCTION dbo.fn_pretty_name (
 	@ps_last_name varchar(40),
 	@ps_first_name varchar(20),
 	@ps_middle_name varchar(20),

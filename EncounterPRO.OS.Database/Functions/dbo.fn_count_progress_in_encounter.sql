@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_count_progress_in_encounter (
+CREATE FUNCTION dbo.fn_count_progress_in_encounter (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@ps_context_object varchar(12),

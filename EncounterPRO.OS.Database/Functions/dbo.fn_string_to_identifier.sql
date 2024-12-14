@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_string_to_identifier (
+CREATE FUNCTION dbo.fn_string_to_identifier (
 	@ps_string varchar(128))
 
 RETURNS varchar(128)

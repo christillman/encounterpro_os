@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_id_list (
+CREATE FUNCTION dbo.fn_user_id_list (
 	@ps_user_id varchar(24))
 
 RETURNS @ids TABLE (

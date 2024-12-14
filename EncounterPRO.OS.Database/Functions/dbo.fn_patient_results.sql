@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_results (
+CREATE FUNCTION dbo.fn_patient_results (
 	@ps_cpr_id varchar(12),
 	@ps_observation_id varchar(24),
 	@pi_result_sequence smallint)

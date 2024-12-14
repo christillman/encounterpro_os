@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_pretty_address (
+CREATE FUNCTION dbo.fn_pretty_address (
 	@ps_address_line_1 varchar(40),
 	@ps_address_line_2 varchar(40),
 	@ps_city varchar(40),

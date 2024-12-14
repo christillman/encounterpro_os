@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_med_strength_unit (
+CREATE FUNCTION dbo.fn_med_strength_unit (
 	@ps_administer_unit varchar(12),
 	@pr_dose_amount real,
 	@ps_dose_unit varchar(12)

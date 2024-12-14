@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_latest_scripts (
+CREATE FUNCTION dbo.fn_latest_scripts (
 	@ps_script_type varchar(24),
 	@pl_major_release int,
 	@ps_database_version varchar(4),

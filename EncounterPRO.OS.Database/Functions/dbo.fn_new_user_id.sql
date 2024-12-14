@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_new_user_id (
+CREATE FUNCTION dbo.fn_new_user_id (
 	@pl_owner_id int,
 	@ps_user_full_name varchar(64),
 	@ps_proposed_user_id varchar(24) )

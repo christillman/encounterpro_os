@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_available_routes_2 (
+CREATE FUNCTION dbo.fn_document_available_routes_2 (
 	@ps_ordered_by varchar(24),
 	@ps_ordered_for varchar(24),
 	@ps_purpose varchar(40),

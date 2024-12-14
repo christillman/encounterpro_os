@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_report_default_printer (
+CREATE FUNCTION dbo.fn_report_default_printer (
 	@ps_report_id varchar(40),
 	@ps_office_id varchar(4),
 	@pl_computer_id int,

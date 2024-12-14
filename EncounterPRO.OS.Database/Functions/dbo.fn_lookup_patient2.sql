@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_lookup_patient2 (
+CREATE FUNCTION dbo.fn_lookup_patient2 (
 	@pl_owner_id int,
 	@ps_IDDomain varchar(40),
 	@ps_IDValue varchar(255)

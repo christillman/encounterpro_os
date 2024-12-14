@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_em_encounter_data_reviewed_detail (
+CREATE FUNCTION dbo.fn_em_encounter_data_reviewed_detail (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer)
 

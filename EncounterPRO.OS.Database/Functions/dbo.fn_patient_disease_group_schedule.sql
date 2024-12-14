@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_disease_group_schedule (
+CREATE FUNCTION dbo.fn_patient_disease_group_schedule (
 	@ps_cpr_id varchar(12),
 	@ps_disease_group varchar(24),
 	@pdt_current_date datetime)

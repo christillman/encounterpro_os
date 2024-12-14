@@ -21,7 +21,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_encounter_charges (
+CREATE FUNCTION dbo.fn_encounter_charges (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int
 	)

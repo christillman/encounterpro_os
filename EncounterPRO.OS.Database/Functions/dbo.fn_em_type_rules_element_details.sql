@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_em_type_rules_element_details (
+CREATE FUNCTION dbo.fn_em_type_rules_element_details (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer,
 	@ps_em_component varchar(24),

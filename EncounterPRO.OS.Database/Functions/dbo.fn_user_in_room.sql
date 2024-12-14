@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_user_in_room (
+CREATE FUNCTION dbo.fn_user_in_room (
 	@ps_room_id varchar(12) )
 
 RETURNS varchar(24)

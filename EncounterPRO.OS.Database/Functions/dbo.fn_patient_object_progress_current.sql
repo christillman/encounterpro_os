@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_object_progress_current (
+CREATE FUNCTION dbo.fn_patient_object_progress_current (
 	@ps_cpr_id varchar(12))
 
 RETURNS @progress TABLE (

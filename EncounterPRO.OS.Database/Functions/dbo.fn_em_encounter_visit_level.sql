@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_em_encounter_visit_level (
+CREATE FUNCTION dbo.fn_em_encounter_visit_level (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer)
 

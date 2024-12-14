@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_date_add_interval (
+CREATE FUNCTION dbo.fn_date_add_interval (
 	@pdt_date datetime,
 	@pl_interval_amount int,
 	@ps_interval_unit varchar(24))

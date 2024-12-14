@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_workplan_item_attribute (
+CREATE FUNCTION dbo.fn_workplan_item_attribute (
 	@pl_patient_workplan_item_id int,
 	@ps_attribute varchar(64))
 

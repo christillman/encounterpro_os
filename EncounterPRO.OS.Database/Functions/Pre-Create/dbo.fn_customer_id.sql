@@ -65,7 +65,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 
-		CREATE FUNCTION fn_customer_id ()
+		CREATE FUNCTION dbo.fn_customer_id ()
 		RETURNS int
 
 		AS

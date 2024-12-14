@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_user_property (
+CREATE FUNCTION dbo.fn_user_property (
 	@ps_user_id varchar(24),
 	@ps_progress_type varchar(24),
 	@ps_progress_key varchar(40) )

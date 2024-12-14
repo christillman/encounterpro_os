@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_is_unit_convertible (
+CREATE FUNCTION dbo.fn_is_unit_convertible (
 	@ps_from_unit_id varchar(12),
 	@ps_to_unit_id varchar(12))
 

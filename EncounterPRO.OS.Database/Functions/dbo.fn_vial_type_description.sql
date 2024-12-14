@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_vial_type_description (
+CREATE FUNCTION dbo.fn_vial_type_description (
 	@ps_vial_type varchar(24) )
 
 RETURNS varchar(80)

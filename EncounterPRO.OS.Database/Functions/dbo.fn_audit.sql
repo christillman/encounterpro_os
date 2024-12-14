@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_audit (
+CREATE FUNCTION dbo.fn_audit (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@pdt_begin_date datetime,

@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_workplan_item_owned_by_2 (
+CREATE FUNCTION dbo.fn_workplan_item_owned_by_2 (
 	@ps_ordered_for varchar(24),
 	@pl_patient_workplan_id int,
 	@ps_cpr_id varchar(12),

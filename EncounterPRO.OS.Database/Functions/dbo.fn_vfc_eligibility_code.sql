@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_vfc_eligibility_code (
+CREATE FUNCTION dbo.fn_vfc_eligibility_code (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@pl_treatment_id int )

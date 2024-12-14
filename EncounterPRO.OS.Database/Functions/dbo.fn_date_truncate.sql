@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_date_truncate (
+CREATE FUNCTION dbo.fn_date_truncate (
 	@pdt_datetime datetime,
 	@ps_truncate_unit varchar(24) )
 RETURNS datetime

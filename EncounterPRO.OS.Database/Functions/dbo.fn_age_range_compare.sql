@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_age_range_compare (
+CREATE FUNCTION dbo.fn_age_range_compare (
 	@pl_age_range_id int,
 	@pdt_begin_date datetime,
 	@pdt_end_date datetime)

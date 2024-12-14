@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_equivalent_observation_results (
+CREATE FUNCTION dbo.fn_equivalent_observation_results (
 	@ps_observation_id varchar(24),
 	@pi_result_sequence smallint)
 

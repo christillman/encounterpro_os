@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_incoming_documents ()
+CREATE FUNCTION dbo.fn_incoming_documents ()
 
 RETURNS @documents TABLE (
 	[attachment_id] [int] NOT NULL,

@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_icd_version ()
+CREATE FUNCTION dbo.fn_icd_version ()
 
 RETURNS varchar(24)
 

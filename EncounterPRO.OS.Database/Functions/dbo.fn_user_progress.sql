@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_progress (
+CREATE FUNCTION dbo.fn_user_progress (
 	@ps_user_id varchar(24),
 	@ps_progress_type varchar (24) = NULL ,
 	@ps_progress_key varchar (40) = NULL )

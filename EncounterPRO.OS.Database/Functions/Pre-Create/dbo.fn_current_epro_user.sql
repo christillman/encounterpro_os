@@ -66,7 +66,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 
-CREATE FUNCTION fn_current_epro_user ( )
+CREATE FUNCTION dbo.fn_current_epro_user ( )
 
 RETURNS varchar(24)
 

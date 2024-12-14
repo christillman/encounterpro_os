@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_is_wait_service_ready (
+CREATE FUNCTION dbo.fn_is_wait_service_ready (
 	@pl_patient_workplan_item_id int,
 	@pdt_current_date datetime )
 

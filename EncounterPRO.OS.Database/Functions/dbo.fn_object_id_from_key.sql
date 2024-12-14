@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_object_id_from_key (
+CREATE FUNCTION dbo.fn_object_id_from_key (
 	@ps_object_type varchar(24),
 	@ps_object_key varchar(64))
 

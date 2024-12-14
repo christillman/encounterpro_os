@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_database_schemacheck_columns ()
+CREATE FUNCTION dbo.fn_database_schemacheck_columns ()
 
 RETURNS @columninfo TABLE (
 	[tablename] [varchar](64) NOT NULL,

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_encounter_complexity (
+CREATE FUNCTION dbo.fn_encounter_complexity (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer)
 

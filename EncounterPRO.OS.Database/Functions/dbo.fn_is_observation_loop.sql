@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_is_observation_loop (
+CREATE FUNCTION dbo.fn_is_observation_loop (
 	@ps_parent_observation_id varchar(24),
 	@ps_new_observation_id varchar(24) = NULL )
 

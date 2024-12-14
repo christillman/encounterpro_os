@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_document_interfaceserviceid (
+CREATE FUNCTION dbo.fn_document_interfaceserviceid (
 	@pl_document_patient_workplan_item_id int)
 
 RETURNS int

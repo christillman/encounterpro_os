@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_encounter_audit (
+CREATE FUNCTION dbo.fn_encounter_audit (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@ps_include_object_updates char(1) = 'Y'

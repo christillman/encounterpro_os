@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_convert_units (
+CREATE FUNCTION dbo.fn_convert_units (
 	@pr_amount real,
 	@ps_from_unit_id varchar(12),
 	@ps_to_unit_id varchar(12))

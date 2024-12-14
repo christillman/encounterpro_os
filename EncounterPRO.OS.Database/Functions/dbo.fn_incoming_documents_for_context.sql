@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_incoming_documents_for_context (
+CREATE FUNCTION dbo.fn_incoming_documents_for_context (
 	@ps_context_object varchar(24),
 	@ps_cpr_id varchar(12),
 	@pl_object_key int

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_calc_bmi (
+CREATE FUNCTION dbo.fn_calc_bmi (
 	@ps_cpr_id varchar(12)
 	)
 RETURNS decimal(9,3)

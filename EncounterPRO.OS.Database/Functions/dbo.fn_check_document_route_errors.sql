@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_check_document_route_errors (
+CREATE FUNCTION dbo.fn_check_document_route_errors (
 	@pl_patient_workplan_item_id int,
 	@ps_ordered_for varchar(24),
 	@ps_document_route varchar(24))

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_content_object_info (
+CREATE FUNCTION dbo.fn_content_object_info (
 	@ps_object_type varchar(24),
 	@ps_object_key varchar(64))
 

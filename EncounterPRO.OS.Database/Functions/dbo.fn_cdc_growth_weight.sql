@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_cdc_growth_weight (
+CREATE FUNCTION dbo.fn_cdc_growth_weight (
 	@ps_growth_class varchar(24),
 	@pdt_date_of_birth datetime,
 	@pdt_date_of_measure datetime,

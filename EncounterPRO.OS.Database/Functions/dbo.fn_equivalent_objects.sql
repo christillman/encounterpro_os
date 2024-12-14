@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_equivalent_objects (
+CREATE FUNCTION dbo.fn_equivalent_objects (
 	@ps_object_type varchar(24),
 	@ps_object_key varchar(64))
 

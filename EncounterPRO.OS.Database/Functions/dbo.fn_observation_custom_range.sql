@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_observation_custom_range (
+CREATE FUNCTION dbo.fn_observation_custom_range (
 	@ps_cpr_id varchar(12),
 	@ps_observation_id varchar(24),
 	@pi_result_sequence smallint,

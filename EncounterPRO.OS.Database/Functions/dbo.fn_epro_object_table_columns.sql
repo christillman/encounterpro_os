@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_epro_object_table_columns (
+CREATE FUNCTION dbo.fn_epro_object_table_columns (
 	@ps_epro_object varchar(64))
 
 RETURNS @columns TABLE (

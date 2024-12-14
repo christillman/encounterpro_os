@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_encounter_well_sick_status (
+CREATE FUNCTION dbo.fn_encounter_well_sick_status (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int
 	)

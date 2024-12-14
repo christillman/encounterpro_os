@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_med_id (
+CREATE FUNCTION dbo.fn_med_id (
 	@ps_drug_id varchar(24),
 	@ps_package_id varchar(24)
 	 )

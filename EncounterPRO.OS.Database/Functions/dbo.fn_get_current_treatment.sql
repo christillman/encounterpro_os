@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_get_current_treatment (
+CREATE FUNCTION dbo.fn_get_current_treatment (
 	@ps_cpr_id varchar(12),
 	@pl_treatment_id int)
 

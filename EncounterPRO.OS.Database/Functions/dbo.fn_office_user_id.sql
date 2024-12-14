@@ -21,7 +21,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_office_user_id (
+CREATE FUNCTION dbo.fn_office_user_id (
 	@ps_office_id varchar(4)
 	)
 

@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_objects (
+CREATE FUNCTION dbo.fn_document_objects (
 	@pl_document_patient_workplan_item_id int
 	)
 

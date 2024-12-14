@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_config_object_description (
+CREATE FUNCTION dbo.fn_config_object_description (
 	@pui_config_object_id uniqueidentifier)
 
 RETURNS varchar(80)

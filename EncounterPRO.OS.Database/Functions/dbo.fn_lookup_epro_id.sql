@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_lookup_epro_id (
+CREATE FUNCTION dbo.fn_lookup_epro_id (
 	@pl_owner_id int ,
 	@ps_code_domain varchar(40) ,
 	@ps_code varchar(80) ,

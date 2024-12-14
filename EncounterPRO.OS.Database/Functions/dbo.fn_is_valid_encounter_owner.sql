@@ -13,7 +13,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 
-CREATE FUNCTION fn_is_valid_encounter_owner (
+CREATE FUNCTION dbo.fn_is_valid_encounter_owner (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int	)
 

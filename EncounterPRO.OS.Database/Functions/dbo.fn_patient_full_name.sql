@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_patient_full_name (
+CREATE FUNCTION dbo.fn_patient_full_name (
 	@ps_cpr_id varchar(12) )
 
 RETURNS varchar(80)

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_treatment_tree (
+CREATE FUNCTION dbo.fn_treatment_tree (
 	@ps_cpr_id varchar(12),
 	@pl_treatment_id int)
 

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_audit (
+CREATE FUNCTION dbo.fn_user_audit (
 	@ps_user_id varchar(24),
 	@pdt_audit_date datetime = NULL,
 	@ps_include_object_updates char(1) = 'Y'

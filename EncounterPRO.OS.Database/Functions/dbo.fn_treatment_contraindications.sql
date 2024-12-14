@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_treatment_contraindications (
+CREATE FUNCTION dbo.fn_treatment_contraindications (
 	@ps_cpr_id varchar(12),
 	@ps_user_id varchar(24),
 	@ps_treatment_type varchar(24) = NULL,

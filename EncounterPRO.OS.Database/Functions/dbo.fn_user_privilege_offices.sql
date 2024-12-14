@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_privilege_offices (
+CREATE FUNCTION dbo.fn_user_privilege_offices (
 	@ps_user_id varchar(24),
 	@ps_privilege_id varchar(24)
 	)

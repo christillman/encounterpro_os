@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_defaults_from_actuals (
+CREATE FUNCTION dbo.fn_defaults_from_actuals (
 	@ps_cpr_id varchar(12),
 	@pl_observation_sequence integer,
 	@pl_branch_id int )

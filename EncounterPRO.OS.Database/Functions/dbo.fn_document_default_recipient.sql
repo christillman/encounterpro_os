@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_default_recipient (
+CREATE FUNCTION dbo.fn_document_default_recipient (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@ps_context_object varchar(50),

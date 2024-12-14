@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_object_progress_user (
+CREATE FUNCTION dbo.fn_patient_object_progress_user (
 	@ps_user_id varchar(24),
 	@pdt_begin_date datetime,
 	@pdt_end_date datetime)

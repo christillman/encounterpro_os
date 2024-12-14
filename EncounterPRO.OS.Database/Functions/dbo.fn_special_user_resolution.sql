@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_special_user_resolution (
+CREATE FUNCTION dbo.fn_special_user_resolution (
 	@ps_ordered_for varchar(24),
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int)

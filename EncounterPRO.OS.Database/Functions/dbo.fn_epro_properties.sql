@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_epro_properties ()
+CREATE FUNCTION dbo.fn_epro_properties ()
 
 RETURNS @properties TABLE (
 	[property_id] [int] NOT NULL,

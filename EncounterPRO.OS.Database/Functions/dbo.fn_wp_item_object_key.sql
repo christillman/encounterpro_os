@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_wp_item_object_key (
+CREATE FUNCTION dbo.fn_wp_item_object_key (
 	@pl_patient_workplan_item_id int)
 
 RETURNS int
