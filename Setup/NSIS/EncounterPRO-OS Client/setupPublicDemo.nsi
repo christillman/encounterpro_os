@@ -12,7 +12,7 @@
   !define PRODUCT   "GreenOlive_EHR_Public_Demo"
 
 ; Client Setup Version
-  !define VERSION   7.2.1.8
+  !define VERSION   7.2.6.0
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -23,7 +23,7 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   223
+  !define Database_Mod_Level   229
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -51,15 +51,15 @@
 ; ------------------------------------------
 ; Variables
 
-    Var SERVER
-    Var DATABASE
-    Var LOGID
-    Var LOGPASS
-    Var Dialog
-    Var SText
-    Var DText
-    Var LText
-    Var PText
+    ; Var SERVER
+    ; Var DATABASE
+    ; Var LOGID
+    ; Var LOGPASS
+    ; Var Dialog
+    ; Var SText
+    ; Var DText
+    ; Var LText
+    ; Var PText
     Var ALREADY_INSTALLED
 
 ; ------------------------------------------
@@ -147,8 +147,8 @@
     LangString PAGE_SERVDB_SUBTITLE ${LANG_ENGLISH} "Enter or confirm the Server and Database."
 
     ; Assign language strings to sections
-    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_FUNCTION_DESCRIPTION_END
+    ;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+    ;!insertmacro MUI_FUNCTION_DESCRIPTION_END
 	
 ; ------------------------------------------
 ; Installer Sections
@@ -198,15 +198,15 @@
       ; CreateDirectory "C:\Users\Public\Documents\"
       ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021\TB"
   
-	; Dont install utilites on demo versions, it would need admin installer
-      ; SetDetailsPrint both
-      ; DetailPrint "Installing EncounterPRO.OS.Utilities..."
+      SetDetailsPrint both
+      DetailPrint "Installing EncounterPRO.OS.Utilities..."
       ; SetDetailsPrint none
       ; SetOutPath '$INSTDIR'
       ; File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
       ; nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
       ; Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
-      
+      SetOutPath '${UTILITIES_FOLDER}'
+	  File "${SRC_EproUtils}\${EncounterPro_OS_Utilities_VERSION}\Files\*.*"
       SetDetailsPrint both
     SectionEnd
     
@@ -217,7 +217,28 @@
         DetailPrint "Installing ${PRODUCT}..."
         SetOverwrite on
         SetDetailsPrint both
-        File "${SRC_EPRO}\*.*"
+		File "${SRC_EPRO}\*.txt"
+		File "${SRC_EPRO}\*.exe"
+		File "${SRC_EPRO}\*.dll"
+		File "${SRC_EPRO}\*.pbx"
+		File "${SRC_EPRO}\*.pbd"
+		File "${SRC_EPRO}\*.ocx"
+		File "${SRC_EPRO}\*.jar"
+		File "${SRC_EPRO}\*.manifest"
+		File "${SRC_EPRO}\*.xml"
+		File "${SRC_EPRO}\*.tlb"
+        File "${SRC_EPRO}\*.zip"
+		File "${SRC_EPRO}\Open Source License.rtf"
+		File "${SRC_EPRO}\LICENSE"
+		File "${SRC_EPRO}\*.flt"
+		File "${SRC_EPRO}\*.ico"
+		File "${SRC_EPRO}\*.chm"
+		File "${SRC_EPRO}\*.json"
+		; Avoid EncounterPro.ini
+		File "${SRC_EPRO}\pb.ini"
+		File "${SRC_EPRO}\pbodb.ini"
+		File "${SRC_EPRO}\runtimepackage.ini"
+		File "${SRC_EPRO}\tp15_ic.ini"
 
         ; DetailPrint "Setting ini SERVER and DATABASE to $SERVER and $DATABASE"
         ; DetailPrint "Setting ini DBLOGID and DBLOGPASS to $LOGID and $LOGPASS"
@@ -232,6 +253,7 @@
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
         WriteINIStr "$INSTDIR\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
         SetDetailsPrint both
+
     SectionEnd
     
     ; Section '-Help File' SecHelp
@@ -287,10 +309,10 @@
         CreateDirectory "${ATT_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=srv-goehr-demo.database.windows.net|GreenOliveDemo" "$INSTDIR\green-olive-avi-02.ico"
         ;CreateShortCut "${DEST_FOLDER}\${PRODUCT} Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetOutPath "$DESKTOP"
-        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=srv-goehr-demo.database.windows.net|GreenOliveDemo" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
@@ -343,22 +365,30 @@
       !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcp80.dll"
       !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\atl80.dll"
        
-      Delete "$INSTDIR\*.txt"
-      Delete "$INSTDIR\*.dll"
-      Delete "$INSTDIR\*.pbx"
-      Delete "$INSTDIR\*.ocx"
-      Delete "$INSTDIR\*.ini"
-      Delete "$INSTDIR\*.jar"
-      Delete "$INSTDIR\*.manifest"
-      Delete "$INSTDIR\*.xml"
-      Delete "$INSTDIR\*.tlb"
-      Delete "$INSTDIR\Open Source License.rtf"
-      Delete "$INSTDIR\*.flt"
-      Delete "$INSTDIR\*.lnk"
-      Delete "$INSTDIR\*.chm"
-      Delete "$INSTDIR\*.json"
-      Delete "$INSTDIR\LICENSE"
+		Delete "$INSTDIR\*.txt"
+		Delete "$INSTDIR\*.exe"
+		Delete "$INSTDIR\*.dll"
+		Delete "$INSTDIR\*.pbx"
+		Delete "$INSTDIR\*.pbd"
+		Delete "$INSTDIR\*.ocx"
+		Delete "$INSTDIR\*.jar"
+		Delete "$INSTDIR\*.manifest"
+		Delete "$INSTDIR\*.xml"
+		Delete "$INSTDIR\*.tlb"
+        Delete "$INSTDIR\*.zip"
+		Delete "$INSTDIR\Open Source License.rtf"
+		Delete "$INSTDIR\LICENSE"
+		Delete "$INSTDIR\*.flt"
+		Delete "$INSTDIR\*.ico"
+		Delete "$INSTDIR\*.lnk"
+		Delete "$INSTDIR\*.chm"
+		Delete "$INSTDIR\*.json"
+		Delete "$INSTDIR\pb.ini"
+		Delete "$INSTDIR\pbodb.ini"
+		Delete "$INSTDIR\runtimepackage.ini"
+		Delete "$INSTDIR\tp15_ic.ini"
       Delete "$INSTDIR\Uploads"
+      Delete "$INSTDIR\Attachments"
       Delete "$INSTDIR"
     SectionEnd
 
@@ -389,7 +419,7 @@ Function .onInit
       Abort "Please install the .NET Framework 4 before running setup again."
   ${EndIf}
 
-    Call SetInstallDir
+   ; Call SetInstallDir
    ; Call cpServerAndDatabase only supporting one destination for demo
 FunctionEnd
 
@@ -485,13 +515,13 @@ Function SetInstallDir
 FunctionEnd
 
 Function cpServerAndDatabase
-  SetOutPath "$APPDATA\${APPDATA_TARGET}"
+  ;SetOutPath "$APPDATA\${APPDATA_TARGET}"
   ; if EncounterPRO.ini doesn't exist, don't try to get its data
-  IfFileExists "$INSTDIR\EncounterPRO.ini" 0 lbl_?servdbdone
+  ;IfFileExists "$INSTDIR\EncounterPRO.ini" 0 lbl_?servdbdone
   ; Read Server and Database from EncounterPRO.ini
   ; ReadINIStr $SERVER "$INSTDIR\EncounterPRO.ini" "<Default>" "dbserver"
   ; ReadINIStr $DATABASE "$INSTDIR\EncounterPRO.ini" "<Default>" "dbname"
   ; ReadINIStr $LOGID "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid"
   ; ReadINIStr $LOGPASS "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass"
-  lbl_?servdbdone:
+  ;lbl_?servdbdone:
 FunctionEnd
