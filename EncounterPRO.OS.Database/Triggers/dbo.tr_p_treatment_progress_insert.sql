@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -79,40 +35,20 @@ DECLARE @ls_cpr_id varchar(12),
 DECLARE
 	 @Add_Instruction_flag SMALLINT
 	,@Assessment_flag SMALLINT
-	,@ATTACHMENT_FOLDER_flag SMALLINT
-	,@ATTACHMENT_TAG_flag SMALLINT
 	,@CANCELLED_flag SMALLINT
-	,@CHANGED_flag SMALLINT
 	,@Closed_flag SMALLINT
 	,@COLLECTED_flag SMALLINT
-	,@COMPLETED_flag SMALLINT
-	,@CONSOLIDATED_flag SMALLINT
-	,@DECEASED_flag SMALLINT
-	,@DELETED_flag SMALLINT
-	,@DISPATCHED_flag SMALLINT
-	,@DOLATER_flag SMALLINT
-	,@ESCALATE_flag SMALLINT
 	,@Effectiveness_flag SMALLINT
-	,@Effectiveness_Comment_flag SMALLINT
-	,@EXPIRE_flag SMALLINT
 	,@MODIFIED_flag SMALLINT
 	,@Modify_flag SMALLINT
-	,@MOVED_flag SMALLINT
 	,@NEEDSAMPLE_flag SMALLINT
 	,@Property_flag SMALLINT
-	,@REDIAGNOSED_flag SMALLINT
 	,@ReOpen_flag SMALLINT
-	,@Revert_flag SMALLINT
-	,@Runtime_Configured_flag SMALLINT
-	,@skipped_flag SMALLINT
-	,@STARTED_flag SMALLINT
-	,@TEXT_flag SMALLINT
 	,@UNCancelled_flag SMALLINT
 	,@Confidential_flag smallint
 
-
 /*
-	This query sets a numberic flag to a value greater than 0 whenever one or more records in the 
+	This query sets a numeric flag to a value greater than 0 whenever one or more records in the 
 	inserted table has the progress_type be checked for.  The flags are then used to only execute
 	applicable queries.
 */
@@ -120,34 +56,15 @@ DECLARE
 SELECT
 	 @Add_Instruction_flag = SUM( CHARINDEX( 'Add Instruction', inserted.progress_type ) )
 	,@Assessment_flag = SUM( CHARINDEX( 'ASSESSMENT', inserted.progress_type ) )
-	,@ATTACHMENT_FOLDER_flag = SUM( CHARINDEX( 'ATTACHMENT_FOLDER', inserted.progress_type ) )
-	,@ATTACHMENT_TAG_flag = SUM( CHARINDEX( 'ATTACHMENT_TAG', inserted.progress_type ) )
 	,@CANCELLED_flag = SUM( CHARINDEX( 'CANCELLED', inserted.progress_type ) )
-	,@CHANGED_flag = SUM( CHARINDEX( 'CHANGED', inserted.progress_type ) )
 	,@Closed_flag = SUM( CHARINDEX( 'Closed', inserted.progress_type ) )
 	,@COLLECTED_flag = SUM( CHARINDEX( 'COLLECTED', inserted.progress_type ) )
-	,@COMPLETED_flag = SUM( CHARINDEX( 'COMPLETED', inserted.progress_type ) )
-	,@CONSOLIDATED_flag = SUM( CHARINDEX( 'CONSOLIDATED', inserted.progress_type ) )
-	,@DECEASED_flag = SUM( CHARINDEX( 'DECEASED', inserted.progress_type ) )
-	,@DELETED_flag = SUM( CHARINDEX( 'DELETED', inserted.progress_type ) )
-	,@DISPATCHED_flag = SUM( CHARINDEX( 'DISPATCHED', inserted.progress_type ) )
-	,@DOLATER_flag = SUM( CHARINDEX( 'DOLATER', inserted.progress_type ) )
-	,@ESCALATE_flag = SUM( CHARINDEX( 'ESCALATE', inserted.progress_type ) )
 	,@Effectiveness_flag = SUM( CHARINDEX( 'Effectiveness', inserted.progress_type ) )
-	,@Effectiveness_Comment_flag = SUM( CHARINDEX( 'Effectiveness Comment', inserted.progress_type ) )
-	,@EXPIRE_flag = SUM( CHARINDEX( 'EXPIRE', inserted.progress_type ) )
 	,@MODIFIED_flag = SUM( CHARINDEX( 'MODIFIED', inserted.progress_type ) )
 	,@Modify_flag = SUM( CHARINDEX( 'Modify', inserted.progress_type ) )
-	,@MOVED_flag = SUM( CHARINDEX( 'MOVED', inserted.progress_type ) )
 	,@NEEDSAMPLE_flag = SUM( CHARINDEX( 'NEEDSAMPLE', inserted.progress_type ) )
 	,@Property_flag = SUM( CHARINDEX( 'Property', inserted.progress_type ) )
-	,@REDIAGNOSED_flag = SUM( CHARINDEX( 'REDIAGNOSED', inserted.progress_type ) )
 	,@ReOpen_flag = SUM( CHARINDEX( 'ReOpen', inserted.progress_type ) )
-	,@Revert_flag = SUM( CHARINDEX( 'Revert To Original Owner', inserted.progress_type ) )
-	,@Runtime_Configured_flag = SUM( CHARINDEX( 'Runtime_Configured', inserted.progress_type ) )
-	,@skipped_flag = SUM( CHARINDEX( 'Skipped', inserted.progress_type ) )
-	,@STARTED_flag = SUM( CHARINDEX( 'STARTED', inserted.progress_type ) )
-	,@TEXT_flag = SUM( CHARINDEX( 'TEXT', inserted.progress_type ) )
 	,@UNCancelled_flag = SUM( CHARINDEX( 'UNCancelled', inserted.progress_type ) )
 	,@Confidential_flag = SUM( CHARINDEX( 'CONFIDENTIAL', inserted.progress_type ) )
 FROM inserted
@@ -359,83 +276,7 @@ END
 
 IF @Modify_flag > 0
 BEGIN
-/*
-	INSERT INTO p_Treatment_Progress (
-			cpr_id,
-			treatment_id,
-			encounter_id,
-			[user_id],
-			progress_date_time,
-			progress_type,
-			progress_key,
-			progress_value,
-			attachment_id,
-			patient_workplan_item_id,
-			risk_level,
-			current_flag,
-			created,
-			created_by,
-			id)
-	SELECT	i.cpr_id,
-			i.treatment_id,
-			i.encounter_id,
-			i.[user_id],
-			i.progress_date_time,
-			'Original Value',
-			i.progress_key,
-			progress_value = CASE i.progress_key WHEN 'begin_date' THEN CONVERT(varchar(40), t.begin_date) 
-												WHEN 'package_id' THEN t.package_id 
-												WHEN 'specialty_id' THEN t.specialty_id 
-												WHEN 'procedure_id' THEN t.procedure_id 
-												WHEN 'drug_id' THEN t.drug_id 
-												WHEN 'observation_id' THEN t.observation_id 
-												WHEN 'administration_sequence' THEN t.administration_sequence 
-												WHEN 'dose_amount' then CONVERT(varchar(40), t.dose_amount) 
-												WHEN 'dose_unit' THEN t.dose_unit 
-												WHEN 'administer_frequency' THEN t.administer_frequency 
-												WHEN 'duration_amount' then CONVERT(varchar(40), t.duration_amount) 
-												WHEN 'duration_unit' THEN t.duration_unit 
-												WHEN 'duration_prn' THEN t.duration_prn 
-												WHEN 'dispense_amount' then CONVERT(varchar(40), t.dispense_amount) 
-												WHEN 'office_dispense_amount' then CONVERT(varchar(40), t.office_dispense_amount) 
-												WHEN 'dispense_unit' THEN t.dispense_unit 
-												WHEN 'brand_name_required' THEN t.brand_name_required 
-												WHEN 'refills' then CONVERT(varchar(40), t.refills) 
-												WHEN 'location' THEN t.location 
-												WHEN 'maker_id' THEN t.maker_id 
-												WHEN 'lot_number' THEN t.lot_number 
-												WHEN 'expiration_date' then CONVERT(varchar(40), t.expiration_date) 
-												WHEN 'send_out_flag' THEN t.send_out_flag 
-												WHEN 'original_treatment_id' then CONVERT(varchar(40), t.original_treatment_id) 
-												WHEN 'referral_question' THEN t.referral_question 
-												WHEN 'referral_question_assmnt_id' THEN t.referral_question_assmnt_id 
-												WHEN 'material_id' then CONVERT(varchar(40), t.material_id) 
-												WHEN 'treatment_mode' THEN t.treatment_mode 
-												WHEN 'office_id' THEN t.office_id 
-												WHEN 'treatment_status' THEN t.treatment_status 
-												WHEN 'treatment_description' THEN CONVERT(varchar(40), t.treatment_description)
-												WHEN 'treatment_goal' THEN CONVERT(varchar(40), t.treatment_goal)
-												WHEN 'end_date' then CONVERT(varchar(40), t.end_date) END,
-			i.attachment_id,
-			i.patient_workplan_item_id,
-			i.risk_level,
-			'N',
-			dbo.get_client_datetime(),
-			i.created_by,
-			newid()
-	FROM inserted i
-		INNER JOIN p_Treatment_Item t
-		ON t.cpr_id = i.cpr_id
-		AND t.treatment_id = i.treatment_id
-	WHERE progress_type = 'Modify'
-	AND NOT EXISTS (SELECT treatment_progress_sequence
-					FROM p_Treatment_Progress p
-					WHERE p.cpr_id = i.cpr_id
-					AND p.treatment_id = i.treatment_id
-					AND p.progress_type = i.progress_type
-					AND p.progress_key = i.progress_key
-					AND p.treatment_progress_sequence <> i.treatment_progress_sequence)
-*/
+
 	UPDATE t
 	SET begin_date = CASE i.progress_key WHEN 'begin_date' then CONVERT(datetime, i.progress_value) ELSE t.begin_date END,
 		package_id = CASE i.progress_key WHEN 'package_id' then i.progress_value ELSE t.package_id END,

@@ -21,4 +21,5 @@ GRANT REFERENCES ON [dbo].[c_Drug_Interaction_Class] TO [cprsystem]
 GO
 GRANT SELECT ON [dbo].[c_Drug_Interaction_Class] TO [cprsystem]
 GO
-GRANT UPDATE ON [dbo].[c_Drug_Interaction_Class
+GRANT UPDATE ON [dbo].[c_Drug_Interaction_Class] TO [cprsystem]
+GO

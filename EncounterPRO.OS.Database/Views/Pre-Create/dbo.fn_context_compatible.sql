@@ -51,50 +51,51 @@ SET NOCOUNT ON
 SET XACT_ABORT ON
 GO
 
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_Report_Definition]') AND ([type]='U')))
-ALTER TABLE [dbo].[c_Report_Definition]
-	DROP
-	CONSTRAINT IF EXISTS [DF__c_Report_Def_created_by]
+-- Drop Function [dbo].[fn_context_compatible]
+Print 'Drop Function [dbo].[fn_context_compatible]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_context_compatible]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_context_compatible]
 GO
 
--- Drop Function [dbo].[fn_current_epro_user]
-Print 'Drop Function [dbo].[fn_current_epro_user]'
-GO
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_current_epro_user]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_current_epro_user]
-GO
-
--- Create Function [dbo].[fn_current_epro_user]
-Print 'Create Function [dbo].[fn_current_epro_user]'
+-- Create Function [dbo].[fn_context_compatible]
+Print 'Create Function [dbo].[fn_context_compatible]'
 GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
+CREATE FUNCTION fn_context_compatible (
+	@ps_existing_context varchar(12),
+	@ps_new_context varchar(12) )
 
-
-CREATE FUNCTION dbo.fn_current_epro_user ( )
-
-RETURNS varchar(24)
+RETURNS bit
 
 AS
 BEGIN
+DECLARE @li_compatible bit
 
-DECLARE @ls_logged_in_user_id varchar(24)
+SET @li_compatible = 0
 
-SET @ls_logged_in_user_id = (SELECT logged_in_user_id FROM dbo.fn_current_epro_user_context())
+-- If the two contexts are the same then they're compatible
+IF @ps_existing_context = @ps_new_context
+	SET @li_compatible = 1
 
-RETURN @ls_logged_in_user_id 
+-- The general context is compatible with everything
+IF @ps_new_context = 'General'
+	SET @li_compatible = 1
+
+-- If the existing context isn't general then it's always compatible with 'Patient'
+IF @ps_existing_context <> 'General' AND @ps_new_context = 'Patient'
+	SET @li_compatible = 1
+
+
+RETURN @li_compatible 
 
 END
-GO
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_Report_Definition]') AND ([type]='U')))
-ALTER TABLE [dbo].[c_Report_Definition]
-	ADD
-	CONSTRAINT [DF__c_Report_Def_created_by]
-	DEFAULT ([dbo].[fn_current_epro_user]()) FOR [created_by]
+
 GO
 GRANT EXECUTE
-	ON [dbo].[fn_current_epro_user]
+	ON [dbo].[fn_context_compatible]
 	TO [cprsystem]
 GO
 

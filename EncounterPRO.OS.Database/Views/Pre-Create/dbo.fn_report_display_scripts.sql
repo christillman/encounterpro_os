@@ -51,50 +51,69 @@ SET NOCOUNT ON
 SET XACT_ABORT ON
 GO
 
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_Report_Definition]') AND ([type]='U')))
-ALTER TABLE [dbo].[c_Report_Definition]
-	DROP
-	CONSTRAINT IF EXISTS [DF__c_Report_Def_created_by]
+-- Drop Function [dbo].[fn_report_display_scripts]
+Print 'Drop Function [dbo].[fn_report_display_scripts]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_report_display_scripts]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_report_display_scripts]
 GO
 
--- Drop Function [dbo].[fn_current_epro_user]
-Print 'Drop Function [dbo].[fn_current_epro_user]'
-GO
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_current_epro_user]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
-DROP FUNCTION [dbo].[fn_current_epro_user]
-GO
-
--- Create Function [dbo].[fn_current_epro_user]
-Print 'Create Function [dbo].[fn_current_epro_user]'
+-- Create Function [dbo].[fn_report_display_scripts]
+Print 'Create Function [dbo].[fn_report_display_scripts]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
+CREATE FUNCTION fn_report_display_scripts ()
 
-
-CREATE FUNCTION dbo.fn_current_epro_user ( )
-
-RETURNS varchar(24)
+RETURNS @report_display_script TABLE (
+	[display_script_id] [int] NULL,
+	[id] uniqueidentifier NULL )
 
 AS
+
 BEGIN
 
-DECLARE @ls_logged_in_user_id varchar(24)
+DECLARE @ll_count int
 
-SET @ls_logged_in_user_id = (SELECT logged_in_user_id FROM dbo.fn_current_epro_user_context())
+INSERT INTO @report_display_script (
+	[display_script_id])
+SELECT DISTINCT CAST(value AS int)
+FROM c_Report_Attribute
+WHERE attribute LIKE '%display_script_id'
+AND ISNUMERIC(value) = 1
 
-RETURN @ls_logged_in_user_id 
+SET @ll_count = 1
+WHILE @ll_count > 0
+	BEGIN
+	INSERT INTO @report_display_script (
+		[display_script_id])
+	SELECT DISTINCT CAST(a.value AS int) AS display_script_id
+	FROM c_Display_Script_Cmd_Attribute a
+		INNER JOIN @report_display_script r
+		ON r.display_script_id = a.display_script_id
+	WHERE a.attribute LIKE '%display_script_id'
+	AND ISNUMERIC(a.value) = 1
+	AND CAST(a.value AS int) NOT IN (
+		SELECT display_script_id
+		FROM @report_display_script)
+	
+	SET @ll_count = @@ROWCOUNT
+	END
 
+UPDATE r
+SET id = d.id
+FROM @report_display_script r
+	INNER JOIN c_Display_Script d
+	ON r.display_script_id = d.display_script_id
+
+DELETE @report_display_script
+WHERE id IS NULL
+
+RETURN
 END
+
 GO
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[c_Report_Definition]') AND ([type]='U')))
-ALTER TABLE [dbo].[c_Report_Definition]
-	ADD
-	CONSTRAINT [DF__c_Report_Def_created_by]
-	DEFAULT ([dbo].[fn_current_epro_user]()) FOR [created_by]
-GO
-GRANT EXECUTE
-	ON [dbo].[fn_current_epro_user]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_report_display_scripts] TO [public]
 GO
 

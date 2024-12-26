@@ -273,25 +273,14 @@ ELSE
 
 	SET @pl_treatment_id = SCOPE_IDENTITY()
 
-	INSERT INTO p_Treatment_Progress(
-		cpr_id,
-		treatment_id,
-		encounter_id,
-		user_id,
-		progress_date_time,
-		progress_type,
-		created,
-		created_by)
-	VALUES (
-		@ps_cpr_id,
-		@pl_treatment_id,
-		@pl_encounter_id,
-		@ps_ordered_by,
-		dbo.get_client_datetime(),
-		'Created',
-		dbo.get_client_datetime(),
-		@ps_created_by )
-
+	-- Add the "Created" progress record
+	EXECUTE sp_set_treatment_progress
+		@ps_cpr_id = @ps_cpr_id,
+		@pl_treatment_id = @pl_treatment_id,
+		@pl_encounter_id = @pl_encounter_id,
+		@ps_progress_type = 'Created',
+		@ps_user_id = @ps_ordered_by,
+		@ps_created_by = @ps_created_by 
 
 	IF LEN(@ls_patient_instructions) > 0
 		EXECUTE sp_set_treatment_progress

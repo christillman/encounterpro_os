@@ -44,4 +44,5 @@ FROM p_Encounter_Assessment_Charge eac (NOLOCK)
     JOIN p_Assessment_Treatment pat (NOLOCK) ON a.cpr_id = pat.cpr_id
 		AND a.problem_id = pat.problem_id
     JOIN c_procedure cp (NOLOCK) ON cp.procedure_id = ec.procedure_id  
+GO
 
