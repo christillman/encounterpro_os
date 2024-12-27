@@ -300,7 +300,7 @@ string ls_filename
 string ls_extension
 ulong lul_hinst, lul_maxpath, lul_rc
 blob lbl_file
-string ls_database
+string ls_server
 
 // We don't have access to the database yet, so set the beeps to null.  The priority_alert
 // method will query the beeps setting when it first runs
@@ -309,7 +309,7 @@ setnull(adodb)
 
 randomize(0)
 
-default_database = "srv-goehr-demo.database.windows.net|GreenOliveDemo"
+default_database = "<Default>" // "srv-goehr-demo.database.windows.net|GreenOliveDemo"
 
 // Set osversion
 // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vista or 2008
@@ -363,6 +363,9 @@ else
 END IF
 
 // If the INI file doesn't exist, then this is a demo version
+// For development, the INI file must specify a demo database, or if a blank file was written before then assume it is demo
+gnv_app.is_demo_version = False
+
 if not fileexists(gnv_app.ini_file) then
 	gnv_app.is_demo_version = True
 	// write blank file so ini errors don't pop up
@@ -370,11 +373,8 @@ if not fileexists(gnv_app.ini_file) then
 	log.file_write(lbl_file, gnv_app.ini_file)
 end if
 
-// For development, the INI file must specify a demo database, or if a blank file was written before then assume it is demo
-gnv_app.is_demo_version = False
-ls_database = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
-
-if ls_database = "GreenOliveDemo" OR Pos(gnv_app.program_directory,"Demo") > 0 OR Pos(gnv_app.program_filename,"Demo") > 0 then
+ls_server = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "srv-goehr-demo.database.windows.net")
+if Pos(ls_server,"demo") > 0 OR Pos(gnv_app.program_directory,"Demo") > 0 OR Pos(gnv_app.program_filename,"Demo") > 0 then
 	gnv_app.is_demo_version = True
 end if
 
