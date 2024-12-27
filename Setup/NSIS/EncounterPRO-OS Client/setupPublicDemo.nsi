@@ -18,7 +18,6 @@
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
   !define INST_ROOT "C:\Users\Public\Documents"
   !define DEST_FOLDER "${INST_ROOT}\${PRODUCT}\Client"
-  !define ATT_FOLDER "${INST_ROOT}\${PRODUCT}\Attachments"
   !define UTILITIES_FOLDER "${INST_ROOT}\Utilities"
   
 ; Included Versions
@@ -43,10 +42,6 @@
   !define SRC_EPRO_Resources  '${SOURCE_ROOT}\EncounterPRO-OS\Resources'
 
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
-
-  ; Installing the help file
-  ;!define COMMONFILES_TARGET "EncounterPRO-OS"
-  ;!define APPDATA_TARGET "${PRODUCT}"
 
 ; ------------------------------------------
 ; Variables
@@ -91,8 +86,8 @@
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
     
-    ; Allow to install as ordinary user
-    RequestExecutionLevel user
+    ; Allow to install as ordinary user, but creating the share requires admin
+    RequestExecutionLevel admin
     
 ; ------------------------------------------
 ; Interface Configuration
@@ -256,57 +251,35 @@
 
     SectionEnd
     
-    ; Section '-Help File' SecHelp
-        ; SetOutPath '$INSTDIR'
-        ; SetDetailsPrint both
-        ; DetailPrint "Installing ${PRODUCT} Help..."
-        ; SetOverwrite on
-        ; SetDetailsPrint textonly
-        ; File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
-        ; File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
-    ; SectionEnd
+    Section '-Help File' SecHelp
+        SetOutPath '$INSTDIR'
+        SetDetailsPrint both
+        DetailPrint "Installing ${PRODUCT} Help..."
+        SetOverwrite on
+        SetDetailsPrint textonly
+        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chm"
+        File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
+    SectionEnd
 
-    ; Section '-Ini Files' SecIni
-    ;     SetOutPath "$APPDATA\${APPDATA_TARGET}"
-    ;     SetDetailsPrint both
-    ;     DetailPrint "Installing EncounterPro.ini to $APPDATA\${APPDATA_TARGET}"
-    ;     File "${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\EncounterPRO.ini"
-    ;     DetailPrint "Setting ini SERVER to $SERVER"
-    ;     DetailPrint "Setting ini DATABASE to $DATABASE"
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbserver" $SERVER
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbname" $DATABASE
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "dbms" "SNC"
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EncounterPRO.ini" "<Default>" "office_id" "0001"
-    ;     ${GetFileVersion} "$INSTDIR\EncounterPRO.OS.Client.exe" $R0
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "EncounterPRO" "ProductVersion" "$R0"
-    ;     WriteINIStr "$APPDATA\${APPDATA_TARGET}\EPCompInfo.ini" "Client" "ProductVersion" "${EproClient_VERSION}"
-    ;     SetDetailsPrint both
-    ; SectionEnd
+    Section '-Attachments' SecAT
+		; ReadEnvStr $R1 USERPROFILE
+		!define ATT_FOLDER "C:\Users\Public\Documents\Attachments"
+		; "C:\Users\Public\Documents\Attachments"
+		; "$R1\Attachments"
 
-
-; Just put it into attachments
-;    Section '-Mod Level Script' SecML
-;        Delete "$INSTDIR\*.mdlvl"
-;        SetOutPath '$INSTDIR'
-;        SetDetailsPrint both
-;        DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
-;        SetDetailsPrint textonly
-;        File "${SRC_Mod_Level}\*.mdlvl"
-;    SectionEnd
-
-    ; Section '-Attachments' SecAT
-        ; SetOutPath '\\localhost\attachments'
-        ; SetDetailsPrint both
-        ; DetailPrint "Installing Attachments in \\localhost\attachments ..."
-        ; SetOverwrite on
-        ; File /nonfatal "${SRC_Mod_Level}\Attachments\*.*"
-    ; SectionEnd
+        CreateDirectory "${ATT_FOLDER}"
+        SetOutPath "${ATT_FOLDER}"
+        SetDetailsPrint both
+        DetailPrint "Installing Attachments in ${ATT_FOLDER} ..."
+        SetOverwrite on
+        File /nonfatal "${SRC_Mod_Level}\Attachments\*.*"
+ 		nsExec::ExecToLog 'NET SHARE attachments="${ATT_FOLDER}" /GRANT:Everyone,FULL'
+   SectionEnd
     
     Section -AdditionalIcons
         SetDetailsPrint textonly
         SetOutPath '$INSTDIR'
         CreateDirectory "${DEST_FOLDER}"
-        CreateDirectory "${ATT_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
         CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=srv-goehr-demo.database.windows.net|GreenOliveDemo" "$INSTDIR\green-olive-avi-02.ico"
@@ -383,10 +356,7 @@
 		Delete "$INSTDIR\*.lnk"
 		Delete "$INSTDIR\*.chm"
 		Delete "$INSTDIR\*.json"
-		Delete "$INSTDIR\pb.ini"
-		Delete "$INSTDIR\pbodb.ini"
-		Delete "$INSTDIR\runtimepackage.ini"
-		Delete "$INSTDIR\tp15_ic.ini"
+		Delete "$INSTDIR\*.ini"
       Delete "$INSTDIR\Uploads"
       Delete "$INSTDIR\Attachments"
       Delete "$INSTDIR"
