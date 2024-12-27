@@ -31,7 +31,7 @@ $ResourceGroupName = "rg-greenolivedemo"
 
 $ErrorActionPreference = 'Stop'
 
-# Not sure if this is needed
+# Not needed
 # az login --scope https://database.windows.net/.default
 
 Write-Host "Connecting to Azure; note: this token lasts for one hour."
@@ -65,15 +65,14 @@ Write-Host "Running 02-DBConfig_Schema_User.sql in $TargetDatabase"
 Invoke-Sqlcmd -InputFile "$BaseFolder\Script\Migration\02-DBConfig_Schema_User.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken -Verbose
  #>
  
-# Done in PosdtInstall Write-Host "Creating application role"
+# Done in PostInstall Write-Host "Creating application role"
 # Invoke-Sqlcmd -InputFile "$BaseFolder\Scripts\Migration\CreateApplicationRole.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken -Verbose
-<## 
+ 
 Write-Host "Pre-Creating tables"
 Create-Database-Object -FullPath "$BaseFolder\Tables\Pre-Create\dbo.c_Database_Status.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 Create-Database-Object -FullPath "$BaseFolder\Tables\Pre-Create\dbo.c_Observation_Result_Set.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
 Write-Host "Pre-Creating functions"
-Create-Database-Object -FullPath "$BaseFolder\Functions\Pre-Create\dbo.get_client_datetime.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 Run-AllFiles -SourceFolder "$BaseFolder\Functions\Pre-Create" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
 Write-Host "Creating tables"
@@ -82,7 +81,7 @@ Run-AllFiles -SourceFolder "$BaseFolder\Tables" -Match "*.sql" -ServerInstance $
 Write-Host "Copying data from $SourceDatabase to $TargetDatabase"
 $tables = Table-List
 Copy-SQLTables -SourceServerInstance $SourceServerInstance -SourceDatabase $SourceDatabase -TargetServerInstance $TargetServerInstance -TargetDatabase $TargetDatabase -Tables $tables -BulkCopyBatchSize 50000 -AccessToken $AccessToken
- ##>
+
 
  <# 
 Write-Host "Copying to dev.DeviceNames"
@@ -91,14 +90,14 @@ $ConnectString = "Data Source=sql-pharmac-medical-devices-dbserver.database.wind
 $DataConnection = Connect-DbaInstance -SqlInstance $ConnectString -Database $TargetDatabase -AccessToken $AccessToken -NonPooledConnection
 $dataset = Invoke-DbaQuery -Query "SELECT [DeviceNameID],[DeviceName], convert(datetime,[DateAdded],0) AS DateAdded FROM [dev].[DeviceNames]" -SqlInstance $SourceSQLInstance -Database $SourceDatabase -As DataSet
 $dataset | Write-DbaDbTableData -Schema "dev" -Table "DeviceNames" -BatchSize $BulkCopyBatchSize -EnableException -SqlInstance $AzureServerMD 
-
+ #>
 Write-Host "Creating triggers"
 Run-AllFiles -SourceFolder "$BaseFolder\Triggers" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
 Write-Host "Creating demo triggers"
 Run-AllFiles -SourceFolder "C:\EncounterPro\Azure\Demo\Triggers" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
- #>
+
 <#
 Write-Host "Creating column constraints"
 Invoke-Sqlcmd -InputFile "$BaseFolder\Constraint\ColumnConstraints.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken 
@@ -120,19 +119,15 @@ Invoke-Sqlcmd -Query "exec dbo.Generate_Journalling" -ServerInstance $TargetServ
 Create-Database-Object -FullPath "$BaseFolder\Script\GeneratedJournalling.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 #>
 
- <##
+
 Write-Host "Creating dependent view functions"
 Run-AllFiles -SourceFolder "$BaseFolder\Views\Pre-Create" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
- ##>
 
 Write-Host "Creating views"
 Run-AllFiles -SourceFolder "$BaseFolder\Views" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
 Write-Host "Creating $BaseFolder\Functions"
 Run-AllFiles -SourceFolder "$BaseFolder\Functions" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
-
-#Write-Host "Creating dependent procedures"
-#Run-Folder -SourceFolder "$BaseFolder\Procedures\Pre-Create" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken
 
 Write-Host "Creating procedures"
 Run-AllFiles -SourceFolder "$BaseFolder\Procedures" -Match "*.sql" -ServerInstance $TargetServerInstance -Database $TargetDatabase -AccessToken $AccessToken

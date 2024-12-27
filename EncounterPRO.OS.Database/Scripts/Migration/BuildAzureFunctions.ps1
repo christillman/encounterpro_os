@@ -1,5 +1,77 @@
 # In Admin powershell, you may need to Install-Module SQLServer from PSGallery
 
+function CopyData
+{
+    [CmdletBinding()]
+    param( 
+  
+        [Parameter(Mandatory=$true)]
+        [string] $SourceServerInstance,
+ 
+        [Parameter(Mandatory=$true)]
+        [string] $SourceDatabase,        
+         
+        [Parameter(Mandatory=$true)]
+        [string] $TargetServerInstance,
+         
+        [Parameter(Mandatory=$false)]
+        [string] $SourceTableAndSchema,
+
+		[Parameter(Mandatory=$true)]
+		[string] $TargetDatabase,
+		
+        [Parameter(Mandatory=$false)]
+        [string] $TargetSchema,
+		
+        [Parameter(Mandatory=$false)]
+        [string] $TargetTable,
+         
+        [Parameter(Mandatory=$false)]
+        [int] $BulkCopyBatchSize = 1000000,
+ 
+        [Parameter(Mandatory=$false)]
+        [int] $BulkCopyTimeout = 600,
+ 		
+		[Parameter(Mandatory=$true)]
+		[string] $SourceQuery
+ 
+    )
+	$TargetTableAndSchema = $TargetSchema + "." + $TargetTable
+	$conTargetString = $conTargetString = "Server=$TargetServerInstance;Database=$TargetDatabase;User ID=demo1@srv-goehr-demo;Password=Gr33nOl1ve;"
+
+	$conTarget = New-Object System.Data.SQLClient.SQLConnection($conTargetString)
+	$conTarget.Open()
+
+	# Preserve the identity values, don't create new ones
+	$copyOptions = [System.Data.SQLClient.SqlBulkCopyOptions]::TableLock + [System.Data.SQLClient.SqlBulkCopyOptions]::KeepIdentity
+	$conBulk = New-Object System.Data.SQLClient.SQLBulkCopy($conTargetString, $copyOptions)
+	$conBulk.DestinationTableName = $TargetTableAndSchema
+	$conBulk.BatchSize = $BulkCopyBatchSize
+
+	$cmdTarget = New-Object System.Data.SQLClient.SQLCommand
+	$cmdTarget.Connection = $conTarget
+
+	$cmdTarget.CommandText = "truncate table $TargetTableAndSchema"
+	$cmdTarget.ExecuteNonQuery() | Out-Null
+
+	$conSourceString = "Data Source=$SourceServerInstance;Initial Catalog=$SourceDatabase;Integrated Security=True"
+	$conSource = New-Object System.Data.SQLClient.SQLConnection($conSourceString)
+	$conSource.Open()
+
+	$cmdSource = New-Object System.Data.SQLClient.SQLCommand
+	$cmdSource.CommandText = $SourceQuery
+	$cmdSource.Connection = $conSource
+
+	$tabSource = $cmdSource.ExecuteReader()
+	$conBulk.WriteToServer($tabSource)
+
+	$conSource.Close()
+	$conSource.Dispose()
+
+	$conTarget.Close()
+	$conTarget.Dispose() 
+}
+
 function Copy-SQLTable
 {
     [CmdletBinding()]
@@ -63,14 +135,14 @@ WHERE s.name = '$TargetSchema' AND t.name='$TargetTable' and c.is_computed = 0"
 	$sourceQuery = "select $colList from $SourceTableAndSchema"
 	# colList: $colList"
 	"sourceQuery: $sourceQuery"
-	$dataTable = Invoke-Sqlcmd -ServerInstance $SourceServerInstance -Database $SourceDatabase -TrustServerCertificate -Query $sourceQuery -As DataTable
-	$count = $dataTable.Rows.Count
-	"rows: $count"
+
+	# $dataTable = Invoke-Sqlcmd -ServerInstance $SourceServerInstance -Database $SourceDatabase -TrustServerCertificate -Query $sourceQuery -As DataTable
 	# avoid error if there are no rows in the source table
-	if ($dataTable -ne $null -and $dataTable.Rows.Count -gt 0) {
+#	if ($dataTable -ne $null -and $dataTable.Rows.Count -gt 0) {
 		try
 		{    
-			Write-SqlTableData -Timeout 900 -ProgressAction SilentlyContinue -InputData $dataTable -ServerInstance $TargetServerInstance -Database $TargetDatabase -SchemaName $TargetSchema -TableName $TargetTable -AccessToken $AccessToken
+			CopyData -SourceServerInstance $SourceServerInstance -SourceDatabase $SourceDatabase -SourceTableAndSchema $SourceTableAndSchema -TargetServerInstance $TargetServerInstance -TargetDatabase $TargetDatabase -TargetSchema $TargetSchema -TargetTable $TargetTable -SourceQuery $sourceQuery
+			# Write-SqlTableData -Timeout 900 -ProgressAction SilentlyContinue -InputData $dataTable -ServerInstance $TargetServerInstance -Database $TargetDatabase -SchemaName $TargetSchema -TableName $TargetTable -AccessToken $AccessToken
 		}
 		catch
 		{
@@ -78,7 +150,7 @@ WHERE s.name = '$TargetSchema' AND t.name='$TargetTable' and c.is_computed = 0"
 			write-host $ex.Message
 			throw $ex
 		}
-	}
+#	}
 }
 
 
@@ -103,7 +175,7 @@ function Copy-SQLTables
         [string[]] $Tables,
 
         [Parameter(Mandatory=$false)]
-        [int] $BulkCopyBatchSize = 10000,
+        [int] $BulkCopyBatchSize = 1000000,
  
         [Parameter(Mandatory=$false)]
         [int] $BulkCopyTimeout = 600,
@@ -147,7 +219,7 @@ order by 1
  #>
  
 # List of schema.table
-[string[]] $tables = @( `
+[string[]] $tables = @( 
 'dbo.b_Appointment_Type', `
 'dbo.b_Provider_Translation', `
 'dbo.b_Resource', `
@@ -437,6 +509,10 @@ order by 1
 'dbo.em_Visit_Level', `
 'dbo.em_Visit_Level_Rule', `
 'dbo.em_Visit_Level_Rule_Item', `
+'dbo.icd_block', ` `
+'dbo.icd10_rwanda', ` `
+'dbo.icd10_who', ` `
+'dbo.icd10cm_codes', `
 'dbo.o_Active_Services', `
 'dbo.o_box', `
 'dbo.o_Component_Attribute', `
@@ -557,7 +633,7 @@ order by 1
 'dbo.x_Translate_A', `
 'dbo.x_Translate_P', `
 'dbo.x_Translation_Rule', `
-'dbo.x_Translation_Set' `
+'dbo.x_Translation_Set' 
 )
 
 return $tables
