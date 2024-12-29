@@ -2,6 +2,7 @@
 
 function CopyData
 {
+	# Thanks for template to https://paulouyang.blogspot.com/2019/05/copy-data-with-powershell-benchmark.html
     [CmdletBinding()]
     param( 
   
@@ -37,7 +38,7 @@ function CopyData
  
     )
 	$TargetTableAndSchema = $TargetSchema + "." + $TargetTable
-	$conTargetString = $conTargetString = "Server=$TargetServerInstance;Database=$TargetDatabase;User ID=demo1@srv-goehr-demo;Password=Gr33nOl1ve;"
+	$conTargetString = $conTargetString = "Server=$TargetServerInstance;Database=$TargetDatabase;User ID=demo1@srv-goehr-demo;Password=*****;"
 
 	$conTarget = New-Object System.Data.SQLClient.SQLConnection($conTargetString)
 	$conTarget.Open()
