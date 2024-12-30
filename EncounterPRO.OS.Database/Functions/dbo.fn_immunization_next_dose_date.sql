@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -92,21 +48,25 @@ DECLARE @ldt_due_date datetime,
 SET @ldt_due_date = NULL
 
 DECLARE lc_dose_rules CURSOR LOCAL FAST_FORWARD FOR
-	SELECT min_age = dbo.fn_date_add_interval(@pdt_date_of_birth, a.age_from, a.age_from_unit),
-			min_wait_date = dbo.fn_date_add_interval(@pdt_last_dose_date, last_dose_interval_amount, last_dose_interval_unit_id),
+	SELECT min_age.adjusted_date as min_age,
+			min_wait.adjusted_date as min_wait_date,
 			s.dose_schedule_sequence,
 			s.dose_text
 	FROM c_Immunization_Dose_Schedule s
-		INNER JOIN c_Age_Range a
-		ON s.patient_age_range_id = a.age_range_id		
+		INNER JOIN c_Age_Range a ON s.patient_age_range_id = a.age_range_id		
+		LEFT JOIN c_Age_Range fst ON s.first_dose_age_range_id = fst.age_range_id	
+		LEFT JOIN c_Age_Range lst ON s.last_dose_age_range_id = lst.age_range_id			
 	CROSS JOIN o_Office oo
 	JOIN c_Office co ON co.office_id = oo.office_id
+	CROSS APPLY dbo.itvf_date_add_interval(@pdt_date_of_birth, a.age_from, a.age_from_unit) min_age
+	CROSS APPLY dbo.itvf_date_add_interval(@pdt_last_dose_date, s.last_dose_interval_amount, s.last_dose_interval_unit_id) min_wait
+	CROSS APPLY dbo.itvf_age_in_range_as_at(a.age_from, a.age_from_unit, a.age_to, a.age_to_unit, @pdt_date_of_birth, @pdt_current_date) patient_age
+	CROSS APPLY dbo.itvf_age_in_range_as_at(fst.age_from, fst.age_from_unit, fst.age_to, fst.age_to_unit, @pdt_date_of_birth, @pdt_first_dose_date) first_dose
+	CROSS APPLY dbo.itvf_age_in_range_as_at(lst.age_from, lst.age_from_unit, lst.age_to, lst.age_to_unit, @pdt_date_of_birth, @pdt_last_dose_date) last_dose
 	WHERE s.valid_in LIKE '%' + co.country + ';%'
-	AND s.disease_id = @pl_disease_id
-	AND s.dose_number = @pl_dose_number
-	AND dbo.fn_age_range_compare(s.patient_age_range_id, @pdt_date_of_birth, @pdt_current_date) <= 0
-	AND (first_dose_age_range_id IS NULL OR dbo.fn_age_range_compare(s.first_dose_age_range_id, @pdt_date_of_birth, @pdt_first_dose_date) = 0)
-	AND (last_dose_age_range_id IS NULL OR dbo.fn_age_range_compare(s.last_dose_age_range_id, @pdt_date_of_birth, @pdt_last_dose_date) = 0)
+	AND patient_age.is_in_range <= 0
+	AND first_dose.is_in_range = 0
+	AND last_dose.is_in_range = 0
 	ORDER BY s.sort_sequence
 
 OPEN lc_dose_rules
