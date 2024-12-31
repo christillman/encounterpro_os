@@ -48,13 +48,13 @@ IF @ps_value LIKE '\%General%' ESCAPE '\'
 	FROM c_Preference
 	WHERE preference_id = @ls_preference_id
 	
-	IF @@ROWCOUNT <> 1
+	IF @ls_description IS NULL
 		SET @ls_description = @ps_value
 
 	RETURN @ls_description
 	END
 
--- We need to put these in separate calls, so the optimizer in copmat level 150 doesn't run out of memory
+-- We need to put these in separate calls, so the optimizer in compat level 150 doesn't run out of memory
 
 IF @ps_attribute LIKE '%observation_id'
 	SET @ls_description = dbo.fn_attribute_desc_obs(@ps_value)
@@ -84,6 +84,10 @@ IF @ps_attribute LIKE '%unit_id'
 	SET @ls_description = dbo.fn_attribute_desc_unit(@ps_value)
 
 IF @ps_attribute LIKE '%user_id' 
+		OR @ps_attribute LIKE '%approved_by' 
+		OR @ps_attribute LIKE '%ordered_by'
+		OR @ps_attribute LIKE '%ordered_for'
+		OR @ps_attribute LIKE '%completed_by'
 	SET @ls_description = dbo.fn_attribute_desc_rusr(@ps_value)
 
 IF @ps_attribute LIKE '%report_id'
