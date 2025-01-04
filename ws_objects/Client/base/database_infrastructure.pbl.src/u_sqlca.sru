@@ -62,7 +62,6 @@ FUNCTION long	 jmj_create_local_vaccine_schedule(ref string ps_config_object_id)
 FUNCTION long	 jmj_document_order_workplan(string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_purpose, string ps_new_object, string ps_ordered_by, string ps_created_by, string ps_workplan_description) RPCFUNC ALIAS FOR "dbo.jmj_document_order_workplan"
 FUNCTION long	 jmj_document_set_recipient(long pl_patient_workplan_item_id, string ps_ordered_for, string ps_dispatch_method, string ps_address_attribute, string ps_address_value, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_document_set_recipient"
 FUNCTION long	 jmj_log_database_maintenance(string ps_action, string ps_completion_status, string ps_action_argument, string ps_build, string ps_comment) RPCFUNC ALIAS FOR "dbo.jmj_log_database_maintenance"
-FUNCTION long	 jmj_new_attachment(string ps_description, string ps_attachment_file, string ps_extension, long pl_owner_id, long pl_box_id, long pl_item_id, long pl_interfaceserviceid, long pl_transportsequence, long pl_patient_workplan_item_id, string ps_attached_by, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_new_attachment"
 FUNCTION long	 jmj_new_attachment2(string ps_description, string ps_attachment_file, string ps_extension, long pl_owner_id, long pl_box_id, long pl_item_id, long pl_interfaceserviceid, long pl_transportsequence, long pl_patient_workplan_item_id, string ps_attached_by, string ps_created_by, string ps_id) RPCFUNC ALIAS FOR "dbo.jmj_new_attachment2"
 FUNCTION long	 jmj_new_datafile(string ps_description, string ps_context_object , string ps_component_id , string ps_created_by , string ps_status , string ps_long_description , REF string ps_report_id) RPCFUNC ALIAS FOR "dbo.jmj_new_datafile"
 FUNCTION long	 jmj_new_document_config_object(string ps_config_object_type, string ps_description, string ps_context_object , string ps_component_id , string ps_created_by , string ps_status , string ps_long_description , REF string ps_report_id) RPCFUNC ALIAS FOR "dbo.jmj_new_document_config_object"
@@ -296,8 +295,6 @@ FUNCTION long sp_forward_todo_service(long pl_patient_workplan_item_id, string p
 FUNCTION long sp_generate_billing_id(string ps_cpr_id, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_generate_billing_id"
 FUNCTION long sp_get_age_date(datetime pdt_from_date, long pl_add_number, string ps_add_unit, ref datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_get_age_date"
 FUNCTION long sp_get_all_encounter_procs() RPCFUNC ALIAS FOR "dbo.sp_get_all_encounter_procs"
-FUNCTION long sp_get_appointment_type(string ps_appointment_type, ref string ps_encounter_type, ref string ps_new_flag) RPCFUNC ALIAS FOR "dbo.sp_get_appointment_type"
-FUNCTION long sp_get_appointment_type_list() RPCFUNC ALIAS FOR "dbo.sp_get_appointment_type_list"
 FUNCTION long sp_get_assessment_icd10(string ps_cpr_id, string ps_assessment_id) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_icd10"
 FUNCTION long sp_get_assessment_status(string ps_cpr_id, long pl_problem_id, long pl_encounter_id, ref string ps_status) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_status"
 FUNCTION long sp_get_assessment_top_20(string ps_user_id, string ps_assessment_type, string ps_top_20_code) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_top_20"
@@ -398,7 +395,6 @@ FUNCTION long sp_get_progress_types(string ps_cpr_id, string ps_context_object, 
 FUNCTION long sp_get_read_message_list(string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_get_read_message_list"
 FUNCTION long sp_get_referral_attachment_id(string ps_cpr_id, long pl_problem_id, integer pi_treatment_sequence, ref long pl_attachment_id) RPCFUNC ALIAS FOR "dbo.sp_get_referral_attachment_id"
 FUNCTION long sp_get_report_printer(string ps_report_id, string ps_office_id, long pl_computer_id, string ps_room_id) RPCFUNC ALIAS FOR "dbo.sp_get_report_printer"
-FUNCTION long sp_get_resource(string ps_resource, ref string ps_encounter_type, ref string ps_new_flag, ref string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_get_resource"
 FUNCTION long sp_get_room_status(string ps_room_id) RPCFUNC ALIAS FOR "dbo.sp_get_room_status"
 FUNCTION long sp_get_rooms_in_type(string ps_room_type) RPCFUNC ALIAS FOR "dbo.sp_get_rooms_in_type"
 FUNCTION long sp_get_secondary_proc_list() RPCFUNC ALIAS FOR "dbo.sp_get_secondary_proc_list"
@@ -411,7 +407,6 @@ FUNCTION long sp_get_todo_list_30(string ps_user_id, string ps_office_id, string
 FUNCTION long sp_get_top_20(string ps_user_id, string ps_top_20_code, string ps_icon_bitmap) RPCFUNC ALIAS FOR "dbo.sp_get_top_20"
 FUNCTION long sp_get_top_20_for_edit(string ps_user_id, string ps_top_20_code) RPCFUNC ALIAS FOR "dbo.sp_get_top_20_for_edit"
 FUNCTION long sp_get_treatment_assessments(string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_assessments"
-FUNCTION long sp_get_treatment_attachment_id(string ps_cpr_id, long pl_treatment_id, ref long pl_attachment_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_attachment_id"
 FUNCTION long sp_get_treatment_billing(string ps_cpr_id, long pl_encounter_id, long pl_problem_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_billing"
 FUNCTION long sp_get_treatment_followup_workplan(string ps_cpr_id, long pl_treatment_id, long pl_encounter_id, string ps_ordered_by, string ps_created_by, string ps_workplan_type, ref long pl_patient_workplan_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_followup_workplan"
 FUNCTION long sp_get_treatment_followup_workplan_items(string ps_cpr_id, long pl_treatment_id, string ps_workplan_type) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_followup_workplan_items"
@@ -430,7 +425,6 @@ FUNCTION long sp_get_who_came_office(string ps_office_id, string ps_user_id, dat
 FUNCTION long sp_get_who_came_today(datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_get_who_came_today"
 FUNCTION long sp_Get_Workplan_Auto_Perform_Service(long pl_patient_workplan_id, string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_Get_Workplan_Auto_Perform_Service"
 FUNCTION long sp_get_workplan_step_details(long pi_workplan_id, long pi_step_number) RPCFUNC ALIAS FOR "dbo.sp_get_workplan_step_details"
-FUNCTION long sp_growth_percentile(string ps_measurement, string ps_sex, integer pi_age_months, real pr_value, ref real pr_percentile) RPCFUNC ALIAS FOR "dbo.sp_growth_percentile"
 FUNCTION long sp_has_alert(string ps_cpr_id, string ps_alert_category_id, ref integer pi_alert_count) RPCFUNC ALIAS FOR "dbo.sp_has_alert"
 FUNCTION long sp_init_user_therapies(string ps_user_id, string ps_assessment_id, string ps_common_list_id, long pl_old_parent_definition_id, long pl_new_parent_definition_id) RPCFUNC ALIAS FOR "dbo.sp_init_user_therapies"
 FUNCTION long sp_insert_assessment_treat_def(string ps_assessment, string ps_treatment_type, string ps_treatment_desc, string ps_user_id, long pi_sort_sequence, string ps_instructions, long pl_parent_definition_id, string pc_child_flag, long pl_followup_workplan_id, ref long pl_definition_id) RPCFUNC ALIAS FOR "dbo.sp_insert_assessment_treat_def"
@@ -506,9 +500,6 @@ FUNCTION long sp_pick_service(string ps_context_object) RPCFUNC ALIAS FOR "dbo.s
 FUNCTION long sp_post_encounter_note(string ps_cpr_id, long pl_patient_workplan_id, long pl_encounter_id, string ps_encounter_note, string ps_ordered_by, string ps_ordered_for, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_post_encounter_note"
 FUNCTION long sp_procedure_search(string ps_procedure_type, string ps_procedure_category_id, string ps_description, string ps_cpt_code, string ps_specialty_id, string ps_status) RPCFUNC ALIAS FOR "dbo.sp_procedure_search"
 FUNCTION long sp_purge_messages(datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_purge_messages"
-FUNCTION long sp_queue_event(string ps_event, datetime pdt_start_date, ref long pl_event_id) RPCFUNC ALIAS FOR "dbo.sp_queue_event"
-FUNCTION long sp_queue_event_set_attribute(long pl_event_id, string ps_attribute, string ps_value) RPCFUNC ALIAS FOR "dbo.sp_queue_event_set_attribute"
-FUNCTION long sp_queue_event_set_ready(long pl_event_id) RPCFUNC ALIAS FOR "dbo.sp_queue_event_set_ready"
 FUNCTION long sp_register_computer(string ps_office_id, string ps_logon_id, string ps_computername, ref long pl_computer_id) RPCFUNC ALIAS FOR "dbo.sp_register_computer"
 FUNCTION long sp_remove_attachment(string ps_cpr_id, long pl_attachment_id, string ps_user_id, string ps_created_by, string ps_context_object, long pl_object_key) RPCFUNC ALIAS FOR "dbo.sp_remove_attachment"
 FUNCTION long sp_remove_results(string ps_cpr_id, long pl_observation_sequence, string ps_location, integer pi_result_sequence, long pl_encounter_id, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_remove_results"
@@ -551,7 +542,6 @@ FUNCTION long sp_set_workplan_item_progress(long pl_patient_workplan_item_id, st
 FUNCTION long sp_set_workplan_status(string ps_cpr_id, long pl_encounter_id, long pl_treatment_id, long pl_patient_workplan_id, string ps_progress_type, datetime pdt_progress_date_time, string ps_completed_by, string ps_owned_by, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_set_workplan_status"
 FUNCTION long sp_setup_integration(string ps_billing_system, string ps_office_id) RPCFUNC ALIAS FOR "dbo.sp_setup_integration"
 FUNCTION long sp_setup_practicemanagement(string ps_billing_system, string ps_office_id) RPCFUNC ALIAS FOR "dbo.sp_setup_practicemanagement"
-FUNCTION long sp_stone_and_replicate(string ps_cpr_id, long pl_encounter_id) RPCFUNC ALIAS FOR "dbo.sp_stone_and_replicate"
 FUNCTION long sp_table_update(string ps_table_name, string ps_updated_by) RPCFUNC ALIAS FOR "dbo.sp_table_update"
 FUNCTION long sp_top_20_delete(string ps_top_20_user_id, string ps_top_20_code, long pl_top_20_sequence) RPCFUNC ALIAS FOR "dbo.sp_top_20_delete"
 FUNCTION long sp_top_20_sort_update(string ps_top_20_user_id, string ps_top_20_code, long pl_top_20_sequence, long pl_new_sort_sequence) RPCFUNC ALIAS FOR "dbo.sp_top_20_sort_update"
@@ -1467,9 +1457,10 @@ end function
 
 public function string sys (string ps_user);string ls_temp
 str_popup popup
-string ls_servername
+string ls_servername, ls_database_name
 
 select ServerProperty('SERVERNAME') INTO :ls_servername FROM c_1_record USING this;
+ls_database_name = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
 
 if lower(ps_user) = "jmjtech" then
 	ls_temp  = "1"
@@ -1501,7 +1492,7 @@ elseif lower(ps_user) = lower(application_role) then
 			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
 		end if		
 	end if
-	if Mid(ls_servername,1,5) = "goehr" OR gnv_app.is_demo_version Then
+	if Mid(ls_servername,1,5) = "goehr" OR gnv_app.is_demo_version OR Pos(lower(ls_database_name),"demo") > 0  Then
 		// Azure SQL password complexity constraints
 		ls_temp  = "A"
 		ls_temp  += "p"
