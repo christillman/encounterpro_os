@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_order_past_treatment_services]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_order_past_treatment_services
 	(
@@ -49,7 +49,7 @@ SELECT @ls_treatment_type = treatment_type
 FROM p_Treatment_Item
 WHERE treatment_id = @pl_treatment_id
 
-IF @@ROWCOUNT <> 1
+IF @ls_treatment_type IS NULL
 	BEGIN
 	RAISERROR ('Workplan not found (%d)',16,-1, @pl_patient_workplan_id)
 	ROLLBACK TRANSACTION

@@ -18,7 +18,7 @@ GO
 Print 'Create Function [dbo].[fn_is_observation_loop]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_is_observation_loop (
 	@ps_parent_observation_id varchar(24),

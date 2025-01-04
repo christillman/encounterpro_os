@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_observation_sources]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_observation_sources
 	(
@@ -32,11 +32,6 @@ DECLARE @ls_composite_flag char(1)
 SELECT @ls_composite_flag = composite_flag
 FROM c_Observation
 WHERE observation_id = @ps_observation_id
-
-IF @@ROWCOUNT <> 1
-	BEGIN
-	RETURN
-	END
 
 IF @ls_composite_flag = 'Y'
 	SELECT DISTINCT s.external_source,

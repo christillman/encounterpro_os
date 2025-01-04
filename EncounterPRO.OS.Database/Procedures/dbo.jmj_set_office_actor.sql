@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_set_office_actor]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_set_office_actor (
 	@ps_unmapped_office_user_id varchar(24),
@@ -27,9 +27,7 @@ CREATE PROCEDURE jmj_set_office_actor (
 	@ps_mapped_office_user_id varchar(24) OUTPUT)
 AS
 
-DECLARE @ls_office_user_id varchar(24),
-		@ll_rowcount int,
-		@ll_error int
+DECLARE @ls_office_user_id varchar(24)
 
 IF @ps_unmapped_office_user_id IS NULL
 	BEGIN
@@ -60,10 +58,7 @@ IF @ls_office_user_id IS NULL
 									@ps_progress = @ps_mapped_to_office_id,
 									@ps_created_by = @ps_created_by
 
-	SELECT @ll_rowcount = @@ROWCOUNT,
-			@ll_error = @@ERROR
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
 	SET @ps_mapped_office_user_id = @ps_unmapped_office_user_id
@@ -102,10 +97,7 @@ WHERE [user_id] = @ps_unmapped_office_user_id
 AND progress_type = 'ID'
 AND current_flag = 'Y'
 
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
 EXECUTE sp_Set_User_Progress @ps_user_id = @ps_unmapped_office_user_id,
@@ -115,10 +107,7 @@ EXECUTE sp_Set_User_Progress @ps_user_id = @ps_unmapped_office_user_id,
 								@ps_progress = 'NA',
 								@ps_created_by = @ps_created_by
 
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
 SET @ps_mapped_office_user_id = @ls_office_user_id

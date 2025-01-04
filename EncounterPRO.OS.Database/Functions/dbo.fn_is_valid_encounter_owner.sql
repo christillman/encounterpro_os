@@ -10,7 +10,7 @@ GO
 Print 'Create Function dbo.fn_is_valid_encounter_owner'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE FUNCTION dbo.fn_is_valid_encounter_owner (
@@ -43,7 +43,7 @@ FROM p_Patient_Encounter
 WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id
 
-IF @@ROWCOUNT <> 1
+IF @ls_bill_flag IS NULL
 	RETURN -1
 
 -- If the owner is still a role, then we'll check later

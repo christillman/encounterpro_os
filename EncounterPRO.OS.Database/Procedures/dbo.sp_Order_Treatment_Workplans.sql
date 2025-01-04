@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Order_Treatment_Workplans]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Order_Treatment_Workplans
 	(
@@ -60,7 +60,7 @@ IF @ps_in_office_flag IS NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @pl_encounter_id
 	
-	IF @@ROWCOUNT = 1
+	IF @ls_encounter_status IS NOT NULL
 		BEGIN
 		-- If the associated encounter is open then default the in_office_flag to 'Y'
 		IF @ls_encounter_status = 'OPEN'

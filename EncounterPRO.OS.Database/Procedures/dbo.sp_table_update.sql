@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_table_update]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_table_update (
 	@ps_table_name varchar(64),

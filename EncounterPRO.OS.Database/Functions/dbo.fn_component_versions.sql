@@ -17,7 +17,7 @@ GO
 -- Create Function [dbo].[fn_component_versions]
 Print 'Create Function [dbo].[fn_component_versions]'
 GO
-SET ANSI_NULLS OFF
+SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_component_versions (

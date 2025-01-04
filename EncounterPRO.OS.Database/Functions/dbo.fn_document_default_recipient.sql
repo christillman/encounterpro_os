@@ -44,8 +44,6 @@ BEGIN
 DECLARE @ll_status int,
 		@ll_sum int,
 		@ll_last_document_id int,
-		@ll_error int,
-		@ll_rowcount int,
 		@ls_default_ordered_for varchar(24),
 		@ls_default_document_route varchar(24),
 		@ls_default_address_attribute varchar(64),
@@ -103,10 +101,7 @@ IF @ls_default_ordered_for IS NULL
 		AND a.attribute = 'Purpose'
 		AND a.value_short = @ps_purpose
 
-		SELECT @ll_error = @@ERROR,
-				@ll_rowcount = @@ROWCOUNT
-
-		IF @ll_error <> 0
+		IF @@ERROR <> 0
 			RETURN
 
 		IF @ll_last_document_id IS NOT NULL
@@ -127,10 +122,7 @@ IF @ls_default_ordered_for IS NULL
 			WHERE ap.purpose = @ps_purpose
 			ORDER BY ct.primary_actor desc, ap.sort_sequence asc
 
-			SELECT @ll_error = @@ERROR,
-					@ll_rowcount = @@ROWCOUNT
-
-			IF @ll_error <> 0
+			IF @@ERROR <> 0
 				RETURN
 			END
 		END
@@ -181,13 +173,7 @@ IF @ls_default_address_attribute IS NULL
 		FROM c_Document_Route
 		WHERE document_route = @ls_default_document_route
 
-		SELECT @ll_error = @@ERROR,
-				@ll_rowcount = @@ROWCOUNT
-
-		IF @ll_error <> 0
-			RETURN
-
-		IF @ll_rowcount = 0
+		IF @@ERROR <> 0
 			RETURN
 
 		IF @ls_communication_type IS NULL
@@ -203,8 +189,6 @@ IF @ls_default_address_attribute IS NULL
 ELSE
 	UPDATE @defaults
 	SET address_attribute = @ls_default_address_attribute
-
-
 
 -------------------------------------------------------------------------------------
 -- Default address value

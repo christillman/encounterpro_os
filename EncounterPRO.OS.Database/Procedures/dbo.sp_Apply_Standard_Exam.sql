@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Apply_Standard_Exam]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Apply_Standard_Exam (
 	@ps_cpr_id varchar(12),
@@ -78,7 +78,8 @@ IF @ls_root_observation_id IS NULL
 SELECT @ls_common_list_id = COALESCE(specialty_id, '$')
 FROM c_User
 WHERE [user_id] = @ps_user_id
-IF @@ROWCOUNT = 0
+
+IF @ls_common_list_id IS NULL
 	SET @ls_common_list_id = '$'
 
 INSERT INTO @tmp_observation_results (
@@ -353,7 +354,7 @@ WHILE @@FETCH_STATUS = 0
 		AND observation_id = @ls_child_observation_id
 		AND original_branch_id = @ll_branch_id
 		
-		IF @@ROWCOUNT = 0
+		IF @ll_observation_sequence IS NULL
 			BEGIN
 			SELECT @ls_description = COALESCE(t.description, o.description),
 					@ll_branch_sort_sequence = t.sort_sequence
@@ -362,7 +363,7 @@ WHILE @@FETCH_STATUS = 0
 				ON t.child_observation_id = o.observation_id
 			WHERE t.branch_id = @ll_branch_id
 			
-			IF @@ROWCOUNT = 1
+			IF @ll_branch_sort_sequence IS NOT NULL
 				BEGIN
 				INSERT INTO p_Observation
 						(

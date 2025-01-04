@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Default_Results]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Default_Results (
 	@pl_branch_id int = NULL,
@@ -78,7 +78,8 @@ IF @ls_root_observation_id IS NULL
 SELECT @ls_common_list_id = COALESCE(specialty_id, '$')
 FROM c_User
 WHERE [user_id] = @ps_user_id
-IF @@ROWCOUNT = 0
+
+IF @ls_common_list_id IS NULL
 	SET @ls_common_list_id = '$'
 
 INSERT INTO @tmp_observation_results (

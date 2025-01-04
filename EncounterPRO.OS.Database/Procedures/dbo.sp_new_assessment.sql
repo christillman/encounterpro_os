@@ -76,10 +76,8 @@ AND ISNULL(icd10_code, '<Null>') = ISNULL(@ps_icd10_code, '<Null>')
 AND ISNULL(CAST(long_description AS nvarchar(max)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
 ORDER BY status desc, last_updated desc
 
-SET @ll_rows = @@ROWCOUNT
-
 -- We didn't find an exact match so see if there's a unique match on icd10_code
-IF @ll_rows = 0 AND @ps_icd10_code IS NOT NULL AND @ps_allow_dup_icd10_code <> 'Y'
+IF @ps_assessment_id IS NULL AND @ps_icd10_code IS NOT NULL AND @ps_allow_dup_icd10_code <> 'Y'
 	BEGIN
 	SELECT @ll_count = COUNT(*)
 	FROM c_Assessment_Definition
@@ -94,13 +92,12 @@ IF @ll_rows = 0 AND @ps_icd10_code IS NOT NULL AND @ps_allow_dup_icd10_code <> '
 		WHERE icd10_code = @ps_icd10_code
 		AND status = 'OK'
 
-		SET @ll_rows = @@ROWCOUNT
 		END
 
 	END
 
 -- We didn't find a match yet so see if there's match with commas and spaces removed
-IF @ll_rows = 0
+IF @ps_assessment_id IS NULL
 	BEGIN
 	SET @ls_trimmed_description = REPLACE(@ps_description, ',', '')
 	SET @ls_trimmed_description = REPLACE(@ls_trimmed_description, ' ', '')
@@ -113,11 +110,9 @@ IF @ll_rows = 0
 	AND ISNULL(CAST(long_description AS nvarchar(max)), '<Null>') = ISNULL(@ls_long_description_varchar, '<Null>')
 	ORDER BY status desc, last_updated desc
 
-	SET @ll_rows = @@ROWCOUNT
-
 	END
 
-IF @ll_rows = 1
+IF @ps_assessment_id IS NOT NULL
 	BEGIN
 	IF @ls_old_status <> 'OK' AND @ps_status = 'OK'
 		UPDATE c_Assessment_Definition

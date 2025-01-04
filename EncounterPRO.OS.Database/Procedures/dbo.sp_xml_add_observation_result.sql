@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_xml_add_observation_result]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_xml_add_observation_result (
 	@pl_observation_sequence int,
@@ -114,13 +114,10 @@ SELECT @ls_cpr_id = cpr_id,
 FROM p_Observation
 WHERE observation_sequence = @pl_observation_sequence
 
-SELECT @ll_error = @@ERROR,
-		@ll_count = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_count <> 1
+IF @ls_cpr_id IS NULL
 	BEGIN
 	RAISERROR ('The observation_sequence was not found (%d)',16,-1, @pl_observation_sequence)
 	RETURN -1

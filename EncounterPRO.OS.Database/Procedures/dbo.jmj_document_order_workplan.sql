@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_document_order_workplan]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_document_order_workplan
 	(
@@ -46,8 +46,6 @@ DECLARE @ll_workplan_id int,
 	@ll_parent_patient_workplan_item_id int,
 	@ls_dispatch_flag char(1),
 	@ll_patient_workplan_id int,
-	@ll_count int,
-	@ll_error int,
 	@ls_object_ordered_by varchar(24),
 	@ll_parent_treatment_id int,
 	@ls_suppress char(1)
@@ -91,12 +89,10 @@ IF @ls_ordered_for_context_object = 'Encounter'
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @ll_encounter_id
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @ls_ordered_for IS NULL
 		BEGIN
 		RAISERROR ('Encounter not found (%s,%d)',16,-1, @ps_cpr_id, @ll_encounter_id)
 		RETURN -1
@@ -113,12 +109,10 @@ IF @ls_ordered_for_context_object = 'Assessment'
 	AND problem_id = @ll_problem_id
 	AND current_flag = 'Y'
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @ls_ordered_for IS NULL
 		BEGIN
 		RAISERROR ('Assessment not found (%s,%d)',16,-1, @ps_cpr_id, @ll_problem_id)
 		RETURN -1
@@ -135,12 +129,10 @@ IF @ls_ordered_for_context_object = 'Treatment'
 	WHERE cpr_id = @ps_cpr_id
 	AND treatment_id = @ll_treatment_id
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @ls_ordered_for IS NULL
 		BEGIN
 		RAISERROR ('Treatment not found (%s,%d)',16,-1, @ps_cpr_id, @ll_treatment_id)
 		RETURN -1
@@ -187,22 +179,20 @@ IF NOT EXISTS (SELECT 1 FROM c_User
 
 -- Get the workplan from the document purpose table
 
-SELECT @ll_workplan_id = CASE @ps_new_object WHEN 'Y' THEN new_object_workplan_id ELSE existing_object_workplan_id END
+SELECT @ll_workplan_id = CASE @ps_new_object WHEN 'Y' 
+	THEN new_object_workplan_id ELSE existing_object_workplan_id END
 FROM c_Document_Purpose
 WHERE context_object = @ps_context_object
 AND purpose = @ps_purpose
 
-SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_count = 0
-	RETURN
+IF @ll_workplan_id IS NULL
+	RETURN -1
 
 IF @ps_workplan_description IS NULL
 	SET @ps_workplan_description = @ps_purpose
-
 
 SET @ls_suppress = 'N'
 IF @ps_workplan_description LIKE 'Sending%SureScripts%Succeeded%' AND @ps_purpose = 'Message Success'

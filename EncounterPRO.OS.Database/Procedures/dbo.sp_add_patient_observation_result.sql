@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_add_patient_observation_result]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_add_patient_observation_result
 	(
@@ -49,7 +49,7 @@ FROM p_Observation
 WHERE cpr_id = @ps_cpr_id
 AND observation_sequence = @pl_observation_sequence 
 
-IF @@ROWCOUNT <> 1
+IF @ls_observation_id IS NULL
 	BEGIN
 	RAISERROR ('Cannot find observation (%s, %d)', 16, -1, @ps_cpr_id, @pl_observation_sequence )
 	ROLLBACK TRANSACTION
@@ -64,7 +64,7 @@ FROM c_Observation_Result
 WHERE observation_id = @ls_observation_id
 AND result_sequence = @pi_result_sequence
 
-IF @@ROWCOUNT <> 1
+IF @ls_result_type IS NULL
 	BEGIN
 	RAISERROR ('Cannot find observation result (%s, %d)', 16, -1, @ls_observation_id, @pi_result_sequence )
 	ROLLBACK TRANSACTION

@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_context_info]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_context_info (
 	@ps_cpr_id varchar(12),
@@ -33,7 +33,8 @@ DECLARE @ll_treatment_id int,
 		@ll_encounter_id int,
 		@ll_observation_sequence int,
 		@ll_attachment_id int,
-		@ll_location_result_sequence int
+		@ll_location_result_sequence int,
+		@test_patient bit
 
 SET @ll_treatment_id = NULL
 SET @ll_problem_id = NULL
@@ -139,7 +140,7 @@ SELECT @ll_customer_id = customer_id,
 		@ll_modification_level = modification_level
 FROM c_Database_Status
 
-IF @@ROWCOUNT <> 1
+IF @ll_modification_level IS NULL
 	BEGIN
 	RAISERROR ('Cannot find database status',16,-1)
 	ROLLBACK TRANSACTION
@@ -234,11 +235,12 @@ SELECT @ls_last_name = last_name,
 		@ls_sex = sex,
 		@ldt_date_of_birth = date_of_birth,
 		@ls_patient_status = patient_status,
-		@ls_race = race
+		@ls_race = race,
+		@test_patient = test_patient
 FROM p_Patient
 WHERE cpr_id = @ps_cpr_id
 
-IF @@ROWCOUNT = 1
+IF @test_patient IS NOT NULL
 	BEGIN
 	INSERT INTO @context (
 		cpr_id,
@@ -369,12 +371,13 @@ IF @ll_attachment_id > 0 AND @ps_cpr_id IS NOT NULL
 			@ls_attachment_folder = attachment_folder,
 			@ls_attached_by = attached_by,
 			@ls_attachment_context_object = context_object,
-			@ll_attachment_object_key = object_key
+			@ll_attachment_object_key = object_key,
+			@test_patient = default_grant
 	FROM p_Attachment
 	WHERE cpr_id = @ps_cpr_id
 	AND attachment_id = @ll_attachment_id
 
-	IF @@ROWCOUNT <> 1
+	IF @test_patient IS NULL
 		BEGIN
 		RAISERROR ('Cannot find attachment %s, %d',16,-1, @ps_cpr_id, @ll_attachment_id)
 		ROLLBACK TRANSACTION
@@ -512,7 +515,7 @@ IF @ll_observation_sequence > 0 AND @ps_cpr_id IS NOT NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND observation_sequence = @ll_observation_sequence
 
-	IF @@ROWCOUNT <> 1
+	IF @ls_description IS NULL
 		BEGIN
 		RAISERROR ('Cannot find observation %s, %d',16,-1, @ps_cpr_id, @ll_observation_sequence)
 		ROLLBACK TRANSACTION
@@ -627,7 +630,7 @@ IF @ll_treatment_id > 0 AND @ps_cpr_id IS NOT NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND treatment_id = @ll_treatment_id
 
-	IF @@ROWCOUNT <> 1
+	IF @ll_treatment_encounter_id IS NULL
 		BEGIN
 		RAISERROR ('Cannot find treatment %s, %d',16,-1, @ps_cpr_id, @ll_treatment_id)
 		ROLLBACK TRANSACTION
@@ -758,7 +761,7 @@ IF @ll_problem_id > 0 AND @ps_cpr_id IS NOT NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND problem_id = @ll_problem_id
 
-	IF @@ROWCOUNT <> 1
+	IF @ls_assessment_id IS NULL
 		BEGIN
 		RAISERROR ('Cannot find assessment %s, %d',16,-1, @ps_cpr_id, @ll_problem_id)
 		ROLLBACK TRANSACTION
@@ -896,12 +899,13 @@ IF @ll_encounter_id > 0 AND @ps_cpr_id IS NOT NULL
 			@ls_encounter_status = encounter_status,
 			@ldt_encounter_date = encounter_date,
 			@ls_encounter_description = encounter_description,
-			@ls_attending_doctor = attending_doctor
+			@ls_attending_doctor = attending_doctor,
+			@test_patient = default_grant
 	FROM p_Patient_Encounter
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @ll_encounter_id
 
-	IF @@ROWCOUNT <> 1
+	IF @test_patient IS NULL
 		BEGIN
 		RAISERROR ('Cannot find encounter %s, %d',16,-1, @ps_cpr_id, @ll_encounter_id)
 		ROLLBACK TRANSACTION
@@ -1007,11 +1011,11 @@ IF @ls_physician IS NOT NULL
 
 IF @ps_user_id IS NOT NULL
 	BEGIN
-	SELECT @ls_provider = user_full_name
+	SELECT @ls_provider = user_full_name, @ls_encounter_status = status
 	FROM c_User
 	WHERE [user_id] = @ps_user_id
 	
-	IF @@ROWCOUNT = 1
+	IF @ls_encounter_status IS NOT NULL
 		BEGIN
 		INSERT INTO @context (
 			cpr_id,

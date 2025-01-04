@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_order_workplan_item]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_order_workplan_item
 	(
@@ -57,10 +57,7 @@ IF @pl_patient_workplan_id > 0
 	FROM p_Patient_WP
 	WHERE patient_workplan_id = @pl_patient_workplan_id
 
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	END
 ELSE
@@ -77,10 +74,7 @@ IF @ps_description IS NULL
 	FROM o_Service
 	WHERE service = @ps_ordered_service
 
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	END
 
@@ -126,7 +120,6 @@ VALUES	(
 SELECT @ll_error = @@ERROR,
 		@ll_rowcount = @@ROWCOUNT,
 		@ll_patient_workplan_item_id = @@identity
-
 
 IF @ll_error <> 0
 	RETURN -1

@@ -18,9 +18,9 @@ GO
 Print 'Create Procedure [dbo].[sp_obstree_encounter]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
-CREATE       PROCEDURE sp_obstree_encounter
+CREATE PROCEDURE sp_obstree_encounter
 (	 @ps_cpr_id varchar(12)
 	,@pl_encounter_id int
 	,@ps_treatment_type varchar(24) = NULL
@@ -33,7 +33,7 @@ DECLARE  @ll_iterations int
 	,@ll_more_records INT
 	,@ll_level INT
 
-SET  	@ll_iterations = 1
+SET @ll_iterations = 1
 SET	@ll_more_records = 1
 SET	@ll_level = 1001 - @ll_iterations
 

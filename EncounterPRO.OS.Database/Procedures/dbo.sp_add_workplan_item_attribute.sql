@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_add_workplan_item_attribute]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_add_workplan_item_attribute
 	(
@@ -54,7 +54,7 @@ IF (@ps_cpr_id IS NULL) OR (@pl_patient_workplan_id IS NULL)
 	FROM p_Patient_WP_Item
 	WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
-	IF @@rowcount <> 1
+	IF @ps_cpr_id IS NULL
 		BEGIN
 		RAISERROR ('No such workplan item (%d)',16,-1, @pl_patient_workplan_item_id)
 		ROLLBACK TRANSACTION

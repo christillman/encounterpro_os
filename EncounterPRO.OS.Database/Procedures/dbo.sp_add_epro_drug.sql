@@ -178,7 +178,7 @@ IF @country_source_id = 'Nothing'
 	WHERE source_brand_form_descr = @in_brand_name_formulation
 		AND country_code = @country_code
 
-	IF @@ROWCOUNT > 0
+	IF @country_source_id IS NOT NULL
 		BEGIN
 		print 'source_id already exists: ' + @country_source_id
 		print 'Aborting'

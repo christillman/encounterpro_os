@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_procedure_cpt]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_procedure_cpt (
 	@ps_cpr_id varchar(12),
@@ -60,7 +60,7 @@ AND pi.authority_sequence = 1
 AND pi.authority_type = 'PAYOR'
 AND i.procedure_id = @ps_procedure_id
 
-IF @@ROWCOUNT = 1
+IF @ls_cpt_code IS NOT NULL
 	SELECT @ls_proc_description = description
 	FROM c_Procedure
 	WHERE procedure_id = @ps_procedure_id
@@ -83,6 +83,7 @@ SELECT
 	, @lr_units  AS units
 	, @ldc_charge  AS charge
 	, @ls_proc_description AS proc_description
+
 GO
 GRANT EXECUTE
 	ON [dbo].[sp_get_procedure_cpt]

@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Order_Workplan_Treatment]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Order_Workplan_Treatment
 	(
@@ -172,7 +172,7 @@ IF @ls_observation_id IS NOT NULL
 		@ls_observation_description = description
 	FROM c_Observation
 	WHERE observation_id = @ls_observation_id
-	IF @@rowcount <> 1
+	IF @ls_observation_description IS NULL
 		BEGIN
 		RAISERROR ('Observation not in c_observation table (%s)',16,-1, @ls_observation_id)
 		ROLLBACK TRANSACTION

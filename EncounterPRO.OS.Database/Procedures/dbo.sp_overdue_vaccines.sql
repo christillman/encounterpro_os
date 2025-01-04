@@ -18,13 +18,13 @@ GO
 Print 'Create Procedure [dbo].[sp_overdue_vaccines]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE   PROCEDURE sp_overdue_vaccines
 AS
 
-SELECT DISTINCT
-	 1
+DECLARE @ll_count int
+SELECT @ll_count = count(*)
 FROM	c_vaccine_schedule vs WITH (NOLOCK)
 INNER JOIN c_vaccine v WITH (NOLOCK)
 ON	v.vaccine_id = vs.vaccine_id
@@ -36,14 +36,15 @@ OR	age <= 0
 OR	age_unit IS NULL
 OR	age_unit NOT IN ('day', 'd', 'dd' )
 
-IF @@rowcount <> 0
+IF @ll_count <> 0
 BEGIN
 	RAISERROR ('Vaccine Schedule is configured incorrectly', 16, 1 )
 
 	RETURN
 END
 
-SELECT 
+SELECT @ll_count = count(*)
+FROM (SELECT 
 	 vs.vaccine_id
 	,COUNT( vs.schedule_sequence ) AS cnt_sequence
 	,MAX( vs.schedule_sequence) as max_sequence
@@ -51,8 +52,9 @@ FROM	c_vaccine_schedule vs WITH (NOLOCK)
 GROUP BY
 	vs.vaccine_id
 HAVING COUNT( vs.schedule_sequence ) <> MAX( vs.schedule_sequence )
+) t
 
-IF @@rowcount <> 0
+IF @ll_count <> 0
 BEGIN
 	RAISERROR ('Vaccine Sequence must start at 0 and increment by 1', 16, 1 )
 
@@ -93,7 +95,6 @@ WHERE
 AND	DATEDIFF (year, p.date_of_birth, dbo.get_client_datetime() ) < 18.0
 AND	v.status = 'OK'
 AND	vs.schedule_sequence = 1
-
 
 -- Count how many times each vaccine has been administered
 

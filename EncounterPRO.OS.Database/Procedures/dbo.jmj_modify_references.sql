@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_modify_references]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_modify_references (
 	@pl_reference_id int,
@@ -29,8 +29,6 @@ AS
 -- This stored procedure creates a local copy of the specified reference and returns the new reference_id
 DECLARE @ls_tablename varchar(64),
 		@ls_columnname varchar(64),
-		@ll_count int,
-		@ll_error int,
 		@ls_sql nvarchar(max),
 		@ll_IsPrimaryKey int
 
@@ -47,29 +45,24 @@ FETCH lc_refs INTO @ls_tablename, @ls_columnname
 
 WHILE @@FETCH_STATUS = 0
 	BEGIN
-	SELECT @ll_IsPrimaryKey = ObjectProperty(Object_id(si.name),  'IsPrimaryKey')
-	FROM sysobjects o
-		INNER JOIN syscolumns cl
-		ON o.id = cl.id
-		INNER JOIN sysindexes si
-		ON o.id = si.id
-		INNER JOIN sysindexkeys sk
-		ON si.id = sk.id
-		AND si.indid = sk.indid
-		AND sk.colid = cl.colid
+	SELECT @ll_IsPrimaryKey = i.is_primary_key
+	FROM sys.objects o
+	INNER JOIN sys.indexes i ON i.object_id = o.object_id
+	INNER JOIN sys.index_columns ic ON ic.object_id=i.object_id AND ic.index_id = i.index_id
+	INNER JOIN sys.columns c ON c.object_id=ic.object_id AND c.column_id = ic.column_id
 	WHERE o.name COLLATE DATABASE_DEFAULT = @ls_tablename
-	AND cl.name COLLATE DATABASE_DEFAULT = @ls_columnname
-	AND o.type = 'U'
+		AND c.name COLLATE DATABASE_DEFAULT = @ls_columnname
+		AND o.type = 'U'
 
-	IF @@ROWCOUNT = 1 AND @ll_IsPrimaryKey = 0
+	IF @ll_IsPrimaryKey = 0
 		BEGIN
 		SET @ls_sql = 'UPDATE ' + @ls_tablename 
 		SET @ls_sql = @ls_sql + ' SET ' + @ls_columnname + ' = ' + CAST(@pl_new_reference_id AS varchar(12))
 		SET @ls_sql = @ls_sql + ' WHERE ' + @ls_columnname + ' = ' + CAST(@pl_reference_id AS varchar(12))
 
 		EXECUTE (@ls_sql)
-		SET @ll_error = @@ERROR
-		IF @ll_error <> 0
+		
+		IF @@ERROR <> 0
 			RETURN -1
 		END
 

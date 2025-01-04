@@ -60,7 +60,7 @@ SELECT @ll_installed_version = installed_version,
 FROM c_Config_Object
 WHERE config_object_id = @lui_config_object_id
 
-IF @@ROWCOUNT = 0
+IF @ll_owner_id IS NULL
 	RETURN -99
 
 SELECT @ll_customer_id = customer_id

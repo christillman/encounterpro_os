@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_remove_patient_context_from_wp_item]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_remove_patient_context_from_wp_item (
 	@pl_patient_workplan_item_id int,
@@ -58,7 +58,7 @@ SELECT @ls_ordered_service = ordered_service,
 FROM p_Patient_WP_Item WITH (UPDLOCK)
 WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
-IF @@ROWCOUNT <> 1
+IF @ll_patient_workplan_id IS NULL
 	BEGIN
 	RAISERROR ('Cannot find workplan item (%d)',16,-1, @pl_patient_workplan_item_id)
 	ROLLBACK TRANSACTION

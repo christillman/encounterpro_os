@@ -1,4 +1,11 @@
 
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+SET XACT_ABORT ON
+GO
 Print 'Drop Function [dbo].[fn_tallman]'
 GO
 IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_tallman]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
@@ -16,16 +23,19 @@ AS BEGIN
 	DECLARE @limit int = 15	
 	DECLARE @spelling varchar(200)
 
+ 	IF NOT EXISTS (SELECT spelling from c_Drug_Tall_Man 
+			WHERE @drug_description LIKE '%' + spelling COLLATE DATABASE_DEFAULT + '%'
+			)
+		RETURN @drug_description
+
 	DECLARE cr_update CURSOR FOR 
 	SELECT spelling from c_Drug_Tall_Man 
-	WHERE @tallman_version LIKE '%' + spelling COLLATE DATABASE_DEFAULT + '%'
-	
-	IF @@ROWCOUNT = 0 RETURN @drug_description
+	WHERE @tallman_version LIKE '%' + spelling COLLATE DATABASE_DEFAULT + '%'	
 
 	OPEN cr_update
 
 	FETCH NEXT FROM cr_update INTO @spelling
- 
+
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
 		SELECT @tallman_version = REPLACE(@tallman_version, @spelling, @spelling)

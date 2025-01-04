@@ -18,7 +18,7 @@ GO
 Print 'Create Function [dbo].[fn_attribute_desc_pmat]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_attribute_desc_pmat (@ps_value varchar(255))
 
@@ -31,7 +31,7 @@ BEGIN
 	FROM c_Patient_Material
 	WHERE material_id = CAST(@ps_value as integer)
 	
-	IF @@ROWCOUNT <> 1
+	IF @ls_description IS NULL
 		SET @ls_description = @ps_value
 
 	RETURN @ls_description

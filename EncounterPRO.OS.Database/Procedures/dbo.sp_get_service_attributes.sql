@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_service_attributes]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE dbo.sp_get_service_attributes (
 	@ps_service varchar(24),
@@ -43,7 +43,7 @@ SELECT @ls_specialty_id = COALESCE(specialty_id, '$')
 FROM c_User
 WHERE [user_id] = @ps_user_id
 
-IF @@ROWCOUNT = 1
+IF @ls_specialty_id IS NOT NULL
 	BEGIN
 	-- If we have a valid user_id, then add the specialty attributes followed by the user
 	-- specific attributes

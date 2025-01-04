@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -62,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[config_install_vaccine_schedule]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE config_install_vaccine_schedule (
 	@pui_config_object_id uniqueidentifier ,
@@ -73,9 +29,7 @@ AS
 -- -1 An error occured
 --
 
-DECLARE @ll_error int,
-		@ll_rowcount int,
-		@lx_xml xml,
+DECLARE @lx_xml xml,
 		@ll_doc int,
 		@ls_age_range_category varchar(24),
 		@ls_description varchar(40),
@@ -118,13 +72,10 @@ FROM dbo.c_Config_Object_Version
 WHERE config_object_id = @pui_config_object_id
 AND version = @pl_version
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_rowcount <> 1
+IF @lx_xml IS NULL
 	BEGIN
 	RAISERROR ('The specified config object was not found (%s, %d)',16,-1, @ls_config_object_id, @pl_version)
 	RETURN -1
@@ -134,10 +85,7 @@ SELECT @ll_domain_sequence = max(domain_sequence)
 FROM c_Domain
 WHERE domain_id = 'Config Vaccine Schedule'
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
 EXEC sp_xml_preparedocument @ll_doc OUTPUT, @lx_xml
@@ -167,10 +115,7 @@ FROM   OPENXML (@ll_doc, '/EPConfigObjects/VaccineSchedule/AgeRange',1)
 				age_to_unit varchar(24)
 			)
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
 DECLARE lc_ar CURSOR LOCAL FAST_FORWARD FOR
@@ -204,10 +149,7 @@ WHILE @@FETCH_STATUS = 0
 		@ps_age_to_unit = @ls_age_to_unit,
 		@pl_age_range_id = @ll_new_age_range_id OUTPUT
 
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
 	UPDATE @Age_Ranges
@@ -231,10 +173,7 @@ BEGIN TRANSACTION
 
 DELETE FROM c_Immunization_Dose_Schedule
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -242,10 +181,7 @@ IF @ll_error <> 0
 
 DELETE FROM c_Disease_Group_Item
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -253,10 +189,7 @@ IF @ll_error <> 0
 
 DELETE FROM c_Disease_Group
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -294,10 +227,7 @@ FROM   OPENXML (@ll_doc, '/EPConfigObjects/VaccineSchedule/DiseaseGroup',1)
 				owner_id int
 			)
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -309,10 +239,7 @@ FROM c_Disease_Group dg
 	INNER JOIN @Age_Ranges x
 	ON dg.age_range = x.age_range_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -340,10 +267,7 @@ FROM   OPENXML (@ll_doc, '/EPConfigObjects/VaccineSchedule/DiseaseGroupItem',1)
 				owner_id int 
 			)
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -381,10 +305,7 @@ FROM   OPENXML (@ll_doc, '/EPConfigObjects/VaccineSchedule/DoseSchedule',1)
 				dose_text varchar(255) 
 			)
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -396,10 +317,7 @@ FROM c_Immunization_Dose_Schedule ds
 	INNER JOIN @Age_Ranges x
 	ON ds.patient_age_range_id = x.age_range_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -411,10 +329,7 @@ FROM c_Immunization_Dose_Schedule ds
 	INNER JOIN @Age_Ranges x
 	ON ds.first_dose_age_range_id = x.age_range_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -426,10 +341,7 @@ FROM c_Immunization_Dose_Schedule ds
 	INNER JOIN @Age_Ranges x
 	ON ds.last_dose_age_range_id = x.age_range_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	BEGIN
 	ROLLBACK TRANSACTION
 	RETURN -1
@@ -448,10 +360,7 @@ IF @ll_domain_sequence IS NULL
 		@ll_domain_sequence,
 		@ls_config_object_id)
 
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		BEGIN
 		ROLLBACK TRANSACTION
 		RETURN -1
@@ -464,10 +373,7 @@ ELSE
 	WHERE domain_id = 'Config Vaccine Schedule'
 	AND domain_sequence = @ll_domain_sequence
 
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		BEGIN
 		ROLLBACK TRANSACTION
 		RETURN -1

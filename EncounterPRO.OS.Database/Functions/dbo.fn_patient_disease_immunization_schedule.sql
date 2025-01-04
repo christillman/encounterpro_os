@@ -56,9 +56,6 @@ SELECT @ldt_date_of_birth = date_of_birth
 FROM p_Patient
 WHERE cpr_id = @ps_cpr_id
 
-IF @@ROWCOUNT = 0
-	RETURN
-
 IF @ldt_date_of_birth IS NULL
 	RETURN
 
@@ -66,7 +63,7 @@ SELECT @ls_no_vaccine_after_disease = no_vaccine_after_disease
 FROM c_Disease
 WHERE disease_id = @pl_disease_id
 
-IF @@ROWCOUNT = 0
+IF @ls_no_vaccine_after_disease IS NULL
 	RETURN
 
 SET @ldt_disease_diagnosis_date = NULL

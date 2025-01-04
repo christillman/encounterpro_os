@@ -18,7 +18,7 @@ GO
 Print 'Create Trigger [dbo].[tr_c_consultant_insert]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE TRIGGER tr_c_consultant_insert ON dbo.c_Consultant
 FOR INSERT
@@ -113,7 +113,7 @@ WHILE @@FETCH_STATUS = 0
 	FROM c_User
 	WHERE [user_id] = @ls_consultant_id
 
-	IF @@ROWCOUNT = 0
+	IF @ll_actor_id IS NULL
 		BEGIN
 		INSERT INTO c_User (
 				user_id,

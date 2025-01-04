@@ -26,12 +26,10 @@ FOR INSERT
 AS
 
 
-DECLARE @ll_count int
-
-select @ll_count = count(*) from inserted
-
-IF @ll_count = 0
+IF @@ROWCOUNT = 0
 	RETURN
+
+DECLARE @ll_count int
 
 IF UPDATE(billing_id)
 	BEGIN

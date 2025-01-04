@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[eprosys_upgrade_table]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[eprosys_upgrade_table] (
@@ -33,8 +33,6 @@ DECLARE @ls_columnname varchar (64) ,
 	@li_column_nullable smallint ,
 	@ls_column_definition varchar(64),
 	@ls_sql nvarchar(max),
-	@ll_error int,
-	@ll_rowcount int,
 	@ls_error varchar(255),
 	@li_default_constraint smallint ,
 	@ls_default_constraint_name varchar (64) ,
@@ -61,13 +59,10 @@ SELECT @ll_table_modification_level = modification_level
 FROM c_Database_Table
 WHERE tablename = @ps_tablename
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_rowcount <> 1
+IF @ll_table_modification_level IS NULL
 	BEGIN
 	RAISERROR ('Invalid tablename',16,-1)
 	RETURN -1
@@ -114,10 +109,8 @@ FROM dbo.c_Database_Column
 WHERE tablename = @ps_tablename
 AND modification_level <= @pl_modification_level
 
-SET @ll_error = @@ERROR
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
-
 
 -- See if the table exists
 IF (NOT EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[' + @ps_tablename + ']') AND [type]='U'))
@@ -160,9 +153,8 @@ IF (NOT EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[
 
 	-- Execute the create script
 	EXECUTE (@ls_sql)
-	SET @ll_error = @@ERROR
 
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		BEGIN
 		PRINT 'Error Creating Table ' + @ps_tablename
 		PRINT @ls_sql
@@ -210,9 +202,8 @@ WHILE @@FETCH_STATUS = 0
 		SET @ls_sql = @ls_sql + ' DEFAULT ' + @ls_default_constraint_text
 
 	EXECUTE (@ls_sql)
-	SET @ll_error = @@ERROR
 
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
 	FETCH lc_columns INTO @ls_columnname, @li_column_identity, @li_column_nullable, @ls_column_definition, @li_default_constraint, @ls_default_constraint_name, @ls_default_constraint_text
@@ -247,20 +238,16 @@ WHILE @@FETCH_STATUS = 0
 	AND o.name COLLATE DATABASE_DEFAULT = @ps_tablename
 	AND c.name COLLATE DATABASE_DEFAULT = @ls_columnname
 	
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
-	IF @ll_rowcount = 1
+	IF @ls_Existing_Constraint_Name IS NOT NULL
 		BEGIN
 		SET @ls_sql = 'ALTER TABLE ' + @ps_tablename + ' DROP CONSTRAINT ' + @ls_Existing_Constraint_Name
 
 		EXECUTE (@ls_sql)
-		SET @ll_error = @@ERROR
 
-		IF @ll_error <> 0
+		IF @@ERROR <> 0
 			RETURN -1
 		END
 	
@@ -271,9 +258,8 @@ WHILE @@FETCH_STATUS = 0
 		SET @ls_sql = @ls_sql + @ls_default_constraint_text + ') FOR [' + @ls_columnname + ']'
 
 		EXECUTE (@ls_sql)
-		SET @ll_error = @@ERROR
 
-		IF @ll_error <> 0
+		IF @@ERROR <> 0
 			RETURN -1
 		END
 

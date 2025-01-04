@@ -61,10 +61,7 @@ SELECT @ll_ordered_by_actor_id = actor_id,
 FROM c_User
 WHERE [user_id] = @ps_ordered_by
 
-SELECT @ll_error = @@ERROR,
-	@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
 SELECT @ll_ordered_for_actor_id = actor_id,
@@ -72,12 +69,8 @@ SELECT @ll_ordered_for_actor_id = actor_id,
 FROM c_User
 WHERE [user_id] = @ps_ordered_for
 
-SELECT @ll_error = @@ERROR,
-	@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
-
 
 SELECT 	@ls_ordered_for_user_id = user_id,
 		@ls_ordered_for_actor_class = actor_class,
@@ -143,10 +136,7 @@ IF @ls_ordered_for_actor_class IS NOT NULL
 		AND cr.status = 'OK')
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -161,10 +151,7 @@ IF @ps_purpose = 'NewRX' and @ls_ordered_for_actor_class = 'Patient'
 	WHERE r.document_route <> 'Printer'
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -183,10 +170,7 @@ IF @ls_ordered_for_actor_class = 'Patient'
 		AND c.communication_value IS NOT NULL )
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 ELSE IF @ll_ordered_for_actor_id IS NOT NULL
@@ -204,10 +188,7 @@ ELSE IF @ll_ordered_for_actor_id IS NOT NULL
 		AND c.communication_value IS NOT NULL )
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -229,10 +210,7 @@ IF @ls_ordered_for_user_id IS NOT NULL
 		AND p.current_flag = 'Y' )
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -254,10 +232,7 @@ IF @ps_ordered_by IS NOT NULL
 		AND p.current_flag = 'Y' )
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -274,10 +249,7 @@ IF @ps_purpose IS NOT NULL
 	WHERE rp.allow_flag = 'N'
 	AND r.is_valid = 1
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -324,10 +296,7 @@ IF @ls_document_format IS NOT NULL
 	WHERE r.is_valid = 1
 	AND r.document_format <> @ls_document_format
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
