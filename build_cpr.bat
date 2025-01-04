@@ -16,15 +16,15 @@ pause
 call assemble_cpr.bat %1 %runtimeversion%
 
 
-mkdir "%build_folder%Demo"
-xcopy "%build_folder%\*.pbd" "%build_folder%Demo" /S /Y
-xcopy "%build_folder%\*.exe" "%build_folder%Demo" /S /Y
+REM mkdir "%build_folder%Demo"
+REM xcopy "%build_folder%\*.pbd" "%build_folder%Demo" /S /Y
+REM xcopy "%build_folder%\*.exe" "%build_folder%Demo" /S /Y
 
 
-copy %build_folder%\..\pb.ini "%build_folder%Demo"
-copy %build_folder%\..\EncounterPRODemo.ini "%build_folder%Demo\EncounterPRO.ini"
-copy "%build_folder%\..\..\Resources\Open Source License.rtf" "%build_folder%Demo"
+REM copy %build_folder%\..\pb.ini "%build_folder%Demo"
+REM copy %build_folder%\..\EncounterPRODemo.ini "%build_folder%Demo\EncounterPRO.ini"
+REM copy "%build_folder%\..\..\Resources\Open Source License.rtf" "%build_folder%Demo"
 
 REM now adding runtime into the EPro folder, so we don't need to run runtime installer
-xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" "%build_folder%Demo" /S /Y
+REM xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" "%build_folder%Demo" /S /Y
 
