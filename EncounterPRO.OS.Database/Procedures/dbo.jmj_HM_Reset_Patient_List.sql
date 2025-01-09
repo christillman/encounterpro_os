@@ -164,7 +164,7 @@ WHILE @@FETCH_STATUS = 0
 		END
 	ELSE IF @ls_operation = 'In Age Range'
 		BEGIN
-		SET @ldt_today = dbo.fn_date_truncate(dbo.get_client_datetime(), 'Day')
+		SET @ldt_today = CURRENT_DATE
 		SELECT @ll_age_from = age_from,
 				@ls_age_from_unit = age_from_unit,
 				@ll_age_to = age_to,

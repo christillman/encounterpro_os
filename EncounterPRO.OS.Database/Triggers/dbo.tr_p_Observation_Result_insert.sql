@@ -195,7 +195,7 @@ FROM @commentdates x
 	ON x.cpr_id = t.cpr_id
 	AND x.treatment_id = t.treatment_id
 WHERE e.encounter_status = 'OPEN'
-AND dbo.fn_date_truncate(e.encounter_date, 'DAY') = dbo.fn_date_truncate(dbo.get_client_datetime(), 'DAY')
+AND dbo.fn_date_truncate(e.encounter_date, 'DAY') = CURRENT_DATE
 AND ISNULL(t.treatment_status, 'OPEN') = 'OPEN'
 
 -- Update the remaining comment_date_time values to the greater of the treatment
