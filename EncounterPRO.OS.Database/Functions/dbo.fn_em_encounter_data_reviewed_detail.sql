@@ -118,7 +118,7 @@ SELECT o.cpr_id ,
 	o.parent_observation_sequence ,
 	o.treatment_id,
 	o.result_count
-FROM fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
+FROM dbo.fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
 
 -- Add up the result_count from all the observations, but exclude those observations
 -- which are mapped to history taking bullets

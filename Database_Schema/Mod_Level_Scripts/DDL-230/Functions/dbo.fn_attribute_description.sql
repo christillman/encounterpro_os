@@ -54,62 +54,57 @@ IF @ps_value LIKE '\%General%' ESCAPE '\'
 	RETURN @ls_description
 	END
 
--- We need to put these in separate calls, so the optimizer in compat level 150 doesn't run out of memory
-RETURN CASE  
-	WHEN @ps_attribute LIKE '%observation_id'
-		THEN dbo.fn_attribute_desc_obs(@ps_value)
+-- We need to put these in separate calls, so the optimizer in copmat level 150 doesn't run out of memory
 
-	WHEN @ps_attribute LIKE '%procedure_id'
-		THEN dbo.fn_attribute_desc_proc(@ps_value)
+IF @ps_attribute LIKE '%observation_id'
+	SET @ls_description = dbo.fn_attribute_desc_obs(@ps_value)
 
-	WHEN @ps_attribute LIKE '%assessment_id'
-		THEN dbo.fn_attribute_desc_assm(@ps_value)
+IF @ps_attribute LIKE '%procedure_id'
+	SET @ls_description = dbo.fn_attribute_desc_proc(@ps_value)
 
-	WHEN @ps_attribute LIKE '%property_id'
-		THEN dbo.fn_attribute_desc_prop(@ps_value)
+IF @ps_attribute LIKE '%assessment_id'
+	SET @ls_description = dbo.fn_attribute_desc_assm(@ps_value)
 
-	WHEN @ps_attribute LIKE '%display_script_id' OR @ps_attribute LIKE '%xml_script_id'
-		THEN dbo.fn_attribute_desc_dscr(@ps_value)
+IF @ps_attribute LIKE '%property_id'
+	SET @ls_description = dbo.fn_attribute_desc_prop(@ps_value)
 
-	WHEN @ps_attribute LIKE '%service'
-		THEN dbo.fn_attribute_desc_serv(@ps_value)
+IF @ps_attribute LIKE '%display_script_id' OR @ps_attribute LIKE '%xml_script_id'
+	SET @ls_description = dbo.fn_attribute_desc_dscr(@ps_value)
 
-	WHEN @ps_attribute LIKE '%treatment_type'
-		THEN dbo.fn_attribute_desc_trtt(@ps_value)
+IF @ps_attribute LIKE '%service'
+	SET @ls_description = dbo.fn_attribute_desc_serv(@ps_value)
 
-	WHEN @ps_attribute LIKE '%assessment_type'
-		THEN dbo.fn_attribute_desc_asst(@ps_value)
+IF @ps_attribute LIKE '%treatment_type'
+	SET @ls_description = dbo.fn_attribute_desc_trtt(@ps_value)
 
-	WHEN @ps_attribute LIKE '%unit_id'
-		THEN dbo.fn_attribute_desc_unit(@ps_value)
+IF @ps_attribute LIKE '%assessment_type'
+	SET @ls_description = dbo.fn_attribute_desc_asst(@ps_value)
 
-	WHEN @ps_attribute LIKE '%user_id' 
-			OR @ps_attribute LIKE '%approved_by' 
-			OR @ps_attribute LIKE '%ordered_by'
-			OR @ps_attribute LIKE '%ordered_for'
-			OR @ps_attribute LIKE '%completed_by'
-		THEN dbo.fn_attribute_desc_rusr(@ps_value)
+IF @ps_attribute LIKE '%unit_id'
+	SET @ls_description = dbo.fn_attribute_desc_unit(@ps_value)
 
-	WHEN @ps_attribute LIKE '%report_id'
-		THEN dbo.fn_attribute_desc_rpt(@ps_value)
+IF @ps_attribute LIKE '%user_id' 
+	SET @ls_description = dbo.fn_attribute_desc_rusr(@ps_value)
 
-	WHEN @ps_attribute LIKE '%office_id'
-		THEN dbo.fn_attribute_desc_ofc(@ps_value)
+IF @ps_attribute LIKE '%report_id'
+	SET @ls_description = dbo.fn_attribute_desc_rpt(@ps_value)
 
-	WHEN @ps_attribute LIKE '%room_id'
-		THEN dbo.fn_attribute_desc_room(@ps_value)
+IF @ps_attribute LIKE '%office_id'
+	SET @ls_description = dbo.fn_attribute_desc_ofc(@ps_value)
+
+IF @ps_attribute LIKE '%room_id'
+	SET @ls_description = dbo.fn_attribute_desc_room(@ps_value)
 		
-	WHEN @ps_attribute LIKE '%component_id'
-		THEN dbo.fn_attribute_desc_comp(@ps_value)
+IF @ps_attribute LIKE '%component_id'
+	SET @ls_description = dbo.fn_attribute_desc_comp(@ps_value)
 
-	WHEN @ps_attribute LIKE '%material_id'
-		THEN dbo.fn_attribute_desc_pmat(@ps_value)
+IF @ps_attribute LIKE '%material_id'
+	SET @ls_description = dbo.fn_attribute_desc_pmat(@ps_value)
 	
-	WHEN @ps_attribute LIKE '%attachment_location_id'
-		THEN dbo.fn_attribute_desc_attl(@ps_value)
+IF @ps_attribute LIKE '%attachment_location_id'
+	SET @ls_description = dbo.fn_attribute_desc_attl(@ps_value)
 	
-	ELSE @ls_description 
-END
+RETURN @ls_description 
 
 END
 GO

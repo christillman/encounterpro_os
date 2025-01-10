@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_attribute_description (
+CREATE FUNCTION dbo.fn_attribute_description (
 	@ps_attribute varchar(40),
 	@ps_value varchar(255) )
 

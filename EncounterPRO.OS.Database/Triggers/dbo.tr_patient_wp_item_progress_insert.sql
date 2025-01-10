@@ -147,7 +147,7 @@ EXEC sp_update_patient_wp_item_1 @inserted,
 -- Update the parent workplan item dispatched records
 IF @DISPATCHED_flag > 0 OR @CONSOLIDATED_flag > 0
 BEGIN
-	-- fn_workplan_item_owned_by_2 was being nasty in SQL Server 2019, running it out of 
+	-- dbo.fn_workplan_item_owned_by_2 was being nasty in SQL Server 2019, running it out of 
 	-- memory when combined into the update. Needed to use a cursor and variables.
 	DECLARE @progress_type varchar(24),
 		@progress_date_time datetime,

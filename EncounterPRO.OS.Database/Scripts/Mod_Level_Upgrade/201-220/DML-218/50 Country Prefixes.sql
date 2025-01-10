@@ -272,7 +272,7 @@ VALUES
 
 -- Update for existing patients
 
--- Be sure phone is stripped with new version of fn_pretty_phone
+-- Be sure phone is stripped with new version of dbo.fn_pretty_phone
 UPDATE p_Patient
 SET phone_number = dbo.fn_pretty_phone(phone_number)
 WHERE created BETWEEN '2019-01-01' AND '2023-09-01'

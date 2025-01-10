@@ -256,7 +256,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 			,p.progress_sequence
 			,p.progress_user_id
 			,p.progress_created_by
-		FROM fn_patient_object_progress_user(@ps_user_id, @pdt_begin_date, @pdt_end_date) p
+		FROM dbo.fn_patient_object_progress_user(@ps_user_id, @pdt_begin_date, @pdt_end_date) p
 			INNER JOIN c_user u WITH (NOLOCK)
 			ON	p.progress_user_id = u.user_id
 			INNER JOIN p_Patient pp WITH (NOLOCK)
@@ -297,7 +297,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				,p.progress_sequence
 				,p.progress_user_id
 				,p.progress_created_by
-			FROM fn_patient_object_progress(@ps_cpr_id, @pdt_begin_date, @pdt_end_date) p
+			FROM dbo.fn_patient_object_progress(@ps_cpr_id, @pdt_begin_date, @pdt_end_date) p
 				INNER JOIN c_user u WITH (NOLOCK)
 				ON	p.progress_user_id = u.user_id
 				INNER JOIN p_Patient pp WITH (NOLOCK)
@@ -337,7 +337,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				,p.progress_sequence
 				,p.progress_user_id
 				,p.progress_created_by
-			FROM fn_patient_object_progress_in_encounter(@ps_cpr_id, @pl_encounter_id) p
+			FROM dbo.fn_patient_object_progress_in_encounter(@ps_cpr_id, @pl_encounter_id) p
 				INNER JOIN c_user u WITH (NOLOCK)
 				ON	p.progress_user_id = u.user_id
 				INNER JOIN p_Patient pp WITH (NOLOCK)

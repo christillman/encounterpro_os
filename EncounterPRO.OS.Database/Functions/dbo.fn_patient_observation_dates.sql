@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE     FUNCTION fn_patient_observation_dates
+CREATE     FUNCTION dbo.fn_patient_observation_dates
 (	@ps_cpr_id varchar(12),
 	@ps_context_object varchar(24) = 'Patient',
 	@pl_object_key int = NULL,

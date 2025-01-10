@@ -179,7 +179,7 @@ SELECT o.cpr_id ,
 	o.parent_observation_sequence ,
 	o.treatment_id,
 	o.result_count
-FROM fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
+FROM dbo.fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
 
 -- Get a list of the elements which map to any observations taken during the encounter
 INSERT INTO @em_elements (

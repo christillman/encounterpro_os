@@ -170,7 +170,7 @@ INSERT INTO @em_component_level_passed (
 	em_component_level)
 SELECT em_component,
 	max(em_component_level) as em_component_level
-FROM fn_em_component_rules_passed(@ps_cpr_id, @pl_encounter_id, @ps_em_documentation_guide)
+FROM dbo.fn_em_component_rules_passed(@ps_cpr_id, @pl_encounter_id, @ps_em_documentation_guide)
 WHERE passed_flag = 'Y'
 GROUP BY em_component
 

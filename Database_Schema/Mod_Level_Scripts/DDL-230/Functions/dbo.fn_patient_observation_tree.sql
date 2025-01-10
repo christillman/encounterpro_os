@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_observation_tree
+CREATE FUNCTION dbo.fn_patient_observation_tree
 (	 @ps_cpr_id varchar(12)
 	,@pl_observation_sequence integer 
 )

@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_context_compatible (
+CREATE FUNCTION dbo.fn_context_compatible (
 	@ps_existing_context varchar(12),
 	@ps_new_context varchar(12) )
 

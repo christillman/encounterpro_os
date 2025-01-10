@@ -65,7 +65,7 @@ RETURNS @documents TABLE (
 	purpose varchar(40) NULL)
 AS
 BEGIN
-/* 7.2.1.9: Extract fn_document_wpi_for_object */
+/* 7.2.1.9: Extract dbo.fn_document_wpi_for_object */
 
 DECLARE @actor_comm TABLE (
 	actor_id int NOT NULL,

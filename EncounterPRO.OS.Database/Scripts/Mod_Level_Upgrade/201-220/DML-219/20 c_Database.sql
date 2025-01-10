@@ -1,6 +1,6 @@
 
 /*
-select * from fn_database_schemacheck_columns ()
+select * from dbo.fn_database_schemacheck_columns ()
 order by tablename
 
 select * from [c_Database_Column] where [tablename] = 'c_Drug_Definition' order by [tablename], [column_sequence]

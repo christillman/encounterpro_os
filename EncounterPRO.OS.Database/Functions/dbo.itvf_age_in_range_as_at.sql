@@ -31,7 +31,7 @@ CREATE FUNCTION dbo.itvf_age_in_range_as_at (
 
 RETURNS TABLE
 RETURN
-/* Refactor fn_age_range_compare as inline tvf, avoiding query of age_range table 
+/* Refactor dbo.fn_age_range_compare as inline tvf, avoiding query of age_range table 
 	Also needed because the @@ROWCOUNT function doesn't = 1 for a valid id, 
 	unless the row is already in the cache; causing a NULL return
 	*/

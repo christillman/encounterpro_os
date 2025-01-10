@@ -34,7 +34,7 @@ RETURNS @wpi TABLE (
 AS
 BEGIN
 
-/* 7.2.1.9: Extracted from fn_documents_for_object_2 for use in fn_count_documents_for_object */
+/* 7.2.1.9: Extracted from dbo.fn_documents_for_object_2 for use in dbo.fn_count_documents_for_object */
 DECLARE @ldt_begin_date datetime,
 		@ldt_end_date datetime
 

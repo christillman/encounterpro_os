@@ -190,7 +190,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 		,CAST(CASE WHEN p.progress_key IS NULL THEN p.progress ELSE p.progress_key + ' = ' + p.progress END AS varchar(80))
 		,p.progress_sequence
 		,p.progress_user_id
-	FROM fn_patient_object_progress_user(@ps_user_id, @ldt_begin_date, @ldt_end_date) p
+	FROM dbo.fn_patient_object_progress_user(@ps_user_id, @ldt_begin_date, @ldt_end_date) p
 		INNER JOIN c_user u WITH (NOLOCK)
 		ON	p.progress_user_id = u.user_id
 		INNER JOIN p_Patient pp

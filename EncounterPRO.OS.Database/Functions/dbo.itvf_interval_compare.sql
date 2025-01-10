@@ -27,7 +27,7 @@ CREATE FUNCTION dbo.itvf_interval_compare (
 	@pdt_end_date datetime)
 
 RETURNS TABLE
--- optimized from fn_interval_compare
+-- optimized from dbo.fn_interval_compare
 RETURN
 -- Clear out any time values with convert(datetime, convert(varchar,@x, 112)
 

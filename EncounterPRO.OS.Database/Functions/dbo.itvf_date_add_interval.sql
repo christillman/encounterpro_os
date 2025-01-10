@@ -26,7 +26,7 @@ CREATE FUNCTION dbo.itvf_date_add_interval (
 	@ps_interval_unit varchar(24))
 
 RETURNS TABLE 
--- optimized from fn_date_add_interval
+-- optimized from dbo.fn_date_add_interval
 RETURN
 SELECT CASE WHEN @pl_interval_amount IS NULL OR @ps_interval_unit IS NULL
 	THEN @pdt_date

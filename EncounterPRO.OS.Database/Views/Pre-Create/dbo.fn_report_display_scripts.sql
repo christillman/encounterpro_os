@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_report_display_scripts ()
+CREATE FUNCTION dbo.fn_report_display_scripts ()
 
 RETURNS @report_display_script TABLE (
 	[display_script_id] [int] NULL,
