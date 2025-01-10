@@ -4185,69 +4185,69 @@ private function integer load_office_status (ref long pl_room_count, ref long pl
 boolean lb_rooms_changed, lb_active_services_changed, lb_encounters_changed
 int li_status_row, li_prev_status_row
 
+// Start with the cached values
+pl_room_count = office_rooms.rowcount()
+pl_encounter_count = open_encounters.rowcount()
+pl_service_count = active_services.rowcount()
+
 // See if we need to refresh the data stores
 if secondsafter(office_last_refresh, now()) <= office_refresh_interval then
-	pl_room_count = office_rooms.rowcount()
-	pl_encounter_count = open_encounters.rowcount()
-	pl_service_count = active_services.rowcount()
-else
-	// refresh the data stores
-	// See if the underlying tables have been updated
-	
-	ll_rows = office_status.retrieve()
-	
-	if upperbound(previous_status) = 0 then 
-		// initialize first time
-		for li_status_row = 1 to ll_rows
-			previous_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
-			previous_status[li_status_row].last_updated = datetime("2024-07-28")
-		next
-	end if
-	
-	for li_status_row = 1 to ll_rows
-		current_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
-		current_status[li_status_row].last_updated = office_status.object.last_updated[li_status_row]
-		for li_prev_status_row = 1 to upperbound(previous_status)
-			if previous_status[li_prev_status_row].tablename = current_status[li_status_row].tablename then
-				if previous_status[li_prev_status_row].last_updated < current_status[li_status_row].last_updated then
-					choose case previous_status[li_prev_status_row].tablename
-						case "o_Active_Services"
-							lb_active_services_changed = true
-						case "o_Rooms"
-							lb_rooms_changed = true
-						case "p_Patient_Encounter", "p_Patient_WP_Item"
-							lb_encounters_changed = true
-					end choose
-					 previous_status[li_prev_status_row].last_updated = current_status[li_status_row].last_updated
-				end if
-			end if
-		next
-	next
-
-	if lb_rooms_changed then 
-		// Get the groups and rooms in this office
-		pl_room_count = office_rooms.retrieve(gnv_app.office_id)
-		if pl_room_count < 0 then return -1
-	end if
-	
-	if lb_encounters_changed then 
-		// Get all the open encounters
-		pl_encounter_count = open_encounters.retrieve('%')
-		if pl_encounter_count < 0 then return -1
-	end if
-	
-	if lb_active_services_changed then 
-		// Get all the active services
-		pl_service_count = active_services.retrieve("Y")
-		if pl_service_count < 0 then return -1
-	end if
-
-	check_table_update()
-	
-	// Set the refresh time stamp to now
-	office_last_refresh = now()
+	return 1
 end if
 
+// See if the underlying tables have been updated	
+ll_rows = office_status.retrieve()
+
+if upperbound(previous_status) = 0 then 
+	// initialize first time
+	for li_status_row = 1 to ll_rows
+		previous_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+		previous_status[li_status_row].last_updated = datetime("2018-07-28")
+	next
+end if
+
+for li_status_row = 1 to ll_rows
+	current_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+	current_status[li_status_row].last_updated = office_status.object.last_updated[li_status_row]
+	for li_prev_status_row = 1 to upperbound(previous_status)
+		if previous_status[li_prev_status_row].tablename = current_status[li_status_row].tablename then
+			if previous_status[li_prev_status_row].last_updated < current_status[li_status_row].last_updated then
+				choose case previous_status[li_prev_status_row].tablename
+					case "o_Active_Services"
+						lb_active_services_changed = true
+					case "o_Rooms"
+						lb_rooms_changed = true
+					case "p_Patient_Encounter", "p_Patient_WP_Item"
+						lb_encounters_changed = true
+				end choose
+				 previous_status[li_prev_status_row].last_updated = current_status[li_status_row].last_updated
+			end if
+		end if
+	next
+next
+
+if lb_rooms_changed then 
+	// Get the groups and rooms in this office
+	pl_room_count = office_rooms.retrieve(gnv_app.office_id)
+	if pl_room_count < 0 then return -1
+end if
+
+if lb_encounters_changed then 
+	// Get all the open encounters
+	pl_encounter_count = open_encounters.retrieve('%')
+	if pl_encounter_count < 0 then return -1
+end if
+
+if lb_active_services_changed then 
+	// Get all the active services
+	pl_service_count = active_services.retrieve("Y")
+	if pl_service_count < 0 then return -1
+end if
+
+check_table_update()
+
+// Set the refresh time stamp to now
+office_last_refresh = now()
 
 return 1
 
