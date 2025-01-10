@@ -38,13 +38,13 @@ BEGIN
 DECLARE @ldt_begin_date datetime,
 		@ldt_end_date datetime
 
-IF @pdt_begin_date IS NULL OR @pdt_begin_date > CURRENT_DATE
-	SET @ldt_begin_date = DATEADD(day, -30, CURRENT_DATE)
+IF @pdt_begin_date IS NULL OR @pdt_begin_date > getdate()
+	SET @ldt_begin_date = DATEADD(day, -30, dbo.fn_date_truncate(getdate(), 'Day'))
 ELSE
 	SET @ldt_begin_date = dbo.fn_date_truncate(@pdt_begin_date, 'Day')
 
-IF @pdt_end_date IS NULL OR @pdt_end_date > CURRENT_DATE
-	SET @ldt_end_date = DATEADD(day, 1, CURRENT_DATE)
+IF @pdt_end_date IS NULL OR @pdt_end_date > getdate()
+	SET @ldt_end_date = DATEADD(day, 1, dbo.fn_date_truncate(getdate(), 'Day'))
 ELSE
 	SET @ldt_end_date = DATEADD(day, 1, dbo.fn_date_truncate(@pdt_end_date, 'Day'))
 

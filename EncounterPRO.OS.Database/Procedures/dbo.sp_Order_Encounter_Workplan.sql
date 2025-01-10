@@ -143,7 +143,7 @@ SET @ls_service = dbo.fn_get_preference ('WORKFLOW',
 -- For direct encounters, see if there are any pending followup workplans
 IF @ls_service IS NOT NULL AND @ls_indirect_flag = 'D'
 	BEGIN
-	SET @ldt_today = CURRENT_DATE
+	SET @ldt_today = dbo.fn_date_truncate(getdate(), 'Day')
 
 	SET @ldt_follwup_cutoff = NULL
 
