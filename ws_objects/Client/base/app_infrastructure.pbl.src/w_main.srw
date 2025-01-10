@@ -399,7 +399,6 @@ call u_help_bar::destroy
 end on
 
 type tab_main from u_main_tab within w_main
-boolean visible = false
 integer taborder = 20
 end type
 
