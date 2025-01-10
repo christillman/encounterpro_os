@@ -653,7 +653,7 @@ if isnull(current_user) then return 1
 if newindex = 1 then
 	if first_one then
 		first_one = false
-//		return 1
+		return 1
 	end if
 else
 	pages[1].visible = false
