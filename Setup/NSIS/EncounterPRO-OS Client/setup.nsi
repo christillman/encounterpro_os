@@ -105,7 +105,7 @@
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
     
     ; Everything is now installed in C:\Users\Public so no need for special privs
-    RequestExecutionLevel user
+    RequestExecutionLevel admin
     
 ; ------------------------------------------
 ; Interface Configuration
@@ -174,10 +174,6 @@
         IfFileExists '\\localhost\attachments\*.*' GoAhead
         DetailPrint "The share folder \\localhost\attachments is required for the bulk import files "
         DetailPrint "supporting this installation."
-        DetailPrint ""
-        DetailPrint "Create an empty folder anywhere on this computer. Right click on it and choose Share."
-        DetailPrint "Make the share name 'attachments', and be sure to share it with 'Everyone' with Read/Write permission. "
-        DetailPrint "The bulk import files will be copied to it during installation when you try again."
         DetailPrint ""
         SetDetailsView show
         Abort "The share folder \\localhost\attachments was not found. Aborting now."
@@ -268,12 +264,12 @@
 
     Section '-Attachments' SecAT
         CreateDirectory "${ATT_FOLDER}"
-        SetOutPath "${ATT_FOLDER}"
+		nsExec::ExecToLog 'NET SHARE attachments="${ATT_FOLDER}"'
+        SetOutPath "\\localhost\attachments"
         SetDetailsPrint both
-        DetailPrint "Installing Attachments in ${ATT_FOLDER} ..."
+        DetailPrint "Installing Attachments in \\localhost\attachments ..."
         SetOverwrite on
         File /nonfatal "${SRC_Mod_Level}\Attachments\*.*"
-		nsExec::ExecToLog 'NET SHARE attachments="${ATT_FOLDER}"
     SectionEnd
     
     Section -AdditionalIcons
