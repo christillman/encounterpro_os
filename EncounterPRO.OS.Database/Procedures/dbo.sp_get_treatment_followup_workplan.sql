@@ -32,7 +32,8 @@ AS
 
 DECLARE @ls_description varchar(80),
 		@ls_treatment_type varchar(24),
-		@ls_in_office_flag varchar(1)
+		@ls_in_office_flag varchar(1),
+		@lb_default_grant bit
 
 SELECT @pl_patient_workplan_id = min(patient_workplan_id)
 FROM p_Patient_Wp
@@ -43,11 +44,12 @@ AND workplan_type = @ps_workplan_type
 IF @pl_patient_workplan_id IS NULL
 	BEGIN
 	SELECT @ls_description = treatment_description,
-			@ls_treatment_type = treatment_type
+			@ls_treatment_type = treatment_type,
+			@lb_default_grant = default_grant
 	FROM p_Treatment_Item
 	WHERE treatment_id = @pl_treatment_id
 
-	IF @ls_treatment_type IS NULL
+	IF @lb_default_grant IS NULL
 		BEGIN
 		RAISERROR ('No such followup treatment for treatment id (%d)',16,-1, @pl_treatment_id)
 		ROLLBACK TRANSACTION

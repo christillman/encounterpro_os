@@ -39,16 +39,18 @@ DECLARE @lc_in_office_flag char,
 		@ls_progress varchar(40),
 		@ldt_treatment_date datetime,
 		@ldt_encounter_date datetime,
-		@ls_encounter_status varchar(8)
+		@ls_encounter_status varchar(8),
+		@ls_workplan_type varchar(12)
 
 IF @ps_cpr_id IS NULL OR @pl_encounter_id IS NULL
 BEGIN
 SELECT @ps_cpr_id = cpr_id,
-	@pl_encounter_id = encounter_id
+	@pl_encounter_id = encounter_id,
+	@ls_workplan_type = workplan_type
 FROM p_Patient_Wp
 WHERE patient_workplan_id = @pl_patient_workplan_id
 
-IF @ps_cpr_id IS NULL
+IF @ls_workplan_type IS NULL
 	BEGIN
 	RAISERROR ('No such workplan (%d)',16,-1, @pl_patient_workplan_id)
 	ROLLBACK TRANSACTION

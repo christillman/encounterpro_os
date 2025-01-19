@@ -60,7 +60,7 @@ AND pi.authority_sequence = 1
 AND pi.authority_type = 'PAYOR'
 AND i.procedure_id = @ps_procedure_id
 
-IF @ls_cpt_code IS NOT NULL
+IF @ls_authority_id IS NOT NULL
 	SELECT @ls_proc_description = description
 	FROM c_Procedure
 	WHERE procedure_id = @ps_procedure_id

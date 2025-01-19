@@ -167,10 +167,12 @@ WHILE @pi_step_number > 0
 	AND step_number = @pi_step_number
 
 	IF @lb_mutually_exclusive_items IS NULL
+		BEGIN
 		SET @ls_room_type = NULL
 		SET @ll_step_delay = NULL
 		SET @ls_step_delay_unit = NULL
 		SET @ls_delay_from_flag = NULL
+		END
 
 
 	-- Get the new room from the c_Workplan_Step table

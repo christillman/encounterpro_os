@@ -54,7 +54,7 @@ SELECT	 @ls_in_office_flag = in_office_flag
 FROM 	p_Patient_WP_Item WITH (NOLOCK)
 WHERE	patient_workplan_item_id = @pl_patient_workplan_item_id
 
-IF @ls_cpr_id IS NULL
+IF @ll_patient_workplan_id IS NULL
 	RETURN
 
 -- If the associated encounter is open then look for in office items even if this service is not-in-office

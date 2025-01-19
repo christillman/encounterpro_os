@@ -449,7 +449,7 @@ SELECT
 	,@ll_actor_id
 	,@ps_created_by
 FROM @t_new_p_item t
-	INNER LOOP JOIN c_Workplan_Item_Attribute ia WITH (NOLOCK)
+	INNER JOIN c_Workplan_Item_Attribute ia WITH (NOLOCK)
 	ON	ia.workplan_id = @pl_workplan_id
 	AND ia.item_number = t.item_number
 ORDER BY t.patient_workplan_item_id

@@ -35,7 +35,8 @@ AS
 DECLARE @ll_patient_workplan_item_id int,
 		@ls_document_user_id varchar(24),
 		@ls_status varchar(12),
-		@ls_description varchar(80)
+		@ls_description varchar(80),
+		@lb_default_grant bit
 
 IF @pl_attachment_id IS NULL
 	BEGIN
@@ -48,14 +49,15 @@ IF @ls_document_user_id IS NULL
 	SET @ls_document_user_id = '#JMJ'
 
 SELECT @ls_status = status, 
-		@ls_description = attachment_tag
+		@ls_description = attachment_tag,
+		@lb_default_grant = default_grant
 FROM p_Attachment
 WHERE attachment_id = @pl_attachment_id
 
 IF @@ERROR <> 0
 	RETURN -1
 
-IF @ls_status IS NULL
+IF @lb_default_grant IS NULL
 	BEGIN
 	RAISERROR('Attachment_id not found (%d)', 16, -1, @pl_attachment_id)
 	RETURN -1

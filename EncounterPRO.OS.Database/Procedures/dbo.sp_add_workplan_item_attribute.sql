@@ -54,14 +54,13 @@ IF (@ps_cpr_id IS NULL) OR (@pl_patient_workplan_id IS NULL)
 	FROM p_Patient_WP_Item
 	WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
-	IF @ps_cpr_id IS NULL
+	IF @pl_patient_workplan_id IS NULL
 		BEGIN
 		RAISERROR ('No such workplan item (%d)',16,-1, @pl_patient_workplan_item_id)
 		ROLLBACK TRANSACTION
 		RETURN
 		END
 	END
-
 
 -- First add the progress record.  If the length of @ps_progress is <= 40 then
 -- store the value in [progress_value].  Otherwise store it in [progress].

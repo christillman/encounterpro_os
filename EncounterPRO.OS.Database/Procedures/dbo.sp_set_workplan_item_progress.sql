@@ -43,7 +43,8 @@ DECLARE @ll_encounter_id int,
 	@li_count smallint,
 	@ll_cons_patient_workplan_item_id int,
 	@ls_wp_in_office_flag char(1),
-	@li_last_step_dispatched smallint
+	@li_last_step_dispatched smallint,
+	@ls_workplan_type varchar(12)
 
 -- Get some info from the workplan item table and take an update lock
 SELECT  @ls_cpr_id = cpr_id,
@@ -53,7 +54,7 @@ SELECT  @ls_cpr_id = cpr_id,
 FROM p_Patient_WP_Item (UPDLOCK)
 WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
-IF @ls_cpr_id IS NULL
+IF @ll_patient_workplan_id IS NULL
 	BEGIN
 	RAISERROR ('No such workplan item (%d)',16,-1, @pl_patient_workplan_item_id)
 	ROLLBACK TRANSACTION
@@ -61,21 +62,19 @@ IF @ls_cpr_id IS NULL
 	END
 
 -- Get some info from the workplan table and take an update lock
-ELSE
-	BEGIN
-	SELECT @ll_encounter_id = encounter_id,
-		@ll_treatment_id = treatment_id,
-		@ls_wp_in_office_flag = in_office_flag,
-		@ls_patient_wp_status = status
-	FROM p_Patient_WP (UPDLOCK)
-	WHERE patient_workplan_id = @ll_patient_workplan_id
+SELECT @ll_encounter_id = encounter_id,
+	@ll_treatment_id = treatment_id,
+	@ls_wp_in_office_flag = in_office_flag,
+	@ls_patient_wp_status = status,
+	@ls_workplan_type = workplan_type
+FROM p_Patient_WP (UPDLOCK)
+WHERE patient_workplan_id = @ll_patient_workplan_id
 
-	IF @ls_patient_wp_status IS NULL
-		BEGIN
-		RAISERROR ('Workplan not found for item (%d)',16,-1, @ll_patient_workplan_id)
-		ROLLBACK TRANSACTION
-		RETURN
-		END
+IF @ls_workplan_type IS NULL
+	BEGIN
+	RAISERROR ('Workplan not found for item (%d)',16,-1, @ll_patient_workplan_id)
+	ROLLBACK TRANSACTION
+	RETURN
 	END
 
 IF @pdt_progress_date_time IS NULL
@@ -156,7 +155,7 @@ FROM p_Patient_WP
 WHERE patient_workplan_id = @ll_patient_workplan_id
 IF @ls_workplan_status IS NULL
 	BEGIN
-	RAISERROR ('No such workplan (%d)',16,-1, @ll_patient_workplan_id)
+	RAISERROR ('Workplan (%d) Status not set',16,-1, @ll_patient_workplan_id)
 	ROLLBACK TRANSACTION
 	RETURN
 	END

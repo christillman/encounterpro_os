@@ -290,7 +290,8 @@ DECLARE	@ll_branch_id int ,
 	@li_severity smallint,
 	@ll_observation_sequence int,
 	@ll_parent_observation_sequence int,
-	@ls_observation_tag varchar(12)
+	@ls_observation_tag varchar(12),
+	@ll_owner_id int
 
 DECLARE lc_results CURSOR LOCAL FAST_FORWARD FOR
 	SELECT 	branch_id ,
@@ -357,13 +358,14 @@ WHILE @@FETCH_STATUS = 0
 		IF @ll_observation_sequence IS NULL
 			BEGIN
 			SELECT @ls_description = COALESCE(t.description, o.description),
-					@ll_branch_sort_sequence = t.sort_sequence
+					@ll_branch_sort_sequence = t.sort_sequence,
+					@ll_owner_id = o.owner_id
 			FROM c_Observation_Tree t
 				INNER JOIN c_Observation o
 				ON t.child_observation_id = o.observation_id
 			WHERE t.branch_id = @ll_branch_id
 			
-			IF @ll_branch_sort_sequence IS NOT NULL
+			IF @ll_owner_id IS NOT NULL
 				BEGIN
 				INSERT INTO p_Observation
 						(

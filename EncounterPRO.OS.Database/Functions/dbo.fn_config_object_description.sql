@@ -34,10 +34,15 @@ IF @pui_config_object_id IS NOT NULL
 	BEGIN
 	SELECT @ls_description = object_type_prefix + ': ' + description
 	FROM dbo.fn_object_info(@pui_config_object_id)
+
+	IF @@ROWCOUNT = 1
+		RETURN @ls_description
 	END
 
-RETURN @ls_description
+RETURN NULL
+
 END
+
 GO
 GRANT EXECUTE
 	ON [dbo].[fn_config_object_description]

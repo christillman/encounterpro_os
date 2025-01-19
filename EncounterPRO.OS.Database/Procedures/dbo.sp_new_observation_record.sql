@@ -36,6 +36,7 @@ CREATE PROCEDURE sp_new_observation_record (
 	@ps_default_view char(1) = NULL,
 	@ps_display_style varchar(255) = NULL,
 	@pl_owner_id int,
+	@ll_owner_id int,
 	@ps_owner_key varchar(40) = NULL,
 	@ps_status varchar(12) = NULL,
 	@ps_force_new char(1) = 'N' ,
@@ -85,11 +86,12 @@ IF @ps_force_new = 'N'
 		SET @ps_observation_id = dbo.fn_lookup_epro_id(@pl_owner_id, @ps_owner_code_domain, @ps_owner_code, @ps_epro_domain)
 		IF @ps_observation_id IS NOT NULL
 			BEGIN
-			SELECT @ls_found_description = description
+			SELECT @ls_found_description = description,
+				@ll_owner_id = owner_id
 			FROM c_Observation
 			WHERE observation_id = @ps_observation_id
 
-			IF @ls_found_description IS NULL
+			IF @ll_owner_id IS NULL
 				SET @ps_observation_id = NULL
 			
 			IF @ls_found_description <> @ps_description

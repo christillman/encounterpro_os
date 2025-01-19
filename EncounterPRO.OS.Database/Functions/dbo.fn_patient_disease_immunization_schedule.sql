@@ -48,7 +48,8 @@ DECLARE @ll_dose_count int,
 		@ldt_date_of_birth datetime,
 		@ls_no_vaccine_after_disease char(1),
 		@ldt_disease_diagnosis_date datetime,
-		@ls_assessment varchar(80)
+		@ls_assessment varchar(80),
+		@ll_owner_id int
 
 SET @pdt_current_date = convert(datetime, convert(varchar,@pdt_current_date, 112))
 
@@ -59,11 +60,12 @@ WHERE cpr_id = @ps_cpr_id
 IF @ldt_date_of_birth IS NULL
 	RETURN
 
-SELECT @ls_no_vaccine_after_disease = no_vaccine_after_disease
+SELECT @ls_no_vaccine_after_disease = no_vaccine_after_disease,
+	@ll_owner_id = owner_id
 FROM c_Disease
 WHERE disease_id = @pl_disease_id
 
-IF @ls_no_vaccine_after_disease IS NULL
+IF @ll_owner_id IS NULL
 	RETURN
 
 SET @ldt_disease_diagnosis_date = NULL

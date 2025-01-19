@@ -117,7 +117,7 @@ WHERE observation_sequence = @pl_observation_sequence
 IF @@ERROR <> 0
 	RETURN -1
 
-IF @ls_cpr_id IS NULL
+IF @ls_observation_id IS NULL
 	BEGIN
 	RAISERROR ('The observation_sequence was not found (%d)',16,-1, @pl_observation_sequence)
 	RETURN -1

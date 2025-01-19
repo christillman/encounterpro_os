@@ -32,14 +32,16 @@ AS
 
 
 DECLARE @ls_assessment_type varchar(24),
-	@ls_assessment varchar(80)
+	@ls_assessment varchar(80),
+	@ll_owner_id int
 
 SELECT @ls_assessment_type = assessment_type,
-	@ls_assessment = description
+	@ls_assessment = description,
+	@ll_owner_id = owner_id
 FROM c_Assessment_Definition
 WHERE assessment_id = @ps_assessment_id
 
-IF @ls_assessment_type IS NULL
+IF @ll_owner_id IS NULL
 	BEGIN
 	RAISERROR ('Assessment not found (%s)',16,-1, @ps_assessment_id)
 	ROLLBACK TRANSACTION

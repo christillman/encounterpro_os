@@ -41,19 +41,21 @@ DECLARE @ll_encounter_patient_workplan_id int,
 		@ls_context_object_type varchar(24),
 		@ls_workplan_description varchar(80),
 		@ls_owned_by varchar(24),
-		@ls_in_office_flag char(1)
+		@ls_in_office_flag char(1),
+		@lb_default_grant bit
 
 SET @ll_patient_workplan_item_id = NULL
 
 -- Get the status of the encounter
 SELECT @ll_encounter_patient_workplan_id = patient_workplan_id,
-		@ls_encounter_status = encounter_status
+		@ls_encounter_status = encounter_status,
+		@lb_default_grant = default_grant
 FROM p_Patient_Encounter
 WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id
 
 -- If the encounter isn't found then don't do anything
-IF @ll_encounter_patient_workplan_id IS NULL
+IF @lb_default_grant IS NULL
 	RETURN @ll_patient_workplan_item_id
 
 -- If the encounter isn't open then don't do anything
@@ -62,12 +64,13 @@ IF @ls_encounter_status <> 'OPEN'
 
 -- Get the status of the encounter workplan
 SELECT @ls_encounter_workplan_status = status,
-		@li_last_step_dispatched = last_step_dispatched
+		@li_last_step_dispatched = last_step_dispatched,
+		@ls_workplan_type = workplan_type
 FROM p_Patient_WP
 WHERE patient_workplan_id = @ll_encounter_patient_workplan_id
 
 -- If the workplan isn't found then don't do anything
-IF @ls_encounter_workplan_status IS NULL
+IF @ls_workplan_type IS NULL
 	RETURN @ll_patient_workplan_item_id
 
 -- If the workplan isn't current then don't do anything
@@ -89,7 +92,7 @@ FROM p_Patient_WP
 WHERE patient_workplan_id = @pl_patient_workplan_id
 
 -- If the workplan isn't found then don't do anything
-IF @ls_object_workplan_status IS NULL
+IF @ls_context_object IS NULL
 	RETURN @ll_patient_workplan_item_id
 
 -- If the workplan isn't current then don't do anything

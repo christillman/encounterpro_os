@@ -48,7 +48,8 @@ DECLARE @ll_count int,
 	@ls_default_unit varchar(24),
 	@ldt_expiration_date datetime,
 	@ll_from_treatment_id int,
-	@ls_expiration_date varchar(24)
+	@ls_expiration_date varchar(24),
+	@lb_default_grant bit
 
 SET @ls_definition_status = dbo.fn_patient_object_property (@ps_cpr_id ,
 															'Treatment' ,
@@ -128,14 +129,15 @@ IF @ll_full_strength_ratio = 1
 	BEGIN
 	-- If this is a full strength vial, then we must use the definition vial size
 	SELECT @pr_vial_amount = dose_amount,
-		@ps_vial_unit = dose_unit
+		@ps_vial_unit = dose_unit,
+		@lb_default_grant = default_grant
 	FROM p_Treatment_Item
 	WHERE cpr_id = @ps_cpr_id
 	AND treatment_id = @pl_parent_treatment_id
 
-	IF @pr_vial_amount IS NULL
+	IF @lb_default_grant IS NULL
 		BEGIN
-		RAISERROR ('Error getting parent dose info',16,-1)
+		RAISERROR ('Parent treatment item does not exist',16,-1)
 		ROLLBACK TRANSACTION
 		RETURN -1
 		END
@@ -153,14 +155,15 @@ ELSE
 	IF @pr_vial_amount IS NULL OR @ps_vial_unit IS NULL
 		BEGIN
 		SELECT @pr_vial_amount = dose_amount,
-			@ps_vial_unit = dose_unit
+			@ps_vial_unit = dose_unit,
+			@lb_default_grant = default_grant
 		FROM p_Treatment_Item
 		WHERE cpr_id = @ps_cpr_id
 		AND treatment_id = @pl_parent_treatment_id
 
-		IF @pr_vial_amount IS NULL
+		IF @lb_default_grant IS NULL
 			BEGIN
-			RAISERROR ('Error getting parent dose info',16,-1)
+			RAISERROR ('Parent treatment item does not exist',16,-1)
 			ROLLBACK TRANSACTION
 			RETURN -1
 			END

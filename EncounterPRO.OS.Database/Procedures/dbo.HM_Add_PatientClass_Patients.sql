@@ -35,7 +35,7 @@ DECLARE @ls_time_amount nvarchar(12),
 		@ls_time_unit nvarchar(12),
 		@ldt_measuredate datetime,
 		@ls_measurename nvarchar(80),
-		@ll_key int,
+		@ll_owner_id int,
 		@ll_Parent_maintenance_rule_id int,
 		@ll_PatientCount int
 
@@ -52,14 +52,15 @@ IF @pl_maintenance_rule_id IS NULL
 	END
 
 -- Get the random patients from the parent class
-SELECT @ll_Parent_maintenance_rule_id = filter_from_maintenance_rule_id
+SELECT @ll_Parent_maintenance_rule_id = filter_from_maintenance_rule_id,
+	@ll_owner_id = owner_id
 FROM dbo.c_Maintenance_Patient_Class
 WHERE maintenance_rule_id = @pl_maintenance_rule_id
 
 IF @@ERROR <> 0
 	RETURN -1	
 
-IF @ll_Parent_maintenance_rule_id IS NULL
+IF @ll_owner_id IS NULL
 	BEGIN
 	RAISERROR ('Invalid _maintenance_rule_id (%d)', 16, -1, @pl_maintenance_rule_id)
 	RETURN -1

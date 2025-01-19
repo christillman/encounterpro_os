@@ -35,9 +35,6 @@ IF @ps_description IS NULL
 	RETURN -1
 	END
 
-SELECT @ll_owner_id = customer_id
-FROM c_Database_Status
-
 SELECT @ll_disease_id = max(disease_id)
 FROM c_Disease
 WHERE description = @ps_description
@@ -51,9 +48,11 @@ FROM c_Disease
 IF @ll_disease_id IS NULL
 	SET @ll_disease_id = 1
 
+SELECT @ll_owner_id = customer_id
+FROM c_Database_Status
+
 IF @ll_owner_id <> 0 AND @ll_disease_id < 1000000
 	SET @ll_disease_id = @ll_disease_id + 1000000
-
 
 INSERT INTO [c_Disease]
            ([disease_id]

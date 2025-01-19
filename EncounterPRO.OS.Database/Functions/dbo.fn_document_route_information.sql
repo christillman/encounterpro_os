@@ -98,7 +98,7 @@ IF @ll_rowcount = 0
 IF NOT EXISTS(SELECT 1
 				FROM o_Computers
 				WHERE status = 'SERVER'
-				AND last_connected_date > DATEADD(DAY, -7, dbo.get_client_datetime())
+				AND last_connected_date > DATEADD(DAY, -7, getdate())
 			)
 	UPDATE @route_info
 	SET send_from = 'Client'

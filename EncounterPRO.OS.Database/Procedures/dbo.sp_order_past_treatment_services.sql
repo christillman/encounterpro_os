@@ -37,21 +37,32 @@ DECLARE @ls_treatment_type varchar(24),
 	@ls_cpr_id varchar(12),
 	@ll_encounter_id int,
 	@ls_in_office_flag char(1),
-	@ll_patient_workplan_item_id int
+	@ll_patient_workplan_item_id int,
+	@ls_workplan_type varchar(12),
+	@lb_default_grant bit
 
 SELECT @ls_cpr_id = cpr_id,
 	@ll_encounter_id = encounter_id,
-	@ls_in_office_flag = in_office_flag
+	@ls_in_office_flag = in_office_flag,
+	@ls_workplan_type = workplan_type
 FROM p_Patient_WP
 WHERE patient_workplan_id = @pl_patient_workplan_id
 
-SELECT @ls_treatment_type = treatment_type
+IF @ls_workplan_type IS NULL
+	BEGIN
+	RAISERROR ('Workplan not found (%d)',16,-1, @pl_patient_workplan_id)
+	ROLLBACK TRANSACTION
+	RETURN
+	END
+
+SELECT @ls_treatment_type = treatment_type,
+	@lb_default_grant = default_grant
 FROM p_Treatment_Item
 WHERE treatment_id = @pl_treatment_id
 
-IF @ls_treatment_type IS NULL
+IF @lb_default_grant IS NULL
 	BEGIN
-	RAISERROR ('Workplan not found (%d)',16,-1, @pl_patient_workplan_id)
+	RAISERROR ('Treatment item not found (%d)',16,-1, @pl_treatment_id)
 	ROLLBACK TRANSACTION
 	RETURN
 	END

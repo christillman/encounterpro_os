@@ -28,7 +28,8 @@ RETURNS varchar(255)
 
 AS
 BEGIN
-DECLARE @ls_description varchar(255)
+DECLARE @ls_description varchar(255),
+	@ls_specialty_id varchar(24)
 
 SET @ls_description = @ps_key
 
@@ -44,11 +45,12 @@ IF @ps_object = 'Drug'
 
 IF @ps_object = 'Consultant'
 	BEGIN
-	SELECT @ls_description = description
+	SELECT @ls_description = description, 
+		@ls_specialty_id = specialty_id
 	FROM c_Consultant
 	WHERE consultant_id = @ps_key
 	
-	IF @ls_description IS NULL
+	IF @ls_specialty_id IS NULL
 		SET @ls_description = @ps_key
 	END
 

@@ -70,7 +70,7 @@ WHILE 1 = 1
 											@ldt_hypothetical_first_dose_date ,
 											@ldt_hypothetical_last_dose_date)
 	
-	IF @ldt_dose_date IS NULL
+	IF @@ROWCOUNT = 0
 		BREAK
 	
 	IF @ldt_dose_date < @ldt_hypothetical_current_date

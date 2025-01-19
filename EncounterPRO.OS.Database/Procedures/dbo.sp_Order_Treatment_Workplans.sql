@@ -44,7 +44,8 @@ DECLARE @ls_encounter_status varchar(12),
 		@ls_ordered_for varchar(24),
 		@ls_office_id varchar(4),
 		@ll_count int,
-		@ls_max_treatment_mode varchar(24)
+		@ls_max_treatment_mode varchar(24),
+		@lb_default_grant bit
 
 
 SET @ls_ordered_for = COALESCE(@ps_ordered_for, @ps_ordered_by)
@@ -55,12 +56,13 @@ IF @pl_ordered_workplan_id <= 0
 -- Make sure we have an in_office_flag
 IF @ps_in_office_flag IS NULL
 	BEGIN
-	SELECT @ls_encounter_status = encounter_status
+	SELECT @ls_encounter_status = encounter_status,
+		@lb_default_grant = default_grant
 	FROM p_Patient_Encounter
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @pl_encounter_id
 	
-	IF @ls_encounter_status IS NOT NULL
+	IF @lb_default_grant IS NOT NULL
 		BEGIN
 		-- If the associated encounter is open then default the in_office_flag to 'Y'
 		IF @ls_encounter_status = 'OPEN'
@@ -128,6 +130,7 @@ IF 	@ps_in_office_flag = 'Y'
 		FROM c_Treatment_Type_Workplan
 		WHERE treatment_type = @ps_treatment_type
 		AND treatment_mode = @ps_treatment_mode
+
 		END
 
 	IF @pl_ordered_workplan_id IS NULL

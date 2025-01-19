@@ -27,11 +27,15 @@ CREATE PROCEDURE sp_get_observation_sources
 	)
 AS
 
-DECLARE @ls_composite_flag char(1)
+DECLARE @ls_composite_flag char(1),
+	@ll_owner_id int
 
-SELECT @ls_composite_flag = composite_flag
+SELECT @ls_composite_flag = composite_flag,
+	@ll_owner_id = owner_id
 FROM c_Observation
 WHERE observation_id = @ps_observation_id
+
+IF @ll_owner_id IS NULL RETURN
 
 IF @ls_composite_flag = 'Y'
 	SELECT DISTINCT s.external_source,

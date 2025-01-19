@@ -34,7 +34,8 @@ DECLARE @ll_treatment_id int,
 		@ll_observation_sequence int,
 		@ll_attachment_id int,
 		@ll_location_result_sequence int,
-		@test_patient bit
+		@test_patient bit,
+		@default_grant bit
 
 SET @ll_treatment_id = NULL
 SET @ll_problem_id = NULL
@@ -372,7 +373,7 @@ IF @ll_attachment_id > 0 AND @ps_cpr_id IS NOT NULL
 			@ls_attached_by = attached_by,
 			@ls_attachment_context_object = context_object,
 			@ll_attachment_object_key = object_key,
-			@test_patient = default_grant
+			@default_grant = default_grant
 	FROM p_Attachment
 	WHERE cpr_id = @ps_cpr_id
 	AND attachment_id = @ll_attachment_id
@@ -515,7 +516,7 @@ IF @ll_observation_sequence > 0 AND @ps_cpr_id IS NOT NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND observation_sequence = @ll_observation_sequence
 
-	IF @ls_description IS NULL
+	IF @ls_observation_id IS NULL
 		BEGIN
 		RAISERROR ('Cannot find observation %s, %d',16,-1, @ps_cpr_id, @ll_observation_sequence)
 		ROLLBACK TRANSACTION
@@ -900,12 +901,12 @@ IF @ll_encounter_id > 0 AND @ps_cpr_id IS NOT NULL
 			@ldt_encounter_date = encounter_date,
 			@ls_encounter_description = encounter_description,
 			@ls_attending_doctor = attending_doctor,
-			@test_patient = default_grant
+			@default_grant = default_grant
 	FROM p_Patient_Encounter
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @ll_encounter_id
 
-	IF @test_patient IS NULL
+	IF @default_grant IS NULL
 		BEGIN
 		RAISERROR ('Cannot find encounter %s, %d',16,-1, @ps_cpr_id, @ll_encounter_id)
 		ROLLBACK TRANSACTION

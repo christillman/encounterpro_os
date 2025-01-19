@@ -53,7 +53,7 @@ IF @pl_authority_sequence <= 0
 	END
 
 -- Get the authority type
-SELECT @ls_authority_type = authority_type
+SELECT @ls_authority_type = COALESCE(authority_type,'XXXX')
 FROM c_Authority
 WHERE authority_id = @ps_authority_id
 
@@ -63,6 +63,12 @@ IF @@ERROR <> 0
 IF @ls_authority_type IS NULL
 	BEGIN
 	RAISERROR ('Authority does not exist (%s)',16,-1, @ps_authority_id)
+	RETURN
+	END
+
+IF @ls_authority_type = 'XXXX'
+	BEGIN
+	RAISERROR ('NULL Authority Type (%s)',16,-1, @ps_authority_id)
 	RETURN
 	END
 
@@ -77,7 +83,7 @@ AND authority_sequence = @pl_authority_sequence
 IF @@ERROR <> 0
 	RETURN
 
-IF @ls_status IS NOT NULL
+IF @ls_current_authority_id IS NOT NULL
 	BEGIN
 	-- If the existing authority_id is the same then we're done
 	IF @ls_current_authority_id = @ps_authority_id
@@ -98,6 +104,7 @@ IF @ls_status IS NOT NULL
 	WHERE cpr_id = @ps_cpr_id
 	AND authority_type = @ls_authority_type
 	AND authority_sequence = @pl_authority_sequence
+
 	END
 
 -- Add the new authority link

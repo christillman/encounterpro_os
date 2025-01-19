@@ -30,19 +30,21 @@ AS
 DECLARE @ls_procedure_id varchar(24),
 		@ls_observation_id varchar(24),
 		@ls_collection_procedure_id varchar(24),
-		@ls_perform_procedure_id varchar(24)
+		@ls_perform_procedure_id varchar(24),
+		@lb_default_grant bit
 
 -- If there is no encounter_id, then we have nothing to do here
 IF @pl_encounter_id IS NULL
 	RETURN
 
 SELECT @ls_procedure_id = procedure_id,
-		@ls_observation_id = observation_id
+		@ls_observation_id = observation_id,
+		@lb_default_grant = default_grant
 FROM p_Treatment_Item
 WHERE cpr_id = @ps_cpr_id
 AND treatment_id = @pl_treatment_id
 
-IF @ls_procedure_id IS NULL AND @ls_observation_id IS NULL
+IF @lb_default_grant IS NULL
 	BEGIN
 	RAISERROR ('Invalid Treatment (%s, %d)',16,-1, @ps_cpr_id, @pl_treatment_id)
 	ROLLBACK TRANSACTION

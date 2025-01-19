@@ -34,20 +34,20 @@ DECLARE @ls_last_ordered_for varchar(24),
 		@ls_last_dispatch_method varchar(24),
 		@ll_last_attachment_id int,
 		@ls_cpr_id varchar(12),
-		@ls_status varchar(12)
+		@ls_ordered_by varchar(12)
 
 SELECT @ls_last_ordered_for = ordered_for,
 		@ls_last_dispatch_method = dispatch_method,
 		@ll_last_attachment_id = attachment_id,
 		@ls_cpr_id = cpr_id,
-		@ls_status = status
+		@ls_ordered_by = ordered_by
 FROM p_Patient_WP_Item
 WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
 IF @@ERROR <> 0
 	RETURN -1
 
-IF @ls_last_ordered_for IS NULL
+IF @ls_ordered_by IS NULL
 	BEGIN
 	RAISERROR ('Document record not found (%d)',16,-1, @pl_patient_workplan_item_id)
 	RETURN -1

@@ -30,17 +30,20 @@ BEGIN
 DECLARE @ll_interfaceserviceid int,
 		@ls_document_route varchar(24),
 		@ls_ordered_for varchar(24),
+		@ls_ordered_by varchar(24),
 		@ls_property varchar(255)
 
 SELECT @ls_document_route = dispatch_method,
-		@ls_ordered_for = ordered_for
+		@ls_ordered_for = ordered_for,
+		@ls_ordered_by = ordered_by
+
 FROM dbo.p_Patient_WP_Item
 WHERE patient_workplan_item_id = @pl_document_patient_workplan_item_id
 
 IF @@ERROR <> 0
 	RETURN -1
 
-IF @ls_document_route IS NULL
+IF @ls_ordered_by IS NULL
 	RETURN -1
 
 -- First see if route has a send_via_addressee

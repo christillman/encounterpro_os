@@ -68,6 +68,7 @@ DECLARE @ll_encounter_id int,
 	@ls_cpr_id varchar(12),
 	@ls_in_office_flag char(1),
 	@ls_workplan_status varchar(12),
+	@ls_workplan_type varchar(12),
 	@li_step_number smallint,
 	@li_last_step_dispatched smallint,
 	@li_count smallint,
@@ -79,7 +80,8 @@ DECLARE @ll_encounter_id int,
 	@ldt_discharge_date datetime,
 	@ll_parent_patient_workplan_item_id int,
 	@ll_doc_status int,
-	@ls_temp varchar(255)
+	@ls_temp varchar(255),
+	@lb_default_grant bit
 
 -- If this is the default workplan (0), then we don't need to check it
 IF @pl_patient_workplan_id = 0
@@ -92,11 +94,12 @@ SELECT @ls_cpr_id = cpr_id,
 	@ls_in_office_flag = in_office_flag,
 	@li_last_step_dispatched = last_step_dispatched,
 	@ls_workplan_status = status,
+	@ls_workplan_type = workplan_type,
 	@ll_parent_patient_workplan_item_id = parent_patient_workplan_item_id
 FROM p_Patient_WP (UPDLOCK)
 WHERE patient_workplan_id = @pl_patient_workplan_id
 
-IF @ls_cpr_id IS NULL
+IF @ls_workplan_type IS NULL
 	BEGIN
 	RAISERROR ('Workplan not found for item (%d)',16,-1, @pl_patient_workplan_id)
 	ROLLBACK TRANSACTION
@@ -107,12 +110,13 @@ IF @ls_cpr_id IS NULL
 IF @ls_cpr_id IS NOT NULL AND @ll_encounter_id IS NOT NULL
 	BEGIN
 	SELECT @ll_encounter_patient_workplan_id = patient_workplan_id,
-		@ls_encounter_status = encounter_status
+		@ls_encounter_status = encounter_status,
+		@lb_default_grant = default_grant
 	FROM p_Patient_Encounter (UPDLOCK)
 	WHERE cpr_id = @ls_cpr_id
 	AND encounter_id = @ll_encounter_id
 
-	IF @ll_encounter_patient_workplan_id IS NULL
+	IF @lb_default_grant IS NULL
 		BEGIN
 		-- If the encounter doesn't exist then null out the foreign key
 		UPDATE p_Patient_WP
@@ -127,14 +131,14 @@ IF @ls_cpr_id IS NOT NULL AND @ll_encounter_id IS NOT NULL
 IF @ls_workplan_status IN ('Completed', 'Cancelled')
 	RETURN
 
--- Count the remaing in-office items
+-- Count the remaining in-office items
 SELECT @li_in_count = count(*)
 FROM p_Patient_WP_Item
 WHERE patient_workplan_id = @pl_patient_workplan_id
 AND in_office_flag = 'Y'
 AND COALESCE(status, 'Pending') IN ('Pending', 'Dispatched', 'Started')
 
--- Count the remaing not-in-office items
+-- Count the remaining not-in-office items
 SELECT @li_not_in_count = count(*)
 FROM p_Patient_WP_Item
 WHERE patient_workplan_id = @pl_patient_workplan_id
@@ -163,7 +167,7 @@ IF @ls_in_office_flag = 'Y'
 	-- First, if we don't have a valid encounter, then we have an error condition so cancel the workplan
 	IF @ls_cpr_id IS NULL OR @ll_encounter_id IS NULL
 		BEGIN
-		SET @ls_workplan_status = 'Cancelled'
+		SET @ls_workplan_status = 'xCancelled'
 
 		EXECUTE sp_set_workplan_status
 			@ps_cpr_id = @ls_cpr_id,

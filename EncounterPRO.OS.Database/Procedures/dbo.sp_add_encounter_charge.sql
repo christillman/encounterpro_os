@@ -60,7 +60,8 @@ DECLARE @ll_encounter_charge_id integer,
 		@ls_payer_assessment_auto_bill char(1),
 		@ls_bill_assessment_well_encounter_flag char(1),
 		@ll_accumulate_encounter_charge_id int,
-		@ls_exclusive_link char(1)
+		@ls_exclusive_link char(1),
+		@ls_authority_type varchar(24)
 
 -- Make sure the @pl_units is valid
 IF @pl_units IS NULL OR @pl_units <= 0
@@ -104,7 +105,8 @@ SELECT @ls_cpt_code = c.cpt_code,
 	@ls_modifier = c.modifier,
 	@ls_other_modifiers = c.other_modifiers,
 	@ll_units = c.units,
-	@lm_charge = c.charge
+	@lm_charge = c.charge,
+	@ls_authority_type = authority_type
 FROM c_Procedure_Coding c
 	INNER JOIN p_Patient_Authority a
 	ON a.authority_id = c.authority_id
@@ -114,7 +116,7 @@ AND a.authority_type = 'PAYOR'
 AND c.procedure_id = @ps_procedure_id
 
 -- If we didn't find any authority specific billing info then get it from c_Procedure
-IF @ls_cpt_code IS NULL
+IF @ls_authority_type IS NULL
 	SELECT @ls_cpt_code = cpt_code,
 		@ls_modifier = modifier,
 		@ls_other_modifiers = other_modifiers,
@@ -538,7 +540,7 @@ IF @ll_encounter_charge_id IS NOT NULL
 		IF @ls_payer_assessment_auto_bill <> 'N' AND @ls_bill_assessment_id IS NOT NULL AND @ls_charge_bill_flag = 'Y' 
 			BEGIN
 			-- Make sure the bill_assessment_id is valid and get the well_encounter_flag for it
-			SELECT @ls_bill_assessment_well_encounter_flag = ISNULL(at.well_encounter_flag, 'A')
+			SELECT @ls_bill_assessment_well_encounter_flag = coalesce(at.well_encounter_flag, 'A')
 			FROM c_Assessment_Definition a
 				INNER JOIN c_Assessment_Type at
 				ON a.assessment_type = at.assessment_type

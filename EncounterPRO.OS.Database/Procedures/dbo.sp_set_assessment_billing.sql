@@ -47,7 +47,8 @@ DECLARE @ls_bill_flag char(1),
 	@ls_icd10_code varchar(12),
 	@ll_encounter_charge_id int,
 	@ls_assessment_type varchar(24),
-	@ll_record_added int
+	@ll_record_added int,
+	@ll_owner_id int
 
 -- Initialize record added flag
 SET @ll_record_added = 0
@@ -71,7 +72,8 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'ICD10-CM' 
 		SELECT @ls_icd10_code = a.icd10_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 			INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
@@ -80,7 +82,8 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'ICD10-WHO' 
 		SELECT @ls_icd10_code = a.icd10_who_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 		INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
@@ -89,13 +92,14 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'Rwanda' 
 		SELECT @ls_icd10_code = a.icd10_who_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 			INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
 		WHERE a.assessment_id = @ps_assessment_id
 
-	IF @ls_icd10_code IS NULL
+	IF @ll_owner_id IS NULL
 		BEGIN
 		RAISERROR ('Cannot find assessment_id (%s)',16,-1, @ps_assessment_id)
 		RETURN
@@ -129,7 +133,8 @@ ELSE
 			@li_diagnosis_sequence = p.diagnosis_sequence,
 			@ls_assessment_id = p.assessment_id,
 			@ls_default_bill_flag = t.default_bill_flag,
-			@ls_assessment_type = a.assessment_type
+			@ls_assessment_type = a.assessment_type,
+			@ll_owner_id = owner_id
 	FROM p_Assessment p
 		INNER JOIN c_Assessment_Definition a
 		ON p.assessment_id = a.assessment_id
@@ -139,10 +144,9 @@ ELSE
 	AND p.problem_id = @pl_problem_id
 	AND p.current_flag = 'Y'
 
-	IF @ls_icd10_code IS NULL
+	IF @ll_owner_id IS NULL
 		RETURN
 	END
-
 
 -- If there is no icd10_code, then don't bill the assessment
 IF @ls_icd10_code IS NULL

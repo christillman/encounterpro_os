@@ -25,11 +25,16 @@ CREATE PROCEDURE sp_get_treatment_attachment_id (
 	@pl_treatment_id int,
 	@pl_attachment_id int OUTPUT )
 AS
-SELECT @pl_attachment_id = attachment_id
+
+DECLARE @lb_default_grant bit
+
+SELECT @pl_attachment_id = attachment_id,
+	@lb_default_grant = default_grant
 FROM p_Treatment_Item
 WHERE cpr_id = @ps_cpr_id
 AND treatment_id = @pl_treatment_id
-IF @pl_attachment_id <= 0 	
+
+IF @lb_default_grant IS NULL OR @pl_attachment_id <= 0 	
 	SELECT @pl_attachment_id = NULL
 
 GO

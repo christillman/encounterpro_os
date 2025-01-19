@@ -29,18 +29,18 @@ AS
 BEGIN
 DECLARE @ls_procedure_id varchar(24),
 		@ls_cpt_code varchar(24),
-		@ll_error int,
-		@ll_rowcount int
+		@ll_owner_id int
 
-SELECT @ls_procedure_id = procedure_id
+SELECT @ls_procedure_id = procedure_id,
+	@ll_owner_id = owner_id
 FROM c_Drug_Definition
 WHERE drug_id = @ps_drug_id
 
 IF @@ERROR <> 0
-	RETURN @ls_cpt_code
+	RETURN @ps_drug_id
 
-IF @ls_procedure_id IS NULL
-	RETURN @ls_cpt_code
+IF @ll_owner_id IS NULL
+	RETURN @ps_drug_id
 
 SELECT @ls_cpt_code = cpt_code
 FROM c_Procedure
