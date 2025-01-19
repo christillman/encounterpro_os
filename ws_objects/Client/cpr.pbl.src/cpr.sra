@@ -219,14 +219,14 @@ boolean is_demo_version
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 230
+long target_modification_level = 231
 
-date compile_date = date("2025-01-11")
+date compile_date = date("2025-01-20")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "7.0"
-// Resulting in 7.2.7.0
+string build = "8.0"
+// Resulting in 7.2.8.0
 
 /// !!! Remember to also change this in markbuild project entry spots
 //  7   2   7  0

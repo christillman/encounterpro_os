@@ -724,6 +724,7 @@ public function long load_schema_file (string ps_rootpath, long pl_modification_
 public function string fn_strength (string ps_form_rxcui)
 public subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
 public subroutine test_playback ()
+public function integer upgrade_database_local_mdlvl ()
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -3831,6 +3832,9 @@ ll_modification_level = modification_level + 1
 	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
 	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
 	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file("C:\Users\Public\Documents\Attachments", ll_modification_level, as_filename)
+	end if
+	if ll_material_id <= 0 then
 		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
 	end if
 	if ll_material_id <= 0 then
@@ -4113,6 +4117,174 @@ log.log(this,"test_playback","Test 2",2)
 rollback_transaction()
 
 end subroutine
+
+public function integer upgrade_database_local_mdlvl ();
+// This method calls the upgrade scripts to upgrade the database from its current modification level
+// to the next modification level in the open source version. Upgrades are delivered via .mdlvl files.
+
+long ll_modification_level
+long ll_material_id
+blob lbl_script
+string ls_xml
+integer li_sts
+pbdom_builder pbdombuilder_new
+pbdom_element lo_root
+pbdom_element pbdom_element_array[]
+pbdom_document lo_doc
+string ls_new_xml
+blob lbl_new_xml
+string ls_script
+integer li_please_wait_index
+integer li_script, li_count
+integer li_num_scripts
+string ls_element
+string ls_client_link
+string ls_log_file
+long ll_dochandle
+string ls_message
+string ls_path
+str_sql_script_status lstr_sql_script_status
+
+ll_modification_level = this.modification_level + 1
+
+ls_path = gnv_app.program_directory
+//// lbl_script
+////	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
+////	if ll_material_id <= 0 then
+////		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
+////	end if
+////	if ll_material_id <= 0 then
+////		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level, as_filename)
+////	end if
+////	if ll_material_id <= 0 then
+////		MessageBox("File not found", "The ModLevel-" + string(ll_modification_level) + ".mdlvl schema file for mod level " + string(ll_modification_level) + " was not found in either the program directory or attachments folder.")
+////
+//		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, as_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
+//		If li_sts <= 0 Then return -1
+//		
+//		ll_material_id = load_schema_file(ls_filepath, ll_modification_level, as_filename)
+//		if ll_material_id <= 0 then
+//			openwithparm(w_pop_message, "Error loading schema file")
+//			return -1
+//		end if
+//	end if
+//end if
+//
+//
+//ll_material_id = upgrade_material_id(ls_script)
+//if ll_material_id < 0 then
+//	// Messages already logged
+//	return -1
+//end if
+//
+//SELECTBLOB object
+//INTO :lbl_script
+//FROM c_Patient_Material
+//WHERE material_id = :ll_material_id;
+//if not tf_check() then return -1
+//
+//if isnull(lbl_script) or len(lbl_script) <= 0 then
+//	log.log(this, "u_sqlca.upgrade_database:0039", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
+//	return -1
+//end if
+//
+//ls_xml = f_blob_to_string(lbl_script)
+//
+//// Do not keep the material, want to load again next time
+//DELETE FROM c_patient_material
+//WHERE material_id = :ll_material_id
+//USING this;
+
+// Now create the DOM version from the string version
+pbdombuilder_new = Create pbdom_builder
+
+// Make sure this looks like XML
+TRY
+	lo_doc = pbdombuilder_new.BuildFromString(ls_xml)
+	lo_root = lo_doc.getrootelement()
+	if lo_root.GetName() <> "EproDBSchema" then
+		log.log(this, "u_sqlca.upgrade_database:0058", "XML schema incorrect", 4)
+		return -1
+	end if		
+CATCH (throwable lo_error)
+	log.log(this, "u_sqlca.upgrade_database:0062", "Error reading XML schema data (" + lo_error.text + ")", 4)
+	return -1
+END TRY
+
+// "C:\Users\Public\Downloads\"
+begin_transaction(this, "Upgrade Mod Level")
+
+lo_root.GetChildElements(ref pbdom_element_array)
+li_num_scripts = UpperBound(pbdom_element_array)
+
+// Avoid o_log conflicts, write messages to file instead
+ls_log_file = "C:\Users\Public\Downloads\Installation-" + string(ll_modification_level) + ".log"
+ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
+if ll_dochandle = -1 then	
+	MessageBox("Upgrade log cannot be opened","Cannot open " + ls_log_file)
+	DebugBreak()
+	return -1
+end if
+FileWrite(ll_dochandle, "Starting upgrade " + string(Today()) + " " + string(Now()))
+
+li_please_wait_index = f_please_wait_open()
+f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
+
+for li_script = 1 to li_num_scripts
+	ls_element = pbdom_element_array[li_script].getname()
+	ls_script = pbdom_element_array[li_script].gettext()
+	ls_message = "Executing " + ls_element
+	FileWrite(ll_dochandle, ls_message)
+	execute_sql_script(ls_script, true, lstr_sql_script_status)
+	if lstr_sql_script_status.status < 0 then
+		check()
+		rollback_transaction()
+		f_please_wait_close(li_please_wait_index)
+		ls_message = "Failed executing " + ls_script
+		FileWrite(ll_dochandle, ls_message)
+		log.log(this, "u_sqlca.upgrade_database:0098", "Failed executing " + ls_script, 5)
+		FileClose(ll_dochandle)
+		DESTROY pbdombuilder_new
+		return -1
+	end if
+	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
+next
+f_please_wait_close(li_please_wait_index)
+FileWrite(ll_dochandle, "Finished upgrade " + string(Today()) + " " + string(Now()))
+FileClose(ll_dochandle)
+
+commit_transaction()
+
+select count(*) into :li_count from sys.columns where name = 'client_link';
+if li_count > 0 then
+	// Set the client_link to the upgrade mod level
+	// Lower mod level clients connecting to the database will use this link to 
+	// download the matching client in f_check_version
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
+
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level,
+		client_link = :ls_client_link
+	USING this;
+else		
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level
+	USING this;
+
+end if
+if not check() then
+	return -1
+end if
+
+DESTROY pbdombuilder_new
+
+this.modification_level = ll_modification_level
+
+return 1
+
+
+end function
 
 event constructor;
 deadlock = false

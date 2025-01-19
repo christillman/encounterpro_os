@@ -12,7 +12,7 @@
   !define PRODUCT   "GreenOlive_EHR_Public_Demo"
 
 ; Client Setup Version
-  !define VERSION   7.2.7.0
+  !define VERSION   7.2.8.0
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -22,7 +22,7 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   230
+  !define Database_Mod_Level   231
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
