@@ -67,7 +67,7 @@ SET @ll_all_same = 1
 SET @ls_eligible = 'Y'
 SET @ls_ineligible_dose_text = ''
 
--- If this patient is not elegible for this disease group, then return "Inelegible"
+-- If this patient is not elegible for this disease group, then return "Ineligible"
 SELECT @ll_age_range = age_range, @ls_sex = sex
 FROM c_Disease_Group
 WHERE disease_group = @ps_disease_group
