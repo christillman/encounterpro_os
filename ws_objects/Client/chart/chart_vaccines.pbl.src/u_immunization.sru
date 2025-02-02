@@ -66,6 +66,7 @@ dw_immunizations.width = 2153
 dw_immunizations.x = (width / 2) - (dw_immunizations.width / 2)
 
 dw_immunizations.settransobject(sqlca)
+dw_immunizations.retrieve(current_patient.cpr_id, datetime(today(), now()))
 
 refresh()
 
@@ -77,7 +78,7 @@ integer li_max_status
 long ll_color
 
 
-ll_count = dw_immunizations.retrieve(current_patient.cpr_id, datetime(today(), now()))
+ll_count = dw_immunizations.rowcount()
 
 li_max_status = 1
 
