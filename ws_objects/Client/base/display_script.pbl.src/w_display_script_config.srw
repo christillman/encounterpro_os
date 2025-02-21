@@ -341,6 +341,10 @@ end event
 
 event command_selected;call super::command_selected;long ll_command_index
 
+If NOT IsValid(rtf_display) Then
+	RETURN
+End If
+
 ll_command_index = rtf_display.select_next_command(0, pstr_command)
 
 // If the desired command hasn't been painted yet and we're in debug mode, then automatically run to that command
@@ -371,12 +375,14 @@ end type
 
 event clicked;integer li_sts
 
-rtf_display.show_newlines = false
-if allow_editing and tv_display_script.changes_made then
-	li_sts = tv_display_script.save_changes()
-	if li_sts <= 0 then
-		openwithparm(w_pop_message, "An error occured.  Changes have not been saved.")
-		return
+if IsValid(rtf_display) then rtf_display.show_newlines = false
+if IsValid(tv_display_script) then
+	if allow_editing and tv_display_script.changes_made then
+		li_sts = tv_display_script.save_changes()
+		if li_sts <= 0 then
+			openwithparm(w_pop_message, "An error occured.  Changes have not been saved.")
+			return
+		end if
 	end if
 end if
 
@@ -658,10 +664,13 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-rtf_display.redisplay()
-tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
+If IsValid(rtf_display) Then
+	rtf_display.redisplay()
+End If
 
-
+if not isnull(tv_display_script) then
+	tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
+end if
 end event
 
 type cb_debug from commandbutton within w_display_script_config
@@ -697,6 +706,11 @@ if li_sts <= 0 then
 		openwithparm(w_pop_message, "No commands found")
 	end if
 end if
+
+If NOT IsValid(rtf_display) Then
+	openwithparm(w_pop_message, "Rich text display not available")
+	RETURN
+End If
 
 rtf_display.set_breakpoint(lstr_command)
 cb_debug.visible = false
@@ -760,8 +774,6 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-
-rtf_display.clear_breakpoint()
 cb_debug.visible = true
 cb_run.visible = true
 cb_stop_debugging.visible = false
@@ -769,8 +781,12 @@ cb_next.visible = false
 debugging = false
 last_command_index = 0
 
-rtf_display.show_newlines = false
-rtf_display.redisplay()
+if IsValid(rtf_display) then
+	rtf_display.clear_breakpoint()
+	rtf_display.show_newlines = false
+	rtf_display.redisplay()
+end if
+
 tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 
