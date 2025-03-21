@@ -15,14 +15,14 @@ str_popup_return lo_empty
 
 lo_return = Message.PowerObjectParm
 if isnull(lo_return) then
-	log.log(po_null, "f_popup_return:0007", "Null popup return, " +ps_caller , 3)
+	log.log(po_null, "f_popup_return:0007", "Null popup return, " +ps_caller , 4)
 	return lo_empty
 end if
 if not isvalid(lo_return) then
 	log.log(po_null, "f_popup_return:0011", "Invalid popup return, " + ps_caller , 3)
 	return lo_empty
 end if
-if lower(classname(message.powerobjectparm)) <> "str_popup_return" then
+if lower(classname(lo_return)) <> "str_popup_return" then
 	log.log(po_null, "f_popup_return:0015", "PowerObjectParm is not str_popup_return, " + ps_caller , 3)
 	return lo_empty
 end if
