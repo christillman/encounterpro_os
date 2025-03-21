@@ -58,7 +58,7 @@ u_patient current_patient
 
 // Currently displayed encounter
 u_str_encounter current_display_encounter
-int posted_encounter_id
+long posted_encounter_id
 
 // Current user object - user performing service
 u_user current_user
@@ -178,7 +178,6 @@ long debug_display_script_id
 long debug_display_command_id
 
 end variables
-
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -260,6 +259,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
