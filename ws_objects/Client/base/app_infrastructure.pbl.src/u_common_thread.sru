@@ -16,7 +16,7 @@ Function uint waveOutGetNumDevs() Library "WINMM.DLL"
 end prototypes
 
 type variables
-SoapConnection conn // Define SoapConnection
+//SoapConnection conn // Define SoapConnection
 EpieGateway_service EpIE_Gateway // Declare proxy
 epiegateway_credentialsheader credentials
 boolean epie_initialized = false
@@ -1425,35 +1425,36 @@ long rval
 //////////////////////////////////////////////////////////////////////////////////
 // Create EpIE Gateway Connection
 //////////////////////////////////////////////////////////////////////////////////
-conn = create SoapConnection
-
-if datalist.get_preference_boolean("SYSTEM", "epie_log_soap_calls", false) then
-	ls_templog = f_temp_file2("log", "EpIELogs")
-else
-	ls_templog = ""
-end if
-ll_sts = conn.SetSoapLogFile(ls_templog) 
-
-rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
-if rVal <> 0 then
-	log.log(this, "u_common_thread.initialize_epie_gateway:0019", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
-	destroy conn
-	return -1
-end if
-
-credentials = CREATE epiegateway_credentialsheader
-credentials.user = datalist.get_preference( "SYSTEM", "epie_user")
-credentials.password = datalist.get_preference( "SYSTEM", "epie_pwd")
-setnull(credentials.actor)
-setnull(credentials.encodedmustunderstand)
-setnull(credentials.encodedmustunderstand12)
-setnull(credentials.encodedrelay)
-setnull(credentials.role)
-
-EpIE_Gateway.setcredentialsheadervalue(credentials)
-
-return 1
-
+//conn = create SoapConnection
+//
+//if datalist.get_preference_boolean("SYSTEM", "epie_log_soap_calls", false) then
+//	ls_templog = f_temp_file2("log", "EpIELogs")
+//else
+//	ls_templog = ""
+//end if
+//ll_sts = conn.SetSoapLogFile(ls_templog) 
+//
+//rVal = Conn.CreateInstance(EpIE_Gateway, "EpieGateway_service")
+//if rVal <> 0 then
+//	log.log(this, "u_common_thread.initialize_epie_gateway:0019", "Creating SOAP proxy failed (" + string(rVal) + ")", 4)
+//	destroy conn
+//	return -1
+//end if
+//
+//credentials = CREATE epiegateway_credentialsheader
+//credentials.user = datalist.get_preference( "SYSTEM", "epie_user")
+//credentials.password = datalist.get_preference( "SYSTEM", "epie_pwd")
+//setnull(credentials.actor)
+//setnull(credentials.encodedmustunderstand)
+//setnull(credentials.encodedmustunderstand12)
+//setnull(credentials.encodedrelay)
+//setnull(credentials.role)
+//
+//EpIE_Gateway.setcredentialsheadervalue(credentials)
+//
+//return 1
+//
+return -1
 end function
 
 public function str_users practice_users (string ps_user_property);string ls_progress
@@ -1711,51 +1712,51 @@ public function integer sendtoepie (string ps_message, boolean pb_test_message, 
 integer li_sts
 string ls_TestMessageFlag
 
-if epie_initialized then
-	// Reset the credentials
-	credentials.user = datalist.get_preference( "SYSTEM", "epie_user")
-	credentials.password = datalist.get_preference( "SYSTEM", "epie_pwd")
-	setnull(credentials.actor)
-	setnull(credentials.encodedmustunderstand)
-	setnull(credentials.encodedmustunderstand12)
-	setnull(credentials.encodedrelay)
-	setnull(credentials.role)
-	
-	EpIE_Gateway.setcredentialsheadervalue(credentials)
-else
-	li_sts = initialize_epie_gateway()
-	if li_sts < 0 then
-		log.log(this, "u_common_thread.sendtoepie:0019", "Error initializing EpIE Gateway", 4)
-		return -1
-	end if
-end if
-
-if pb_test_message then
-	ls_TestMessageFlag = "Y"
-else
-	ls_TestMessageFlag = "N"
-end if
-
-// Get Message Bag
-TRY
-	la_rtn = EpIE_Gateway.putmessage(ps_message)
-	if classname(la_rtn) = "string" then
-		ps_response = string(la_rtn)
-	else
-		ps_response = ""
-	end if
-CATCH ( SoapException lt_error )
-	log.log(this, "u_common_thread.sendtoepie:0039", "Error calling EpIE upload gateway (" + lt_error.text + ")", 4)
-	return -1
-END TRY
-
-if len(ps_response) > 0 then
-	return 1
-end if
-
-return 0
-
-
+//if epie_initialized then
+//	// Reset the credentials
+//	credentials.user = datalist.get_preference( "SYSTEM", "epie_user")
+//	credentials.password = datalist.get_preference( "SYSTEM", "epie_pwd")
+//	setnull(credentials.actor)
+//	setnull(credentials.encodedmustunderstand)
+//	setnull(credentials.encodedmustunderstand12)
+//	setnull(credentials.encodedrelay)
+//	setnull(credentials.role)
+//	
+//	EpIE_Gateway.setcredentialsheadervalue(credentials)
+//else
+//	li_sts = initialize_epie_gateway()
+//	if li_sts < 0 then
+//		log.log(this, "u_common_thread.sendtoepie:0019", "Error initializing EpIE Gateway", 4)
+//		return -1
+//	end if
+//end if
+//
+//if pb_test_message then
+//	ls_TestMessageFlag = "Y"
+//else
+//	ls_TestMessageFlag = "N"
+//end if
+//
+//// Get Message Bag
+//TRY
+//	la_rtn = EpIE_Gateway.putmessage(ps_message)
+//	if classname(la_rtn) = "string" then
+//		ps_response = string(la_rtn)
+//	else
+//		ps_response = ""
+//	end if
+//CATCH ( SoapException lt_error )
+//	log.log(this, "u_common_thread.sendtoepie:0039", "Error calling EpIE upload gateway (" + lt_error.text + ")", 4)
+//	return -1
+//END TRY
+//
+//if len(ps_response) > 0 then
+//	return 1
+//end if
+//
+//return 0
+//
+return -1
 end function
 
 public function boolean utilities_ok ();integer li_sts
