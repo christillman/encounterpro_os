@@ -136,9 +136,10 @@ if not isnull(current_display_encounter) then
 	else
 		st_encounter_approved_by.textsize = -10
 	end if
-	
-	current_patient.open_encounter.set_billing_procedure(lb_replace)
-	
+end if
+
+if not isnull(current_patient.open_encounter) then	
+	current_patient.open_encounter.set_billing_procedure(lb_replace)	
 	if current_patient.open_encounter.bill_flag = "Y" then
 		is_billed = true
 		st_bill_encounter_yes.backcolor = color_object_selected
@@ -148,7 +149,9 @@ if not isnull(current_display_encounter) then
 		st_bill_encounter_yes.backcolor = color_object
 		st_bill_encounter_no.backcolor = color_object_selected
 	end if
-	
+end if	
+
+if not isnull(current_display_encounter) then	
 	load_billing()
 	
 	refresh_coding()
@@ -192,8 +195,6 @@ if not isnull(current_display_encounter) then
 			st_code_check_status.textcolor = color_text_normal
 		end if
 	end if
-
-	
 else
 	cb_coding.visible = false
 	dw_billing.visible = false
