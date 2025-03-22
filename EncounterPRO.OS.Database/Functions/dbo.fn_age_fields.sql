@@ -152,8 +152,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_age_fields]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_age_fields] TO [cprsystem]
 GO
 

@@ -66,7 +66,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 
-CREATE FUNCTION fn_treatment_type_key_description (
+CREATE FUNCTION dbo.fn_treatment_type_key_description (
 	@ps_treatment_type varchar(24),
 	@ps_treatment_key varchar(64) )
 

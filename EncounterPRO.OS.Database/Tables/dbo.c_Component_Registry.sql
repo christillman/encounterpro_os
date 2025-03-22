@@ -72,7 +72,7 @@ CREATE TABLE [dbo].[c_Component_Registry] (
 		[id]                          [uniqueidentifier] NOT NULL,
 		[component_location]          [varchar](255) NULL,
 		[component_data]              [varchar](255) NULL,
-		[component_install]           [image] NULL,
+		[component_install]           [varbinary](max) NULL,
 		[min_build]                   [int] NULL,
 		[owner_id]                    [varchar](255) NULL,
 		[status]                      [varchar](12) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE [dbo].[c_Component_Registry] (
 		[license_data]                [varchar](2000) NULL,
 		[license_status]              [varchar](24) NOT NULL,
 		[license_expiration_date]     [datetime] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Component_Registry]
 	ADD
@@ -116,25 +116,15 @@ CREATE NONCLUSTERED INDEX [idx_c_Component_Registry_id]
 	ON [dbo].[c_Component_Registry] ([id], [component_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Component_Registry]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Component_Registry] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Registry]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Registry] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Component_Registry]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Component_Registry] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Registry]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Registry] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Registry]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Registry] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Registry] SET (LOCK_ESCALATION = TABLE)
 GO

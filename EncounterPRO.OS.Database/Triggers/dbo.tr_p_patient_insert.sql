@@ -8,18 +8,18 @@ SET NOCOUNT ON
 SET XACT_ABORT ON
 GO
 
--- Drop Trigger [dbo].[tr_p_patient_insert]
-Print 'Drop Trigger [dbo].[tr_p_patient_insert]'
+-- Drop Trigger tr_p_patient_insert
+Print 'Drop Trigger tr_p_patient_insert'
 GO
-IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[tr_p_patient_insert]') AND [type]='TR'))
-DROP TRIGGER [dbo].[tr_p_patient_insert]
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'tr_p_patient_insert') AND [type]='TR'))
+DROP TRIGGER tr_p_patient_insert
 GO
 
--- Create Trigger [dbo].[tr_p_patient_insert]
-Print 'Create Trigger [dbo].[tr_p_patient_insert]'
+-- Create Trigger tr_p_patient_insert
+Print 'Create Trigger tr_p_patient_insert'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE TRIGGER tr_p_patient_insert ON dbo.p_Patient
 FOR INSERT
@@ -131,8 +131,9 @@ WHERE last_name IS NOT NULL
 IF UPDATE(phone_number)
 	BEGIN
 	UPDATE p
-	SET phone_number = CASE WHEN IsNull(p.zip,"") = "" THEN dbo.fn_pretty_phone(p.phone_number)
-							ELSE dbo.fn_pretty_phone_us(p.phone_number) END
+	SET phone_number = CASE WHEN COALESCE(p.zip,'00000') = '00000' 
+		THEN dbo.fn_pretty_phone(p.phone_number)
+		ELSE dbo.fn_pretty_phone_us(p.phone_number) END
 	FROM p_Patient p
 		INNER JOIN inserted i
 		ON p.cpr_id = i.cpr_id
@@ -144,5 +145,6 @@ IF UPDATE(phone_number)
 		ON p.cpr_id = i.cpr_id
 
 	END
+	
 GO
 

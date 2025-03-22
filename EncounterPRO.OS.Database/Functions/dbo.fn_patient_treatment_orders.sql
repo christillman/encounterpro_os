@@ -297,8 +297,6 @@ END
 
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_treatment_orders]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_treatment_orders] TO [cprsystem]
 GO
 

@@ -108,8 +108,6 @@ FROM c_External_Source r
 	AND p.token1 = a.attribute
 WHERE p.token1 IS NOT NULL
 GO
-GRANT SELECT
-	ON [dbo].[v_External_Source_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_External_Source_Attribute] TO [cprsystem]
 GO
 

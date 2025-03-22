@@ -117,21 +117,13 @@ CREATE CLUSTERED INDEX [idx_patient_alias_cluster]
 	ON [dbo].[p_Patient_Alias] ([last_name], [cpr_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_Alias]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_Alias] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_Alias]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_Alias] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_Alias]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_Alias] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_Alias]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_Alias] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_Alias] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -106,8 +106,6 @@ SELECT cpr_id
 FROM dbo.p_Observation_Result
 WHERE result_type IN ('Comment', 'Attachment')
 GO
-GRANT SELECT
-	ON [dbo].[p_Observation_Comment]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Observation_Comment] TO [cprsystem]
 GO
 

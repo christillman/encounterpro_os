@@ -1,0 +1,12 @@
+﻿$PBExportHeader$str_playback_log_entry.srs
+global type str_playback_log_entry from structure
+	powerobject		who
+	string		script
+	string		message
+	integer		severity
+	string		component_id
+	string		version_name
+	datetime		date_time
+	decimal		seconds
+end type
+

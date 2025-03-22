@@ -33,8 +33,6 @@ FROM p_Patient p
 JOIN p_Assessment a ON p.cpr_id = a.cpr_id
 JOIN c_Assessment_Definition d ON a.assessment_id = d.assessment_id
 GO
-GRANT SELECT
-	ON [dbo].[v_Diagnosed_Patients]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Diagnosed_Patients] TO [cprsystem]
 GO
 

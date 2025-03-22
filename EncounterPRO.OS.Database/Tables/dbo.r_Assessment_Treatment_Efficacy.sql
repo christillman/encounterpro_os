@@ -79,25 +79,15 @@ ALTER TABLE [dbo].[r_Assessment_Treatment_Efficacy]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[r_Assessment_Treatment_Efficacy]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[r_Assessment_Treatment_Efficacy] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[r_Assessment_Treatment_Efficacy]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[r_Assessment_Treatment_Efficacy] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[r_Assessment_Treatment_Efficacy]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[r_Assessment_Treatment_Efficacy] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[r_Assessment_Treatment_Efficacy]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[r_Assessment_Treatment_Efficacy] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[r_Assessment_Treatment_Efficacy]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[r_Assessment_Treatment_Efficacy] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[r_Assessment_Treatment_Efficacy] SET (LOCK_ESCALATION = TABLE)
 GO

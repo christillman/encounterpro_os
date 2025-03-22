@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Order_Workplan_Treatment]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Order_Workplan_Treatment
 	(
@@ -77,7 +77,8 @@ DECLARE @ll_ordered_patient_workplan_id int,
 	@ldt_begin_date datetime,
 	@ldt_encounter_date datetime,
 	@ll_existing_treatment_id int,
-	@ls_progress_value varchar(40)
+	@ls_progress_value varchar(40),
+	@ll_owner_id int
 
 DECLARE lc_treatment_atts CURSOR LOCAL FAST_FORWARD TYPE_WARNING FOR
 	SELECT attribute, value
@@ -163,16 +164,18 @@ WHILE (@@fetch_status<>-1)
 	FETCH NEXT FROM lc_treatment_atts INTO @ls_attribute, @ls_value
 	END
 
+CLOSE lc_treatment_atts
 DEALLOCATE lc_treatment_atts
 
 -- If we have an observation_id, then get the description and composite flag
 IF @ls_observation_id IS NOT NULL
 	BEGIN
 	SELECT @ls_composite_flag = composite_flag,
-		@ls_observation_description = description
+		@ls_observation_description = description,
+		@ll_owner_id = owner_id
 	FROM c_Observation
 	WHERE observation_id = @ls_observation_id
-	IF @@rowcount <> 1
+	IF @ll_owner_id IS NULL
 		BEGIN
 		RAISERROR ('Observation not in c_observation table (%s)',16,-1, @ls_observation_id)
 		ROLLBACK TRANSACTION
@@ -273,25 +276,14 @@ ELSE
 
 	SET @pl_treatment_id = SCOPE_IDENTITY()
 
-	INSERT INTO p_Treatment_Progress(
-		cpr_id,
-		treatment_id,
-		encounter_id,
-		user_id,
-		progress_date_time,
-		progress_type,
-		created,
-		created_by)
-	VALUES (
-		@ps_cpr_id,
-		@pl_treatment_id,
-		@pl_encounter_id,
-		@ps_ordered_by,
-		dbo.get_client_datetime(),
-		'Created',
-		dbo.get_client_datetime(),
-		@ps_created_by )
-
+	-- Add the "Created" progress record
+	EXECUTE sp_set_treatment_progress
+		@ps_cpr_id = @ps_cpr_id,
+		@pl_treatment_id = @pl_treatment_id,
+		@pl_encounter_id = @pl_encounter_id,
+		@ps_progress_type = 'Created',
+		@ps_user_id = @ps_ordered_by,
+		@ps_created_by = @ps_created_by 
 
 	IF LEN(@ls_patient_instructions) > 0
 		EXECUTE sp_set_treatment_progress

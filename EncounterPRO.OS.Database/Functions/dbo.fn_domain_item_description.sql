@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_domain_item_description (
+CREATE FUNCTION dbo.fn_domain_item_description (
 	@ps_domain_id varchar(24),
 	@ps_domain_item varchar(40) )
 RETURNS varchar(80)

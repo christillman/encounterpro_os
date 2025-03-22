@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Apply_Standard_Exam]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Apply_Standard_Exam (
 	@ps_cpr_id varchar(12),
@@ -48,7 +48,7 @@ DECLARE @tmp_observation_results TABLE (
 	result_type varchar(12) NULL,
 	result varchar(80) NULL,
 	result_value varchar(40) NULL,
-	long_result_value text NULL,
+	long_result_value varchar(max) NULL,
 	result_unit varchar(24) NULL,
 	abnormal_flag char(1) NULL,
 	severity smallint NULL,
@@ -78,7 +78,8 @@ IF @ls_root_observation_id IS NULL
 SELECT @ls_common_list_id = COALESCE(specialty_id, '$')
 FROM c_User
 WHERE [user_id] = @ps_user_id
-IF @@ROWCOUNT = 0
+
+IF @ls_common_list_id IS NULL
 	SET @ls_common_list_id = '$'
 
 INSERT INTO @tmp_observation_results (
@@ -278,7 +279,7 @@ DECLARE	@ll_branch_id int ,
 	@li_result_sequence smallint,
 	@ls_location varchar(24),
 	@ls_result_value varchar(40),
-	@ls_long_result_value varchar(4000),
+	@ls_long_result_value varchar(max),
 	@ls_result_unit varchar(12),
 	@ll_parent_branch_id int,
 	@ls_description varchar(80),
@@ -289,7 +290,8 @@ DECLARE	@ll_branch_id int ,
 	@li_severity smallint,
 	@ll_observation_sequence int,
 	@ll_parent_observation_sequence int,
-	@ls_observation_tag varchar(12)
+	@ls_observation_tag varchar(12),
+	@ll_owner_id int
 
 DECLARE lc_results CURSOR LOCAL FAST_FORWARD FOR
 	SELECT 	branch_id ,
@@ -301,7 +303,7 @@ DECLARE lc_results CURSOR LOCAL FAST_FORWARD FOR
 		result_type ,
 		result ,
 		result_value ,
-		CAST(long_result_value AS varchar(4000)),
+		CAST(long_result_value AS varchar(max)),
 		result_unit ,
 		abnormal_flag ,
 		severity ,
@@ -353,16 +355,17 @@ WHILE @@FETCH_STATUS = 0
 		AND observation_id = @ls_child_observation_id
 		AND original_branch_id = @ll_branch_id
 		
-		IF @@ROWCOUNT = 0
+		IF @ll_observation_sequence IS NULL
 			BEGIN
 			SELECT @ls_description = COALESCE(t.description, o.description),
-					@ll_branch_sort_sequence = t.sort_sequence
+					@ll_branch_sort_sequence = t.sort_sequence,
+					@ll_owner_id = o.owner_id
 			FROM c_Observation_Tree t
 				INNER JOIN c_Observation o
 				ON t.child_observation_id = o.observation_id
 			WHERE t.branch_id = @ll_branch_id
 			
-			IF @@ROWCOUNT = 1
+			IF @ll_owner_id IS NOT NULL
 				BEGIN
 				INSERT INTO p_Observation
 						(

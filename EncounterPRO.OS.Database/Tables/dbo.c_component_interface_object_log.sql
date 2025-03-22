@@ -84,21 +84,13 @@ ALTER TABLE [dbo].[c_component_interface_object_log]
 	CONSTRAINT [DF_c_comp_int_obj_log_object_status]
 	DEFAULT ('Not Sent') FOR [object_status]
 GO
-GRANT DELETE
-	ON [dbo].[c_component_interface_object_log]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_component_interface_object_log] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_component_interface_object_log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_component_interface_object_log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_component_interface_object_log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_component_interface_object_log] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_component_interface_object_log]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_component_interface_object_log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_component_interface_object_log] SET (LOCK_ESCALATION = TABLE)
 GO

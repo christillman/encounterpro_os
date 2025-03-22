@@ -109,17 +109,11 @@ CREATE CLUSTERED INDEX [idx_p_Classification_Set_Item_name]
 	ON [dbo].[p_Classification_Set_Item] ([cpr_id], [summary_context_object], [summary_object_key], [classification_set_id], [item_sequence])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[p_Classification_Set_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Classification_Set_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Classification_Set_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Classification_Set_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Classification_Set_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Classification_Set_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Classification_Set_Item] SET (LOCK_ESCALATION = TABLE)
 GO

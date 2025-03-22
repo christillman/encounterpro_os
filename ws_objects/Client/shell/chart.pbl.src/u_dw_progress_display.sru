@@ -313,7 +313,7 @@ CHOOSE CASE lower(progress_object)
 		description = current_patient.name()
 	CASE "encounter"
 		if isnull(service.encounter_id) then
-			log.log(this, "u_dw_progress_display.initialize:0020", "Null encounter_id", 4)
+			log.log(this, "u_dw_progress_display.initialize:0020", "Null service.encounter_id", 4)
 			return -1
 		end if
 		li_sts = current_patient.encounters.encounter(encounter, service.encounter_id)
@@ -699,9 +699,11 @@ return ps_progress_key + ls_suffix
 end function
 
 on u_dw_progress_display.create
+call super::create
 end on
 
 on u_dw_progress_display.destroy
+call super::destroy
 end on
 
 event selected(long selected_row);call super::selected;note_menu(selected_row)

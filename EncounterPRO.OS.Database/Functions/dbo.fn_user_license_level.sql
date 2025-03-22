@@ -14,7 +14,7 @@ SET QUOTED_IDENTIFIER OFF
 GO
 
 
-CREATE FUNCTION fn_user_license_level (
+CREATE FUNCTION dbo.fn_user_license_level (
 	@ps_user_id varchar(24) )
 
 RETURNS int

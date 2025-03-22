@@ -78,25 +78,15 @@ ALTER TABLE [dbo].[em_Visit_Code_Group]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[em_Visit_Code_Group]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[em_Visit_Code_Group] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[em_Visit_Code_Group]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[em_Visit_Code_Group] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[em_Visit_Code_Group]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[em_Visit_Code_Group] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[em_Visit_Code_Group]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[em_Visit_Code_Group] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[em_Visit_Code_Group]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[em_Visit_Code_Group] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[em_Visit_Code_Group] SET (LOCK_ESCALATION = TABLE)
 GO

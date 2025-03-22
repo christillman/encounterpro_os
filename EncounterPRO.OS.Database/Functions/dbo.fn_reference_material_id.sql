@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_reference_material_id (
+CREATE FUNCTION dbo.fn_reference_material_id (
 	@ps_cpr_id varchar(12),
 	@ps_context_object varchar(24),
 	@pl_object_key int,

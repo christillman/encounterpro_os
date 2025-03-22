@@ -382,11 +382,16 @@ li_sts = f_set_progress3( current_patient.cpr_id, &
 
 section[newindex].section_selected()
 
+if IsNull(section[newindex]) OR NOT IsValid(section[newindex]) or IsNull(current_service) OR NOT IsValid(current_service)  THEN 
+	MessageBox("Null section reference", "Closing application due to instability")
+	HALT CLOSE
+END IF
+
 if section[newindex].section_object.tag = "EXIT" and current_service.manual_service then
 	// Determined this is causing a crash; but without it we get an invalid service bookmark
 	// Added post, seems to have fixed it
 	lw_cpr = section[newindex].my_cpr_main
-	lw_cpr.post close("CLOSE")
+	lw_cpr.post close_me("CLOSE")
 end if
 
 li_sts = 0

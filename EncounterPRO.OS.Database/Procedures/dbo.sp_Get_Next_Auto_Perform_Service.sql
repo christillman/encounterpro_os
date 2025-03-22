@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Get_Next_Auto_Perform_Service]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Get_Next_Auto_Perform_Service
 	@pl_patient_workplan_item_id int,
@@ -27,17 +27,18 @@ CREATE PROCEDURE sp_Get_Next_Auto_Perform_Service
 AS
 
 DECLARE @ll_patient_workplan_item_id int,
-	@ls_in_office_flag char(1)
+	@ls_in_office_flag char(1),
+	@ll_workplan_id int
 
 SELECT @pl_next_patient_workplan_item_id = NULL
 
 SELECT @ll_patient_workplan_item_id = @pl_patient_workplan_item_id
 
-SELECT @ls_in_office_flag = in_office_flag
+SELECT @ls_in_office_flag = in_office_flag, @ll_workplan_id = workplan_id
 FROM p_Patient_WP_Item
 WHERE patient_workplan_item_id = @pl_patient_workplan_item_id
 
-IF @@ROWCOUNT <> 1
+IF @ll_workplan_id IS NULL
 	RETURN
 
 -- Loop though the parents until we reach the top workplan

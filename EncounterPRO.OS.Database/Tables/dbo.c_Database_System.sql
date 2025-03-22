@@ -90,25 +90,15 @@ ALTER TABLE [dbo].[c_Database_System]
 	CONSTRAINT [DF_c_Database_System_sort]
 	DEFAULT ((0)) FOR [sort_sequence]
 GO
-GRANT DELETE
-	ON [dbo].[c_Database_System]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Database_System] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Database_System]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Database_System] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Database_System]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Database_System] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Database_System]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Database_System] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Database_System]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Database_System] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Database_System] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_latest_system_version (
+CREATE FUNCTION dbo.fn_latest_system_version (
 	@ps_system_id varchar(24),
 	@pl_major_release int = NULL,
 	@ps_database_version varchar(4) = NULL,

@@ -103,7 +103,6 @@ integer portrait_y = 13
 end variables
 
 forward prototypes
-public function integer close (string ps_status)
 public function integer windowposchanging (long pl_x, long pl_y, long pl_width, long pl_height, long pl_flags)
 public function integer close ()
 public subroutine initialize ()
@@ -111,6 +110,7 @@ public subroutine display_portrait ()
 public subroutine refresh_screen ()
 public function integer refresh ()
 public function integer initialize_property (string ps_prop_num, ref u_st_property pst_prop, ref statictext pst_prop_title, ref str_attributes pstr_attributes)
+public function integer close_me (string ps_status)
 end prototypes
 
 event post_open;integer li_sts
@@ -146,6 +146,7 @@ tab_cpr.setfocus()
 end event
 
 event load_error(string ps_message);str_popup popup
+
 long ll_choice
 
 if isvalid(tab_cpr.wait_window) then close(tab_cpr.wait_window)
@@ -159,32 +160,15 @@ openwithparm(w_pop_choices_2, popup)
 ll_choice = message.doubleparm
 if ll_choice = 1 then
 	// Try again now
-	CLOSE("TRY AGAIN")
+	close_me("TRY AGAIN")
 else
 	// Try again later
-	CLOSE("ERROR")
+	close_me("ERROR")
 end if
 
 
 
 end event
-
-public function integer close (string ps_status);str_popup_return popup_return
-
-if isnull(ps_status) then
-	popup_return.item_count = 0
-else
-	popup_return.item_count = 1
-	popup_return.items[1] = ps_status
-end if
-
-if IsValid(main_window) then main_window.postevent("refresh")
-
-closewithreturn(this, popup_return)
-
-return 1
-
-end function
 
 public function integer windowposchanging (long pl_x, long pl_y, long pl_width, long pl_height, long pl_flags);return tab_cpr.windowposchanging(pl_x, pl_y, pl_width, pl_height, pl_flags)
 
@@ -195,7 +179,7 @@ public function integer close ();string ls_status
 
 setnull(ls_status)
 
-return close(ls_status)
+return close_me(ls_status)
 
 end function
 
@@ -285,6 +269,23 @@ else
 end if
 	
 return 0
+end function
+
+public function integer close_me (string ps_status);str_popup_return popup_return
+
+if isnull(ps_status) then
+	popup_return.item_count = 0
+else
+	popup_return.item_count = 1
+	popup_return.items[1] = ps_status
+end if
+
+if IsValid(main_window) then main_window.postevent("refresh")
+
+closewithreturn(this, popup_return)
+
+return 1
+
 end function
 
 event open;call super::open;str_popup_return popup_return

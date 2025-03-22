@@ -92,25 +92,15 @@ ALTER TABLE [dbo].[c_Database_Maintenance]
 	CONSTRAINT [DF_c_Database_Maintenance_action_date]
 	DEFAULT (dbo.get_client_datetime()) FOR [action_date]
 GO
-GRANT DELETE
-	ON [dbo].[c_Database_Maintenance]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Database_Maintenance] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Database_Maintenance]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Database_Maintenance] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Database_Maintenance]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Database_Maintenance] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Database_Maintenance]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Database_Maintenance] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Database_Maintenance]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Database_Maintenance] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Database_Maintenance] SET (LOCK_ESCALATION = TABLE)
 GO

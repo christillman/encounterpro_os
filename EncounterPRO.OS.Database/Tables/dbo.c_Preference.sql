@@ -73,16 +73,16 @@ CREATE TABLE [dbo].[c_Preference] (
 		[computer_flag]       [char](1) NOT NULL,
 		[specialty_flag]      [char](1) NOT NULL,
 		[user_flag]           [char](1) NOT NULL,
-		[help]                [text] NULL,
-		[query]               [text] NULL,
+		[help]                [nvarchar](max) NULL,
+		[query]               [nvarchar](max) NULL,
 		[encrypted]           [char](1) NOT NULL,
-		[change_script]       [text] NULL,
+		[change_script]       [nvarchar](max) NULL,
 		[system_id]           [nvarchar](24) NULL,
 		[build_number]        [int] NULL,
 		[id]                  [uniqueidentifier] NULL,
 		[last_updated]        [datetime] NOT NULL,
 		[universal_flag]      [char](1) NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Preference]
 	ADD
@@ -117,25 +117,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_c_preference_id]
 	ON [dbo].[c_Preference] ([id])
 	WITH ( FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Preference]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Preference] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Preference]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Preference] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Preference]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Preference] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Preference]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Preference] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Preference]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Preference] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Preference] SET (LOCK_ESCALATION = TABLE)
 GO

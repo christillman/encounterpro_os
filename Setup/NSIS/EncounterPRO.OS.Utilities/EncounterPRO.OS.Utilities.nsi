@@ -7,7 +7,7 @@
 !define SOURCE_ROOT "C:\EncounterPro\Builds"
 
 ; Component Versions
-!define EncounterPRO_Utilities_VERSION   1.0.6.0
+!define EncounterPRO_Utilities_VERSION   1.1.1.0
 ; This has a virus in it
 ; !define TPS_Foxit_Version 2.3
 !define EventLogInstaller_Version 1.2
@@ -28,7 +28,8 @@
 
 
 ; Installation constants
-!define COMMONFILES_TARGET "EncounterPRO-OS"
+!define INST_ROOT "C:\Users\Public\Documents"
+!define UTILITIES_FOLDER "${INST_ROOT}\Utilities"
 
 ; Include install functions
 !include "..\plugins\eproinstallfunctions.nsh"
@@ -89,7 +90,7 @@
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "EncounterPRO.OS.Utilities ${EncounterPRO_Utilities_VERSION} Install.exe"
-InstallDir "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities"
+InstallDir "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities"
 ShowInstDetails show
 AutoCloseWindow false
 
@@ -143,7 +144,7 @@ Section "EncounterPRO.OS.Utilities"
   SetOverwrite on
 
   ; Copy files for Adobe PS Distiller Driver (used for "Sybase Datawindow PS" printer)
-  ; SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\Sybase Datawindow PS"
+  ; SetOutPath "${UTILITIES_FOLDER}\Sybase Datawindow PS"
   ; File "${PS_Distiller_Driver_SOURCE}\*"
 
   ; Start by making sure that some .Net utilities are installed
@@ -166,11 +167,11 @@ Section "EncounterPRO.OS.Utilities"
 ;  File "${DOTNET_TOOLS_SOURCE}\InstallUtil.exe"
       
   ; Define symbols for the utilities
-  !define gacutil "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\CSharpGACTool.exe"
+  !define gacutil "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\CSharpGACTool.exe"
   !define regasm "$NETInstallLoc\$RunningDotNetVersion\regasm.exe"
   !define InstallUtil "$NETInstallLoc\$RunningDotNetVersion\InstallUtil.exe"
 
-  SetOutPath "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities"
+  SetOutPath "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities"
   
   ; CSharpGACTool
   File "${CSharpGACTool_SOURCE}\EncounterPRO.OS.CSharpGACTool.exe"
@@ -185,20 +186,20 @@ Section "EncounterPRO.OS.Utilities"
   File "${EncounterPRO_Utilities_SOURCE}\EncounterPRO.OS.Utilities.dll"
   
   ; Register the assemblies in the GAC
-  !insertmacro CSharpGacToolInstall "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\ICSharpCode.SharpZipLib.dll"
-;  !insertmacro CSharpGacToolInstall "$$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\ProgressBars.dll"
-  !insertmacro CSharpGacToolInstall "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
+  !insertmacro CSharpGacToolInstall "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\ICSharpCode.SharpZipLib.dll"
+;  !insertmacro CSharpGacToolInstall "$${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\ProgressBars.dll"
+  !insertmacro CSharpGacToolInstall "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
   
   ; Register the EncounterPRO.OS.Utilities.dll Type Library.  This is needed for 32/64 bit support.
-  !insertmacro REGASM "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
+  !insertmacro REGASM "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll"
 
   ; Write the version into EPCompInfo.ini
-  ${GetFileVersion} "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll" $R0
-  WriteINIStr "$COMMONFILES\${COMMONFILES_TARGET}\EPCompInfo.ini" "EncounterPRO.OS.Utilities" "ProductVersion" "$R0"
+  ${GetFileVersion} "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\EncounterPRO.OS.Utilities.dll" $R0
+  WriteINIStr "${UTILITIES_FOLDER}\EPCompInfo.ini" "EncounterPRO.OS.Utilities" "ProductVersion" "$R0"
 
   ; Install the EncounterPRO Event Log Sources
   File "${EVENTLOG_INSTALLER_SOURCE}\EncounterPRO.OS.EventLogSourceInstaller.dll"
-  nsExec::Exec '"${InstallUtil}" "$COMMONFILES\${COMMONFILES_TARGET}\EncounterPRO.OS.Utilities\EPROEventLogInstaller.dll"'
+  nsExec::Exec '"${InstallUtil}" "${UTILITIES_FOLDER}\EncounterPRO.OS.Utilities\EPROEventLogInstaller.dll"'
   
 SectionEnd
 

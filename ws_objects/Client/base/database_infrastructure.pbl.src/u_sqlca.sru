@@ -62,7 +62,6 @@ FUNCTION long	 jmj_create_local_vaccine_schedule(ref string ps_config_object_id)
 FUNCTION long	 jmj_document_order_workplan(string ps_cpr_id, string ps_context_object, long pl_object_key, string ps_purpose, string ps_new_object, string ps_ordered_by, string ps_created_by, string ps_workplan_description) RPCFUNC ALIAS FOR "dbo.jmj_document_order_workplan"
 FUNCTION long	 jmj_document_set_recipient(long pl_patient_workplan_item_id, string ps_ordered_for, string ps_dispatch_method, string ps_address_attribute, string ps_address_value, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_document_set_recipient"
 FUNCTION long	 jmj_log_database_maintenance(string ps_action, string ps_completion_status, string ps_action_argument, string ps_build, string ps_comment) RPCFUNC ALIAS FOR "dbo.jmj_log_database_maintenance"
-FUNCTION long	 jmj_new_attachment(string ps_description, string ps_attachment_file, string ps_extension, long pl_owner_id, long pl_box_id, long pl_item_id, long pl_interfaceserviceid, long pl_transportsequence, long pl_patient_workplan_item_id, string ps_attached_by, string ps_created_by) RPCFUNC ALIAS FOR "dbo.jmj_new_attachment"
 FUNCTION long	 jmj_new_attachment2(string ps_description, string ps_attachment_file, string ps_extension, long pl_owner_id, long pl_box_id, long pl_item_id, long pl_interfaceserviceid, long pl_transportsequence, long pl_patient_workplan_item_id, string ps_attached_by, string ps_created_by, string ps_id) RPCFUNC ALIAS FOR "dbo.jmj_new_attachment2"
 FUNCTION long	 jmj_new_datafile(string ps_description, string ps_context_object , string ps_component_id , string ps_created_by , string ps_status , string ps_long_description , REF string ps_report_id) RPCFUNC ALIAS FOR "dbo.jmj_new_datafile"
 FUNCTION long	 jmj_new_document_config_object(string ps_config_object_type, string ps_description, string ps_context_object , string ps_component_id , string ps_created_by , string ps_status , string ps_long_description , REF string ps_report_id) RPCFUNC ALIAS FOR "dbo.jmj_new_document_config_object"
@@ -296,8 +295,6 @@ FUNCTION long sp_forward_todo_service(long pl_patient_workplan_item_id, string p
 FUNCTION long sp_generate_billing_id(string ps_cpr_id, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_generate_billing_id"
 FUNCTION long sp_get_age_date(datetime pdt_from_date, long pl_add_number, string ps_add_unit, ref datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_get_age_date"
 FUNCTION long sp_get_all_encounter_procs() RPCFUNC ALIAS FOR "dbo.sp_get_all_encounter_procs"
-FUNCTION long sp_get_appointment_type(string ps_appointment_type, ref string ps_encounter_type, ref string ps_new_flag) RPCFUNC ALIAS FOR "dbo.sp_get_appointment_type"
-FUNCTION long sp_get_appointment_type_list() RPCFUNC ALIAS FOR "dbo.sp_get_appointment_type_list"
 FUNCTION long sp_get_assessment_icd10(string ps_cpr_id, string ps_assessment_id) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_icd10"
 FUNCTION long sp_get_assessment_status(string ps_cpr_id, long pl_problem_id, long pl_encounter_id, ref string ps_status) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_status"
 FUNCTION long sp_get_assessment_top_20(string ps_user_id, string ps_assessment_type, string ps_top_20_code) RPCFUNC ALIAS FOR "dbo.sp_get_assessment_top_20"
@@ -398,7 +395,6 @@ FUNCTION long sp_get_progress_types(string ps_cpr_id, string ps_context_object, 
 FUNCTION long sp_get_read_message_list(string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_get_read_message_list"
 FUNCTION long sp_get_referral_attachment_id(string ps_cpr_id, long pl_problem_id, integer pi_treatment_sequence, ref long pl_attachment_id) RPCFUNC ALIAS FOR "dbo.sp_get_referral_attachment_id"
 FUNCTION long sp_get_report_printer(string ps_report_id, string ps_office_id, long pl_computer_id, string ps_room_id) RPCFUNC ALIAS FOR "dbo.sp_get_report_printer"
-FUNCTION long sp_get_resource(string ps_resource, ref string ps_encounter_type, ref string ps_new_flag, ref string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_get_resource"
 FUNCTION long sp_get_room_status(string ps_room_id) RPCFUNC ALIAS FOR "dbo.sp_get_room_status"
 FUNCTION long sp_get_rooms_in_type(string ps_room_type) RPCFUNC ALIAS FOR "dbo.sp_get_rooms_in_type"
 FUNCTION long sp_get_secondary_proc_list() RPCFUNC ALIAS FOR "dbo.sp_get_secondary_proc_list"
@@ -411,7 +407,6 @@ FUNCTION long sp_get_todo_list_30(string ps_user_id, string ps_office_id, string
 FUNCTION long sp_get_top_20(string ps_user_id, string ps_top_20_code, string ps_icon_bitmap) RPCFUNC ALIAS FOR "dbo.sp_get_top_20"
 FUNCTION long sp_get_top_20_for_edit(string ps_user_id, string ps_top_20_code) RPCFUNC ALIAS FOR "dbo.sp_get_top_20_for_edit"
 FUNCTION long sp_get_treatment_assessments(string ps_cpr_id, long pl_encounter_id, long pl_encounter_charge_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_assessments"
-FUNCTION long sp_get_treatment_attachment_id(string ps_cpr_id, long pl_treatment_id, ref long pl_attachment_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_attachment_id"
 FUNCTION long sp_get_treatment_billing(string ps_cpr_id, long pl_encounter_id, long pl_problem_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_billing"
 FUNCTION long sp_get_treatment_followup_workplan(string ps_cpr_id, long pl_treatment_id, long pl_encounter_id, string ps_ordered_by, string ps_created_by, string ps_workplan_type, ref long pl_patient_workplan_id) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_followup_workplan"
 FUNCTION long sp_get_treatment_followup_workplan_items(string ps_cpr_id, long pl_treatment_id, string ps_workplan_type) RPCFUNC ALIAS FOR "dbo.sp_get_treatment_followup_workplan_items"
@@ -430,7 +425,6 @@ FUNCTION long sp_get_who_came_office(string ps_office_id, string ps_user_id, dat
 FUNCTION long sp_get_who_came_today(datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_get_who_came_today"
 FUNCTION long sp_Get_Workplan_Auto_Perform_Service(long pl_patient_workplan_id, string ps_user_id) RPCFUNC ALIAS FOR "dbo.sp_Get_Workplan_Auto_Perform_Service"
 FUNCTION long sp_get_workplan_step_details(long pi_workplan_id, long pi_step_number) RPCFUNC ALIAS FOR "dbo.sp_get_workplan_step_details"
-FUNCTION long sp_growth_percentile(string ps_measurement, string ps_sex, integer pi_age_months, real pr_value, ref real pr_percentile) RPCFUNC ALIAS FOR "dbo.sp_growth_percentile"
 FUNCTION long sp_has_alert(string ps_cpr_id, string ps_alert_category_id, ref integer pi_alert_count) RPCFUNC ALIAS FOR "dbo.sp_has_alert"
 FUNCTION long sp_init_user_therapies(string ps_user_id, string ps_assessment_id, string ps_common_list_id, long pl_old_parent_definition_id, long pl_new_parent_definition_id) RPCFUNC ALIAS FOR "dbo.sp_init_user_therapies"
 FUNCTION long sp_insert_assessment_treat_def(string ps_assessment, string ps_treatment_type, string ps_treatment_desc, string ps_user_id, long pi_sort_sequence, string ps_instructions, long pl_parent_definition_id, string pc_child_flag, long pl_followup_workplan_id, ref long pl_definition_id) RPCFUNC ALIAS FOR "dbo.sp_insert_assessment_treat_def"
@@ -506,9 +500,6 @@ FUNCTION long sp_pick_service(string ps_context_object) RPCFUNC ALIAS FOR "dbo.s
 FUNCTION long sp_post_encounter_note(string ps_cpr_id, long pl_patient_workplan_id, long pl_encounter_id, string ps_encounter_note, string ps_ordered_by, string ps_ordered_for, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_post_encounter_note"
 FUNCTION long sp_procedure_search(string ps_procedure_type, string ps_procedure_category_id, string ps_description, string ps_cpt_code, string ps_specialty_id, string ps_status) RPCFUNC ALIAS FOR "dbo.sp_procedure_search"
 FUNCTION long sp_purge_messages(datetime pdt_date) RPCFUNC ALIAS FOR "dbo.sp_purge_messages"
-FUNCTION long sp_queue_event(string ps_event, datetime pdt_start_date, ref long pl_event_id) RPCFUNC ALIAS FOR "dbo.sp_queue_event"
-FUNCTION long sp_queue_event_set_attribute(long pl_event_id, string ps_attribute, string ps_value) RPCFUNC ALIAS FOR "dbo.sp_queue_event_set_attribute"
-FUNCTION long sp_queue_event_set_ready(long pl_event_id) RPCFUNC ALIAS FOR "dbo.sp_queue_event_set_ready"
 FUNCTION long sp_register_computer(string ps_office_id, string ps_logon_id, string ps_computername, ref long pl_computer_id) RPCFUNC ALIAS FOR "dbo.sp_register_computer"
 FUNCTION long sp_remove_attachment(string ps_cpr_id, long pl_attachment_id, string ps_user_id, string ps_created_by, string ps_context_object, long pl_object_key) RPCFUNC ALIAS FOR "dbo.sp_remove_attachment"
 FUNCTION long sp_remove_results(string ps_cpr_id, long pl_observation_sequence, string ps_location, integer pi_result_sequence, long pl_encounter_id, string ps_user_id, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_remove_results"
@@ -551,7 +542,6 @@ FUNCTION long sp_set_workplan_item_progress(long pl_patient_workplan_item_id, st
 FUNCTION long sp_set_workplan_status(string ps_cpr_id, long pl_encounter_id, long pl_treatment_id, long pl_patient_workplan_id, string ps_progress_type, datetime pdt_progress_date_time, string ps_completed_by, string ps_owned_by, string ps_created_by) RPCFUNC ALIAS FOR "dbo.sp_set_workplan_status"
 FUNCTION long sp_setup_integration(string ps_billing_system, string ps_office_id) RPCFUNC ALIAS FOR "dbo.sp_setup_integration"
 FUNCTION long sp_setup_practicemanagement(string ps_billing_system, string ps_office_id) RPCFUNC ALIAS FOR "dbo.sp_setup_practicemanagement"
-FUNCTION long sp_stone_and_replicate(string ps_cpr_id, long pl_encounter_id) RPCFUNC ALIAS FOR "dbo.sp_stone_and_replicate"
 FUNCTION long sp_table_update(string ps_table_name, string ps_updated_by) RPCFUNC ALIAS FOR "dbo.sp_table_update"
 FUNCTION long sp_top_20_delete(string ps_top_20_user_id, string ps_top_20_code, long pl_top_20_sequence) RPCFUNC ALIAS FOR "dbo.sp_top_20_delete"
 FUNCTION long sp_top_20_sort_update(string ps_top_20_user_id, string ps_top_20_code, long pl_top_20_sequence, long pl_new_sort_sequence) RPCFUNC ALIAS FOR "dbo.sp_top_20_sort_update"
@@ -733,6 +723,8 @@ public function long upgrade_material_id (ref string as_filename)
 public function long load_schema_file (string ps_rootpath, long pl_modification_level, ref string as_filename)
 public function string fn_strength (string ps_form_rxcui)
 public subroutine execute_sql_script (string ps_string, boolean pb_abort_on_error, ref str_sql_script_status pstr_status)
+public subroutine test_playback ()
+public function integer upgrade_database_local_mdlvl ()
 end prototypes
 
 public subroutine checkpoint (string ps_text);if transaction_level < 1 then return
@@ -750,8 +742,10 @@ if transaction_open = false then
 end if
 
 rollback using luo_this;
-
+// When you change the value of AutoCommit from false to true, PowerBuilder issues a COMMIT statement by default.
 autocommit = true
+// After rolling back, re-record the logs that occurred during the transaction
+mylog.play_back()
 
 if transaction_open = false then
 	return
@@ -807,7 +801,7 @@ end function
 public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_logid, string ps_logpass);
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
-return dbconnect(ps_server, ps_dbname, ps_dbms, "EncounterPRO_OS", ps_logid, ps_logpass)
+return dbconnect(ps_server, ps_dbname, ps_dbms, gnv_app.product_name, ps_logid, ps_logpass)
 
 end function
 
@@ -870,42 +864,36 @@ integer li_sts
 
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
-if common_thread.default_database = "JMJIssueManager" then
-	ls_dbserver = "techserv"
-	ls_dbname = "issues"
-	ls_dbms = "SNC"
+if pos(common_thread.default_database, "|") > 0 then
+	f_split_string(common_thread.default_database, "|", ls_dbserver, ls_dbname)
+	if ls_dbserver = "" or ls_dbname = "" then
+		log.log(this, "u_sqlca.dbconnect:0016", "Invalid DB specification (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 else
-	if pos(common_thread.default_database, "|") > 0 then
-		f_split_string(common_thread.default_database, "|", ls_dbserver, ls_dbname)
-		if ls_dbserver = "" or ls_dbname = "" then
-			log.log(this, "u_sqlca.dbconnect:0016", "Invalid DB specification (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-	else
-		ls_dbserver = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "")
-		if ls_dbserver = "" then
-			log.log(this, "u_sqlca.dbconnect:0022", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-		
-		ls_dbname = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "")
-		if ls_dbserver = "" then
-			log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
-			return -1
-		end if
-		
-		ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "")
-		ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "")
-end if
+	ls_dbserver = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "srv-goehr-demo.database.windows.net")
+	if ls_dbserver = "" then
+		log.log(this, "u_sqlca.dbconnect:0022", "Invalid dbserver entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 	
+	ls_dbname = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
+	if ls_dbserver = "" then
+		log.log(this, "u_sqlca.dbconnect:0028", "Invalid dbname entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
+		return -1
+	end if
 	
-	ls_dbms = "SNC"
 //	ls_dbms = profilestring(gnv_app.ini_file, common_thread.default_database, "dbms", "")
 //	if ls_dbserver = "" then
 //		log.log(this, "u_sqlca.dbconnect:0037", "Invalid dbms entry in EncounterPRO.INI (" + common_thread.default_database + ")", 4)
 //		return -1
 //	end if
 end if
+
+ls_logid = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogid", "demo1@srv-goehr-demo")
+ls_logpass = profilestring(gnv_app.ini_file, common_thread.default_database, "dblogpass", "Gr33nOl1ve")
+
+ls_dbms = "MSO"
 
 if len(ls_logid) > 0 and len(ls_logpass) > 0 then
 	return dbconnect(ls_dbserver, ls_dbname, ls_dbms, ps_appname, ls_logid, ls_logpass)
@@ -1047,7 +1035,7 @@ return 1
 
 end function
 
-public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_appname, string ps_logid, string ps_logpass, string ps_dbparm, string ps_connectstring);u_sqlca luo_this
+public function integer dbconnect (string ps_server, string ps_dbname, string ps_dbms, string ps_appname, string ps_logid, string ps_logpass, string ps_dbparm, string ps_connectstring);
 string ls_computername
 integer li_sts
 string ls_sql
@@ -1062,8 +1050,6 @@ string ls_adodb_connectstring
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
 if isnull(servername) then set_server(ps_server)
-
-luo_this = this
 
 // Set sqlca.sqlcode = 1 before connection to database is made
 sqlcode = 1
@@ -1180,6 +1166,31 @@ setnull(ls_sql_error)
 
 SetPointer(HourGlass!)
 
+// For public demo access, first try the "free" server then the alternate if not successful
+if gnv_app.is_demo_version then
+	// The ServerName, logid, logpass parameters are defaulted
+	dbparm += ",TimeOut=120"
+	CONNECT USING this; 
+	if SQLCode = 0 then
+		connected = true
+	end if
+	if not connected then
+		CONNECT USING this; 
+		if SQLCode = 0 then
+			connected = true
+		end if		
+	end if
+	if not connected then		
+		// try the alternate
+		this.ServerName = "srv-goehr-demo1.database.windows.net"
+		this.logid += "1"
+		CONNECT USING this; 
+		if SQLCode = 0 then
+			connected = true
+		end if
+	end if
+end if
+
 // First try connecting with sql_authentication if it's available
 if not connected and sql_authentication then
 	if isnull(logpass) then
@@ -1189,26 +1200,21 @@ if not connected and sql_authentication then
 	// Reset the dbparm
 	dbparm = ls_dbparm
 
-	CONNECT USING luo_this; 
+	CONNECT USING this; 
 	if SQLCode = 0 then
 		autocommit = true
 		connected = true
 		connected_using = "SQL"
-		adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
-		// Check the database for EncounterPRO objects and security status
-		li_sts = check_database()
-		if li_sts <= 0 then
-			ls_sql_error = "check_database failed (" + database + ")"
-			if len(sqlerrtext) > 0 then
-				ls_sql_error += " - " + sqlerrtext
-			end if
-			log.log(this, "u_sqlca.dbconnect:0125", "SQL Authentication - " + ls_sql_error, 1)
-			dbdisconnect()
-		end if
 	else
 		ls_sql_error = sqlerrtext
 		log.log(this, "u_sqlca.dbconnect:0130", "SQL Authentication - " + ls_sql_error, 1)
 	end if
+end if
+
+if connected then
+	autocommit = true
+	connected_using = "SQL"
+	adodb_connectstring = ls_adodb_connectstring + ";UID=" + logid + ";PWD=" + logpass
 end if
 
 // If we didn't connect with sql authentication, try windows authentication if it's available
@@ -1228,35 +1234,21 @@ if not connected and windows_authentication then
 		CASE ELSE
 	END CHOOSE
 	
-	CONNECT USING luo_this;
+	CONNECT USING this;
 	if SQLCode <> 0 THEN 
 		// retry once
-		CONNECT USING luo_this;
+		CONNECT USING this;
 	end if
 	if SQLCode = 0 then
 		autocommit = true
 		connected = true
 		connected_using = "Windows"
 		adodb_connectstring = ls_adodb_connectstring
-		// Check the database for EncounterPRO objects and security status
-		li_sts = check_database()
-		if li_sts <= 0 then
-			ls_windows_error = "check_database failed (" + database + ")"
-			if len(sqlerrtext) > 0 then
-				ls_windows_error += " - " + sqlerrtext
-			end if
-			log.log(this, "u_sqlca.dbconnect:0166", "Windows Authentication - " + ls_windows_error, 1)
-			dbdisconnect()
-		end if
 	else
 		ls_windows_error = sqlerrtext
 		log.log(this, "u_sqlca.dbconnect:0171", "Windows Authentication - " + ls_windows_error, 1)
 	end if
 end if
-
-if not connected then DebugBreak()
-
-setpointer ( arrow! )
 
 if not connected then
 	// Construct the error message
@@ -1278,6 +1270,23 @@ if not connected then
 	log.log(this, "u_sqlca.dbconnect:0179", ls_message, 4)
 	return -1
 end if
+
+if connected then
+	// Check the database for EncounterPRO objects and security status
+	li_sts = check_database()
+	if li_sts <= 0 then
+		ls_windows_error = "check_database failed (" + database + ")"
+		if len(sqlerrtext) > 0 then
+			ls_windows_error += " - " + sqlerrtext
+		end if
+		log.log(this, "u_sqlca.dbconnect:0166", ls_windows_error, 4)
+		dbdisconnect()
+		return -1
+	end if
+else
+	DebugBreak()
+end if
+setpointer ( arrow! )
 
 // If we get here then we've successfully connected
 
@@ -1305,7 +1314,9 @@ else
 //	commit using luo_this;
 	transaction_level = 0
 	transaction_open = false
+	// When you change the value of AutoCommit from false to true, PowerBuilder issues a COMMIT statement by default.
 	autocommit = true
+	mylog.clear_playback()
 end if
 
 if li_transaction_level > 0 then	
@@ -1324,6 +1335,7 @@ transaction_level += 1
 transaction_open = true
 caller_object[transaction_level] = po_caller_object
 caller_text[transaction_level] = ps_caller_text
+mylog.clear_playback()
 
 mylog.log(this, "u_sqlca.begin_transaction:0009", "level=" + string(transaction_level) + ", caller=" + who_called(po_caller_object) + ", script=" + ps_caller_text, 1)
 
@@ -1453,9 +1465,10 @@ end function
 
 public function string sys (string ps_user);string ls_temp
 str_popup popup
-string ls_servername
+string ls_servername, ls_database_name
 
 select ServerProperty('SERVERNAME') INTO :ls_servername FROM c_1_record USING this;
+ls_database_name = profilestring(gnv_app.ini_file, common_thread.default_database, "dbname", "GreenOliveDemo")
 
 if lower(ps_user) = "jmjtech" then
 	ls_temp  = "1"
@@ -1487,7 +1500,7 @@ elseif lower(ps_user) = lower(application_role) then
 			log.log(this, "u_sqlca.sys:0032", "No system_bitmap (Utilities not available)", 3)
 		end if		
 	end if
-	if Mid(ls_servername,1,5) = "goehr" OR Pos(sqlca.database, "Demo") > 0  Then
+	if Mid(ls_servername,1,5) = "goehr" OR gnv_app.is_demo_version OR Pos(lower(ls_database_name),"demo") > 0  Then
 		// Azure SQL password complexity constraints
 		ls_temp  = "A"
 		ls_temp  += "p"
@@ -1729,14 +1742,16 @@ if luo_this.sqlcode = 0 then
 				database_mode,
 				database_status,
 				master_configuration_date,
-				modification_level
+				modification_level,
+				client_link
 		INTO :ll_customer_id,
 				:db_script_major_release,
 				:db_script_database_version,
 				:ls_database_mode,
 				:ls_database_status,
 				:ldt_master_configuration_date,
-				:ll_modification_level
+				:ll_modification_level,
+				:client_link
 		FROM c_Database_Status
 		USING luo_this;
 		if not this.check() then return -1
@@ -2309,7 +2324,11 @@ if li_sts >= 0 and pl_modification_level > modification_level then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	if gnv_app.is_demo_version then
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Public_Demo_Install_"
+	else
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	end if
 	ls_client_link = gnv_app.client_link_start + string(pl_modification_level) + ".exe"
 	
 	select count(*) into :li_count from sys.columns where name = 'client_link';
@@ -3730,7 +3749,7 @@ if ll_dochandle = -1 then
 	DebugBreak()
 	return -1
 end if
-FileWrite(ll_dochandle, "Starting upgrade " + string(Now()))
+FileWrite(ll_dochandle, "Starting upgrade " + string(Today()) + " " + string(Now()))
 
 li_please_wait_index = f_please_wait_open()
 f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
@@ -3755,7 +3774,7 @@ for li_script = 1 to li_num_scripts
 	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
 next
 f_please_wait_close(li_please_wait_index)
-FileWrite(ll_dochandle, "Finished upgrade " + string(Now()))
+FileWrite(ll_dochandle, "Finished upgrade " + string(Today()) + " " + string(Now()))
 FileClose(ll_dochandle)
 
 commit_transaction()
@@ -3765,7 +3784,11 @@ if li_count > 0 then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	if gnv_app.is_demo_version then
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Public_Demo_Install_"
+	else
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	end if
 	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
 
 	UPDATE c_Database_Status
@@ -3823,6 +3846,9 @@ ll_modification_level = modification_level + 1
 //if ll_material_id = 0 or isnull(ll_material_id) then
 	//log.log(this, "u_sqlca.upgrade_material_id:0015", "No upgrade material found for mod level (" + string(ll_modification_level) + ")", 4)
 	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
+	if ll_material_id <= 0 then
+		ll_material_id = load_schema_file("C:\Users\Public\Documents\Attachments", ll_modification_level, as_filename)
+	end if
 	if ll_material_id <= 0 then
 		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
 	end if
@@ -4098,6 +4124,182 @@ return
 
 
 end subroutine
+
+public subroutine test_playback ();
+begin_transaction(this,"Test")
+log.log(this,"test_playback","Test 1",2)
+log.log(this,"test_playback","Test 2",2)
+rollback_transaction()
+
+end subroutine
+
+public function integer upgrade_database_local_mdlvl ();
+// This method calls the upgrade scripts to upgrade the database from its current modification level
+// to the next modification level in the open source version. Upgrades are delivered via .mdlvl files.
+
+long ll_modification_level
+long ll_material_id
+blob lbl_script
+string ls_xml
+integer li_sts
+pbdom_builder pbdombuilder_new
+pbdom_element lo_root
+pbdom_element pbdom_element_array[]
+pbdom_document lo_doc
+string ls_new_xml
+blob lbl_new_xml
+string ls_script
+integer li_please_wait_index
+integer li_script, li_count
+integer li_num_scripts
+string ls_element
+string ls_client_link
+string ls_log_file
+long ll_dochandle
+string ls_message
+string ls_path
+str_sql_script_status lstr_sql_script_status
+
+ll_modification_level = this.modification_level + 1
+
+ls_path = gnv_app.program_directory
+//// lbl_script
+////	ll_material_id = load_schema_file(gnv_app.program_directory, ll_modification_level, as_filename)
+////	if ll_material_id <= 0 then
+////		ll_material_id = load_schema_file(f_default_attachment_path(), ll_modification_level, as_filename)
+////	end if
+////	if ll_material_id <= 0 then
+////		ll_material_id = load_schema_file("\\localhost\attachments", ll_modification_level, as_filename)
+////	end if
+////	if ll_material_id <= 0 then
+////		MessageBox("File not found", "The ModLevel-" + string(ll_modification_level) + ".mdlvl schema file for mod level " + string(ll_modification_level) + " was not found in either the program directory or attachments folder.")
+////
+//		li_sts = GetFileOpenName ("Select DB Schema File", ls_filepath, as_filename ,"mdlvl", "DB Mod Level (*.mdlvl),*.mdlvl")
+//		If li_sts <= 0 Then return -1
+//		
+//		ll_material_id = load_schema_file(ls_filepath, ll_modification_level, as_filename)
+//		if ll_material_id <= 0 then
+//			openwithparm(w_pop_message, "Error loading schema file")
+//			return -1
+//		end if
+//	end if
+//end if
+//
+//
+//ll_material_id = upgrade_material_id(ls_script)
+//if ll_material_id < 0 then
+//	// Messages already logged
+//	return -1
+//end if
+//
+//SELECTBLOB object
+//INTO :lbl_script
+//FROM c_Patient_Material
+//WHERE material_id = :ll_material_id;
+//if not tf_check() then return -1
+//
+//if isnull(lbl_script) or len(lbl_script) <= 0 then
+//	log.log(this, "u_sqlca.upgrade_database:0039", "Empty upgrade script was found for mod level (" + string(ll_modification_level) + ")", 4)
+//	return -1
+//end if
+//
+//ls_xml = f_blob_to_string(lbl_script)
+//
+//// Do not keep the material, want to load again next time
+//DELETE FROM c_patient_material
+//WHERE material_id = :ll_material_id
+//USING this;
+
+// Now create the DOM version from the string version
+pbdombuilder_new = Create pbdom_builder
+
+// Make sure this looks like XML
+TRY
+	lo_doc = pbdombuilder_new.BuildFromString(ls_xml)
+	lo_root = lo_doc.getrootelement()
+	if lo_root.GetName() <> "EproDBSchema" then
+		log.log(this, "u_sqlca.upgrade_database:0058", "XML schema incorrect", 4)
+		return -1
+	end if		
+CATCH (throwable lo_error)
+	log.log(this, "u_sqlca.upgrade_database:0062", "Error reading XML schema data (" + lo_error.text + ")", 4)
+	return -1
+END TRY
+
+// "C:\Users\Public\Downloads\"
+begin_transaction(this, "Upgrade Mod Level")
+
+lo_root.GetChildElements(ref pbdom_element_array)
+li_num_scripts = UpperBound(pbdom_element_array)
+
+// Avoid o_log conflicts, write messages to file instead
+ls_log_file = "C:\Users\Public\Downloads\Installation-" + string(ll_modification_level) + ".log"
+ll_dochandle = FileOpen(ls_log_file, LineMode!, Write!, Shared!, Append!)
+if ll_dochandle = -1 then	
+	MessageBox("Upgrade log cannot be opened","Cannot open " + ls_log_file)
+	DebugBreak()
+	return -1
+end if
+FileWrite(ll_dochandle, "Starting upgrade " + string(Today()) + " " + string(Now()))
+
+li_please_wait_index = f_please_wait_open()
+f_please_wait_progress_bar(li_please_wait_index, 0, li_num_scripts)
+
+for li_script = 1 to li_num_scripts
+	ls_element = pbdom_element_array[li_script].getname()
+	ls_script = pbdom_element_array[li_script].gettext()
+	ls_message = "Executing " + ls_element
+	FileWrite(ll_dochandle, ls_message)
+	execute_sql_script(ls_script, true, lstr_sql_script_status)
+	if lstr_sql_script_status.status < 0 then
+		check()
+		rollback_transaction()
+		f_please_wait_close(li_please_wait_index)
+		ls_message = "Failed executing " + ls_script
+		FileWrite(ll_dochandle, ls_message)
+		log.log(this, "u_sqlca.upgrade_database:0098", "Failed executing " + ls_script, 5)
+		FileClose(ll_dochandle)
+		DESTROY pbdombuilder_new
+		return -1
+	end if
+	f_please_wait_progress_bar(li_please_wait_index, li_script, li_num_scripts)
+next
+f_please_wait_close(li_please_wait_index)
+FileWrite(ll_dochandle, "Finished upgrade " + string(Today()) + " " + string(Now()))
+FileClose(ll_dochandle)
+
+commit_transaction()
+
+select count(*) into :li_count from sys.columns where name = 'client_link';
+if li_count > 0 then
+	// Set the client_link to the upgrade mod level
+	// Lower mod level clients connecting to the database will use this link to 
+	// download the matching client in f_check_version
+	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
+
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level,
+		client_link = :ls_client_link
+	USING this;
+else		
+	UPDATE c_Database_Status
+	SET modification_level = :ll_modification_level
+	USING this;
+
+end if
+if not check() then
+	return -1
+end if
+
+DESTROY pbdombuilder_new
+
+this.modification_level = ll_modification_level
+
+return 1
+
+
+end function
 
 event constructor;
 deadlock = false

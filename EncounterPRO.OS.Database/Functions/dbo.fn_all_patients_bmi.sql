@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_all_patients_bmi ()
+CREATE FUNCTION dbo.fn_all_patients_bmi ()
 
 RETURNS @patient_bmi TABLE (
 	cpr_id varchar(12) NOT NULL,
@@ -188,8 +188,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_all_patients_bmi]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_all_patients_bmi] TO [cprsystem]
 GO
 

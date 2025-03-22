@@ -83,7 +83,7 @@ AS
 		[progress_date_time] ,
 		[progress_type] ,
 		[progress_key] ,
-		progress_value = COALESCE(CAST([progress] AS varchar(4000)), [progress_value]) ,
+		progress_value = COALESCE(CAST([progress] AS nvarchar(max)), [progress_value]) ,
 		[progress] ,
 		[attachment_id] ,
 		[patient_workplan_item_id] ,

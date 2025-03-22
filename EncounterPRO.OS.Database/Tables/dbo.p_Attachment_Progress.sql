@@ -71,13 +71,13 @@ CREATE TABLE [dbo].[p_Attachment_Progress] (
 		[user_id]                          [varchar](24) NOT NULL,
 		[progress_date_time]               [datetime] NOT NULL,
 		[progress_type]                    [varchar](24) NULL,
-		[progress]                         [text] NULL,
-		[attachment_image]                 [image] NULL,
+		[progress]                         [nvarchar](max) NULL,
+		[attachment_image]                 [varbinary](max) NULL,
 		[current_flag]                     [char](1) NOT NULL,
 		[created]                          [datetime] NULL,
 		[created_by]                       [varchar](24) NULL,
 		[id]                               [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [ATTACHMENTS]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Attachment_Progress]
 	ADD
@@ -107,25 +107,15 @@ CREATE CLUSTERED INDEX [idx_cpr_id]
 	ON [dbo].[p_Attachment_Progress] ([cpr_id], [attachment_id], [progress_type])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Attachment_Progress]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Attachment_Progress] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Attachment_Progress]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Attachment_Progress] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Attachment_Progress]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Attachment_Progress] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Attachment_Progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Attachment_Progress] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Attachment_Progress]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Attachment_Progress] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Attachment_Progress] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -70,7 +70,7 @@ CREATE PROCEDURE sp_Set_User_Progress (
 	@pdt_progress_date_time datetime = NULL,
 	@ps_progress_type varchar(24),
 	@ps_progress_key varchar(40) = NULL,
-	@ps_progress text = NULL ,
+	@ps_progress varchar(max) = NULL ,
 	@ps_created_by varchar(24) )
 AS
 

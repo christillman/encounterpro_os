@@ -29,12 +29,15 @@ end type
 end forward
 
 global type w_display_script_config from w_window_base
+integer x = 18
 integer width = 3063
-integer height = 2036
+integer height = 2016
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
 windowtype windowtype = response!
+long backcolor = 1073741824
+integer transparency = 5
 boolean auto_resize_objects = false
 tv_display_script tv_display_script
 cb_finished cb_finished
@@ -236,6 +239,9 @@ string ls_parent_config_object_id
 
 popup = message.powerobjectparm
 
+this.width = this.width * 0.3
+this.height = this.height * 0.9
+
 if popup.data_row_count < 3 then
 	log.log(this, "w_display_script_config:open", "Invalid Parameters", 4)
 	close(this)
@@ -300,6 +306,13 @@ if li_sts <= 0 then close(this)
 
 end event
 
+event key;call super::key;
+if key = KeyN! then
+	tv_display_script.select_next()
+end if
+
+end event
+
 type pb_epro_help from w_window_base`pb_epro_help within w_display_script_config
 integer x = 2994
 integer y = 8
@@ -316,7 +329,8 @@ integer y = 136
 integer width = 3013
 integer height = 1640
 integer taborder = 20
-long backcolor = 12632256
+integer transparency = 5
+long backcolor = 134217750
 end type
 
 event changes_made;call super::changes_made;cb_cancel.visible = true
@@ -327,6 +341,10 @@ end event
 
 event command_selected;call super::command_selected;long ll_command_index
 
+If NOT IsValid(rtf_display) Then
+	RETURN
+End If
+
 ll_command_index = rtf_display.select_next_command(0, pstr_command)
 
 // If the desired command hasn't been painted yet and we're in debug mode, then automatically run to that command
@@ -334,6 +352,7 @@ if debugging and ll_command_index = 0 and upper(pstr_command.status) = "OK" then
 	last_command_index = ll_command_index
 	rtf_display.set_breakpoint(pstr_command)
 	rtf_display.display_script_reentry()
+	parent.cb_next.setfocus()
 end if
 
 end event
@@ -356,11 +375,14 @@ end type
 
 event clicked;integer li_sts
 
-if allow_editing and tv_display_script.changes_made then
-	li_sts = tv_display_script.save_changes()
-	if li_sts <= 0 then
-		openwithparm(w_pop_message, "An error occured.  Changes have not been saved.")
-		return
+if IsValid(rtf_display) then rtf_display.show_newlines = false
+if IsValid(tv_display_script) then
+	if allow_editing and tv_display_script.changes_made then
+		li_sts = tv_display_script.save_changes()
+		if li_sts <= 0 then
+			openwithparm(w_pop_message, "An error occured.  Changes have not been saved.")
+			return
+		end if
 	end if
 end if
 
@@ -642,12 +664,13 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-cb_run.text = "Run"
-cb_debug.text = "Debug"
+If IsValid(rtf_display) Then
+	rtf_display.redisplay()
+End If
 
-rtf_display.redisplay()
-
-
+if not isnull(tv_display_script) then
+	tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
+end if
 end event
 
 type cb_debug from commandbutton within w_display_script_config
@@ -676,9 +699,6 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-cb_run.text = "Run"
-cb_debug.text = "Debug"
-
 li_sts = tv_display_script.selected_command(lstr_command)
 if li_sts <= 0 then
 	li_sts = tv_display_script.first_command(lstr_command)
@@ -687,6 +707,11 @@ if li_sts <= 0 then
 	end if
 end if
 
+If NOT IsValid(rtf_display) Then
+	openwithparm(w_pop_message, "Rich text display not available")
+	RETURN
+End If
+
 rtf_display.set_breakpoint(lstr_command)
 cb_debug.visible = false
 cb_run.visible = false
@@ -694,8 +719,10 @@ cb_stop_debugging.visible = true
 cb_next.visible = true
 debugging = true
 last_command_index = 0
+rtf_display.show_newlines = true
 
 rtf_display.redisplay()
+tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 // If the rtf control did actually break, then highlight the command that it broke on
 if rtf_display.breakpoint(lstr_command) then
@@ -747,8 +774,6 @@ if allow_editing and tv_display_script.changes_made then
 	end if
 end if
 
-
-rtf_display.clear_breakpoint()
 cb_debug.visible = true
 cb_run.visible = true
 cb_stop_debugging.visible = false
@@ -756,8 +781,13 @@ cb_next.visible = false
 debugging = false
 last_command_index = 0
 
-rtf_display.redisplay()
+if IsValid(rtf_display) then
+	rtf_display.clear_breakpoint()
+	rtf_display.show_newlines = false
+	rtf_display.redisplay()
+end if
 
+tv_display_script.display_display_script(root_display_script_id, parent_config_object, command_stack, allow_editing)
 
 
 end event
@@ -774,7 +804,7 @@ fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
 fontfamily fontfamily = swiss!
 string facename = "Arial"
-string text = "Next"
+string text = "Next (n key)"
 end type
 
 event clicked;tv_display_script.select_next()

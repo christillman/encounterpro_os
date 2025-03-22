@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_task_counts (
+CREATE FUNCTION dbo.fn_user_task_counts (
 	@ps_user_id varchar(24))
 
 RETURNS @counts TABLE (
@@ -124,8 +124,6 @@ END
 
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_task_counts]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_task_counts] TO [cprsystem]
 GO
 

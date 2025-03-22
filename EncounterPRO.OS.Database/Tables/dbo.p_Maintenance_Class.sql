@@ -101,21 +101,13 @@ ALTER TABLE [dbo].[p_Maintenance_Class]
 	CONSTRAINT [DF_p_Maintenance_Class_on_protocol_flag]
 	DEFAULT ('N') FOR [on_protocol_flag]
 GO
-GRANT DELETE
-	ON [dbo].[p_Maintenance_Class]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Maintenance_Class] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Maintenance_Class]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Maintenance_Class] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Maintenance_Class]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Maintenance_Class] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Maintenance_Class]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Maintenance_Class] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Maintenance_Class] SET (LOCK_ESCALATION = TABLE)
 GO

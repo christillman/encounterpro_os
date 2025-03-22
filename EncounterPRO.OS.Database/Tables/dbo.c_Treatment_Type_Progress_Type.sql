@@ -99,25 +99,15 @@ ALTER TABLE [dbo].[c_Treatment_Type_Progress_Type]
 	CONSTRAINT [DF__c_Treatme__progr__49F9CC38]
 	DEFAULT ('N') FOR [progress_key_enumerated_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Treatment_Type_Progress_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Treatment_Type_Progress_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Treatment_Type_Progress_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Treatment_Type_Progress_Type] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Treatment_Type_Progress_Type]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Treatment_Type_Progress_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Treatment_Type_Progress_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Treatment_Type_Progress_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Treatment_Type_Progress_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Treatment_Type_Progress_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Treatment_Type_Progress_Type] SET (LOCK_ESCALATION = TABLE)
 GO

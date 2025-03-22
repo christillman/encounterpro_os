@@ -101,13 +101,15 @@ INSERT INTO c_Property (
 	property_object,
 	description,
 	function_name,
-	status)
+	status,
+	return_data_type)
 VALUES (
 	'User Defined',
 	'Patient',
 	:ls_description,
 	:ls_function_name,
-	'OK');
+	'OK',
+	'string');
 if not tf_check() then return
 
 display_properties()

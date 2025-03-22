@@ -115,8 +115,7 @@ popup = message.powerobjectparm
 access_id = ""
 st_asterisks.text = ""
 
-pb_hint.Visible = (Pos(gnv_app.program_directory,"Demo") > 0 &
-	OR Pos(gnv_app.program_filename,"Demo") > 0)
+pb_hint.Visible =gnv_app.is_demo_version
 
 mode = popup.item
 st_prompt.text = popup.title
@@ -242,7 +241,7 @@ end type
 
 event clicked;call super::clicked;
 
-MessageBox("Hint","For the " + gnv_app.product_name + " demo, you can log in as Dr. Pat Pedia with access id 0222")
+MessageBox("Hint","For the " + gnv_app.product_name + " demo, you can log in as ~r~n* Support, Physician, access id 5401~r~n* Support Nurse, access id 7039~r~n")
 
 end event
 

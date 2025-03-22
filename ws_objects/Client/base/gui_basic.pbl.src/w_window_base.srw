@@ -124,7 +124,6 @@ end variables
 forward prototypes
 public function integer get_windowstate ()
 public subroutine remove_buttons ()
-public function integer button_pressed (integer pi_button_index)
 public subroutine set_button_defaults ()
 public function integer add_button (string ps_picture, string ps_title, string ps_help, string ps_action, string ps_argument)
 public function integer paint_menu (long pl_menu_id)
@@ -135,6 +134,7 @@ public function integer window_to_clipboard ()
 public subroutine resize_and_move ()
 public subroutine center_popup ()
 public subroutine shortcut_menus ()
+private function integer button_was_pressed (integer pi_button_index)
 end prototypes
 
 event button_pressed(integer button_index);integer li_menu_index
@@ -155,7 +155,7 @@ else
 end if
 	
 if li_button_pressed > 0 and li_button_pressed <= buttons_base.button_count then
-	li_sts = button_pressed(li_button_pressed)
+	li_sts = button_was_pressed(li_button_pressed)
 end if
 
 return
@@ -199,42 +199,6 @@ end if
 button_count = 0
 
 end subroutine
-
-public function integer button_pressed (integer pi_button_index);integer li_menu_index
-integer li_sts
-string ls_auto_close_flag
-
-li_sts = 0
-
-CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
-	CASE "MENU"
-		// Check for a valid menu
-		if isnull(istr_menu.menu_id) or istr_menu.menu_id <= 0 then return 0
-		
-		// Get the menu index from the button argument
-		li_menu_index = integer(buttons_base.button[pi_button_index].argument)
-		if isnull(li_menu_index) or li_menu_index <= 0 or li_menu_index > istr_menu.menu_item_count then return 0
-
-		// Perform the menu item
-		li_sts = f_do_menu_item_with_attributes(istr_menu.menu_id, istr_menu.menu_item[li_menu_index].menu_item_id, state_attributes)
-		
-		ls_auto_close_flag = istr_menu.menu_item[li_menu_index].auto_close_flag
-		
-		// If the auto_close_flag is not "N" then see if we need to click a button
-		// on this window
-		if upper(ls_auto_close_flag) = "N" then
-			refresh()
-		else
-			click_button(ls_auto_close_flag)
-		end if
-	CASE ELSE
-		return 0
-END CHOOSE
-
-return li_sts
-
-
-end function
 
 public subroutine set_button_defaults ();// Set the default button placement values
 if button_type = "PICTURE" then
@@ -556,6 +520,46 @@ If Not IsValid(This.menuId) Then
 End if
 
 end subroutine
+
+private function integer button_was_pressed (integer pi_button_index);integer li_menu_index
+integer li_sts
+string ls_auto_close_flag
+
+li_sts = 0
+
+CHOOSE CASE upper(buttons_base.button[pi_button_index].action)
+	CASE "MENU"
+		// Check for a valid menu
+		if isnull(istr_menu.menu_id) or istr_menu.menu_id <= 0 then return 0
+		
+		// Get the menu index from the button argument
+		li_menu_index = integer(buttons_base.button[pi_button_index].argument)
+		if isnull(li_menu_index) or li_menu_index <= 0 or li_menu_index > istr_menu.menu_item_count then return 0
+
+		// Perform the menu item
+		li_sts = f_do_menu_item_with_attributes(istr_menu.menu_id, istr_menu.menu_item[li_menu_index].menu_item_id, state_attributes)
+		
+		ls_auto_close_flag = "N"
+		IF NOT IsNull(istr_menu) THEN
+			IF NOT IsNull(istr_menu.menu_item[li_menu_index]) THEN
+				ls_auto_close_flag = istr_menu.menu_item[li_menu_index].auto_close_flag
+			END IF
+		END IF
+		// If the auto_close_flag is not "N" then see if we need to click a button
+		// on this window
+		if upper(ls_auto_close_flag) = "N" then
+			refresh()
+		else
+			click_button(ls_auto_close_flag)
+		end if
+	CASE ELSE
+		return 0
+END CHOOSE
+
+return li_sts
+
+
+end function
 
 on w_window_base.create
 this.pb_epro_help=create pb_epro_help

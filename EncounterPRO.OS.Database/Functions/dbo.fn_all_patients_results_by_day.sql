@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_all_patients_results_by_day (
+CREATE FUNCTION dbo.fn_all_patients_results_by_day (
 	@ps_observation_id varchar(24),
 	@pi_result_sequence smallint)
 
@@ -235,8 +235,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_all_patients_results_by_day]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_all_patients_results_by_day] TO [cprsystem]
 GO
 

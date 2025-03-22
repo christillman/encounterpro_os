@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_practice_user_id()
+CREATE FUNCTION dbo.fn_practice_user_id()
 RETURNS varchar(24)
 
 AS

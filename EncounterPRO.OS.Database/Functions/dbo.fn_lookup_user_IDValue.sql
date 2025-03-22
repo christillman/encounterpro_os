@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_lookup_user_IDValue (
+CREATE FUNCTION dbo.fn_lookup_user_IDValue (
 	@pl_owner_id int,
 	@ps_IDDomain varchar(40),
 	@ps_IDValue varchar(255) )

@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_recipient_info (
+CREATE FUNCTION dbo.fn_document_recipient_info (
 	@ps_ordered_for varchar(24),
 	@ps_cpr_id varchar(12) = NULL,
 	@pl_encounter_id int = NULL)
@@ -34,9 +34,7 @@ RETURNS @recipient TABLE (
 AS
 BEGIN
 
-DECLARE @ll_error int,
-	@ll_rowcount int,
-	@ll_ordered_for_actor_id int,
+DECLARE @ll_ordered_for_actor_id int,
 	@ls_ordered_for_actor_class varchar(24),
 	@ls_ordered_for_user_id varchar(24),
 	@ls_ordered_for_cpr_id varchar(12)
@@ -46,31 +44,19 @@ SELECT @ll_ordered_for_actor_id = actor_id,
 FROM c_User
 WHERE [user_id] = @ps_ordered_for
 
-SELECT @ll_error = @@ERROR,
-	@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
 -- If the ordered_for wasn't a user then see if it's an actor_class
-IF @ll_rowcount = 0
+IF @ll_ordered_for_actor_id IS NULL
 	BEGIN
 	SELECT @ll_ordered_for_actor_id = NULL,
 			@ls_ordered_for_actor_class = actor_class
 	FROM c_Actor_Class
 	WHERE actor_class = @ps_ordered_for
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
-
-	IF @ll_rowcount = 0
-		BEGIN
-		SET @ll_ordered_for_actor_id = NULL
-		SET @ls_ordered_for_actor_class = NULL
-		END
 	END
 
 -- If the ordered_for_actor_class is "Special" 
@@ -107,10 +93,7 @@ ELSE IF @ls_ordered_for_user_id <> @ps_ordered_for
 	FROM c_User
 	WHERE [user_id] = @ls_ordered_for_user_id
 
-	SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN
 	END
 
@@ -130,8 +113,6 @@ IF @ls_ordered_for_user_id IS NOT NULL
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_recipient_info]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_recipient_info] TO [cprsystem]
 GO
 

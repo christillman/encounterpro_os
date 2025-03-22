@@ -33,6 +33,7 @@ end prototypes
 public function integer open_pages ();integer i
 string ls_text
 
+if IsNull(this_section) OR NOT IsValid(this_section) THEN return -1
 
 for i = 1 to this_section.page_count
 	TRY
@@ -124,6 +125,10 @@ if pages_open then
 	next
 else
 	li_sts = open_pages()
+	IF li_sts = -1 THEN
+		MessageBox("Null section reference", "Closing application due to instability")
+		HALT CLOSE
+	END IF
 	this_section.page[1].page_object.refresh()
 end if
 
@@ -132,6 +137,8 @@ end subroutine
 
 public function integer close_pages ();integer i
 integer li_sts
+
+if IsNull(this_section) OR NOT IsValid(this_section) THEN return -1
 
 for i = 1 to this_section.page_count
 	if isvalid(this_section.page[i].page_object) then
@@ -151,6 +158,10 @@ public subroutine finished ();integer li_sts
 
 li_sts = close_pages()
 
+IF li_sts = -1 THEN
+	MessageBox("Null section reference", "Closing application due to instability")
+	HALT CLOSE
+END IF
 end subroutine
 
 public subroutine post_refresh ();postevent("refresh")
@@ -161,7 +172,13 @@ public subroutine key_down (keycode key, unsignedlong keyflags);
 
 // pass the keystroke into the tab
 if tab_pages.selectedtab > 0 then
-	this_section.page[tab_pages.selectedtab].page_object.key_down(key, keyflags)
+	if NOT IsNull(this_section) then
+	if NOT IsNull(this_section.page[tab_pages.selectedtab]) then
+	if NOT IsNull(this_section.page[tab_pages.selectedtab].page_object) then
+		this_section.page[tab_pages.selectedtab].page_object.key_down(key, keyflags)
+	end if
+	end if
+	end if
 end if
 
 end subroutine

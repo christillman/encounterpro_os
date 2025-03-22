@@ -68,12 +68,12 @@ CREATE TABLE [dbo].[c_Database_Script_Log] (
 		[script_id]                     [int] NOT NULL,
 		[executed_date_time]            [datetime] NULL,
 		[executed_from_computer_id]     [int] NULL,
-		[db_script]                     [text] NULL,
+		[db_script]                     [nvarchar](max) NULL,
 		[completion_status]             [varchar](12) NOT NULL,
 		[error_index]                   [int] NULL,
 		[error_message]                 [varchar](512) NULL,
 		[end_date]                      [datetime] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Database_Script_Log]
 	ADD
@@ -89,25 +89,15 @@ ALTER TABLE [dbo].[c_Database_Script_Log]
 	CONSTRAINT [DF__c_Databas__end_d__776A2C49]
 	DEFAULT (dbo.get_client_datetime()) FOR [end_date]
 GO
-GRANT DELETE
-	ON [dbo].[c_Database_Script_Log]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Database_Script_Log] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Database_Script_Log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Database_Script_Log] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Database_Script_Log]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Database_Script_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Database_Script_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Database_Script_Log] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Database_Script_Log]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Database_Script_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Database_Script_Log] SET (LOCK_ESCALATION = TABLE)
 GO

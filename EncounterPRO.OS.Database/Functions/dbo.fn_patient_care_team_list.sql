@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_care_team_list (
+CREATE FUNCTION dbo.fn_patient_care_team_list (
 	@ps_cpr_id varchar(24) )
 
 RETURNS @care_team TABLE (
@@ -435,8 +435,6 @@ WHERE u.actor_class IN ('Special', 'System')
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_care_team_list]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_care_team_list] TO [cprsystem]
 GO
 

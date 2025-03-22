@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_interface_objects_to_send_sample (
+CREATE FUNCTION dbo.fn_interface_objects_to_send_sample (
 	@pl_document_patient_workplan_item_id int
 	)
 
@@ -111,8 +111,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_interface_objects_to_send_sample]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_interface_objects_to_send_sample] TO [cprsystem]
 GO
 

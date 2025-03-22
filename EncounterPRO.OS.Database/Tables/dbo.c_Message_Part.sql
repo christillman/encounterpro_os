@@ -70,8 +70,8 @@ CREATE TABLE [dbo].[c_Message_Part] (
 		[part_table]                [varchar](32) NULL,
 		[part_order]                [smallint] NULL,
 		[part_unique]               [char](1) NULL,
-		[part_query]                [text] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+		[part_query]                [nvarchar](max) NULL
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Message_Part]
 	ADD
@@ -82,25 +82,15 @@ ALTER TABLE [dbo].[c_Message_Part]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Message_Part]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Message_Part] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Message_Part]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Message_Part] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Message_Part]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Message_Part] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Message_Part]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Message_Part] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Message_Part]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Message_Part] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Message_Part] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -68,12 +68,12 @@ CREATE TABLE [dbo].[x_External_Application_Message] (
 		[message_type]                [varchar](24) NOT NULL,
 		[allow_incoming_flag]         [char](1) NOT NULL,
 		[allow_outgoing_flag]         [char](1) NOT NULL,
-		[notes]                       [text] NULL,
+		[notes]                       [nvarchar](max) NULL,
 		[created]                     [datetime] NOT NULL,
 		[created_by]                  [varchar](24) NOT NULL,
 		[status]                      [varchar](12) NOT NULL,
 		[id]                          [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[x_External_Application_Message]
 	ADD
@@ -99,25 +99,15 @@ ALTER TABLE [dbo].[x_External_Application_Message]
 	CONSTRAINT [DF_x_ext_appl_message_status_40]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[x_External_Application_Message]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_External_Application_Message] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_External_Application_Message]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_External_Application_Message] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_External_Application_Message]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_External_Application_Message] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_External_Application_Message]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_External_Application_Message] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_External_Application_Message]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_External_Application_Message] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_External_Application_Message] SET (LOCK_ESCALATION = TABLE)
 GO

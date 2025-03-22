@@ -18,15 +18,13 @@ GO
 Print 'Create Procedure [dbo].[sp_get_treatment_observed_by]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_treatment_observed_by (
 	@ps_cpr_id varchar(24),
 	@pl_treatment_id int,
 	@pl_encounter_id int,
-	@ps_user_id varchar(24)
-	--@ps_last_observed_by varchar(24) OUTPUT,
-	--@ps_reviewed char(1) OUTPUT 
+	@ps_user_id varchar(24) 
 	)
 AS
 
@@ -44,9 +42,6 @@ WHERE t.cpr_id = @ps_cpr_id
 AND t.treatment_id = @pl_treatment_id
 AND o.parent_observation_sequence IS NULL
 ORDER BY o.observation_sequence desc
-
-IF @@ROWCOUNT = 0
-	SET @ls_last_observed_by = NULL
 
 SELECT @ll_count = count(*)
 FROM p_Treatment_Progress

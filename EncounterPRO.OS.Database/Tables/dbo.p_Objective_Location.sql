@@ -95,25 +95,15 @@ ALTER TABLE [dbo].[p_Objective_Location]
 	CONSTRAINT [DF__p_Objecti__creat__74643BF9]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[p_Objective_Location]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Objective_Location] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Objective_Location]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Objective_Location] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Objective_Location]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Objective_Location] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Objective_Location]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Objective_Location] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Objective_Location]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Objective_Location] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Objective_Location] SET (LOCK_ESCALATION = TABLE)
 GO

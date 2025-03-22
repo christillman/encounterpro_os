@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Dispatch_Workplan_Step]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Dispatch_Workplan_Step
 	(
@@ -111,7 +111,8 @@ WHILE @pi_step_number > 0
 		@ll_workplan_treatment_id = treatment_id
 	FROM p_Patient_WP (UPDLOCK)
 	WHERE patient_workplan_id = @pl_patient_workplan_id
-	IF @@rowcount <> 1
+
+	IF @ll_this_workplan_id IS NULL
 		BEGIN
 		RAISERROR ('Workplan not found (%s, %d)',16,-1, @ps_cpr_id, @pl_patient_workplan_id)
 		ROLLBACK TRANSACTION
@@ -128,7 +129,7 @@ WHILE @pi_step_number > 0
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @ll_encounter_id
 
-	IF @@ROWCOUNT <> 1
+	IF @ls_office_id IS NULL
 		SELECT @ls_office_id = office_id
 		FROM o_Office
 
@@ -147,6 +148,7 @@ WHILE @pi_step_number > 0
 	UPDATE p_Patient_WP
 	SET last_step_dispatched = -@pi_step_number
 	WHERE patient_workplan_id = @pl_patient_workplan_id
+
 	IF @@rowcount <> 1
 		BEGIN
 		RAISERROR ('Error Updating Workplan (%s, %d)',16,-1, @ps_cpr_id, @pl_patient_workplan_id)
@@ -164,11 +166,13 @@ WHILE @pi_step_number > 0
 	WHERE workplan_id = @ll_this_workplan_id
 	AND step_number = @pi_step_number
 
-	IF @@rowcount <> 1
+	IF @lb_mutually_exclusive_items IS NULL
+		BEGIN
 		SET @ls_room_type = NULL
 		SET @ll_step_delay = NULL
 		SET @ls_step_delay_unit = NULL
 		SET @ls_delay_from_flag = NULL
+		END
 
 
 	-- Get the new room from the c_Workplan_Step table
@@ -178,7 +182,7 @@ WHILE @pi_step_number > 0
 	AND step_number = @pi_step_number
 	AND office_id = @ls_office_id
 
-	IF @@rowcount <> 1
+	IF @ls_room_id IS NULL
 		SET @ls_room_id = @ls_room_type
 
 
@@ -310,6 +314,7 @@ WHILE @pi_step_number > 0
 		FROM c_Workplan_Item
 		WHERE workplan_id = @ll_this_workplan_id
 		AND item_number = @ll_item_number
+
 		IF @@ROWCOUNT = 1
 			BEGIN
 			IF @ll_age_range_id IS NOT NULL
@@ -754,6 +759,7 @@ WHILE @pi_step_number > 0
 		SET last_step_dispatched = @pi_step_number,
 			last_step_date = @ldt_last_step_date
 		WHERE patient_workplan_id = @pl_patient_workplan_id
+
 		IF @@rowcount <> 1
 			BEGIN
 			RAISERROR ('Error Updating Workplan (%s, %d)',16,-1, @ps_cpr_id, @pl_patient_workplan_id)

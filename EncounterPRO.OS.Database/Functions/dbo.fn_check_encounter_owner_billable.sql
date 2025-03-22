@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_check_encounter_owner_billable (
+CREATE FUNCTION dbo.fn_check_encounter_owner_billable (
 	@ps_cpr_id varchar(24) ,
 	@pl_encounter_id int 
 	)

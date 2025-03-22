@@ -108,25 +108,15 @@ ALTER TABLE [dbo].[c_Specialty]
 	CONSTRAINT [DF__c_Specialty__id__192BAC54]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Specialty]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Specialty] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Specialty]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Specialty] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Specialty]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Specialty] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Specialty]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Specialty] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Specialty]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Specialty] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Specialty] SET (LOCK_ESCALATION = TABLE)
 GO

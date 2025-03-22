@@ -206,8 +206,8 @@ FROM @services s
 	ON e.attending_doctor = u.user_id
 
 -- Before returning, call the jmj_log_perflog to see if any db stats need to be logged
-IF LEFT(@ps_user_id, 1) = '#'
-	EXECUTE jmj_log_perflog @ps_user_id
+--IF LEFT(@ps_user_id, 1) = '#'
+	--EXECUTE jmj_log_perflog @ps_user_id
 
 SELECT [user_id] ,
 	patient_workplan_item_id ,

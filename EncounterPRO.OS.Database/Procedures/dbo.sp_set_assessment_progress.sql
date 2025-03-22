@@ -72,7 +72,7 @@ CREATE PROCEDURE sp_set_assessment_progress (
 	@pi_diagnosis_sequence smallint = NULL,
 	@ps_progress_type varchar(24),
 	@ps_progress_key varchar(40) = NULL,
-	@ps_progress text = NULL,
+	@ps_progress varchar(max) = NULL,
 	@ps_severity varchar(12) = NULL,
 	@pl_attachment_id integer = NULL,
 	@pl_patient_workplan_item_id integer = NULL,

@@ -68,13 +68,13 @@ CREATE TABLE [dbo].[x_Message_Type] (
 		[integration_operation]     [varchar](24) NOT NULL,
 		[creator_component_id]      [varchar](24) NOT NULL,
 		[handler_component_id]      [varchar](24) NOT NULL,
-		[schema]                    [text] NULL,
-		[documentation]             [text] NULL,
+		[schema]                    [nvarchar](max) NULL,
+		[documentation]             [nvarchar](max) NULL,
 		[status]                    [varchar](12) NOT NULL,
 		[created]                   [datetime] NOT NULL,
 		[created_by]                [varchar](24) NOT NULL,
 		[id]                        [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[x_Message_Type]
 	ADD
@@ -110,25 +110,15 @@ ALTER TABLE [dbo].[x_Message_Type]
 	CONSTRAINT [DF_x_Message_Type_status_40]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[x_Message_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Message_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Message_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Message_Type] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Message_Type]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Message_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Message_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Message_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Message_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Message_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Message_Type] SET (LOCK_ESCALATION = TABLE)
 GO

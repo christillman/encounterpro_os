@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_disease_immunization_schedule (
+CREATE FUNCTION dbo.fn_patient_disease_immunization_schedule (
 	@ps_cpr_id varchar(12),
 	@pl_disease_id int,
 	@pdt_current_date datetime )
@@ -48,7 +48,8 @@ DECLARE @ll_dose_count int,
 		@ldt_date_of_birth datetime,
 		@ls_no_vaccine_after_disease char(1),
 		@ldt_disease_diagnosis_date datetime,
-		@ls_assessment varchar(80)
+		@ls_assessment varchar(80),
+		@ll_owner_id int
 
 SET @pdt_current_date = convert(datetime, convert(varchar,@pdt_current_date, 112))
 
@@ -56,17 +57,15 @@ SELECT @ldt_date_of_birth = date_of_birth
 FROM p_Patient
 WHERE cpr_id = @ps_cpr_id
 
-IF @@ROWCOUNT = 0
-	RETURN
-
 IF @ldt_date_of_birth IS NULL
 	RETURN
 
-SELECT @ls_no_vaccine_after_disease = no_vaccine_after_disease
+SELECT @ls_no_vaccine_after_disease = no_vaccine_after_disease,
+	@ll_owner_id = owner_id
 FROM c_Disease
 WHERE disease_id = @pl_disease_id
 
-IF @@ROWCOUNT = 0
+IF @ll_owner_id IS NULL
 	RETURN
 
 SET @ldt_disease_diagnosis_date = NULL
@@ -188,8 +187,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_disease_immunization_schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_disease_immunization_schedule] TO [cprsystem]
 GO
 

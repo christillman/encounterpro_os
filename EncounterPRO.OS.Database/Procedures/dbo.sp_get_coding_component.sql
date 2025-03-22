@@ -18,15 +18,13 @@ GO
 Print 'Create Procedure [dbo].[sp_get_coding_component]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_coding_component (
 	@ps_cpr_id varchar(12)
-	--, @ps_component_id varchar(24) OUTPUT
 	)
 AS
 
---CWW
 DECLARE @ls_component_id varchar(24)
 
 DECLARE @li_authority_sequence smallint

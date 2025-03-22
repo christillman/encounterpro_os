@@ -100,8 +100,6 @@ FROM p_Treatment_Progress p
 WHERE p.current_flag = 'Y'
 AND a.status = 'OK'
 GO
-GRANT SELECT
-	ON [dbo].[v_Treatment_Attachments]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Treatment_Attachments] TO [cprsystem]
 GO
 

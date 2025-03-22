@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_defaults_from_actuals (
+CREATE FUNCTION dbo.fn_defaults_from_actuals (
 	@ps_cpr_id varchar(12),
 	@pl_observation_sequence integer,
 	@pl_branch_id int )
@@ -78,7 +78,7 @@ RETURNS @actual_results TABLE (
 	result_value varchar(40) NULL,
 	result_unit varchar(12) NULL,
 	sort_sequence smallint NULL,
-	long_result_value text NULL,
+	long_result_value varchar(max) NULL,
 	result_type varchar(12) NULL,
 	result varchar(80) NULL,
 	abnormal_flag char(1) NULL,
@@ -246,8 +246,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_defaults_from_actuals]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_defaults_from_actuals] TO [cprsystem]
 GO
 

@@ -106,7 +106,7 @@ SELECT patient_workplan_item_id,
 	error_message,
 	purpose,
 	message_subject = CAST(NULL AS varchar(120)),
-	message = CAST(NULL AS text),
+	message = CAST(NULL AS varchar(max)),
 	message_sender = CAST(NULL AS varchar(80)),
 	via_address_display
 FROM dbo.fn_documents_for_object_2(@ps_context_object, @ps_cpr_id, @pl_object_key, @pdt_begin_date, @pdt_end_date)

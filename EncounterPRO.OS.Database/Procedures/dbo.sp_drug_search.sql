@@ -73,7 +73,7 @@ SELECT drug_id,
 FROM c_Synonym s
 JOIN v_drug_search
 	ON common_name like '%' + s.alternate + '%'
-WHERE s.term_type = 'drug_ingredient'
+WHERE s.term_type = 'brand_name'
 	AND s.term like CASE WHEN @ls_description = '%' THEN 'zzz' ELSE @ls_description END
 	AND status = COALESCE(@ps_status,'OK')
 	AND COALESCE(specialty_id,'0') = COALESCE(@ps_specialty_id,specialty_id,'0')

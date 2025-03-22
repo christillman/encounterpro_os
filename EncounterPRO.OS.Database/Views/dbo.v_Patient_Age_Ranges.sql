@@ -34,8 +34,6 @@ AND (c_Age_Range.age_to_unit IS NULL
 			WHEN 'DAY' THEN dateadd(day, c_Age_Range.age_to, p_Patient.date_of_birth)
 			END )
 GO
-GRANT SELECT
-	ON [dbo].[v_Patient_Age_Ranges]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Patient_Age_Ranges] TO [cprsystem]
 GO
 

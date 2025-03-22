@@ -92,25 +92,15 @@ CREATE NONCLUSTERED INDEX [idx_observation_cpr_parent]
 ON [dbo].[p_Observation] ([cpr_id], [parent_observation_sequence])
 INCLUDE ([observation_id], [description], [service])
 
-GRANT DELETE
-	ON [dbo].[p_Observation]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Observation] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Observation]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Observation] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Observation]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Observation] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Observation]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Observation] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Observation]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Observation] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Observation] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_object_progress_in_encounter (
+CREATE FUNCTION dbo.fn_patient_object_progress_in_encounter (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int)
 
@@ -143,7 +143,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -198,7 +198,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -255,7 +255,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -311,7 +311,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -434,7 +434,7 @@ SELECT
 	p.[created] ,
 	p.comment_type ,
 	p.comment_title ,
-	ISNULL(p.short_comment, CAST(p.[comment] AS varchar(128))) ,
+	CASE WHEN p.short_comment Is Null THEN CAST(p.[comment] AS varchar(128)) ELSE short_comment END ,
 	p.attachment_id ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -555,7 +555,7 @@ SELECT
 	p.[created] ,
 	p.comment_type ,
 	p.comment_title ,
-	ISNULL(p.short_comment, CAST(p.[comment] AS varchar(128))) ,
+	CASE WHEN p.short_comment Is Null THEN CAST(p.[comment] AS varchar(128)) ELSE short_comment END ,
 	p.attachment_id ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -574,8 +574,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_object_progress_in_encounter]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_object_progress_in_encounter] TO [cprsystem]
 GO
 

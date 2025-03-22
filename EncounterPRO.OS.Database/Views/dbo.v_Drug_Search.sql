@@ -47,7 +47,5 @@ CREATE VIEW v_drug_search AS
 GO
 
 
-GRANT SELECT
-	ON [dbo].[v_drug_search]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_drug_search] TO [cprsystem]
 GO

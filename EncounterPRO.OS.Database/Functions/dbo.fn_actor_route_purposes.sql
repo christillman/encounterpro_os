@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_actor_route_purposes (
+CREATE FUNCTION dbo.fn_actor_route_purposes (
 	@ps_user_id varchar(24),
 	@ps_document_route varchar(24) )
 
@@ -74,8 +74,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_actor_route_purposes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_actor_route_purposes] TO [cprsystem]
 GO
 

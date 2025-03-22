@@ -86,7 +86,7 @@ DECLARE @lt_temp_assessment_treat_def_attrib TABLE (
 	attribute_sequence int ,
 	attribute varchar(80) ,
 	value varchar(255),
-	long_value text
+	long_value varchar(max)
 	)
 
 UPDATE u_assessment_treat_definition 

@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[c_Qualifier]
 	CONSTRAINT [DF__c_Qualifier__id__164F3FA9]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Qualifier]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Qualifier] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Qualifier]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Qualifier] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Qualifier]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Qualifier] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Qualifier]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Qualifier] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Qualifier]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Qualifier] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Qualifier] SET (LOCK_ESCALATION = TABLE)
 GO

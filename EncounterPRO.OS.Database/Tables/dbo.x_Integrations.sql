@@ -92,25 +92,15 @@ ALTER TABLE [dbo].[x_Integrations]
 	CONSTRAINT [DF_x_Integrations_Enabled]
 	DEFAULT ('Y') FOR [Enabled]
 GO
-GRANT DELETE
-	ON [dbo].[x_Integrations]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Integrations] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Integrations]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Integrations] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Integrations]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Integrations] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Integrations]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Integrations] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Integrations]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Integrations] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Integrations] SET (LOCK_ESCALATION = TABLE)
 GO

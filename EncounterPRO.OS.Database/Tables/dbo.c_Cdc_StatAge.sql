@@ -89,25 +89,15 @@ ALTER TABLE [dbo].[c_Cdc_StatAge]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Cdc_StatAge]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Cdc_StatAge] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Cdc_StatAge]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Cdc_StatAge] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Cdc_StatAge]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Cdc_StatAge] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Cdc_StatAge]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Cdc_StatAge] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Cdc_StatAge]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Cdc_StatAge] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Cdc_StatAge] SET (LOCK_ESCALATION = TABLE)
 GO

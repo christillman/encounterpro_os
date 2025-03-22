@@ -101,21 +101,13 @@ ALTER TABLE [dbo].[c_Report_Recipient]
 	CONSTRAINT [DF__c_Report_Recipient_status_4]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Report_Recipient]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Report_Recipient] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Report_Recipient]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Report_Recipient] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Report_Recipient]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Report_Recipient] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Report_Recipient]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Report_Recipient] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Report_Recipient] SET (LOCK_ESCALATION = TABLE)
 GO

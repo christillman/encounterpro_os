@@ -80,29 +80,17 @@ ALTER TABLE [dbo].[o_Preferences]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Preferences]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Preferences] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Preferences]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Preferences] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Preferences]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Preferences] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Preferences]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Preferences] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Preferences]
-	TO [public]
+GRANT SELECT ON [dbo].[o_Preferences] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Preferences]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Preferences] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Preferences] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -59,42 +59,14 @@ log.file_write(lbl_attachment, ls_tempfile)
 //end if
 
 if pi_width > 0 and pi_height > 0 then
-	luo_ImageControl = CREATE oleobject
-	li_sts = luo_ImageControl.connecttonewobject("EncounterPRO.OS.ImageManipulation")
-	if li_sts < 0 then
-		log.log(this, "u_component_attachment_signature_easyink.xx_render:0038", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
-		ps_file = ls_tempfile
-	else
-		li_luminanceCutoff = integer(get_attribute("luminance_cutoff"))
-		if isnull(li_luminanceCutoff) then li_luminanceCutoff = 245
-		
-		ps_file = f_temp_file(".bmp")
-		
-		TRY
-			li_sts = luo_ImageControl.ResizeDarkenBitmap(ls_tempfile, ps_file, pi_width, pi_height, li_luminanceCutoff)
-			if li_sts <= 0 then
-				log.log(this, "u_component_attachment_signature_easyink.xx_render:0049", "Error reducing bitmap (" + string(li_sts) + ")", 3)
-				ps_file = ls_tempfile
-			end if
-		CATCH (throwable lo_error)
-			log.log(this, "u_component_attachment_signature_easyink.xx_render:0053", "Error calling ResizeDarkenBitmap (" + lo_error.text + ")", 3)
-			ps_file = ls_tempfile
-		FINALLY
-			luo_ImageControl.disconnectobject()
-		END TRY
-		
-	end if
+	li_luminanceCutoff = integer(get_attribute("luminance_cutoff"))
+	if isnull(li_luminanceCutoff) then li_luminanceCutoff = 245
 	
-	DESTROY luo_ImageControl
-	
-	// remove the extraneous temp file
-	if fileexists(ls_tempfile) and ls_tempfile <> ps_file then
-		filedelete(ls_tempfile)
-	end if
+	ps_file = f_resize_signature_bitmap(ls_tempfile, pi_width, pi_height, li_luminanceCutoff)
 else
-	ps_file = ls_tempfile
+	log.log(this, "u_component_attachment_signature_easyink.xx_render:0038", "Width or height not positive", 3)
+	return -1
 end if
-
 
 Return 1
 

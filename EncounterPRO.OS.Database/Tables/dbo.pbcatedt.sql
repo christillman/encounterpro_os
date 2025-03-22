@@ -76,21 +76,13 @@ GO
 CREATE UNIQUE CLUSTERED INDEX [pbcatedt_idx]
 	ON [dbo].[pbcatedt] ([pbe_name], [pbe_seqn]) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[pbcatedt]
-	TO [public]
+GRANT DELETE ON [dbo].[pbcatedt] TO [public]
 GO
-GRANT INSERT
-	ON [dbo].[pbcatedt]
-	TO [public]
+GRANT INSERT ON [dbo].[pbcatedt] TO [public]
 GO
-GRANT SELECT
-	ON [dbo].[pbcatedt]
-	TO [public]
+GRANT SELECT ON [dbo].[pbcatedt] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[pbcatedt]
-	TO [public]
+GRANT UPDATE ON [dbo].[pbcatedt] TO [public]
 GO
 ALTER TABLE [dbo].[pbcatedt] SET (LOCK_ESCALATION = TABLE)
 GO

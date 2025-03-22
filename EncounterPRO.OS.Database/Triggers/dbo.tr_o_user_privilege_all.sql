@@ -71,9 +71,7 @@ AS
 IF @@ROWCOUNT = 0
 	RETURN
 
-UPDATE c_Table_Update
-SET last_updated = dbo.get_client_datetime()
-WHERE table_name = 'o_user_privilege'
+EXECUTE sp_table_update @ps_table_name = 'o_user_privilege'
 
 GO
 

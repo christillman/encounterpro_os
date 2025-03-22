@@ -21,7 +21,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_pretty_phone_us (
+CREATE FUNCTION dbo.fn_pretty_phone_us (
 	@ps_phone_number varchar(32)
 	)
 RETURNS varchar(32)

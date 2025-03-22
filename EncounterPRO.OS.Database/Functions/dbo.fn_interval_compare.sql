@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_interval_compare (
+CREATE FUNCTION dbo.fn_interval_compare (
 	@pl_interval_amount int,
 	@ps_interval_unit varchar(24),
 	@pdt_begin_date datetime,

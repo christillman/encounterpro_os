@@ -70,8 +70,8 @@ CREATE TABLE [dbo].[c_Observation] (
 		[collection_procedure_id]        [varchar](24) NULL,
 		[perform_procedure_id]           [varchar](24) NULL,
 		[specimen_type]                  [varchar](24) NULL,
-		[description]                    [varchar](80) NULL,
-		[narrative_phrase]               [text] NULL,
+		[description]                    [varchar](120) NULL,
+		[narrative_phrase]               [nvarchar](max) NULL,
 		[observation_type]               [varchar](24) NOT NULL,
 		[composite_flag]                 [char](1) NULL,
 		[exclusive_flag]                 [char](1) NULL,
@@ -82,7 +82,7 @@ CREATE TABLE [dbo].[c_Observation] (
 		[display_style]                  [varchar](255) NULL,
 		[material_id]                    [int] NULL,
 		[default_view]                   [char](1) NULL,
-		[legal_notice]                   [text] NULL,
+		[legal_notice]                   [nvarchar](max) NULL,
 		[sort_sequence]                  [int] NULL,
 		[result_count]                   [int] NULL,
 		[status]                         [varchar](12) NULL,
@@ -90,10 +90,10 @@ CREATE TABLE [dbo].[c_Observation] (
 		[updated_by]                     [varchar](24) NULL,
 		[id]                             [uniqueidentifier] NOT NULL,
 		[owner_id]                       [int] NOT NULL,
-		[definition]                     [varchar](80) NULL,
+		[definition]                     [varchar](120) NULL,
 		[owner_key]                      [varchar](40) NULL,
 		[observation_key]                [int] IDENTITY(1, 1) NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Observation]
 	ADD
@@ -169,26 +169,18 @@ CREATE NONCLUSTERED INDEX [perform_proc]
 	ON [dbo].[c_Observation] ([perform_procedure_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Observation]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Observation] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation] SET (LOCK_ESCALATION = TABLE)
 GO
 
+CREATE NONCLUSTERED INDEX [ix_c_Observation_last_updated]
+ON [dbo].[c_Observation] ([last_updated])

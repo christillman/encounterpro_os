@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_encounter_complexity_detail (
+CREATE FUNCTION dbo.fn_encounter_complexity_detail (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer)
 
@@ -273,8 +273,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_encounter_complexity_detail]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_encounter_complexity_detail] TO [cprsystem]
 GO
 

@@ -72,7 +72,7 @@ CREATE TABLE [dbo].[c_Property] (
 		[function_name]                       [varchar](64) NULL,
 		[return_data_type]                    [varchar](12) NOT NULL,
 		[script_language]                     [varchar](12) NULL,
-		[script]                              [text] NULL,
+		[script]                              [nvarchar](max) NULL,
 		[service]                             [varchar](24) NULL,
 		[status]                              [varchar](12) NULL,
 		[id]                                  [uniqueidentifier] NOT NULL,
@@ -84,12 +84,12 @@ CREATE TABLE [dbo].[c_Property] (
 		[property_value_object_filter]        [varchar](255) NULL,
 		[property_value_object_unique]        [bit] NULL,
 		[property_value_object_cat_field]     [varchar](255) NULL,
-		[property_value_object_cat_query]     [text] NULL,
+		[property_value_object_cat_query]     [nvarchar](max) NULL,
 		[property_name]                       [varchar](64) NULL,
 		[property_value_object_key]           [varchar](64) NULL,
 		[property_help]                       [varchar](1024) NULL,
 		[sort_sequence]                       [int] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Property]
 	ADD
@@ -128,25 +128,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_c_Property_name]
 	ON [dbo].[c_Property] ([epro_object], [property_name])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Property]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Property] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Property]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Property] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Property]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Property] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Property]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Property] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Property]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Property] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Property] SET (LOCK_ESCALATION = TABLE)
 GO

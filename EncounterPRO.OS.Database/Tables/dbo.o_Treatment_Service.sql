@@ -77,25 +77,15 @@ ALTER TABLE [dbo].[o_Treatment_Service]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Treatment_Service]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Treatment_Service] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Treatment_Service]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Treatment_Service] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Treatment_Service]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Treatment_Service] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Treatment_Service]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Treatment_Service] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Treatment_Service]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Treatment_Service] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Treatment_Service] SET (LOCK_ESCALATION = TABLE)
 GO

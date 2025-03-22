@@ -88,25 +88,15 @@ ALTER TABLE [dbo].[c_Chart_Section_Page]
 	CONSTRAINT [DF__c_Chart_Sect__id__69478F08]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Chart_Section_Page]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Chart_Section_Page] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Chart_Section_Page]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Chart_Section_Page] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Chart_Section_Page]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Chart_Section_Page] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Chart_Section_Page]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Chart_Section_Page] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Chart_Section_Page]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Chart_Section_Page] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Chart_Section_Page] SET (LOCK_ESCALATION = TABLE)
 GO

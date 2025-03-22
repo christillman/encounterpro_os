@@ -131,16 +131,16 @@ CREATE TABLE #new_generic_form (
 	)
 
 CREATE TABLE #new_pack (
-	rxcui varchar(30),
-	descr varchar(1000), 
-	tty varchar(20), 
+	pack_rxcui varchar(30),
+	pack_descr varchar(1000), 
+	pack_tty varchar(20), 
 	valid_in varchar(100)
 	)
 	
 CREATE TABLE #new_generic_pack (
-	rxcui varchar(30),
-	descr varchar(1000), 
-	tty varchar(20), 
+	pack_rxcui varchar(30),
+	pack_descr varchar(1000), 
+	pack_tty varchar(20), 
 	valid_in varchar(100)
 	)
 
@@ -178,7 +178,7 @@ IF @country_source_id = 'Nothing'
 	WHERE source_brand_form_descr = @in_brand_name_formulation
 		AND country_code = @country_code
 
-	IF @@ROWCOUNT > 0
+	IF @country_source_id IS NOT NULL
 		BEGIN
 		print 'source_id already exists: ' + @country_source_id
 		print 'Aborting'
@@ -276,17 +276,19 @@ IF @generic_rxcui IS NULL
 			)
 		)
 		AND (@in_generic_formulation LIKE '%{%'
-			OR @in_generic_formulation LIKE '%GPCK%')
+			OR @in_corr_scd_rxcui LIKE '%GPCK%'
+			OR @in_generic_formulation LIKE '%Kit%'
+			OR @in_generic_formulation LIKE '%Pack%')
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack
-						WHERE descr = @in_generic_formulation)
+						WHERE pack_descr = @in_generic_formulation)
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack 
-						WHERE rxcui = @default_generic_form_rxcui)
+						WHERE pack_rxcui = @default_generic_form_rxcui)
 			BEGIN
 			IF @debug = 1 PRINT 'INSERT INTO #new_generic_pack'
 			INSERT INTO #new_generic_pack (
-				rxcui,
-				descr, 
-				tty, 
+				pack_rxcui,
+				pack_descr, 
+				pack_tty, 
 				valid_in
 				)
 			SELECT @default_generic_form_rxcui,
@@ -300,10 +302,10 @@ IF @generic_rxcui IS NULL
 			BEGIN
 			-- generic pack already exists
 			IF @debug = 1 PRINT @in_generic_formulation + ' already exists'
-			SELECT TOP 1 @default_generic_form_rxcui = rxcui 
+			SELECT TOP 1 @default_generic_form_rxcui = pack_rxcui 
 				FROM c_Drug_Pack
-				WHERE rxcui = ISNULL(@scd_rxcui,'XXXXXXXX')
-				OR descr = @in_generic_formulation
+				WHERE pack_rxcui = ISNULL(@scd_rxcui,'XXXXXXXX')
+				OR pack_descr = @in_generic_formulation
 			END
 	
 	-- Generic formulation?
@@ -389,22 +391,24 @@ IF @generic_rxcui IS NULL
 			OR ( -- there is not already a valid pack pointed to by @sbd_rxcui
 				@sbd_rxcui IS NOT NULL 
 				AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack
-								WHERE rxcui = @sbd_rxcui
+								WHERE pack_rxcui = @sbd_rxcui
 				)
 			)
 		)
 		AND (@in_brand_name_formulation LIKE '%{%'
-			OR @in_brand_name_formulation LIKE '%BPCK%')
+			OR @in_corr_sbd_rxcui LIKE '%BPCK%'
+			OR @in_brand_name_formulation LIKE '%Kit%'
+			OR @in_brand_name_formulation LIKE '%Pack%')
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack
-						WHERE descr = @in_brand_name_formulation)
+						WHERE pack_descr = @in_brand_name_formulation)
 		AND NOT EXISTS (SELECT 1 FROM c_Drug_Pack 
-						WHERE rxcui = @default_brand_form_rxcui)
+						WHERE pack_rxcui = @default_brand_form_rxcui)
 			BEGIN
 			IF @debug = 1 PRINT 'INSERT INTO #new_pack'
 			INSERT INTO #new_pack (
-				rxcui,
-				descr, 
-				tty, 
+				pack_rxcui,
+				pack_descr, 
+				pack_tty, 
 				valid_in
 				)
 			SELECT @default_brand_form_rxcui,
@@ -418,10 +422,10 @@ IF @generic_rxcui IS NULL
 			BEGIN
 			-- brand pack already exists
 			IF @debug = 1 PRINT @in_brand_name_formulation + ' pack already exists'
-			SELECT TOP 1 @default_brand_form_rxcui = rxcui 
+			SELECT TOP 1 @default_brand_form_rxcui = pack_rxcui 
 				FROM c_Drug_Pack
-				WHERE rxcui = ISNULL(@sbd_rxcui,'XXXXXXXX')
-				OR descr = @in_brand_name_formulation
+				WHERE pack_rxcui = ISNULL(@sbd_rxcui,'XXXXXXXX')
+				OR pack_descr = @in_brand_name_formulation
 			END
 
 	-- Brand formulation?
@@ -560,16 +564,16 @@ IF @generic_rxcui IS NULL
 	IF (SELECT count(*) FROM #new_generic_pack) > 0
 	BEGIN
 	IF @debug = 1 PRINT 'INSERT INTO c_Drug_Pack from #new_generic_pack'
-	INSERT INTO c_Drug_Pack (rxcui, descr, tty, valid_in)
-	SELECT rxcui, descr, tty, valid_in
+	INSERT INTO c_Drug_Pack (pack_rxcui, pack_descr, pack_tty, valid_in)
+	SELECT pack_rxcui, pack_descr, pack_tty, valid_in
 	FROM #new_generic_pack
 	END
 
 	IF (SELECT count(*) FROM #new_pack) > 0
 	BEGIN
 	IF @debug = 1 PRINT 'INSERT INTO c_Drug_Pack from #new_pack'
-	INSERT INTO c_Drug_Pack (rxcui, descr, tty, valid_in)
-	SELECT rxcui, descr, tty, valid_in
+	INSERT INTO c_Drug_Pack (pack_rxcui, pack_descr, pack_tty, valid_in)
+	SELECT pack_rxcui, pack_descr, pack_tty, valid_in
 	FROM #new_pack
 	END
 

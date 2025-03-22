@@ -24,7 +24,7 @@ CREATE PROCEDURE jmj_forward_task (
 	@pl_patient_workplan_item_id integer,
 	@ps_to_user_id varchar(24),
 	@ps_new_description varchar(80) = NULL,
-	@ps_new_message text = NULL ,
+	@ps_new_message varchar(max) = NULL ,
 	@ps_created_by varchar(24),
 	@ps_user_id varchar(24) )
 AS

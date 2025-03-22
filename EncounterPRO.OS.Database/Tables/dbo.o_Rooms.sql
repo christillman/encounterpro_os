@@ -90,25 +90,15 @@ ALTER TABLE [dbo].[o_Rooms]
 	CONSTRAINT [DF_o_Rooms_room_status]
 	DEFAULT ('OK') FOR [room_status]
 GO
-GRANT DELETE
-	ON [dbo].[o_Rooms]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Rooms] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Rooms]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Rooms] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Rooms]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Rooms] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Rooms]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Rooms] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Rooms]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Rooms] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Rooms] SET (LOCK_ESCALATION = TABLE)
 GO

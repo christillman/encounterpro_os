@@ -41,7 +41,7 @@ UPDATE o_preferences
 SET preference_value = '{Last}, {First}{ Middle}'
 where preference_value = '{Last}, {First}{Middle}'
 
--- Fix for bug I ran across in fn_epro_object_properties
+-- Fix for bug I ran across in dbo.fn_epro_object_properties
  UPDATE p 
   SET return_data_type = 
   CASE WHEN function_name like '%date%' or function_name like '%time%' THEN 'datetime'

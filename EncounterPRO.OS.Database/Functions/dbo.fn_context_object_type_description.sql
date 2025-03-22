@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_context_object_type_description (
+CREATE FUNCTION dbo.fn_context_object_type_description (
 	@ps_context_object varchar(24),
 	@ps_context_object_type varchar(40))
 

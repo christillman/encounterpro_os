@@ -287,7 +287,7 @@ setnull(edit_service[1])
 
 observation_id[1] = service.root_observation_id()
 if isnull(observation_id[1]) then
-	log.log(this, "w_physical_exam.initialize:0039", "No Root observation_id", 4)
+	log.log(this, "w_physical_exam.initialize:0039", "No Root observation_id", 3)
 	return -1
 end if
 

@@ -18,13 +18,12 @@ GO
 Print 'Create Procedure [dbo].[sp_get_default_encounter_proc]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_default_encounter_proc (
 	@ps_encounter_type varchar(24),
 	@ps_new_flag char(1),
 	@pl_visit_level int
-	--, @ps_procedure_id varchar(24) OUTPUT
 	)
 AS
 
@@ -49,20 +48,14 @@ AND v.new_flag = @ps_new_flag
 AND v.visit_level = @pl_visit_level
 
 -- If we didn't get one then try useing 'SICK' as the visit code group
-IF @@ROWCOUNT <> 1
-	BEGIN
+IF @ls_procedure_id IS NULL
 	SELECT @ls_procedure_id = procedure_id
 	FROM em_Visit_Code_Item
 	WHERE visit_code_group = 'SICK'
 	AND new_flag = @ps_new_flag
 	AND visit_level = @pl_visit_level
 
-	IF @@ROWCOUNT <> 1
-		SELECT  @ls_procedure_id = NULL
-	END
-
 SELECT @ls_procedure_id AS procedure_id
-
 
 GO
 GRANT EXECUTE

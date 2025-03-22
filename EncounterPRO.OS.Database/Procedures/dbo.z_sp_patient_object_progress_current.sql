@@ -79,7 +79,7 @@ DECLARE @progress TABLE (
 	[progress_type] [varchar] (24)  NULL ,
 	[progress_key] [varchar] (48)  NULL ,
 	[progress_value] [varchar] (40) NULL ,
-	[progress] [text]  NULL ,
+	[progress] [nvarchar](max)  NULL ,
 	[attachment_id] [int] NULL ,
 	[patient_workplan_item_id] [int] NULL ,
 	[risk_level] [int] NULL ,

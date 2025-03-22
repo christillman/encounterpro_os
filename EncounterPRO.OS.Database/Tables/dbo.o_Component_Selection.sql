@@ -91,21 +91,13 @@ ALTER TABLE [dbo].[o_Component_Selection]
 	CONSTRAINT [DF_o_Component_Selection_id]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT DELETE
-	ON [dbo].[o_Component_Selection]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Component_Selection] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Component_Selection]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Component_Selection] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Component_Selection]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Component_Selection] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Component_Selection]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Component_Selection] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Component_Selection] SET (LOCK_ESCALATION = TABLE)
 GO

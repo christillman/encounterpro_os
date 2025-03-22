@@ -17,10 +17,10 @@ GO
 -- Create Function [dbo].[fn_document_objects]
 Print 'Create Function [dbo].[fn_document_objects]'
 GO
-SET ANSI_NULLS OFF
+SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_objects (
+CREATE FUNCTION dbo.fn_document_objects (
 	@pl_document_patient_workplan_item_id int
 	)
 
@@ -43,9 +43,7 @@ AS
 BEGIN
 
 DECLARE @ll_interfaceServiceId int,
-		@ls_ordered_for varchar(24),
-		@ll_error int,
-		@ll_rowcount int
+		@ls_ordered_by varchar(24)
 
 DECLARE @tempobjects TABLE (
 	[object_sequence] [int] NOT NULL,
@@ -56,18 +54,15 @@ DECLARE @tempobjects TABLE (
 	[id] [uniqueidentifier] NOT NULL
 	)
 
-SELECT @ls_ordered_for = ordered_for,
+SELECT @ls_ordered_by = ordered_by,
 		@ll_interfaceServiceId = dbo.fn_document_interfaceserviceid(@pl_document_patient_workplan_item_id)
 FROM p_Patient_WP_Item
 WHERE patient_workplan_item_id = @pl_document_patient_workplan_item_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
-IF @ll_rowcount <> 1
+IF @ls_ordered_by IS NULL
 	RETURN
 
 

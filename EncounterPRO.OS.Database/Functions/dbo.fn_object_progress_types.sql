@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_object_progress_types ()
+CREATE FUNCTION dbo.fn_object_progress_types ()
 
 RETURNS @progress_type TABLE (
 	context_object varchar(24) NOT NULL,
@@ -352,8 +352,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_object_progress_types]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_object_progress_types] TO [cprsystem]
 GO
 

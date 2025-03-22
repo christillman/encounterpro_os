@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_vfc_eligibility_code (
+CREATE FUNCTION dbo.fn_vfc_eligibility_code (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id int,
 	@pl_treatment_id int )
@@ -77,7 +77,7 @@ DECLARE @ls_vfc_eligibility_code varchar(80)
 
 SELECT TOP 1 @ls_vfc_eligibility_code = r.result
 FROM p_Observation_Result r
-	INNER JOIN fn_equivalent_observations('0^VFCEligCode') eq
+	INNER JOIN dbo.fn_equivalent_observations('0^VFCEligCode') eq
 	ON r.observation_id = eq.observation_id
 WHERE cpr_id = @ps_cpr_id
 AND current_flag = 'Y'

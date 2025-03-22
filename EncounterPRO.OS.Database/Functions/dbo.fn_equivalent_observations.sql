@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_equivalent_observations (
+CREATE FUNCTION dbo.fn_equivalent_observations (
 	@ps_observation_id varchar(24))
 
 RETURNS @equivalent_observations TABLE (
@@ -108,8 +108,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_equivalent_observations]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_equivalent_observations] TO [cprsystem]
 GO
 

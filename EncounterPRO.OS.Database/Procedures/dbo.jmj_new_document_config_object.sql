@@ -71,7 +71,7 @@ CREATE PROCEDURE jmj_new_document_config_object (
 	@ps_component_id varchar(24) ,
 	@ps_created_by varchar(24) ,
 	@ps_status varchar(12) ,
-	@ps_long_description text = NULL ,
+	@ps_long_description varchar(max) = NULL ,
 	@ps_report_id varchar(40) OUTPUT )
 AS
 

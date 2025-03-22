@@ -263,7 +263,11 @@ st_new_title.text = "Post to New " + wordcap(is_context_object)
 st_type_title.text = wordcap(is_context_object) + " Type"
 
 // Set the encounter context
-if isnull(current_display_encounter) then current_patient.encounters.last_encounter()
+if isnull(current_display_encounter) then 
+	if NOT isnull(current_patient.encounters) then
+		current_patient.encounters.last_encounter()
+	end if
+end if
 
 CHOOSE CASE lower(attachment_context.context_object)
 	CASE "encounter"

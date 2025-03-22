@@ -58,7 +58,7 @@ u_patient current_patient
 
 // Currently displayed encounter
 u_str_encounter current_display_encounter
-int posted_encounter_id
+long posted_encounter_id
 
 // Current user object - user performing service
 u_user current_user
@@ -172,6 +172,11 @@ u_windows_api windows_api
 // Replace with po_null.
 powerobject po_null
 
+// Set using Ctrl-D on a display script in the treeview. Then when debugging with Powerbuilder,
+// it will break at that display script. 
+long debug_display_script_id
+long debug_display_command_id
+
 end variables
 
 global type cpr from application
@@ -209,34 +214,34 @@ type variables
 
 string product_name = 'GreenOlive EHR'
 string client_link_start
+boolean is_demo_version
 
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 225
+long target_modification_level = 232
 
-date compile_date = date("2024-06-15")
+date compile_date = date("2025-03-22")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "2.0"
-// Resulting in 7.2.3.0
+string build = "9.0"
+// Resulting in 7.2.9.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   1   9
+//  7   2   9  0
 
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
-string copyright = "Copyright 1994-2024 The EncounterPRO Foundation, Inc."
+string copyright = "Copyright 1994-2025 The EncounterPRO Foundation, Inc."
 string source_url = "https://github.com/christillman/encounterpro_os"
 
 ////////////////////////////////////////////////////////////
 // DB Version this client is compatible with.
 string my_sql_version = "4.05"
 ////////////////////////////////////////////////////////////
-
 
 string registry_key
 string ini_file
@@ -255,7 +260,6 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 
@@ -297,7 +301,7 @@ log = CREATE u_event_log
 // Initialize the utility com objects
 common_thread = CREATE u_common_thread
 li_sts = common_thread.initialize()
-if li_sts <= 0 then halt
+if li_sts <= 0 then HALT CLOSE
 
 this.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(target_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
 // Moved application path so we can set the INI file into common_thread.initialize()
@@ -314,37 +318,42 @@ f_split_string(ls_parm, "=", ls_parm, ls_arg)
 
 ls_parm = upper(trim(ls_parm))
 
-CHOOSE CASE ls_parm
-	CASE "CLIENT"
-		if len(ls_arg) > 0 then
-			common_thread.default_database = trim(ls_arg)
-		else
-			common_thread.default_database = "<Default>"
-		end if		
-	CASE "SERVER", "NTSERVER"
-		messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
-		event close()
-	CASE "DBMAINT"
-		messagebox("CPR Open", "DB Maintenance Mode is no longer supported from EncounterPRO.exe.  Please use EproDBMaint.exe.")
-		event close()
-	CASE "ASK"
-		open(w_pop_which_database)
-		common_thread.default_database = message.stringparm
-		// If the user didn't pick a database then exit
-		if common_thread.default_database = "" then
+if gnv_app.is_demo_version then
+ 	common_thread.default_database = "<Default>"
+else
+	CHOOSE CASE ls_parm
+		CASE "CLIENT"
+			if len(ls_arg) > 0 then
+				common_thread.default_database = trim(ls_arg)
+			else
+				common_thread.default_database = "<Default>"
+			end if		
+		CASE "SERVER", "NTSERVER"
+			messagebox("CPR Open", "Server Mode is no longer supported from EncounterPRO.exe")
 			event close()
-		end if
-	CASE ELSE
-		// Assume the parameter is a database
-		common_thread.default_database = ls_parm
-END CHOOSE
+		CASE "DBMAINT"
+			messagebox("CPR Open", "DB Maintenance Mode is no longer supported from EncounterPRO.exe.  Please use EproDBMaint.exe.")
+			event close()
+		CASE "ASK"
+			open(w_pop_which_database)
+			common_thread.default_database = message.stringparm
+			// If the user didn't pick a database then exit
+			if common_thread.default_database = "" then
+				event close()
+			end if
+		CASE ELSE
+			// Assume the parameter is a database
+			common_thread.default_database = ls_parm
+	END CHOOSE
+end if
 
+open(w_splash)
 li_sts = f_initialize_common("EncounterPRO")
 if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
 		log.log(this, "cpr:open", "Error initializing EncounterPRO", 5)
 	end if
-	halt
+	HALT CLOSE
 end if
 
 // Enable the display of log events
@@ -367,13 +376,14 @@ end if
 // Check the versions
 if f_check_version() < 0 then
 	// After an upgrade, we don't want an error message but rather a nice quiet exit
-	halt
+	HALT CLOSE
 end if
 
 li_sts = f_crash_clean_up()
 if li_sts < 0 then
-	log.log(po_null, "cpr.open:155","crash clean up failed", 5)
+	log.log(po_null, "cpr.open:114","crash clean up failed for computer_id " + string(gnv_app.computer_id), 4)
 end if
+close(w_splash)
 
 li_sts = f_logon()
 if li_sts < 0 then

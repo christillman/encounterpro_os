@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_treatment_results_description]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_treatment_results_description (
 	@ps_cpr_id varchar(12),
@@ -27,14 +27,17 @@ CREATE PROCEDURE sp_get_treatment_results_description (
 AS
 
 DECLARE @ls_root_observation_id varchar(24),
-	@ls_composite_flag char(1)
+	@ls_composite_flag char(1),
+	@ls_open_flag varchar(1),
+	@ls_observation_type varchar(24)
 
-SELECT @ls_root_observation_id = observation_id
+SELECT @ls_root_observation_id = observation_id,
+	@ls_open_flag = open_flag
 FROM p_Treatment_Item
 WHERE cpr_id = @ps_cpr_id
 AND treatment_id = @pl_treatment_id
 
-IF @@ROWCOUNT <> 1
+IF @ls_open_flag IS NULL
 	BEGIN
 	RAISERROR ('No such treatment (%s, %d)',16,-1, @ps_cpr_id, @pl_treatment_id)
 	ROLLBACK TRANSACTION
@@ -47,11 +50,12 @@ IF @ls_root_observation_id IS NULL
 	RETURN
 	END
 
-SELECT @ls_composite_flag = composite_flag
+SELECT @ls_composite_flag = composite_flag,
+	@ls_observation_type = observation_type
 FROM c_Observation
 WHERE observation_id = @ls_root_observation_id
 
-IF @@ROWCOUNT <> 1
+IF @ls_observation_type IS NULL
 	BEGIN
 	RAISERROR ('No such observation (%s)',16,-1, @ls_root_observation_id)
 	ROLLBACK TRANSACTION

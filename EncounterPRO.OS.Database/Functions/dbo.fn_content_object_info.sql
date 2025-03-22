@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_content_object_info (
+CREATE FUNCTION dbo.fn_content_object_info (
 	@ps_object_type varchar(24),
 	@ps_object_key varchar(64))
 
@@ -126,8 +126,6 @@ ELSE IF @ls_epro_object = '!Enumerated'
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_content_object_info]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_content_object_info] TO [cprsystem]
 GO
 

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_epro_object_property_pick (
+CREATE FUNCTION dbo.fn_epro_object_property_pick (
 	@ps_epro_object varchar(64),
 	@pb_display_user_defined bit = 0,
 	@ps_property_value_object varchar(24) = NULL)
@@ -113,8 +113,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_epro_object_property_pick]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_epro_object_property_pick] TO [cprsystem]
 GO
 

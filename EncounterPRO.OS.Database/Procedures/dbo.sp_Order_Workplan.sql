@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Order_Workplan]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE   PROCEDURE sp_Order_Workplan
 (	 @ps_cpr_id varchar(12)
@@ -106,7 +106,8 @@ BEGIN
 	SELECT @ll_id = id
 	FROM c_Workplan WITH (NOLOCK)
 	WHERE workplan_id = @pl_workplan_id
-	IF @@rowcount <> 1
+
+	IF @ll_id IS NULL
 	BEGIN
 		RAISERROR ('Workplan not found (%d)',16,-1, @pl_workplan_id)
 		ROLLBACK TRANSACTION
@@ -130,7 +131,8 @@ BEGIN
 		@ls_procedure_id = procedure_id
 	FROM c_Workplan WITH (NOLOCK)
 	WHERE workplan_id = @pl_workplan_id
-	IF @@rowcount <> 1
+
+	IF @ls_workplan_type IS NULL
 	BEGIN
 		RAISERROR ('Workplan not found (%d)',16,-1, @pl_workplan_id)
 		ROLLBACK TRANSACTION
@@ -173,7 +175,7 @@ FROM p_Patient_Encounter WITH (NOLOCK)
 WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id
 
-IF @@ROWCOUNT = 0
+IF @ls_encounter_status IS NULL
 	SET @ls_encounter_status = 'NA'
 
 -- If the in_office_flag is 'E', then set it to 'Y' if the associated encounter is still open
@@ -447,7 +449,7 @@ SELECT
 	,@ll_actor_id
 	,@ps_created_by
 FROM @t_new_p_item t
-	INNER LOOP JOIN c_Workplan_Item_Attribute ia WITH (NOLOCK)
+	INNER JOIN c_Workplan_Item_Attribute ia WITH (NOLOCK)
 	ON	ia.workplan_id = @pl_workplan_id
 	AND ia.item_number = t.item_number
 ORDER BY t.patient_workplan_item_id

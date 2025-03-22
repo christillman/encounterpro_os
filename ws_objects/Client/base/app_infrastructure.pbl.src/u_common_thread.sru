@@ -32,6 +32,7 @@ str_config_object_info contraindication_alerts[]
 
 nvo_utilities mm
 nvo_utilities eprolibnet4
+nvo_imagemanipulation imageutils
 
 CoderObject inv_CoderObject
 
@@ -299,6 +300,7 @@ string ls_filename
 string ls_extension
 ulong lul_hinst, lul_maxpath, lul_rc
 blob lbl_file
+string ls_server
 
 // We don't have access to the database yet, so set the beeps to null.  The priority_alert
 // method will query the beeps setting when it first runs
@@ -307,7 +309,7 @@ setnull(adodb)
 
 randomize(0)
 
-default_database = "<Default>"
+default_database = "<Default>" // "srv-goehr-demo.database.windows.net|GreenOliveDemo"
 
 // Set osversion
 // 0 =  Not Windows, 4 = 2000 or less, 5 = XP or 2003, 6 = Vista or 2008
@@ -360,10 +362,20 @@ else
 	epcompinfo = "EPCompInfo.ini"
 END IF
 
-// If the INI file doesn't exist, then create an empty one
+// If the INI file doesn't exist, then this is a demo version
+// For development, the INI file must specify a demo database, or if a blank file was written before then assume it is demo
+gnv_app.is_demo_version = False
+
 if not fileexists(gnv_app.ini_file) then
+	gnv_app.is_demo_version = True
+	// write blank file so ini errors don't pop up
 	lbl_file = blob("")
 	log.file_write(lbl_file, gnv_app.ini_file)
+end if
+
+ls_server = profilestring(gnv_app.ini_file, common_thread.default_database, "dbserver", "srv-goehr-demo.database.windows.net")
+if Pos(ls_server,"demo") > 0 OR Pos(gnv_app.program_directory,"Demo") > 0 OR Pos(gnv_app.program_filename,"Demo") > 0 then
+	gnv_app.is_demo_version = True
 end if
 
 // Initialize the logging system; the log system uses the ini file
@@ -372,7 +384,7 @@ end if
 log.initialize("gnv_app.product_name")
 if li_sts <= 0 then
 	openwithparm(w_pop_message, "Unable to initialize logging system")
-	halt
+	HALT CLOSE
 end if
 
 return 1
@@ -1749,6 +1761,8 @@ end function
 public function boolean utilities_ok ();integer li_sts
 boolean lb_ok
 string ls_appversion
+powerobject err_handler
+string current_event = "test"
 
 //// Initialize utility com objects
 //mm = CREATE oleobject
@@ -1759,7 +1773,7 @@ string ls_appversion
 //end if
 
 // IsNull doesn't seem to work
-lb_ok =  IsValid(this.eprolibnet4)
+lb_ok = IsValid(this.eprolibnet4)
 IF NOT lb_ok THEN 
 	this.eprolibnet4 = CREATE nvo_utilities	
 	ls_appversion = string(gnv_app.major_release) + "." &
@@ -1774,7 +1788,17 @@ IF NOT lb_ok THEN
 	this.mm = this.eprolibnet4
 END IF
 
-lb_ok =  IsValid(this.eprolibnet4)
+lb_ok = IsValid(this.imageutils)
+IF NOT lb_ok THEN 
+	this.imageutils = CREATE nvo_imagemanipulation	
+	try 
+		this.imageutils.of_geterrorhandler(err_handler, current_event)
+	catch (throwable e1)
+		openwithparm(w_pop_message, "nvo_ImageManipulation error: " + e1.Text)
+	end try
+END IF
+
+lb_ok =  IsValid(this.eprolibnet4) AND IsValid(this.imageutils)
 RETURN lb_ok
 end function
 

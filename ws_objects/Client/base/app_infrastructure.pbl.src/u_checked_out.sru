@@ -549,7 +549,7 @@ popup.argument_count = 1
 popup.argument[1] = "billing_posted"
 
 Openwithparm(w_pop_pick, popup)
-popup_return = Message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_checked_out.cb_billing_status.clicked:14")
 If popup_return.item_count <> 1 Then Return
 If filter_billing_status = popup_return.items[1] Then Return
 
@@ -606,7 +606,7 @@ popup.items[1] = "<<All>>"
 popup.items[2] = "By Patient"
 popup.items[3] = "By Appointment Mode"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_checked_out.st_mode.clicked:12")
 
 if popup_return.item_count = 0 then return
 text = popup_return.items[1]
@@ -627,7 +627,7 @@ CHOOSE CASE text
 		st_type_title.visible = true
 		st_pick_encounter_type.visible = true
 		Open(w_pop_get_string_abc)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_get_string_abc,u_checked_out.st_mode.clicked:33")
 		if popup_return.item_count = 0 Then
 			ls_search = "%"
 			st_pick_encounter_type.text = "All"
@@ -655,7 +655,7 @@ CHOOSE CASE text
 		popup.items[5] = "Specific Type"
 
 		openwithparm(w_pop_pick, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_pick,u_checked_out.st_mode.clicked:61")
 		st_type_title.text = "Mode"
 		st_pick_encounter_type.enabled = false
 		if popup_return.item_count = 0 then 
@@ -947,7 +947,7 @@ else
 	popup.title = "Filter By:"
 	
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,u_checked_out.st_office.clicked:31")
 	if popup_return.item_count <> 1 then return
 	
 	if popup_return.item_indexes[1] = 1 then
@@ -961,7 +961,7 @@ else
 		popup.argument[2] = "View Patients"
 		
 		openwithparm(w_pop_pick, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_pick,u_checked_out.st_office.clicked:45")
 		if popup_return.item_count <> 1 then return
 		
 		setnull(filter_user_id)
@@ -1071,7 +1071,7 @@ popup.data_row_count = 1
 popup.items[1] = string(encounter_date, date_format_string)
 
 openwithparm(w_pick_date, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pick_date,u_checked_out.pb_pick_date.clicked:9")
 
 if not isnull(popup_return.item) then
 	encounter_date = date(popup_return.item)
@@ -1127,7 +1127,7 @@ elseif lastcolumnname = "compute_code_checker" then
 	ls_code_check_status = dw_checked_out.object.code_check_status[selected_row]
 	if isnull(ls_code_check_status) then
 		openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this appointment.  Do you with to perform the Code Check service now?")
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_yes_no,u_checked_out.dw_checked_out.selected:23")
 		if popup_return.item <> "YES" then return
 	
 		li_idx = f_please_wait_open()

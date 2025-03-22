@@ -35,7 +35,7 @@ gnv_app.windows_logon_id = upper(log.get_userid())
 
 
 // First, see if an office_id is specified
-gnv_app.office_id = profilestring(gnv_app.ini_file, common_thread.default_database, "office_id", "")
+gnv_app.office_id = profilestring(gnv_app.ini_file, common_thread.default_database, "office_id", "0001")
 if trim(gnv_app.office_id) = "" then setnull(gnv_app.office_id)
 
 // Then, determine the computer_id and default office_id

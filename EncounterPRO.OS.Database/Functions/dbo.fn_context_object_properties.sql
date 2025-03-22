@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_context_object_properties (
+CREATE FUNCTION dbo.fn_context_object_properties (
 	@ps_cpr_id varchar(12),
 	@ps_context_object varchar(12),
 	@pl_object_key int )
@@ -139,8 +139,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_context_object_properties]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_context_object_properties] TO [cprsystem]
 GO
 

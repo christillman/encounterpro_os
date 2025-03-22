@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_attachment (
+CREATE FUNCTION dbo.fn_attachment (
 	@ps_cpr_id varchar(12),
 	@pl_attachment_id int)
 
@@ -104,8 +104,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_attachment]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_attachment] TO [cprsystem]
 GO
 

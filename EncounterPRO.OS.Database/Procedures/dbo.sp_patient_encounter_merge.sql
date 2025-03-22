@@ -53,7 +53,7 @@ WHERE
 	cpr_id = @cpr_id
 AND 	patient_status <> 'MERGED'
 
-IF @@rowcount <> 1
+IF @x IS NULL
 BEGIN
 	RAISERROR ('Patient does not exist', 16, 1)
 	ROLLBACK TRANSACTION
@@ -71,7 +71,7 @@ WHERE
 AND	encounter_id = @encounter_id_keep
 AND 	encounter_status NOT IN ('CANCELLED', 'MERGED')
 
-IF @@rowcount <> 1
+IF @x IS NULL
 BEGIN
 	RAISERROR ('Keep Patient Encounter does not exist', 16, 1)
 	ROLLBACK TRANSACTION
@@ -109,7 +109,7 @@ ON
 WHERE
 	i.cpr_id = @cpr_id
 
-IF @@rowcount > 0
+IF @x = 1
 BEGIN
 	RAISERROR ('Patient has locked services', 16, 1)
 	ROLLBACK TRANSACTION

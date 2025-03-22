@@ -79,6 +79,8 @@ Openwithparm(service_window, this, "w_drug_treatment")
 
 ls_return = message.stringparm
 
+if IsNull(ls_return) THEN return -1
+
 CHOOSE CASE upper(ls_return)
 	CASE "OK", "COMPLETE"
 //		If treatment.past_treatment Then

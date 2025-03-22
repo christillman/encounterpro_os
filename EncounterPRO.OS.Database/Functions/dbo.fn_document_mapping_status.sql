@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_document_mapping_status (
+CREATE FUNCTION dbo.fn_document_mapping_status (
 	@pl_patient_workplan_item_id int)
 
 RETURNS varchar(12)

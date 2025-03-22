@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_lookup_user (
+CREATE FUNCTION dbo.fn_lookup_user (
 	@ps_office_id varchar(4),
 	@ps_id varchar(24))
 

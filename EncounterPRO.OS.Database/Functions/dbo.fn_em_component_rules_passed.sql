@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_em_component_rules_passed (
+CREATE FUNCTION dbo.fn_em_component_rules_passed (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer,
 	@ps_em_documentation_guide varchar(24))
@@ -172,7 +172,7 @@ INSERT INTO @em_type_level_passed (
 SELECT em_component,
 	em_type,
 	max(em_type_level) as em_type_level
-FROM fn_em_type_rules_passed(@ps_cpr_id, @pl_encounter_id, @ps_em_documentation_guide)
+FROM dbo.fn_em_type_rules_passed(@ps_cpr_id, @pl_encounter_id, @ps_em_documentation_guide)
 WHERE passed_flag = 'Y'
 GROUP BY em_component, em_type
 
@@ -232,8 +232,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_component_rules_passed]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_component_rules_passed] TO [cprsystem]
 GO
 

@@ -78,10 +78,10 @@ CREATE TABLE [dbo].[c_Domain_Master] (
 		[map_cardinality]        [varchar](12) NOT NULL,
 		[missing_map_action]     [varchar](24) NULL,
 		[param_class]            [varchar](40) NULL,
-		[param_query]            [text] NULL,
+		[param_query]            [nvarchar](max) NULL,
 		[item_owner]             [varchar](12) NOT NULL,
 		[equivalence_flag]       [char](1) NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Domain_Master]
 	ADD
@@ -122,25 +122,15 @@ ALTER TABLE [dbo].[c_Domain_Master]
 	CONSTRAINT [DF__c_Domain_Master_last_updated]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT DELETE
-	ON [dbo].[c_Domain_Master]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Domain_Master] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Domain_Master]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Domain_Master] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Domain_Master]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Domain_Master] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Domain_Master]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Domain_Master] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Domain_Master]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Domain_Master] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Domain_Master] SET (LOCK_ESCALATION = TABLE)
 GO

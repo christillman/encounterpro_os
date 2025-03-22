@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_cdc_lms_calc (
+CREATE FUNCTION dbo.fn_cdc_lms_calc (
 	@pd_x decimal(18, 6),
 	@pd_l decimal(18, 6),
 	@pd_m decimal(18, 6),

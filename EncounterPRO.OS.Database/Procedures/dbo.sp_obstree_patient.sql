@@ -18,9 +18,9 @@ GO
 Print 'Create Procedure [dbo].[sp_obstree_patient]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
-CREATE   PROCEDURE sp_obstree_patient
+CREATE PROCEDURE sp_obstree_patient
 (	 @ps_cpr_id varchar(12)
 	,@ps_observation_id varchar(24)
 	,@pdt_begin_date datetime = NULL
@@ -82,7 +82,7 @@ DECLARE @tmp_patient_results TABLE
 	,observation_comment_id int NULL
 	,comment_user_id varchar(24) NULL
 	,comment_title varchar(48) NULL
-	,comment text NULL
+	,comment varchar(max) NULL
 	,attachment_id int NULL
 	,location_result_sequence int NULL
 	,location varchar(24) NULL

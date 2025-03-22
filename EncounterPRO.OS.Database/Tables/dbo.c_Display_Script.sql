@@ -24,7 +24,7 @@ CREATE TABLE [dbo].[c_Display_Script] (
 		[context_object]              [varchar](24) NOT NULL,
 		[display_script]              [varchar](40) NOT NULL,
 		[description]                 [varchar](128) NULL,
-		[example]                     [text] NULL,
+		[example]                     [nvarchar](max) NULL,
 		[status]                      [char](8) NOT NULL,
 		[last_updated]                [datetime] NULL,
 		[updated_by]                  [varchar](24) NULL,
@@ -35,7 +35,7 @@ CREATE TABLE [dbo].[c_Display_Script] (
 		[original_id]                 [uniqueidentifier] NULL,
 		[default_root_element]        [varchar](64) NULL,
 		[xml_script_id]               AS ([display_script_id])
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Display_Script]
 	ADD
@@ -81,25 +81,15 @@ CREATE NONCLUSTERED INDEX [idx_c_Display_Script_Type]
 	INCLUDE ([description], [status], [id], [owner_id], [context_object], [display_script])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Display_Script]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Display_Script] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Display_Script]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Display_Script] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Display_Script]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Display_Script] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Display_Script]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Display_Script] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Display_Script]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Display_Script] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Display_Script] SET (LOCK_ESCALATION = TABLE)
 GO

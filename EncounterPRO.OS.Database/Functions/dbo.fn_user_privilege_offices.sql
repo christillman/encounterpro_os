@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_privilege_offices (
+CREATE FUNCTION dbo.fn_user_privilege_offices (
 	@ps_user_id varchar(24),
 	@ps_privilege_id varchar(24)
 	)
@@ -32,21 +32,16 @@ AS
 
 BEGIN
 
-DECLARE @ls_secure_flag char(1),
-		@ll_rowcount int,
-		@ll_error int
+DECLARE @ls_secure_flag char(1)
 
 SELECT @ls_secure_flag = secure_flag
 FROM c_Privilege
 WHERE privilege_id = @ps_privilege_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
-IF @ll_rowcount = 0
+IF @ls_secure_flag IS NULL
 	RETURN
 
 IF @ls_secure_flag = 'Y'
@@ -106,8 +101,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_privilege_offices]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_privilege_offices] TO [cprsystem]
 GO
 

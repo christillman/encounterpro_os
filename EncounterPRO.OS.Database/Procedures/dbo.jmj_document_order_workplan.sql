@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_document_order_workplan]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_document_order_workplan
 	(
@@ -46,11 +46,11 @@ DECLARE @ll_workplan_id int,
 	@ll_parent_patient_workplan_item_id int,
 	@ls_dispatch_flag char(1),
 	@ll_patient_workplan_id int,
-	@ll_count int,
-	@ll_error int,
 	@ls_object_ordered_by varchar(24),
 	@ll_parent_treatment_id int,
-	@ls_suppress char(1)
+	@ls_suppress char(1),
+	@lb_default_grant bit,
+	@ll_owner_id int
 
 -- The default context for determining the ordered_for is the passed in context
 SET @ls_ordered_for_context_object = @ps_context_object
@@ -86,17 +86,16 @@ IF @ls_ordered_for_context_object = 'Encounter'
 	BEGIN
 	SET @ll_encounter_id = @pl_object_key
 	
-	SELECT @ls_ordered_for = attending_doctor
+	SELECT @ls_ordered_for = attending_doctor,
+		@lb_default_grant = default_grant
 	FROM p_Patient_Encounter
 	WHERE cpr_id = @ps_cpr_id
 	AND encounter_id = @ll_encounter_id
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @lb_default_grant IS NULL
 		BEGIN
 		RAISERROR ('Encounter not found (%s,%d)',16,-1, @ps_cpr_id, @ll_encounter_id)
 		RETURN -1
@@ -106,19 +105,18 @@ IF @ls_ordered_for_context_object = 'Encounter'
 IF @ls_ordered_for_context_object = 'Assessment'
 	BEGIN
 	SET @ll_problem_id = @pl_object_key
-	
-	SELECT @ls_ordered_for = diagnosed_by
+	SET @lb_default_grant = NULL
+	SELECT @ls_ordered_for = diagnosed_by,
+		@lb_default_grant = default_grant
 	FROM p_Assessment
 	WHERE cpr_id = @ps_cpr_id
 	AND problem_id = @ll_problem_id
 	AND current_flag = 'Y'
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @lb_default_grant IS NULL
 		BEGIN
 		RAISERROR ('Assessment not found (%s,%d)',16,-1, @ps_cpr_id, @ll_problem_id)
 		RETURN -1
@@ -128,19 +126,19 @@ IF @ls_ordered_for_context_object = 'Assessment'
 IF @ls_ordered_for_context_object = 'Treatment'
 	BEGIN
 	SET @ll_treatment_id = @pl_object_key
+	SET @lb_default_grant = NULL
 	SELECT @ls_ordered_for = ordered_for,
 			@ls_object_ordered_by = ordered_by,
-			@ll_parent_treatment_id = parent_treatment_id
+			@ll_parent_treatment_id = parent_treatment_id,
+			@lb_default_grant = default_grant
 	FROM p_Treatment_item
 	WHERE cpr_id = @ps_cpr_id
 	AND treatment_id = @ll_treatment_id
 	
-	SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 	
-	IF @ll_count = 0
+	IF @lb_default_grant IS NULL
 		BEGIN
 		RAISERROR ('Treatment not found (%s,%d)',16,-1, @ps_cpr_id, @ll_treatment_id)
 		RETURN -1
@@ -158,14 +156,16 @@ IF @ls_ordered_for_context_object = 'Treatment'
 						WHERE [user_id] = @ls_ordered_for
 						AND actor_class = 'User')
 			BEGIN
+			SET @lb_default_grant = NULL
 			SELECT @ls_ordered_for = ordered_for,
-					@ls_object_ordered_by = ordered_by
+					@ls_object_ordered_by = ordered_by,
+					@lb_default_grant = default_grant
 			FROM p_Treatment_item
 			WHERE cpr_id = @ps_cpr_id
 			AND treatment_id = @ll_parent_treatment_id
 
-			-- If the parent treatment ordered_for isn't a valid user, try the ordered_fby of the parent treatment
-			IF NOT EXISTS (SELECT 1 FROM c_User 
+			-- If the parent treatment ordered_for isn't a valid user, try the ordered_by of the parent treatment
+			IF @lb_default_grant IS NULL OR NOT EXISTS (SELECT 1 FROM c_User 
 							WHERE [user_id] = @ls_ordered_for
 							AND actor_class = 'User')
 				BEGIN
@@ -187,22 +187,21 @@ IF NOT EXISTS (SELECT 1 FROM c_User
 
 -- Get the workplan from the document purpose table
 
-SELECT @ll_workplan_id = CASE @ps_new_object WHEN 'Y' THEN new_object_workplan_id ELSE existing_object_workplan_id END
+SELECT @ll_workplan_id = CASE @ps_new_object WHEN 'Y' 
+	THEN new_object_workplan_id ELSE existing_object_workplan_id END,
+	@ll_owner_id = owner_id
 FROM c_Document_Purpose
 WHERE context_object = @ps_context_object
 AND purpose = @ps_purpose
 
-SELECT @ll_count = @@ROWCOUNT, @ll_error = @@ERROR
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_count = 0
-	RETURN
+IF @ll_owner_id IS NULL
+	RETURN -1
 
 IF @ps_workplan_description IS NULL
 	SET @ps_workplan_description = @ps_purpose
-
 
 SET @ls_suppress = 'N'
 IF @ps_workplan_description LIKE 'Sending%SureScripts%Succeeded%' AND @ps_purpose = 'Message Success'

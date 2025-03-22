@@ -144,21 +144,13 @@ ALTER TABLE [dbo].[p_Patient_Relation]
 	CONSTRAINT [DF__p_Patient_Relation_status_date]
 	DEFAULT (dbo.get_client_datetime()) FOR [status_date]
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_Relation]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_Relation] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_Relation]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_Relation] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_Relation]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_Relation] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_Relation]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_Relation] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_Relation] SET (LOCK_ESCALATION = TABLE)
 GO

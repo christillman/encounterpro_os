@@ -577,13 +577,9 @@ for i = 1 to li_location_count
 			ls_location_text = ""
 		end if
 		ls_location_text += lsa_location_description[i] + ps_title_sep
-//		puo_rtf.add_text(ls_location_text)
 		ls_first_time_header = ls_location_text
 	else
 		ls_first_time_header = "~r~n" + lsa_location_description[i] + "~t"
-//		puo_rtf.add_cr()
-//		puo_rtf.add_text(lsa_location_description[i])
-//		puo_rtf.add_tab()
 	end if
 	
 
@@ -1607,8 +1603,6 @@ return li_sts
 end function
 
 private function integer display_observation (long pl_row, string ps_result_type, string ps_title_separator, boolean pb_continuous, boolean pb_have_context, ref boolean pb_context_needed, string ps_abnormal_flag, boolean pb_include_comments, boolean pb_include_attachments, u_text_base puo_rtf);string ls_temp
-string ls_rtf
-string ls_composite_flag
 string ls_display_style
 integer li_sts
 long ll_row
@@ -1631,17 +1625,16 @@ integer k
 boolean lb_loop_found
 str_results_by_result lstr_results
 str_results_by_location lstr_locations
-string ls_observation
+string ls_observation_desc
 string ls_location
 string ls_location_description
 string ls_result
+string ls_results
 string ls_record_type
 string ls_in_context_flag
-long ll_templine, ll_tempchar
 boolean lb_parent_context_needed
 boolean lb_child_context_needed
 string ls_format_command
-string ls_results
 boolean lb_abnormal
 string ls_comment
 string ls_observed_by
@@ -1667,7 +1660,7 @@ if not any_results[pl_row] then return 0
 ls_record_type = wordcap(object.record_type[pl_row])
 ls_in_context_flag = object.in_context_flag[pl_row]
 ls_description = object.observation_description[pl_row]
-ls_composite_flag = object.composite_flag[pl_row]
+// unused ls_composite_flag = object.composite_flag[pl_row]
 ll_history_sequence = object.history_sequence[pl_row]
 ls_display_style = get_display_style(pl_row)
 ls_observed_by = object.observed_by[pl_row]
@@ -1688,7 +1681,7 @@ puo_rtf.apply_formatting(ls_format_command)
 // Construct the child find string
 ls_child_find = "parent_history_sequence=" + string(ll_history_sequence)
 ls_child_find += " and record_type='Observation'"
-
+	
 // First we need to display the observation description
 if ls_record_type = "Root" and lsa_where[1] = "B" then
 	// If this is the root description and the children are below, then add the observed_by and date/time
@@ -1712,8 +1705,8 @@ if upper(ps_result_type) = "PERFORM" then
 	end if
 end if
 
-// Then add either a tab character of a separator, depending upon whether display continuously
-// or heirarchically
+// Then add either a tab character or a title separator, depending 
+// upon whether display continuously or heirarchically
 if pb_continuous then
 	puo_rtf.Add_text(ps_title_separator)
 elseif ls_record_type <> "Root" or lsa_where[1] <> "B" then
@@ -1744,7 +1737,7 @@ for i = 1 to li_constituent_count
 									// case put a carriage return between them so they all line up at
 									// the wrap margin
 									if not pb_continuous then
-										puo_rtf.blank_lines(0)
+										puo_rtf.add_cr()
 										puo_rtf.add_tab()
 									else
 										puo_rtf.Add_text(lsa_group_sep[i])
@@ -1781,11 +1774,11 @@ for i = 1 to li_constituent_count
 								
 								for j = 1 to lstr_results.result[k].row_count
 									if j > 1 then ls_results += lsa_item_sep[i]
-									ls_observation = object.observation_description[lstr_results.result[k].result_rows[j]]
+									ls_observation_desc = object.observation_description[lstr_results.result[k].result_rows[j]]
 									ls_location = object.location[lstr_results.result[k].result_rows[j]]
 									ls_location_description = object.location_description[lstr_results.result[k].result_rows[j]]
 									
-									ls_results += ls_observation
+									ls_results += ls_observation_desc
 									if ls_location <> "NA" then
 										ls_results += " ("
 										ls_results += ls_location_description
@@ -1811,12 +1804,13 @@ for i = 1 to li_constituent_count
 									if j > 1 then ls_results += lsa_item_sep[i]
 
 									ls_comment = object.comment[lstr_results.result[k].result_rows[j]]
-									ls_observation = object.observation_description[lstr_results.result[k].result_rows[j]]
+									ls_observation_desc = object.observation_description[lstr_results.result[k].result_rows[j]]
 									
 									// Display the observation description
 									// If the observation description is the same as the comment title, then don't display it
-									if lower(lstr_results.result[k].result) <> lower(ls_observation) then
-										ls_results += ls_observation + lsa_title_sep[i]
+									if lower(lstr_results.result[k].result) <> lower(ls_observation_desc) then
+										// Suppress the observation_description
+										// ls_results += ls_observation_desc + lsa_title_sep[i]
 									end if
 									
 									// Then display the comment itself
@@ -1845,10 +1839,10 @@ for i = 1 to li_constituent_count
 								
 								for j = 1 to lstr_locations.location[k].row_count
 									if j > 1 then ls_results += lsa_item_sep[i]
-									ls_observation = object.observation_description[lstr_locations.location[k].location_rows[j]]
+									ls_observation_desc = object.observation_description[lstr_locations.location[k].location_rows[j]]
 									ls_result = object.result[lstr_locations.location[k].location_rows[j]]
 									
-									ls_results += ls_observation
+									ls_results += ls_observation_desc
 									ls_results += lsa_title_sep[i]
 									ls_results += ls_result
 									lb_loop_found = true
@@ -1874,12 +1868,13 @@ for i = 1 to li_constituent_count
 									if j > 1 then ls_results += lsa_item_sep[i]
 									
 									ls_comment = object.comment[lstr_locations.location[k].location_rows[j]]
-									ls_observation = object.observation_description[lstr_locations.location[k].location_rows[j]]
+									ls_observation_desc = object.observation_description[lstr_locations.location[k].location_rows[j]]
 									
 									// Display the observation description
 									// If the observation description is the same as the comment title, then don't display it
-									if lower(lstr_locations.location[k].location_description) <> lower(ls_observation) then
-										ls_results += ls_observation + lsa_title_sep[i]
+									if lower(lstr_locations.location[k].location_description) <> lower(ls_observation_desc) then
+										// Suppress the observation_description
+										// ls_results += ls_observation_desc + lsa_title_sep[i]
 									end if
 									
 									// Then display the comment itself
@@ -1920,7 +1915,9 @@ next
 if pb_continuous then
 	// If we didn't find any results in continuous mode, then remove the observation description
 	if (li_right_count <= 0) or (not lb_parent_context_needed) or pb_have_context then
-		puo_rtf.delete_range(f_charrange(lstr_startpos, lstr_endpos))
+		if f_char_position_compare(lstr_startpos, lstr_endpos) <> 0 then
+			puo_rtf.delete_range(f_charrange(lstr_startpos, lstr_endpos))
+		end if
 	end if
 else
 	// If we're not in continuous mode, then check to see which constituents should
@@ -1928,16 +1925,16 @@ else
 	
 	
 	if ls_record_type = "Root" and li_right_count <= 0 and root_count <= 1 then
-		// If this is the root record and we didn't find and "right-side" results and
+		// If this is the root record and we didn't find any "right-side" results and
 		// there is only one root record, then suppress the root description
 		puo_rtf.delete_from_position(lstr_startpos)
 	else
 		// Otherwise, add a carriage return and indent one level
-		puo_rtf.blank_lines(0)
+		puo_rtf.add_cr()
 		puo_rtf.next_level()
 	end if
 	
-	// First display the constituents which should go to the right of the observation description
+	// Now display the constituents which should go below the observation description
 	for i = 1 to li_constituent_count
 		if lsa_where[i] = "B" then
 			
@@ -1951,7 +1948,7 @@ else
 							DO WHILE ll_row > 0 and ll_row <= ll_count
 								li_sts = display_observation(ll_row, ps_result_type, lsa_title_sep[i], false, false, lb_child_context_needed, ps_abnormal_flag, pb_include_comments, pb_include_attachments, puo_rtf)
 								if li_sts > 0 then
-									if puo_rtf.linelength() > 0 then puo_rtf.blank_lines(0)
+									if puo_rtf.linelength() > 0 then puo_rtf.add_cr()
 									lb_loop_found = true
 								end if
 								
@@ -1974,11 +1971,11 @@ else
 									
 									for j = 1 to lstr_results.result[k].row_count
 										if j > 1 then ls_results += lsa_item_sep[i]
-										ls_observation = object.observation_description[lstr_results.result[k].result_rows[j]]
+										ls_observation_desc = object.observation_description[lstr_results.result[k].result_rows[j]]
 										ls_location = object.location[lstr_results.result[k].result_rows[j]]
 										ls_location_description = object.location_description[lstr_results.result[k].result_rows[j]]
 										
-										ls_results += ls_observation
+										ls_results += ls_observation_desc
 										if ls_location <> "NA" then
 											ls_results += " ("
 											ls_results += ls_location_description
@@ -2000,12 +1997,13 @@ else
 										if j > 1 then ls_results += lsa_item_sep[i]
 
 										ls_comment = object.comment[lstr_results.result[k].result_rows[j]]
-										ls_observation = object.observation_description[lstr_results.result[k].result_rows[j]]
+										ls_observation_desc = object.observation_description[lstr_results.result[k].result_rows[j]]
 										
 										// Display the observation description
 										// If the observation description is the same as the comment title, then don't display it
-										if lower(lstr_results.result[k].result) <> lower(ls_observation) then
-											ls_results += ls_observation + lsa_title_sep[i]
+										if lower(lstr_results.result[k].result) <> lower(ls_observation_desc) then
+											// Suppress the observation_description
+											// ls_results += ls_observation_desc + lsa_title_sep[i]
 										end if
 										
 										// Then display the comment itself
@@ -2034,10 +2032,10 @@ else
 									
 									for j = 1 to lstr_locations.location[k].row_count
 										if j > 1 then ls_results += lsa_item_sep[i]
-										ls_observation = object.observation_description[lstr_locations.location[k].location_rows[j]]
+										ls_observation_desc = object.observation_description[lstr_locations.location[k].location_rows[j]]
 										ls_result = object.result[lstr_locations.location[k].location_rows[j]]
 										
-										ls_results += ls_observation
+										ls_results += ls_observation_desc
 										ls_results += lsa_title_sep[i]
 										ls_results += ls_result
 										lb_loop_found = true
@@ -2059,12 +2057,13 @@ else
 										if j > 1 then ls_results += lsa_item_sep[i]
 										
 										ls_comment = object.comment[lstr_locations.location[k].location_rows[j]]
-										ls_observation = object.observation_description[lstr_locations.location[k].location_rows[j]]
+										ls_observation_desc = object.observation_description[lstr_locations.location[k].location_rows[j]]
 										
 										// Display the observation description
 										// If the observation description is the same as the comment title, then don't display it
-										if lower(lstr_locations.location[k].location_description) <> lower(ls_observation) then
-											ls_results += ls_observation + lsa_title_sep[i]
+										if lower(lstr_locations.location[k].location_description) <> lower(ls_observation_desc) then
+											// Suppress the observation_description
+											// ls_results += ls_observation_desc + lsa_title_sep[i]
 										end if
 										
 										// Then display the comment itself
@@ -2081,14 +2080,14 @@ else
 				CASE "R"
 					li_sts = display_results(pl_row, ps_result_type, false, lsa_how[i], ps_abnormal_flag, lsa_group_sep[i], lsa_title_sep[i], lsa_item_sep[i], puo_rtf)
 					if li_sts > 0 then
-						puo_rtf.blank_lines(0)
+						puo_rtf.add_cr()
 						lb_loop_found = true
 					end if
 				CASE "C"
 					if pb_include_comments then
 						li_sts = display_comments(pl_row, false, lsa_how[i], ps_abnormal_flag, pb_include_attachments, puo_rtf)
 						if li_sts > 0 then
-							puo_rtf.blank_lines(0)
+							puo_rtf.add_cr()
 							lb_loop_found = true
 						end if
 					end if
@@ -2106,7 +2105,7 @@ else
 	
 		// If we didn't display anything below the observation then delete the carriage return
 		if li_below_count <= 0 then
-//			puo_rtf.delete_cr()
+			puo_rtf.delete_cr()
 			if li_right_count <= 0 then
 				puo_rtf.delete_from_position(lstr_startpos)
 			end if
@@ -2190,24 +2189,29 @@ DO WHILE ll_row > 0 and ll_row <= ll_count
 				puo_rtf.add_text(ls_comment_title)
 				puo_rtf.add_text(": ")
 			end if
-			display_comment(ll_row, puo_rtf)
+			if len(ls_comment) > 0 then
+				display_comment(ll_row, puo_rtf)
+			end if
 		else
 			if upper(ps_how) = "T" then
 				puo_rtf.add_text(ls_comment_title)
 				puo_rtf.add_tab()
-				display_comment(ll_row, puo_rtf)
-				puo_rtf.add_cr()
+				if len(ls_comment) > 0 then
+					display_comment(ll_row, puo_rtf)
+					puo_rtf.add_cr()
+				end if
 			else
-				// Since there's no title, we need to display the entire comment left justified
-				// so turn off wrapping and set the wrap margin to zero
-				puo_rtf.wrap_off()
-				ll_wrap_margin = puo_rtf.wrap_margin()
-				puo_rtf.set_margins(puo_rtf.left_margin(), 0, puo_rtf.right_margin())
-				puo_rtf.add_cr()
-				puo_rtf.add_text(ls_comment)
-				puo_rtf.add_cr()
-				puo_rtf.set_margins(puo_rtf.left_margin(), ll_wrap_margin, puo_rtf.right_margin())
-				puo_rtf.wrap_on()
+				if len(ls_comment) > 0 then
+					// Since there's no title, we need to display the entire comment left justified
+					// so turn off wrapping and set the wrap margin to zero
+					puo_rtf.wrap_off()
+					ll_wrap_margin = puo_rtf.wrap_margin()
+					puo_rtf.set_margins(puo_rtf.left_margin(), 0, puo_rtf.right_margin())
+					display_comment(ll_row, puo_rtf)
+					puo_rtf.add_cr()
+					puo_rtf.set_margins(puo_rtf.left_margin(), ll_wrap_margin, puo_rtf.right_margin())
+					puo_rtf.wrap_on()
+				end if
 			end if
 		end if
 	end if
@@ -2619,8 +2623,7 @@ SetPointer(HourGlass!)
 puo_rtf.set_level(0)
 puo_rtf.wrap_on()
 
-// The process the roots
-// The process the roots
+// Then process the roots
 ll_row = find(ls_find, 1, ll_count)
 DO WHILE ll_row > 0 and ll_row <= ll_count
 	li_sts = display_observation(ll_row, ps_result_type, ls_title_sep, pb_continuous, false, lb_context_needed, ps_abnormal_flag, pb_include_comments, pb_include_attachments, puo_rtf)
@@ -3908,8 +3911,8 @@ event constructor;call super::constructor;string ls_default_display_style
 if len(common_thread.default_display_style) > 0 then
 	ls_default_display_style = common_thread.default_display_style
 else
-	ls_default_display_style = "OBO; %: %, |RRR; %: %, |CBT; %: %, "
-end if
+	ls_default_display_style = "OBO; %: %, |RRR; %: %, |CBN; %: %, "
+end if 
 
 default_constituent_count = parse_display_style(ls_default_display_style, &
 																default_constituent, &

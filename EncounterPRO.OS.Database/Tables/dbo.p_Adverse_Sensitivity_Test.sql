@@ -12,3 +12,12 @@ CREATE TABLE [p_Adverse_Sensitivity_Test](
 	[test_result] [varchar](250) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[p_Adverse_Sensitivity_Test] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[p_Adverse_Sensitivity_Test] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[p_Adverse_Sensitivity_Test] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[p_Adverse_Sensitivity_Test] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[p_Adverse_Sensitivity_Test] TO [cprsystem]

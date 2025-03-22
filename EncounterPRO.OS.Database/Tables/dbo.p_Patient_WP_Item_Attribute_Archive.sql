@@ -69,14 +69,14 @@ CREATE TABLE [dbo].[p_Patient_WP_Item_Attribute_Archive] (
 		[patient_workplan_id]          [int] NOT NULL,
 		[cpr_id]                       [varchar](12) NULL,
 		[attribute]                    [varchar](64) NOT NULL,
-		[message]                      [text] NULL,
+		[message]                      [nvarchar](max) NULL,
 		[created_by]                   [varchar](24) NOT NULL,
 		[created]                      [datetime] NULL,
 		[id]                           [uniqueidentifier] NOT NULL,
 		[value_short]                  [varchar](50) NULL,
 		[actor_id]                     [int] NULL,
 		[value]                        AS (convert(varchar(255),[value_short]))
-) ON [Workflow] TEXTIMAGE_ON [Workflow]
+) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute_Archive]
 	ADD
@@ -85,11 +85,11 @@ ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute_Archive]
 	NONCLUSTERED
 	([patient_workplan_item_id], [attribute_sequence])
 	WITH FILLFACTOR=95
-	ON [Workflow]
+	
 GO
 CREATE CLUSTERED INDEX [idx_wp_item_att_cluster]
 	ON [dbo].[p_Patient_WP_Item_Attribute_Archive] ([cpr_id], [patient_workplan_item_id], [attribute_sequence])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Attribute_Archive] SET (LOCK_ESCALATION = TABLE)
 GO

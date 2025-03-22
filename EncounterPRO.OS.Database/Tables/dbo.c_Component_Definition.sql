@@ -118,17 +118,11 @@ CREATE NONCLUSTERED INDEX [idx_c_Component_Definition_id]
 	ON [dbo].[c_Component_Definition] ([id], [component_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Definition]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Definition] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Definition]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Definition] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Definition]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Definition] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Definition] SET (LOCK_ESCALATION = TABLE)
 GO

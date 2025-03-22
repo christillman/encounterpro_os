@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_Set_User_IDValue]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_Set_User_IDValue (
 	@ps_user_id varchar(24),
@@ -32,9 +32,7 @@ DECLARE @ll_length int,
 	@ls_progress_value varchar(40),
 	@ls_progress_key varchar(40),
 	@ll_customer_id int,
-	@ls_current_value varchar(255),
-	@ll_rowcount int,
-	@ll_error int
+	@ls_current_value varchar(255)
 
 SELECT @ll_customer_id = customer_id
 FROM c_Database_Status
@@ -56,13 +54,10 @@ AND progress_type = 'ID'
 AND progress_key = @ls_progress_key
 AND current_flag = 'Y'
 
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_rowcount > 0 AND @ls_current_value = @ps_IDValue
+IF @ls_current_value = @ps_IDValue
 	RETURN 1
 
 
@@ -73,7 +68,6 @@ IF @ll_length <= 40
 	BEGIN
 
 	SELECT @ls_progress_value = CONVERT(varchar(40), @ps_IDValue)
-
 
 	INSERT INTO c_User_Progress (
 		[user_id] ,

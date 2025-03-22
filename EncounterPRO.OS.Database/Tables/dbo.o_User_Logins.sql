@@ -96,13 +96,15 @@ ALTER TABLE [dbo].[o_User_Logins]
 	CONSTRAINT [DF__o_user_logins_action_time]
 	DEFAULT (dbo.get_client_datetime()) FOR [action_time]
 GO
-GRANT INSERT
-	ON [dbo].[o_User_Logins]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_User_Logins] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_User_Logins]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_User_Logins] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[o_User_Logins] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[o_User_Logins] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[o_User_Logins] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_User_Logins] SET (LOCK_ESCALATION = TABLE)
 GO

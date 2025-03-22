@@ -79,12 +79,12 @@ CREATE TABLE [dbo].[c_Component_Param] (
 		[initial3]           [varchar](128) NULL,
 		[initial4]           [varchar](128) NULL,
 		[required_flag]      [char](1) NULL,
-		[helptext]           [text] NULL,
-		[query]              [text] NULL,
+		[helptext]           [nvarchar](max) NULL,
+		[query]              [nvarchar](max) NULL,
 		[min_build]          [int] NULL,
 		[last_updated]       [datetime] NOT NULL,
 		[param_id]           [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Component_Param]
 	ADD
@@ -113,25 +113,15 @@ CREATE NONCLUSTERED INDEX [idx_param_sequence]
 	ON [dbo].[c_Component_Param] ([param_sequence])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Component_Param]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Component_Param] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Component_Param]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Component_Param] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Component_Param]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Component_Param] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Param]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Param] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Component_Param]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Component_Param] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Param] SET (LOCK_ESCALATION = TABLE)
 GO

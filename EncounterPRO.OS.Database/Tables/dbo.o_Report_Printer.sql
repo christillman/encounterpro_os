@@ -81,25 +81,15 @@ ALTER TABLE [dbo].[o_Report_Printer]
 	([report_id], [report_printer_sequence])
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Report_Printer]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Report_Printer] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Report_Printer]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Report_Printer] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Report_Printer]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Report_Printer] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Report_Printer]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Report_Printer] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Report_Printer]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Report_Printer] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Report_Printer] SET (LOCK_ESCALATION = TABLE)
 GO

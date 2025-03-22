@@ -443,6 +443,10 @@ parent_command_index = command_count
 command_error = false
 command_error_text = ""
 
+if pstr_command.display_script_id = debug_display_script_id and pstr_command.display_command_id = debug_display_command_id then
+	// fake statement for breakpoint (DebugBreak() is crashing)
+	debug_display_script_id = pstr_command.display_script_id
+end if
 
 TRY
 	CHOOSE CASE lower(current_context_object)
@@ -509,11 +513,15 @@ log.log_db_with_seconds(this, "display_script", ls_msg, 2, ld_elapsed)
 
 // Save the final footprint end
 command[ll_command_index].footprint.to_position = charposition()
-// The charposition() actually returns the character after the insertion point but we want the character before the insertion point, unless the insertion point is before the first character already.
+// The charposition() actually returns the character after the insertion point but we want the character before the insertion point, 
+// unless the insertion point is before the first character already.
 if command[ll_command_index].footprint.to_position.char_position > 1 then
 	command[ll_command_index].footprint.to_position.char_position -= 1
 end if
-
+if command[ll_command_index].footprint.to_position.char_position = 1 &
+	and command[ll_command_index].footprint.to_position.line_number > command[ll_command_index].footprint.from_position.line_number then
+	command[ll_command_index].footprint.to_position.line_number -= 1
+end if
 // Restore the previous parent command index
 parent_command_index = ll_parent_command_index
 
@@ -620,7 +628,7 @@ CHOOSE CASE lower(pstr_command.display_command)
 		li_lines = integer(f_attribute_find_attribute(pstr_command.attributes, "lines"))
 		blank_lines(li_lines)
 	CASE "body"
-		blank_lines(0)
+		add_cr()
 		set_detail()
 		return 1
 	CASE "capture signature"
@@ -3958,7 +3966,7 @@ for i = ll_count to 1 step -1
 	
 	ll_result_count = luo_results.retrieve(current_patient.cpr_id, ll_observation_sequence)
 	if ll_result_count > 0 then
-		if not lb_first_result then blank_lines(0)
+		if not lb_first_result then add_cr()
 		li_sts = luo_results.display_observation_sequence(ll_observation_sequence, ps_result_type, "Y", pb_continuous, this)
 		if li_sts > 0 then lb_first_result = false
 	end if
@@ -4100,7 +4108,7 @@ CHOOSE CASE lower(ps_format)
 	CASE "message", "task"
 		// Show services in reverse chronological order
 		for i = ll_count to 1 step -1
-			blank_lines(1)
+			add_cr()
 			set_margins(0, 0, 0)
 			ll_patient_workplan_item_id = puo_data.object.patient_workplan_item_id[i]
 			ls_service = puo_data.object.ordered_service[i]
@@ -4165,7 +4173,7 @@ CHOOSE CASE lower(ps_format)
 				// Print another line if the ordered-for isn't the owned-by
 				ls_owned_by = puo_data.object.owned_by[i]
 				if ls_owned_by <> ls_ordered_for and lower(ls_status) <> "skipped" then
-					blank_lines(0)
+					add_cr()
 					if lower(ls_status) = "completed" then
 						add_text("Completed By: ")
 					elseif lower(ls_status) = "cancelled" then
@@ -4182,7 +4190,7 @@ CHOOSE CASE lower(ps_format)
 		
 				ls_text = puo_data.get_field_display(i, "service", "description")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					
 					add_text("Subject: ")
 					
@@ -4194,18 +4202,18 @@ CHOOSE CASE lower(ps_format)
 		
 				ls_text = puo_data.get_field_display(i, "service", "message")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					add_text("Message: ")
 					add_text(ls_text)
 				end if
 		
 				ls_text = puo_data.get_field_display(i, "service", "disposition")
 				if not isnull(ls_text) then
-					blank_lines(0)
+					add_cr()
 					add_text("Disposition: ")
 					add_text(ls_text)
 				end if
-				blank_lines(0)
+				add_cr()
 			end if
 		next
 		add_cr()
@@ -6286,7 +6294,7 @@ for i = 1 to lstr_progress.progress_count
 //					ls_fielddata = f_service_to_field_data(lstr_service)
 				end if
 				add_text(ls_fieldtext)
-				blank_lines(1)
+				//blank_lines(1) // removed as it seemed to be part of the extra-line problem (#71)
 //				lstr_grid.grid_row[ll_row].column[2].field_data = ls_fielddata				
 				
 //				// Add the title
@@ -6834,6 +6842,10 @@ if (gnv_app.cpr_mode = "CLIENT") and debug_mode and (not isvalid(editor_window) 
 	return ls_rtf
 end if
 
+if pl_display_script_id = debug_display_script_id then
+	// fake statement for breakpoint (DebugBreak() is crashing)
+	debug_display_script_id = pl_display_script_id
+end if
 
 for i = li_first_command_index to lstr_display_script.display_command_count
 	display_script_command(lstr_display_script.display_command[i], pstr_encounter, pstr_assessment, pstr_treatment)
@@ -6849,10 +6861,10 @@ for i = li_first_command_index to lstr_display_script.display_command_count
 			is_on_break = true
 			
 			SetPointer(Arrow!)
+			this.scroll_down() // to see the bottom of scripts during debugging
 			//if auto_redraw_off then set_redraw(true)
 			return ls_rtf
 		end if
-
 		yield()
 		// If not valid, likely the user clicked Finished in the window to cancel the script
 		if not isvalid(this) then exit
@@ -7588,8 +7600,35 @@ lstr_stack = command_stack_for_charposition(lstr_charposition)
 
 open_editor(lstr_stack)
 
-redisplay()
+this.redisplay()
 
+
+end event
+
+event key;call super::key;
+str_charposition lstr_charposition
+long i, j
+str_c_display_script_command_stack lstr_stack
+
+if key = KeyShift! then return
+if key = KeyControl! then return
+
+if keyflags = 2 /* Ctrl */ and key = keyE! then
+	if not config_mode or isnull(first_display_script_id) or first_display_script_id = 0 then return
+	
+	// It's not easy to see where the cursor was when the right mouse button was clicked, so for now let's use the insertion point.  This means that the user
+	// must first click the left mouse button to set the insertion point at the desired location and then click the right mouse button to bring up the RTF Script Editor with that
+	// command highlighted
+	lstr_charposition = charposition()
+	
+	lstr_stack = command_stack_for_charposition(lstr_charposition)
+	
+	open_editor(lstr_stack)
+	
+	redisplay()
+else
+	return
+end if
 
 end event
 

@@ -1,5 +1,5 @@
 
---DROP TABLE [dbo].[c_Drug_Generic]
+DROP TABLE IF EXISTS [dbo].[c_Drug_Generic]
 GO
 
 SET ANSI_NULLS ON
@@ -11,12 +11,9 @@ GO
 SET ARITHABORT ON
 GO
 
-SET ANSI_PADDING ON
-GO
-
 CREATE TABLE [dbo].[c_Drug_Generic](
-	[generic_name] [varchar](2000) NULL,
-	[generic_rxcui] [varchar](20) NULL,
+	[generic_name] [varchar](2000) NOT NULL,
+	[generic_rxcui] [varchar](30) NOT NULL,
 	[is_single_ingredient] [bit] NOT NULL,
 	[drug_id] [varchar](24) NULL,
 	[mesh_definition] [varchar](800) NULL,
@@ -36,8 +33,15 @@ CREATE TABLE [dbo].[c_Drug_Generic](
 
 GO
 
-SET ANSI_PADDING OFF
-GO
-
 CREATE UNIQUE INDEX uq_generic_drug_id ON c_Drug_Generic (drug_id)
+GO
+GRANT DELETE ON [dbo].[c_Drug_Generic] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[c_Drug_Generic] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[c_Drug_Generic] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[c_Drug_Generic] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[c_Drug_Generic] TO [cprsystem]
 GO

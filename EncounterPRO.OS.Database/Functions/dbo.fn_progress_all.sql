@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_progress_all (
+CREATE FUNCTION dbo.fn_progress_all (
 	@ps_cpr_id varchar(12),
 	@ps_context_object varchar(24),
 	@pl_object_key int)
@@ -80,7 +80,7 @@ RETURNS @progress TABLE (
 	[progress_type] [varchar] (24)  NULL ,
 	[progress_key] [varchar] (48)  NULL ,
 	[progress_value] [varchar] (40) NULL ,
-	[progress] [text]  NULL ,
+	[progress] [nvarchar](max)  NULL ,
 	[attachment_id] [int] NULL ,
 	[patient_workplan_item_id] [int] NULL ,
 	[risk_level] [int] NULL ,
@@ -329,8 +329,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_progress_all]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_progress_all] TO [cprsystem]
 GO
 

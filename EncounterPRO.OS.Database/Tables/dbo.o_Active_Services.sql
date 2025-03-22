@@ -125,21 +125,13 @@ CREATE NONCLUSTERED INDEX [idx_Active_Services_result]
 	ON [dbo].[o_Active_Services] ([cpr_id], [treatment_id], [observation_id], [result_sequence])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Active_Services]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Active_Services] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Active_Services]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Active_Services] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Active_Services]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Active_Services] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Active_Services]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Active_Services] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Active_Services] SET (LOCK_ESCALATION = TABLE)
 GO

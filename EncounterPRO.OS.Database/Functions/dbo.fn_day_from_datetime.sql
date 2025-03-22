@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_day_from_datetime (
+CREATE FUNCTION dbo.fn_day_from_datetime (
 	@pdt_datetime datetime )
 
 RETURNS datetime

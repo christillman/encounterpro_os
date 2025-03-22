@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_user_in_room (
+CREATE FUNCTION dbo.fn_user_in_room (
 	@ps_room_id varchar(12) )
 
 RETURNS varchar(24)
@@ -46,7 +46,7 @@ IF @ls_user_in_room IS NOT NULL
 
 ;WITH usersinroom AS (
 	SELECT l.user_id,
-			CASE u.license_flag WHEN 'P' THEN 1 WHEN 'E' THEN 2 ELSE 3 END
+			CASE u.license_flag WHEN 'P' THEN 1 WHEN 'E' THEN 2 ELSE 3 END AS sort_sequence
 	FROM o_User_Service_Lock l
 		INNER JOIN o_Active_Services s
 		ON s.patient_workplan_item_id = l.patient_workplan_item_id

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_latest_system_version_for_db_version (
+CREATE FUNCTION dbo.fn_latest_system_version_for_db_version (
 	@ps_system_id varchar(24),
 	@pl_db_major_release int,
 	@ps_db_database_version varchar(4),
@@ -139,8 +139,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_latest_system_version_for_db_version]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_latest_system_version_for_db_version] TO [cprsystem]
 GO
 

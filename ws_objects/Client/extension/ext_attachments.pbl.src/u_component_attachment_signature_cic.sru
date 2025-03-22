@@ -25,9 +25,8 @@ return 1
 
 end function
 
-public function integer xx_render (string ps_file_type, ref string ps_file, integer pi_width, integer pi_height);blob			lbl_attachment
+public function integer xx_render (string ps_file_type, ref string ps_file, integer pi_width, integer pi_height);blob		lbl_attachment
 Integer		li_sts
-oleobject luo_ImageControl
 string ls_tempfile
 
 w_render_cic_signature lw_window
@@ -37,6 +36,7 @@ li_sts = get_attachment_blob(lbl_attachment)
 If li_sts <= 0 Then Return -1
 
 ls_tempfile = f_temp_file(".bmp")
+ps_file = ls_tempfile
 
 popup.data_row_count = 4
 popup.items[1] = f_blob_to_string(lbl_attachment)
@@ -51,29 +51,24 @@ if not fileexists(ls_tempfile) then
 	return -1
 end if
 
-luo_ImageControl = CREATE oleobject
-li_sts = luo_ImageControl.connecttonewobject("EncounterPRO.OS.ImageManipulation")
-if li_sts < 0 then
-	log.log(this, "u_component_attachment_signature_cic.xx_render:0030", "Error creating EPImageControl object (" + string(li_sts) + ")", 3)
-	ps_file = ls_tempfile
-else
-	ps_file = f_temp_file(".bmp")
-	
-	li_sts = luo_ImageControl.ConvertTo1bppBmp(ls_tempfile, ps_file)
-	if li_sts <= 0 then
-		log.log(this, "u_component_attachment_signature_cic.xx_render:0037", "Error reducing bitmap", 3)
+If IsValid(common_thread.imageutils) THEN
+	TRY
+		ps_file = f_temp_file(".bmp")	
+		common_thread.imageutils.of_convertto1bppbmp(ls_tempfile, ps_file)
+	CATCH (throwable lo_error)
+		log.log(this, "u_component_attachment_signature_cic.xx_render:0032", "Error reducing bitmap", 3)
 		ps_file = ls_tempfile
-	end if
-	luo_ImageControl.disconnectobject()
-end if
-
-DESTROY luo_ImageControl
+		return -1
+	END TRY
+Else
+	log.log(this, "u_component_attachment_signature_cic.xx_render:0035", "common_thread.imageutils not valid", 3)
+	return -1
+End If
 
 // remove the extraneous temp file
 if fileexists(ls_tempfile) and ls_tempfile <> ps_file then
 	filedelete(ls_tempfile)
 end if
-
 
 Return 1
 end function

@@ -104,21 +104,13 @@ ALTER TABLE [dbo].[c_Owner]
 	CONSTRAINT [DF_c_Owner_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Owner]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Owner] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Owner]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Owner] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Owner]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Owner] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Owner]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Owner] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Owner] SET (LOCK_ESCALATION = TABLE)
 GO

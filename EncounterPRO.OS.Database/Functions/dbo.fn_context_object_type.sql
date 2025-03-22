@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_context_object_type (
+CREATE FUNCTION dbo.fn_context_object_type (
 	@ps_context_object varchar(12),
 	@ps_cpr_id varchar(12),
 	@pl_object_key int )

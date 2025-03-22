@@ -110,25 +110,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_o_Menu_Selection_id]
 	ON [dbo].[o_menu_selection] ([id], [owner_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_menu_selection]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_menu_selection] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_menu_selection]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_menu_selection] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_menu_selection]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_menu_selection] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_menu_selection]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_menu_selection] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_menu_selection]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_menu_selection] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_menu_selection] SET (LOCK_ESCALATION = TABLE)
 GO

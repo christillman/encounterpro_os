@@ -50,9 +50,7 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 	openwithparm(w_pop_message, "The " + gnv_app.product_name + " database has been upgraded. Your new application version is being downloaded.")
 	
 	ls_product_underscore = f_string_substitute(gnv_app.product_name," ","_")
-	if sqlca.logid = "demo1" OR (Pos(gnv_app.program_directory,"Demo") > 0 &
-			OR Pos(gnv_app.program_filename,"Demo") > 0 OR Pos(sqlca.client_link,"Demo") > 0) then
-		ls_expectedfile = ls_product_underscore + "_Demo_Install_" + string(sqlca.modification_level) + ".exe"
+	if gnv_app.is_demo_version OR sqlca.logid = "demo1" OR Pos(sqlca.client_link,"Demo") > 0 then
 		ls_expectedfile =  ls_product_underscore + "_Azure_Demo_Install_" + string(sqlca.modification_level) + ".exe"
 	else		
 		ls_expectedfile =  ls_product_underscore + "_Install_" + string(sqlca.modification_level) + ".exe"
@@ -74,26 +72,27 @@ if gnv_app.target_modification_level < sqlca.modification_level then
 				li_return = lnv_extractor.extract (ls_source, ls_target)
 				if li_return <> 1 then
 					openwithparm(w_pop_message, "The extraction of " + ls_expectedfile + " resulted in error code " + string(li_return) + ". Please request assistance from your " + gnv_app.product_name + " representative.")
-					return -1
 				end if
 			end if
 		Else
 			ls_errormsg = iRun.LastErrorText
 			openwithparm(w_pop_message, "The download of " + ls_expectedfile + " was not completed. Please try again soon.")
+			log.log(po_null, "f_check_version:0074", ls_errormsg, 4)
 		End If
 	End if
 	
 	// downloaded just now, or previously
 	if FileExists(ls_target) then
 		openwithparm(w_pop_message, gnv_app.product_name + " will quit now, and the new version will be installed. Afterwards, please start " + gnv_app.product_name + " again to use the new version.")
-		li_sts = Run(ls_target)
-		If li_sts <> 1 Then
+		If NOT iRun.ShellRun(ls_target, "runas", iRun.SW_SHOWNORMAL) Then
+			ls_errormsg = iRun.LastErrorText
+			log.log(po_null, "f_check_version:0083", ls_errormsg, 4)
 			openwithparm(w_pop_message, "The installation of " + ls_expectedfile + " was not completed. Please request assistance from your " + gnv_app.product_name + " representative.")
 		End If
 		return -1 // quit and restart
 	else 
 		openwithparm(w_pop_message, "The download was not completed. Please try again soon.")
-		return -1
+		log.log(po_null, "f_check_version:0087", "File " + ls_target + " does not exist.", 2)
 	end if
 
 end if
@@ -147,7 +146,7 @@ CHOOSE CASE gnv_app.cpr_mode
 				log.log(po_null, "f_check_version:0095", ls_message, 2)
 				ls_message += " Do you wish to configure the database now?"
 				openwithparm(w_pop_yes_no, ls_message)
-				popup_return = message.powerobjectparm
+				popup_return = f_popup_return("w_pop_yes_no.f_check_version:140")
 				if popup_return.item = "YES" then
 					open(w_svc_config_database)
 				end if

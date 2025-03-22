@@ -1,7 +1,26 @@
-﻿IF  EXISTS (SELECT * FROM sys.objects 
-where object_id = OBJECT_ID(N'fn_std_dosage_form_descr') AND type in (N'FN'))
-DROP FUNCTION dbo.fn_std_dosage_form_descr
+﻿
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+SET XACT_ABORT ON
 GO
+
+-- Drop Function [dbo].[fn_std_dosage_form_descr]
+Print 'Drop Function [dbo].[fn_std_dosage_form_descr]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_std_dosage_form_descr]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_std_dosage_form_descr]
+GO
+
+-- Create Function [dbo].[fn_std_dosage_form_descr]
+Print 'Create Function [dbo].[fn_std_dosage_form_descr]'
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+
 
 CREATE FUNCTION dbo.fn_std_dosage_form_descr (@form_descr varchar(2000))
 RETURNS varchar(40) -- dosage_form 
@@ -19,7 +38,7 @@ WHERE @form_descr LIKE '%' + term + '%'
 AND term_type = 'dosage_form'
 ORDER BY LEN(alternate) desc, LEN(term) desc
 
-IF @@rowcount = 0 SET @f_descr = @form_descr
+IF @f_descr IS NULL SET @f_descr = @form_descr
 
 -- Insulin has special preference: instead of Inhalant Powder it should be Cartridge
 IF @f_descr LIKE '%insulin%' 

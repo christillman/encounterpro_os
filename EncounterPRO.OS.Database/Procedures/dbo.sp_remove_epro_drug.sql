@@ -177,7 +177,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 				)
-			IF @@rowcount = 0
+			IF @msg IS NULL
 				SET @msg = 'c_Drug_Definition ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
@@ -191,7 +191,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
-			IF @@rowcount = 0
+			IF @msg IS NULL
 				SET @msg = 'c_Drug_Brand ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Brand
@@ -240,7 +240,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
 				)
-			IF @@rowcount = 0
+			IF @msg IS NULL
 				SET @msg = 'c_Drug_Definition ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
@@ -254,7 +254,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			FROM c_Drug_Generic 
 			WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
-			IF @@rowcount = 0
+			IF @msg IS NULL
 				SET @msg = 'c_Drug_Generic ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Generic

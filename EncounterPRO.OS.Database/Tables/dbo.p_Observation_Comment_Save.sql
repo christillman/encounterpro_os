@@ -14,7 +14,7 @@ CREATE TABLE [p_Observation_Comment_Save](
 	[comment_type] [varchar](24) NOT NULL,
 	[comment_title] [varchar](48) NULL,
 	[short_comment] [varchar](40) NULL,
-	[comment] [text] NULL,
+	[comment] [nvarchar](max) NULL,
 	[abnormal_flag] [char](1) NULL,
 	[severity] [smallint] NULL,
 	[treatment_id] [int] NULL,
@@ -26,5 +26,15 @@ CREATE TABLE [p_Observation_Comment_Save](
 	[created_by] [varchar](24) NOT NULL,
 	[created] [datetime] NULL,
 	[id] [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
+GO
+GRANT DELETE ON [dbo].[p_Observation_Comment_Save] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[p_Observation_Comment_Save] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[p_Observation_Comment_Save] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[p_Observation_Comment_Save] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[p_Observation_Comment_Save] TO [cprsystem]
 GO

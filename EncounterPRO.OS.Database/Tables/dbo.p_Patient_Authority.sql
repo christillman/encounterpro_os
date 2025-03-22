@@ -149,25 +149,15 @@ ALTER TABLE [dbo].[p_Patient_Authority]
 	CONSTRAINT [DF_p_Patient_Authority_suffix_40]
 	DEFAULT ('') FOR [insureds_suffix]
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_Authority]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_Authority] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_Authority]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_Authority] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_Authority]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_Authority] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_Authority]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_Authority] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_Authority]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_Authority] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_Authority] SET (LOCK_ESCALATION = TABLE)
 GO

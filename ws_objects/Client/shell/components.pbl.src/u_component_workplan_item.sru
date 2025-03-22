@@ -645,7 +645,7 @@ else
 	li_sts = 1
 end if
 if isnull(ls_root_observation_id) or li_sts <= 0 then
-	log.log(this, "u_component_workplan_item.get_root_observation:0042", "Unable to determine root observation_id", 4)
+	log.log(this, "u_component_workplan_item.get_root_observation:0042", "Unable to determine root observation_id", 3)
 	return ll_null
 end if
 
@@ -1139,7 +1139,7 @@ if isnull(treatment.observation_id) then
 	
 	// If we still don't have an observation_id then return null
 	if isnull(treatment.observation_id) then
-		log.log(this, "u_component_workplan_item.get_root_observation_ids:0057", "No treatment-root observation found", 4)
+		log.log(this, "u_component_workplan_item.get_root_observation_ids:0057", "No treatment-root observation found for '" + treatment.treatment_description + "', " + string(treatment.treatment_id), 4)
 		return 0
 	else
 		treatment.set_progress_key('Modify', 'observation_id', treatment.observation_id)

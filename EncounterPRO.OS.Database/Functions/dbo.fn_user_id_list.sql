@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_id_list (
+CREATE FUNCTION dbo.fn_user_id_list (
 	@ps_user_id varchar(24))
 
 RETURNS @ids TABLE (
@@ -49,9 +49,7 @@ DECLARE @ll_owner_id int,
 		@ls_upin varchar(24) ,
 		@ls_npi varchar(40),
 		@ll_customer_id int,
-		@ls_actor_class varchar(24),
-		@ll_error int,
-		@ll_rowcount int
+		@ls_actor_class varchar(24)
 
 SELECT @ll_customer_id = customer_id
 FROM c_Database_Status
@@ -66,13 +64,10 @@ SELECT @ls_dea_number = dea_number,
 FROM c_User
 WHERE [user_id] = @ps_user_id
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
-IF @ll_rowcount = 0
+IF @ls_actor_class IS NULL
 	BEGIN
 	-- If we didn't find the [user_id] then assume the param is an actor class
 	SET @ll_owner_id = @ll_customer_id
@@ -249,8 +244,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_id_list]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_id_list] TO [cprsystem]
 GO
 

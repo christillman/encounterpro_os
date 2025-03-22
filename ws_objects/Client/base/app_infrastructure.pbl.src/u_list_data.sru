@@ -70,6 +70,8 @@ u_ds_data workplan
 u_ds_data xml_class
 
 // Office status datastores
+u_ds_data office_status
+str_office_status previous_status[], current_status[]
 u_ds_data open_encounters
 u_ds_data active_services
 u_ds_data office_rooms
@@ -4180,34 +4182,72 @@ return lstr_default_results
 end function
 
 private function integer load_office_status (ref long pl_room_count, ref long pl_encounter_count, ref long pl_service_count);long ll_rows
+boolean lb_rooms_changed, lb_active_services_changed, lb_encounters_changed
+int li_status_row, li_prev_status_row
+
+// Start with the cached values
+pl_room_count = office_rooms.rowcount()
+pl_encounter_count = open_encounters.rowcount()
+pl_service_count = active_services.rowcount()
 
 // See if we need to refresh the data stores
 if secondsafter(office_last_refresh, now()) <= office_refresh_interval then
-	pl_room_count = office_rooms.rowcount()
-	pl_encounter_count = open_encounters.rowcount()
-	pl_service_count = active_services.rowcount()
-else
-	// refresh the data stores
-	
+	return 1
+end if
+
+// See if the underlying tables have been updated	
+ll_rows = office_status.retrieve()
+
+if upperbound(previous_status) = 0 then 
+	// initialize first time
+	for li_status_row = 1 to ll_rows
+		previous_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+		previous_status[li_status_row].last_updated = datetime("2018-07-28")
+	next
+end if
+
+for li_status_row = 1 to ll_rows
+	current_status[li_status_row].tablename = office_status.object.tablename[li_status_row]
+	current_status[li_status_row].last_updated = office_status.object.last_updated[li_status_row]
+	for li_prev_status_row = 1 to upperbound(previous_status)
+		if previous_status[li_prev_status_row].tablename = current_status[li_status_row].tablename then
+			if previous_status[li_prev_status_row].last_updated < current_status[li_status_row].last_updated then
+				choose case previous_status[li_prev_status_row].tablename
+					case "o_Active_Services"
+						lb_active_services_changed = true
+					case "o_Rooms"
+						lb_rooms_changed = true
+					case "p_Patient_Encounter", "p_Patient_WP_Item"
+						lb_encounters_changed = true
+				end choose
+				 previous_status[li_prev_status_row].last_updated = current_status[li_status_row].last_updated
+			end if
+		end if
+	next
+next
+
+if lb_rooms_changed then 
 	// Get the groups and rooms in this office
 	pl_room_count = office_rooms.retrieve(gnv_app.office_id)
 	if pl_room_count < 0 then return -1
-	
+end if
+
+if lb_encounters_changed then 
 	// Get all the open encounters
 	pl_encounter_count = open_encounters.retrieve('%')
 	if pl_encounter_count < 0 then return -1
-	
+end if
+
+if lb_active_services_changed then 
 	// Get all the active services
 	pl_service_count = active_services.retrieve("Y")
 	if pl_service_count < 0 then return -1
-	
-	// Set the refresh time stamp to now
-	office_last_refresh = now()
-	
-	// Now is a good time to see if any tables have been updated
-	check_table_update()
 end if
 
+check_table_update()
+
+// Set the refresh time stamp to now
+office_last_refresh = now()
 
 return 1
 
@@ -6237,17 +6277,16 @@ long i
 integer li_sts
 
 // Search the menu cache
-for i = 1 to menu_cache_count
-	if pl_menu_id = menu_cache[i].menu_id then
-		if config_mode then
-			// if we're in config mode then we want to make sure we have the latest
-			// menu items if they've changed
-			li_sts = get_menu_items(menu_cache[i])
+if NOT config_mode then
+	// if we're in config mode then we want to make sure we have 
+	// the latest menu items if they've changed, so refresh below.
+	// Only consult cache if not in config mode
+	for i = 1 to menu_cache_count
+		if pl_menu_id = menu_cache[i].menu_id then
+		  return menu_cache[i]
 		end if
-
-	  return menu_cache[i]
-	end if
-next
+	next
+end if
 
 // Any script calling this method is really asking for the active menu with the same [id] as
 // the specified menu_id.
@@ -6822,9 +6861,9 @@ for i = 1 to lstr_script.display_command_count
 		ls_value = display_script_command_attributes.object.value[ll_row]
 		ll_attribute_sequence = display_script_command_attributes.object.attribute_sequence[ll_row]
 		
-		// The datawindow will only hold 8000 characters, so if the value is over 8000 characters, then make sure
-		// we have the whole thing
-		if len(ls_value) >= 8000 then
+		// The datawindow will only hold 8000 characters, so if the value is over 7500 characters, 
+		// then make sure we have the whole thing
+		if len(ls_value) >= 7500 then
 			SELECT long_value
 			INTO :ls_value
 			FROM c_Display_Script_Cmd_Attribute
@@ -7729,6 +7768,8 @@ observation_stages = CREATE u_ds_data
 observation_stages.set_dataobject("dw_c_observation_stage")
 setnull(stage_observation_id)
 
+office_status = CREATE u_ds_data
+office_status.set_dataobject("dw_sp_check_office_status")
 open_encounters = CREATE u_ds_data
 open_encounters.set_dataobject("dw_sp_open_encounters")
 active_services = CREATE u_ds_data

@@ -10,3 +10,13 @@ CREATE TABLE [c_Drug_EPC](
 	[epc_category] [varchar](100) NULL
 ) ON [PRIMARY]
 GO
+GRANT DELETE ON [dbo].[c_Drug_EPC] TO [cprsystem]
+GO
+GRANT INSERT ON [dbo].[c_Drug_EPC] TO [cprsystem]
+GO
+GRANT REFERENCES ON [dbo].[c_Drug_EPC] TO [cprsystem]
+GO
+GRANT SELECT ON [dbo].[c_Drug_EPC] TO [cprsystem]
+GO
+GRANT UPDATE ON [dbo].[c_Drug_EPC] TO [cprsystem]
+GO

@@ -142,6 +142,8 @@ f_get_picture_info(ls_picturefile, ll_picture_pixels_x, ll_picture_pixels_y, ll_
 ll_width = pixelstounits(ll_picture_pixels_x, XPixelsToUnits! )
 ll_height = pixelstounits(ll_picture_pixels_y, YPixelsToUnits! )
 
+IF ll_width = 0 or ll_height = 0 THEN return
+
 //p_hidden_picture.picturename = ls_picturefile
 //p_hidden_picture.originalsize = true
 
@@ -166,7 +168,7 @@ else
 	// aspect ratio of the display, so make the picture as wide as the display but shorten
 	// the height.
 	p_picture.height = picture_height
-	p_picture.width = picture_height / lr_picture_aspect
+	IF lr_picture_aspect > 0 THEN p_picture.width = picture_height / lr_picture_aspect
 	p_picture.x = (picture_width - p_picture.width) / 2
 	p_picture.y = 0
 end if

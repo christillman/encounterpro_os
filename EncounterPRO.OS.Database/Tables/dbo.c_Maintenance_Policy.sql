@@ -94,21 +94,13 @@ ALTER TABLE [dbo].[c_Maintenance_Policy]
 	CONSTRAINT [DF_c_mt_Policy_include_new_flag]
 	DEFAULT ('N') FOR [include_new_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Policy]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Policy] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Policy]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Policy] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Policy]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Policy] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Policy]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Policy] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Policy] SET (LOCK_ESCALATION = TABLE)
 GO

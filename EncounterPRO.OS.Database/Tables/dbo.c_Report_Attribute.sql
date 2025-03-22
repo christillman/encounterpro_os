@@ -69,10 +69,10 @@ CREATE TABLE [dbo].[c_Report_Attribute] (
 		[attribute]               [varchar](64) NOT NULL,
 		[value]                   [varchar](255) NULL,
 		[component_attribute]     [char](1) NOT NULL,
-		[objectdata]              [image] NULL,
+		[objectdata]              [varbinary](max) NULL,
 		[component_id]            [uniqueidentifier] NULL,
 		[last_modified]           [datetime] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Report_Attribute]
 	ADD
@@ -93,25 +93,15 @@ ALTER TABLE [dbo].[c_Report_Attribute]
 	CONSTRAINT [DF_c_Report_Attribute_last_modified]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_modified]
 GO
-GRANT DELETE
-	ON [dbo].[c_Report_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Report_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Report_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Report_Attribute] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Report_Attribute]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Report_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Report_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Report_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Report_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Report_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Report_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

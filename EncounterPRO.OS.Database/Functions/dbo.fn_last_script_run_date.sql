@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_last_script_run_date (
+CREATE FUNCTION dbo.fn_last_script_run_date (
 	@ps_script_type varchar(24),
 	@ps_script_name varchar(255) )
 

@@ -72,11 +72,11 @@ CREATE TABLE [dbo].[c_Component_Log] (
 		[computer_id]             [int] NOT NULL,
 		[operation_as_user]       [varchar](64) NOT NULL,
 		[completion_status]       [varchar](12) NOT NULL,
-		[error_message]           [text] NULL,
+		[error_message]           [nvarchar](max) NULL,
 		[created]                 [datetime] NOT NULL,
 		[created_by]              [varchar](24) NOT NULL,
 		[id]                      [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Component_Log]
 	ADD
@@ -88,9 +88,7 @@ ALTER TABLE [dbo].[c_Component_Log]
 	CONSTRAINT [DF_c_Component_Log_id]
 	DEFAULT (newid()) FOR [id]
 GO
-GRANT SELECT
-	ON [dbo].[c_Component_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Component_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Component_Log] SET (LOCK_ESCALATION = TABLE)
 GO

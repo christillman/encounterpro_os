@@ -41,7 +41,7 @@ DECLARE lc_other_constraint CURSOR LOCAL FAST_FORWARD FOR
 		JOIN sysobjects soct WITH (NOLOCK) ON  sc.id = soct.id
 		JOIN sysreferences sr WITH (NOLOCK) ON sc.constid  = sr.constid
 		JOIN sysobjects sort WITH (NOLOCK) ON  sr.rkeyid = sort.id
-	where sort.name = @ps_table
+	where sort.name COLLATE DATABASE_DEFAULT = @ps_table
 OPEN lc_other_constraint
 FETCH NEXT FROM lc_other_constraint INTO @TableName, @ConstraintName
 WHILE (@@fetch_status = 0)
@@ -63,7 +63,7 @@ DECLARE lc_constraint CURSOR LOCAL FAST_FORWARD FOR
 		ON sc.constid = so.id
 		INNER JOIN sysobjects so2 WITH (NOLOCK)
 		ON sc.id = so2.id
-	where so2.name = @ps_table
+	where so2.name COLLATE DATABASE_DEFAULT = @ps_table
 	order by isnull(sr.fkeyid,0) desc
 OPEN lc_constraint
 FETCH NEXT FROM lc_constraint INTO @ConstraintName
@@ -85,7 +85,7 @@ IF @pb_keep_triggers = 0
 			JOIN sysobjects d WITH (NOLOCK) ON o.deltrig = d.id
 		where o.type = 'TR'
 		and d.type = 'U'
-		and d.name = @ps_table
+		and d.name COLLATE DATABASE_DEFAULT = @ps_table
 	OPEN lc_triggers
 	FETCH NEXT FROM lc_triggers INTO @Trigger
 	WHILE (@@fetch_status = 0)
@@ -113,10 +113,10 @@ FROM
 	JOIN sysobjects so WITH (NOLOCK) ON so.id = si.id
 WHERE so.xtype = 'U'
 AND	si.indid BETWEEN 1 and 254
-AND si.name NOT LIKE '/_WA/_Sys/_%' ESCAPE '/'
-AND	so.name = @ps_table
+AND si.name COLLATE DATABASE_DEFAULT NOT LIKE '/_WA/_Sys/_%' ESCAPE '/'
+AND	so.name COLLATE DATABASE_DEFAULT = @ps_table
 ORDER BY
-	si.name
+	si.name COLLATE DATABASE_DEFAULT
 
 OPEN lc_indexes
 

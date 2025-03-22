@@ -14,7 +14,7 @@ UPDATE u
 SET dose_unit = dbo.fn_std_dose_unit (dbo.fn_std_dosage_form (form_descr, generic_form_descr), form_descr, generic_form_descr)
 FROM vw_dose_unit u
 WHERE u.dose_unit IS NULL
-OR u.dose_unit != fn_std_dose_unit (dbo.fn_std_dosage_form (form_descr, generic_form_descr), form_descr, generic_form_descr)
+OR u.dose_unit != dbo.fn_std_dose_unit (dbo.fn_std_dosage_form (form_descr, generic_form_descr), form_descr, generic_form_descr)
 */
 
 

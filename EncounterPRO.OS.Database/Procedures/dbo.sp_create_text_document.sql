@@ -67,7 +67,7 @@ GO
 CREATE PROCEDURE sp_create_text_document (
 	@ps_title varchar(255),
 	@pl_category int = NULL,
-	@ps_document varchar(4000),
+	@ps_document nvarchar(max),
 	@pl_material_id int OUTPUT )
 AS
 DECLARE @ptrval binary(16)
@@ -79,7 +79,7 @@ INSERT INTO c_Patient_Material (
 VALUES (
 	@ps_title,
 	@pl_category,
-	@ps_document,
+	convert(varbinary(max),@ps_document),
 	'OK')
 SELECT @pl_material_id = @@IDENTITY
 

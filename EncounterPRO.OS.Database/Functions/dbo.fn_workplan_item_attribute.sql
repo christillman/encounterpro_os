@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_workplan_item_attribute (
+CREATE FUNCTION dbo.fn_workplan_item_attribute (
 	@pl_patient_workplan_item_id int,
 	@ps_attribute varchar(64))
 
@@ -75,7 +75,7 @@ RETURNS @attribute TABLE (
 	[cpr_id] [varchar] (12)  NULL ,
 	[attribute] [varchar] (64)  NOT NULL ,
 	[value] [varchar] (255)  NULL ,
-	[message] [text]  NULL ,
+	[message] [nvarchar](max)  NULL ,
 	[created_by] [varchar] (24)  NOT NULL ,
 	[created] [datetime] NULL )
 
@@ -117,8 +117,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_workplan_item_attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_workplan_item_attribute] TO [cprsystem]
 GO
 

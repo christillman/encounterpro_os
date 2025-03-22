@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_age_months (
+CREATE FUNCTION dbo.fn_age_months (
 	@pdt_date_of_birth datetime,
 	@pdt_current_date datetime)
 

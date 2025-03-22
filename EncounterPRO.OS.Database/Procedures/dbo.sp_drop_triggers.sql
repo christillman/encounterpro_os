@@ -26,12 +26,12 @@ AS
 
 DECLARE @Trigger sysname
 DECLARE lc_triggers CURSOR FOR
-	select o.name
+	select o.name COLLATE DATABASE_DEFAULT
 	from sysobjects o WITH (NOLOCK) 
 		JOIN sysobjects d WITH (NOLOCK) ON o.deltrig = d.id
 	where o.type = 'TR'
 	and d.type = 'U'
-	and d.name = @ps_table
+	and d.name COLLATE DATABASE_DEFAULT = @ps_table
 OPEN lc_triggers
 FETCH NEXT FROM lc_triggers INTO @Trigger
 WHILE (@@fetch_status = 0)

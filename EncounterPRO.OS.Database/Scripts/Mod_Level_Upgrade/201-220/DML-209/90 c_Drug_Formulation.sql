@@ -1,4 +1,4 @@
--- Some missing spaces mess up fn_strength_sort
+-- Some missing spaces mess up dbo.fn_strength_sort
 
 UPDATE c_Drug_Formulation
 SET form_descr = REPLACE(form_descr, 'n1', 'n 1')

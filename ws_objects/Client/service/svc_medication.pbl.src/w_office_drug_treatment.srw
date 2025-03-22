@@ -581,7 +581,7 @@ popup.datacolumn = 2
 popup.argument_count = 1
 popup.argument[1] = drug_id
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.add_cocktail.clicked:33")
 if popup_return.item_count <> 1 then return 0
 
 ls_constituent_drug_id = popup_return.items[1]
@@ -607,7 +607,7 @@ else
 		popup.items = lsa_description
 	next
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.add_cocktail.clicked:59")
 	if popup_return.item_count = 1 then
 		ls_administer_unit = lsa_unit_id[popup_return.item_indexes[1]]
 	else
@@ -660,7 +660,7 @@ for i = 1 to lstr_progress.progress_count
 	popup.items[i] = lstr_progress.progress[i].progress_full_description
 next
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.remove_cocktail.clicked:21")
 if popup_return.item_count <= 0 then return 0
 
 for i = 1 to popup_return.item_count
@@ -938,7 +938,7 @@ end if
 popup.items = administration
 popup.data_row_count = admin_count
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.uo_drug_administration.clicked:16")
 if popup_return.item_index <= 0 then return
 li_temp = popup_return.item_index
 
@@ -980,7 +980,7 @@ last_package_list_index = package_list_index
 popup.items = package_description
 popup.data_row_count = package_count
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.uo_drug_package.clicked:12")
 if popup_return.item_index <= 0 then return
 package_list_index = popup_return.item_index
 selectitem(package_list_index)
@@ -1071,7 +1071,7 @@ popup.pointerx = this.pointerx() + this.x + w.x
 popup.pointery = this.pointery() + this.y + w.y
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.uo_procedure.clicked:25")
 if popup_return.item_count = 0 then return
 
 set_value(popup_return.items[1])
@@ -1177,7 +1177,7 @@ popup.pointerx = this.pointerx() + this.x + w.x
 popup.pointery = this.pointery() + this.y + w.y
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_office_drug_treatment.uo_hcpcs_procedure.clicked:19")
 if popup_return.item_count = 0 then return
 
 set_value(popup_return.items[1], popup_return.descriptions[1])
@@ -1255,7 +1255,7 @@ popup.button_titles_used = true
 if popup.button_count > 1 then
 	openwithparm(lw_pop_buttons, popup, "w_pop_buttons")
 	if isvalid(message.powerobjectparm) then
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("lw_pop_buttons,w_office_drug_treatment.dw_cocktail.clicked:43")
 		button_pressed = popup_return.item_index
 	else
 		button_pressed = message.doubleparm
@@ -1415,7 +1415,7 @@ end type
 event clicked;str_popup_return popup_return
 
 openwithparm(w_pop_yes_no, "Are you sure you wish to cancel this medication?")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_yes_no,w_office_drug_treatment.cb_cancel.clicked:4")
 if popup_return.item <> "YES" then return
 
 service.treatment.Close("CANCELLED")

@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_epro_properties ()
+CREATE FUNCTION dbo.fn_epro_properties ()
 
 RETURNS @properties TABLE (
 	[property_id] [int] NOT NULL,
@@ -75,7 +75,7 @@ RETURNS @properties TABLE (
 	[function_name] [varchar](64) NULL,
 	[return_data_type] [varchar](12) NULL,
 	[script_language] [varchar](12) NULL,
-	[script] [text] NULL,
+	[script] [nvarchar](max) NULL,
 	[service] [varchar](24) NULL,
 	[status] [varchar](12) NULL ,
 	[id] [uniqueidentifier] NULL ,
@@ -86,7 +86,7 @@ RETURNS @properties TABLE (
 	[property_value_object_filter] [varchar](255) NULL,
 	[property_value_object_unique] [char] (1) NULL,
 	[property_value_object_cat_field] [varchar](255) NULL,
-	[property_value_object_cat_query] [text] NULL,
+	[property_value_object_cat_query] [nvarchar](max) NULL,
 	[property_name] [varchar](64) NULL,
 	[property_value_object_key] [varchar](64) NULL,
 	[property_help] [varchar](1024) NULL,
@@ -252,8 +252,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_epro_properties]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_epro_properties] TO [cprsystem]
 GO
 

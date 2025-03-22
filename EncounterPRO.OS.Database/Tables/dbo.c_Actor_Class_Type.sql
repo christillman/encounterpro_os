@@ -77,17 +77,11 @@ ALTER TABLE [dbo].[c_Actor_Class_Type]
 	WITH FILLFACTOR=70
 	ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[c_Actor_Class_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Actor_Class_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Actor_Class_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Actor_Class_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Actor_Class_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Actor_Class_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Actor_Class_Type] SET (LOCK_ESCALATION = TABLE)
 GO

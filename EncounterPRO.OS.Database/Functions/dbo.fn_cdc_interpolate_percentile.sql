@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_cdc_interpolate_percentile (
+CREATE FUNCTION dbo.fn_cdc_interpolate_percentile (
 	@pd_age decimal(18, 6),
 	@pd_months1 decimal(18, 6),
 	@pd_percentile1 decimal(18, 6),

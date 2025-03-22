@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_treatment_contraindications (
+CREATE FUNCTION dbo.fn_treatment_contraindications (
 	@ps_cpr_id varchar(12),
 	@ps_user_id varchar(24),
 	@ps_treatment_type varchar(24) = NULL,
@@ -85,9 +85,9 @@ RETURNS @contra TABLE (
 	icon varchar(64) NULL,
 	severity int NULL,
 	shortdescription varchar(255) NULL,
-	longdescription text NULL,
+	longdescription varchar(max) NULL,
 	contraindication_warning varchar(255) NULL,
-	contraindication_references text NULL)
+	contraindication_references varchar(max) NULL)
 AS
 
 BEGIN
@@ -219,8 +219,6 @@ AND ISNULL(t.treatment_status, 'OPEN') <> 'Cancelled'
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_treatment_contraindications]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_treatment_contraindications] TO [cprsystem]
 GO
 

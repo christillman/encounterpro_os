@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_compare_well_encounter_flag (
+CREATE FUNCTION dbo.fn_compare_well_encounter_flag (
 	@ps_well_encounter_flag_1 char(1),
 	@ps_well_encounter_flag_2 char(1))
 

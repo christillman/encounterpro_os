@@ -12,16 +12,18 @@
   !define PRODUCT   "GreenOlive_EHR"
 
 ; Client Setup Version
-  !define VERSION   7.2.2.0
+  !define VERSION   7.2.9.0
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
   !define INST_ROOT "C:\Users\Public\Documents"
   !define DEST_FOLDER "${INST_ROOT}\${PRODUCT}\Client"
+  !define ATT_FOLDER "${INST_ROOT}\Attachments"
+  !define UTILITIES_FOLDER "${INST_ROOT}\Utilities"
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   225
+  !define Database_Mod_Level   232
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -44,9 +46,19 @@
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
 
   ; Installing the help file
-  !define COMMONFILES_TARGET "EncounterPRO-OS"
-  !define APPDATA_TARGET "${PRODUCT}"
+  ;!define COMMONFILES_TARGET "EncounterPRO-OS"
+  ;!define APPDATA_TARGET "${PRODUCT}"
 
+  ; Installing certificates
+  !define CERT_QUERY_OBJECT_FILE 1
+  !define CERT_QUERY_CONTENT_FLAG_ALL 16382
+  !define CERT_QUERY_FORMAT_FLAG_ALL 14
+  !define CERT_STORE_PROV_SYSTEM 10
+  !define CERT_STORE_OPEN_EXISTING_FLAG 0x4000
+  !define CERT_SYSTEM_STORE_LOCAL_MACHINE 0x20000
+  !define CERT_STORE_ADD_ALWAYS 4
+ 
+  
 ; ------------------------------------------
 ; Variables
 
@@ -68,7 +80,7 @@
   
 ; ------------------------------------------
 ; Other Includes
-
+; From C:\Program Files (x86)\NSIS\Include
 !include WordFunc.nsh
 !insertmacro VersionCompare
 !include FileFunc.nsh
@@ -79,7 +91,9 @@
 !include LogicLib.nsh
 !include Library.nsh
 !include Sections.nsh
+; local
 !include ..\plugins\eproinstallfunctions.nsh
+
 ; ------------------------------------------
 ; General
 
@@ -90,7 +104,7 @@
     
     ; Default Installation Folder is set from .onInit's call to SetInstallDir
     
-    ; Request Execution Priviliges for Vista / Server 2008
+    ; Everything is now installed in C:\Users\Public so no need for special privs
     RequestExecutionLevel admin
     
 ; ------------------------------------------
@@ -161,10 +175,6 @@
         DetailPrint "The share folder \\localhost\attachments is required for the bulk import files "
         DetailPrint "supporting this installation."
         DetailPrint ""
-        DetailPrint "Create an empty folder anywhere on this computer. Right click on it and choose Share."
-        DetailPrint "Make the share name 'attachments', and be sure to share it with 'Everyone' with Read/Write permission. "
-        DetailPrint "The bulk import files will be copied to it during installation when you try again."
-        DetailPrint ""
         SetDetailsView show
         Abort "The share folder \\localhost\attachments was not found. Aborting now."
         GoAhead:
@@ -196,12 +206,8 @@
   
       SetDetailsPrint both
       DetailPrint "Installing EncounterPRO.OS.Utilities..."
-      SetDetailsPrint none
-      SetOutPath '$INSTDIR'
-      File '${SRC_EproUtils}\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
-      nsExec::Exec '"$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe"'
-      Delete '$INSTDIR\EncounterPRO.OS.Utilities ${EncounterPro_OS_Utilities_VERSION} Install.exe'
-	  
+      SetOutPath '${UTILITIES_FOLDER}'
+	  File "${SRC_EproUtils}\${EncounterPro_OS_Utilities_VERSION}\Files\*.*"	  
       SetDetailsPrint both
     SectionEnd
     
@@ -238,6 +244,7 @@
         File "${SOURCE_ROOT}\EncounterPRO-OS\Help\EncounterPro-OS Help.chw"
     SectionEnd
 
+; ini files now in program directory 
     ; Section '-Ini Files' SecIni
     ;     SetOutPath "$APPDATA\${APPDATA_TARGET}"
     ;     SetDetailsPrint both
@@ -255,19 +262,10 @@
     ;     SetDetailsPrint both
     ; SectionEnd
 
-
-; Just put it into attachments
-;    Section '-Mod Level Script' SecML
-;        Delete "$INSTDIR\*.mdlvl"
-;        SetOutPath '$INSTDIR'
-;        SetDetailsPrint both
-;        DetailPrint "Installing Upgrade Script For Mod Level ${Database_Mod_Level}..."
-;        SetDetailsPrint textonly
-;        File "${SRC_Mod_Level}\*.mdlvl"
-;    SectionEnd
-
     Section '-Attachments' SecAT
-        SetOutPath '\\localhost\attachments'
+        CreateDirectory "${ATT_FOLDER}"
+		nsExec::ExecToLog 'NET SHARE attachments="${ATT_FOLDER}"'
+        SetOutPath "\\localhost\attachments"
         SetDetailsPrint both
         DetailPrint "Installing Attachments in \\localhost\attachments ..."
         SetOverwrite on
@@ -300,7 +298,17 @@
         WriteRegStr HKLM "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${VERSION}"
         SetDetailsPrint both
     SectionEnd
-    
+
+    Section "Certificates"
+		; https://nsis.sourceforge.io/Import_Root_Certificate
+		; Push C:\path\to\certificate.cer
+		; Call AddCertificateToStore
+		; Pop $0
+		; ${If} $0 != success
+		  ; MessageBox MB_OK "Certificate import failed: $0"
+		; ${EndIf}
+    SectionEnd
+       
     Section Uninstall
       Delete "$INSTDIR\uninst.exe"
     
@@ -336,31 +344,36 @@
       !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\msvcp80.dll"
       !insertmacro UnInstallLib DLL    SHARED NOREMOVE "$SYSDIR\atl80.dll"
        
-      Delete "$INSTDIR\*.txt"
-      Delete "$INSTDIR\*.dll"
-      Delete "$INSTDIR\*.pbx"
-      Delete "$INSTDIR\*.ocx"
-      Delete "$INSTDIR\*.ini"
-      Delete "$INSTDIR\*.jar"
-      Delete "$INSTDIR\*.manifest"
-      Delete "$INSTDIR\*.xml"
-      Delete "$INSTDIR\*.tlb"
-      Delete "$INSTDIR\Open Source License.rtf"
-      Delete "$INSTDIR\*.flt"
-      Delete "$INSTDIR\*.lnk"
-      Delete "$INSTDIR\*.chm"
-      Delete "$INSTDIR\*.json"
-      Delete "$INSTDIR\LICENSE"
+		Delete "$INSTDIR\*.txt"
+		Delete "$INSTDIR\*.exe"
+		Delete "$INSTDIR\*.dll"
+		Delete "$INSTDIR\*.pbx"
+		Delete "$INSTDIR\*.pbd"
+		Delete "$INSTDIR\*.ocx"
+		Delete "$INSTDIR\*.jar"
+		Delete "$INSTDIR\*.manifest"
+		Delete "$INSTDIR\*.xml"
+		Delete "$INSTDIR\*.tlb"
+        Delete "$INSTDIR\*.zip"
+		Delete "$INSTDIR\Open Source License.rtf"
+		Delete "$INSTDIR\LICENSE"
+		Delete "$INSTDIR\*.flt"
+		Delete "$INSTDIR\*.ico"
+		Delete "$INSTDIR\*.lnk"
+		Delete "$INSTDIR\*.chm"
+		Delete "$INSTDIR\*.json"
+		Delete "$INSTDIR\*.ini"
       Delete "$INSTDIR\Uploads"
+      Delete "$INSTDIR\Attachments"
       Delete "$INSTDIR"
-    SectionEnd
+	SectionEnd
 
-    
+ 
 Function .onInit
     ; Install for ALL USERS
     SetShellVarContext all
     Call CheckBitness
-    Call CheckIsAdminUser
+    ;Call CheckIsAdminUser
 
   Call getWindowsVersion
   ${If} $WinVer = 'not NT'
@@ -487,4 +500,59 @@ Function cpServerAndDatabase
   ReadINIStr $LOGID "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogid"
   ReadINIStr $LOGPASS "$INSTDIR\EncounterPRO.ini" "<Default>" "dblogpass"
   lbl_?servdbdone:
+FunctionEnd
+
+
+Function AddCertificateToStore
+ 
+  Exch $0
+  Push $1
+  Push $R0
+ 
+  System::Call "crypt32::CryptQueryObject(i ${CERT_QUERY_OBJECT_FILE}, w r0, \
+    i ${CERT_QUERY_CONTENT_FLAG_ALL}, i ${CERT_QUERY_FORMAT_FLAG_ALL}, \
+    i 0, i 0, i 0, i 0, i 0, i 0, *i .r0) i .R0"
+ 
+  ${If} $R0 <> 0
+ 
+    System::Call "crypt32::CertOpenStore(i ${CERT_STORE_PROV_SYSTEM}, i 0, i 0, \
+      i ${CERT_STORE_OPEN_EXISTING_FLAG}|${CERT_SYSTEM_STORE_LOCAL_MACHINE}, \
+      w 'ROOT') i .r1"
+ 
+    ${If} $1 <> 0
+ 
+      System::Call "crypt32::CertAddCertificateContextToStore(i r1, i r0, \
+        i ${CERT_STORE_ADD_ALWAYS}, i 0) i .R0"
+      System::Call "crypt32::CertFreeCertificateContext(i r0)"
+ 
+      ${If} $R0 = 0
+ 
+        StrCpy $0 "Unable to add certificate to certificate store"
+ 
+      ${Else}
+ 
+        StrCpy $0 "success"
+ 
+      ${EndIf}
+ 
+      System::Call "crypt32::CertCloseStore(i r1, i 0)"
+ 
+    ${Else}
+ 
+      System::Call "crypt32::CertFreeCertificateContext(i r0)"
+ 
+      StrCpy $0 "Unable to open certificate store"
+ 
+    ${EndIf}
+ 
+  ${Else}
+ 
+    StrCpy $0 "Unable to open certificate file"
+ 
+  ${EndIf}
+ 
+  Pop $R0
+  Pop $1
+  Exch $0
+ 
 FunctionEnd

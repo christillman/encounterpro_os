@@ -18,13 +18,13 @@ GO
 Print 'Create Procedure [dbo].[jmj_get_actor_document_routes]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_get_actor_document_routes (
 	@ps_ordered_by varchar(24),
 	@ps_ordered_for varchar(24))
 AS
-
+-- Unused 2025-01-01 (called in commented code w_svc_documents.srw)
 DECLARE @ll_error int,
 		@ll_rowcount int,
 		@ll_ordered_by_actor_id int,
@@ -44,33 +44,27 @@ IF @ps_ordered_for IS NULL
 	RETURN -1
 	END
 
-SELECT @ll_ordered_by_actor_id = @ll_ordered_by_actor_id
+SELECT @ll_ordered_by_actor_id = actor_id
 FROM c_User
 WHERE [user_id] = @ps_ordered_by
 
-SELECT @ll_error = @@ERROR,
-	@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
-IF @ll_rowcount = 0
+IF @ll_ordered_by_actor_id IS NULL
 	BEGIN
 	RAISERROR ('ordered_by not found (%s)',16,-1, @ps_ordered_by)
 	RETURN -1
 	END
 
-SELECT @ll_ordered_for_actor_id = @ll_ordered_for_actor_id
+SELECT @ll_ordered_for_actor_id = actor_id
 FROM c_User
 WHERE [user_id] = @ps_ordered_for
 
-SELECT @ll_error = @@ERROR,
-	@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN
 
-IF @ll_rowcount = 0
+IF @ll_ordered_for_actor_id IS NULL
 	BEGIN
 	RAISERROR ('ordered_for not found (%s)',16,-1, @ps_ordered_for)
 	RETURN -1

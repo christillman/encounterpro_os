@@ -86,25 +86,15 @@ ALTER TABLE [dbo].[o_User_Privilege]
 	CONSTRAINT [DF__o_User_Pr__creat__36870511]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[o_User_Privilege]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_User_Privilege] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_User_Privilege]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_User_Privilege] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_User_Privilege]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_User_Privilege] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_User_Privilege]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_User_Privilege] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_User_Privilege]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_User_Privilege] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_User_Privilege] SET (LOCK_ESCALATION = TABLE)
 GO

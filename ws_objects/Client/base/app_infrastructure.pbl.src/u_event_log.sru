@@ -175,6 +175,8 @@ Protected:
 string	is_Separator
 string	is_AllFiles
 
+private str_playback_log_entry playback_log[]
+
 constant integer EVENTLOG_SUCCESS = 0 // 0X0000
 constant integer EVENTLOG_ERROR_TYPE = 1 // 0x0001
 constant integer EVENTLOG_WARNING_TYPE = 2 // 0x0002
@@ -190,7 +192,6 @@ constant integer LOGLEVEL_REDALERT = 5
 
 
 end variables
-
 forward prototypes
 public function integer shutdown ()
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity)
@@ -220,6 +221,8 @@ public function string get_file_version (string ps_filepath)
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name)
 public function integer log_db_with_seconds (powerobject po_who, string ps_script, string ps_message, integer pi_severity, decimal pd_seconds)
 public function integer log_db (powerobject po_who, string ps_script, string ps_message, integer pi_severity, string ps_component_id, string ps_version_name, decimal pd_seconds)
+public subroutine clear_playback ()
+public subroutine play_back ()
 end prototypes
 
 public function integer shutdown ();//DeregisterEventSource(event_handle)
@@ -1425,8 +1428,23 @@ string ls_app_version
 environment lo_env
 integer li_tran_count, li_sts
 string ls_os_version
+integer li_playback_count
 
 if not cprdb.connected then return 1
+
+if cprdb.transaction_open then
+	// In case of potenetial rollback, push log messages onto the instance stack;
+	// they will be played back (and logged to the db) after the rollback is complete
+	li_playback_count = upperbound(playback_log) + 1
+	playback_log[li_playback_count].who = po_who
+	playback_log[li_playback_count].script = ps_script
+	playback_log[li_playback_count].message = ps_message
+	playback_log[li_playback_count].severity = pi_severity
+	playback_log[li_playback_count].component_id = ps_component_id
+	playback_log[li_playback_count].version_name = ps_version_name
+	playback_log[li_playback_count].date_time = datetime(today(),now())
+	playback_log[li_playback_count].seconds = pd_seconds
+end if
 
 li_sts = getenvironment(lo_env)
 if li_sts > 0 then
@@ -1550,6 +1568,38 @@ else
 end if
 
 end function
+
+public subroutine clear_playback ();str_playback_log_entry lstr_empty[]
+
+playback_log = lstr_empty
+end subroutine
+
+public subroutine play_back ();
+// Called from u_sqlca.rollback_transaction, to play back the log messages that were saved during the transaction
+// Otherwise the messages are lost when the transaction rolls back
+integer li_log_count, li_playback_count
+string ls_message
+
+li_playback_count = upperbound(playback_log)
+ls_message = "Next " + string(li_playback_count) + " log records are played back from rolled back transaction"
+this.log_db(this,"u_event_log.play_back:0009",ls_message,2)
+
+for li_log_count = 1 TO li_playback_count
+	ls_message = playback_log[li_log_count].message + " (" + string(playback_log[li_log_count].date_time) + ")"
+	this.log_db( &
+	playback_log[li_log_count].who, &
+	playback_log[li_log_count].script, &
+	ls_message, &
+	playback_log[li_log_count].severity, &
+	playback_log[li_log_count].component_id, &
+	playback_log[li_log_count].version_name, &
+	playback_log[li_log_count].seconds &
+	)
+NEXT
+
+clear_playback()
+
+end subroutine
 
 on u_event_log.create
 call super::create

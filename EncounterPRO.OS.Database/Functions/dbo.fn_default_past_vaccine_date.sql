@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_default_past_vaccine_date (
+CREATE FUNCTION dbo.fn_default_past_vaccine_date (
 	@ps_cpr_id varchar(12),
 	@pdt_today datetime)
 

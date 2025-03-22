@@ -78,25 +78,15 @@ ALTER TABLE [dbo].[c_Allergy_Drug]
 	WITH FILLFACTOR=100
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Allergy_Drug]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Allergy_Drug] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Allergy_Drug]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Allergy_Drug] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Allergy_Drug]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Allergy_Drug] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Allergy_Drug]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Allergy_Drug] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Allergy_Drug]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Allergy_Drug] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Allergy_Drug] SET (LOCK_ESCALATION = TABLE)
 GO

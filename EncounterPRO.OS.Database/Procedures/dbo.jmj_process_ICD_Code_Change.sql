@@ -70,7 +70,7 @@ CREATE PROCEDURE jmj_process_ICD_Code_Change
 	@ps_from_description varchar(80) = NULL,
 	@ps_assessment_type varchar(24) = NULL,
 	@ps_assessment_category_id varchar(24) = NULL,
-	@ps_long_description text = NULL,
+	@ps_long_description varchar(max) = NULL,
 	@ps_operation varchar(24),
 	@ps_from_icd10_code varchar(12) = NULL
 AS

@@ -18,9 +18,9 @@ GO
 Print 'Create Function [dbo].[fn_get_global_preference]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_get_global_preference (
+CREATE FUNCTION dbo.fn_get_global_preference (
 	@ps_preference_type varchar(24),
 	@ps_preference_id varchar(40)
 	)
@@ -53,39 +53,14 @@ AND preference_id = @ps_preference_id
 
 /*
 
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
-		
-IF @ll_error <> 0
-	RETURN @ls_preference_value
-END
-
-
 SELECT @ls_universal_flag = universal_flag
 FROM c_Preference
 WHERE preference_id = @ps_preference_id
-
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
 		
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN @ls_preference_value
 
-IF @ll_rowcount = 0
-	SET @ls_universal_flag = 'N'
-
-SELECT @ll_rowcount = @@ROWCOUNT,
-		@ll_error = @@ERROR
-		
-IF @ll_error <> 0
-	RETURN @ls_preference_value
-
-IF @ll_rowcount = 0
-	RETURN @ls_preference_value
-
-
-
-IF @ls_universal_flag = 'N'
+IF @ls_universal_flag IS NULL
 	BEGIN
 	SELECT @ls_preference_value = preference_value
 	FROM o_preferences
@@ -93,11 +68,8 @@ IF @ls_universal_flag = 'N'
 	AND preference_level = 'Global'
 	AND preference_key = 'Global'
 	AND preference_id = @ps_preference_id
-
-	SELECT @ll_rowcount = @@ROWCOUNT,
-			@ll_error = @@ERROR
 			
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN @ls_preference_value
 	END
 
@@ -109,11 +81,8 @@ IF @ls_universal_flag = 'C'
 	AND preference_level = 'Global'
 	AND preference_key = 'Global'
 	AND preference_id = @ps_preference_id
-
-	SELECT @ll_rowcount = @@ROWCOUNT,
-			@ll_error = @@ERROR
 			
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN @ls_preference_value
 	END
 */

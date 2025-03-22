@@ -9,12 +9,12 @@ end prototypes
 global function integer f_crash_clean_up ();
 if gnv_app.cpr_mode = "CLIENT" then
 	// Don't remove users or services owned by system users
-	DELETE o_user_service_lock
+	DELETE FROM o_user_service_lock
 	WHERE computer_id = :gnv_app.computer_id
 	AND user_id NOT LIKE '#%';
 	if not tf_check() then return -1
 	
-	DELETE o_users
+	DELETE FROM o_users
 	WHERE computer_id = :gnv_app.computer_id
 	AND user_id NOT LIKE '#%';
 	if not tf_check() then return -1

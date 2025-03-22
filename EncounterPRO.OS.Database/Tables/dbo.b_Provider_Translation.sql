@@ -77,21 +77,13 @@ ALTER TABLE [dbo].[b_Provider_Translation]
 	([office_id], [external_id])
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[b_Provider_Translation]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[b_Provider_Translation] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[b_Provider_Translation]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[b_Provider_Translation] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[b_Provider_Translation]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[b_Provider_Translation] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[b_Provider_Translation]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[b_Provider_Translation] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[b_Provider_Translation] SET (LOCK_ESCALATION = TABLE)
 GO

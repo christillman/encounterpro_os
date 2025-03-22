@@ -17,7 +17,7 @@ GO
 -- Create Function [dbo].[fn_patient_observations]
 Print 'Create Function [dbo].[fn_patient_observations]'
 GO
-SET ANSI_NULLS OFF
+SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE   FUNCTION dbo.fn_patient_observations (
@@ -343,8 +343,6 @@ END
 
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_observations]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_observations] TO [cprsystem]
 GO
 

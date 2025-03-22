@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[c_Observation_Stage]
 	CONSTRAINT [DF__c_Observa_Stage_last_up_40]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation_Stage]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation_Stage] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation_Stage]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation_Stage] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Observation_Stage]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Observation_Stage] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation_Stage]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation_Stage] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation_Stage]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation_Stage] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation_Stage] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -90,9 +90,7 @@ ALTER TABLE [dbo].[c_Actor_Class_Purpose]
 	CONSTRAINT [DF_last_updated]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_updated]
 GO
-GRANT SELECT
-	ON [dbo].[c_Actor_Class_Purpose]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Actor_Class_Purpose] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Actor_Class_Purpose] SET (LOCK_ESCALATION = TABLE)
 GO

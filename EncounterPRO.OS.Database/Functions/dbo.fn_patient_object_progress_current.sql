@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_object_progress_current (
+CREATE FUNCTION dbo.fn_patient_object_progress_current (
 	@ps_cpr_id varchar(12))
 
 RETURNS @progress TABLE (
@@ -78,7 +78,7 @@ RETURNS @progress TABLE (
 	[progress_type] [varchar] (24)  NULL ,
 	[progress_key] [varchar] (48)  NULL ,
 	[progress_value] [varchar] (40) NULL ,
-	[progress] [text]  NULL ,
+	[progress] [nvarchar](max)  NULL ,
 	[attachment_id] [int] NULL ,
 	[patient_workplan_item_id] [int] NULL ,
 	[risk_level] [int] NULL ,
@@ -249,8 +249,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_object_progress_current]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_object_progress_current] TO [cprsystem]
 GO
 

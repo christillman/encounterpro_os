@@ -84,25 +84,15 @@ CREATE NONCLUSTERED INDEX [idx_observation_id]
 	ON [dbo].[em_Observation_Element] ([observation_id], [em_component], [em_type], [em_category], [em_element])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 100) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[em_Observation_Element]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[em_Observation_Element] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[em_Observation_Element]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[em_Observation_Element] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[em_Observation_Element]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[em_Observation_Element] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[em_Observation_Element]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[em_Observation_Element] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[em_Observation_Element]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[em_Observation_Element] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[em_Observation_Element] SET (LOCK_ESCALATION = TABLE)
 GO

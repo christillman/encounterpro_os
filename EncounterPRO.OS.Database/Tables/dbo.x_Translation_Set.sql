@@ -98,25 +98,15 @@ ALTER TABLE [dbo].[x_Translation_Set]
 	CONSTRAINT [DF_x_trans_set_status_40]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[x_Translation_Set]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[x_Translation_Set] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[x_Translation_Set]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Translation_Set] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[x_Translation_Set]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[x_Translation_Set] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Translation_Set]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Translation_Set] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[x_Translation_Set]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[x_Translation_Set] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Translation_Set] SET (LOCK_ESCALATION = TABLE)
 GO

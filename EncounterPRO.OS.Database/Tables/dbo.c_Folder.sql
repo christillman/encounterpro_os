@@ -98,25 +98,15 @@ ALTER TABLE [dbo].[c_Folder]
 	CONSTRAINT [DF_c_folder_wp_rqd_flag]
 	DEFAULT ('N') FOR [workplan_required_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Folder]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Folder] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Folder]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Folder] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Folder]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Folder] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Folder]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Folder] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Folder]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Folder] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Folder] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -89,25 +89,15 @@ ALTER TABLE [dbo].[c_Observation_Result_Set_Item]
 	CONSTRAINT [DF_c_Obs_res_severity_27]
 	DEFAULT ((0)) FOR [severity]
 GO
-GRANT DELETE
-	ON [dbo].[c_Observation_Result_Set_Item]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Observation_Result_Set_Item] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Observation_Result_Set_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Observation_Result_Set_Item] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Observation_Result_Set_Item]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Observation_Result_Set_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Observation_Result_Set_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Observation_Result_Set_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Observation_Result_Set_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Observation_Result_Set_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Observation_Result_Set_Item] SET (LOCK_ESCALATION = TABLE)
 GO

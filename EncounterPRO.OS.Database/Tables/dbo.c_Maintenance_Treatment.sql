@@ -93,21 +93,13 @@ ALTER TABLE [dbo].[c_Maintenance_Treatment]
 	CONSTRAINT [DF_c_mt_primary_flag]
 	DEFAULT ('N') FOR [primary_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Maintenance_Treatment]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Maintenance_Treatment] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Maintenance_Treatment]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Maintenance_Treatment] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Maintenance_Treatment]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Maintenance_Treatment] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Maintenance_Treatment]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Maintenance_Treatment] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Maintenance_Treatment] SET (LOCK_ESCALATION = TABLE)
 GO

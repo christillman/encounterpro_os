@@ -66,7 +66,7 @@ end type
 global w_pop_which_database w_pop_which_database
 
 type variables
-string default_database = "<Default>"
+string default_database
 
 string dbkey
 
@@ -85,10 +85,10 @@ public subroutine db_selected (long pl_row);integer li_sts
 
 selected_database = dw_databases.object.database[pl_row]
 
-st_server.text = profilestring(gnv_app.ini_file, selected_database, "dbserver", "")
-st_db.text = profilestring(gnv_app.ini_file, selected_database, "dbname", "")
-st_dbms.text = profilestring(gnv_app.ini_file, selected_database, "dbms", "")
-st_office_id.text = profilestring(gnv_app.ini_file, selected_database, "office_id", "")
+st_server.text = profilestring(gnv_app.ini_file, selected_database, "dbserver", "srv-goehr-demo.database.windows.net")
+st_db.text = profilestring(gnv_app.ini_file, selected_database, "dbname", "GreenOliveDemo")
+st_dbms.text = profilestring(gnv_app.ini_file, selected_database, "dbms", "MSO")
+st_office_id.text = profilestring(gnv_app.ini_file, selected_database, "office_id", "0001")
 
 if selected_database = default_database then
 	cb_delete.enabled = false
@@ -109,6 +109,7 @@ integer li_sts
 integer i
 
 li_section_count = f_ini_get_sections(gnv_app.ini_file, ls_sections)
+IF li_section_count <= 0 THEN return 0
 
 dw_databases.reset()
 
@@ -238,6 +239,7 @@ event open;st_version.text = f_app_version()
 
 dbkey = gnv_app.registry_key + "\Database"
 
+default_database = common_thread.default_database
 get_databases()
 
 end event

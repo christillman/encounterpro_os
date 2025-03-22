@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_new_actor]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_new_actor (
 	@ps_actor_class varchar(12),
@@ -112,7 +112,7 @@ FROM c_User
 WHERE actor_class = @ps_actor_class
 AND user_full_name = @ps_name
 
-IF @@ROWCOUNT <= 0
+IF @ls_user_id IS NULL
 	BEGIN
 	EXECUTE sp_get_next_key
 		@ps_cpr_id = '!CPR',

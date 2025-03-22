@@ -67,7 +67,7 @@ CREATE TABLE [dbo].[c_Document_Type] (
 		[document_type]       [varchar](255) NOT NULL,
 		[description]         [varchar](80) NULL,
 		[SchemaLocation]      [varchar](255) NULL,
-		[SampleDocument]      [text] NULL,
+		[SampleDocument]      [nvarchar](max) NULL,
 		[filetype]            [varchar](24) NULL,
 		[DefaultEncoding]     [varchar](12) NOT NULL,
 		[document_format]     [varchar](24) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[c_Document_Type] (
 		[id]                  [uniqueidentifier] NOT NULL,
 		[last_updated]        [datetime] NOT NULL,
 		[status]              [varchar](12) NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Document_Type]
 	ADD
@@ -107,21 +107,13 @@ ALTER TABLE [dbo].[c_Document_Type]
 	CONSTRAINT [DF__c_Document_Type_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Document_Type]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Document_Type] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Document_Type]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Document_Type] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Document_Type]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Document_Type] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Document_Type]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Document_Type] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Document_Type] SET (LOCK_ESCALATION = TABLE)
 GO

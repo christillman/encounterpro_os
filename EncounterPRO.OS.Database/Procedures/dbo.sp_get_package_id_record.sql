@@ -126,8 +126,7 @@ IF @ps_package_id IS NULL
 		dose_unit,
 		administer_per_dose,
 		dose_amount,
-		dosage_form,
-		id )
+		dosage_form)
 	VALUES (
 		@ps_package_id,
 		@ps_administer_method,
@@ -136,8 +135,7 @@ IF @ps_package_id IS NULL
 		@ps_dose_unit,
 		@pr_administer_per_dose,
 		@pr_dose_amount,
-		@ps_dosage_form,
-		newid() )
+		@ps_dosage_form)
 
 	END
 

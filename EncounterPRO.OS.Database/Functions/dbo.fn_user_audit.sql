@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_user_audit (
+CREATE FUNCTION dbo.fn_user_audit (
 	@ps_user_id varchar(24),
 	@pdt_audit_date datetime = NULL,
 	@ps_include_object_updates char(1) = 'Y'
@@ -190,7 +190,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 		,CAST(CASE WHEN p.progress_key IS NULL THEN p.progress ELSE p.progress_key + ' = ' + p.progress END AS varchar(80))
 		,p.progress_sequence
 		,p.progress_user_id
-	FROM fn_patient_object_progress_user(@ps_user_id, @ldt_begin_date, @ldt_end_date) p
+	FROM dbo.fn_patient_object_progress_user(@ps_user_id, @ldt_begin_date, @ldt_end_date) p
 		INNER JOIN c_user u WITH (NOLOCK)
 		ON	p.progress_user_id = u.user_id
 		INNER JOIN p_Patient pp
@@ -240,8 +240,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_user_audit]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_user_audit] TO [cprsystem]
 GO
 

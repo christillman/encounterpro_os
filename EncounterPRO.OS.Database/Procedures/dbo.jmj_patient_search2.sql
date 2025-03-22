@@ -58,9 +58,9 @@ AS
 
 -- If the @pl_count_only flag is set to a non-zero value, then don't return a result set.  Instead,
 -- return a long integer as follows:
---	1	More than zero and less than a thousand rows were found
+--	1	More than zero and less than 2 thousand rows were found
 --	0	No records matching the search criteria were found
---	-1	More than a thousand rows were found
+--	-1	More than 2 thousand rows were found
 /* test code
 declare @ps_user_id varchar(24) = NULL,
 	@ps_billing_id varchar(24) = NULL,
@@ -545,6 +545,25 @@ SELECT @ll_rows = count(*) FROM @patients
 
 IF @ll_rows > 0
 	BEGIN
+	SELECT @ll_rows = count(*)
+		FROM @patients x
+			INNER JOIN p_Patient p WITH (NOLOCK)
+			ON x.cpr_id = p.cpr_id
+			LEFT OUTER JOIN c_User u
+			ON p.primary_provider_id = u.user_id
+		WHERE ISNULL(p.billing_id, '') like @ps_billing_id
+		AND	ISNULL(x.last_name,'') like @ps_last_name
+		AND	ISNULL(x.first_name,'') like @ps_first_name
+		AND	ISNULL(p.ssn,'') like @ps_ssn
+		AND	(@pdt_date_of_birth IS NULL OR p.date_of_birth = @pdt_date_of_birth)
+		AND	ISNULL(p.phone_number,'') like @ps_phone_number
+		AND	(@ls_area_code_specified = 'Y' OR ((@ls_area_code_specified = 'N' OR LEN(p.phone_number) <= 8)) AND ISNULL(p.phone_number_7digit,'') like @ls_phone_number_7digit)
+		AND	ISNULL(p.employer,'') like @ps_employer
+		AND	ISNULL(p.employeeid,'') like @ps_employeeid
+		AND	p.patient_status like @ps_patient_status
+
+	IF @ll_rows > 0
+		SET @ll_return = 1
 
 	IF @pl_count_only = 0
 		BEGIN
@@ -579,31 +598,6 @@ IF @ll_rows > 0
 		AND	ISNULL(p.employer,'') like @ps_employer
 		AND	ISNULL(p.employeeid,'') like @ps_employeeid
 		AND	p.patient_status like @ps_patient_status
-	
-		IF @@ROWCOUNT > 0
-			SET @ll_return = 1
-		END
-	ELSE
-		BEGIN
-		SELECT @ll_rows = count(*)
-		FROM @patients x
-			INNER JOIN p_Patient p WITH (NOLOCK)
-			ON x.cpr_id = p.cpr_id
-			LEFT OUTER JOIN c_User u
-			ON p.primary_provider_id = u.user_id
-		WHERE ISNULL(p.billing_id, '') like @ps_billing_id
-		AND	ISNULL(x.last_name,'') like @ps_last_name
-		AND	ISNULL(x.first_name,'') like @ps_first_name
-		AND	ISNULL(p.ssn,'') like @ps_ssn
-		AND	(@pdt_date_of_birth IS NULL OR p.date_of_birth = @pdt_date_of_birth)
-		AND	ISNULL(p.phone_number,'') like @ps_phone_number
-		AND	(@ls_area_code_specified = 'Y' OR ((@ls_area_code_specified = 'N' OR LEN(p.phone_number) <= 8)) AND ISNULL(p.phone_number_7digit,'') like @ls_phone_number_7digit)
-		AND	ISNULL(p.employer,'') like @ps_employer
-		AND	ISNULL(p.employeeid,'') like @ps_employeeid
-		AND	p.patient_status like @ps_patient_status
-	
-		IF @ll_rows > 0
-			SET @ll_return = 1
 		END
 	END
 

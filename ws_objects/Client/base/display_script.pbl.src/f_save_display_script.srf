@@ -18,6 +18,8 @@ global function integer f_save_display_script (ref str_display_script pstr_displ
 // 1	success
 // -1	failure
 //
+// To be sure changes are rolled back on failure, use begin_transaction, rollback_transaction, and commit_transaction around this function.
+// Transaction processing is not performed here.
 long i
 long j
 long ll_display_command_id
@@ -34,9 +36,6 @@ if ll_owner_id <> sqlca.customer_id then
 	log.log(po_null, "f_save_display_script:0026", "Only locally owned display scripts may be saved", 4)
 	return -1
 end if
-
-tf_begin_transaction(po_null, "Save Display Script")
-//sqlca.begin_transaction(po_null, "Save Display Script")
 
 // First, delete the existing commands and attributes
 DELETE
@@ -72,7 +71,6 @@ for i = 1 to pstr_display_script.display_command_count
 	if not tf_check() then return -1
 	if isnull(ll_display_command_id) then
 		log.log(po_null, "f_save_display_script:0066", "Could not create new display command", 4)
-		sqlca.rollback_transaction()
 		return -1
 	end if
 
@@ -86,7 +84,6 @@ for i = 1 to pstr_display_script.display_command_count
 	if not tf_check() then return -1
 	if sqlca.sqlcode = 100 then
 		log.log(po_null, "f_save_display_script:0080", "Could not find new display command", 4)
-		sqlca.rollback_transaction()
 		return -1
 	end if
 	
@@ -120,8 +117,6 @@ for i = 1 to pstr_display_script.display_command_count
 		end if
 	next
 next
-
-sqlca.commit_transaction( )
 
 return 1
 

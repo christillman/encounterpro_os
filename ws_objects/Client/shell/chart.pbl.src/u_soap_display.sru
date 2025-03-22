@@ -51,6 +51,8 @@ str_encounter_description encounter_context
 
 u_ds_data encounter_services
 u_ds_data encounter_documents
+u_ds_data patient_documents
+
 
 string load_assessment_type
 
@@ -59,7 +61,6 @@ string assessment_soap_display_rule
 
 
 end variables
-
 forward prototypes
 public function boolean treatment_in_assessment (str_treatment_description pstr_treatment, long pl_problem_id)
 public subroutine encounter_menu (long pl_row)
@@ -1395,6 +1396,9 @@ encounter_services.set_dataobject("dw_sp_get_encounter_user_services")
 
 encounter_documents = CREATE u_ds_data
 encounter_documents.set_dataobject("dw_jmj_get_documents")
+
+patient_documents = CREATE u_ds_data
+patient_documents.set_dataobject("dw_jmj_get_patient_documents")
 
 end event
 

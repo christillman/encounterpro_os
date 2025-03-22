@@ -88,7 +88,7 @@ CREATE TABLE [dbo].[p_Patient_Encounter] (
 		[admit_reason]               [varchar](12) NULL,
 		[attachment_id]              [int] NULL,
 		[new_flag]                   [char](1) NULL,
-		[billing_note]               [text] NULL,
+		[billing_note]               [nvarchar](max) NULL,
 		[encounter_billing_id]       [int] NULL,
 		[billing_posted]             [char](1) NULL,
 		[bill_flag]                  [char](1) NULL,
@@ -107,7 +107,7 @@ CREATE TABLE [dbo].[p_Patient_Encounter] (
 		[default_grant]              [bit] NOT NULL,
 		[billing_provider_id]        [varchar](24) NULL,
 		[encounter_location]         [varchar](24) NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Patient_Encounter]
 	ADD
@@ -161,25 +161,15 @@ CREATE NONCLUSTERED INDEX [idx_encounter_status]
 	ON [dbo].[p_Patient_Encounter] ([encounter_status], [office_id], [cpr_id], [encounter_id], [encounter_date], [billing_posted], [attending_doctor], [patient_location], [patient_workplan_id], [referring_doctor], [new_flag], [encounter_description], [encounter_type])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_Encounter]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_Encounter] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_Encounter]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_Encounter] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_Encounter]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_Encounter] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_Encounter]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_Encounter] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_Encounter]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_Encounter] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_Encounter] SET (LOCK_ESCALATION = TABLE)
 GO

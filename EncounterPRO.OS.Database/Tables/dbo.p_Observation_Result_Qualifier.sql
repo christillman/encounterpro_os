@@ -99,25 +99,15 @@ ALTER TABLE [dbo].[p_Observation_Result_Qualifier]
 	CONSTRAINT [DF_p_obs_rslt_qual_27]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[p_Observation_Result_Qualifier]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Observation_Result_Qualifier] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Observation_Result_Qualifier]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Observation_Result_Qualifier] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Observation_Result_Qualifier]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Observation_Result_Qualifier] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Observation_Result_Qualifier]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Observation_Result_Qualifier] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Observation_Result_Qualifier]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Observation_Result_Qualifier] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Observation_Result_Qualifier] SET (LOCK_ESCALATION = TABLE)
 GO

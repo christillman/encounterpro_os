@@ -29,7 +29,7 @@ public function integer xx_do_service ();///////////////////////////////////////
 str_popup_return        popup_return
 
 Openwithparm(service_window, this, "w_patient_data")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_patient_data,u_component_service_patient_data.xx_do_service:19")
 
 if popup_return.item_count <> 1 then return 0
 

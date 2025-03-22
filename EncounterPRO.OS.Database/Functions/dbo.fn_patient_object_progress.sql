@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_object_progress (
+CREATE FUNCTION dbo.fn_patient_object_progress (
 	@ps_cpr_id varchar(12),
 	@pdt_begin_date datetime,
 	@pdt_end_date datetime)
@@ -144,7 +144,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -201,7 +201,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -260,7 +260,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -319,7 +319,7 @@ SELECT
 	p.[progress_date_time] ,
 	p.[progress_type] ,
 	p.[progress_key] ,
-	ISNULL(p.progress_value, CAST(p.[progress] AS varchar(128))) ,
+	CASE WHEN p.progress_value Is Null THEN CAST(progress AS varchar(128)) ELSE p.progress_value END ,
 	p.[attachment_id] ,
 	p.[current_flag] ,
 	p.[created] ,
@@ -594,8 +594,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_object_progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_object_progress] TO [cprsystem]
 GO
 

@@ -93,41 +93,23 @@ ALTER TABLE [dbo].[o_Computer_Printer]
 	CONSTRAINT [DF__o_Compute__last___646C666E]
 	DEFAULT (dbo.get_client_datetime()) FOR [last_discovered]
 GO
-GRANT DELETE
-	ON [dbo].[o_Computer_Printer]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Computer_Printer] TO [cprsystem]
 GO
-GRANT DELETE
-	ON [dbo].[o_Computer_Printer]
-	TO [public]
+GRANT DELETE ON [dbo].[o_Computer_Printer] TO [public]
 GO
-GRANT INSERT
-	ON [dbo].[o_Computer_Printer]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Computer_Printer] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Computer_Printer]
-	TO [public]
+GRANT INSERT ON [dbo].[o_Computer_Printer] TO [public]
 GO
-GRANT REFERENCES
-	ON [dbo].[o_Computer_Printer]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[o_Computer_Printer] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computer_Printer]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Computer_Printer] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computer_Printer]
-	TO [public]
+GRANT SELECT ON [dbo].[o_Computer_Printer] TO [public]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Computer_Printer]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Computer_Printer] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Computer_Printer]
-	TO [public]
+GRANT UPDATE ON [dbo].[o_Computer_Printer] TO [public]
 GO
 ALTER TABLE [dbo].[o_Computer_Printer] SET (LOCK_ESCALATION = TABLE)
 GO

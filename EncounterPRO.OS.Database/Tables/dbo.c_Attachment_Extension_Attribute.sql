@@ -91,21 +91,13 @@ ALTER TABLE [dbo].[c_Attachment_Extension_Attribute]
 	CONSTRAINT [DF__c_att_ext_att_current_flag]
 	DEFAULT ('Y') FOR [current_flag]
 GO
-GRANT DELETE
-	ON [dbo].[c_Attachment_Extension_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Attachment_Extension_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Attachment_Extension_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Attachment_Extension_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Attachment_Extension_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Attachment_Extension_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Attachment_Extension_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Attachment_Extension_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Attachment_Extension_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

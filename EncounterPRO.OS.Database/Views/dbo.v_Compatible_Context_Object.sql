@@ -74,8 +74,6 @@ AND dbo.fn_context_compatible(d1.domain_item, d2.domain_item) = 1
 
 
 GO
-GRANT SELECT
-	ON [dbo].[v_Compatible_Context_Object]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[v_Compatible_Context_Object] TO [cprsystem]
 GO
 

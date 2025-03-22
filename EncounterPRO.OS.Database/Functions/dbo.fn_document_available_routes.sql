@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_document_available_routes (
+CREATE FUNCTION dbo.fn_document_available_routes (
 	@ps_ordered_by varchar(24),
 	@ps_ordered_for varchar(24),
 	@ps_purpose varchar(40),
@@ -107,8 +107,6 @@ FROM dbo.fn_document_available_routes_2(@ps_ordered_by, @ps_ordered_for, @ps_pur
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_document_available_routes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_document_available_routes] TO [cprsystem]
 GO
 

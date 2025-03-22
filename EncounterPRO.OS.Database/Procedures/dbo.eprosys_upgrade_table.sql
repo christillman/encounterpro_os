@@ -1,57 +1,4 @@
-﻿/*=============================================================
-SCRIPT HEADER
-
-VERSION:   201.00.0001
-DATE:      04-06-2011 18:45:34
-SERVER:    ict1
-
-EncounterPRO Open Source Project
-
-Copyright 2010-2011 The EncounterPRO Foundation, Inc.
-
-This program is free software: you can redistribute it and/or modify it under the terms of 
-the GNU Affero General Public License as published by the Free Software Foundation, either 
-version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-See the GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License along with this 
-program. If not, see http://www.gnu.org/licenses.
-
-EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
-General Public License version 3, or any later version. As such, linking the Project 
-statically or dynamically with other components is making a combined work based on the 
-Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
-or any later version, cover the whole combination.
-
-However, as an additional permission, the copyright holders of EncounterPRO Open Source 
-Project give you permission to link the Project with independent components, regardless of 
-the license terms of these independent components, provided that all of the following are true:
-
-1. All access from the independent component to persisted data which resides
-   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
-   be made through a publically available database driver (e.g. ODBC, SQL 
-   Native Client, etc) or through a service which itself is part of The Project.
-2. The independent component does not create or rely on any code or data 
-   structures within the EncounterPRO Open Source data store unless such 
-   code or data structures, and all code and data structures referred to 
-   by such code or data structures, are themselves part of The Project.
-3. The independent component either a) runs locally on the user's computer,
-   or b) is linked to at runtime by The Project’s Component Manager object 
-   which in turn is called by code which itself is part of The Project.
-
-An independent component is a component which is not derived from or based on the Project.
-If you modify the Project, you may extend this additional permission to your version of 
-the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
-additional permission statement from your version.
-
-DATABASE:	OS_Dev
-  Procedure:  component_install_component
-
-
-=============================================================*/
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -71,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[eprosys_upgrade_table]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[eprosys_upgrade_table] (
@@ -85,9 +32,7 @@ DECLARE @ls_columnname varchar (64) ,
 	@li_column_identity smallint ,
 	@li_column_nullable smallint ,
 	@ls_column_definition varchar(64),
-	@ls_sql varchar(4000),
-	@ll_error int,
-	@ll_rowcount int,
+	@ls_sql nvarchar(max),
 	@ls_error varchar(255),
 	@li_default_constraint smallint ,
 	@ls_default_constraint_name varchar (64) ,
@@ -114,13 +59,10 @@ SELECT @ll_table_modification_level = modification_level
 FROM c_Database_Table
 WHERE tablename = @ps_tablename
 
-SELECT @ll_error = @@ERROR,
-		@ll_rowcount = @@ROWCOUNT
-
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
 
-IF @ll_rowcount <> 1
+IF @ll_table_modification_level IS NULL
 	BEGIN
 	RAISERROR ('Invalid tablename',16,-1)
 	RETURN -1
@@ -167,10 +109,8 @@ FROM dbo.c_Database_Column
 WHERE tablename = @ps_tablename
 AND modification_level <= @pl_modification_level
 
-SET @ll_error = @@ERROR
-IF @ll_error <> 0
+IF @@ERROR <> 0
 	RETURN -1
-
 
 -- See if the table exists
 IF (NOT EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[' + @ps_tablename + ']') AND [type]='U'))
@@ -213,9 +153,8 @@ IF (NOT EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[
 
 	-- Execute the create script
 	EXECUTE (@ls_sql)
-	SET @ll_error = @@ERROR
 
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		BEGIN
 		PRINT 'Error Creating Table ' + @ps_tablename
 		PRINT @ls_sql
@@ -241,8 +180,8 @@ DECLARE lc_columns CURSOR LOCAL FAST_FORWARD FOR
 		FROM sys.objects o
 			INNER JOIN sys.columns c
 			ON o.object_id = c.object_id
-		WHERE o.name = @ps_tablename
-		AND c.name = cc.columnname )
+		WHERE o.name COLLATE DATABASE_DEFAULT = @ps_tablename
+		AND c.name COLLATE DATABASE_DEFAULT = cc.columnname )
 	ORDER BY cc.column_sequence
 
 OPEN lc_columns
@@ -263,9 +202,8 @@ WHILE @@FETCH_STATUS = 0
 		SET @ls_sql = @ls_sql + ' DEFAULT ' + @ls_default_constraint_text
 
 	EXECUTE (@ls_sql)
-	SET @ll_error = @@ERROR
 
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
 	FETCH lc_columns INTO @ls_columnname, @li_column_identity, @li_column_nullable, @ls_column_definition, @li_default_constraint, @ls_default_constraint_name, @ls_default_constraint_text
@@ -289,7 +227,7 @@ FETCH lc_columns INTO @ls_columnname, @ls_default_constraint_name, @ls_default_c
 
 WHILE @@FETCH_STATUS = 0
 	BEGIN
-	SELECT @ls_Existing_Constraint_Name = d.name
+	SELECT @ls_Existing_Constraint_Name = d.name COLLATE DATABASE_DEFAULT
 	FROM sys.default_constraints d
 	INNER JOIN sys.objects o
 	ON d.parent_object_id = o.object_id
@@ -297,23 +235,19 @@ WHILE @@FETCH_STATUS = 0
 	ON o.object_id = c.object_id
 	AND d.parent_column_id = c.column_id
 	WHERE o.type = 'U'
-	AND o.name = @ps_tablename
-	AND c.name = @ls_columnname
+	AND o.name COLLATE DATABASE_DEFAULT = @ps_tablename
+	AND c.name COLLATE DATABASE_DEFAULT = @ls_columnname
 	
-	SELECT @ll_error = @@ERROR,
-			@ll_rowcount = @@ROWCOUNT
-	
-	IF @ll_error <> 0
+	IF @@ERROR <> 0
 		RETURN -1
 
-	IF @ll_rowcount = 1
+	IF @ls_Existing_Constraint_Name IS NOT NULL
 		BEGIN
 		SET @ls_sql = 'ALTER TABLE ' + @ps_tablename + ' DROP CONSTRAINT ' + @ls_Existing_Constraint_Name
 
 		EXECUTE (@ls_sql)
-		SET @ll_error = @@ERROR
 
-		IF @ll_error <> 0
+		IF @@ERROR <> 0
 			RETURN -1
 		END
 	
@@ -324,9 +258,8 @@ WHILE @@FETCH_STATUS = 0
 		SET @ls_sql = @ls_sql + @ls_default_constraint_text + ') FOR [' + @ls_columnname + ']'
 
 		EXECUTE (@ls_sql)
-		SET @ll_error = @@ERROR
 
-		IF @ll_error <> 0
+		IF @@ERROR <> 0
 			RETURN -1
 		END
 

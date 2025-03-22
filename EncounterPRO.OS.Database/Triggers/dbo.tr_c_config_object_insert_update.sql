@@ -83,6 +83,7 @@ IF UPDATE(description)
 		INNER JOIN inserted i
 		ON r.report_id = i.config_object_id
 	WHERE r.description <> i.description
+/*
 
 	UPDATE c
 	SET installed_local_key = x.menu_id
@@ -95,6 +96,7 @@ IF UPDATE(description)
 			GROUP BY id) x
 		ON c.config_object_id = x.id
 	WHERE i.config_object_type = 'Menu'
+*/
 
 	END
 

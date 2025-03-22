@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_incoming_documents ()
+CREATE FUNCTION dbo.fn_incoming_documents ()
 
 RETURNS @documents TABLE (
 	[attachment_id] [int] NOT NULL,
@@ -78,7 +78,7 @@ RETURNS @documents TABLE (
 	[attachment_file_path] [varchar](128) NULL,
 	[attachment_file] [varchar](128) NULL,
 	[extension] [varchar](24) NULL,
-	[attachment_text] [text] NULL,
+	[attachment_text] [nvarchar](max) NULL,
 	[storage_flag] [char](1) NULL,
 	[attachment_date] [datetime] NULL,
 	[attachment_folder] [varchar](40) NULL,
@@ -191,8 +191,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_incoming_documents]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_incoming_documents] TO [cprsystem]
 GO
 

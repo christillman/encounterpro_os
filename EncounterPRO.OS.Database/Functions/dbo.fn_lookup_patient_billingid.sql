@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_lookup_patient_billingid (
+CREATE FUNCTION dbo.fn_lookup_patient_billingid (
 	@ps_id_domain varchar(40),
 	@ps_id varchar(12))
 

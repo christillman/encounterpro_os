@@ -109,25 +109,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_u_Display_Script_Selection_id]
 	ON [dbo].[u_Display_Script_Selection] ([id], [owner_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 90) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[u_Display_Script_Selection]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_Display_Script_Selection] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_Display_Script_Selection]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_Display_Script_Selection] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_Display_Script_Selection]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_Display_Script_Selection] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_Display_Script_Selection]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_Display_Script_Selection] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_Display_Script_Selection]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_Display_Script_Selection] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_Display_Script_Selection] SET (LOCK_ESCALATION = TABLE)
 GO

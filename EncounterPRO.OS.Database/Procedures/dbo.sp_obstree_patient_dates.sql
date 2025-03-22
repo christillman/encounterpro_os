@@ -96,7 +96,7 @@ DECLARE @tmp_patient_results TABLE
 	,observation_comment_id int NULL
 	,comment_user_id varchar(24) NULL
 	,comment_title varchar(48) NULL
-	,comment text NULL
+	,comment varchar(max) NULL
 	,attachment_id int NULL
 	,location_result_sequence int NULL
 	,location varchar(24) NULL

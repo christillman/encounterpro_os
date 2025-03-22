@@ -97,13 +97,9 @@ CREATE NONCLUSTERED INDEX [idx_perf_metric]
 	ON [dbo].[x_Performance_Log] ([metric], [log_date_time])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[x_Performance_Log]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[x_Performance_Log] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[x_Performance_Log]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[x_Performance_Log] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[x_Performance_Log] SET (LOCK_ESCALATION = TABLE)
 GO

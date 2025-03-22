@@ -119,8 +119,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_config_object_owner_pick]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_config_object_owner_pick] TO [cprsystem]
 GO
 

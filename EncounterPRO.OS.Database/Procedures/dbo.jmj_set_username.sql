@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[jmj_set_username]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE jmj_set_username (
 	@ps_user_id varchar(24),
@@ -49,7 +49,7 @@ SELECT @ls_username = username
 FROM c_User WITH (TABLOCKX)
 WHERE [user_id] = @ps_user_id
 
-IF @@ROWCOUNT <> 1
+IF @ls_username IS NULL
 	BEGIN
 	RAISERROR ('User_id not found (%s)',16,-1, @ps_user_id)
 	ROLLBACK TRANSACTION

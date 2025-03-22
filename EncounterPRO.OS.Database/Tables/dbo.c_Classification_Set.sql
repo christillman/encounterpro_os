@@ -114,17 +114,11 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_c_Classification_Set_name]
 	ON [dbo].[c_Classification_Set] ([owner_id], [classification_set_type], [classification_set_name])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT INSERT
-	ON [dbo].[c_Classification_Set]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Classification_Set] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Classification_Set]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Classification_Set] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Classification_Set]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Classification_Set] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Classification_Set] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[p_Patient_WP_Item_Progress] (
 		[created_by]                        [varchar](24) NOT NULL,
 		[id]                                [uniqueidentifier] NOT NULL,
 		[computer_id]                       [int] NULL
-) ON [Workflow]
+) 
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress]
 	ADD
@@ -85,7 +85,7 @@ ALTER TABLE [dbo].[p_Patient_WP_Item_Progress]
 	NONCLUSTERED
 	([patient_workplan_item_id], [patient_workplan_item_prog_id])
 	WITH FILLFACTOR=90
-	ON [Workflow]
+	
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress]
 	ADD
@@ -99,35 +99,25 @@ ALTER TABLE [dbo].[p_Patient_WP_Item_Progress]
 GO
 CREATE NONCLUSTERED INDEX [idx_user_created]
 	ON [dbo].[p_Patient_WP_Item_Progress] ([user_id], [created], [patient_workplan_item_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) 
 GO
 CREATE CLUSTERED INDEX [idx_wp_item_prg_cluster]
 	ON [dbo].[p_Patient_WP_Item_Progress] ([cpr_id], [encounter_id], [patient_workplan_item_id], [patient_workplan_item_prog_id])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) 
 GO
 CREATE NONCLUSTERED INDEX [idx_wpitemprogress_created]
 	ON [dbo].[p_Patient_WP_Item_Progress] ([created])
-	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [Workflow]
+	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) 
 GO
-GRANT DELETE
-	ON [dbo].[p_Patient_WP_Item_Progress]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Patient_WP_Item_Progress] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Patient_WP_Item_Progress]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Patient_WP_Item_Progress] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Patient_WP_Item_Progress]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Patient_WP_Item_Progress] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Patient_WP_Item_Progress]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Patient_WP_Item_Progress] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Patient_WP_Item_Progress]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Patient_WP_Item_Progress] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Patient_WP_Item_Progress] SET (LOCK_ESCALATION = TABLE)
 GO

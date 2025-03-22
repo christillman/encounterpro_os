@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_em_type_rules_element_details (
+CREATE FUNCTION dbo.fn_em_type_rules_element_details (
 	@ps_cpr_id varchar(12),
 	@pl_encounter_id integer,
 	@ps_em_component varchar(24),
@@ -147,7 +147,7 @@ SELECT 'Treatment' ,
 	p.parent_observation_sequence ,
 	e.em_category ,
 	e.em_element 
-FROM fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
+FROM dbo.fn_patient_observations(@ps_cpr_id, @pl_encounter_id, DEFAULT) as o
 	INNER JOIN em_observation_element as e WITH (NOLOCK)
 	ON o.observation_id = e.observation_id
 	INNER JOIN p_Observation p
@@ -166,8 +166,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_em_type_rules_element_details]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_em_type_rules_element_details] TO [cprsystem]
 GO
 

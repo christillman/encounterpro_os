@@ -79,21 +79,13 @@ ALTER TABLE [dbo].[o_Computer_Printer_Office]
 	WITH FILLFACTOR=70
 	ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[o_Computer_Printer_Office]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[o_Computer_Printer_Office] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[o_Computer_Printer_Office]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[o_Computer_Printer_Office] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[o_Computer_Printer_Office]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[o_Computer_Printer_Office] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[o_Computer_Printer_Office]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[o_Computer_Printer_Office] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[o_Computer_Printer_Office] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -70,12 +70,12 @@ CREATE TABLE [dbo].[p_Family_Illness] (
 		[encounter_id]                [int] NOT NULL,
 		[assessment_id]               [varchar](24) NULL,
 		[age]                         [smallint] NULL,
-		[comment]                     [text] NULL,
+		[comment]                     [nvarchar](max) NULL,
 		[attachment_id]               [int] NULL,
 		[created]                     [datetime] NULL,
 		[created_by]                  [varchar](24) NULL,
 		[id]                          [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Family_Illness]
 	ADD
@@ -96,25 +96,15 @@ ALTER TABLE [dbo].[p_Family_Illness]
 	CONSTRAINT [DF_p_fam_ill_21]
 	DEFAULT (dbo.get_client_datetime()) FOR [created]
 GO
-GRANT DELETE
-	ON [dbo].[p_Family_Illness]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Family_Illness] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Family_Illness]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Family_Illness] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Family_Illness]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Family_Illness] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Family_Illness]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Family_Illness] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Family_Illness]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Family_Illness] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Family_Illness] SET (LOCK_ESCALATION = TABLE)
 GO

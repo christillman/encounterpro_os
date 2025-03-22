@@ -1,48 +1,4 @@
-﻿--EncounterPRO Open Source Project
---
---Copyright 2010-2011 The EncounterPRO Foundation, Inc.
---
---This program is free software: you can redistribute it and/or modify it under the terms of 
---the GNU Affero General Public License as published by the Free Software Foundation, either 
---version 3 of the License, or (at your option) any later version.
---
---This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
---without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
---See the GNU Affero General Public License for more details.
---
---You should have received a copy of the GNU Affero General Public License along with this 
---program. If not, see http://www.gnu.org/licenses.
---
---EncounterPRO Open Source Project (“The Project”) is distributed under the GNU Affero 
---General Public License version 3, or any later version. As such, linking the Project 
---statically or dynamically with other components is making a combined work based on the 
---Project. Thus, the terms and conditions of the GNU Affero General Public License version 3, 
---or any later version, cover the whole combination.
---
---However, as an additional permission, the copyright holders of EncounterPRO Open Source 
---Project give you permission to link the Project with independent components, regardless of 
---the license terms of these independent components, provided that all of the following are true:
---
---1. All access from the independent component to persisted data which resides
---   inside any EncounterPRO Open Source data store (e.g. SQL Server database) 
---   be made through a publically available database driver (e.g. ODBC, SQL 
---   Native Client, etc) or through a service which itself is part of The Project.
---2. The independent component does not create or rely on any code or data 
---   structures within the EncounterPRO Open Source data store unless such 
---   code or data structures, and all code and data structures referred to 
---   by such code or data structures, are themselves part of The Project.
---3. The independent component either a) runs locally on the user's computer,
---   or b) is linked to at runtime by The Project’s Component Manager object 
---   which in turn is called by code which itself is part of The Project.
---
---An independent component is a component which is not derived from or based on the Project.
---If you modify the Project, you may extend this additional permission to your version of 
---the Project, but you are not obligated to do so. If you do not wish to do so, delete this 
---additional permission statement from your version.
---
------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------
-
+﻿
 SET ARITHABORT ON
 SET NUMERIC_ROUNDABORT OFF
 SET CONCAT_NULL_YIELDS_NULL ON
@@ -91,7 +47,8 @@ DECLARE @ls_bill_flag char(1),
 	@ls_icd10_code varchar(12),
 	@ll_encounter_charge_id int,
 	@ls_assessment_type varchar(24),
-	@ll_record_added int
+	@ll_record_added int,
+	@ll_owner_id int
 
 -- Initialize record added flag
 SET @ll_record_added = 0
@@ -115,7 +72,8 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'ICD10-CM' 
 		SELECT @ls_icd10_code = a.icd10_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 			INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
@@ -124,7 +82,8 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'ICD10-WHO' 
 		SELECT @ls_icd10_code = a.icd10_who_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 		INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
@@ -133,13 +92,14 @@ IF @pl_problem_id IS NULL
 	IF [dbo].[fn_icd_version]() = 'Rwanda' 
 		SELECT @ls_icd10_code = a.icd10_who_code,
 				@ls_default_bill_flag = t.default_bill_flag,
-				@ls_assessment_type = a.assessment_type
+				@ls_assessment_type = a.assessment_type,
+				@ll_owner_id = owner_id
 		FROM c_Assessment_Definition a
 			INNER JOIN c_Assessment_Type t
 			ON a.assessment_type = t.assessment_type
 		WHERE a.assessment_id = @ps_assessment_id
 
-	IF @@ROWCOUNT = 0
+	IF @ll_owner_id IS NULL
 		BEGIN
 		RAISERROR ('Cannot find assessment_id (%s)',16,-1, @ps_assessment_id)
 		RETURN
@@ -152,7 +112,7 @@ IF @pl_problem_id IS NULL
 	AND encounter_id = @pl_encounter_id
 	AND assessment_id = @ps_assessment_id
 	
-	IF @@ROWCOUNT = 0
+	IF @pl_problem_id IS NULL
 		BEGIN
 		SELECT @pl_problem_id = min(problem_id) - 1
 		FROM p_Encounter_Assessment
@@ -173,7 +133,8 @@ ELSE
 			@li_diagnosis_sequence = p.diagnosis_sequence,
 			@ls_assessment_id = p.assessment_id,
 			@ls_default_bill_flag = t.default_bill_flag,
-			@ls_assessment_type = a.assessment_type
+			@ls_assessment_type = a.assessment_type,
+			@ll_owner_id = owner_id
 	FROM p_Assessment p
 		INNER JOIN c_Assessment_Definition a
 		ON p.assessment_id = a.assessment_id
@@ -183,10 +144,9 @@ ELSE
 	AND p.problem_id = @pl_problem_id
 	AND p.current_flag = 'Y'
 
-	IF @@ROWCOUNT = 0
+	IF @ll_owner_id IS NULL
 		RETURN
 	END
-
 
 -- If there is no icd10_code, then don't bill the assessment
 IF @ls_icd10_code IS NULL
@@ -199,7 +159,7 @@ WHERE cpr_id = @ps_cpr_id
 AND encounter_id = @pl_encounter_id
 AND problem_id = @pl_problem_id
 
-IF @@ROWCOUNT = 0
+IF @ls_bill_flag IS NULL
 	BEGIN
 	-- If the billing record doesn't exist and the bill_flag was not provided
 	-- then use the default

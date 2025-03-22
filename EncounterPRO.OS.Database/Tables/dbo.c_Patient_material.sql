@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[c_Patient_material] (
 		[title]                       [varchar](255) NOT NULL,
 		[category]                    [int] NULL,
 		[status]                      [varchar](12) NULL,
-		[object]                      [image] NULL,
+		[object]                      [varbinary](max) NULL,
 		[extension]                   [varchar](24) NULL,
 		[id]                          [uniqueidentifier] NOT NULL,
 		[owner_id]                    [int] NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE [dbo].[c_Patient_material] (
 		[created_by]                  [varchar](24) NULL,
 		[version]                     [int] NOT NULL,
 		[document_id]                 [uniqueidentifier] NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[c_Patient_material]
 	ADD
@@ -131,25 +131,15 @@ CREATE NONCLUSTERED INDEX [idx_c_Patient_material_id]
 	ON [dbo].[c_Patient_material] ([id], [material_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 80) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Patient_material]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Patient_material] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Patient_material]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Patient_material] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Patient_material]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Patient_material] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Patient_material]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Patient_material] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Patient_material]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Patient_material] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Patient_material] SET (LOCK_ESCALATION = TABLE)
 GO

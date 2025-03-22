@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_results (
+CREATE FUNCTION dbo.fn_patient_results (
 	@ps_cpr_id varchar(12),
 	@ps_observation_id varchar(24),
 	@pi_result_sequence smallint)
@@ -82,7 +82,7 @@ RETURNS @patient_results TABLE (
 	result_date_time datetime NOT NULL,
 	result varchar(80) NOT NULL,
 	result_value varchar(40) NULL,
-	result_long_value text NULL,
+	result_long_value varchar(max) NULL,
 	result_unit varchar(12) NULL,
 	abnormal_flag char(1) NULL,
 	abnormal_nature varchar(8) NULL,
@@ -366,8 +366,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_results]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_results] TO [cprsystem]
 GO
 

@@ -92,25 +92,15 @@ ALTER TABLE [dbo].[c_Display_Script_Command]
 	CONSTRAINT [DF_c_Display_Script_Command_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_Display_Script_Command]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Display_Script_Command] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Display_Script_Command]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Display_Script_Command] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Display_Script_Command]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Display_Script_Command] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Display_Script_Command]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Display_Script_Command] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Display_Script_Command]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Display_Script_Command] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Display_Script_Command] SET (LOCK_ESCALATION = TABLE)
 GO

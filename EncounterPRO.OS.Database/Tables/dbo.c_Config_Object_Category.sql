@@ -84,17 +84,11 @@ ALTER TABLE [dbo].[c_Config_Object_Category]
 	CONSTRAINT [DF_c_Config_Object_Category_sort_sequence]
 	DEFAULT ((0)) FOR [sort_sequence]
 GO
-GRANT INSERT
-	ON [dbo].[c_Config_Object_Category]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Config_Object_Category] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Config_Object_Category]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Config_Object_Category] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Config_Object_Category]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Config_Object_Category] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Config_Object_Category] SET (LOCK_ESCALATION = TABLE)
 GO

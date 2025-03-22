@@ -96,21 +96,13 @@ ALTER TABLE [dbo].[c_Disease_Group_Item]
 	CONSTRAINT [DF_c_Disease_Group_Item_owner_id]
 	DEFAULT ([dbo].[fn_customer_id]()) FOR [owner_id]
 GO
-GRANT DELETE
-	ON [dbo].[c_Disease_Group_Item]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Disease_Group_Item] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Disease_Group_Item]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Disease_Group_Item] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Disease_Group_Item]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Disease_Group_Item] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Disease_Group_Item]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Disease_Group_Item] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Disease_Group_Item] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -108,25 +108,15 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_age_range_cat_id]
 	ON [dbo].[c_Age_Range_Category] ([id], [owner_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 100) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[c_Age_Range_Category]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_Age_Range_Category] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_Age_Range_Category]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_Age_Range_Category] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_Age_Range_Category]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_Age_Range_Category] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_Age_Range_Category]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_Age_Range_Category] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_Age_Range_Category]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_Age_Range_Category] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_Age_Range_Category] SET (LOCK_ESCALATION = TABLE)
 GO

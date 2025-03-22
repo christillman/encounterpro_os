@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_get_specific_preference (
+CREATE FUNCTION dbo.fn_get_specific_preference (
 	@ps_preference_type varchar(24),
 	@ps_preference_level varchar(12),
 	@ps_preference_key varchar(40),

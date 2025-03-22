@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_calc_bmi_percent (
+CREATE FUNCTION dbo.fn_calc_bmi_percent (
 	@dec_bmi decimal(15,7)
 	,@l1 decimal(9,7)
 	,@m1 decimal(9,7)

@@ -85,25 +85,15 @@ ALTER TABLE [dbo].[c_External_Source_Attribute]
 	CONSTRAINT [DF_c_External_Source_Attribute_comp_att]
 	DEFAULT ('N') FOR [component_attribute]
 GO
-GRANT DELETE
-	ON [dbo].[c_External_Source_Attribute]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_External_Source_Attribute] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_External_Source_Attribute]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_External_Source_Attribute] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[c_External_Source_Attribute]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[c_External_Source_Attribute] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_External_Source_Attribute]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_External_Source_Attribute] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_External_Source_Attribute]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_External_Source_Attribute] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_External_Source_Attribute] SET (LOCK_ESCALATION = TABLE)
 GO

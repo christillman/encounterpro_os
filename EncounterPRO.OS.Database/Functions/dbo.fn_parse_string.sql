@@ -20,7 +20,7 @@ GO
 SET ANSI_NULLS OFF
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_parse_string (
+CREATE FUNCTION dbo.fn_parse_string (
 	@ps_string varchar(4000),
 	@ps_delimiter varchar(40) )
 
@@ -74,8 +74,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_parse_string]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_parse_string] TO [cprsystem]
 GO
 

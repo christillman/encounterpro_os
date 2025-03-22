@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_patient_immunization_schedule (
+CREATE FUNCTION dbo.fn_patient_immunization_schedule (
 	@ps_cpr_id varchar(12),
 	@pdt_current_date datetime)
 
@@ -135,8 +135,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_patient_immunization_schedule]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_patient_immunization_schedule] TO [cprsystem]
 GO
 

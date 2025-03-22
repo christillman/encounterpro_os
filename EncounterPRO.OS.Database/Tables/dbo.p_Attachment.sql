@@ -75,8 +75,8 @@ CREATE TABLE [dbo].[p_Attachment] (
 		[attachment_file_path]         [varchar](128) NULL,
 		[attachment_file]              [varchar](128) NULL,
 		[extension]                    [varchar](24) NULL,
-		[attachment_text]              [text] NULL,
-		[attachment_image]             [image] NULL,
+		[attachment_text]              [nvarchar](max) NULL,
+		[attachment_image]             [varbinary](max) NULL,
 		[storage_flag]                 [char](1) NULL,
 		[attachment_date]              [datetime] NULL,
 		[attachment_folder]            [varchar](40) NULL,
@@ -95,7 +95,7 @@ CREATE TABLE [dbo].[p_Attachment] (
 		[interfaceserviceid]           [int] NULL,
 		[transportsequence]            [int] NULL,
 		[patient_workplan_item_id]     [int] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [ATTACHMENTS]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[p_Attachment]
 	ADD
@@ -135,25 +135,15 @@ CREATE CLUSTERED INDEX [idx_cpr_id]
 	ON [dbo].[p_Attachment] ([cpr_id], [attachment_id])
 	WITH ( PAD_INDEX = ON, FILLFACTOR = 70) ON [PRIMARY]
 GO
-GRANT DELETE
-	ON [dbo].[p_Attachment]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[p_Attachment] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[p_Attachment]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[p_Attachment] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[p_Attachment]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[p_Attachment] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[p_Attachment]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[p_Attachment] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[p_Attachment]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[p_Attachment] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[p_Attachment] SET (LOCK_ESCALATION = TABLE)
 GO

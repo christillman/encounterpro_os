@@ -1,6 +1,24 @@
-﻿IF  EXISTS (SELECT * FROM sys.objects 
-where object_id = OBJECT_ID(N'fn_std_dosage_form') AND type in (N'FN'))
-DROP FUNCTION dbo.fn_std_dosage_form
+﻿
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_WARNINGS ON
+SET NOCOUNT ON
+SET XACT_ABORT ON
+GO
+
+-- Drop Function [dbo].[fn_std_dosage_form]
+Print 'Drop Function [dbo].[fn_std_dosage_form]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[fn_std_dosage_form]') AND ([type]='IF' OR [type]='FN' OR [type]='TF')))
+DROP FUNCTION [dbo].[fn_std_dosage_form]
+GO
+
+-- Create Function [dbo].[fn_std_dosage_form]
+Print 'Create Function [dbo].[fn_std_dosage_form]'
+GO
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE FUNCTION dbo.fn_std_dosage_form (@form_descr varchar(2000), @generic_descr varchar(2000))
@@ -20,15 +38,15 @@ WHERE @form_descr LIKE '%' + term + '%'
 AND term_type = 'dosage_form'
 ORDER BY LEN(alternate) desc, LEN(term) desc
 
-IF @@rowcount = 0 SET @f_descr = @form_descr
+IF @f_descr IS NULL SET @f_descr = @form_descr
 
-SELECT TOP 1 @g_descr = REPLACE(IsNull(@generic_descr,'zzz'), term, alternate)
+SELECT TOP 1 @g_descr = REPLACE(CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END, term, alternate)
 FROM c_Synonym 
-WHERE IsNull(@generic_descr,'zzz') LIKE '%' + term + '%'
+WHERE CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END LIKE '%' + term + '%'
 AND term_type = 'dosage_form'
 ORDER BY LEN(alternate) desc, LEN(term) desc
 
-IF @@rowcount = 0 SET @g_descr = IsNull(@generic_descr,'zzz')
+IF @g_descr IS NULL SET @g_descr = CASE WHEN @generic_descr IS NULL THEN 'zzz' ELSE @generic_descr END
 
 -- Insulin has special preference: instead of Inhalant Powder it should be Cartridge
 IF @f_descr LIKE '%insulin%' OR @g_descr LIKE '%insulin%'

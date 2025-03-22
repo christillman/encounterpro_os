@@ -73,12 +73,12 @@ CREATE TABLE [dbo].[u_Exam_Default_Results] (
 		[result_value]          [varchar](40) NULL,
 		[result_unit]           [varchar](24) NULL,
 		[result_flag]           [char](1) NOT NULL,
-		[long_result_value]     [text] NULL,
+		[long_result_value]     [nvarchar](max) NULL,
 		[result]                [varchar](80) NULL,
 		[result_type]           [varchar](12) NULL,
 		[abnormal_flag]         [char](1) NULL,
 		[severity]              [smallint] NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[u_Exam_Default_Results]
 	ADD
@@ -99,25 +99,15 @@ ALTER TABLE [dbo].[u_Exam_Default_Results]
 	CONSTRAINT [DF__u_Exam_De__user___53584DE9]
 	DEFAULT ('!DEFAULT') FOR [user_id]
 GO
-GRANT DELETE
-	ON [dbo].[u_Exam_Default_Results]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[u_Exam_Default_Results] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[u_Exam_Default_Results]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[u_Exam_Default_Results] TO [cprsystem]
 GO
-GRANT REFERENCES
-	ON [dbo].[u_Exam_Default_Results]
-	TO [cprsystem]
+GRANT REFERENCES ON [dbo].[u_Exam_Default_Results] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[u_Exam_Default_Results]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[u_Exam_Default_Results] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[u_Exam_Default_Results]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[u_Exam_Default_Results] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[u_Exam_Default_Results] SET (LOCK_ESCALATION = TABLE)
 GO

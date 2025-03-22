@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_pretty_age (
+CREATE FUNCTION dbo.fn_pretty_age (
 	@pdt_date_of_birth datetime,
 	@pdt_current_date datetime)
 

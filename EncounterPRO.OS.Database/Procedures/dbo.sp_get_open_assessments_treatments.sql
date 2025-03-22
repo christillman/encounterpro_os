@@ -1,17 +1,17 @@
 
-/****** Object:  StoredProcedure [dbo].[sp_get_open_assessments_treatments]    Script Date: 15/07/2023 8:11:50 am ******/
+-- Drop Procedure [dbo].[sp_get_open_assessments_treatments]
+Print 'Drop Procedure [dbo].[sp_get_open_assessments_treatments]'
+GO
+IF (EXISTS(SELECT * FROM sys.objects WHERE [object_id] = OBJECT_ID(N'[dbo].[sp_get_open_assessments_treatments]') AND [type] = 'P'))
 DROP PROCEDURE [dbo].[sp_get_open_assessments_treatments]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_get_open_assessments_treatments]    Script Date: 15/07/2023 8:11:50 am ******/
+-- Create Procedure [dbo].[sp_get_open_assessments_treatments]
+Print 'Create Procedure [dbo].[sp_get_open_assessments_treatments]'
+GO
 SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
 GO
-
-SET QUOTED_IDENTIFIER OFF
-GO
-
-
-
 CREATE PROCEDURE [dbo].[sp_get_open_assessments_treatments] (
 	@ps_cpr_id varchar(12)
 	)

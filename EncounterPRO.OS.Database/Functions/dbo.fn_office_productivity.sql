@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_office_productivity (
+CREATE FUNCTION dbo.fn_office_productivity (
 	@ps_office_id varchar(4) = NULL,
 	@pdt_begin_date datetime = NULL,
 	@pdt_end_date datetime = NULL,
@@ -266,8 +266,6 @@ RETURN
 END
 
 GO
-GRANT SELECT
-	ON [dbo].[fn_office_productivity]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_office_productivity] TO [cprsystem]
 GO
 

@@ -106,21 +106,13 @@ ALTER TABLE [dbo].[c_XML_Class_Selection]
 	CONSTRAINT [DF_c_XML_Class_Selection_status]
 	DEFAULT ('OK') FOR [status]
 GO
-GRANT DELETE
-	ON [dbo].[c_XML_Class_Selection]
-	TO [cprsystem]
+GRANT DELETE ON [dbo].[c_XML_Class_Selection] TO [cprsystem]
 GO
-GRANT INSERT
-	ON [dbo].[c_XML_Class_Selection]
-	TO [cprsystem]
+GRANT INSERT ON [dbo].[c_XML_Class_Selection] TO [cprsystem]
 GO
-GRANT SELECT
-	ON [dbo].[c_XML_Class_Selection]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[c_XML_Class_Selection] TO [cprsystem]
 GO
-GRANT UPDATE
-	ON [dbo].[c_XML_Class_Selection]
-	TO [cprsystem]
+GRANT UPDATE ON [dbo].[c_XML_Class_Selection] TO [cprsystem]
 GO
 ALTER TABLE [dbo].[c_XML_Class_Selection] SET (LOCK_ESCALATION = TABLE)
 GO

@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_Find_Observation]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_Find_Observation
 	@ps_observation_id varchar(24)

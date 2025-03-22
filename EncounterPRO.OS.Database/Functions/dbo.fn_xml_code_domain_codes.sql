@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION fn_xml_code_domain_codes (
+CREATE FUNCTION dbo.fn_xml_code_domain_codes (
 	@pl_owner_id int ,
 	@ps_code_domain varchar(40) ,
 	@pl_document_patient_workplan_item_id int
@@ -213,8 +213,6 @@ FROM @codes x
 RETURN
 END
 GO
-GRANT SELECT
-	ON [dbo].[fn_xml_code_domain_codes]
-	TO [cprsystem]
+GRANT SELECT ON [dbo].[fn_xml_code_domain_codes] TO [cprsystem]
 GO
 

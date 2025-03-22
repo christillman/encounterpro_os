@@ -64,7 +64,7 @@ GO
 SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
-CREATE FUNCTION fn_count_attachments (
+CREATE FUNCTION dbo.fn_count_attachments (
 	@ps_cpr_id varchar(12),
 	@ps_context_object varchar(24),
 	@pl_object_key int)

@@ -18,7 +18,7 @@ GO
 Print 'Create Procedure [dbo].[sp_get_treatment_followup_workplan_items]'
 GO
 SET ANSI_NULLS ON
-SET QUOTED_IDENTIFIER OFF
+SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_get_treatment_followup_workplan_items (
 	@ps_cpr_id varchar(12),
@@ -33,12 +33,14 @@ FROM p_Patient_Wp
 WHERE cpr_id = @ps_cpr_id
 AND treatment_id = @pl_treatment_id
 AND workplan_type = @ps_workplan_type
-IF @@rowcount <> 1
+
+IF @ll_patient_workplan_id IS NULL
 	BEGIN
 	RAISERROR ('No such followup workplan (%d)',16,-1, @pl_treatment_id)
 	ROLLBACK TRANSACTION
 	RETURN
 	END
+
 SELECT p_Patient_Wp_Item.patient_workplan_item_id,
 	p_Patient_Wp_Item.description,
 	c_Treatment_Type.button
