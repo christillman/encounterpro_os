@@ -219,23 +219,23 @@ boolean is_demo_version
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 231
+long target_modification_level = 232
 
-date compile_date = date("2025-01-20")
+date compile_date = date("2025-03-22")
 
 integer major_release = 7
 string database_version = "2" // this is really minor release
-string build = "8.0"
-// Resulting in 7.2.8.0
+string build = "9.0"
+// Resulting in 7.2.9.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   2   7  0
+//  7   2   9  0
 
 // Using Powerbuilder Runtime 2797
 
 ////////////////////////////////////////////////////////////
 
-string copyright = "Copyright 1994-2024 The EncounterPRO Foundation, Inc."
+string copyright = "Copyright 1994-2025 The EncounterPRO Foundation, Inc."
 string source_url = "https://github.com/christillman/encounterpro_os"
 
 ////////////////////////////////////////////////////////////
@@ -260,7 +260,6 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
-
 event keydown;//f_fkey_handler(key, keyflags)
 
 

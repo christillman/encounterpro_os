@@ -7,5 +7,5 @@ Save Format v3.0(19990112)
  2 "demorte.pbt";
  3 "..\\..\\Users\\Somebody\\Downloads\\runandwait\\runandwait126.pbt";
 @end;
-DefaultTarget "Client\\cpr.pbt";
-DefaultRemoteTarget "Client\\cpr.pbt";
+DefaultTarget "upgradescript.pbt";
+DefaultRemoteTarget "upgradescript.pbt";
