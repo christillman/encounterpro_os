@@ -1046,6 +1046,7 @@ string ls_message
 string ls_windows_error
 string ls_sql_error
 string ls_adodb_connectstring
+int li_attempts
 
 if isnull(mylog) or not isvalid(mylog) then mylog = log
 
@@ -1169,17 +1170,15 @@ SetPointer(HourGlass!)
 // For public demo access, first try the "free" server then the alternate if not successful
 if gnv_app.is_demo_version then
 	// The ServerName, logid, logpass parameters are defaulted
-	dbparm += ",TimeOut=120"
-	CONNECT USING this; 
-	if SQLCode = 0 then
-		connected = true
-	end if
-	if not connected then
-		CONNECT USING this; 
+	li_attempts = 12  // Connect timeout is about 15 seconds so this allows 3 minutes to warm up (tested at one minute)
+	// Note the Timeout and CommandTimeout dbparm parameters seem not to work
+	do while li_attempts > 0 and not connected 
+		CONNECT USING this;
 		if SQLCode = 0 then
 			connected = true
-		end if		
-	end if
+		end if
+		li_attempts = li_attempts - 1
+	loop
 	if not connected then		
 		// try the alternate
 		this.ServerName = "srv-goehr-demo1.database.windows.net"
