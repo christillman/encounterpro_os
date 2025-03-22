@@ -7600,7 +7600,7 @@ lstr_stack = command_stack_for_charposition(lstr_charposition)
 
 open_editor(lstr_stack)
 
-redisplay()
+this.redisplay()
 
 
 end event
