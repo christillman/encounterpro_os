@@ -178,6 +178,7 @@ long debug_display_script_id
 long debug_display_command_id
 
 end variables
+
 global type cpr from application
 string appname = "cpr"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\IDE\theme"
@@ -347,6 +348,7 @@ else
 	END CHOOSE
 end if
 
+open(w_splash)
 li_sts = f_initialize_common("EncounterPRO")
 if li_sts < 0 then
 	if NOT IsNull(log) AND IsValid(log) then
@@ -382,6 +384,7 @@ li_sts = f_crash_clean_up()
 if li_sts < 0 then
 	log.log(po_null, "cpr.open:114","crash clean up failed for computer_id " + string(gnv_app.computer_id), 4)
 end if
+close(w_splash)
 
 li_sts = f_logon()
 if li_sts < 0 then

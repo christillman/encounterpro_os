@@ -8,27 +8,26 @@ type st_copyright from statictext within w_splash
 end type
 type p_logo from picture within w_splash
 end type
+type st_message from statictext within w_splash
+end type
 end forward
 
 global type w_splash from w_window_base
 integer x = 69
 integer y = 256
-integer width = 2670
-integer height = 1652
-boolean enabled = false
-boolean titlebar = false
+integer width = 2679
+integer height = 1732
 string title = ""
-boolean minbox = false
-boolean maxbox = false
+boolean controlmenu = true
 boolean resizable = false
-boolean border = false
-windowtype windowtype = popup!
+long backcolor = 16777215
 boolean show_more_buttons = false
 boolean auto_resize_objects = false
 boolean nested_user_object_resize = false
 st_build_number st_build_number
 st_copyright st_copyright
 p_logo p_logo
+st_message st_message
 end type
 global w_splash w_splash
 
@@ -38,10 +37,12 @@ call super::create
 this.st_build_number=create st_build_number
 this.st_copyright=create st_copyright
 this.p_logo=create p_logo
+this.st_message=create st_message
 iCurrent=UpperBound(this.Control)
 this.Control[iCurrent+1]=this.st_build_number
 this.Control[iCurrent+2]=this.st_copyright
 this.Control[iCurrent+3]=this.p_logo
+this.Control[iCurrent+4]=this.st_message
 end on
 
 on w_splash.destroy
@@ -49,13 +50,14 @@ call super::destroy
 destroy(this.st_build_number)
 destroy(this.st_copyright)
 destroy(this.p_logo)
+destroy(this.st_message)
 end on
 
 event open;call super::open;st_build_number.text = f_app_version()
 
 st_copyright.text = gnv_app.copyright
 
-timer( 5 ) // 35 seconds
+//timer( 5 ) // 35 seconds
 this.bringtotop = TRUE
 end event
 
@@ -89,7 +91,7 @@ end type
 
 type st_build_number from statictext within w_splash
 integer x = 32
-integer y = 1480
+integer y = 1484
 integer width = 965
 integer height = 64
 integer textsize = -10
@@ -126,6 +128,23 @@ type p_logo from picture within w_splash
 integer width = 2674
 integer height = 1652
 string picturename = "greenolivehr-background.png"
+boolean focusrectangle = false
+end type
+
+type st_message from statictext within w_splash
+integer x = 471
+integer y = 208
+integer width = 791
+integer height = 124
+boolean bringtotop = true
+integer textsize = -18
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Microsoft Sans Serif"
+long backcolor = 7191717
+string text = "Connecting ... "
 boolean focusrectangle = false
 end type
 
