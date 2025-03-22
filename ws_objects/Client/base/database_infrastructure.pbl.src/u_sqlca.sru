@@ -1169,11 +1169,18 @@ SetPointer(HourGlass!)
 // For public demo access, first try the "free" server then the alternate if not successful
 if gnv_app.is_demo_version then
 	// The ServerName, logid, logpass parameters are defaulted
+	dbparm += ",TimeOut=120"
 	CONNECT USING this; 
 	if SQLCode = 0 then
 		connected = true
 	end if
 	if not connected then
+		CONNECT USING this; 
+		if SQLCode = 0 then
+			connected = true
+		end if		
+	end if
+	if not connected then		
 		// try the alternate
 		this.ServerName = "srv-goehr-demo1.database.windows.net"
 		this.logid += "1"
@@ -2317,7 +2324,11 @@ if li_sts >= 0 and pl_modification_level > modification_level then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	if gnv_app.is_demo_version then
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Public_Demo_Install_"
+	else
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(pl_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	end if
 	ls_client_link = gnv_app.client_link_start + string(pl_modification_level) + ".exe"
 	
 	select count(*) into :li_count from sys.columns where name = 'client_link';
@@ -3773,7 +3784,11 @@ if li_count > 0 then
 	// Set the client_link to the upgrade mod level
 	// Lower mod level clients connecting to the database will use this link to 
 	// download the matching client in f_check_version
-	gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	if gnv_app.is_demo_version then
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Public_Demo_Install_"
+	else
+		gnv_app.client_link_start  = "https://github.com/christillman/encounterpro_os/releases/download/v" + string(ll_modification_level) + "/" + f_string_substitute(gnv_app.product_name," ","_") + "_Install_"
+	end if
 	ls_client_link = gnv_app.client_link_start + string(ll_modification_level) + ".exe"
 
 	UPDATE c_Database_Status
