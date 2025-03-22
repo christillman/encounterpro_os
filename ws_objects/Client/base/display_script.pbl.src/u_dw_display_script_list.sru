@@ -622,16 +622,18 @@ event clicked;call super::clicked;integer li_selected_flag
 long ll_row
 
 setnull(top_20_sequence)
+ll_row = row
+if ll_row <= 0 then return
 
 if mode = "EDIT" and allow_editing then
 	if current_search = "TOP20" then
-		top_20_sequence = object.top_20_sequence[row]
+		top_20_sequence = object.top_20_sequence[ll_row]
 	end if
 	
-	li_selected_flag = object.selected_flag[row]
+	li_selected_flag = object.selected_flag[ll_row]
 	
-	object.selected_flag[row] = 1
-	display_script_menu(row)
+	object.selected_flag[ll_row] = 1
+	display_script_menu(ll_row)
 	
 	clear_selected()
 end if
