@@ -42,12 +42,8 @@
   ;*** If Setup version != Client files version, modify following line ***
   !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
   !define SRC_EPRO_Resources  '${SOURCE_ROOT}\EncounterPRO-OS\Resources'
-
+  !define SRC_MSO   '${SOURCE_ROOT}\3rd Party Software\Microsoft'
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
-
-  ; Installing the help file
-  ;!define COMMONFILES_TARGET "EncounterPRO-OS"
-  ;!define APPDATA_TARGET "${PRODUCT}"
 
   ; Installing certificates
   !define CERT_QUERY_OBJECT_FILE 1
@@ -56,8 +52,7 @@
   !define CERT_STORE_PROV_SYSTEM 10
   !define CERT_STORE_OPEN_EXISTING_FLAG 0x4000
   !define CERT_SYSTEM_STORE_LOCAL_MACHINE 0x20000
-  !define CERT_STORE_ADD_ALWAYS 4
- 
+  !define CERT_STORE_ADD_ALWAYS 4 
   
 ; ------------------------------------------
 ; Variables
@@ -192,6 +187,20 @@
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\msvcp80.dll" "$SYSDIR\msvcp80.dll" "$SYSDIR"
           !insertmacro InstallLib DLL    $ALREADY_INSTALLED REBOOT_PROTECTED \
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
+
+      ; Install MSOLEDBSQL
+      SetOutPath '$INSTDIR'
+      DetailPrint "Installing MSOLEDBSQL..."
+      SetDetailsPrint textonly
+      File "${SRC_MSO}\VC_redist.x86.exe"
+      nsExec::Exec 'VC_redist.x86.exe /q /norestart'
+      Delete '$INSTDIR\VC_redist.x86.exe'
+      File "${SRC_MSO}\VC_redist.x64.exe"
+      nsExec::Exec 'VC_redist.x64.exe /q /norestart'
+      Delete '$INSTDIR\VC_redist.x64.exe'
+      File "${SRC_MSO}\msoledbsql.msi"
+      nsExec::Exec 'msiexec /i "$INSTDIR\msoledbsql.msi" /passive /norestart /l*v "$INSTDIR\msoledbsql.msi.log"'
+      Delete '$INSTDIR\msoledbsql.msi'
                   
 	  ; Adding a fake file which the installer errors out trying to delete
       ; CreateDirectory "$SMPROGRAMS\SoftMaker FreeOffice 2021"
@@ -235,7 +244,7 @@
     SectionEnd
     
     Section '-Help File' SecHelp
-        SetOutPath "$INSTDIR"
+        SetOutPath '$INSTDIR'
         SetDetailsPrint both
         DetailPrint "Installing ${PRODUCT} Help..."
         SetOverwrite on
