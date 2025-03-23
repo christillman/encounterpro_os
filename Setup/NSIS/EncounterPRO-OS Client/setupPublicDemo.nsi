@@ -12,17 +12,18 @@
   !define PRODUCT   "GreenOlive_EHR_Public_Demo"
 
 ; Client Setup Version
-  !define VERSION   7.2.8.0
+  !define VERSION   7.2.9.0
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
   !define INST_ROOT "C:\Users\Public\Documents"
   !define DEST_FOLDER "${INST_ROOT}\${PRODUCT}\Client"
+  !define ATT_FOLDER "${INST_ROOT}\Attachments"
   !define UTILITIES_FOLDER "${INST_ROOT}\Utilities"
-  
+
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   231
+  !define Database_Mod_Level   232
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -38,13 +39,20 @@
   ; !define SRC_TextMaker_Filename  'freeoffice2021.msi'
 
   ;*** If Setup version != Client files version, modify following line ***
-  !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}'
+  !define SRC_EPRO  '${SOURCE_ROOT}\EncounterPRO-OS\EncounterPRO.OS.Client\${EproClient_VERSION}Demo'
   !define SRC_EPRO_Resources  '${SOURCE_ROOT}\EncounterPRO-OS\Resources'
   !define SRC_MSO   '${SOURCE_ROOT}\3rd Party Software\Microsoft'
-
-
   !define SRC_Mod_Level  '${SOURCE_ROOT}\EncounterPRO-OS\Database\Upgrade\${Database_Mod_Level}'
 
+  ; Installing certificates
+  !define CERT_QUERY_OBJECT_FILE 1
+  !define CERT_QUERY_CONTENT_FLAG_ALL 16382
+  !define CERT_QUERY_FORMAT_FLAG_ALL 14
+  !define CERT_STORE_PROV_SYSTEM 10
+  !define CERT_STORE_OPEN_EXISTING_FLAG 0x4000
+  !define CERT_SYSTEM_STORE_LOCAL_MACHINE 0x20000
+  !define CERT_STORE_ADD_ALWAYS 4
+  
 ; ------------------------------------------
 ; Variables
 
@@ -182,7 +190,7 @@
             "${SOURCE_ROOT}\3rd Party Software\Microsoft\atl80.dll" "$SYSDIR\atl80.dll" "$SYSDIR"
 
       ; Install MSOLEDBSQL
-      SetOutPath $INSTDIR
+      SetOutPath '$INSTDIR'
       DetailPrint "Installing MSOLEDBSQL..."
       SetDetailsPrint textonly
       File "${SRC_MSO}\VC_redist.x86.exe"
@@ -278,10 +286,6 @@
     SectionEnd
 
     Section '-Attachments' SecAT
-		; ReadEnvStr $R1 USERPROFILE
-		!define ATT_FOLDER "C:\Users\Public\Documents\Attachments"
-		; "C:\Users\Public\Documents\Attachments"
-		; "$R1\Attachments"
 
         CreateDirectory "${ATT_FOLDER}"
         SetOutPath "${ATT_FOLDER}"
@@ -298,15 +302,17 @@
         CreateDirectory "${DEST_FOLDER}"
         CreateDirectory "${DEST_FOLDER}\Uploads"
         CreateShortCut "${DEST_FOLDER}\Uninstall.lnk" "$INSTDIR\uninst.exe"
-        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=srv-goehr-demo.database.windows.net|GreenOliveDemo" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "${DEST_FOLDER}\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         ;CreateShortCut "${DEST_FOLDER}\${PRODUCT} Ask.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "ASK" "$INSTDIR\green-olive-avi-02.ico"
         SetOutPath "$DESKTOP"
-        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=srv-goehr-demo.database.windows.net|GreenOliveDemo" "$INSTDIR\green-olive-avi-02.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT}.lnk" "$INSTDIR\EncounterPRO.OS.Client.exe" "CLIENT=<Default>" "$INSTDIR\green-olive-avi-02.ico"
         SetDetailsPrint both
     SectionEnd
     
     Section '-Post' SecPost
         SetDetailsPrint textonly
+		; No ini file for public demo
+		Delete "$INSTDIR\EncounterPro.ini"
         ; Store installation folder
         WriteRegStr HKLM 'Software\${PRODUCT}' '' $INSTDIR   
         
