@@ -122,10 +122,9 @@ copy %build_folder%\..\EncounterPRO.ini %build_folder%
 copy "Help\EncounterPro-OS Help.chm" %build_folder%
 copy "%build_folder%\..\..\Resources\Open Source License.rtf" %build_folder%
 
-REM Now building pbdom / pbsoap separately as of PB 2019 R3
+REM Now building pbdom separately as of PB 2019 R3
 
 copy %build_folder%\..\pbdom.pbd %build_folder%
-copy %build_folder%\..\pbsoapclient.pbd %build_folder%
 
 REM now adding runtime into the EPro folder, so we don't need to run runtime installer
 xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Runtime %runtimeversion%\*" %build_folder% /S /Y
