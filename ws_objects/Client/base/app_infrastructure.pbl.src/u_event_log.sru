@@ -192,6 +192,7 @@ constant integer LOGLEVEL_REDALERT = 5
 
 
 end variables
+
 forward prototypes
 public function integer shutdown ()
 public function integer log (powerobject po_who, string ps_script, string ps_message, integer pi_severity)
@@ -1327,7 +1328,7 @@ end if
 ls_message = "Who: " + ls_who + ", Where: " + ps_script + ", Message:" + ps_message + ", Severity: " + string(pi_severity)
 
 // If not initialized, write to a file in the current folder
-if not initialized then 
+if NOT initialized OR NOT SQLCA.connected then 
 	ls_error_file = GetCurrentDirectory( ) + "\EPro-Initialization-Errors.txt"
 	ll_dochandle = FileOpen(ls_error_file, LineMode!, Write!, Shared!, Append!)
 	if ll_dochandle = -1 then	
@@ -1361,7 +1362,7 @@ end if
 if pi_severity >= loglevel then
 	if common_thread.utilities_ok() then
 		li_sts = common_thread.eprolibnet4.of_LogEvent(ls_who, ps_script, ps_message, pi_severity)
-		lb_reported = True
+		lb_reported = (li_sts >= 0)
 	else
 		log.log(this, "u_event_log.log:0112", "Event not logged (Utilities not available)", 3)
 	end if
@@ -1391,13 +1392,13 @@ end if
 
 f_unrecoverable(ps_message)
 
-if not lb_reported then return -1
-
 if pi_severity >= 4 then
 	// Call to developer attention
 	Clipboard(ls_message)
 	DebugBreak()
 end if
+
+if not lb_reported then return -1
 
 return 1
 
