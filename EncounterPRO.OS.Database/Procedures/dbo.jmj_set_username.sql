@@ -25,7 +25,7 @@ CREATE PROCEDURE jmj_set_username (
 	@ps_new_username varchar(40) )
 AS
 
-DECLARE @ls_username varchar(40),
+DECLARE @ls_username varchar(40) = 'Not found',
 		@ll_count int,
 		@ll_sts int,
 		@ls_progress varchar(255)
@@ -49,7 +49,8 @@ SELECT @ls_username = username
 FROM c_User WITH (TABLOCKX)
 WHERE [user_id] = @ps_user_id
 
-IF @ls_username IS NULL
+-- For new users, that data will be NULL, check for set value instead (#91)
+IF @ls_username = 'Not found'
 	BEGIN
 	RAISERROR ('User_id not found (%s)',16,-1, @ps_user_id)
 	ROLLBACK TRANSACTION

@@ -96,6 +96,7 @@ IF @brand_name_rxcui IS NOT NULL
 		DELETE FROM c_Drug_Formulation
 		WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_brand_forms1)
 
+		SET @msg = 'Not found'
 		SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + common_name 
 		FROM c_Drug_Definition
 		WHERE drug_id IN (
@@ -103,7 +104,7 @@ IF @brand_name_rxcui IS NOT NULL
 			WHERE brand_name_rxcui = @brand_name_rxcui
 			)
 		OR drug_id = @drug_id
-		IF @msg IS NULL
+		IF @msg = 'Not found'
 			SET @msg = 'c_Drug_Definition for ' + @brand_name_rxcui + ' not found'
 		print @msg
 
@@ -114,10 +115,11 @@ IF @brand_name_rxcui IS NOT NULL
 			)
 		OR drug_id = @drug_id
 
+		SET @msg = 'Not found'
 		SELECT @msg = 'Removing brand ' + brand_name_rxcui + ', ' + brand_name 
 		FROM c_Drug_Brand
 		WHERE brand_name_rxcui = @brand_name_rxcui
-		IF @msg IS NULL
+		IF @msg = 'Not found'
 			SET @msg = 'c_Drug_Brand ' + @brand_name_rxcui + ' not found'
 		print @msg
 
@@ -152,6 +154,7 @@ IF @generic_rxcui IS NOT NULL
 		DELETE FROM c_Drug_Formulation
 		WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_generic_forms1)
 
+		SET @msg = 'Not found'
 		SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + generic_name 
 		FROM c_Drug_Definition
 		WHERE drug_id = (
@@ -159,7 +162,7 @@ IF @generic_rxcui IS NOT NULL
 			WHERE generic_rxcui = @generic_rxcui
 			)
 		OR drug_id = @drug_id
-		IF @msg IS NULL
+		IF @msg = 'Not found'
 			SET @msg = 'c_Drug_Definition for ' + @generic_rxcui + ' not found'
 		print @msg
 		DELETE FROM c_Drug_Definition
@@ -169,10 +172,11 @@ IF @generic_rxcui IS NOT NULL
 			)
 		OR drug_id = @drug_id
 
+		SET @msg = 'Not found'
 		SELECT @msg = 'Removing generic ' + generic_rxcui + ', ' + generic_name 
 		FROM c_Drug_Generic 
 		WHERE generic_rxcui = @generic_rxcui
-		IF @msg IS NULL
+		IF @msg = 'Not found'
 			SET @msg = 'c_Drug_Generic ' + @generic_rxcui + ' not found'
 		print @msg
 		DELETE FROM c_Drug_Generic

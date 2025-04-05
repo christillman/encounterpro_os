@@ -28,7 +28,7 @@ CREATE PROCEDURE sp_generate_billing_id (
 AS
 
 DECLARE @ll_billing_id int,
-		@ll_test int,
+		@ll_test int = -99,
 		@ls_billing_id varchar(24),
 		@ll_last_key int
 
@@ -53,10 +53,11 @@ WHILE 1 = 1
 		FROM p_Patient
 		WHERE billing_id = @ls_billing_id )
 	
-	IF @ll_test IS NULL
+	IF @ll_test = -99
 		BREAK
 	
 	SET @ll_billing_id = @ll_billing_id + 1
+	SET @ll_test = -99
 	END
 
 EXECUTE sp_Set_Patient_Progress

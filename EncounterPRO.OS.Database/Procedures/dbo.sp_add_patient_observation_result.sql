@@ -64,7 +64,7 @@ FROM c_Observation_Result
 WHERE observation_id = @ls_observation_id
 AND result_sequence = @pi_result_sequence
 
-IF @ls_result_type IS NULL
+IF @ls_result IS NULL
 	BEGIN
 	RAISERROR ('Cannot find observation result (%s, %d)', 16, -1, @ls_observation_id, @pi_result_sequence )
 	ROLLBACK TRANSACTION

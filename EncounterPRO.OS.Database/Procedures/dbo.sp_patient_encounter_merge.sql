@@ -28,7 +28,7 @@ AS
 
 DECLARE
 	 @merge_notice VARCHAR(24)
-	,@x INT
+	,@x INT = -1
 
 SET @merge_notice = '(Merged Encounter: ' + CAST( @encounter_id_keep AS VARCHAR) + ')'
 
@@ -53,7 +53,7 @@ WHERE
 	cpr_id = @cpr_id
 AND 	patient_status <> 'MERGED'
 
-IF @x IS NULL
+IF @x = -1
 BEGIN
 	RAISERROR ('Patient does not exist', 16, 1)
 	ROLLBACK TRANSACTION
@@ -61,7 +61,7 @@ BEGIN
 END
 
 PRINT 'Check for valid KEEP Patient Encounter'
-
+SET @x = -1
 SELECT
 	@x = 1
 FROM
@@ -71,7 +71,7 @@ WHERE
 AND	encounter_id = @encounter_id_keep
 AND 	encounter_status NOT IN ('CANCELLED', 'MERGED')
 
-IF @x IS NULL
+IF @x = -1
 BEGIN
 	RAISERROR ('Keep Patient Encounter does not exist', 16, 1)
 	ROLLBACK TRANSACTION

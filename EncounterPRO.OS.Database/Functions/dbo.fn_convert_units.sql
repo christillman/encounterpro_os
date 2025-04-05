@@ -31,7 +31,7 @@ AS
 BEGIN
 
 DECLARE @lr_to_amount real,
-		@lr_conversion_factor real,
+		@lr_conversion_factor real = 0.0,
 		@lr_conversion_difference real
 
 SET @lr_to_amount = NULL
@@ -46,7 +46,7 @@ FROM c_Unit_Conversion
 WHERE unit_from = @ps_from_unit_id
 AND unit_to = @ps_to_unit_id
 
-IF @lr_conversion_factor IS NOT NULL
+IF @lr_conversion_factor != 0.0
 	BEGIN
 	SET @lr_to_amount = (@pr_amount * @lr_conversion_factor) + @lr_conversion_difference
 	END
@@ -58,7 +58,7 @@ ELSE
 	WHERE unit_from = @ps_to_unit_id
 	AND unit_to = @ps_from_unit_id
 	
-	IF @lr_conversion_factor IS NULL
+	IF @lr_conversion_factor = 0.0
 		RETURN @lr_to_amount
 	
 	SET @lr_to_amount = (@pr_amount - @lr_conversion_difference) / @lr_conversion_factor

@@ -170,6 +170,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			DELETE FROM c_Drug_Formulation
 			WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_brand_forms)
 
+			SET @msg = 'Not found'
 			SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + common_name 
 			FROM c_Drug_Definition
 			WHERE drug_id = (
@@ -177,7 +178,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 				)
-			IF @msg IS NULL
+			IF @msg = 'Not found'
 				SET @msg = 'c_Drug_Definition ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
@@ -187,11 +188,12 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
 				)
 
+			SET @msg = 'Not found'
 			SELECT @msg = 'Removing brand ' + brand_name_rxcui + ', ' + brand_name 
 			FROM c_Drug_Brand
 			WHERE brand_name_rxcui = @brand_name_rxcui
 				AND @brand_name_rxcui LIKE @country_code + 'BI%'
-			IF @msg IS NULL
+			IF @msg = 'Not found'
 				SET @msg = 'c_Drug_Brand ' + @brand_name_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Brand
@@ -233,6 +235,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 			DELETE FROM c_Drug_Formulation
 			WHERE form_rxcui IN (SELECT form_rxcui FROM #remove_generic_forms)
 
+			SET @msg = 'Not found'
 			SELECT @msg = 'Removing drug defn ' + drug_id + ', ' + generic_name 
 			FROM c_Drug_Definition
 			WHERE drug_id = (
@@ -240,7 +243,7 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
 				)
-			IF @msg IS NULL
+			IF @msg = 'Not found'
 				SET @msg = 'c_Drug_Definition ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Definition
@@ -250,11 +253,12 @@ DECLARE @replacement_brand_name_rxcui varchar(20)
 				AND @generic_rxcui LIKE @country_code + 'GI%'
 				)
 
+			SET @msg = 'Not found'
 			SELECT @msg = 'Removing generic ' + generic_rxcui + ', ' + generic_name 
 			FROM c_Drug_Generic 
 			WHERE generic_rxcui = @generic_rxcui
 				AND @generic_rxcui LIKE @country_code + 'GI%'
-			IF @msg IS NULL
+			IF @msg = 'Not found'
 				SET @msg = 'c_Drug_Generic ' + @generic_rxcui + ' not found'
 			print @msg
 			DELETE FROM c_Drug_Generic
