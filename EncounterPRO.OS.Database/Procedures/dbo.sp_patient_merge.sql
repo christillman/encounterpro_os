@@ -318,6 +318,7 @@ IF @@ERROR <> 0
 	RETURN -1
 	END
 
+SET @x = 0
 SELECT
 	@x = 1
 FROM
@@ -332,7 +333,7 @@ IF @@ERROR <> 0
 	RETURN -1
 	END
 
-IF @x IS NULL
+IF @x = 0
 BEGIN
 	RAISERROR ('Keep Patient does not exist', 16, -1)
 	ROLLBACK TRANSACTION
@@ -340,11 +341,13 @@ BEGIN
 END
 	
 -- msc - Allow merged patient to have status of 'MERGED' so that a merge can be re-tried
+-- Add update of modified_by when merging (#68)
 UPDATE p_patient
 SET
 	 patient_status = 'MERGED'
 	,billing_id = @merge_notice
 	,last_name = LEFT(last_name, 40 - LEN(@merge_notice) - 1) + ' ' + @merge_notice
+	,modified_by = ORIGINAL_LOGIN()
 WHERE cpr_id = @cpr_id_merge
 
 SELECT @ll_count = @@ROWCOUNT,
@@ -368,6 +371,7 @@ UPDATE p_patient
 SET		modified_by = ORIGINAL_LOGIN()
 WHERE cpr_id = @cpr_id_keep
 
+SET @x = 0
 SELECT DISTINCT
 	 @x = 1
 FROM
@@ -377,6 +381,7 @@ ON
 	o.patient_workplan_item_id = i.patient_workplan_item_id
 WHERE
 	i.cpr_id = @cpr_id_merge
+AND i.ordered_service <> 'Merge Patients'
 
 IF @@ERROR <> 0
 	BEGIN
@@ -391,6 +396,7 @@ BEGIN
 	RETURN -1
 END
 
+SET @x = 0
 SELECT DISTINCT
 	 @x = 1
 FROM
@@ -400,6 +406,7 @@ ON
 	o.patient_workplan_item_id = i.patient_workplan_item_id
 WHERE
 	i.cpr_id = @cpr_id_keep
+AND i.ordered_service <> 'Merge Patients'
 
 IF @x = 1
 BEGIN
@@ -972,6 +979,7 @@ IF @@ERROR <> 0
 
 
 
+SET @x = 0
 SELECT DISTINCT
 	@x = 1
 FROM
