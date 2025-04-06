@@ -36,7 +36,6 @@ CREATE PROCEDURE sp_new_observation_record (
 	@ps_default_view char(1) = NULL,
 	@ps_display_style varchar(255) = NULL,
 	@pl_owner_id int,
-	@ll_owner_id int,
 	@ps_owner_key varchar(40) = NULL,
 	@ps_status varchar(12) = NULL,
 	@ps_force_new char(1) = 'N' ,
@@ -51,6 +50,7 @@ DECLARE @ll_key_value integer,
 	@ls_created_by varchar(24),
 	@ls_found_description varchar(80),
 	@ll_code_id int,
+	@ll_owner_id int,
 	@ll_customer_id int
 
 IF @ps_epro_domain IS NULL
