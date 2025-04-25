@@ -152,7 +152,7 @@ popup.auto_singleton = true
 popup.add_blank_row = true
 popup.blank_text = "<None>"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_dw_vitals.get_collection_location:21")
 if popup_return.item_count <> 1 then return 0
 
 ls_location = popup_return.items[1]
@@ -886,7 +886,7 @@ popup.argument_count = 1
 popup.argument[1] = ls_location_domain
 popup.auto_singleton = true
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,u_dw_vitals.get_perform_location:24")
 if popup_return.item_count <> 1 then return ls_null
 
 ls_location = popup_return.items[1]
@@ -1084,7 +1084,7 @@ if dwo.name = "more" then
 		popup.items[1] = "Enter Result Manually"
 		popup.items[2] = "Get result(s) from " + ls_external_source_description
 		openwithparm(w_pop_pick, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_pick,u_dw_vitals.clicked:63")
 		if popup_return.item_count <> 1 then return
 		
 		if popup_return.item_indexes[1] = 2 then
