@@ -4,12 +4,12 @@ EXE:EncounterPRO.OS.Client.exe,encounterpro.os.pbr,0,1,1,0,C:\Program Files (x86
 CMP:0,0,0,2,0,0,0
 COM:EncounterPRO Healthcare Resources, Inc.
 DES:Electronic Medical Record System
-CPY:(c) 1994-2021 EncounterPRO Healthcare Resources, Inc.  All Rights Reserved
+CPY:(c) 1994-2025 EncounterPRO Healthcare Resources, Inc.  All Rights Reserved
 PRD:EncounterPRO_OS (tm)
-PVS:7.2.8.0
-PVN:7,2,9,0
-FVS:7.2.8.0
-FVN:7,2,9,0
+PVS:7.3.0.0
+PVN:7,3,0,0
+FVS:7.3.0.0
+FVN:7,3,0,0
 MAN:2,asInvoker,0
 PBD:cpr.pbl,,0
 PBD:pbdom.pbd,,1
