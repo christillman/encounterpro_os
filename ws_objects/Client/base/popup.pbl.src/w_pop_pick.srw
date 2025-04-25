@@ -590,9 +590,7 @@ boolean border = false
 boolean livescroll = false
 end type
 
-event post_click;call super::post_click;str_popup_return popup_return
-string ls_col, ls_coltype
-
+event post_click;call super::post_click;
 if lastrow <= 0 then return
 
 if not multiselect then picked(lastrow)
