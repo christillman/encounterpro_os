@@ -134,3 +134,11 @@ copy /Y "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\encounter
 
 REM Add Utilities in EPro folder
 xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Utilities 1.0.6.0\*" %build_folder% /S /Y
+
+
+REM Copy everything to the Demo folder
+xcopy "%build_folder%\*.*" "%build_folder%Demo" /S /Y /I
+
+REM The demo should not have EncounterPro.ini
+del "%build_folder%Demo\EncounterPRO.ini"
+
