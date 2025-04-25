@@ -29,7 +29,7 @@ AS
 -- -1 An error occured
 --
 
-DECLARE @lx_xml xml = 'Not found',
+DECLARE @lx_xml xml,
 		@ll_doc int,
 		@ls_age_range_category varchar(24),
 		@ls_description varchar(40),
@@ -75,7 +75,7 @@ AND version = @pl_version
 IF @@ERROR <> 0
 	RETURN -1
 
-IF @lx_xml = 'Not found'
+IF @lx_xml IS NULL
 	BEGIN
 	RAISERROR ('The specified config object was not found (%s, %d)',16,-1, @ls_config_object_id, @pl_version)
 	RETURN -1
