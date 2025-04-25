@@ -6,7 +6,8 @@ forward prototypes
 global subroutine f_display_log_entry (str_event_log_entry pstr_log)
 end prototypes
 
-global subroutine f_display_log_entry (str_event_log_entry pstr_log);string ls_msg
+global subroutine f_display_log_entry (str_event_log_entry pstr_log);string ls_msg, ls_test
+int li_pos
 
 ls_msg =   	"Message Severity:   " + string(pstr_log.severity) + " - " + pstr_log.severity_text
 ls_msg += "~nMessage Date/Time:  " + string(pstr_log.date_time)
@@ -18,9 +19,17 @@ ls_msg += "~nError Message:      " + pstr_log.message
 if pstr_log.severity >= 4 then
 	Clipboard(ls_msg)
 	ls_msg += "~n~nThis error has been recorded to the db log and windows event log. " 
-	ls_msg += "It has also been copied to your clipboard, ready to paste in an email for example." 
-	
+	ls_msg += "It has also been copied to your clipboard, ready to paste in an email for example." 	
 end if
+
+ls_test = "SQL ERROR = ("
+li_pos = Pos(pstr_log.message,ls_test)
+IF li_pos > 0 THEN ls_test = Mid(pstr_log.message, li_pos + 13, 5)
+IF ls_test = "26) S" OR ls_test = "208) " OR ls_test = "258) " OR ls_test = "999) " OR ls_test = "10065" OR ls_test = "10061" OR ls_test = "10060" OR  ls_test = "10054" OR ls_test = "10053" OR ls_test = "10051" THEN 
+	// Substitute friendlier version for all network problems
+	ls_msg = "The server took longer than expected to respond. This may happen if your network connection slowed temporarily. If this message appears again, try checking your Wi-Fi signal or restarting the app. For more consistent performance, using a wired (Ethernet) connection can help ensure a more stable connection. Error #" + ls_test
+END IF
+
 openwithparm(w_pop_message, ls_msg)
 
 
