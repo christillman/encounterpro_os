@@ -12,8 +12,7 @@ forward prototypes
 public function integer xx_do_service ()
 end prototypes
 
-public function integer xx_do_service ();str_popup_return popup_return
-integer li_sts
+public function integer xx_do_service ();integer li_sts
 string ls_new_assessment_id
 boolean lb_exists
 long ll_attachment_id

@@ -32,7 +32,6 @@ end forward
 
 global type w_progress_notes from w_window_base
 string title = ""
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -376,7 +375,7 @@ popup.datacolumn = 2
 popup.displaycolumn = 2
 popup.auto_singleton = true
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_progress_notes.st_progress_type.clicked:0011")
 if popup_return.item_count <> 1 then return
 
 dw_progress.set_progress_type(popup_return.items[1])

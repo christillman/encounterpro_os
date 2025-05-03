@@ -245,7 +245,7 @@ CHOOSE CASE lower(ls_attribute)
 		popup.item = ls_old_value
 		
 		openwithparm(w_pop_prompt_date_time, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_prompt_date_time,u_tabpage_assessment_overview.clilcked:0027")
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
@@ -260,7 +260,7 @@ CHOOSE CASE lower(ls_attribute)
 		popup.item = ls_old_value
 		
 		openwithparm(w_pop_prompt_date_time, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_prompt_date_time,u_tabpage_assessment_overview.clilcked:0042")
 		if popup_return.item_count <> 2 then return
 		
 		ldt_begin_date = datetime(date(popup_return.items[1]), time(popup_return.items[2]))
@@ -273,7 +273,7 @@ CHOOSE CASE lower(ls_attribute)
 	CASE "assessment_status"
 		if ls_old_value = "Cancelled" then
 			openwithparm(w_pop_yes_no, "Do you wish to un-cancel this assessment?")
-			popup_return = message.powerobjectparm
+			popup_return = f_popup_return("w_pop_yes_no,u_tabpage_assessment_overview.clilcked:0055")
 			if popup_return.item <> "YES" then return
 			
 			current_patient.assessments.set_progress(parent_tab.service.problem_id, 'UNCancelled', ls_null, ls_null)
@@ -288,7 +288,7 @@ CHOOSE CASE lower(ls_attribute)
 		popup.argument_count = 1
 		popup.argument[1] = "Acuteness"
 		openwithparm(w_pop_pick, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_pick,u_tabpage_assessment_overview.clilcked:0070")
 		if popup_return.item_count <> 1 then return 0
 		
 		ls_new_value = popup_return.items[1]

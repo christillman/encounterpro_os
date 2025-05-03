@@ -6,7 +6,6 @@ end forward
 
 global type w_svc_assessment_timeline from w_window_base
 boolean visible = false
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -105,7 +104,7 @@ Else
 	popup.argument[2] = ls_user_id
 	popup.auto_singleton = true
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_svc_assessment_timeline.post_open:0053")
 	if popup_return.item_count <> 1 then return
 			
 	// The call the timeline screen
@@ -123,5 +122,8 @@ Closewithreturn(this, popup_return)
 end event
 
 type pb_epro_help from w_window_base`pb_epro_help within w_svc_assessment_timeline
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_svc_assessment_timeline
 end type
 

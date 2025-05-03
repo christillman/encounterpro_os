@@ -54,7 +54,6 @@ end forward
 
 global type w_new_past_immunization from w_window_base
 integer height = 1904
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -473,7 +472,7 @@ popup.add_blank_row = true
 popup.blank_text = "<None>"
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_new_past_immunizationt.st_maker.clicked:0029")
 
 if popup_return.item_count <> 1 then return
 
@@ -521,7 +520,7 @@ popup.add_blank_row = true
 popup.blank_text = "<Other Location>"
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_new_past_immunizationt.st_office.clicked:0013")
 
 if popup_return.item_count <> 1 then return
 
@@ -534,7 +533,7 @@ if popup_return.items[1] = "" then
 	popup.item = ""
 	popup.multiselect = true
 	openwithparm(w_pop_prompt_string, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_prompt_string,w_new_past_immunizationt.st_office.clicked:0026")
 	if popup_return.item_count <> 1 then
 		text = "<Other Location>"
 	elseif isnull(popup_return.items[1]) or trim(popup_return.items[1]) = "" then
@@ -603,7 +602,7 @@ popup.add_blank_row = true
 popup.blank_text = "<None>"
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_new_past_immunizationt.st_location.clicked:0013")
 
 if popup_return.item_count <> 1 then return
 
@@ -722,7 +721,7 @@ boolean border = true
 borderstyle borderstyle = stylelowered!
 date maxdate = Date("2999-12-31")
 date mindate = Date("1800-01-01")
-datetime value = DateTime(Date("2009-06-11"), Time("13:31:41.000000"))
+datetime value = DateTime(Date("2025-05-03"), Time("14:41:44.000000"))
 integer textsize = -10
 fontcharset fontcharset = ansi!
 fontpitch fontpitch = variable!
@@ -951,7 +950,6 @@ long ll_null
 string ls_status
 window 				lw_pop_buttons
 str_popup 			popup
-str_popup_return 	popup_return
 
 Setnull(ls_null)
 Setnull(ll_null)

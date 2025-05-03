@@ -42,7 +42,6 @@ end forward
 
 global type w_svc_treatment_billing from w_window_base
 integer height = 1840
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 3
@@ -565,7 +564,7 @@ popup.data_row_count += 1
 popup.items[popup.data_row_count] = "<None>"
 	
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_svc_treatment_billing.cb_choose_authority.clicked:0020")
 if popup_return.item_count <> 1 then return
 
 ll_row = popup_return.item_indexes[1]

@@ -27,7 +27,6 @@ end type
 end forward
 
 global type w_svc_imm_record from w_window_base
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 3
@@ -403,7 +402,7 @@ if lastcolumnname = "maker_name" then
 	popup.blank_text = "<None>"
 	
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_svc_imm_record.dw_vaccine_history.post_click:0031")
 	
 	if popup_return.item_count <> 1 then return
 	
@@ -427,7 +426,7 @@ if lastcolumnname = "location_description" then
 	popup.blank_text = "<None>"
 	
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_svc_imm_record.dw_vaccine_history.post_click:0055")
 	
 	if popup_return.item_count <> 1 then return
 	
@@ -448,7 +447,7 @@ if lastcolumnname = "compute_where" then
 	popup.blank_text = "<Other Location>"
 	
 	openwithparm(w_pop_pick, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_pick,w_svc_imm_record.dw_vaccine_history.post_click:0076")
 	
 	if popup_return.item_count <> 1 then return
 	
@@ -461,7 +460,7 @@ if lastcolumnname = "compute_where" then
 		popup.item = ""
 		popup.multiselect = true
 		openwithparm(w_pop_prompt_string, popup)
-		popup_return = message.powerobjectparm
+		popup_return = f_popup_return("w_pop_prompt_string,w_svc_imm_record.dw_vaccine_history.post_click:0089")
 		if popup_return.item_count <> 1 then
 			ls_description = "<Other Location>"
 		elseif isnull(popup_return.items[1]) or trim(popup_return.items[1]) = "" then
@@ -496,7 +495,7 @@ if lastcolumnname = "lot_number" then
 	popup.item = ""
 	popup.multiselect = true
 	openwithparm(w_pop_prompt_string, popup)
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_prompt_string,w_svc_imm_record.dw_vaccine_history.post_click:0124")
 	if popup_return.item_count <> 1 then return
 
 

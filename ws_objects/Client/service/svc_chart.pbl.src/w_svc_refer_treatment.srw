@@ -60,7 +60,6 @@ end forward
 
 global type w_svc_refer_treatment from w_observation_base
 integer height = 1840
-boolean controlmenu = false
 windowtype windowtype = response!
 string button_type = "COMMAND"
 integer max_buttons = 3
@@ -532,12 +531,12 @@ end if
 
 end event
 
-type pb_epro_help from w_window_base`pb_epro_help within w_svc_refer_treatment
+type pb_epro_help from w_observation_base`pb_epro_help within w_svc_refer_treatment
 boolean visible = true
 integer taborder = 20
 end type
 
-type st_config_mode_menu from w_window_base`st_config_mode_menu within w_svc_refer_treatment
+type st_config_mode_menu from w_observation_base`st_config_mode_menu within w_svc_refer_treatment
 end type
 
 type st_title from statictext within w_svc_refer_treatment
@@ -580,7 +579,7 @@ if li_sts <= 0 then return
 
 if isnull(consultant_id) then
 	openwithparm(w_pop_yes_no, "Do you wish to exit without selecting a consultant?")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_yes_no,w_svc_refer_treatment.cb_finished.clicked:0009")
 	if popup_return.item <> "YES" then return
 end if
 
@@ -876,7 +875,7 @@ popup.data_row_count += 1
 popup.items[popup.data_row_count] = "<None>"
 	
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_svc_refer_treatment.cb_choose_authority.clicked:0020")
 if popup_return.item_count <> 1 then return
 
 ll_row = popup_return.item_indexes[1]

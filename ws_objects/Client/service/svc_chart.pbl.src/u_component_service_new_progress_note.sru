@@ -204,7 +204,7 @@ if isnull(ls_progress_key) then
 			end if
 			popup.auto_singleton = true
 			openwithparm(w_pop_pick, popup)
-			popup_return = message.powerobjectparm
+			popup_return = f_popup_return("w_pop_pick,u_component_service_new_progress_note.xx_do_service:0039")
 			if popup_return.item_count = 1 then
 				ls_progress_key = popup_return.items[1]
 			end if
@@ -214,7 +214,7 @@ if isnull(ls_progress_key) then
 			popup.argument[1] = "PRG|" + progress_type + "|" + context_object + "|" + progress_type_pick_code
 			
 			openwithparm(w_pop_prompt_string, popup)
-			popup_return = message.powerobjectparm
+			popup_return = f_popup_return("w_pop_prompt_string,u_component_service_new_progress_note.xx_do_service:0049")
 			if popup_return.item_count = 1 then
 				ls_progress_key = popup_return.items[1]
 			end if
@@ -257,7 +257,7 @@ if isnull(ls_progress) then
 	
 	// Edit/Create the progress note
 	openwithparm(service_window, popup, "w_progress_note_edit")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_progress_note_edit,u_component_service_new_progress_note.xx_do_service:0092")
 	if popup_return.item_count <> 2 then return 2
 	
 	if isnull(popup_return.items[1]) or trim(popup_return.items[1]) = "" then return 2

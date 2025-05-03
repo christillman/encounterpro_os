@@ -47,7 +47,6 @@ end type
 end forward
 
 global type w_svc_problem_list from w_window_base
-boolean controlmenu = false
 boolean minbox = false
 boolean maxbox = false
 boolean resizable = false
@@ -686,7 +685,7 @@ popup.blank_text = "<All Types>"
 
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_svc_problem_list.st_assessment_type.clicked:0012")
 if popup_return.item_count <> 1 then return
 
 if popup_return.items[1] = "" then
@@ -773,7 +772,7 @@ popup.blank_text = "<All Types>"
 
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_svc_problem_list.st_treatment_type.clicked:0012")
 if popup_return.item_count <> 1 then return
 
 if popup_return.items[1] = "" then

@@ -124,7 +124,7 @@ popup.title = dw_billing.object.description[pl_row]
 popup.multiselect = true
 
 openwithparm(w_charge_edit, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_charge_edit,w_billing_edit.edit_charges:0019")
 
 if popup_return.item_count <> 2 then return
 
@@ -208,7 +208,7 @@ popup.items[3] = string(dw_billing.object.encounter_charge_id[pl_row])
 popup.data_row_count = 3
 
 openwithparm(w_pick_proc_assessments, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pick_proc_assessments,w_billing_edit.attach_to_assessments:0011")
 
 if popup_return.item = "CHANGED" then
 	load_billing()
@@ -236,7 +236,7 @@ popup.argument[1] = encounter.encounter_type
 popup.argument[2] = encounter.new_flag
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_billing_edit.new_visit_charge:0011")
 if popup_return.item_count <> 1 then return
 
 ls_procedure_id = popup_return.items[1]
@@ -273,7 +273,7 @@ popup.argument[1] = encounter.encounter_type
 popup.argument[2] = encounter.new_flag
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_billing_edit.new_secondary_visit_charge:0018")
 if popup_return.item_count <> 1 then return
 
 ls_procedure_id = popup_return.items[1]
@@ -328,7 +328,7 @@ string ls_description
 ls_description = dw_billing.object.description[pl_row]
 
 openwithparm(w_pop_yes_no, "Are you sure you wish to delete the charge for " + ls_description +"?")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_yes_no,w_billing_editdelete_charge:0008")
 if popup_return.item <> "YES" then return
 
 ll_encounter_charge_id = dw_billing.object.encounter_charge_id[pl_row]
@@ -344,9 +344,7 @@ load_billing()
 
 end subroutine
 
-public subroutine test_perform (long pl_row);str_popup popup
-str_popup_return popup_return
-integer li_sts
+public subroutine test_perform (long pl_row);integer li_sts
 string ls_perform_procedure_id
 string ls_collection_procedure_id
 long ll_treatment_id
@@ -395,9 +393,7 @@ dw_billing.object.procedure_type[pl_row] = "TESTPERFORM"
 
 end subroutine
 
-public subroutine test_collect (long pl_row);str_popup popup
-str_popup_return popup_return
-integer li_sts
+public subroutine test_collect (long pl_row);integer li_sts
 string ls_perform_procedure_id
 string ls_collection_procedure_id
 long ll_treatment_id
@@ -537,7 +533,7 @@ popup.argument_count = 1
 popup.argument[1] = ls_visit_code_group
 
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_billing_edit.change_level:0022")
 if popup_return.item_count <> 1 then return
 
 ls_procedure_id = popup_return.items[1]
@@ -660,7 +656,7 @@ popup.title = "Enter Number of Units to Bill"
 popup.realitem = lr_units
 
 openwithparm(w_number, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_number,w_billing_edit.change_units:0016")
 if upper(popup_return.item) = "CANCEL" then return
 if popup_return.realitem < 1 or isnull(popup_return.realitem) then return
 if popup_return.realitem = lr_units then return
@@ -695,7 +691,7 @@ popup.title = dw_billing.object.description[pl_row]
 popup.multiselect = true
 
 openwithparm(w_charge_edit, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_charge_edit,w_billing_edit.edit_modifier:0019")
 
 if popup_return.item_count <> 2 then return
 
@@ -1083,7 +1079,7 @@ popup.data_row_count = 2
 popup.items[1] = "BillingNotes"
 popup.items[2] = ""
 openwithparm(w_pick_top_20_multiline, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pick_top_20_multiline,w_billing_edit.st_notes.clicked:0009")
 if popup_return.item_count <> 1 then return
 
 text = popup_return.items[1]
@@ -1139,7 +1135,7 @@ popup.displaycolumn = 3
 popup.argument_count = 1
 popup.argument[1] = "COURTESY_CODE"
 openwithparm(w_pop_pick, popup)
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_pop_pick,w_billing_edit.st_courtesy_code.clicked:0010")
 if popup_return.item_count = 0 then return
 
 text = popup_return.descriptions[1]
@@ -1406,7 +1402,7 @@ integer li_idx
 ls_code_check_status = current_patient.encounters.get_property_value(current_display_encounter.encounter_id, "Code Check Status")
 if isnull(ls_code_check_status) then
 	openwithparm(w_pop_yes_no, "The Code Check service has not yet been performed on this appointment.  Do you with to perform the Code Check service now?")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_poop_yes_no,w_billing_edit.st_code_check_status.clicked:0010")
 	if popup_return.item <> "YES" then return
 
 	li_idx = f_please_wait_open()
@@ -1476,7 +1472,7 @@ if isnull(li_new_level) then return
 if string(li_new_level) <> text then
 	text = string(li_new_level)
 	openwithparm(w_pop_yes_no, "The visit level has changed.  Do you wish to regenerate the visit code?")
-	popup_return = message.powerobjectparm
+	popup_return = f_popup_return("w_pop_yes_no,w_billing_edit.cb_coding.clicked:0016")
 	if popup_return.item = "YES" then
 		// Regenerate the visit level
 		encounter.set_billing_procedure(true)

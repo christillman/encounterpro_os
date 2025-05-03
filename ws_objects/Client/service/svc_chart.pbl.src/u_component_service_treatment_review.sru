@@ -20,7 +20,7 @@ if isnull(treatment) then
 end if
 
 openwithparm(service_window, this, "w_do_treatment")
-popup_return = message.powerobjectparm
+popup_return = f_popup_return("w_do_treatment,u_component_service_treatment.xx_do_service:0009")
 
 if popup_return.item_count <> 1 then return 0
 
