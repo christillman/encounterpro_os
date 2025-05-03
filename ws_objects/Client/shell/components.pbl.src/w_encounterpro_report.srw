@@ -15,18 +15,12 @@ end type
 end forward
 
 global type w_encounterpro_report from w_window_base
-int X=0
-int Y=0
-int Width=2926
-int Height=1832
-WindowType WindowType=response!
-boolean TitleBar=true
-string Title=""
-long backcolor = 7191717
-boolean MinBox=false
-boolean MaxBox=false
-boolean Resizable=false
-WindowState WindowState=maximized!
+string title = ""
+boolean minbox = false
+boolean maxbox = false
+boolean resizable = false
+windowtype windowtype = response!
+windowstate windowstate = maximized!
 pb_done pb_done
 pb_cancel pb_cancel
 cb_print cb_print
@@ -51,13 +45,13 @@ blob lbl_report
 dw_report.setredraw(false)
 
 pb_done.x = width - pb_done.width - 100
-cb_print.x = pb_done.x
-cb_printsetup.x = cb_print.x
+cb_print.x = width - cb_print.width - 100
+cb_printsetup.x = width - cb_printsetup.width - 100
 
 pb_done.y = height - pb_done.height - 200
 
-dw_report.height = height - 150
-dw_report.width = pb_done.x - 100
+dw_report.height = height - 250
+dw_report.width = cb_print.x - 100
 
 
 li_sts = puo_report_component.report_datastore.getfullstate(lbl_report)
@@ -127,12 +121,20 @@ this.function POST display_report(luo_report)
 
 end event
 
+type pb_epro_help from w_window_base`pb_epro_help within w_encounterpro_report
+end type
+
+type st_config_mode_menu from w_window_base`st_config_mode_menu within w_encounterpro_report
+end type
+
 type pb_done from u_picture_button within w_encounterpro_report
-int X=2583
-int Y=1568
-int TabOrder=10
-string PictureName="button26.bmp"
-string DisabledName="b_push26.bmp"
+integer x = 2409
+integer y = 1484
+integer width = 256
+integer height = 224
+integer taborder = 10
+string picturename = "button26.bmp"
+string disabledname = "b_push26.bmp"
 end type
 
 event clicked;call super::clicked;close(parent)
@@ -140,30 +142,32 @@ event clicked;call super::clicked;close(parent)
 end event
 
 type pb_cancel from u_picture_button within w_encounterpro_report
-int X=128
-int Y=1556
-int TabOrder=40
-boolean Visible=false
-boolean BringToTop=true
-string PictureName="button11.bmp"
-string DisabledName="b_push11.bmp"
-boolean Cancel=true
+boolean visible = false
+integer x = 128
+integer y = 1556
+integer width = 256
+integer height = 224
+integer taborder = 40
+boolean bringtotop = true
+boolean cancel = true
+string picturename = "button11.bmp"
+string disabledname = "b_push11.bmp"
 end type
 
 type cb_print from commandbutton within w_encounterpro_report
-int X=2578
-int Y=364
-int Width=247
-int Height=108
-int TabOrder=20
-boolean BringToTop=true
-string Text="Print"
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 2405
+integer y = 364
+integer width = 247
+integer height = 108
+integer taborder = 20
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Print"
 end type
 
 event clicked;dw_report.print()
@@ -171,19 +175,19 @@ event clicked;dw_report.print()
 end event
 
 type cb_printsetup from commandbutton within w_encounterpro_report
-int X=2578
-int Y=84
-int Width=247
-int Height=108
-int TabOrder=30
-boolean BringToTop=true
-string Text="Setup"
-int TextSize=-10
-int Weight=400
-string FaceName="Arial"
-FontCharSet FontCharSet=Ansi!
-FontFamily FontFamily=Swiss!
-FontPitch FontPitch=Variable!
+integer x = 2405
+integer y = 84
+integer width = 247
+integer height = 108
+integer taborder = 30
+boolean bringtotop = true
+integer textsize = -10
+integer weight = 400
+fontcharset fontcharset = ansi!
+fontpitch fontpitch = variable!
+fontfamily fontfamily = swiss!
+string facename = "Arial"
+string text = "Setup"
 end type
 
 event clicked;printsetup()
@@ -191,13 +195,13 @@ event clicked;printsetup()
 end event
 
 type dw_report from u_dw_report within w_encounterpro_report
-int X=18
-int Y=20
-int Width=2286
-int Height=1668
-int TabOrder=20
-boolean BringToTop=true
-boolean HScrollBar=true
-boolean VScrollBar=true
+integer x = 18
+integer y = 20
+integer width = 2286
+integer height = 1668
+integer taborder = 20
+boolean bringtotop = true
+boolean hscrollbar = true
+boolean vscrollbar = true
 end type
 
