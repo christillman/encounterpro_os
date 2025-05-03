@@ -5,6 +5,7 @@ end type
 end forward
 
 global type u_component_service from u_component_workplan_item
+boolean my_objects = true
 end type
 global u_component_service u_component_service
 
@@ -322,17 +323,19 @@ TRY
 			ls_status = "CONTINUED"
 		End If
 		
-		cprdb.sp_set_workplan_item_progress( &
-				pl_patient_workplan_item_id, &
-				current_user.user_id, &
-				ls_status, &
-				ldt_progress_date_time, &
-				current_scribe.user_id, &
-				gnv_app.computer_id)
-		if not cprdb.check() then
-			restore_service_state(-1)
-			return -1
-		end if
+		If IsValid(current_user) AND IsValid(current_scribe) Then
+			cprdb.sp_set_workplan_item_progress( &
+					pl_patient_workplan_item_id, &
+					current_user.user_id, &
+					ls_status, &
+					ldt_progress_date_time, &
+					current_scribe.user_id, &
+					gnv_app.computer_id)
+			if not cprdb.check() then
+				restore_service_state(-1)
+				return -1
+			end if
+		End If
 		
 		// If there's a current patient then reload the patient data
 		if not isnull(current_patient) then current_patient.reload()
@@ -405,9 +408,14 @@ TRY
 	End If
 CATCH (throwable lo_error)
 	ls_error = "Error doing service"
-	if not isnull(lo_error.text) then
-		ls_error += " (" + lo_error.text + ")"
+	if isnull(lo_error) then
+		ls_error += ", unknown"
+	else
+		if not isnull(lo_error.text) then
+			ls_error += " (" + lo_error.text + ")"
+		end if
 	end if
+	
 	log.log(this, "u_component_service.do_service:0386", ls_error, 4)
 	li_sts = -1
 FINALLY
