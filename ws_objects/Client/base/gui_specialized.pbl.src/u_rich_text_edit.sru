@@ -3880,6 +3880,7 @@ if first_display_script_id > 0 then
 	display_script(first_display_script_id, first_encounter, first_assessment, first_treatment)
 end if
 
+if IsNull(this) then return
 select_text(f_charposition(0, 0))
 
 this.event POST scrollto(ll_scrollpos)

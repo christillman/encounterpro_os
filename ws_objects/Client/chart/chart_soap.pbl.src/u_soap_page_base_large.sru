@@ -233,6 +233,7 @@ else
 	li_sts = f_do_menu_item_with_attributes(menu.menu_id, menu.menu_item[pi_button].menu_item_id, lstr_attributes)
 end if
 
+If IsNull(this) Then return -1
 refresh()
 
 postevent("refresh")

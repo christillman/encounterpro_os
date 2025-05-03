@@ -192,7 +192,7 @@ END CHOOSE
 
 DESTROY luo_attributes
 
-current_scribe.sticky_logon = lb_sticky_logon
+if IsValid(current_scribe) then current_scribe.sticky_logon = lb_sticky_logon
 
 return li_return_status
 
