@@ -760,12 +760,14 @@ else
 	ls_manual_service_flag = "N"
 end if
 
-sqlca.jmj_set_service_error(patient_workplan_item_id, &
+if IsValid(current_user) AND IsValid(current_scribe) then
+	sqlca.jmj_set_service_error(patient_workplan_item_id, &
 									current_user.user_id, &
 									current_scribe.user_id, &
 									ls_manual_service_flag, &
 									gnv_app.computer_id)
-
+end if
+								
 
 
 end subroutine
