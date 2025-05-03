@@ -199,7 +199,7 @@
       nsExec::Exec 'VC_redist.x64.exe /q /norestart'
       Delete '$INSTDIR\VC_redist.x64.exe'
       File "${SRC_MSO}\msoledbsql.msi"
-      nsExec::Exec 'msiexec /i "$INSTDIR\msoledbsql.msi" /passive /norestart /l*v "$INSTDIR\msoledbsql.msi.log"'
+      nsExec::Exec 'msiexec /i "$INSTDIR\msoledbsql.msi" /passive /norestart /l*v "$INSTDIR\msoledbsql.msi.log" IACCEPTMSOLEDBSQLLICENSETERMS=YES'
       Delete '$INSTDIR\msoledbsql.msi'
                   
 	  ; Adding a fake file which the installer errors out trying to delete
