@@ -159,6 +159,8 @@ public subroutine set_position (str_charposition pstr_charposition)
 public subroutine delete_cr ()
 public subroutine add_cr ()
 private subroutine add_chunk_old (string ps_text)
+public function integer grid_column_chars (string ps_string)
+public subroutine set_indents (long pl_indentl, long pl_indentr, long pl_indentfl, boolean pb_set_object)
 end prototypes
 
 public subroutine prev_level ();set_level(level - 1)
@@ -217,7 +219,7 @@ right_margin = pl_right_margin
 setparagraphsetting(Indent!, left_margin)
 
 //setparagraphsetting(leftmargin!, wrap_margin)
-//setparagraphsetting(rightmargin!, right_margin)
+setparagraphsetting(rightmargin!, right_margin)
 
 //set_level(level)
 
@@ -1177,14 +1179,14 @@ return ll_scrollpos
 
 end function
 
-public subroutine add_grid (str_grid pstr_grid);integer li_table
+public subroutine add_grid (str_grid pstr_grid);long ll_table
 integer i
 integer j
 long ll_viewable
-//long ll_cell_width[]
-//object.FormatSelection = True
+long ll_cell_width[]
+//FormatSelection = True
 long ll_total_chars
-//long ll_column_chars[]
+long ll_column_chars[]
 string ls_column
 long ll_screen_resolution_x
 integer li_heading_count
@@ -1195,12 +1197,17 @@ integer li_widest_cell
 long ll_cell_growth
 long ll_left_margin_twips
 long ll_right_margin_twips
+long page_width_twips
 long ll_longest_line
 str_font_settings lstr_original_font_settings
 boolean lb_last_fontstate_caching
 long ll_wrap_margin
 long ll_right_margin
 long ll_left_margin
+long ll_cell_height
+int selstart
+boolean lb_return
+int li_abnormal_colno
 
 // Turn off caching to force all the fontstate changes
 lb_last_fontstate_caching = font_settings_caching
@@ -1208,8 +1215,6 @@ font_settings_caching = false
 
 // Get the original font settings
 lstr_original_font_settings = get_font_settings()
-
-set_font_settings(lstr_original_font_settings)
 
 // Save the margins
 ll_wrap_margin = wrap_margin
@@ -1220,7 +1225,7 @@ ll_left_margin = left_margin
 set_margins(left_margin,0,right_margin)
 
 // Make sure nothing is selected
-//object.sellength = 0
+//sellength = 0
 
 if pstr_grid.table_attributes.suppress_headings then
 	li_heading_count = 0
@@ -1235,53 +1240,53 @@ else
 end if
 
 // Add a table one column and one row larger than the grid provided
-//last_table += 1
-//ll_left_margin_twips = (1440 * left_margin) / 1000
-//ll_right_margin_twips = (1440 * right_margin) / 1000
+ll_left_margin_twips = (1440 * left_margin) / 1000
+ll_right_margin_twips = (1440 * right_margin) / 1000
+if (ll_right_margin_twips = 0) then ll_right_margin_twips = 1000
 //set_indents(0, 0, 0)
-//li_table = object.TableInsert(pstr_grid.row_count + li_heading_count, pstr_grid.column_count + li_column_title_count, -1, last_table)
-//if li_table <= 0 then return
-//
-//object.TableCellAttribute[li_table, 0, 1, txTableCellHorizontalPos] = ll_left_margin_twips
+ll_table = TableInsert(pstr_grid.row_count + li_heading_count, pstr_grid.column_count + li_column_title_count)
+if ll_table <= 0 then return
+
+TableSetCellHorizontalPos(ll_table, 0, 1, ll_left_margin_twips)
 
 add_cr()
 
 if li_heading_count > 0 then
-	if pstr_grid.table_attributes.bold_headings then
-		set_bold(true)
-	end if
 	if li_column_title_count > 0 then
 		// Set the heading for the first column
 		ls_column = trim(pstr_grid.row_title)
 		if isnull(ls_column) then ls_column = ""
-		//object.TableCellText[li_table, 1, 1] = ls_column
-		add_text(ls_column)
-		
-//		ll_column_chars[1] = grid_column_chars(ls_column)
+		TableSetCellHeader(ll_table, 1, 1, true)
+		TableSetCellText(ll_table, 1, 1, ls_column)
+		ll_cell_height = TableGetCellheight(ll_table, 1, 1)		
+		if pstr_grid.table_attributes.bold_headings then
+			TableCellSelect(ll_table,1, 1)
+			set_bold(true)
+		end if
+		ll_column_chars[1] = grid_column_chars(ls_column)
 	end if
 	
 	// Set the other column headings
 	for j = 1 to pstr_grid.column_count
 		ls_column = trim(pstr_grid.column_title[j])
 		if isnull(ls_column) then ls_column = ""
+		If ls_column = "Abn" then li_abnormal_colno = j
 		
 		// Add column heading using bold if necessary
-		add_tab()
-		add_text(ls_column)
-		
-//		ll_column_chars[j + li_column_title_count] = grid_column_chars(ls_column)
+		TableSetCellHeader(ll_table, 1, j, true)
+		TableSetCellText(ll_table, 1, j, ls_column)
+		if pstr_grid.table_attributes.bold_headings then
+			TableCellSelect(ll_table,1, j)
+			set_bold(true)
+		end if
+		ll_column_chars[j + li_column_title_count] = grid_column_chars(ls_column)
 	next
 	
-	// Set the bold back
-	if pstr_grid.table_attributes.bold_headings then
-		set_bold(lstr_original_font_settings.bold)
-	end if
-//else
-//	// We don't have headings so initialize the column counts to zero
-//	for i = 1 to pstr_grid.column_count + li_column_title_count
-//		ll_column_chars[i] = 0
-//	next	
-
+else
+	// We don't have headings so initialize the column counts to zero
+	for i = 1 to pstr_grid.column_count + li_column_title_count
+		ll_column_chars[i] = 0
+	next	
 	add_cr()
 end if
 
@@ -1291,147 +1296,138 @@ For i = 1 To pstr_grid.row_count
 		ls_column = trim(pstr_grid.grid_row[i].row_title)
 		if isnull(ls_column) then ls_column = ""
 		
-		add_text(ls_column)
-//		object.TableCellText[li_table, i + li_heading_count, 1] = ls_column
-//		if len(ls_column) > ll_column_chars[1] then
-//			ll_column_chars[1] = grid_column_chars(ls_column)
-//		end if
+		//add_text(ls_column)
+		TableSetCellText(ll_table, i + li_heading_count, 1, ls_column)
+		if len(ls_column) > ll_column_chars[1] then
+		ll_column_chars[1] = grid_column_chars(ls_column)
+		end if
 	end if
 	
 	// Then loop through the columns and set the column text
 	for j = 1 to pstr_grid.column_count
 		ls_column = trim(pstr_grid.grid_row[i].column[j].column_text)
 		if isnull(ls_column) then ls_column = ""
-		add_tab()
-		if pstr_grid.grid_row[i].column[j].use_font_settings then
-			set_font_settings(pstr_grid.grid_row[i].column[j].font_settings)
-		end if
-		add_text(ls_column)
-		if pstr_grid.grid_row[i].column[j].use_font_settings then
-			set_font_settings(lstr_original_font_settings)
-		end if
 		
-//		if len(ls_column) > 0 then
-//			object.selstart = object.TableCellStart[li_table, i + li_heading_count, j + li_column_title_count] - 1
-//			if pstr_grid.grid_row[i].column[j].use_font_settings then
-//				set_font_settings(pstr_grid.grid_row[i].column[j].font_settings)
-//			end if
-//			if len(pstr_grid.grid_row[i].column[j].field_data) > 0 then
-//				// set the insertion point in the desired cell
-//				add_field(ls_column, pstr_grid.grid_row[i].column[j].field_data)
-//			else
-//				add_text(ls_column)
-//			end if
-//			if pstr_grid.grid_row[i].column[j].use_font_settings then
-//				set_font_settings(lstr_original_font_settings)
-//			end if
-//		end if
-//		ll_longest_line = f_longest_line(ls_column)
-//		if ll_longest_line > ll_column_chars[j + li_column_title_count] then
-//			ll_column_chars[j + li_column_title_count] = ll_longest_line
-//		end if
+		if len(ls_column) > 0 then
+			// selstart = TableGetCellHorizontalPos(ll_table, i + li_heading_count, j + li_column_title_count - 1)
+			if len(pstr_grid.grid_row[i].column[j].field_data) > 0 then
+				// set the insertion point in the desired cell
+				add_field(ls_column, pstr_grid.grid_row[i].column[j].field_data)
+			else
+				TableSetCellText(ll_table, i + li_heading_count, j, ls_column)
+				if li_abnormal_colno = j then
+					TableCellSelect(ll_table,i + li_heading_count, j)
+					set_bold(true)
+				end if
+
+			end if
+		end if
+		ll_longest_line = f_longest_line(ls_column)
+		if ll_longest_line > ll_column_chars[j + li_column_title_count] then
+			ll_column_chars[j + li_column_title_count] = ll_longest_line
+		end if
 	next	
-	add_cr()
 Next
 
-//// Calculate the viewable width in twips
-//if pstr_grid.table_attributes.table_width > 0 then
-//	// If the table width is supplied then convert it from thousandths of an inch to twips
-//	ll_viewable = (1440 * pstr_grid.table_attributes.table_width) / 1000
-//else
-//	// If the table width was not supplied then calculate it based on the screen width or page width
-//	if object.viewmode = view_mode_normal_layout  then
-//		ll_screen_resolution_x = common_thread.screen_resolution_x()
-//		ll_viewable = (1440 * UnitsToPixels(width, XUnitsToPixels!)) / ll_screen_resolution_x
-//		// Leave room for the scroll bar
-//		ll_viewable -= 400
-//		// Leave room for the margins
-//		ll_viewable -= ll_left_margin_twips
-//		ll_viewable -= ll_right_margin_twips
-//	else
-//		ll_viewable = page_width_twips - object.PageMarginL - object.PageMarginR
-//		// Leave room for the margins
-//		ll_viewable -= ll_left_margin_twips
-//		ll_viewable -= ll_right_margin_twips
+// Calculate the viewable width in twips
+if pstr_grid.table_attributes.table_width > 0 then
+	// If the table width is supplied then convert it from thousandths of an inch to twips
+	ll_viewable = (1440 * pstr_grid.table_attributes.table_width) / 1000
+else
+	// If the table width was not supplied then calculate it based on the screen width or page width
+	if true then // viewmode = view_mode_normal_layout  then
+		ll_screen_resolution_x = common_thread.screen_resolution_x()
+		// seems to be twice as wide as it needs to be; add / 2
+		ll_viewable = ((1440 * UnitsToPixels(this.width, XUnitsToPixels!)) / ll_screen_resolution_x)/2
+		// Leave room for the scroll bar
+		ll_viewable -= 400
+		// Leave room for the margins
+		ll_viewable -= ll_left_margin_twips
+		ll_viewable -= ll_right_margin_twips
+	else
+		// Leave room for the margins
+		ll_viewable -= ll_left_margin_twips
+		ll_viewable -= ll_right_margin_twips
+	end if
+end if
+
+ll_table_columns = pstr_grid.column_count + li_column_title_count
+
+// Give column 1 an automatic bump because if there's a close competition between which column wraps we prefer column 1 to not wrap
+ll_column_chars[1] += 1
+
+// Count the total chars
+ll_total_chars = 0
+for j = 1 to ll_table_columns
+	ll_total_chars += ll_column_chars[j]
+next
+
+// Calculate the width of each column in twips
+for j = 1 to ll_table_columns
+	if ll_total_chars > 0 then
+		ll_cell_width[j] = long(real(ll_viewable) * (real(ll_column_chars[j]) / real(ll_total_chars)))
+	else
+		ll_cell_width[j] = ll_viewable / ll_table_columns
+	end if
+next	
+
+// Find the widest cell
+li_widest_cell = 1
+for i = 2 to ll_table_columns
+	if ll_cell_width[i] > ll_cell_width[li_widest_cell] then li_widest_cell = i
+next	
+
+// Scan for columns too narrow and grow them
+for j = 1 to ll_table_columns
+	if (ll_min_twips_per_char * ll_column_chars[j]) > ll_cell_width[j] &
+	 and ll_cell_width[j] < (ll_viewable / ll_table_columns) then
+		if (ll_min_twips_per_char * ll_column_chars[j]) < (ll_viewable / ll_table_columns) then
+			// If the min width is less than the average width, then grow to the min width
+			ll_cell_growth = (ll_min_twips_per_char * ll_column_chars[j]) - ll_cell_width[j]
+		else
+			// If the min width is greater than the average width, then grow to the average width
+			ll_cell_growth =  (ll_viewable / ll_table_columns) - ll_cell_width[j]
+		end if
+		// Grow cell and reduce the widest cell
+		ll_cell_width[j] += ll_cell_growth
+		ll_cell_width[li_widest_cell] -= ll_cell_growth
+		// Now find the widest cell again
+		li_widest_cell = 1
+		for i = 2 to ll_table_columns
+			if ll_cell_width[i] > ll_cell_width[li_widest_cell] then li_widest_cell = i
+		next	
+	end if
+	
+//	if ll_column_chars[j] > (ll_total_chars - ll_column_chars[j]) / 2 then
+//		ll_total_chars -= ll_column_chars[j]
+//		ll_column_chars[j] = 2 * ll_total_chars / 3
+//		ll_total_chars += ll_column_chars[j]
 //	end if
-//end if
-//
-//ll_table_columns = pstr_grid.column_count + li_column_title_count
-//
-//// Give column 1 an automatic bump because if there's a close competition between which column wraps we prefer column 1 to not wrap
-//ll_column_chars[1] += 1
-//
-//// Count the total chars
-//ll_total_chars = 0
-//for j = 1 to ll_table_columns
-//	ll_total_chars += ll_column_chars[j]
-//next
-//
-//// Calculate the width of each column in twips
-//for j = 1 to ll_table_columns
-//	if ll_total_chars > 0 then
-//		ll_cell_width[j] = long(real(ll_viewable) * (real(ll_column_chars[j]) / real(ll_total_chars)))
-//	else
-//		ll_cell_width[j] = ll_viewable / ll_table_columns
-//	end if
-//next	
-//
-//// Find the widest cell
-//li_widest_cell = 1
-//for i = 2 to ll_table_columns
-//	if ll_cell_width[i] > ll_cell_width[li_widest_cell] then li_widest_cell = i
-//next	
-//
-//// Scan for columns too narrow and grow them
-//for j = 1 to ll_table_columns
-//	if (ll_min_twips_per_char * ll_column_chars[j]) > ll_cell_width[j] &
-//	 and ll_cell_width[j] < (ll_viewable / ll_table_columns) then
-//		if (ll_min_twips_per_char * ll_column_chars[j]) < (ll_viewable / ll_table_columns) then
-//			// If the min width is less than the average width, then grow to the min width
-//			ll_cell_growth = (ll_min_twips_per_char * ll_column_chars[j]) - ll_cell_width[j]
-//		else
-//			// If the min width is greater than the average width, then grow to the average width
-//			ll_cell_growth =  (ll_viewable / ll_table_columns) - ll_cell_width[j]
-//		end if
-//		// Grow cell and reduce the widest cell
-//		ll_cell_width[j] += ll_cell_growth
-//		ll_cell_width[li_widest_cell] -= ll_cell_growth
-//		// Now find the widest cell again
-//		li_widest_cell = 1
-//		for i = 2 to ll_table_columns
-//			if ll_cell_width[i] > ll_cell_width[li_widest_cell] then li_widest_cell = i
-//		next	
-//	end if
-//	
-////	if ll_column_chars[j] > (ll_total_chars - ll_column_chars[j]) / 2 then
-////		ll_total_chars -= ll_column_chars[j]
-////		ll_column_chars[j] = 2 * ll_total_chars / 3
-////		ll_total_chars += ll_column_chars[j]
-////	end if
-//next	
-//
-//// Set the width of each column
-//for j = 1 to ll_table_columns
-//	object.TableCellAttribute[li_table, 0, j, txTableCellHorizontalExt] = ll_cell_width[j]
-//next	
-//
-//// Set the grid line width
-//if pstr_grid.table_attributes.suppress_lines then
-//	object.TableCellAttribute[li_table, 0, 0, txTableCellBorderWidth] = 0
-//else
-//	object.TableCellAttribute[li_table, 0, 0, txTableCellBorderWidth] = 1
-//end if
-//
-//goto_end_of_text()
-//
-//add_cr()
-//
-//remove_character_wall = object.selstart
+next	
+
+// Set the width of each column
+for j = 1 to ll_table_columns
+	TableSetCellHorizontalExt(ll_table, 0, j, ll_cell_width[j])
+	TableSetCellheight(ll_table, pstr_grid.row_count, j, ll_cell_height)
+next	
+
+// Set the grid line width
+if pstr_grid.table_attributes.suppress_lines then
+	TableSetCellBorderWidth(ll_table, 0, 0, 0)
+else
+	TableSetCellBorderWidth(ll_table, 0, 0, 1)
+end if
+
+goto_end_of_text()
+
+add_cr()
+
+//remove_character_wall = selstart
 //
 set_font_settings(lstr_original_font_settings)
 
 // Restore margins
-//set_indents(ll_wrap_margin, ll_right_margin, ll_left_margin)
+set_margins(ll_left_margin, ll_wrap_margin, ll_right_margin)
 font_settings_caching = lb_last_fontstate_caching
 
 reset_fontstate()
@@ -2094,7 +2090,7 @@ end if
 
 set_font_size(pstr_font_settings.fontsize)
 set_color(pstr_font_settings.forecolor)
-set_text_back_color(pstr_font_settings.textbackcolor)
+//set_text_back_color(pstr_font_settings.textbackcolor)
 set_fontname(pstr_font_settings.fontname)
 
 font_settings_caching = lb_font_settings_caching
@@ -2549,6 +2545,76 @@ DO
 LOOP WHILE ls_whats_left <> ""
 
 
+
+end subroutine
+
+public function integer grid_column_chars (string ps_string);long ll_length
+long ll_pos
+
+ll_length = len(ps_string)
+
+// Capital "W" counts as two characters
+ll_pos = 0
+DO
+	ll_pos = pos(ps_string, "W", ll_pos + 1)
+	if ll_pos <= 0 then exit
+	
+	ll_length += 1
+LOOP WHILE true
+
+// everything is at least 2
+if isnull(ll_length) or ll_length < 2 then
+	ll_length = 2
+end if
+
+return ll_length
+
+end function
+
+public subroutine set_indents (long pl_indentl, long pl_indentr, long pl_indentfl, boolean pb_set_object);
+//long ll_pos
+//long i
+//boolean lb_found
+//long ll_indentfl
+//long ll_indentl
+//long ll_indentr
+
+//if pb_set_object then
+//	indentfl = pl_indentfl
+//	indentl = pl_indentl
+//	indentfl = pl_indentfl
+//	indentr = pl_indentr
+//end if
+
+//ll_indentfl = indentfl
+//ll_indentl = indentl
+//ll_indentr = indentr
+
+
+//current_fontstate.indentl = pl_indentl
+//current_fontstate.indentr = pl_indentr
+//current_fontstate.indentfl = pl_indentfl
+
+//// now see if this cursor position is saved in the fontstate stack.  If so then update the stack with the current fontstate.
+//ll_pos = selstart
+
+//lb_found = false
+//for i = fontstate_count to 1 step -1
+//	if fontstateposition[i] = ll_pos then
+//		lb_found = true
+//		exit
+//	end if
+//	if fontstateposition[i] < ll_pos then
+//		exit
+//	end if
+//next
+
+//if lb_found then
+//	fontstate[i] = current_fontstate
+//end if
+
+
+//return
 
 end subroutine
 

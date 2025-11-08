@@ -42,6 +42,7 @@ type str_reentry_state from structure
 end type
 
 global type u_rich_text_edit from u_richtextedit
+long backcolor = 16777215
 long init_leftmargin = 1
 boolean border = false
 event lbuttondown pbm_renlbuttondown
