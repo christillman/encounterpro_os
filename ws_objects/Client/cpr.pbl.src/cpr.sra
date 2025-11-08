@@ -186,12 +186,17 @@ string themename = "Do Not Use Themes"
 boolean nativepdfvalid = false
 boolean nativepdfincludecustomfont = false
 string nativepdfappname = ""
-long richtextedittype = 3
-long richtexteditx64type = 3
-long richtexteditversion = 2
+long richtextedittype = 5
+long richtexteditx64type = 5
+long richtexteditversion = 3
 string richtexteditkey = ""
 string appicon = "green-olive-avi-02.ico"
-string appruntimeversion = "19.2.0.2797"
+string appruntimeversion = "22.2.0.3441"
+boolean manualsession = false
+boolean unsupportedapierror = false
+boolean ultrafast = false
+boolean bignoreservercertificate = false
+uint ignoreservercertificate = 0
 long webview2distribution = 0
 boolean webview2checkx86 = false
 boolean webview2checkx64 = false
@@ -231,7 +236,7 @@ string build = "0.0"
 /// !!! Remember to also change this in markbuild project entry spots
 //  7   3  0  0
 
-// Using Powerbuilder Runtime 2797
+// Using Powerbuilder Runtime 22.2.0.3441
 
 ////////////////////////////////////////////////////////////
 
@@ -260,6 +265,7 @@ string windows_logon_id
 // en-RW, en-UG, en-KE: starting support for African countries
 string locale
 end variables
+
 event keydown;//f_fkey_handler(key, keyflags)
 
 
