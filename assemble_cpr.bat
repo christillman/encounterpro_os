@@ -1,5 +1,5 @@
 REM Usage: assemble_cpr.bat <target-version> 
-REM e.g. > assemble_cpr.bat 7.0.0.1
+REM e.g. > assemble_cpr.bat 7.0.0.1 22.2.0.3441
 
 set build_folder=C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%1
 set runtimeversion=%2
@@ -137,8 +137,8 @@ xcopy "C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\Utilities 1
 
 
 REM Copy everything to the Demo folder
-xcopy "%build_folder%\*.*" "%build_folder%Demo" /S /Y /I
+REM xcopy "%build_folder%\*.*" "%build_folder%Demo" /S /Y /I
 
 REM The demo should not have EncounterPro.ini
-del "%build_folder%Demo\EncounterPRO.ini"
+REM del "%build_folder%Demo\EncounterPRO.ini"
 
