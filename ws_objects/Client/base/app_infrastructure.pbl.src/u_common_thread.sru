@@ -344,7 +344,7 @@ lul_hinst = Handle( GetApplication() )
 lul_maxpath = 260
 ls_apppath = Space( lul_maxpath )    // pre-allocate memory
 lul_rc = GetModuleFilenameA( lul_hinst, ls_apppath, lul_maxpath )
-IF ls_apppath = "C:\Program Files (x86)\Appeon\PowerBuilder 19.0\PB190.exe" THEN
+IF Pos(ls_apppath, "C:\Program Files (x86)\Appeon") = 1 THEN
 	// If we are running in the IDE, the app is "running" in Program Files. But we don't
 	// want to create / modify files here, because of admin issues and writing to virtualstore
 	// So make it the default location for dev
