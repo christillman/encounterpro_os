@@ -21,12 +21,21 @@ string themename = "Do Not Use Themes"
 boolean nativepdfvalid = false
 boolean nativepdfincludecustomfont = false
 string nativepdfappname = ""
-long richtextedittype = 0
-long richtexteditx64type = 0
-long richtexteditversion = 0
+long richtextedittype = 5
+long richtexteditx64type = 5
+long richtexteditversion = 3
 string richtexteditkey = ""
 string appicon = ""
 string appruntimeversion = "22.2.0.3441"
+boolean manualsession = false
+boolean unsupportedapierror = false
+boolean ultrafast = false
+boolean bignoreservercertificate = false
+uint ignoreservercertificate = 0
+long webview2distribution = 0
+boolean webview2checkx86 = false
+boolean webview2checkx64 = false
+string webview2url = "https://developer.microsoft.com/en-us/microsoft-edge/webview2/"
 end type
 global upgradescript upgradescript
 
@@ -55,7 +64,7 @@ event open;
 script_producer sp
 line_number_updater lnu
 
-// Upgraded to PB 2019 R3
+// Upgraded to PB 2022 R3
 //lnu = CREATE line_number_updater
 //lnu.update_line_numbers()
 
