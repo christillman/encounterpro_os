@@ -117,6 +117,7 @@ public function str_pretty_results get_pretty_results (string ps_result_type, st
 public function integer display_grid_lab (string ps_result_type, string ps_abnormal_flag, str_font_settings pstr_abnormal_font_settings, str_font_settings pstr_comment_font_settings, str_rtf_table_attributes pstr_table_attributes, u_rich_text_edit puo_rtf, boolean pb_show_actor_full, boolean pb_latest_root_only)
 public function str_grids get_grids (string ps_result_type, string ps_abnormal_flag, boolean pb_latest_root_only, long pl_max_result_length)
 public function str_pretty_results get_pretty_results (string ps_result_type, string ps_abnormal_flag, long pl_parent_sequence)
+public function string unit_value_for_row (long pl_row)
 end prototypes
 
 private function string get_display_style (long pl_row);string ls_display_style
@@ -3238,6 +3239,7 @@ str_service_info lstr_service
 string ls_fieldtext
 string ls_grid_test_name
 string ls_grid_result
+string ls_unit
 str_pretty_results lstr_results
 string ls_observed_by
 long i, j
@@ -3277,6 +3279,7 @@ for i = 1 to lstr_results.result_count
 	// put the test_name and result into the grid datastore
 	luo_data.object.test_name[ll_row] = lstr_results.result[i].test_name
 	luo_data.object.result[ll_row] = ls_grid_result
+	luo_data.object.unit[ll_row] = lstr_results.result[i].unit
 	
 	// Transfer other data to results grid
 	luo_data.object.abnormal_flag[ll_row] = lstr_results.result[i].abnormal_flag
@@ -3311,17 +3314,18 @@ next
 
 luo_data.sort()
 
-
+// Remove abnormal column and Who, add Unit column per Ciru 27/9/2025
 // Add data to grid structure
 lstr_grid.table_attributes = pstr_table_attributes
 lstr_grid.table_attributes.bold_headings = true
 lstr_grid.table_attributes.suppress_title_column = true
-lstr_grid.column_count = 5
+lstr_grid.column_count = 4
 lstr_grid.column_title[1] = "Test Name"
 lstr_grid.column_title[2] = "Result"
-lstr_grid.column_title[3] = "Abn"
-lstr_grid.column_title[4] = "Normal Range"
-lstr_grid.column_title[5] = "Who"
+// lstr_grid.column_title[3] = "Abn"
+lstr_grid.column_title[3] = "Unit"
+lstr_grid.column_title[4] = "Ref Range"
+// lstr_grid.column_title[5] = "Who"
 
 lstr_grid.row_count = 0
 ll_last_root_sequence = -1
@@ -3378,13 +3382,14 @@ for i = 1 to luo_data.rowcount()
 
 	lstr_grid.grid_row[lstr_grid.row_count].column[1].column_text = luo_data.object.test_name[i]
 	lstr_grid.grid_row[lstr_grid.row_count].column[2].column_text = luo_data.object.result[i]
+	lstr_grid.grid_row[lstr_grid.row_count].column[3].column_text = luo_data.object.unit[i]
 	if f_string_to_boolean(luo_data.object.abnormal_flag[i]) then
 		lstr_grid.grid_row[lstr_grid.row_count].abnormal_flag = true
-		if len(string(luo_data.object.abnormal_nature[i])) > 0 then
-			lstr_grid.grid_row[lstr_grid.row_count].column[3].column_text = luo_data.object.abnormal_nature[i]
-		else
-			lstr_grid.grid_row[lstr_grid.row_count].column[3].column_text = luo_data.object.abnormal_flag[i]
-		end if
+//		if len(string(luo_data.object.abnormal_nature[i])) > 0 then
+//			lstr_grid.grid_row[lstr_grid.row_count].column[3].column_text = luo_data.object.abnormal_nature[i]
+//		else
+//			lstr_grid.grid_row[lstr_grid.row_count].column[3].column_text = luo_data.object.abnormal_flag[i]
+//		end if
 		lstr_grid.grid_row[lstr_grid.row_count].column[1].use_font_settings = true
 		lstr_grid.grid_row[lstr_grid.row_count].column[1].font_settings = pstr_abnormal_font_settings
 		lstr_grid.grid_row[lstr_grid.row_count].column[2].use_font_settings = true
@@ -3393,11 +3398,11 @@ for i = 1 to luo_data.rowcount()
 		lstr_grid.grid_row[lstr_grid.row_count].column[3].font_settings = pstr_abnormal_font_settings
 		lstr_grid.grid_row[lstr_grid.row_count].column[4].use_font_settings = true
 		lstr_grid.grid_row[lstr_grid.row_count].column[4].font_settings = pstr_abnormal_font_settings
-		lstr_grid.grid_row[lstr_grid.row_count].column[5].use_font_settings = true
-		lstr_grid.grid_row[lstr_grid.row_count].column[5].font_settings = pstr_abnormal_font_settings
+//		lstr_grid.grid_row[lstr_grid.row_count].column[5].use_font_settings = true
+//		lstr_grid.grid_row[lstr_grid.row_count].column[5].font_settings = pstr_abnormal_font_settings
 	end if
 	lstr_grid.grid_row[lstr_grid.row_count].column[4].column_text = luo_data.object.normal_range[i]
-	lstr_grid.grid_row[lstr_grid.row_count].column[5].column_text = luo_data.object.observed_by_index[i]
+//	lstr_grid.grid_row[lstr_grid.row_count].column[5].column_text = luo_data.object.observed_by_index[i]
 	
 	// Set min/max result date
 	if luo_data.object.result_date[i] < ld_min_result_date or isnull(ld_min_result_date) then ld_min_result_date = luo_data.object.result_date[i]
@@ -3702,6 +3707,7 @@ long ll_obsrow
 string ls_observation
 string ls_in_context_flag
 string ls_result
+string ls_unit
 long ll_result_count
 long ll_root_sequence
 long ll_parent_sequence
@@ -3789,6 +3795,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_rowcount
 		if ls_record_type = "Result" then
 			ls_result_title = result_title_for_row(ll_row)
 			ls_result = result_value_for_row(ll_row, true)
+			ls_unit = unit_value_for_row(ll_row)
 			ls_observed_by = object.observed_by[ll_row]
 		else
 			ls_result_title = object.comment_title[ll_row]
@@ -3796,6 +3803,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_rowcount
 				ls_result_title = "Comment"
 			end if
 			ls_result = object.comment[ll_row]
+			ls_unit = ""
 			ls_observed_by = object.comment_user_id[ll_row]
 		end if
 	
@@ -3870,6 +3878,7 @@ DO WHILE ll_row > 0 and ll_row <= ll_rowcount
 			// put the test_name and result into the results datastore
 			lstr_results.result[ll_result_count].test_name = ls_grid_test_name
 			lstr_results.result[ll_result_count].result = ls_grid_result
+			lstr_results.result[ll_result_count].unit = ls_unit
 			
 			// Transfer other data to results grid
 			lstr_results.result[ll_result_count].abnormal_flag = object.abnormal_flag[ll_row]
@@ -3895,6 +3904,40 @@ lstr_results.result_count = ll_result_count
 return lstr_results
 
 
+
+end function
+
+public function string unit_value_for_row (long pl_row);u_unit luo_unit
+string ls_find
+string ls_result_unit
+string ls_result_value
+string ls_pretty_result
+//string ls_unit_preference
+string ls_null
+
+setnull(ls_null)
+ls_pretty_result = ""
+
+if isnull(pl_row) or pl_row <= 0 then return ls_null
+
+// If the location is not applicable, then use the result description in the string construction
+ls_result_value = object.result_value[pl_row] // needed to determine wheter to add plural designation s or ies
+ls_result_unit = object.result_unit[pl_row]
+// unit_preference is either METRIC or ENGLISH (reference luo_unit.pretty_amount_unit)
+// not used here, we are only wanting the unit as recorded
+// ls_unit_preference = object.unit_preference[pl_row]
+
+luo_unit = unit_list.find_unit(ls_result_unit)
+if isnull(luo_unit) then
+	ls_pretty_result = ""
+else
+	ls_pretty_result = luo_unit.pretty_unit(ls_result_value)
+end if	
+
+// If we don't have anything then return null
+if trim(ls_pretty_result) = "" then setnull(ls_pretty_result)
+
+return ls_pretty_result
 
 end function
 
