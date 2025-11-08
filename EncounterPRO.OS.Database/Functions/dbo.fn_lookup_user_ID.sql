@@ -21,7 +21,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER OFF
 GO
 CREATE FUNCTION dbo.fn_lookup_user_ID (
-	@ps_user_id varchar(24),
+	@ps_user_id varchar(255),
 	@pl_owner_id int,
 	@ps_IDDomain varchar(40))
 

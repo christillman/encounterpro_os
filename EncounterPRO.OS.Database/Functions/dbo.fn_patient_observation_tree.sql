@@ -41,7 +41,7 @@ RETURNS @patient_observation_tree TABLE
 	,treatment_id int NULL
 	,parent_observation_sequence int NULL
 	,observation_comment_id int NULL
-	,comment_user_id varchar(24) NULL
+	,comment_user_id varchar(255) NULL
 	,comment_title varchar(48) NULL
 	,comment varchar(max) NULL
 	,attachment_id int NULL
@@ -69,7 +69,7 @@ RETURNS @patient_observation_tree TABLE
 	,default_view char(1) NULL
 	,abnormal_nature varchar(8) NULL
 	,normal_range varchar(40) NULL
-	,observed_by varchar(24) NULL
+	,observed_by varchar(255) NULL
 )
 
 AS

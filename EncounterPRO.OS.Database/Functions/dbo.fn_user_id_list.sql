@@ -21,12 +21,12 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_user_id_list (
-	@ps_user_id varchar(24))
+	@ps_user_id varchar(255))
 
 RETURNS @ids TABLE (
-	[user_id] [varchar](24) NOT NULL,
+	[user_id] [varchar](255) NOT NULL,
 	[user_progress_sequence] [int] NULL,
-	[progress_user_id] [varchar](24) NULL,
+	[progress_user_id] [varchar](255) NULL,
 	[progress_date_time] [datetime] NULL,
 	[progress_type] [varchar](24) NOT NULL,
 	[progress_key] [varchar](40) NOT NULL,
@@ -34,7 +34,7 @@ RETURNS @ids TABLE (
 	[display_key] varchar(40) NULL,
 	[owner_id] int NULL,
 	[created] [datetime] NULL ,
-	[created_by] [varchar](24) NULL
+	[created_by] [varchar](255) NULL
 	)
 
 AS

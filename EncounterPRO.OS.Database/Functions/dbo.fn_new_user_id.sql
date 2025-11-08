@@ -23,17 +23,17 @@ GO
 CREATE FUNCTION dbo.fn_new_user_id (
 	@pl_owner_id int,
 	@ps_user_full_name varchar(64),
-	@ps_proposed_user_id varchar(24) )
+	@ps_proposed_user_id varchar(255) )
 
-RETURNS varchar(24)
+RETURNS varchar(255)
 
 AS
 BEGIN
 
 DECLARE @ll_counter int,
 	@ls_counter varchar(8),
-	@ls_user_id_base varchar(24),
-	@ls_new_user_id varchar(24)
+	@ls_user_id_base varchar(255),
+	@ls_new_user_id varchar(255)
 
 IF @ps_proposed_user_id IS NULL OR @ps_proposed_user_id = ''
 	BEGIN
@@ -66,7 +66,7 @@ WHILE EXISTS(SELECT 1 FROM c_User WHERE [user_id] = @ls_new_user_id)
 		RETURN NULL
 		END
 	SET @ls_counter = CAST(@ll_counter AS varchar(8))
-	SET @ls_new_user_id = LEFT(@ls_user_id_base, 24 - LEN(@ls_counter) - 1) + '-' + @ls_counter
+	SET @ls_new_user_id = LEFT(@ls_user_id_base, 255 - LEN(@ls_counter) - 1) + '-' + @ls_counter
 	END
 
 RETURN @ls_new_user_id

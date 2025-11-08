@@ -25,12 +25,12 @@ CREATE FUNCTION dbo.fn_office_user_id (
 	@ps_office_id varchar(4)
 	)
 
-RETURNS varchar(24)
+RETURNS varchar(255)
 
 AS
 
 BEGIN
-DECLARE @ls_office_user_id varchar(24)
+DECLARE @ls_office_user_id varchar(255)
 
 SELECT @ls_office_user_id = IsNull(min(user_id),'No actor_class = Office')
 FROM c_User

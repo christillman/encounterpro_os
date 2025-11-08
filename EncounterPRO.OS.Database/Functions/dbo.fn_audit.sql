@@ -25,7 +25,7 @@ CREATE FUNCTION dbo.fn_audit (
 	@pl_encounter_id int,
 	@pdt_begin_date datetime,
 	@pdt_end_date datetime,
-	@ps_user_id varchar(24),
+	@ps_user_id varchar(255),
 	@ps_include_object_updates char(1) = 'Y',
 	@ps_include_patient_info char(1) = 'N'
 	)
@@ -34,21 +34,21 @@ RETURNS @events TABLE (
 	cpr_id varchar(12) NULL,
 	billing_id varchar(24) NULL,
 	patient_name varchar(128) NULL,
-	Time datetime NOT NULL,
-	Provider varchar(64) NOT NULL ,
+	[Time] datetime NOT NULL,
+	[Provider] varchar(64) NOT NULL ,
 	context_object varchar(24) NOT NULL ,
 	object_key int NULL ,
 	object_type varchar(24) NULL ,
 	object_description varchar(80) NULL ,
 	Item_Type varchar(12) NOT NULL ,
 	Item varchar(80) NULL ,
-	Action varchar(80) NULL ,
+	[Action] varchar(80) NULL ,
 	event_id int NULL ,
-	user_id varchar(24) NULL ,
+	[user_id] varchar(255) NULL ,
 	computer_id int NULL ,
 	computer_description varchar(80) NULL,
 	user_short_name varchar(12) NULL,
-	scribe_user_id varchar(24) NULL,
+	[scribe_user_id] varchar(255) NULL,
 	scribe_user_short_name varchar(12) NULL,
 	patient_workplan_item_id int NULL )
 AS
@@ -170,17 +170,17 @@ INSERT INTO @events (
 	cpr_id,
 	billing_id,
 	patient_name,
-	Time ,
-	Provider ,
+	[Time] ,
+	[Provider] ,
 	context_object ,
 	object_key ,
 	Item_Type ,
 	Item ,
-	Action ,
+	[Action] ,
 	event_id ,
-	user_id ,
+	[user_id] ,
 	computer_id,
-	scribe_user_id,
+	[scribe_user_id],
 	patient_workplan_item_id)
 SELECT i.cpr_id
 	,p.billing_id
@@ -199,7 +199,7 @@ SELECT i.cpr_id
 	,i.description
 	,lower(ip.progress_type)
 	,ip.patient_workplan_item_prog_id
-	,ip.user_id
+	,ip.[user_id]
 	,ip.computer_id
 	,ip.created_by
 	,i.patient_workplan_item_id
@@ -210,7 +210,7 @@ FROM @wpitemprogress x
 	ON	x.patient_workplan_item_id = ip.patient_workplan_item_id
 	AND x.patient_workplan_item_prog_id = ip.patient_workplan_item_prog_id
 	INNER JOIN c_user u WITH (NOLOCK)
-	ON	ip.user_id = u.user_id
+	ON	ip.[user_id] = u.[user_id]
 	LEFT OUTER JOIN p_patient p WITH (NOLOCK)
 	ON	p.cpr_id = i.cpr_id 
 
@@ -229,18 +229,18 @@ IF @ps_include_object_updates IN ('Y', 'T')
 			cpr_id,
 			billing_id,
 			patient_name,
-			Time ,
-			Provider ,
+			[Time] ,
+			[Provider] ,
 			Context_object ,
 			object_key ,
 			object_type ,
 			object_description ,
 			Item_Type ,
 			Item ,
-			Action ,
+			[Action] ,
 			event_id ,
-			user_id,
-			scribe_user_id )
+			[user_id],
+			[scribe_user_id] )
 		SELECT p.cpr_id
 			,pp.billing_id
 			,dbo.fn_pretty_name(pp.last_name, pp.first_name, pp.middle_name, pp.name_suffix, pp.name_prefix, pp.degree)
@@ -258,7 +258,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 			,p.progress_created_by
 		FROM dbo.fn_patient_object_progress_user(@ps_user_id, @pdt_begin_date, @pdt_end_date) p
 			INNER JOIN c_user u WITH (NOLOCK)
-			ON	p.progress_user_id = u.user_id
+			ON	p.progress_user_id = u.[user_id]
 			INNER JOIN p_Patient pp WITH (NOLOCK)
 			ON p.cpr_id = pp.cpr_id
 		END -- cpr_id is null
@@ -270,18 +270,18 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				cpr_id,
 				billing_id,
 				patient_name,
-				Time ,
-				Provider ,
+				[Time] ,
+				[Provider] ,
 				Context_object ,
 				object_key ,
 				object_type ,
 				object_description ,
 				Item_Type ,
 				Item ,
-				Action ,
+				[Action] ,
 				event_id ,
-				user_id ,
-				scribe_user_id)
+				[user_id] ,
+				[scribe_user_id])
 			SELECT p.cpr_id
 				,pp.billing_id
 				,dbo.fn_pretty_name(pp.last_name, pp.first_name, pp.middle_name, pp.name_suffix, pp.name_prefix, pp.degree)
@@ -299,7 +299,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				,p.progress_created_by
 			FROM dbo.fn_patient_object_progress(@ps_cpr_id, @pdt_begin_date, @pdt_end_date) p
 				INNER JOIN c_user u WITH (NOLOCK)
-				ON	p.progress_user_id = u.user_id
+				ON	p.progress_user_id = u.[user_id]
 				INNER JOIN p_Patient pp WITH (NOLOCK)
 				ON p.cpr_id = pp.cpr_id
 			WHERE (@ps_user_id IS NULL OR p.progress_user_id = @ps_user_id OR p.progress_created_by = @ps_user_id)
@@ -310,18 +310,18 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				cpr_id,
 				billing_id,
 				patient_name,
-				Time ,
-				Provider ,
+				[Time] ,
+				[Provider] ,
 				Context_object ,
 				object_key ,
 				object_type ,
 				object_description ,
 				Item_Type ,
 				Item ,
-				Action ,
+				[Action] ,
 				event_id ,
-				user_id ,
-				scribe_user_id)
+				[user_id] ,
+				[scribe_user_id])
 			SELECT p.cpr_id
 				,pp.billing_id
 				,dbo.fn_pretty_name(pp.last_name, pp.first_name, pp.middle_name, pp.name_suffix, pp.name_prefix, pp.degree)
@@ -339,7 +339,7 @@ IF @ps_include_object_updates IN ('Y', 'T')
 				,p.progress_created_by
 			FROM dbo.fn_patient_object_progress_in_encounter(@ps_cpr_id, @pl_encounter_id) p
 				INNER JOIN c_user u WITH (NOLOCK)
-				ON	p.progress_user_id = u.user_id
+				ON	p.progress_user_id = u.[user_id]
 				INNER JOIN p_Patient pp WITH (NOLOCK)
 				ON p.cpr_id = pp.cpr_id
 			WHERE (@ps_user_id IS NULL OR p.progress_user_id = @ps_user_id OR p.progress_created_by = @ps_user_id)
@@ -356,54 +356,54 @@ IF @ps_include_object_updates IN ('Y', 'T')
 IF @ps_user_id IS NOT NULL AND @pdt_begin_date IS NOT NULL AND @pdt_end_date IS NOT NULL
 	BEGIN
 	INSERT INTO @events (
-		Time ,
-		Provider ,
+		[Time] ,
+		[Provider] ,
 		Context_object ,
 		Item_type ,
 		Item ,
-		Action ,
+		[Action] ,
 		event_id ,
-		user_id ,
+		[user_id] ,
 		computer_id ,
-		scribe_user_id)
-	SELECT Time=ul.action_time
-		,Provider = u.user_full_name
+		[scribe_user_id])
+	SELECT ul.action_time
+		,u.user_full_name
 		,'User'
 		,'Security'
-		,ul.action + COALESCE(' for ' + u2.user_short_name, '')
+		,ul.[action] + COALESCE(' for ' + u2.user_short_name, '')
 		,ul.action_status + CASE WHEN ul.action = 'Login' THEN ', winuser: ' + c.logon_id + ', office: ' + ul.office_id ELSE '' END
 		,ul.action_id
 		,ul.scribe_for_user_id
 		,ul.computer_id
-		,ul.user_id
+		,ul.[user_id]
 	FROM o_User_Logins ul
 		INNER JOIN c_user u WITH (NOLOCK)
-		ON	ul.user_id = u.user_id
+		ON	ul.[user_id] = u.[user_id]
 		INNER JOIN o_Computers c WITH (NOLOCK)
 		ON	ul.computer_id = c.computer_id
 		LEFT OUTER JOIN c_User u2 WITH (NOLOCK)
-		ON ul.action_for_user_id = u2.user_id
+		ON ul.action_for_user_id = u2.[user_id]
 	WHERE ul.action_time >= @pdt_begin_date
 	AND ul.action_time < @pdt_end_date
-	AND ul.user_id = @ps_user_id
+	AND ul.[user_id] = @ps_user_id
 	UNION
-	SELECT Time=ul.action_time
-		,Provider = u.user_full_name
+	SELECT ul.action_time
+		,u.user_full_name
 		,'User'
 		,'Security'
-		,ul.action + COALESCE(' for ' + u2.user_short_name, '')
+		,ul.[action] + COALESCE(' for ' + u2.user_short_name, '')
 		,ul.action_status + CASE WHEN ul.action = 'Login' THEN ', winuser: ' + c.logon_id + ', office: ' + ul.office_id ELSE '' END
 		,ul.action_id
 		,ul.scribe_for_user_id
 		,ul.computer_id
-		,ul.user_id
+		,ul.[user_id]
 	FROM o_User_Logins ul
 		INNER JOIN c_user u WITH (NOLOCK)
-		ON	ul.user_id = u.user_id
+		ON	ul.[user_id] = u.[user_id]
 		INNER JOIN o_Computers c WITH (NOLOCK)
 		ON	ul.computer_id = c.computer_id
 		LEFT OUTER JOIN c_User u2 WITH (NOLOCK)
-		ON ul.action_for_user_id = u2.user_id
+		ON ul.action_for_user_id = u2.[user_id]
 	WHERE ul.action_time >= @pdt_begin_date
 	AND ul.action_time < @pdt_end_date
 	AND ul.scribe_for_user_id = @ps_user_id
@@ -416,16 +416,16 @@ FROM @events e
 	ON e.computer_id = c.computer_id
 
 UPDATE e
-SET user_short_name = COALESCE(u.user_short_name, u.user_id)
+SET user_short_name = COALESCE(u.user_short_name, u.[user_id])
 FROM @events e
 	INNER JOIN c_User u
-	ON e.user_id = u.user_id
+	ON e.[user_id] = u.[user_id]
 
 UPDATE e
-SET scribe_user_short_name = COALESCE(u.user_short_name, u.user_id)
+SET scribe_user_short_name = COALESCE(u.user_short_name, u.[user_id])
 FROM @events e
 	INNER JOIN c_User u
-	ON e.scribe_user_id = u.user_id
+	ON e.[scribe_user_id] = u.[user_id]
 
 IF @ps_include_patient_info <> 'Y'
 	UPDATE @events

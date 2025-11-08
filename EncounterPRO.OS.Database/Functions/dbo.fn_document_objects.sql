@@ -34,7 +34,7 @@ RETURNS @objects TABLE (
 	[object_description] [varchar] (80) NOT NULL ,
 	[object_status] [varchar] (12) NOT NULL ,
 	[office_id] varchar(4) NULL ,
-	[office_user_id] varchar(24) NULL ,
+	[office_user_id] varchar(255) NULL ,
 	[id] [uniqueidentifier] NOT NULL
 	)
 
@@ -43,7 +43,7 @@ AS
 BEGIN
 
 DECLARE @ll_interfaceServiceId int,
-		@ls_ordered_by varchar(24)
+		@ls_ordered_by varchar(255)
 
 DECLARE @tempobjects TABLE (
 	[object_sequence] [int] NOT NULL,
@@ -269,7 +269,7 @@ FROM @tempobjects x
 WHERE x.context_object = 'Attachment'
 AND a.status = 'OK'
 
-DECLARE @ls_primary_office_user_id varchar(24),
+DECLARE @ls_primary_office_user_id varchar(255),
 		@ls_primary_office_id varchar(4)
 
 SELECT @ls_primary_office_user_id = min(u.user_id)
@@ -284,7 +284,7 @@ WHERE [user_id] = @ls_primary_office_user_id
 
 DECLARE @offices TABLE (
 	office_id varchar(4) NOT NULL,
-	office_user_id varchar(24) NOT NULL)
+	office_user_id varchar(255) NOT NULL)
 
 INSERT INTO @offices (
 	office_id ,

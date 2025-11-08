@@ -21,12 +21,12 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_user_progress (
-	@ps_user_id varchar(24),
+	@ps_user_id varchar(255),
 	@ps_progress_type varchar (24) = NULL ,
 	@ps_progress_key varchar (40) = NULL )
 
 RETURNS @progress TABLE (
-	[user_id] [varchar](24) NOT NULL,
+	[user_id] [varchar](255) NOT NULL,
 	[user_progress_sequence] [int] ,
 	[progress_user_id] [varchar](24) NOT NULL,
 	[progress_date_time] [datetime] NOT NULL,
@@ -34,7 +34,7 @@ RETURNS @progress TABLE (
 	[progress_key] [varchar](40) NULL,
 	[progress] [nvarchar](max) NULL,
 	[created] [datetime] NOT NULL ,
-	[created_by] [varchar](24) NOT NULL
+	[created_by] [varchar](255) NOT NULL
 )
 
 AS

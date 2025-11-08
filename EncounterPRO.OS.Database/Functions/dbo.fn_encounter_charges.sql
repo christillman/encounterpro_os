@@ -44,7 +44,7 @@ RETURNS @charges TABLE (
 	[modifier] [varchar](2) NULL,
 	[other_modifiers] [varchar](12) NULL,
 	[last_updated] [datetime] NULL,
-	[last_updated_by] [varchar](24) NULL,
+	[last_updated_by] varchar(255) NULL,
 	[last_updated_name] [varchar] (64) NULL,
 	[units_recovered] [int] NULL,
 	[charge_recovered] [money] NULL,

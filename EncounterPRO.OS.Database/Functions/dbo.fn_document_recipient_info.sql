@@ -21,12 +21,12 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_document_recipient_info (
-	@ps_ordered_for varchar(24),
+	@ps_ordered_for varchar(255),
 	@ps_cpr_id varchar(12) = NULL,
 	@pl_encounter_id int = NULL)
 
 RETURNS @recipient TABLE (
-	user_id varchar(24) NOT NULL,
+	[user_id] varchar(255) NOT NULL,
 	actor_class varchar(24) NOT NULL,
 	actor_id int NULL,
 	cpr_id varchar(24) NULL
@@ -36,7 +36,7 @@ BEGIN
 
 DECLARE @ll_ordered_for_actor_id int,
 	@ls_ordered_for_actor_class varchar(24),
-	@ls_ordered_for_user_id varchar(24),
+	@ls_ordered_for_user_id varchar(255),
 	@ls_ordered_for_cpr_id varchar(12)
 
 SELECT @ll_ordered_for_actor_id = actor_id,
@@ -99,7 +99,7 @@ ELSE IF @ls_ordered_for_user_id <> @ps_ordered_for
 
 IF @ls_ordered_for_user_id IS NOT NULL
 	INSERT INTO @recipient (
-		user_id ,
+		[user_id] ,
 		actor_class ,
 		actor_id ,
 		cpr_id)

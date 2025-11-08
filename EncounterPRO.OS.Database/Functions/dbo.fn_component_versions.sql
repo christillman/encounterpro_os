@@ -56,7 +56,7 @@ RETURNS @versions TABLE (
 	[owner_id] [int] NOT NULL ,
 	[owner_description] [varchar] (80) NOT NULL ,
 	[created] [datetime] NULL ,
-	[created_by] [varchar](24) NULL,
+	[created_by] varchar(255) NULL,
 	[last_updated] [datetime] NULL ,
 	[id] [uniqueidentifier] NOT NULL
 	)
