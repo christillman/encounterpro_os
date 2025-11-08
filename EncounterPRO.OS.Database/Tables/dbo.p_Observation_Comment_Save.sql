@@ -20,10 +20,10 @@ CREATE TABLE [p_Observation_Comment_Save](
 	[treatment_id] [int] NULL,
 	[encounter_id] [int] NULL,
 	[attachment_id] [int] NULL,
-	[user_id] [varchar](24) NOT NULL,
+	[user_id] [varchar](255) NOT NULL,
 	[current_flag] [char](1) NOT NULL,
 	[root_observation_sequence] [int] NULL,
-	[created_by] [varchar](24) NOT NULL,
+	[created_by] [varchar](255) NOT NULL,
 	[created] [datetime] NULL,
 	[id] [uniqueidentifier] NOT NULL
 ) ON [PRIMARY]
