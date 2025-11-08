@@ -83,7 +83,7 @@ IF @ldt_age_to_date <= @ldt_age_from_date
 	END
 
 -- If we're not supposed to overlap then make sure we don't
-IF @ls_overlap_flag = 'Y'
+IF @ls_overlap_flag = 'N'
 	BEGIN
 	-- Check the from-date
 	select @ll_age_range_id = min(c_Age_Range.age_range_id)
