@@ -14,5 +14,6 @@ global type str_pretty_result from structure
 	string		parent_observation_description
 	long		sort_sequence
 	datetime		result_date_time
+	string		unit
 end type
 
