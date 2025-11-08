@@ -69,7 +69,7 @@ CREATE PROCEDURE jmj_modify_age_range_references (
 	@pl_to_age_range_id int)
 AS
 
--- This stored procedure creates a local copy of the specified age_range and returns the new age_range_id
+-- This stored procedure modifies an existing age_range_id, updating child tables
 DECLARE @ll_count int,
 		@ll_error int
 
