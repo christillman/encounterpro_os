@@ -12,7 +12,7 @@ FVS:7.3.1.0
 FVN:7,3,1,0
 MAN:2,asInvoker,0
 PBD:cpr.pbl,,0
-PBD:pbdom220.pbd,,1
+PBD:pbdom.pbd,,1
 PBD:base\app_infrastructure.pbl,,1
 PBD:base\attribute.pbl,,1
 PBD:base\conversion.pbl,,1
