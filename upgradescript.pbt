@@ -4,5 +4,5 @@ Save Format v3.0(19990112)
 @end;
 appname "upgradescript";
 applib "upgradescript.pbl";
-LibList "upgradescript.pbl;pbdom220.pbd";
+LibList "upgradescript.pbl;pbdom.pbl";
 type "pb";
