@@ -359,7 +359,7 @@ INSERT INTO [dbo].[c_Observation_Treatment_Type] VALUES
 ('TissueAutoantibody(A','LAB'),
 ('TotalBilirubin','LAB'),
 ('TotalProtein','LAB'),
-('Transferrin','LAB'),
+('981^824','LAB'),
 ('TransferrinSaturatio','LAB'),
 ('Triglycerides','LAB'),
 ('981^811','LAB'),
