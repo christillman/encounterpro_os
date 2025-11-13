@@ -337,6 +337,45 @@ lcx_key.GetContextKeywords ('USERPROFILE', ls_values)
 
 windows_userprofile = ls_values[1]
 
+lcx_key.GetContextKeywords ('TEMP', ls_values)
+temp_path = ls_values[1]
+if right(temp_path, 1) = "\" then temp_path = left(temp_path, len(temp_path) - 1)
+
+// removed from f_get_preferences
+//li_return = GetContextService("ContextKeyword", lcx_key)
+//lcx_key.GetContextKeywords("TEMP", lsa_values)
+//li_count = UpperBound(lsa_values)
+//if li_count >= 1 then
+//	temp_path = lsa_values[1]
+//else
+//	li_return = GetContextService("ContextKeyword", lcx_key2)
+//	lcx_key2.GetContextKeywords("TMP", lsa_values)
+//	li_count = UpperBound(lsa_values)
+//	if li_count >= 1 then
+//		temp_path = lsa_values[1]
+//	else
+//		temp_path = "C:\Temp"
+//	end if
+//end if
+//if right(temp_path, 1) = "\" then temp_path = left(temp_path, len(temp_path) - 1)
+//
+//if isnull(temp_path) then
+//	temp_path = datalist.get_preference("SYSTEM", "temp_path")
+//end if
+//
+temp_path = temp_path + "\EPro"
+
+if not log.of_directoryexists(temp_path) then
+	log.of_createdirectory(temp_path)
+end if
+
+temp_path += "\" + string(gnv_app.computer_id)
+
+if not log.of_directoryexists(temp_path) then
+	log.of_createdirectory(temp_path)
+end if
+
+
 // Get our application path so we can set the INI file
 // Default installation application path is C:\Users\Public\Documents\GreenOlive_EHR\Client
 // so we can write to it without admin, and every user on the computer can see it
