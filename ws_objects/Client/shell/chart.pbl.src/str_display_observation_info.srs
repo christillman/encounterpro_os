@@ -1,0 +1,14 @@
+﻿$PBExportHeader$str_display_observation_info.srs
+global type str_display_observation_info from structure
+	long		result_row
+	string		result_type
+	string		title_separator
+	string		group_separator
+	boolean		continuous
+	boolean		have_context
+	boolean		context_needed
+	string		abnormal_flag
+	boolean		include_comments
+	boolean		include_attachments
+end type
+
