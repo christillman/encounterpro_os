@@ -12,7 +12,7 @@ FVS:7.3.1.0
 FVN:7,3,1,0
 MAN:2,asInvoker,0
 PBD:cpr.pbl,,0
-PBD:pbdom.pbd,,1
+PBD:pbdom.pbl,,0
 PBD:base\app_infrastructure.pbl,,1
 PBD:base\attribute.pbl,,1
 PBD:base\conversion.pbl,,1
@@ -180,7 +180,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\property.pbl,f_object_pr
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\menu.pbl,w_menu_edit,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\configure_treatment_type.pbl,w_edit_treatment_type_list,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_utility.pbl,u_dw_patient_info,u
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_builder,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,f_xml_document_string,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\attachment.pbl,w_attachment_review,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\attachment.pbl,w_post_attachment_workplan,w
@@ -237,6 +236,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_curr
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\document.pbl,dw_jmj_get_documents_general,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,f_set_screen,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\configure_component.pbl,str_component_definition,s
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_object,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient.pbl,str_id_instance,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\progress.pbl,f_get_progress,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\property.pbl,f_get_property,f
@@ -290,6 +290,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_slrcgroup,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,u_component_xml_handler_contraindication,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\database_infrastructure.pbl,f_empty_sql_script_status,f
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_document,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\components.pbl,str_access_control_item,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,f_message,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\clinicaldatacache.pbl,f_edas_parse_which_object,f
@@ -314,7 +315,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\security.pbl,dw_security
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\room.pbl,u_waiting_room_status,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\pretty.pbl,f_pretty_age_short,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,f_system_error,f
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_doctype,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\progress.pbl,f_set_patient_object_progress,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\chart.pbl,u_ds_observation_results,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\image.pbl,f_get_picture_dimensions,f
@@ -524,6 +524,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\date_time.pbl,f_add_days,
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,f_xml_blob,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_actorreferencetype,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,f_attributes_to_xml_for_component,f
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_attribute,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\string.pbl,f_gen_key_string,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\gui_basic.pbl,u_richtextedit,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\context.pbl,f_get_context_attributes,f
@@ -617,7 +618,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,f_set_temp_directory,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\parameter.pbl,f_any_params,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\attribute.pbl,dw_attribute_value_display,d
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_document,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\pretty.pbl,f_pretty_amount,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\observation_tree.pbl,str_observation_tree_branch,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\date_time.pbl,dw_age_range_selection,d
@@ -714,7 +714,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\popup.pbl,w_pop_get_strin
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\date_time.pbl,w_pick_date,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,dw_decade_list,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\clinicaldatacache.pbl,u_ds_epro_object_cache,u
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_exception,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\workplan.pbl,w_workplan_item_timeout,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,f_message_wrapper_to,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\components.pbl,u_ds_report,u
@@ -728,6 +727,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\configure_drug.pbl,f_e
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\office.pbl,dw_who_came_today,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\security.pbl,w_security_alert,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\gui_basic.pbl,str_grid_column,s
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_doctype,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\progress.pbl,str_progress_list,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\gui_basic.pbl,u_calendar_pb,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\file.pbl,f_temp_file,f
@@ -864,6 +864,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,st
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\parameter.pbl,str_param_wizard_return,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,f_unit_convert,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\clinicaldatacache.pbl,f_edas_interpret_address,f
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_exception,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\configure_treatment_type.pbl,w_treatment_type_service_edit,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_assessment.pbl,f_assessment_description,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\clinicaldatacache.pbl,u_clinical_data_cache,u
@@ -970,7 +971,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\svc_procedure.pbl,w_pi
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\configure_observation.pbl,w_observation_coding_elements,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\drug_administration.pbl,w_trt_pick_drugs,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\document.pbl,f_manage_documents,f
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_element,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\menu.pbl,dw_sp_get_menu_items,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\database_infrastructure.pbl,tf_commit_transaction,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\attachment.pbl,f_attachment_object_key,f
@@ -982,7 +982,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\location.pbl,w_pick_loca
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\specialty.pbl,dw_specialty_list,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_treatment.pbl,f_set_default_treatment_mode,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_product_type,s
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_processinginstruction,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_treatment.pbl,str_treatment_description,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\table_accessor.pbl,str_p_attachment_progress,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\string.pbl,f_string_modified,f
@@ -1011,6 +1010,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\attribute.pbl,f_attribute
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\shortlist.pbl,dw_pick_top20_menus,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\xml.pbl,str_c_xml_code_list,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\context.pbl,f_empty_attachment_context,f
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_builder,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_utility.pbl,f_load_patient_list_items,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\svc_report.pbl,f_run_report,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\svc_observations.pbl,str_pretty_result,s
@@ -1143,7 +1143,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_info
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_reaction,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\room.pbl,dw_sp_open_encounters_in_room_type,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\table_accessor.pbl,dw_c_domain_item_bitmap,d
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_object,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\encounter.pbl,str_encounter_description,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\attachment.pbl,u_ds_attachments,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient_utility.pbl,f_clear_patient,f
@@ -1312,7 +1311,6 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\room.pbl,dw_room_status,d
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\components.pbl,w_data_address_which_object,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\gui_basic.pbl,str_grid,s
-OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\pbdom220.pbd,pbdom_attribute,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\table_accessor.pbl,str_c_display_script_command,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\svc_followup.pbl,f_appointment_string,f
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient.pbl,str_patient_communications,s
@@ -1400,6 +1398,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\security.pbl,dw_sp_user_
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\service\svc_patient_message.pbl,w_message_folder_edit,w
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\encounter.pbl,str_encounter_list,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\location.pbl,str_location,s
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_processinginstruction,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\file.pbl,str_document_file,s
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_attachments.pbl,u_component_attachment_generic,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_observation.pbl,u_twain_scanner,u
@@ -1431,6 +1430,7 @@ OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,str_ccr_
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\extension\ext_xml.pbl,u_component_xml_handler_script,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\office.pbl,u_office_status_tab,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\base\app_infrastructure.pbl,f_stop_tracing,f
+OBJ:c:\encounterpro\encounterpro_os_2022r3\client\pbdom.pbl,pbdom_element,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\components.pbl,u_component_security,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\components.pbl,u_component_treatment,u
 OBJ:C:\EncounterPro\encounterpro_os_2022R3\Client\shell\patient.pbl,u_unit,u
