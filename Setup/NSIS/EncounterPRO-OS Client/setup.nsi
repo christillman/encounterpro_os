@@ -12,7 +12,7 @@
   !define PRODUCT   "GreenOlive_EHR"
 
 ; Client Setup Version
-  !define VERSION   7.3.0.0
+  !define VERSION   7.3.1.0
 
 ; Source Root
   !define SOURCE_ROOT "C:\EncounterPro\Builds"
@@ -23,7 +23,7 @@
   
 ; Included Versions
   !define EproClient_VERSION   ${VERSION}
-  !define Database_Mod_Level   233
+  !define Database_Mod_Level   234
   !define EncounterPro_OS_Utilities_VERSION   1.0.6.0
   !define ConfigObjectManager_VERSION   2.1.3.2
 
@@ -167,6 +167,10 @@
         SetOutPath '$SYSDIR'
         SetDetailsPrint both
         IfFileExists '\\localhost\attachments\*.*' GoAhead
+        DetailPrint "Sharing \\localhost\attachments at ${ATT_FOLDER}"
+        CreateDirectory "${ATT_FOLDER}"
+		nsExec::ExecToLog 'NET SHARE attachments="${ATT_FOLDER}"'
+        IfFileExists '\\localhost\attachments\*.*' GoAhead		
         DetailPrint "The share folder \\localhost\attachments is required for the bulk import files "
         DetailPrint "supporting this installation."
         DetailPrint ""
