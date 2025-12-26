@@ -88,9 +88,14 @@ SELECT drug_id,
 	selected_flag = 0
 FROM c_Synonym s
 JOIN v_drug_search
-	ON generic_name like '%' + s.alternate + '%'
+	ON (generic_name like '%' + s.alternate + '%'
+		OR generic_name like '%' + s.term + '%'
+		OR generic_name like '%' + s.preferred_term + '%'
+		)
 WHERE s.term_type = 'drug_ingredient'
-	AND s.term like CASE WHEN COALESCE(@ps_generic_name,'%') = '%' THEN 'zzz' ELSE COALESCE(@ps_generic_name,'%') END
+	AND (s.term like CASE WHEN COALESCE(@ps_generic_name,'%') = '%' THEN 'zzz' ELSE COALESCE(@ps_generic_name,'%') END
+		OR s.alternate like CASE WHEN COALESCE(@ps_generic_name,'%') = '%' THEN 'zzz' ELSE COALESCE(@ps_generic_name,'%') END
+		OR s.preferred_term like CASE WHEN COALESCE(@ps_generic_name,'%') = '%' THEN 'zzz' ELSE COALESCE(@ps_generic_name,'%') END)
 	AND status = COALESCE(@ps_status,'OK')
 	AND COALESCE(specialty_id,'0') = COALESCE(@ps_specialty_id,specialty_id,'0')
 	AND COALESCE(drug_category_id,'') like COALESCE(@ps_drug_category_id,'%')
@@ -99,6 +104,8 @@ WHERE s.term_type = 'drug_ingredient'
 
 	 /* exec [sp_drug_search] NULL, NULL, '%Acetaminophen%', NULL, NULL, 'Drug' */
 	 /* exec [sp_drug_search] NULL, NULL, '%Paracetamol%', NULL, NULL, 'Drug' */
+	 /* exec [sp_drug_search] NULL, NULL, '%Vitamin B6%', NULL, NULL, 'Drug' */
+	 /* exec [sp_drug_search] NULL, NULL, '%pyridoxine%', NULL, NULL, 'Drug' */
 	 /* exec [sp_drug_search] NULL, 'Ziak', NULL, NULL, NULL, 'Drug' */
 GO
 GRANT EXECUTE
