@@ -14,10 +14,12 @@ AS BEGIN
 
 	-- Missing KE brand definitions
 	print 'INSERT INTO c_Drug_Definition brand'
-	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
+	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name, status, is_generic)
 	SELECT b.drug_id, 
 		CASE WHEN LEN(b.brand_name) <= 80 THEN b.brand_name ELSE left(b.brand_name,77) + '...' END, 
-		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
+		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END,
+		'OK',
+		0
 	FROM c_Drug_Brand b
 	JOIN c_Drug_Generic g ON g.generic_rxcui = b.generic_rxcui
 	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = b.drug_id)
@@ -25,10 +27,12 @@ AS BEGIN
 
 	-- Missing KE generic definitions
 	print 'INSERT INTO c_Drug_Definition generic'
-	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name)
+	INSERT INTO c_Drug_Definition (drug_id, common_name, generic_name, status, is_generic)
 	SELECT g.drug_id, 
 		CASE WHEN LEN(g.generic_name) <= 80 THEN g.generic_name ELSE left(g.generic_name,77) + '...' END, 
-		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END -- select '''' + g.generic_name + ''','
+		CASE WHEN LEN(g.generic_name) <= 500 THEN g.generic_name ELSE left(g.generic_name,497) + '...' END,
+		'OK',
+		1
 	FROM c_Drug_Generic g
 	WHERE NOT EXISTS (SELECT 1 FROM c_Drug_Definition d where d.drug_id = g.drug_id)
 	AND EXISTS (SELECT 1 FROM c_Drug_Formulation f where g.generic_rxcui = f.ingr_rxcui)
