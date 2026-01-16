@@ -10,7 +10,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE FUNCTION dbo.fn_split (@str varchar(1000), @delimiter varchar(10))
-RETURNS @t TABLE (substr varchar(1000))
+RETURNS @t TABLE (substr varchar(1000), ordinal int identity(1,1))
 AS
 BEGIN
 	WITH cte AS
