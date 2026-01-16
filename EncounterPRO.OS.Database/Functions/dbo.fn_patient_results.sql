@@ -214,7 +214,7 @@ SELECT 	r.cpr_id,
 	r.abnormal_nature ,
 	r.severity ,
 	r.observed_by ,
-	r.normal_range ,
+	COALESCE(rr.normal_range,c.normal_range,r.normal_range) ,
 	r.root_observation_sequence ,
 	result_amount_flag  = CASE ISNULL(r.result_unit, 'NA') WHEN 'NA' THEN 'N' ELSE 'Y' END ,
 	print_result_flag = ISNULL(c.print_result_flag, 'N') ,
@@ -239,6 +239,9 @@ FROM @tmp_results t
 	LEFT OUTER JOIN c_Observation_Result c
 	ON r.observation_id = c.observation_id
 	AND r.result_sequence = c.result_sequence
+	LEFT OUTER JOIN c_Observation_Result_Range rr 
+	ON rr.observation_id = r.observation_id
+	AND r.result_sequence = rr.result_sequence
 WHERE r.result_date_time IS NOT NULL
 AND r.cpr_id = @ps_cpr_id
 AND COALESCE(ti.treatment_status, 'OPEN') <> 'CANCELLED'
