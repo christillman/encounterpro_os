@@ -291,8 +291,6 @@ string ls_dea_number_required, ls_generic_name
 
 setnull(ls_null)
 
-log.log(this, "w_drug_admin_edit.set_drug:0007", drug_id, 1)
-
 // Get the name and default duration
 li_sts = tf_get_drug(drug_id, &
 							st_drug.text, &
@@ -318,7 +316,7 @@ end if
 // Get the package list for this drug
 li_count = uo_drug_package.retrieve(drug_id)
 if li_count <= 0 then
-	messagebox("w_drug_admin_edit-set_drug()","This drug (" + st_drug.text + ") has no packages defined.")
+	log.log(this, "w_drug_admin_edit.set_drug:0032","This drug (" + st_drug.text + ") has no packages defined.", 4)
 	return -1
 end if
 

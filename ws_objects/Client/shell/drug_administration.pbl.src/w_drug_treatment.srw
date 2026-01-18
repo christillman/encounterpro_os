@@ -784,7 +784,7 @@ end if
 // Get the package list for this drug
 li_count = uo_drug_package.retrieve(drug_id)
 if li_count <= 0 then
-	messagebox("w_drug_treatment.set_drug:0044","This drug (" +drug_id  + ") has no packages defined, or the packages have no dose_unit.")
+	log.log(this, "w_drug_treatment.set_drug:0044","This drug (" +drug_id  + ") has no packages defined, or the packages have no dose_unit.", 4)
 	return -1
 end if
 
@@ -792,7 +792,7 @@ end if
 // This means another formulation can't be chosen with uo_drug_package
 package_list_index = uo_drug_package.selectformulation(form_rxcui)
 if package_list_index <= 0 then
-	messagebox("w_drug_treatment.set_drug:0052","This formulation (" +form_rxcui + ") has no packages defined, or the packages have no dose_unit.")
+	log.log(this, "w_drug_treatment.set_drug:0052","This formulation (" +form_rxcui + ") has no packages defined, or the packages have no dose_unit.", 4)
 	return -1
 end if
 
