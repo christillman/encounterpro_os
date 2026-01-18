@@ -5,6 +5,7 @@ set build_folder=C:\EncounterPro\Builds\EncounterPRO-OS\EncounterPRO.OS.Client\%
 set runtimeversion=%2
 
 move /Y "Client\pbdom.pbd" %build_folder%
+move /Y "Client\cpr.pbd" %build_folder%
 move /Y "Client\base\app_infrastructure.pbd" %build_folder%
 move /Y "Client\base\attribute.pbd" %build_folder%
 move /Y "Client\base\conversion.pbd" %build_folder%
@@ -112,6 +113,7 @@ move /Y "Client\shell\xml.pbd" %build_folder%
 
 
 move /Y "Client\pbdom.dll" %build_folder%
+move /Y "Client\cpr.dll" %build_folder%
 move /Y "Client\base\app_infrastructure.dll" %build_folder%
 move /Y "Client\base\attribute.dll" %build_folder%
 move /Y "Client\base\conversion.dll" %build_folder%
@@ -221,7 +223,7 @@ REM move /Y "Client\dbmaint.pbd" %build_folder%
 REM move /Y "Client\eprodbmaint.exe" %build_folder%
 
 REM -- only for IDE builds
-REM move /Y "Client\encounterpro.os.client.exe" %build_folder%
+move /Y "Client\encounterpro.os.client.exe" %build_folder%
 REM move /Y "Client\encounterpro.os.client.exe.manifest" %build_folder%
 
 copy %build_folder%\..\pb.ini %build_folder%

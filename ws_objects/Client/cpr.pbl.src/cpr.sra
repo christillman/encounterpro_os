@@ -224,17 +224,17 @@ boolean is_demo_version
 ///////////////////////////////////////////////////////////
 // !!!! Change these values for every compile !!!!
 
-long target_modification_level = 234
+long target_modification_level = 235
 
-date compile_date = date("2025-11-08")
+date compile_date = date("2026-01-17")
 
 integer major_release = 7
 string database_version = "3" // this is really minor release
-string build = "1.0"
-// Resulting in 7.3.1.0
+string build = "2.0"
+// Resulting in 7.3.2.0
 
 /// !!! Remember to also change this in markbuild project entry spots
-//  7   3  1  0
+//  7   3  2  0
 
 // Using Powerbuilder Runtime 22.2.0.3441
 
