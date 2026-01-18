@@ -125,8 +125,8 @@ AS BEGIN
 	JOIN c_Drug_Brand b ON b.brand_name_rxcui = f.ingr_rxcui
 	JOIN c_Drug_Package dp ON dp.drug_id = b.drug_id
 		AND dp.form_rxcui = f.form_rxcui
-	LEFT JOIN vw_dose_unit v ON v.form_rxcui = f.form_rxcui AND v.package_id = dp.package_id
-	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_std_dosage_form(v.form_descr, v.generic_form_descr)
+	LEFT JOIN c_Drug_Formulation fg ON fg.form_rxcui = f.generic_form_rxcui
+	LEFT JOIN c_Dosage_Form df ON df.dosage_form = dbo.fn_std_dosage_form(f.form_descr, fg.form_descr)
 	WHERE NOT EXISTS (SELECT 1 
 			FROM [c_Package] a 
 			WHERE a.package_id = dp.[package_id]
